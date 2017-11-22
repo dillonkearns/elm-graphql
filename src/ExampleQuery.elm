@@ -1,8 +1,10 @@
 module ExampleQuery exposing (query)
 
-import Schema.User as User
+import Schema.Human as Human
 
 
 query : number
 query =
-    User.user [ User.id 123 ] []
+    Human.human
+        [ Human.id "1000" ]
+        [ Human.name ]

@@ -1,4 +1,4 @@
-module Graphqelm exposing (Parameter, ParameterValue)
+module GraphqElm exposing (Parameter, ParameterValue)
 
 
 type Parameter

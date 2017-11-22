@@ -1,13 +1,10 @@
-module Graphqelm.Param exposing (Param, ParamValue, int, string)
+module GraphqElm.Param exposing (Param, int, string)
+
+import GraphqElm.Value exposing (Value(..))
 
 
 type Param
-    = Param String ParamValue
-
-
-type ParamValue
-    = StringValue String
-    | IntValue Int
+    = Param String Value
 
 
 string : String -> String -> Param
