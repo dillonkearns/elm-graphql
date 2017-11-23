@@ -3,38 +3,44 @@ module GraphqElm.Field exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
-type Field a
-    = Field String (Decoder a)
+type Field
+    = Composite String (List Argument) (List Field)
+    | Leaf String (List Argument)
 
 
-
--- type FieldType a
---     = IntField
---     | StringField
--- string : String -> Field String
--- string fieldName =
---     Field fieldName StringField
--- int : String -> Field Int
--- int fieldName =
---     Field fieldName IntField
+type Argument
+    = StringArgument String
+    | IntArgument Int
 
 
-string : String -> Field String
+type Selection a
+    = Selection (List String) (Decoder a)
+
+
+toQuery : Field -> String
+toQuery field =
+    ""
+
+
+selection : (value -> record) -> Selection (value -> record)
+selection constructor =
+    Selection [] (Decode.succeed constructor)
+
+
+string : String -> Field
 string fieldName =
-    Field fieldName Decode.string
+    Leaf fieldName []
 
 
-int : String -> Field Int
+int : String -> Field
 int fieldName =
-    Field fieldName Decode.int
-
-
-with : (a -> b -> value) -> Field a -> Field b -> Field value
-with mapFn ((Field fieldNameA decoderA) as fieldA) ((Field fieldNameB decoderB) as fieldB) =
-    Field fieldNameA (Decode.map2 mapFn decoderA decoderB)
+    Leaf fieldName []
 
 
 
+-- with : (a -> b -> value) -> Field a -> Selection b -> Selection value
+-- with mapFn (Field fieldName fieldDecoder) (Selection selectionFieldNames selectionDecoder) =
+--     Selection (fieldName :: selectionFieldNames) (Decode.map2 mapFn fieldDecoder selectionDecoder)
 -- map : (a -> b) -> Field a -> Field b
 -- map function (Field fieldName fieldType) =
 --     Field fieldName (function fieldType)

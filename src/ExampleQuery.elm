@@ -1,9 +1,15 @@
 module ExampleQuery exposing (query)
 
+import Schema.Human as Human
 
-query : number
+
+-- query : number
+
+
+query : GraphqElm.Field.Field
 query =
-    123
+    -- 123
+    Human.human [] [ Human.name ]
 
 
 

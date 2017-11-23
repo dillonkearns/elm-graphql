@@ -1,19 +1,23 @@
 module Tests exposing (..)
 
 import Expect
+import GraphqElm.Field as Field
+import Schema.Human as Human
 import Test exposing (..)
+
+
+query : Field.Field
+query =
+    -- 123
+    Human.human [] [ Human.name ]
 
 
 all : Test
 all =
-    describe "A Test Suite"
-        [ test "Addition" <|
+    describe "GraphqElm"
+        [ test "generate query document" <|
             \_ ->
-                Expect.equal 10 (3 + 7)
-        , test "String.left" <|
-            \_ ->
-                Expect.equal "a" (String.left 1 "abcdefg")
-        , test "This test should fail" <|
-            \_ ->
-                Expect.fail "failed as expected!"
+                Field.toQuery query
+                    |> Expect.equal
+                        """"""
         ]
