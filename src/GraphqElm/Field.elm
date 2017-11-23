@@ -1,16 +1,12 @@
 module GraphqElm.Field exposing (..)
 
+import GraphqElm.Argument as Argument exposing (Argument)
 import Json.Decode as Decode exposing (Decoder)
 
 
 type Field
     = Composite String (List Argument) (List Field)
     | Leaf String (List Argument)
-
-
-type Argument
-    = StringArgument String
-    | IntArgument Int
 
 
 type Selection a
@@ -23,6 +19,7 @@ toQuery field =
         ++ (case field of
                 Composite fieldName args children ->
                     fieldName
+                        ++ Argument.toQueryString args
                         ++ " "
                         ++ (children
                                 |> List.map toQuery

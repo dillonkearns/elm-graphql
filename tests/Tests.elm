@@ -8,7 +8,7 @@ import Test exposing (..)
 
 query : Field.Field
 query =
-    Human.human [] [ Human.name ]
+    Human.human { id = "1000" } [] [ Human.name ]
 
 
 all : Test
@@ -19,7 +19,7 @@ all =
                 Field.toQuery query
                     |> Expect.equal
                         """{
-human {
+human(id: "1000") {
 name
 }
 }"""
