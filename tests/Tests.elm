@@ -7,9 +7,13 @@ import Schema.Human as Human
 import Test exposing (..)
 
 
+type alias Human =
+    { name : String }
+
+
 query : Field.FieldDecoder { name : String }
 query =
-    Human.human { id = "1000" } []
+    Human.human Human { id = "1000" } []
         |> Field.with Human.name
 
 
@@ -38,7 +42,3 @@ name
                     |> Expect.equal
                         (Ok { name = "Luke Skywalker" })
         ]
-
-
-type Human
-    = Human { name : String }

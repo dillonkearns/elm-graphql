@@ -8,9 +8,9 @@ type alias Human =
     { name : String }
 
 
-human : { id : String } -> List Argument -> FieldDecoder (String -> Human)
-human requiredArgs optionalArgs =
-    Field.object Human
+human : (a -> constructor) -> { id : String } -> List Argument -> FieldDecoder (a -> constructor)
+human constructor requiredArgs optionalArgs =
+    Field.object constructor
         "human"
         ([ id requiredArgs.id ] ++ optionalArgs)
 
