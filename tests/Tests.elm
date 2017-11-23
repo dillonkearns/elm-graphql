@@ -2,6 +2,7 @@ module Tests exposing (..)
 
 import Expect
 import GraphqElm.Field as Field
+import Json.Decode
 import Schema.Human as Human
 import Test exposing (..)
 
@@ -23,4 +24,25 @@ human(id: "1000") {
 name
 }
 }"""
+        , test "decodes properly" <|
+            \() ->
+                """{
+  "data": {
+    "human": {
+      "name": "Luke Skywalker"
+    }
+  }
+}"""
+                    |> Json.Decode.decodeString decoder
+                    |> Expect.equal
+                        (Ok (Human { name = "Luke Skywalker" }))
         ]
+
+
+type Human
+    = Human { name : String }
+
+
+decoder : Json.Decode.Decoder a
+decoder =
+    Json.Decode.fail ""
