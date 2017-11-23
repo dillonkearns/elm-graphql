@@ -1,11 +1,51 @@
 module GraphqElm.Field exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
+import Json.Decode as Decode exposing (Decoder)
+
+
+type FieldDecoder decodesTo
+    = FieldDecoder Field (Decoder decodesTo)
 
 
 type Field
     = Composite String (List Argument) (List Field)
     | Leaf String (List Argument)
+
+
+decoder : FieldDecoder decodesTo -> Decoder decodesTo
+decoder (FieldDecoder field decoder) =
+    decoder
+
+
+object :
+    (a -> constructor)
+    -> String
+    -> List Argument
+    -> FieldDecoder (a -> constructor)
+object constructor fieldName args =
+    FieldDecoder
+        (Composite fieldName args [])
+        (Decode.succeed constructor |> Decode.at [ "data", fieldName ])
+
+
+with : FieldDecoder a -> FieldDecoder (a -> b) -> FieldDecoder b
+with (FieldDecoder fieldA decoderA) (FieldDecoder fieldB decoderB) =
+    let
+        combinedField =
+            case fieldB of
+                Composite fieldName args children ->
+                    Composite fieldName args (fieldA :: children)
+
+                Leaf fieldName args ->
+                    fieldB
+    in
+    FieldDecoder combinedField (Decode.map2 (|>) decoderA decoderB)
+
+
+fieldDecoderToQuery : FieldDecoder a -> String
+fieldDecoderToQuery (FieldDecoder field decoder) =
+    toQuery field
 
 
 toQuery : Field -> String
@@ -27,20 +67,12 @@ toQuery field =
         ++ "\n}"
 
 
-string : String -> Field
+string : String -> FieldDecoder String
 string fieldName =
-    Leaf fieldName []
+    FieldDecoder (Leaf fieldName [])
+        (Decode.string |> Decode.at [ "data", "human", fieldName ])
 
 
-int : String -> Field
+int : String -> FieldDecoder Int
 int fieldName =
-    Leaf fieldName []
-
-
-
--- with : (a -> b -> value) -> Field a -> Selection b -> Selection value
--- with mapFn (Field fieldName fieldDecoder) (Selection selectionFieldNames selectionDecoder) =
---     Selection (fieldName :: selectionFieldNames) (Decode.map2 mapFn fieldDecoder selectionDecoder)
--- map : (a -> b) -> Field a -> Field b
--- map function (Field fieldName fieldType) =
---     Field fieldName (function fieldType)
+    FieldDecoder (Leaf fieldName []) (Decode.int |> Decode.field fieldName)

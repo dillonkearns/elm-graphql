@@ -7,9 +7,10 @@ import Schema.Human as Human
 import Test exposing (..)
 
 
-query : Field.Field
+query : Field.FieldDecoder { name : String }
 query =
-    Human.human { id = "1000" } [] [ Human.name ]
+    Human.human { id = "1000" } []
+        |> Field.with Human.name
 
 
 all : Test
@@ -17,7 +18,7 @@ all =
     describe "GraphqElm"
         [ test "generate query document" <|
             \_ ->
-                Field.toQuery query
+                Field.fieldDecoderToQuery query
                     |> Expect.equal
                         """{
 human(id: "1000") {
@@ -33,16 +34,11 @@ name
     }
   }
 }"""
-                    |> Json.Decode.decodeString decoder
+                    |> Json.Decode.decodeString (Field.decoder query)
                     |> Expect.equal
-                        (Ok (Human { name = "Luke Skywalker" }))
+                        (Ok { name = "Luke Skywalker" })
         ]
 
 
 type Human
     = Human { name : String }
-
-
-decoder : Json.Decode.Decoder a
-decoder =
-    Json.Decode.fail ""

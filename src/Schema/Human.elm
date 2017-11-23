@@ -1,12 +1,18 @@
 module Schema.Human exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
-import GraphqElm.Field as Field exposing (Field)
+import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 
 
-human : { id : String } -> List Argument -> List Field -> Field
-human requiredArgs optionalArgs children =
-    Field.Composite "human" ([ id requiredArgs.id ] ++ optionalArgs) children
+type alias Human =
+    { name : String }
+
+
+human : { id : String } -> List Argument -> FieldDecoder (String -> Human)
+human requiredArgs optionalArgs =
+    Field.object Human
+        "human"
+        ([ id requiredArgs.id ] ++ optionalArgs)
 
 
 id : String -> Argument
@@ -14,11 +20,6 @@ id value =
     Argument.string "id" value
 
 
-name : Field
+name : FieldDecoder String
 name =
     Field.string "name"
-
-
-height : List Argument -> List Field -> Field
-height params children =
-    Field.int "height"
