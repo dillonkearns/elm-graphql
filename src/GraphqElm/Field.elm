@@ -1,16 +1,11 @@
 module GraphqElm.Field exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
-import Json.Decode as Decode exposing (Decoder)
 
 
 type Field
     = Composite String (List Argument) (List Field)
     | Leaf String (List Argument)
-
-
-type Selection a
-    = Selection (List String) (Decoder a)
 
 
 toQuery : Field -> String
@@ -30,11 +25,6 @@ toQuery field =
                     fieldName
            )
         ++ "\n}"
-
-
-selection : (value -> record) -> Selection (value -> record)
-selection constructor =
-    Selection [] (Decode.succeed constructor)
 
 
 string : String -> Field
