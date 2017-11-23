@@ -19,7 +19,20 @@ type Selection a
 
 toQuery : Field -> String
 toQuery field =
-    ""
+    "{\n"
+        ++ (case field of
+                Composite fieldName args children ->
+                    fieldName
+                        ++ " "
+                        ++ (children
+                                |> List.map toQuery
+                                |> String.join "\n"
+                           )
+
+                Leaf fieldName args ->
+                    fieldName
+           )
+        ++ "\n}"
 
 
 selection : (value -> record) -> Selection (value -> record)
