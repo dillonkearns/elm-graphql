@@ -9,8 +9,8 @@ type RootQuery decodesTo
 
 
 rootQuery : FieldDecoder decodesTo -> RootQuery decodesTo
-rootQuery fieldDecoder =
-    RootQuery fieldDecoder
+rootQuery (FieldDecoder field decoder) =
+    RootQuery (FieldDecoder field (decoder |> Decode.field "data"))
 
 
 type FieldDecoder decodesTo
@@ -27,9 +27,9 @@ decoder (RootQuery (FieldDecoder field decoder)) =
     decoder
 
 
-listAt : List String -> FieldDecoder a -> FieldDecoder (List a)
+listAt : String -> FieldDecoder a -> FieldDecoder (List a)
 listAt at (FieldDecoder field decoder) =
-    FieldDecoder field (decoder |> Decode.list |> Decode.at at)
+    FieldDecoder field (decoder |> Decode.list |> Decode.field at)
 
 
 object :
