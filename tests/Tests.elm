@@ -19,7 +19,7 @@ type alias MenuItemWithId =
 menusWithId : RootQuery (List MenuItemWithId)
 menusWithId =
     menuItemWithId
-        |> Query.menuItems
+        |> Query.menuItems []
 
 
 menuItem : FieldDecoder MenuItem
@@ -38,7 +38,7 @@ menuItemWithId =
 menusQuery : RootQuery (List MenuItem)
 menusQuery =
     menuItem
-        |> Query.menuItems
+        |> Query.menuItems []
 
 
 all : Test
