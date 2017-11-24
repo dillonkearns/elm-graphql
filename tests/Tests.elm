@@ -23,18 +23,10 @@ menusWithId =
         |> Query.menuItems []
 
 
-
--- menuItem : FieldDecoder MenuItem
-
-
 menuItem : Object MenuItem
 menuItem =
     MenuItem.menuItem MenuItem
         |> Object.with MenuItem.name
-
-
-
--- menuItemWithId : FieldDecoder MenuItemWithId
 
 
 menuItemWithId : Object MenuItemWithId
