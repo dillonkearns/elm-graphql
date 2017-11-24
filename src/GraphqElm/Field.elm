@@ -18,6 +18,11 @@ decoder (FieldDecoder field decoder) =
     decoder
 
 
+listAt : List String -> FieldDecoder a -> FieldDecoder (List a)
+listAt at (FieldDecoder field decoder) =
+    FieldDecoder field (decoder |> Decode.list |> Decode.at at)
+
+
 object :
     (a -> constructor)
     -> String
@@ -26,7 +31,8 @@ object :
 object constructor fieldName args =
     FieldDecoder
         (Composite fieldName args [])
-        (Decode.succeed constructor |> Decode.at [ "data", fieldName ])
+        -- (Decode.succeed constructor |> Decode.at [ fieldName ])
+        (Decode.succeed constructor)
 
 
 with : FieldDecoder a -> FieldDecoder (a -> b) -> FieldDecoder b
@@ -70,7 +76,7 @@ toQuery field =
 string : String -> FieldDecoder String
 string fieldName =
     FieldDecoder (Leaf fieldName [])
-        (Decode.string |> Decode.at [ "data", "human", fieldName ])
+        (Decode.string |> Decode.at [ fieldName ])
 
 
 int : String -> FieldDecoder Int
