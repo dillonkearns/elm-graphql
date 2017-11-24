@@ -18,16 +18,26 @@ type alias MenuItemWithId =
 
 menusWithId : FieldDecoder (List MenuItemWithId)
 menusWithId =
+    menuItemWithId
+        |> Query.menuItems
+
+
+menuItem : FieldDecoder MenuItem
+menuItem =
+    MenuItem.menuItem MenuItem
+        |> Field.with MenuItem.name
+
+
+menuItemWithId : FieldDecoder MenuItemWithId
+menuItemWithId =
     MenuItem.menuItem MenuItemWithId
         |> Field.with MenuItem.name
         |> Field.with MenuItem.id
-        |> Query.menuItems
 
 
 menusQuery : FieldDecoder (List MenuItem)
 menusQuery =
-    MenuItem.menuItem MenuItem
-        |> Field.with MenuItem.name
+    menuItem
         |> Query.menuItems
 
 
