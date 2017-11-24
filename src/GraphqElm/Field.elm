@@ -56,21 +56,22 @@ fieldDecoderToQuery (FieldDecoder field decoder) =
 
 toQuery : Field -> String
 toQuery field =
-    "{\n"
-        ++ (case field of
-                Composite fieldName args children ->
-                    fieldName
+    case field of
+        Composite fieldName args children ->
+            "{\n"
+                ++ (fieldName
                         ++ Argument.toQueryString args
-                        ++ " "
+                        ++ " {\n"
                         ++ (children
                                 |> List.map toQuery
                                 |> String.join "\n"
                            )
+                   )
+                ++ "\n}"
+                ++ "\n}"
 
-                Leaf fieldName args ->
-                    fieldName
-           )
-        ++ "\n}"
+        Leaf fieldName args ->
+            fieldName
 
 
 string : String -> FieldDecoder String

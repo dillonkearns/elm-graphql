@@ -43,6 +43,16 @@ menuItems {
 name
 }
 }"""
+        , test "generate menu with id query" <|
+            \_ ->
+                Field.fieldDecoderToQuery menusWithId
+                    |> Expect.equal
+                        """{
+menuItems {
+id
+name
+}
+}"""
         , test "decodes menu items with id" <|
             \() ->
                 """
