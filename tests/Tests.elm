@@ -3,20 +3,9 @@ module Tests exposing (..)
 import Expect
 import GraphqElm.Field as Field exposing (FieldDecoder)
 import Json.Decode as Decode exposing (Decoder)
-import Schema.Human as Human
 import Schema.MenuItem as MenuItem
 import Schema.Query as Query
 import Test exposing (..)
-
-
-type alias Human =
-    { name : String }
-
-
-query : Field.FieldDecoder { name : String }
-query =
-    Human.human Human { id = "1000" } []
-        |> Field.with Human.name
 
 
 type alias MenuItem =
@@ -33,29 +22,7 @@ menusQuery =
 all : Test
 all =
     describe "GraphqElm"
-        [ test "generate query document" <|
-            \_ ->
-                Field.fieldDecoderToQuery query
-                    |> Expect.equal
-                        """{
-human(id: "1000") {
-name
-}
-}"""
-
-        --         , test "decodes human properly" <|
-        --             \() ->
-        --                 """{
-        --   "data": {
-        --     "human": {
-        --       "name": "Luke Skywalker"
-        --     }
-        --   }
-        -- }"""
-        --                     |> Decode.decodeString (Field.decoder query)
-        --                     |> Expect.equal
-        --                         (Ok { name = "Luke Skywalker" })
-        , test "generate menu query" <|
+        [ test "generate menu query" <|
             \_ ->
                 Field.fieldDecoderToQuery menusQuery
                     |> Expect.equal
