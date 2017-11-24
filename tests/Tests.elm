@@ -20,7 +20,7 @@ type alias MenuItemWithId =
 menusWithId : RootQuery (List MenuItemWithId)
 menusWithId =
     menuItemWithId
-        |> Query.menuItems []
+        |> Query.menuItems [ MenuItem.contains "Milkshake" ]
 
 
 menuItem : Object MenuItem
@@ -59,7 +59,7 @@ name
                 Field.fieldDecoderToQuery menusWithId
                     |> Expect.equal
                         """{
-menuItems {
+menuItems(contains: "Milkshake") {
 id
 name
 }
@@ -71,10 +71,6 @@ name
   "data": {
   "menuItems": [
   {
-  "name": "Masala Chai",
-  "id": "1"
-  },
-  {
   "name": "Vanilla Milkshake",
   "id": "2"
   },
@@ -85,7 +81,7 @@ name
   ] } }"""
                     |> Decode.decodeString (Field.decoder menusWithId)
                     |> Expect.equal
-                        (Ok [ { name = "Masala Chai", id = "1" }, { name = "Vanilla Milkshake", id = "2" }, { name = "Chocolate Milkshake", id = "3" } ])
+                        (Ok [ { name = "Vanilla Milkshake", id = "2" }, { name = "Chocolate Milkshake", id = "3" } ])
         , test "decodes menu items" <|
             \() ->
                 """
