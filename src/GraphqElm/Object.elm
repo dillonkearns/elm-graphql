@@ -14,6 +14,11 @@ listOf fieldName args (Object fields decoder) =
     FieldDecoder (Composite fieldName args fields) (Decode.list decoder |> Decode.field fieldName)
 
 
+single : String -> List Argument -> Object a -> FieldDecoder a
+single fieldName args (Object fields decoder) =
+    FieldDecoder (Composite fieldName args fields) (decoder |> Decode.field fieldName)
+
+
 object :
     (a -> constructor)
     -> Object (a -> constructor)

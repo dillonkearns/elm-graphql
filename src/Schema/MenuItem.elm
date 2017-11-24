@@ -23,3 +23,8 @@ name =
 contains : String -> Argument
 contains =
     Argument.string "contains"
+
+
+idArg : String -> Argument
+idArg =
+    Argument.string "id"

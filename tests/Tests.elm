@@ -42,6 +42,12 @@ menusQuery =
         |> Query.menuItems []
 
 
+menuQuery : RootQuery MenuItem
+menuQuery =
+    menuItem
+        |> Query.menuItem { id = "123" } []
+
+
 all : Test
 all =
     describe "GraphqElm"
@@ -101,6 +107,28 @@ name
                     |> Decode.decodeString menusDecoder
                     |> Expect.equal
                         (Ok [ { name = "Masala Chai" }, { name = "Vanilla Milkshake" }, { name = "Chocolate Milkshake" } ])
+        , test "generate menuItem query" <|
+            \_ ->
+                Field.fieldDecoderToQuery menuQuery
+                    |> Expect.equal
+                        """{
+menuItem(id: "123") {
+name
+}
+}"""
+        , test "decode menu item" <|
+            \() ->
+                """
+              {
+"data": {
+"menuItem":
+{
+"name": "Masala Chai"
+}
+ } }"""
+                    |> Decode.decodeString (Field.decoder menuQuery)
+                    |> Expect.equal
+                        (Ok { name = "Masala Chai" })
         ]
 
 
