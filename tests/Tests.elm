@@ -12,6 +12,18 @@ type alias MenuItem =
     { name : String }
 
 
+type alias MenuItemWithId =
+    { name : String, id : String }
+
+
+menusWithId : FieldDecoder (List MenuItemWithId)
+menusWithId =
+    MenuItem.menuItem MenuItemWithId
+        |> Field.with MenuItem.name
+        |> Field.with MenuItem.id
+        |> Query.menuItems
+
+
 menusQuery : FieldDecoder (List MenuItem)
 menusQuery =
     MenuItem.menuItem MenuItem
@@ -31,6 +43,28 @@ menuItems {
 name
 }
 }"""
+        , test "decodes menu items with id" <|
+            \() ->
+                """
+                {
+  "data": {
+  "menuItems": [
+  {
+  "name": "Masala Chai",
+  "id": "1"
+  },
+  {
+  "name": "Vanilla Milkshake",
+  "id": "2"
+  },
+  {
+  "name": "Chocolate Milkshake",
+  "id": "3"
+  }
+  ] } }"""
+                    |> Decode.decodeString (Field.decoder menusWithId)
+                    |> Expect.equal
+                        (Ok [ { name = "Masala Chai", id = "1" }, { name = "Vanilla Milkshake", id = "2" }, { name = "Chocolate Milkshake", id = "3" } ])
         , test "decodes menu items" <|
             \() ->
                 """
