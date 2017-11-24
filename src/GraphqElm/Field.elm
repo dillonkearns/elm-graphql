@@ -4,6 +4,15 @@ import GraphqElm.Argument as Argument exposing (Argument)
 import Json.Decode as Decode exposing (Decoder)
 
 
+type RootQuery decodesTo
+    = RootQuery (FieldDecoder decodesTo)
+
+
+rootQuery : FieldDecoder decodesTo -> RootQuery decodesTo
+rootQuery fieldDecoder =
+    RootQuery fieldDecoder
+
+
 type FieldDecoder decodesTo
     = FieldDecoder Field (Decoder decodesTo)
 
@@ -13,8 +22,8 @@ type Field
     | Leaf String (List Argument)
 
 
-decoder : FieldDecoder decodesTo -> Decoder decodesTo
-decoder (FieldDecoder field decoder) =
+decoder : RootQuery decodesTo -> Decoder decodesTo
+decoder (RootQuery (FieldDecoder field decoder)) =
     decoder
 
 
@@ -49,8 +58,8 @@ with (FieldDecoder fieldA decoderA) (FieldDecoder fieldB decoderB) =
     FieldDecoder combinedField (Decode.map2 (|>) decoderA decoderB)
 
 
-fieldDecoderToQuery : FieldDecoder a -> String
-fieldDecoderToQuery (FieldDecoder field decoder) =
+fieldDecoderToQuery : RootQuery a -> String
+fieldDecoderToQuery (RootQuery (FieldDecoder field decoder)) =
     toQuery field
 
 

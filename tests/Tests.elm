@@ -1,7 +1,7 @@
 module Tests exposing (..)
 
 import Expect
-import GraphqElm.Field as Field exposing (FieldDecoder)
+import GraphqElm.Field as Field exposing (FieldDecoder, RootQuery)
 import Json.Decode as Decode exposing (Decoder)
 import Schema.MenuItem as MenuItem
 import Schema.Query as Query
@@ -16,7 +16,7 @@ type alias MenuItemWithId =
     { name : String, id : String }
 
 
-menusWithId : FieldDecoder (List MenuItemWithId)
+menusWithId : RootQuery (List MenuItemWithId)
 menusWithId =
     menuItemWithId
         |> Query.menuItems
@@ -35,7 +35,7 @@ menuItemWithId =
         |> Field.with MenuItem.id
 
 
-menusQuery : FieldDecoder (List MenuItem)
+menusQuery : RootQuery (List MenuItem)
 menusQuery =
     menuItem
         |> Query.menuItems
