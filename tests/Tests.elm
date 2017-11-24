@@ -25,7 +25,7 @@ type alias MenuItem =
 
 menusQuery : FieldDecoder (List MenuItem)
 menusQuery =
-    Query.menuItem MenuItem
+    MenuItem.menuItem MenuItem
         |> Field.with MenuItem.name
         |> Query.menuItems
 
