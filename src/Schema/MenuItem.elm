@@ -2,14 +2,12 @@ module Schema.MenuItem exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
+import GraphqElm.Object as Object exposing (Object)
 
 
-menuItem : (a -> constructor) -> FieldDecoder (a -> constructor)
+menuItem : (a -> constructor) -> Object (a -> constructor)
 menuItem constructor =
-    Field.object
-        constructor
-        "menuItems"
-        []
+    Object.object constructor
 
 
 id : FieldDecoder String

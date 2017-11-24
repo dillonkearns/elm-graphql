@@ -32,18 +32,6 @@ listAt at (FieldDecoder field decoder) =
     FieldDecoder field (decoder |> Decode.list |> Decode.field at)
 
 
-object :
-    (a -> constructor)
-    -> String
-    -> List Argument
-    -> FieldDecoder (a -> constructor)
-object constructor fieldName args =
-    FieldDecoder
-        (Composite fieldName args [])
-        -- (Decode.succeed constructor |> Decode.at [ fieldName ])
-        (Decode.succeed constructor)
-
-
 with : FieldDecoder a -> FieldDecoder (a -> b) -> FieldDecoder b
 with (FieldDecoder fieldA decoderA) (FieldDecoder fieldB decoderB) =
     let

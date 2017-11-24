@@ -2,6 +2,7 @@ module Tests exposing (..)
 
 import Expect
 import GraphqElm.Field as Field exposing (FieldDecoder, RootQuery)
+import GraphqElm.Object as Object exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 import Schema.MenuItem as MenuItem
 import Schema.Query as Query
@@ -22,17 +23,25 @@ menusWithId =
         |> Query.menuItems []
 
 
-menuItem : FieldDecoder MenuItem
+
+-- menuItem : FieldDecoder MenuItem
+
+
+menuItem : Object MenuItem
 menuItem =
     MenuItem.menuItem MenuItem
-        |> Field.with MenuItem.name
+        |> Object.with MenuItem.name
 
 
-menuItemWithId : FieldDecoder MenuItemWithId
+
+-- menuItemWithId : FieldDecoder MenuItemWithId
+
+
+menuItemWithId : Object MenuItemWithId
 menuItemWithId =
     MenuItem.menuItem MenuItemWithId
-        |> Field.with MenuItem.name
-        |> Field.with MenuItem.id
+        |> Object.with MenuItem.name
+        |> Object.with MenuItem.id
 
 
 menusQuery : RootQuery (List MenuItem)
