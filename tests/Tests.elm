@@ -104,7 +104,7 @@ name
   "name": "Chocolate Milkshake"
   }
   ] } }"""
-                    |> Decode.decodeString menusDecoder
+                    |> Decode.decodeString (Field.decoder menusQuery)
                     |> Expect.equal
                         (Ok [ { name = "Masala Chai" }, { name = "Vanilla Milkshake" }, { name = "Chocolate Milkshake" } ])
         , test "generate menuItem query" <|
@@ -130,11 +130,6 @@ name
                     |> Expect.equal
                         (Ok { name = "Masala Chai" })
         ]
-
-
-menusDecoder : Decoder (List MenuItem)
-menusDecoder =
-    Field.decoder menusQuery
 
 
 
