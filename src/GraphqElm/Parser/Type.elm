@@ -20,7 +20,15 @@ type Type
 
 parseRaw : RawType -> Type
 parseRaw (RawType { kind, name, ofType }) =
-    Type Nullable String
+    case name of
+        Just "String" ->
+            Type Nullable String
+
+        Just "Boolean" ->
+            Type Nullable Boolean
+
+        _ ->
+            Debug.crash "TODO"
 
 
 createType : TypeKind -> Maybe String -> Maybe RawType -> RawType
