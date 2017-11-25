@@ -6,12 +6,17 @@ import Json.Decode as Decode exposing (Decoder)
 
 
 type RootQuery decodesTo
-    = RootQuery (FieldDecoder decodesTo)
+    = RootQuery (List Field) (Decoder decodesTo)
+
+
+combine : (decodesToA -> decodesToB -> decodesToC) -> RootQuery decodesToA -> RootQuery decodesToB -> RootQuery decodesToC
+combine combineFunction (RootQuery fieldsA decoderA) (RootQuery fieldsB decoderB) =
+    RootQuery (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
 
 
 rootQuery : FieldDecoder decodesTo -> RootQuery decodesTo
 rootQuery (FieldDecoder field decoder) =
-    RootQuery (FieldDecoder field (decoder |> Decode.field "data"))
+    RootQuery [ field ] (decoder |> Decode.field "data")
 
 
 type FieldDecoder decodesTo
@@ -24,7 +29,7 @@ type Field
 
 
 decoder : RootQuery decodesTo -> Decoder decodesTo
-decoder (RootQuery (FieldDecoder field decoder)) =
+decoder (RootQuery fields decoder) =
     decoder
 
 
@@ -34,9 +39,9 @@ listAt at (FieldDecoder field decoder) =
 
 
 toQuery : RootQuery a -> String
-toQuery (RootQuery (FieldDecoder field decoder)) =
+toQuery (RootQuery fields decoder) =
     "{\n"
-        ++ fieldDecoderToQuery field
+        ++ (List.map fieldDecoderToQuery fields |> String.join "\n")
         ++ "\n}"
 
 
