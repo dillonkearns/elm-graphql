@@ -16,27 +16,36 @@ decoder =
 
 
 type Type
-    = Type IsNullable Scalar
+    = Leaf IsNullable Scalar
+    | Composite IsNullable Type
 
 
 parseRaw : RawType -> Type
 parseRaw (RawType { kind, name, ofType }) =
     case ( kind, name ) of
         ( Scalar, Just scalarName ) ->
-            Type Nullable (Scalar.parse scalarName)
+            Leaf Nullable (Scalar.parse scalarName)
 
         ( NonNull, Nothing ) ->
             case ofType of
                 Just (RawType actualOfType) ->
                     case ( actualOfType.kind, actualOfType.name ) of
                         ( Scalar, Just scalarName ) ->
-                            Type NonNullable (Scalar.parse scalarName)
+                            Leaf NonNullable (Scalar.parse scalarName)
 
                         _ ->
                             Debug.crash ("Expected scalar, got " ++ toString actualOfType)
 
                 Nothing ->
                     Debug.crash "Invalid, no type to parse for non-null parent node."
+
+        ( List, Nothing ) ->
+            case ofType of
+                Nothing ->
+                    Debug.crash "Invalid, no type to parse for List parent node."
+
+                Just actualOfType ->
+                    Composite Nullable (parseRaw actualOfType)
 
         _ ->
             Debug.crash "TODO"

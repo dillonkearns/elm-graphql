@@ -90,7 +90,7 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRaw
-                    |> Expect.equal (Type.Type Type.Nullable Scalar.String)
+                    |> Expect.equal (Type.Leaf Type.Nullable Scalar.String)
         , test "parse raw boolean" <|
             \() ->
                 Type.RawType
@@ -99,7 +99,7 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRaw
-                    |> Expect.equal (Type.Type Type.Nullable Scalar.Boolean)
+                    |> Expect.equal (Type.Leaf Type.Nullable Scalar.Boolean)
         , test "parseRaw non-nullable string" <|
             \() ->
                 Type.RawType
@@ -115,9 +115,24 @@ all =
                             )
                     }
                     |> Type.parseRaw
-                    |> Expect.equal (Type.Type Type.NonNullable Scalar.String)
+                    |> Expect.equal (Type.Leaf Type.NonNullable Scalar.String)
+        , test "parse list of string string" <|
+            \() ->
+                Type.RawType
+                    { kind = TypeKind.List
+                    , name = Nothing
+                    , ofType =
+                        Just
+                            (Type.RawType
+                                { kind = TypeKind.Scalar
+                                , name = Just "String"
+                                , ofType = Nothing
+                                }
+                            )
+                    }
+                    |> Type.parseRaw
+                    |> Expect.equal
+                        (Type.Composite Type.Nullable
+                            (Type.Leaf Type.Nullable Scalar.String)
+                        )
         ]
-
-
-
--- Type ListType NonNullable (Type NonNullable StringType)
