@@ -6,30 +6,30 @@ import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 
 
-type Kind
-    = Kind
+type Type
+    = Type
 
 
-menuItem : (a -> constructor) -> Object (a -> constructor) Kind
+menuItem : (a -> constructor) -> Object (a -> constructor) Type
 menuItem constructor =
     Object.object constructor
 
 
-id : TypeLocked (FieldDecoder String) Kind
+id : TypeLocked (FieldDecoder String) Type
 id =
     Field.string "id"
 
 
-name : TypeLocked (FieldDecoder String) Kind
+name : TypeLocked (FieldDecoder String) Type
 name =
     Field.string "name"
 
 
-contains : String -> TypeLocked Argument Kind
+contains : String -> TypeLocked Argument Type
 contains value =
     Argument.string "contains" value
 
 
-idArg : String -> TypeLocked Argument Kind
+idArg : String -> TypeLocked Argument Type
 idArg value =
     Argument.string "id" value

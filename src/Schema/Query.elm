@@ -13,7 +13,7 @@ menuItems optionalArgs object =
         |> Field.rootQuery
 
 
-menuItem : { id : String } -> List (TypeLocked Argument MenuItem.Kind) -> Object menuItem MenuItem.Kind -> Field.RootQuery menuItem
+menuItem : { id : String } -> List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.RootQuery menuItem
 menuItem requiredArgs optionalArgs object =
     Object.single "menuItem" (MenuItem.idArg requiredArgs.id :: optionalArgs) object
         |> Field.rootQuery
