@@ -81,8 +81,20 @@ all =
                                 }
                             )
                         )
+        , test "parseRaw string" <|
+            \() ->
+                Type.RawType
+                    { kind = NonNull
+                    , name = Nothing
+                    , ofType =
+                        Just
+                            (Type.RawType
+                                { kind = TypeKind.Scalar
+                                , name = Just "String"
+                                , ofType = Nothing
+                                }
+                            )
+                    }
+                    |> Type.parseRaw
+                    |> Expect.equal (Type.Type Type.Nullable Type.String)
         ]
-
-
-
--- Type ListType NonNullable (Type NonNullable StringType)

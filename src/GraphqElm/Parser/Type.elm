@@ -14,6 +14,15 @@ decoder =
         )
 
 
+type Type
+    = Type IsNullable ScalarPrimitive
+
+
+parseRaw : RawType -> Type
+parseRaw (RawType { kind, name, ofType }) =
+    Type Nullable String
+
+
 createType : TypeKind -> Maybe String -> Maybe RawType -> RawType
 createType kind name ofType =
     RawType
