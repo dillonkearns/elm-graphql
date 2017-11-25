@@ -1,7 +1,7 @@
 module GraphqElm.Parser.Type exposing (..)
 
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
+import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -16,15 +16,15 @@ decoder =
 
 
 type Type
-    = Leaf IsNullable Scalar
-    | Composite IsNullable Type
+    = Scalar IsNullable Scalar
+    | List IsNullable Type
 
 
 parseRaw : RawType -> Type
 parseRaw (RawType { kind, name, ofType }) =
     case ( kind, name ) of
-        ( Scalar, Just scalarName ) ->
-            Leaf Nullable (Scalar.parse scalarName)
+        ( TypeKind.Scalar, Just scalarName ) ->
+            Scalar Nullable (Scalar.parse scalarName)
 
         ( compositeNodeType, _ ) ->
             case ofType of
@@ -40,21 +40,29 @@ parseRaw (RawType { kind, name, ofType }) =
 parseCompositeType : TypeKind -> RawType -> Type
 parseCompositeType typeKind (RawType actualOfType) =
     case typeKind of
-        List ->
-            Composite Nullable (parseRaw (RawType actualOfType))
+        TypeKind.List ->
+            List Nullable (parseRaw (RawType actualOfType))
 
-        NonNull ->
+        TypeKind.NonNull ->
             case ( actualOfType.kind, actualOfType.name ) of
-                ( Scalar, Just scalarName ) ->
-                    Leaf NonNullable (Scalar.parse scalarName)
+                ( TypeKind.Scalar, Just scalarName ) ->
+                    Scalar NonNullable (Scalar.parse scalarName)
+
+                ( TypeKind.List, Nothing ) ->
+                    case actualOfType.ofType of
+                        Just nested ->
+                            List NonNullable (parseRaw nested)
+
+                        _ ->
+                            Debug.crash ("Expected nested ofType to parse, got " ++ toString actualOfType)
 
                 _ ->
                     Debug.crash ("Expected scalar, got " ++ toString actualOfType)
 
-        Scalar ->
+        TypeKind.Scalar ->
             Debug.crash "Not expecting scalar."
 
-        Object ->
+        TypeKind.Object ->
             Debug.crash "Unhandled"
 
 
