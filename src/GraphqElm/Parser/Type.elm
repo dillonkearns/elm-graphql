@@ -16,7 +16,11 @@ decoder =
 
 createType : TypeKind -> Maybe String -> Maybe Type -> Type
 createType kind name ofType =
-    Type { kind = kind, name = name, ofType = ofType }
+    Type
+        { kind = kind
+        , name = name
+        , ofType = ofType
+        }
 
 
 type Type
