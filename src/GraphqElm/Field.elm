@@ -61,12 +61,18 @@ toQuery field =
             fieldName
 
 
-string : String -> FieldDecoder String
-string fieldName =
+fieldDecoder : String -> Decoder decodesTo -> TypeLocked (FieldDecoder decodesTo) lockedTo
+fieldDecoder fieldName decoder =
     FieldDecoder (Leaf fieldName [])
-        (Decode.string |> Decode.at [ fieldName ])
+        (decoder |> Decode.at [ fieldName ])
+        |> TypeLocked
 
 
-int : String -> FieldDecoder Int
+string : String -> TypeLocked (FieldDecoder String) lockedTo
+string fieldName =
+    fieldDecoder fieldName Decode.string
+
+
+int : String -> TypeLocked (FieldDecoder Int) lockedTo
 int fieldName =
-    FieldDecoder (Leaf fieldName []) (Decode.int |> Decode.field fieldName)
+    fieldDecoder fieldName Decode.int

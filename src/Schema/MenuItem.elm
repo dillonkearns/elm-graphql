@@ -17,13 +17,11 @@ menuItem constructor =
 id : TypeLocked (FieldDecoder String) Kind
 id =
     Field.string "id"
-        |> TypeLocked
 
 
 name : TypeLocked (FieldDecoder String) Kind
 name =
     Field.string "name"
-        |> TypeLocked
 
 
 contains : String -> TypeLocked Argument Kind
