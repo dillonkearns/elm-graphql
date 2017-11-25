@@ -26,11 +26,13 @@ name =
         |> TypeLocked
 
 
-contains : String -> Argument
-contains =
-    Argument.string "contains"
+contains : String -> TypeLocked Argument Kind
+contains value =
+    Argument.string "contains" value
+        |> TypeLocked
 
 
-idArg : String -> Argument
-idArg =
-    Argument.string "id"
+idArg : String -> TypeLocked Argument Kind
+idArg value =
+    Argument.string "id" value
+        |> TypeLocked
