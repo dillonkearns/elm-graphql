@@ -35,23 +35,23 @@ listAt at (FieldDecoder field decoder) =
 
 fieldDecoderToQuery : RootQuery a -> String
 fieldDecoderToQuery (RootQuery (FieldDecoder field decoder)) =
-    toQuery field
+    "{\n"
+        ++ toQuery field
+        ++ "\n}"
 
 
 toQuery : Field -> String
 toQuery field =
     case field of
         Composite fieldName args children ->
-            "{\n"
-                ++ (fieldName
-                        ++ Argument.toQueryString args
-                        ++ " {\n"
-                        ++ (children
-                                |> List.map toQuery
-                                |> String.join "\n"
-                           )
+            (fieldName
+                ++ Argument.toQueryString args
+                ++ " {\n"
+                ++ (children
+                        |> List.map toQuery
+                        |> String.join "\n"
                    )
-                ++ "\n}"
+            )
                 ++ "\n}"
 
         Leaf fieldName args ->
@@ -63,6 +63,12 @@ fieldDecoder fieldName decoder =
     FieldDecoder (Leaf fieldName [])
         (decoder |> Decode.at [ fieldName ])
         |> TypeLocked
+
+
+custom : String -> Decoder decodesTo -> FieldDecoder decodesTo
+custom fieldName decoder =
+    FieldDecoder (Leaf fieldName [])
+        (decoder |> Decode.field fieldName)
 
 
 string : String -> TypeLocked (FieldDecoder String) lockedTo

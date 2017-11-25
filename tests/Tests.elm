@@ -129,6 +129,26 @@ name
                     |> Decode.decodeString (Field.decoder menuQuery)
                     |> Expect.equal
                         (Ok { name = "Masala Chai" })
+        , test "generate captains query" <|
+            \_ ->
+                Field.fieldDecoderToQuery Query.captains
+                    |> Expect.equal
+                        """{
+captains
+}"""
+        , test "decode captains" <|
+            \() ->
+                """
+                                      {
+                        "data": {
+                        "captains":
+                        [ "Kirk", "Picard" ]
+                         }
+                        }
+                         """
+                    |> Decode.decodeString (Field.decoder Query.captains)
+                    |> Expect.equal
+                        (Ok [ "Kirk", "Picard" ])
         ]
 
 
