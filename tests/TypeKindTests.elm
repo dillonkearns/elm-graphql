@@ -1,4 +1,4 @@
-module ParserTests exposing (..)
+module TypeKindTests exposing (..)
 
 import Expect
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
