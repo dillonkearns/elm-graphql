@@ -7,14 +7,19 @@ type Argument
     = Argument String Value
 
 
+argument : String -> Value -> Argument
+argument fieldName value =
+    Argument fieldName value
+
+
 string : String -> String -> Argument
 string fieldName value =
-    Argument fieldName (StringValue value)
+    argument fieldName (StringValue value)
 
 
 int : String -> Int -> Argument
 int fieldName value =
-    Argument fieldName (IntValue value)
+    argument fieldName (IntValue value)
 
 
 toQueryString : List Argument -> String
