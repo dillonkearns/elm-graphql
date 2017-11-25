@@ -8,6 +8,10 @@ type RootQuery decodesTo
     = RootQuery (FieldDecoder decodesTo)
 
 
+type TypeLocked thing lockedTo
+    = TypeLocked thing
+
+
 rootQuery : FieldDecoder decodesTo -> RootQuery decodesTo
 rootQuery (FieldDecoder field decoder) =
     RootQuery (FieldDecoder field (decoder |> Decode.field "data"))

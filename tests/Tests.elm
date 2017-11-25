@@ -23,13 +23,13 @@ menusWithId =
         |> Query.menuItems [ MenuItem.contains "Milkshake" ]
 
 
-menuItem : Object MenuItem
+menuItem : Object MenuItem MenuItem.Kind
 menuItem =
     MenuItem.menuItem MenuItem
         |> Object.with MenuItem.name
 
 
-menuItemWithId : Object MenuItemWithId
+menuItemWithId : Object MenuItemWithId MenuItem.Kind
 menuItemWithId =
     MenuItem.menuItem MenuItemWithId
         |> Object.with MenuItem.name

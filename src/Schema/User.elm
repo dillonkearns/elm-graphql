@@ -1,4 +1,4 @@
-module Schema.MenuItem exposing (..)
+module Schema.User exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder, TypeLocked(TypeLocked))
@@ -9,8 +9,8 @@ type Kind
     = Kind
 
 
-menuItem : (a -> constructor) -> Object (a -> constructor) Kind
-menuItem constructor =
+user : (a -> constructor) -> Object (a -> constructor) Kind
+user constructor =
     Object.object constructor
 
 

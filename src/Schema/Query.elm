@@ -6,13 +6,13 @@ import GraphqElm.Object as Object exposing (Object)
 import Schema.MenuItem as MenuItem
 
 
-menuItems : List Argument -> Object menuItem -> Field.RootQuery (List menuItem)
+menuItems : List Argument -> Object menuItem kind -> Field.RootQuery (List menuItem)
 menuItems optionalArgs object =
     Object.listOf "menuItems" optionalArgs object
         |> Field.rootQuery
 
 
-menuItem : { id : String } -> List Argument -> Object menuItem -> Field.RootQuery menuItem
+menuItem : { id : String } -> List Argument -> Object menuItem kind -> Field.RootQuery menuItem
 menuItem requiredArgs optionalArgs object =
     Object.single "menuItem" (MenuItem.idArg requiredArgs.id :: optionalArgs) object
         |> Field.rootQuery
