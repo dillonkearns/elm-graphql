@@ -26,29 +26,36 @@ parseRaw (RawType { kind, name, ofType }) =
         ( Scalar, Just scalarName ) ->
             Leaf Nullable (Scalar.parse scalarName)
 
-        ( NonNull, Nothing ) ->
+        ( compositeNodeType, _ ) ->
             case ofType of
-                Just (RawType actualOfType) ->
-                    case ( actualOfType.kind, actualOfType.name ) of
-                        ( Scalar, Just scalarName ) ->
-                            Leaf NonNullable (Scalar.parse scalarName)
-
-                        _ ->
-                            Debug.crash ("Expected scalar, got " ++ toString actualOfType)
-
-                Nothing ->
-                    Debug.crash "Invalid, no type to parse for non-null parent node."
-
-        ( List, Nothing ) ->
-            case ofType of
-                Nothing ->
-                    Debug.crash "Invalid, no type to parse for List parent node."
-
                 Just actualOfType ->
-                    Composite Nullable (parseRaw actualOfType)
+                    parseCompositeType compositeNodeType actualOfType
 
-        _ ->
-            Debug.crash "TODO"
+                Nothing ->
+                    "Invalid type, no child type to parse for composite parent node "
+                        ++ toString compositeNodeType
+                        |> Debug.crash
+
+
+parseCompositeType : TypeKind -> RawType -> Type
+parseCompositeType typeKind (RawType actualOfType) =
+    case typeKind of
+        List ->
+            Composite Nullable (parseRaw (RawType actualOfType))
+
+        NonNull ->
+            case ( actualOfType.kind, actualOfType.name ) of
+                ( Scalar, Just scalarName ) ->
+                    Leaf NonNullable (Scalar.parse scalarName)
+
+                _ ->
+                    Debug.crash ("Expected scalar, got " ++ toString actualOfType)
+
+        Scalar ->
+            Debug.crash "Not expecting scalar."
+
+        Object ->
+            Debug.crash "Unhandled"
 
 
 createType : TypeKind -> Maybe String -> Maybe RawType -> RawType

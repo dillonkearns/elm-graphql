@@ -116,7 +116,7 @@ all =
                     }
                     |> Type.parseRaw
                     |> Expect.equal (Type.Leaf Type.NonNullable Scalar.String)
-        , test "parse list of string string" <|
+        , test "parse list of string" <|
             \() ->
                 Type.RawType
                     { kind = TypeKind.List
