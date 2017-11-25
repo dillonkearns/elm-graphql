@@ -1,15 +1,12 @@
 module GraphqElm.Field exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
+import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
 
 
 type RootQuery decodesTo
     = RootQuery (FieldDecoder decodesTo)
-
-
-type TypeLocked thing lockedTo
-    = TypeLocked thing
 
 
 rootQuery : FieldDecoder decodesTo -> RootQuery decodesTo

@@ -1,8 +1,9 @@
 module Schema.MenuItem exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
-import GraphqElm.Field as Field exposing (Field, FieldDecoder, TypeLocked(TypeLocked))
+import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
+import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 
 
 type Kind

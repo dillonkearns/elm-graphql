@@ -1,8 +1,8 @@
 module GraphqElm.Object exposing (..)
 
 import GraphqElm.Argument exposing (Argument)
-import GraphqElm.Field exposing (Field(Composite), FieldDecoder(FieldDecoder), TypeLocked(TypeLocked))
-import GraphqElm.TypeLock as TypeLock
+import GraphqElm.Field exposing (Field(Composite), FieldDecoder(FieldDecoder))
+import GraphqElm.TypeLock as TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
 
 

@@ -1,6 +1,8 @@
 module GraphqElm.TypeLock exposing (..)
 
-import GraphqElm.Field exposing (TypeLocked(TypeLocked))
+
+type TypeLocked thing lockedTo
+    = TypeLocked thing
 
 
 unlock : TypeLocked a lockedTo -> a
