@@ -32,20 +32,6 @@ listAt at (FieldDecoder field decoder) =
     FieldDecoder field (decoder |> Decode.list |> Decode.field at)
 
 
-with : FieldDecoder a -> FieldDecoder (a -> b) -> FieldDecoder b
-with (FieldDecoder fieldA decoderA) (FieldDecoder fieldB decoderB) =
-    let
-        combinedField =
-            case fieldB of
-                Composite fieldName args children ->
-                    Composite fieldName args (fieldA :: children)
-
-                Leaf fieldName args ->
-                    fieldB
-    in
-    FieldDecoder combinedField (Decode.map2 (|>) decoderA decoderB)
-
-
 fieldDecoderToQuery : RootQuery a -> String
 fieldDecoderToQuery (RootQuery (FieldDecoder field decoder)) =
     toQuery field
