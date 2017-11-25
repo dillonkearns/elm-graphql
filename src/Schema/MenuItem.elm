@@ -28,10 +28,8 @@ name =
 contains : String -> TypeLocked Argument Kind
 contains value =
     Argument.string "contains" value
-        |> TypeLocked
 
 
 idArg : String -> TypeLocked Argument Kind
 idArg value =
     Argument.string "id" value
-        |> TypeLocked

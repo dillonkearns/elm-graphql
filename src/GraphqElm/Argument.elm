@@ -1,5 +1,6 @@
 module GraphqElm.Argument exposing (Argument, int, string, toQueryString)
 
+import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import GraphqElm.Value as Value exposing (Value(..))
 
 
@@ -7,17 +8,18 @@ type Argument
     = Argument String Value
 
 
-argument : String -> Value -> Argument
+argument : String -> Value -> TypeLocked Argument lockedTo
 argument fieldName value =
     Argument fieldName value
+        |> TypeLocked
 
 
-string : String -> String -> Argument
+string : String -> String -> TypeLocked Argument lockedTo
 string fieldName value =
     argument fieldName (StringValue value)
 
 
-int : String -> Int -> Argument
+int : String -> Int -> TypeLocked Argument lockedTo
 int fieldName value =
     argument fieldName (IntValue value)
 

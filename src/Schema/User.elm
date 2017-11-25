@@ -1,8 +1,9 @@
 module Schema.User exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
-import GraphqElm.Field as Field exposing (Field, FieldDecoder, TypeLocked(TypeLocked))
+import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
+import GraphqElm.TypeLock exposing (TypeLocked)
 
 
 type Kind
@@ -27,10 +28,8 @@ name =
 contains : String -> TypeLocked Argument Kind
 contains value =
     Argument.string "contains" value
-        |> TypeLocked
 
 
 idArg : String -> TypeLocked Argument Kind
 idArg value =
     Argument.string "id" value
-        |> TypeLocked
