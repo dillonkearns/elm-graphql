@@ -1,5 +1,6 @@
 module GraphqElm.Parser.Type exposing (..)
 
+import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
 import Json.Decode as Decode exposing (Decoder)
 
@@ -15,17 +16,27 @@ decoder =
 
 
 type Type
-    = Type IsNullable ScalarPrimitive
+    = Type IsNullable Scalar
 
 
 parseRaw : RawType -> Type
 parseRaw (RawType { kind, name, ofType }) =
-    case name of
-        Just "String" ->
-            Type Nullable String
+    case ( kind, name ) of
+        ( Scalar, Just scalarName ) ->
+            Type Nullable (Scalar.parse scalarName)
 
-        Just "Boolean" ->
-            Type Nullable Boolean
+        ( NonNull, Nothing ) ->
+            case ofType of
+                Just (RawType actualOfType) ->
+                    case ( actualOfType.kind, actualOfType.name ) of
+                        ( Scalar, Just scalarName ) ->
+                            Type NonNullable (Scalar.parse scalarName)
+
+                        _ ->
+                            Debug.crash ("Expected scalar, got " ++ toString actualOfType)
+
+                Nothing ->
+                    Debug.crash "Invalid, no type to parse for non-null parent node."
 
         _ ->
             Debug.crash "TODO"
@@ -51,12 +62,3 @@ type RawType
         , name : Maybe String
         , ofType : Maybe RawType
         }
-
-
-type ScalarPrimitive
-    = Boolean
-    | ID
-    | String
-    | Int
-    | Float
-    | Custom { name : String }

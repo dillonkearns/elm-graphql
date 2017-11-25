@@ -1,6 +1,7 @@
 module TypeTests exposing (..)
 
 import Expect
+import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
 import GraphqElm.Parser.Type as Type
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
 import Json.Decode as Decode exposing (Decoder)
@@ -89,7 +90,7 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRaw
-                    |> Expect.equal (Type.Type Type.Nullable Type.String)
+                    |> Expect.equal (Type.Type Type.Nullable Scalar.String)
         , test "parse raw boolean" <|
             \() ->
                 Type.RawType
@@ -98,7 +99,23 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRaw
-                    |> Expect.equal (Type.Type Type.Nullable Type.Boolean)
+                    |> Expect.equal (Type.Type Type.Nullable Scalar.Boolean)
+        , test "parseRaw non-nullable string" <|
+            \() ->
+                Type.RawType
+                    { kind = NonNull
+                    , name = Nothing
+                    , ofType =
+                        Just
+                            (Type.RawType
+                                { kind = TypeKind.Scalar
+                                , name = Just "String"
+                                , ofType = Nothing
+                                }
+                            )
+                    }
+                    |> Type.parseRaw
+                    |> Expect.equal (Type.Type Type.NonNullable Scalar.String)
         ]
 
 
