@@ -40,4 +40,45 @@ all =
                                 }
                             )
                         )
+        , test "list of non-null strings" <|
+            \_ ->
+                """
+                              {
+                                "ofType": {
+                                  "ofType": {
+                                    "ofType": null,
+                                    "name": "String",
+                                    "kind": "SCALAR"
+                                  },
+                                  "name": null,
+                                  "kind": "NON_NULL"
+                                },
+                                "name": null,
+                                "kind": "LIST"
+                              }
+               """
+                    |> Decode.decodeString Type.decoder
+                    |> Expect.equal
+                        (Ok
+                            (Type.Type
+                                { kind = List
+                                , name = Nothing
+                                , ofType =
+                                    Just
+                                        (Type.Type
+                                            { kind = NonNull
+                                            , name = Nothing
+                                            , ofType =
+                                                Just
+                                                    (Type.Type
+                                                        { kind = TypeKind.Scalar
+                                                        , name = Just "String"
+                                                        , ofType = Nothing
+                                                        }
+                                                    )
+                                            }
+                                        )
+                                }
+                            )
+                        )
         ]
