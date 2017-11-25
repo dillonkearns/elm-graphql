@@ -53,7 +53,7 @@ all =
     describe "GraphqElm"
         [ test "generate menu query" <|
             \_ ->
-                Field.fieldDecoderToQuery menusQuery
+                Field.toQuery menusQuery
                     |> Expect.equal
                         """{
 menuItems {
@@ -62,7 +62,7 @@ name
 }"""
         , test "generate menu with id query" <|
             \_ ->
-                Field.fieldDecoderToQuery menusWithId
+                Field.toQuery menusWithId
                     |> Expect.equal
                         """{
 menuItems(contains: "Milkshake") {
@@ -109,7 +109,7 @@ name
                         (Ok [ { name = "Masala Chai" }, { name = "Vanilla Milkshake" }, { name = "Chocolate Milkshake" } ])
         , test "generate menuItem query" <|
             \_ ->
-                Field.fieldDecoderToQuery menuQuery
+                Field.toQuery menuQuery
                     |> Expect.equal
                         """{
 menuItem(id: "123") {
@@ -131,7 +131,7 @@ name
                         (Ok { name = "Masala Chai" })
         , test "generate captains query" <|
             \_ ->
-                Field.fieldDecoderToQuery Query.captains
+                Field.toQuery Query.captains
                     |> Expect.equal
                         """{
 captains
