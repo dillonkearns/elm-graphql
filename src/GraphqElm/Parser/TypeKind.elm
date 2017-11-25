@@ -6,12 +6,15 @@ import Json.Decode as Decode exposing (Decoder)
 type TypeKind
     = Scalar
     | Object
-    | Interface
-    | Union
-    | Enum
-    | InputObject
     | List
     | NonNull
+
+
+
+-- | Interface
+-- | Union
+-- | Enum
+-- | InputObject
 
 
 decoder : Decoder TypeKind
@@ -26,24 +29,23 @@ decoder =
                     "OBJECT" ->
                         Decode.succeed Object
 
-                    "INTERFACE" ->
-                        Decode.succeed Interface
-
-                    "UNION" ->
-                        Decode.succeed Union
-
-                    "ENUM" ->
-                        Decode.succeed Enum
-
-                    "INPUT_OBJECT" ->
-                        Decode.succeed InputObject
-
                     "LIST" ->
                         Decode.succeed List
 
                     "NON_NULL" ->
                         Decode.succeed NonNull
 
+                    -- "INTERFACE" ->
+                    --     Decode.succeed Interface
+                    --
+                    -- "UNION" ->
+                    --     Decode.succeed Union
+                    --
+                    -- "ENUM" ->
+                    --     Decode.succeed Enum
+                    --
+                    -- "INPUT_OBJECT" ->
+                    --     Decode.succeed InputObject
                     _ ->
                         Decode.fail "Invalid TypeKind"
             )

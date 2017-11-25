@@ -26,12 +26,12 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (Type.Type
+                            (Type.RawType
                                 { kind = NonNull
                                 , name = Nothing
                                 , ofType =
                                     Just
-                                        (Type.Type
+                                        (Type.RawType
                                             { kind = TypeKind.Scalar
                                             , name = Just "String"
                                             , ofType = Nothing
@@ -60,17 +60,17 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (Type.Type
+                            (Type.RawType
                                 { kind = List
                                 , name = Nothing
                                 , ofType =
                                     Just
-                                        (Type.Type
+                                        (Type.RawType
                                             { kind = NonNull
                                             , name = Nothing
                                             , ofType =
                                                 Just
-                                                    (Type.Type
+                                                    (Type.RawType
                                                         { kind = TypeKind.Scalar
                                                         , name = Just "String"
                                                         , ofType = Nothing
@@ -82,3 +82,7 @@ all =
                             )
                         )
         ]
+
+
+
+-- Type ListType NonNullable (Type NonNullable StringType)
