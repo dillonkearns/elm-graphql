@@ -1,10 +1,13 @@
 module Main exposing (..)
 
+import Api.Query
+import GraphqElm.Http
 import Html
+import Http
 
 
 type Msg
-    = NoOp
+    = GotResponse (Result Http.Error String)
 
 
 type alias Model =
@@ -13,12 +16,18 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( 123, Cmd.none )
+    ( 123, GraphqElm.Http.request "http://localhost:4000/api" Api.Query.me |> Http.send GotResponse )
 
 
-update : a -> b -> ( b, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        GotResponse response ->
+            let
+                _ =
+                    Debug.log "got response" response
+            in
+            ( model, Cmd.none )
 
 
 main : Program Never Model Msg
@@ -33,4 +42,4 @@ main =
 
 view : Model -> Html.Html Msg
 view model =
-    Html.text "Hi!"
+    Html.text "Hi!!!!"
