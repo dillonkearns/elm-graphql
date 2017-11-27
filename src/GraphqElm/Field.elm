@@ -9,16 +9,6 @@ type Query decodesTo
     = Query (List Field) (Decoder decodesTo)
 
 
-combine : (decodesToA -> decodesToB -> decodesToC) -> Query decodesToA -> Query decodesToB -> Query decodesToC
-combine combineFunction (Query fieldsA decoderA) (Query fieldsB decoderB) =
-    Query (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
-
-
-rootQuery : FieldDecoder decodesTo -> Query decodesTo
-rootQuery (FieldDecoder field decoder) =
-    Query [ field ] (decoder |> Decode.field "data")
-
-
 type FieldDecoder decodesTo
     = FieldDecoder Field (Decoder decodesTo)
 

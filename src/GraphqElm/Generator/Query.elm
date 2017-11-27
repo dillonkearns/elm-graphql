@@ -11,7 +11,7 @@ generate { name, typeOf } =
         """{1} : Field.Query ({2})
 {1} =
     Field.custom "{1}" ({3})
-        |> Field.rootQuery
+        |> Query.rootQuery
 """
         ( name, generateType typeOf, generateDecoder typeOf )
 

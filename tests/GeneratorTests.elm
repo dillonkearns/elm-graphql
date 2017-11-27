@@ -18,7 +18,7 @@ all =
                         """me : Field.Query (String)
 me =
     Field.custom "me" (Decode.string)
-        |> Field.rootQuery
+        |> Query.rootQuery
 """
         , test "list" <|
             \() ->
@@ -28,6 +28,6 @@ me =
                         """captains : Field.Query (List String)
 captains =
     Field.custom "captains" (Decode.string |> Decode.list)
-        |> Field.rootQuery
+        |> Query.rootQuery
 """
         ]

@@ -3,6 +3,7 @@ module QueryCombineTests exposing (..)
 import Expect
 import GraphqElm.Field as Field exposing (FieldDecoder, Query)
 import GraphqElm.Object as Object exposing (Object)
+import GraphqElm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 import Schema.MenuItem as MenuItem
 import Schema.Query as Query
@@ -27,7 +28,7 @@ menusQuery =
 
 combinedQueries : Query ( List String, List MenuItem )
 combinedQueries =
-    Field.combine (,) Query.captains menusQuery
+    Query.combine (,) Query.captains menusQuery
 
 
 all : Test
