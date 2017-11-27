@@ -1,7 +1,7 @@
-module RootQueryCombineTests exposing (..)
+module QueryCombineTests exposing (..)
 
 import Expect
-import GraphqElm.Field as Field exposing (FieldDecoder, RootQuery)
+import GraphqElm.Field as Field exposing (FieldDecoder, Query)
 import GraphqElm.Object as Object exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 import Schema.MenuItem as MenuItem
@@ -19,13 +19,13 @@ menuItem =
         |> Object.with MenuItem.name
 
 
-menusQuery : RootQuery (List MenuItem)
+menusQuery : Query (List MenuItem)
 menusQuery =
     menuItem
         |> Query.menuItems []
 
 
-combinedQueries : RootQuery ( List String, List MenuItem )
+combinedQueries : Query ( List String, List MenuItem )
 combinedQueries =
     Field.combine (,) Query.captains menusQuery
 

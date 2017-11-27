@@ -18,7 +18,7 @@ type Request decodesTo
         }
 
 
-request : String -> Field.RootQuery decodesTo -> Request decodesTo
+request : String -> Field.Query decodesTo -> Request decodesTo
 request url query =
     { method = "POST"
     , headers = []

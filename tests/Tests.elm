@@ -1,7 +1,7 @@
 module Tests exposing (..)
 
 import Expect
-import GraphqElm.Field as Field exposing (FieldDecoder, RootQuery)
+import GraphqElm.Field as Field exposing (FieldDecoder, Query)
 import GraphqElm.Object as Object exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 import Schema.MenuItem as MenuItem
@@ -17,7 +17,7 @@ type alias MenuItemWithId =
     { name : String, id : String }
 
 
-menusWithId : RootQuery (List MenuItemWithId)
+menusWithId : Query (List MenuItemWithId)
 menusWithId =
     menuItemWithId
         |> Query.menuItems [ MenuItem.contains "Milkshake" ]
@@ -36,13 +36,13 @@ menuItemWithId =
         |> Object.with MenuItem.id
 
 
-menusQuery : RootQuery (List MenuItem)
+menusQuery : Query (List MenuItem)
 menusQuery =
     menuItem
         |> Query.menuItems []
 
 
-menuQuery : RootQuery MenuItem
+menuQuery : Query MenuItem
 menuQuery =
     menuItem
         |> Query.menuItem { id = "123" } []

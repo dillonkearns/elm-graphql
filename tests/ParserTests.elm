@@ -20,7 +20,7 @@ all =
                       "types": [
                         {
                           "possibleTypes": null,
-                          "name": "RootQueryType",
+                          "name": "QueryType",
                           "kind": "OBJECT",
                           "interfaces": [],
                           "inputFields": null,

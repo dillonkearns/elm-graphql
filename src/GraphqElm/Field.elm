@@ -5,18 +5,18 @@ import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
 
 
-type RootQuery decodesTo
-    = RootQuery (List Field) (Decoder decodesTo)
+type Query decodesTo
+    = Query (List Field) (Decoder decodesTo)
 
 
-combine : (decodesToA -> decodesToB -> decodesToC) -> RootQuery decodesToA -> RootQuery decodesToB -> RootQuery decodesToC
-combine combineFunction (RootQuery fieldsA decoderA) (RootQuery fieldsB decoderB) =
-    RootQuery (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
+combine : (decodesToA -> decodesToB -> decodesToC) -> Query decodesToA -> Query decodesToB -> Query decodesToC
+combine combineFunction (Query fieldsA decoderA) (Query fieldsB decoderB) =
+    Query (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
 
 
-rootQuery : FieldDecoder decodesTo -> RootQuery decodesTo
+rootQuery : FieldDecoder decodesTo -> Query decodesTo
 rootQuery (FieldDecoder field decoder) =
-    RootQuery [ field ] (decoder |> Decode.field "data")
+    Query [ field ] (decoder |> Decode.field "data")
 
 
 type FieldDecoder decodesTo
@@ -28,8 +28,8 @@ type Field
     | Leaf String (List Argument)
 
 
-decoder : RootQuery decodesTo -> Decoder decodesTo
-decoder (RootQuery fields decoder) =
+decoder : Query decodesTo -> Decoder decodesTo
+decoder (Query fields decoder) =
     decoder
 
 
@@ -38,8 +38,8 @@ listAt at (FieldDecoder field decoder) =
     FieldDecoder field (decoder |> Decode.list |> Decode.field at)
 
 
-toQuery : RootQuery a -> String
-toQuery (RootQuery fields decoder) =
+toQuery : Query a -> String
+toQuery (Query fields decoder) =
     "{\n"
         ++ (List.map fieldDecoderToQuery fields |> String.join "\n")
         ++ "\n}"

@@ -15,7 +15,7 @@ all =
                 { name = "me", typeOf = Type.Scalar Type.NonNullable Scalar.String }
                     |> GraphqElm.Generator.Query.generate
                     |> Expect.equal
-                        """me : Field.RootQuery (String)
+                        """me : Field.Query (String)
 me =
     Field.custom "me" (Decode.string)
         |> Field.rootQuery
@@ -25,7 +25,7 @@ me =
                 { name = "captains", typeOf = Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String) }
                     |> GraphqElm.Generator.Query.generate
                     |> Expect.equal
-                        """captains : Field.RootQuery (List String)
+                        """captains : Field.Query (List String)
 captains =
     Field.custom "captains" (Decode.string |> Decode.list)
         |> Field.rootQuery

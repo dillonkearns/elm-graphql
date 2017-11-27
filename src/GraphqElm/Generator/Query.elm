@@ -8,7 +8,7 @@ import String.Format
 generate : { name : String, typeOf : Type } -> String
 generate { name, typeOf } =
     String.Format.format3
-        """{1} : Field.RootQuery ({2})
+        """{1} : Field.Query ({2})
 {1} =
     Field.custom "{1}" ({3})
         |> Field.rootQuery
