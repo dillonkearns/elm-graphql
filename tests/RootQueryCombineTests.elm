@@ -15,7 +15,7 @@ type alias MenuItem =
 
 menuItem : Object MenuItem MenuItem.Type
 menuItem =
-    MenuItem.menuItem MenuItem
+    MenuItem.build MenuItem
         |> Object.with MenuItem.name
 
 

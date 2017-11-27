@@ -11,8 +11,8 @@ type Type
     = Type
 
 
-user : (a -> constructor) -> Object (a -> constructor) Type
-user constructor =
+build : (a -> constructor) -> Object (a -> constructor) Type
+build constructor =
     Object.object constructor
 
 

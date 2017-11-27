@@ -11,8 +11,8 @@ type Type
     = Type
 
 
-menuItem : (a -> constructor) -> Object (a -> constructor) Type
-menuItem constructor =
+build : (a -> constructor) -> Object (a -> constructor) Type
+build constructor =
     Object.object constructor
 
 
