@@ -18,11 +18,17 @@ type alias DecodesTo =
     List String
 
 
+makeRequest : Cmd Msg
+makeRequest =
+    Api.Query.captains
+        |> GraphqElm.Http.request "http://localhost:4000/api"
+        |> GraphqElm.Http.sendRemoteData GotResponse
+
+
 init : ( Model, Cmd Msg )
 init =
     ( RemoteData.Loading
-    , GraphqElm.Http.request "http://localhost:4000/api" Api.Query.captains
-        |> GraphqElm.Http.sendRemoteData GotResponse
+    , makeRequest
     )
 
 
