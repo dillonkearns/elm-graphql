@@ -54,11 +54,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 generate : { name : String, typeOf : Type } -> String
 generate { name, typeOf } =
-    String.Format.format3 """{1} : Field.RootQuery ({2})
+    String.Format.format3
+        """{1} : Field.RootQuery ({2})
 {1} =
     Field.custom "{1}" ({3})
         |> Field.rootQuery
-""" ( name, generateType typeOf, generateDecoder typeOf )
+"""
+        ( name, generateType typeOf, generateDecoder typeOf )
 
 
 generateDecoder : Type -> String
@@ -85,28 +87,3 @@ generateType typeOf =
 
         Type.List isNullable type_ ->
             "List String"
-
-
-
--- generate : { name : String, typeOf : Type } -> String
--- generate { name, typeOf } =
---     let
---         decoder =
---             "Decode.string"
---
---         decodesTo =
---             "String"
---     in
---     name
---         ++ " : Field.RootQuery "
---         ++ decodesTo
---         ++ "\n"
---         ++ name
---         ++ """ =
---     Field.custom """
---         ++ "\""
---         ++ name
---         ++ "\" "
---         ++ decoder
---         ++ "\n        |> Field.rootQuery\n"
---
