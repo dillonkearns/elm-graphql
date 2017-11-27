@@ -1,7 +1,8 @@
 port module Main exposing (..)
 
 import GraphqElm.Generator.Module
-import GraphqElm.Parser
+import GraphqElm.Parser exposing (Field)
+import Http
 import Json.Decode exposing (..)
 
 
@@ -19,35 +20,44 @@ type alias Model =
 
 
 type alias Flags =
-    { graphqlUrl : String }
+    { data : Json.Decode.Value }
 
 
-fields : List GraphqElm.Parser.Field
-fields =
-    Json.Decode.decodeString GraphqElm.Parser.decoder schemaJsonString
-        |> Result.withDefault []
+type Msg
+    = GotSchema (Result.Result Http.Error String)
 
 
-
--- queryFile : String
-
-
-queryFile : String
-queryFile =
+queryFile : List Field -> String
+queryFile fields =
     GraphqElm.Generator.Module.generate fields
 
 
-init : Flags -> ( Model, Cmd msg )
+init : Flags -> ( Model, Cmd Msg )
 init flags =
-    () ! [ generatedFiles queryFile ]
+    let
+        fieldsResult =
+            Json.Decode.decodeValue GraphqElm.Parser.decoderAt3 flags.data
+    in
+    case fieldsResult of
+        Ok fields ->
+            ( (), generatedFiles (queryFile fields) )
+
+        Err error ->
+            Debug.crash ("Got error " ++ toString error)
 
 
-update : msg -> Model -> ( Model, Cmd msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        GotSchema response ->
+            let
+                _ =
+                    Debug.log "response" response
+            in
+            ( model, Cmd.none )
 
 
-main : Program Flags Model msg
+main : Program Flags Model Msg
 main =
     Platform.programWithFlags
         { init = init
@@ -60,65 +70,3 @@ port generatedFiles : String -> Cmd msg
 
 
 port parsingError : String -> Cmd msg
-
-
-schemaJsonString : String
-schemaJsonString =
-    """
-    {
-  "data": {
-    "__schema": {
-      "types": [
-        {
-          "possibleTypes": null,
-          "name": "RootQueryType",
-          "kind": "OBJECT",
-          "interfaces": [],
-          "inputFields": null,
-          "fields": [
-            {
-              "type": {
-                "ofType": {
-                  "ofType": {
-                    "ofType": null,
-                    "name": "String",
-                    "kind": "SCALAR"
-                  },
-                  "name": null,
-                  "kind": "NON_NULL"
-                },
-                "name": null,
-                "kind": "LIST"
-              },
-              "name": "captains",
-              "isDeprecated": false,
-              "description": null,
-              "deprecationReason": null,
-              "args": []
-            },
-            {
-              "type": {
-                "ofType": {
-                  "ofType": null,
-                  "name": "String",
-                  "kind": "SCALAR"
-                },
-                "name": null,
-                "kind": "NON_NULL"
-              },
-              "name": "me",
-              "isDeprecated": false,
-              "description": null,
-              "deprecationReason": null,
-              "args": []
-            }
-          ],
-          "enumValues": null,
-          "description": null
-        }
-      ]
-    }
-  }
-}
-
-    """

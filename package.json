@@ -10,6 +10,7 @@
     "@types/minimist": "^1.2.0",
     "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.19",
+    "@types/request": "^2.0.8",
     "@types/webpack": "^3.8.1",
     "elm": "^0.18.0",
     "elm-hot-loader": "0.5.4",
@@ -21,6 +22,7 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "request": "^2.83.0"
   }
 }

@@ -21,7 +21,7 @@ type Type
 
 
 parseRaw : RawType -> Type
-parseRaw (RawType { kind, name, ofType }) =
+parseRaw ((RawType { kind, name, ofType }) as rawType) =
     case ( kind, name ) of
         ( TypeKind.Scalar, Just scalarName ) ->
             Scalar Nullable (Scalar.parse scalarName)
@@ -32,9 +32,16 @@ parseRaw (RawType { kind, name, ofType }) =
                     parseCompositeType compositeNodeType actualOfType
 
                 Nothing ->
-                    "Invalid type, no child type to parse for composite parent node "
-                        ++ toString compositeNodeType
-                        |> Debug.crash
+                    -- TODO temp to avoid errors
+                    Scalar Nullable Scalar.String
+
+
+
+-- "Invalid type, no child type to parse for composite parent node "
+--     ++ toString compositeNodeType
+--     ++ "\n at:\n"
+--     ++ toString rawType
+--     |> Debug.crash
 
 
 parseCompositeType : TypeKind -> RawType -> Type
