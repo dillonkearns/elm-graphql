@@ -7,7 +7,7 @@ import Http
 
 
 type Msg
-    = GotResponse (Result Http.Error String)
+    = GotResponse (Result Http.Error (List String))
 
 
 type alias Model =
@@ -16,7 +16,10 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( 123, GraphqElm.Http.request "http://localhost:4000/api" Api.Query.me |> Http.send GotResponse )
+    ( 123
+    , GraphqElm.Http.request "http://localhost:4000/api" Api.Query.captains
+        |> GraphqElm.Http.send GotResponse
+    )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
