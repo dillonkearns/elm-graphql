@@ -1,4 +1,4 @@
-module GraphqElm.Parser exposing (decoder)
+module GraphqElm.Parser exposing (Field, decoder)
 
 import GraphqElm.Parser.Type as Type exposing (Type)
 import Json.Decode as Decode exposing (Decoder)

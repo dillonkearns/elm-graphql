@@ -6,7 +6,7 @@ import GraphqElm.Parser.Type as Type exposing (Type)
 
 prepend : String
 prepend =
-    """module Schema.Query exposing (..)
+    """module Api.Query exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
