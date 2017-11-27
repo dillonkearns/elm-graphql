@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Api.Query
+import GraphqElm.Field
 import GraphqElm.Http
 import Html
 import RemoteData exposing (WebData)
@@ -15,12 +16,12 @@ type alias Model =
 
 
 type alias DecodesTo =
-    List String
+    ( String, List String )
 
 
 makeRequest : Cmd Msg
 makeRequest =
-    Api.Query.captains
+    GraphqElm.Field.combine (,) Api.Query.me Api.Query.captains
         |> GraphqElm.Http.request "http://localhost:4000/api"
         |> GraphqElm.Http.sendRemoteData GotResponse
 
