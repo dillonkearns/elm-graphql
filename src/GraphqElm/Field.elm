@@ -74,13 +74,3 @@ custom : String -> Decoder decodesTo -> FieldDecoder decodesTo
 custom fieldName decoder =
     FieldDecoder (Leaf fieldName [])
         (decoder |> Decode.field fieldName)
-
-
-string : String -> TypeLocked (FieldDecoder String) lockedTo
-string fieldName =
-    fieldDecoder fieldName Decode.string
-
-
-int : String -> TypeLocked (FieldDecoder Int) lockedTo
-int fieldName =
-    fieldDecoder fieldName Decode.int

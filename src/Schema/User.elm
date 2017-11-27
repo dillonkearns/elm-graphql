@@ -4,6 +4,7 @@ import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.TypeLock exposing (TypeLocked)
+import Json.Decode as Decode
 
 
 type Type
@@ -17,12 +18,12 @@ user constructor =
 
 id : TypeLocked (FieldDecoder String) Type
 id =
-    Field.string "id"
+    Field.fieldDecoder "id" Decode.string
 
 
 name : TypeLocked (FieldDecoder String) Type
 name =
-    Field.string "name"
+    Field.fieldDecoder "name" Decode.string
 
 
 contains : String -> TypeLocked Argument Type
