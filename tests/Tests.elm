@@ -150,14 +150,3 @@ captains
                     |> Expect.equal
                         (Ok [ "Kirk", "Picard" ])
         ]
-
-
-
--- menusDecoder : Decoder (List MenuItem)
--- menusDecoder =
---     Decode.at [ "data", "menuItems" ]
---         (Decode.list
---             (Decode.map MenuItem
---                 (Decode.field "name" Decode.string)
---             )
---         )
