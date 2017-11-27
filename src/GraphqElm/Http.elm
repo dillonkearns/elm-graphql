@@ -1,7 +1,8 @@
-module GraphqElm.Http exposing (request, send, withHeader, withTimeout)
+module GraphqElm.Http exposing (request, send, sendRemoteData, withHeader, withTimeout)
 
 import GraphqElm.Field as Field
 import Http
+import RemoteData exposing (WebData)
 import Time exposing (Time)
 
 
@@ -37,6 +38,14 @@ send resultToMessage (Request request) =
     request
         |> Http.request
         |> Http.send resultToMessage
+
+
+sendRemoteData : (WebData decodesTo -> msg) -> Request decodesTo -> Cmd msg
+sendRemoteData resultToMsg (Request request) =
+    request
+        |> Http.request
+        |> RemoteData.sendRequest
+        |> Cmd.map resultToMsg
 
 
 withHeader : String -> String -> Request decodesTo -> Request decodesTo

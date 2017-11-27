@@ -3,22 +3,26 @@ module Main exposing (..)
 import Api.Query
 import GraphqElm.Http
 import Html
-import Http
+import RemoteData exposing (WebData)
 
 
 type Msg
-    = GotResponse (Result Http.Error (List String))
+    = GotResponse Model
 
 
 type alias Model =
-    Int
+    WebData DecodesTo
+
+
+type alias DecodesTo =
+    List String
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( 123
+    ( RemoteData.Loading
     , GraphqElm.Http.request "http://localhost:4000/api" Api.Query.captains
-        |> GraphqElm.Http.send GotResponse
+        |> GraphqElm.Http.sendRemoteData GotResponse
     )
 
 
@@ -26,11 +30,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotResponse response ->
-            let
-                _ =
-                    Debug.log "got response" response
-            in
-            ( model, Cmd.none )
+            ( response, Cmd.none )
 
 
 main : Program Never Model Msg
@@ -45,4 +45,4 @@ main =
 
 view : Model -> Html.Html Msg
 view model =
-    Html.text "Hi!!!!"
+    Html.text (toString model)
