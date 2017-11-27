@@ -1,9 +1,9 @@
 module GeneratorTests exposing (all)
 
 import Expect
+import GraphqElm.Generator.Query
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
 import GraphqElm.Parser.Type as Type exposing (Type)
-import String.Format
 import Test exposing (..)
 
 
@@ -13,7 +13,7 @@ all =
         [ test "simple string" <|
             \() ->
                 { name = "me", typeOf = Type.Scalar Type.NonNullable Scalar.String }
-                    |> thing
+                    |> GraphqElm.Generator.Query.generate
                     |> Expect.equal
                         """me : Field.RootQuery (String)
 me =
@@ -23,7 +23,7 @@ me =
         , test "list" <|
             \() ->
                 { name = "captains", typeOf = Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String) }
-                    |> thing
+                    |> GraphqElm.Generator.Query.generate
                     |> Expect.equal
                         """captains : Field.RootQuery (List String)
 captains =
@@ -31,11 +31,6 @@ captains =
         |> Field.rootQuery
 """
         ]
-
-
-thing : { name : String, typeOf : Type } -> String
-thing something =
-    generate something
 
 
 prepend : String
@@ -50,40 +45,3 @@ import Json.Decode as Decode exposing (Decoder)
 
 
 """
-
-
-generate : { name : String, typeOf : Type } -> String
-generate { name, typeOf } =
-    String.Format.format3
-        """{1} : Field.RootQuery ({2})
-{1} =
-    Field.custom "{1}" ({3})
-        |> Field.rootQuery
-"""
-        ( name, generateType typeOf, generateDecoder typeOf )
-
-
-generateDecoder : Type -> String
-generateDecoder typeOf =
-    case typeOf of
-        Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String) ->
-            "Decode.string |> Decode.list"
-
-        Type.Scalar isNullable scalar ->
-            "Decode.string"
-
-        Type.List isNullable type_ ->
-            "Decode.string |> Decode.list"
-
-
-generateType : Type -> String
-generateType typeOf =
-    case typeOf of
-        Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String) ->
-            "List String"
-
-        Type.Scalar isNullable scalar ->
-            "String"
-
-        Type.List isNullable type_ ->
-            "List String"
