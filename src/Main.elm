@@ -1,5 +1,6 @@
 port module Main exposing (..)
 
+import GraphqElm.Generator.Group
 import GraphqElm.Generator.Module
 import GraphqElm.Parser exposing (Field)
 import Http
@@ -27,16 +28,16 @@ type Msg
     = GotSchema (Result.Result Http.Error String)
 
 
-queryFile : List Field -> String
+queryFile : GraphqElm.Generator.Group.Group -> String
 queryFile fields =
-    GraphqElm.Generator.Module.generate fields
+    GraphqElm.Generator.Module.generateNew fields
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
     let
         fieldsResult =
-            Json.Decode.decodeValue GraphqElm.Parser.decoderAt3 flags.data
+            Json.Decode.decodeValue GraphqElm.Parser.decoderNew flags.data
     in
     case fieldsResult of
         Ok fields ->

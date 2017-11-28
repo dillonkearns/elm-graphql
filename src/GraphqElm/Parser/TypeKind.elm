@@ -8,6 +8,7 @@ type TypeKind
     | Object
     | List
     | NonNull
+    | Ignore
 
 
 
@@ -35,17 +36,19 @@ decoder =
                     "NON_NULL" ->
                         Decode.succeed NonNull
 
-                    -- "INTERFACE" ->
-                    --     Decode.succeed Interface
-                    --
-                    -- "UNION" ->
-                    --     Decode.succeed Union
-                    --
-                    -- "ENUM" ->
-                    --     Decode.succeed Enum
-                    --
-                    -- "INPUT_OBJECT" ->
-                    --     Decode.succeed InputObject
                     _ ->
-                        Decode.fail "Invalid TypeKind"
+                        Decode.succeed Ignore
+             -- "INTERFACE" ->
+             --     Decode.succeed Interface
+             --
+             -- "UNION" ->
+             --     Decode.succeed Union
+             --
+             -- "ENUM" ->
+             --     Decode.succeed Enum
+             --
+             -- "INPUT_OBJECT" ->
+             --     Decode.succeed InputObject
+             -- _ ->
+             --     Decode.fail ("Invalid TypeKind " ++ string)
             )

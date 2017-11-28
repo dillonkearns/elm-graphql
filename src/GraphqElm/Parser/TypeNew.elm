@@ -92,6 +92,11 @@ parse (RawTypeDef rawType) =
         TypeKind.NonNull ->
             Debug.crash "TODO"
 
+        TypeKind.Ignore ->
+            TypeDefinition
+                "Ignore"
+                (ScalarType "Ignore")
+
 
 parseRef : RawTypeRef -> TypeReference
 parseRef (RawTypeRef rawTypeRef) =
@@ -115,7 +120,7 @@ parseRef (RawTypeRef rawTypeRef) =
                 Nullable
 
         TypeKind.Object ->
-            Debug.crash "TODO"
+            TypeReference (Scalar Scalar.Boolean) Nullable
 
         TypeKind.NonNull ->
             case rawTypeRef.ofType of
@@ -138,8 +143,19 @@ parseRef (RawTypeRef rawTypeRef) =
                         ( _, Maybe.Nothing ) ->
                             Debug.crash "TODO d"
 
+                        ( TypeKind.Ignore, Maybe.Just _ ) ->
+                            ignoreRef
+
                 Nothing ->
                     Debug.crash "TODO"
+
+        TypeKind.Ignore ->
+            ignoreRef
+
+
+ignoreRef : TypeReference
+ignoreRef =
+    TypeReference (Scalar (Scalar.Custom { name = "Ignore" })) NonNullable
 
 
 createType : String -> TypeKind -> Maybe RawTypeRef -> Maybe (List RawField) -> RawTypeDef

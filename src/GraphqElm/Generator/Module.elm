@@ -1,5 +1,6 @@
 module GraphqElm.Generator.Module exposing (..)
 
+import GraphqElm.Generator.Group
 import GraphqElm.Generator.Query as Query
 import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
 
@@ -17,6 +18,12 @@ import Json.Decode as Decode exposing (Decoder)
 
 
 """
+
+
+generateNew : GraphqElm.Generator.Group.Group -> String
+generateNew group =
+    prepend
+        ++ (List.map Query.generateNew group.queries |> String.join "\n\n")
 
 
 generate : List { name : String, typeOf : TypeDefinition } -> String

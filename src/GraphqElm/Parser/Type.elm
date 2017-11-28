@@ -74,7 +74,7 @@ parseCompositeType typeKind (RawType actualOfType) =
         TypeKind.Scalar ->
             Debug.crash "Not expecting scalar."
 
-        TypeKind.Object ->
+        _ ->
             Debug.crash "Unhandled"
 
 
