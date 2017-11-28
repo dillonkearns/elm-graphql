@@ -3,8 +3,25 @@ module GeneratorTests exposing (all)
 import Expect
 import GraphqElm.Generator.Query
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
+import GraphqElm.Parser.TypeNew as TypeNew exposing (TypeDefinition)
 import Test exposing (..)
+
+
+captainsRef : TypeNew.Field
+captainsRef =
+    { name = "captains"
+    , typeRef =
+        TypeNew.TypeReference
+            (TypeNew.List
+                (TypeNew.TypeReference (TypeNew.Scalar Scalar.String) TypeNew.NonNullable)
+            )
+            TypeNew.Nullable
+    }
+
+
+meRef : TypeNew.Field
+meRef =
+    { name = "me", typeRef = TypeNew.TypeReference (TypeNew.Scalar Scalar.String) TypeNew.NonNullable }
 
 
 all : Test
@@ -12,8 +29,8 @@ all =
     describe "generator"
         [ test "simple string" <|
             \() ->
-                { name = "me", typeOf = Type.Scalar Type.NonNullable Scalar.String }
-                    |> GraphqElm.Generator.Query.generate
+                meRef
+                    |> GraphqElm.Generator.Query.generateNew
                     |> Expect.equal
                         """me : Field.Query (String)
 me =
@@ -22,8 +39,8 @@ me =
 """
         , test "list" <|
             \() ->
-                { name = "captains", typeOf = Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String) }
-                    |> GraphqElm.Generator.Query.generate
+                captainsRef
+                    |> GraphqElm.Generator.Query.generateNew
                     |> Expect.equal
                         """captains : Field.Query (List String)
 captains =
