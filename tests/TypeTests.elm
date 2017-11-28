@@ -2,8 +2,8 @@ module TypeTests exposing (..)
 
 import Expect
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
+import GraphqElm.Parser.TypeNew as Type exposing (RawTypeRef(RawTypeRef))
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 
@@ -24,20 +24,13 @@ all =
                   "kind": "NON_NULL"
                 }
                """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString Type.typeRefDecoder
                     |> Expect.equal
                         (Ok
-                            (Type.RawType
-                                { kind = NonNull
-                                , name = Nothing
-                                , ofType =
-                                    Just
-                                        (Type.RawType
-                                            { kind = TypeKind.Scalar
-                                            , name = Just "String"
-                                            , ofType = Nothing
-                                            }
-                                        )
+                            (RawTypeRef
+                                { name = Nothing
+                                , kind = NonNull
+                                , ofType = Just (RawTypeRef { name = Just "String", kind = Scalar, ofType = Nothing })
                                 }
                             )
                         )
@@ -58,22 +51,22 @@ all =
                                 "kind": "LIST"
                               }
                """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString Type.typeRefDecoder
                     |> Expect.equal
                         (Ok
-                            (Type.RawType
-                                { kind = List
-                                , name = Nothing
+                            (RawTypeRef
+                                { name = Nothing
+                                , kind = List
                                 , ofType =
                                     Just
-                                        (Type.RawType
-                                            { kind = NonNull
-                                            , name = Nothing
+                                        (RawTypeRef
+                                            { name = Nothing
+                                            , kind = NonNull
                                             , ofType =
                                                 Just
-                                                    (Type.RawType
-                                                        { kind = TypeKind.Scalar
-                                                        , name = Just "String"
+                                                    (RawTypeRef
+                                                        { name = Just "String"
+                                                        , kind = Scalar
                                                         , ofType = Nothing
                                                         }
                                                     )
@@ -84,77 +77,77 @@ all =
                         )
         , test "parseRaw string" <|
             \() ->
-                Type.RawType
-                    { kind = TypeKind.Scalar
-                    , name = Just "String"
+                RawTypeRef
+                    { name = Just "String"
+                    , kind = Scalar
                     , ofType = Nothing
                     }
-                    |> Type.parseRaw
-                    |> Expect.equal (Type.Scalar Type.Nullable Scalar.String)
+                    |> Type.parseRef
+                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable)
         , test "parse raw boolean" <|
             \() ->
-                Type.RawType
-                    { kind = TypeKind.Scalar
-                    , name = Just "Boolean"
+                RawTypeRef
+                    { name = Just "Boolean"
+                    , kind = Scalar
                     , ofType = Nothing
                     }
-                    |> Type.parseRaw
-                    |> Expect.equal (Type.Scalar Type.Nullable Scalar.Boolean)
+                    |> Type.parseRef
+                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.Boolean) Type.Nullable)
         , test "parseRaw non-nullable string" <|
             \() ->
-                Type.RawType
-                    { kind = NonNull
-                    , name = Nothing
+                RawTypeRef
+                    { name = Nothing
+                    , kind = NonNull
                     , ofType =
                         Just
-                            (Type.RawType
-                                { kind = TypeKind.Scalar
-                                , name = Just "String"
+                            (RawTypeRef
+                                { name = Just "String"
+                                , kind = Scalar
                                 , ofType = Nothing
                                 }
                             )
                     }
-                    |> Type.parseRaw
-                    |> Expect.equal (Type.Scalar Type.NonNullable Scalar.String)
+                    |> Type.parseRef
+                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable)
         , test "parse list of strings" <|
             \() ->
-                Type.RawType
-                    { kind = TypeKind.List
-                    , name = Nothing
+                RawTypeRef
+                    { name = Nothing
+                    , kind = List
                     , ofType =
                         Just
-                            (Type.RawType
-                                { kind = TypeKind.Scalar
-                                , name = Just "String"
+                            (RawTypeRef
+                                { name = Just "String"
+                                , kind = Scalar
                                 , ofType = Nothing
                                 }
                             )
                     }
-                    |> Type.parseRaw
+                    |> Type.parseRef
                     |> Expect.equal
-                        (Type.List Type.Nullable
-                            (Type.Scalar Type.Nullable Scalar.String)
+                        (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable))
+                            Type.Nullable
                         )
         , test "parse non-null list of non-null strings" <|
             \() ->
-                Type.RawType
-                    { kind = TypeKind.NonNull
-                    , name = Nothing
+                RawTypeRef
+                    { name = Nothing
+                    , kind = NonNull
                     , ofType =
                         Just
-                            (Type.RawType
-                                { kind = TypeKind.List
-                                , name = Nothing
+                            (RawTypeRef
+                                { name = Nothing
+                                , kind = List
                                 , ofType =
                                     Just
-                                        (Type.RawType
-                                            { kind = TypeKind.NonNull
-                                            , name = Nothing
+                                        (RawTypeRef
+                                            { name = Nothing
+                                            , kind = NonNull
                                             , ofType =
                                                 Just
-                                                    (Type.RawType
-                                                        { kind = TypeKind.Scalar
-                                                        , name = Just "String"
+                                                    (RawTypeRef
+                                                        { name = Just "String"
+                                                        , kind = Scalar
                                                         , ofType = Nothing
                                                         }
                                                     )
@@ -163,9 +156,9 @@ all =
                                 }
                             )
                     }
-                    |> Type.parseRaw
+                    |> Type.parseRef
                     |> Expect.equal
-                        (Type.List Type.NonNullable
-                            (Type.Scalar Type.NonNullable Scalar.String)
+                        (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
+                            Type.NonNullable
                         )
         ]

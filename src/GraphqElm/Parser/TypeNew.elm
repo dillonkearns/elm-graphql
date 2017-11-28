@@ -135,7 +135,12 @@ parseRef (RawTypeRef rawTypeRef) =
                             Debug.crash "TODO a"
 
                         ( TypeKind.List, _ ) ->
-                            Debug.crash "TODO b"
+                            case actualOfType.ofType of
+                                Just nestedOfType ->
+                                    TypeReference (List (parseRef nestedOfType)) NonNullable
+
+                                Nothing ->
+                                    Debug.crash ""
 
                         ( TypeKind.NonNull, _ ) ->
                             Debug.crash "TODO c"
