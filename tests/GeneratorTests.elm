@@ -3,7 +3,7 @@ module GeneratorTests exposing (all)
 import Expect
 import GraphqElm.Generator.Query
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (Type)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
 import Test exposing (..)
 
 

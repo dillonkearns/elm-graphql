@@ -1,11 +1,11 @@
 module GraphqElm.Parser exposing (Field, decoder, decoderAt3)
 
-import GraphqElm.Parser.Type as Type exposing (Type)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
 import Json.Decode as Decode exposing (Decoder)
 
 
 type alias Field =
-    { name : String, typeOf : Type.Type }
+    { name : String, typeOf : Type.TypeDefinition }
 
 
 decoder : Decoder (List Field)

@@ -1,11 +1,11 @@
 module GraphqElm.Generator.Query exposing (..)
 
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (Type)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
 import String.Format
 
 
-generate : { name : String, typeOf : Type } -> String
+generate : { name : String, typeOf : TypeDefinition } -> String
 generate { name, typeOf } =
     String.Format.format3
         """{1} : Field.Query ({2})
@@ -16,7 +16,7 @@ generate { name, typeOf } =
         ( name, generateType typeOf, generateDecoder typeOf )
 
 
-generateDecoder : Type -> String
+generateDecoder : TypeDefinition -> String
 generateDecoder typeOf =
     case typeOf of
         Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String) ->
@@ -32,7 +32,7 @@ generateDecoder typeOf =
             Debug.crash "TODO"
 
 
-generateType : Type -> String
+generateType : TypeDefinition -> String
 generateType typeOf =
     case typeOf of
         Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String) ->

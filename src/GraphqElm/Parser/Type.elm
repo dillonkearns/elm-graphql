@@ -16,16 +16,16 @@ decoder =
 
 
 type alias Field =
-    { name : String, typeOf : Type }
+    { name : String, typeOf : TypeDefinition }
 
 
-type Type
+type TypeDefinition
     = Scalar IsNullable Scalar
-    | List IsNullable Type
+    | List IsNullable TypeDefinition
     | Object IsNullable (List Field)
 
 
-parseRaw : RawType -> Type
+parseRaw : RawType -> TypeDefinition
 parseRaw ((RawType { kind, name, ofType }) as rawType) =
     case ( kind, name ) of
         ( TypeKind.Scalar, Just scalarName ) ->
@@ -49,7 +49,7 @@ parseRaw ((RawType { kind, name, ofType }) as rawType) =
 --     |> Debug.crash
 
 
-parseCompositeType : TypeKind -> RawType -> Type
+parseCompositeType : TypeKind -> RawType -> TypeDefinition
 parseCompositeType typeKind (RawType actualOfType) =
     case typeKind of
         TypeKind.List ->

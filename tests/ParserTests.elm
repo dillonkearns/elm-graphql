@@ -3,7 +3,7 @@ module ParserTests exposing (all)
 import Expect
 import GraphqElm.Parser
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (Type)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 

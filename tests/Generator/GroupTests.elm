@@ -4,7 +4,7 @@ import Expect
 import GraphqElm.Generator.Group as Group
 import GraphqElm.Parser exposing (Field)
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (Type)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
 import Test exposing (..)
 
 
@@ -29,7 +29,7 @@ all =
         ]
 
 
-rootQuery : { name : String, typeOf : Type }
+rootQuery : { name : String, typeOf : TypeDefinition }
 rootQuery =
     { name = "RootQueryType"
     , typeOf = Type.Object Type.NonNullable []
@@ -43,7 +43,7 @@ meQuery =
     }
 
 
-captainsQuery : { name : String, typeOf : Type }
+captainsQuery : { name : String, typeOf : TypeDefinition }
 captainsQuery =
     { name = "captains"
     , typeOf = Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String)
