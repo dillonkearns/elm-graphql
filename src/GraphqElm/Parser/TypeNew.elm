@@ -97,7 +97,12 @@ parseRef : RawTypeRef -> TypeReference
 parseRef (RawTypeRef rawTypeRef) =
     case rawTypeRef.kind of
         TypeKind.List ->
-            TypeReference (List (parseRef (RawTypeRef rawTypeRef))) Nullable
+            case rawTypeRef.ofType of
+                Just nestedOfType ->
+                    TypeReference (List (parseRef nestedOfType)) Nullable
+
+                Nothing ->
+                    Debug.crash ""
 
         TypeKind.Scalar ->
             TypeReference
