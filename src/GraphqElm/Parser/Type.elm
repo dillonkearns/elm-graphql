@@ -1,4 +1,4 @@
-module GraphqElm.Parser.TypeNew exposing (..)
+module GraphqElm.Parser.Type exposing (..)
 
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind)

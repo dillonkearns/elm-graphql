@@ -3,25 +3,25 @@ module GeneratorTests exposing (all)
 import Expect
 import GraphqElm.Generator.Query
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.TypeNew as TypeNew exposing (TypeDefinition)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
 import Test exposing (..)
 
 
-captainsRef : TypeNew.Field
+captainsRef : Type.Field
 captainsRef =
     { name = "captains"
     , typeRef =
-        TypeNew.TypeReference
-            (TypeNew.List
-                (TypeNew.TypeReference (TypeNew.Scalar Scalar.String) TypeNew.NonNullable)
+        Type.TypeReference
+            (Type.List
+                (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable)
             )
-            TypeNew.Nullable
+            Type.Nullable
     }
 
 
-meRef : TypeNew.Field
+meRef : Type.Field
 meRef =
-    { name = "me", typeRef = TypeNew.TypeReference (TypeNew.Scalar Scalar.String) TypeNew.NonNullable }
+    { name = "me", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable }
 
 
 all : Test

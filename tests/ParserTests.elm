@@ -3,7 +3,7 @@ module ParserTests exposing (all)
 import Expect
 import GraphqElm.Parser
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.TypeNew as TypeNew
+import GraphqElm.Parser.Type as Type
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 
@@ -76,13 +76,13 @@ all =
                             { queries =
                                 [ { name = "captains"
                                   , typeRef =
-                                        TypeNew.TypeReference
-                                            (TypeNew.List
-                                                (TypeNew.TypeReference (TypeNew.Scalar Scalar.String) TypeNew.NonNullable)
+                                        Type.TypeReference
+                                            (Type.List
+                                                (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable)
                                             )
-                                            TypeNew.Nullable
+                                            Type.Nullable
                                   }
-                                , { name = "me", typeRef = TypeNew.TypeReference (TypeNew.Scalar Scalar.String) TypeNew.NonNullable }
+                                , { name = "me", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable }
                                 ]
                             , scalars = []
                             , objects = []

@@ -1,6 +1,6 @@
 module GraphqElm.Generator.Group exposing (Group, gather)
 
-import GraphqElm.Parser.TypeNew as Type exposing (Field, TypeDefinition)
+import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition)
 
 
 type alias Group =

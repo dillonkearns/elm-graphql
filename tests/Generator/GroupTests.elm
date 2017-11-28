@@ -3,7 +3,7 @@ module Generator.GroupTests exposing (all)
 import Expect
 import GraphqElm.Generator.Group as Group
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.TypeNew as Type exposing (TypeDefinition, TypeReference)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 

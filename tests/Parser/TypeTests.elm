@@ -3,7 +3,7 @@ module Parser.TypeTests exposing (..)
 import Expect
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
-import GraphqElm.Parser.TypeNew as Type
+import GraphqElm.Parser.Type as Type
 import Test exposing (..)
 
 

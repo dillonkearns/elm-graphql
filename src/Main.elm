@@ -2,7 +2,7 @@ port module Main exposing (..)
 
 import GraphqElm.Generator.Group
 import GraphqElm.Generator.Module
-import GraphqElm.Parser exposing (Field)
+import GraphqElm.Parser
 import Http
 import Json.Decode exposing (..)
 

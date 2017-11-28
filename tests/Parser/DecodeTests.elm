@@ -2,7 +2,7 @@ module Parser.DecodeTests exposing (all)
 
 import Expect
 import GraphqElm.Parser.TypeKind as TypeKind
-import GraphqElm.Parser.TypeNew as Type
+import GraphqElm.Parser.Type as Type
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (Test, describe, test)
 

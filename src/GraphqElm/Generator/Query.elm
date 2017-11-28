@@ -1,10 +1,10 @@
 module GraphqElm.Generator.Query exposing (..)
 
-import GraphqElm.Parser.TypeNew as TypeNew exposing (TypeReference)
+import GraphqElm.Parser.Type as Type exposing (TypeReference)
 import String.Format
 
 
-generateNew : TypeNew.Field -> String
+generateNew : Type.Field -> String
 generateNew { name, typeRef } =
     String.Format.format3
         """{1} : Field.Query ({2})
@@ -12,28 +12,28 @@ generateNew { name, typeRef } =
     Field.custom "{1}" ({3})
         |> Query.rootQuery
 """
-        ( name, generateTypeNew typeRef, generateDecoderNew typeRef )
+        ( name, generateType typeRef, generateDecoderNew typeRef )
 
 
 generateDecoderNew : TypeReference -> String
 generateDecoderNew typeRef =
     case typeRef of
-        TypeNew.TypeReference referrableType isNullable ->
+        Type.TypeReference referrableType isNullable ->
             case referrableType of
-                TypeNew.Scalar scalar ->
+                Type.Scalar scalar ->
                     "Decode.string"
 
-                TypeNew.List typeRef ->
+                Type.List typeRef ->
                     "Decode.string |> Decode.list"
 
 
-generateTypeNew : TypeReference -> String
-generateTypeNew typeRef =
+generateType : TypeReference -> String
+generateType typeRef =
     case typeRef of
-        TypeNew.TypeReference referrableType isNullable ->
+        Type.TypeReference referrableType isNullable ->
             case referrableType of
-                TypeNew.Scalar scalar ->
+                Type.Scalar scalar ->
                     "String"
 
-                TypeNew.List typeRef ->
+                Type.List typeRef ->
                     "List String"
