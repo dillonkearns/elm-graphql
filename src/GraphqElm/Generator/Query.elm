@@ -28,6 +28,9 @@ generateDecoder typeOf =
         Type.List isNullable type_ ->
             "Decode.string |> Decode.list"
 
+        Type.Object _ _ ->
+            Debug.crash "TODO"
+
 
 generateType : Type -> String
 generateType typeOf =
@@ -40,3 +43,6 @@ generateType typeOf =
 
         Type.List isNullable type_ ->
             "List String"
+
+        Type.Object _ _ ->
+            Debug.crash "TODO"

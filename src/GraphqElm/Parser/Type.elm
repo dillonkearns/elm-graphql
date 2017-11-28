@@ -15,9 +15,14 @@ decoder =
         )
 
 
+type alias Field =
+    { name : String, typeOf : Type }
+
+
 type Type
     = Scalar IsNullable Scalar
     | List IsNullable Type
+    | Object IsNullable (List Field)
 
 
 parseRaw : RawType -> Type

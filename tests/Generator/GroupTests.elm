@@ -29,6 +29,13 @@ all =
         ]
 
 
+rootQuery : { name : String, typeOf : Type }
+rootQuery =
+    { name = "RootQueryType"
+    , typeOf = Type.Object Type.NonNullable []
+    }
+
+
 meQuery : Field
 meQuery =
     { name = "me"
