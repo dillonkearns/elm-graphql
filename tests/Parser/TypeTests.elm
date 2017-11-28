@@ -13,10 +13,11 @@ all =
     describe "typekind decoder"
         [ test "parseRaw string" <|
             \() ->
-                Type.RawType
-                    { kind = TypeKind.Object
-                    , name = Just "MenuItems"
+                Type.RawTypeDef
+                    { name = "MenuItems"
+                    , kind = TypeKind.Object
                     , ofType = Nothing
+                    , fields = Just []
                     }
                     |> Type.parse
                     |> Expect.equal

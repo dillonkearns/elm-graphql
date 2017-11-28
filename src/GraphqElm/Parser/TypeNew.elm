@@ -28,10 +28,10 @@ type ReferrableType
     | List TypeReference
 
 
-parse : RawType -> TypeDefinition
-parse (RawType rawType) =
+parse : RawTypeDef -> TypeDefinition
+parse (RawTypeDef rawType) =
     TypeDefinition
-        (rawType.name |> Maybe.withDefault "...?")
+        rawType.name
         (ObjectType [])
         NonNullable
 
@@ -122,3 +122,24 @@ type RawType
         , name : Maybe String
         , ofType : Maybe RawType
         }
+
+
+type RawTypeRef
+    = RawTypeRef
+        { name : Maybe String
+        , kind : TypeKind
+        , ofType : Maybe RawType
+        }
+
+
+type RawTypeDef
+    = RawTypeDef
+        { name : String
+        , kind : TypeKind
+        , ofType : Maybe RawTypeRef
+        , fields : Maybe (List RawField)
+        }
+
+
+type alias RawField =
+    { name : String, kind : TypeKind, ofType : RawTypeRef }
