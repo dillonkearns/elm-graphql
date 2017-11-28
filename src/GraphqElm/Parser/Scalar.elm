@@ -19,5 +19,8 @@ parse scalarName =
         "Boolean" ->
             Boolean
 
+        "ID" ->
+            ID
+
         _ ->
             Debug.crash "Unhandled"

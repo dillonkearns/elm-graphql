@@ -60,8 +60,47 @@ parse (RawTypeDef rawType) =
 
 
 parseRef : RawTypeRef -> TypeReference
-parseRef rawTypeRef =
-    TypeReference (Scalar Scalar.String) NonNullable
+parseRef (RawTypeRef rawTypeRef) =
+    case rawTypeRef.kind of
+        TypeKind.List ->
+            TypeReference (List (parseRef (RawTypeRef rawTypeRef))) Nullable
+
+        TypeKind.Scalar ->
+            TypeReference
+                (Scalar
+                    (rawTypeRef.name
+                        |> Maybe.withDefault "asdfasdf"
+                        |> Scalar.parse
+                    )
+                )
+                NonNullable
+
+        TypeKind.Object ->
+            Debug.crash "TODO"
+
+        TypeKind.NonNull ->
+            case rawTypeRef.ofType of
+                Just (RawTypeRef actualOfType) ->
+                    case ( actualOfType.kind, actualOfType.name ) of
+                        ( TypeKind.Scalar, Just scalarName ) ->
+                            TypeReference
+                                (Scalar (scalarName |> Scalar.parse))
+                                NonNullable
+
+                        ( TypeKind.Object, _ ) ->
+                            Debug.crash "TODO a"
+
+                        ( TypeKind.List, _ ) ->
+                            Debug.crash "TODO b"
+
+                        ( TypeKind.NonNull, _ ) ->
+                            Debug.crash "TODO c"
+
+                        ( _, Maybe.Nothing ) ->
+                            Debug.crash "TODO d"
+
+                Nothing ->
+                    Debug.crash "TODO"
 
 
 createType : TypeKind -> Maybe String -> Maybe RawType -> RawType

@@ -33,6 +33,21 @@ all =
                                                 )
                                         }
                               }
+                            , { name = "id"
+                              , ofType =
+                                    Type.RawTypeRef
+                                        { name = Nothing
+                                        , kind = TypeKind.NonNull
+                                        , ofType =
+                                            Just
+                                                (Type.RawTypeRef
+                                                    { name = Just "ID"
+                                                    , kind = TypeKind.Scalar
+                                                    , ofType = Nothing
+                                                    }
+                                                )
+                                        }
+                              }
                             ]
                     }
                     |> Type.parse
@@ -43,6 +58,11 @@ all =
                                 [ { name = "description"
                                   , typeRef =
                                         Type.TypeReference (Type.Scalar Scalar.String)
+                                            Type.NonNullable
+                                  }
+                                , { name = "id"
+                                  , typeRef =
+                                        Type.TypeReference (Type.Scalar Scalar.ID)
                                             Type.NonNullable
                                   }
                                 ]
