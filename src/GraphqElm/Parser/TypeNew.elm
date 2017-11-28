@@ -30,19 +30,33 @@ type ReferrableType
 
 parse : RawTypeDef -> TypeDefinition
 parse (RawTypeDef rawType) =
-    TypeDefinition
-        rawType.name
-        (ObjectType
-            (List.map
-                (\{ name, ofType } ->
-                    { name = name
-                    , typeRef = parseRef ofType
-                    }
+    case rawType.kind of
+        TypeKind.Scalar ->
+            TypeDefinition
+                "Date"
+                (ScalarType (Scalar.Custom { name = "Date" }))
+                NonNullable
+
+        TypeKind.Object ->
+            TypeDefinition
+                rawType.name
+                (ObjectType
+                    (List.map
+                        (\{ name, ofType } ->
+                            { name = name
+                            , typeRef = parseRef ofType
+                            }
+                        )
+                        (rawType.fields |> Maybe.withDefault [])
+                    )
                 )
-                (rawType.fields |> Maybe.withDefault [])
-            )
-        )
-        NonNullable
+                NonNullable
+
+        TypeKind.List ->
+            Debug.crash "TODO"
+
+        TypeKind.NonNull ->
+            Debug.crash "TODO"
 
 
 parseRef : RawTypeRef -> TypeReference

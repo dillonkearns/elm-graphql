@@ -49,6 +49,21 @@ all =
                             )
                             Type.NonNullable
                         )
+        , test "parse scalar definition" <|
+            \() ->
+                Type.RawTypeDef
+                    { name = "Date"
+                    , kind = TypeKind.Scalar
+                    , ofType = Nothing
+                    , fields = Nothing
+                    }
+                    |> Type.parse
+                    |> Expect.equal
+                        (Type.TypeDefinition
+                            "Date"
+                            (Type.ScalarType (Scalar.Custom { name = "Date" }))
+                            Type.NonNullable
+                        )
 
         -- , test "parse raw boolean" <|
         --     \() ->
