@@ -87,10 +87,10 @@ parse (RawTypeDef rawType) =
                 )
 
         TypeKind.List ->
-            Debug.crash "TODO"
+            Debug.crash "List will not occur at the top-level definitions"
 
         TypeKind.NonNull ->
-            Debug.crash "TODO"
+            Debug.crash "NonNull will not occur at the top-level definitions"
 
         TypeKind.Ignore ->
             TypeDefinition
@@ -107,17 +107,17 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (List (parseRef nestedOfType)) Nullable
 
                 Nothing ->
-                    Debug.crash ""
+                    Debug.crash "Missing nested type for List reference"
 
         TypeKind.Scalar ->
-            TypeReference
-                (Scalar
-                    (rawTypeRef.name
-                        |> Maybe.withDefault "asdfasdf"
-                        |> Scalar.parse
-                    )
-                )
-                Nullable
+            case rawTypeRef.name of
+                Just scalarName ->
+                    TypeReference
+                        (Scalar (Scalar.parse scalarName))
+                        Nullable
+
+                Nothing ->
+                    Debug.crash "Should not get null names for scalar references"
 
         TypeKind.Object ->
             TypeReference (Scalar Scalar.Boolean) Nullable
