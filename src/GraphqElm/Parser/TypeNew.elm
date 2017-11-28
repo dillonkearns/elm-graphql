@@ -2,6 +2,42 @@ module GraphqElm.Parser.TypeNew exposing (..)
 
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind)
+import Json.Decode as Decode exposing (Decoder)
+
+
+decoder : Decoder RawTypeDef
+decoder =
+    Decode.map4 createType
+        (Decode.field "name" Decode.string)
+        (Decode.field "kind" TypeKind.decoder)
+        (Decode.maybe (Decode.field "ofType" typeRefDecoder))
+        (Decode.maybe <|
+            Decode.field "fields" <|
+                Decode.list <|
+                    fieldDecoder
+        )
+
+
+typeRefDecoder : Decoder RawTypeRef
+typeRefDecoder =
+    Decode.map3 createRawTypeRef
+        (Decode.field "name" Decode.string |> Decode.maybe)
+        (Decode.field "kind" TypeKind.decoder)
+        (Decode.field "ofType"
+            (Decode.maybe (Decode.lazy (\_ -> typeRefDecoder)))
+        )
+
+
+fieldDecoder : Decoder RawField
+fieldDecoder =
+    Decode.map2 RawField
+        (Decode.field "name" Decode.string)
+        (Decode.field "type" typeRefDecoder)
+
+
+createRawTypeRef : Maybe String -> TypeKind -> Maybe RawTypeRef -> RawTypeRef
+createRawTypeRef stringMaybe typeKind rawTypeRefMaybe =
+    RawTypeRef { name = stringMaybe, kind = typeKind, ofType = rawTypeRefMaybe }
 
 
 type alias Field =
@@ -101,26 +137,19 @@ parseRef (RawTypeRef rawTypeRef) =
                     Debug.crash "TODO"
 
 
-createType : TypeKind -> Maybe String -> Maybe RawType -> RawType
-createType kind name ofType =
-    RawType
-        { kind = kind
-        , name = name
+createType : String -> TypeKind -> Maybe RawTypeRef -> Maybe (List RawField) -> RawTypeDef
+createType name kind ofType fields =
+    RawTypeDef
+        { name = name
+        , kind = kind
         , ofType = ofType
+        , fields = fields
         }
 
 
 type IsNullable
     = Nullable
     | NonNullable
-
-
-type RawType
-    = RawType
-        { kind : TypeKind
-        , name : Maybe String
-        , ofType : Maybe RawType
-        }
 
 
 type RawTypeRef
