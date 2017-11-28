@@ -11,7 +11,7 @@ type alias Field =
 
 
 type TypeDefinition
-    = TypeDefinition String DefinableType IsNullable
+    = TypeDefinition String DefinableType
 
 
 type DefinableType
@@ -35,7 +35,6 @@ parse (RawTypeDef rawType) =
             TypeDefinition
                 "Date"
                 (ScalarType "Date")
-                NonNullable
 
         TypeKind.Object ->
             TypeDefinition
@@ -50,7 +49,6 @@ parse (RawTypeDef rawType) =
                         (rawType.fields |> Maybe.withDefault [])
                     )
                 )
-                NonNullable
 
         TypeKind.List ->
             Debug.crash "TODO"
