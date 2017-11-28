@@ -15,7 +15,7 @@ type TypeDefinition
 
 
 type DefinableType
-    = ScalarType Scalar
+    = ScalarType String
     | ObjectType (List Field)
 
 
@@ -34,7 +34,7 @@ parse (RawTypeDef rawType) =
         TypeKind.Scalar ->
             TypeDefinition
                 "Date"
-                (ScalarType (Scalar.Custom { name = "Date" }))
+                (ScalarType "Date")
                 NonNullable
 
         TypeKind.Object ->

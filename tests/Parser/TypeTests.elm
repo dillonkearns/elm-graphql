@@ -49,7 +49,7 @@ all =
                             )
                             Type.NonNullable
                         )
-        , test "parse scalar definition" <|
+        , test "parse custom scalar definition" <|
             \() ->
                 Type.RawTypeDef
                     { name = "Date"
@@ -61,7 +61,7 @@ all =
                     |> Expect.equal
                         (Type.TypeDefinition
                             "Date"
-                            (Type.ScalarType (Scalar.Custom { name = "Date" }))
+                            (Type.ScalarType "Date")
                             Type.NonNullable
                         )
 
