@@ -2,9 +2,8 @@ module Generator.GroupTests exposing (all)
 
 import Expect
 import GraphqElm.Generator.Group as Group
-import GraphqElm.Parser exposing (Field)
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
+import GraphqElm.Parser.TypeNew as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 
@@ -13,14 +12,12 @@ all =
     describe "group"
         [ test "gathers fields from the root query object" <|
             \() ->
-                [ meQuery
-                , captainsQuery
-                ]
+                [ rootQuery ]
                     |> Group.gather
                     |> Expect.equal
                         { queries =
-                            [ meQuery
-                            , captainsQuery
+                            [ meField
+                            , captainsField
                             ]
                         , scalars = []
                         , objects = []
@@ -29,22 +26,29 @@ all =
         ]
 
 
-rootQuery : { name : String, typeOf : TypeDefinition }
+rootQuery : TypeDefinition
 rootQuery =
-    { name = "RootQueryType"
-    , typeOf = Type.Object Type.NonNullable []
-    }
+    Type.TypeDefinition
+        "RootQueryType"
+        (Type.ObjectType
+            [ meField
+            , captainsField
+            ]
+        )
 
 
-meQuery : Field
-meQuery =
-    { name = "me"
-    , typeOf = Type.Scalar Type.NonNullable Scalar.String
-    }
-
-
-captainsQuery : { name : String, typeOf : TypeDefinition }
-captainsQuery =
+captainsField : Type.Field
+captainsField =
     { name = "captains"
-    , typeOf = Type.List Type.NonNullable (Type.Scalar Type.NonNullable Scalar.String)
+    , typeRef =
+        Type.TypeReference
+            (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
+            Type.NonNullable
+    }
+
+
+meField : Type.Field
+meField =
+    { name = "me"
+    , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
