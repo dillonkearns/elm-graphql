@@ -73,7 +73,7 @@ parseRef (RawTypeRef rawTypeRef) =
                         |> Scalar.parse
                     )
                 )
-                NonNullable
+                Nullable
 
         TypeKind.Object ->
             Debug.crash "TODO"

@@ -48,6 +48,14 @@ all =
                                                 )
                                         }
                               }
+                            , { name = "nullableString"
+                              , ofType =
+                                    Type.RawTypeRef
+                                        { name = Just "String"
+                                        , kind = TypeKind.Scalar
+                                        , ofType = Nothing
+                                        }
+                              }
                             ]
                     }
                     |> Type.parse
@@ -64,6 +72,12 @@ all =
                                   , typeRef =
                                         Type.TypeReference (Type.Scalar Scalar.ID)
                                             Type.NonNullable
+                                  }
+                                , { name = "nullableString"
+                                  , typeRef =
+                                        Type.TypeReference
+                                            (Type.Scalar Scalar.String)
+                                            Type.Nullable
                                   }
                                 ]
                             )
