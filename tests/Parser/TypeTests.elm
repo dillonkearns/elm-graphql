@@ -1,8 +1,7 @@
 module Parser.TypeTests exposing (..)
 
--- import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-
 import Expect
+import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
 import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
 import GraphqElm.Parser.TypeNew as Type
 import Test exposing (..)
@@ -11,19 +10,43 @@ import Test exposing (..)
 all : Test
 all =
     describe "typekind decoder"
-        [ test "parseRaw string" <|
+        [ test "parse object definition" <|
             \() ->
                 Type.RawTypeDef
                     { name = "MenuItems"
                     , kind = TypeKind.Object
                     , ofType = Nothing
-                    , fields = Just []
+                    , fields =
+                        Just
+                            [ { name = "description"
+                              , ofType =
+                                    Type.RawTypeRef
+                                        { name = Nothing
+                                        , kind = TypeKind.NonNull
+                                        , ofType =
+                                            Just
+                                                (Type.RawTypeRef
+                                                    { name = Just "String"
+                                                    , kind = TypeKind.Scalar
+                                                    , ofType = Nothing
+                                                    }
+                                                )
+                                        }
+                              }
+                            ]
                     }
                     |> Type.parse
                     |> Expect.equal
                         (Type.TypeDefinition
                             "MenuItems"
-                            (Type.ObjectType [])
+                            (Type.ObjectType
+                                [ { name = "description"
+                                  , typeRef =
+                                        Type.TypeReference (Type.Scalar Scalar.String)
+                                            Type.NonNullable
+                                  }
+                                ]
+                            )
                             Type.NonNullable
                         )
 

@@ -32,74 +32,22 @@ parse : RawTypeDef -> TypeDefinition
 parse (RawTypeDef rawType) =
     TypeDefinition
         rawType.name
-        (ObjectType [])
+        (ObjectType
+            (List.map
+                (\{ name, ofType } ->
+                    { name = name
+                    , typeRef = parseRef ofType
+                    }
+                )
+                (rawType.fields |> Maybe.withDefault [])
+            )
+        )
         NonNullable
 
 
-
--- type alias Field =
---     { name : String, typeOf : TypeDefinition }
---
---
--- type TypeDefinition
---     = Scalar IsNullable Scalar
---     | List IsNullable TypeDefinition
---     | Object IsNullable (List Field)
---
---
--- parseRaw : RawType -> TypeDefinition
--- parseRaw ((RawType { kind, name, ofType }) as rawType) =
---     case ( kind, name ) of
---         ( TypeKind.Scalar, Just scalarName ) ->
---             Scalar Nullable (Scalar.parse scalarName)
---
---         ( compositeNodeType, _ ) ->
---             case ofType of
---                 Just actualOfType ->
---                     parseCompositeType compositeNodeType actualOfType
---
---                 Nothing ->
---                     -- TODO temp to avoid errors
---                     Scalar Nullable Scalar.String
---
---
---
--- -- "Invalid type, no child type to parse for composite parent node "
--- --     ++ toString compositeNodeType
--- --     ++ "\n at:\n"
--- --     ++ toString rawType
--- --     |> Debug.crash
---
---
--- parseCompositeType : TypeKind -> RawType -> TypeDefinition
--- parseCompositeType typeKind (RawType actualOfType) =
---     case typeKind of
---         TypeKind.List ->
---             List Nullable (parseRaw (RawType actualOfType))
---
---         TypeKind.NonNull ->
---             case ( actualOfType.kind, actualOfType.name ) of
---                 ( TypeKind.Scalar, Just scalarName ) ->
---                     Scalar NonNullable (Scalar.parse scalarName)
---
---                 ( TypeKind.List, Nothing ) ->
---                     case actualOfType.ofType of
---                         Just nested ->
---                             List NonNullable (parseRaw nested)
---
---                         _ ->
---                             Debug.crash ("Expected nested ofType to parse, got " ++ toString actualOfType)
---
---                 _ ->
---                     Debug.crash ("Expected scalar, got " ++ toString actualOfType)
---
---         TypeKind.Scalar ->
---             Debug.crash "Not expecting scalar."
---
---         TypeKind.Object ->
---             Debug.crash "Unhandled"
---
---
+parseRef : RawTypeRef -> TypeReference
+parseRef rawTypeRef =
+    TypeReference (Scalar Scalar.String) NonNullable
 
 
 createType : TypeKind -> Maybe String -> Maybe RawType -> RawType
@@ -128,7 +76,7 @@ type RawTypeRef
     = RawTypeRef
         { name : Maybe String
         , kind : TypeKind
-        , ofType : Maybe RawType
+        , ofType : Maybe RawTypeRef
         }
 
 
@@ -142,4 +90,4 @@ type RawTypeDef
 
 
 type alias RawField =
-    { name : String, kind : TypeKind, ofType : RawTypeRef }
+    { name : String, ofType : RawTypeRef }
