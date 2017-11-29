@@ -1,10 +1,5 @@
 module Generator.GenerateQueryTests exposing (..)
 
--- generateThis : List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query menuItem
--- generateThis optionalArgs object =
---     Object.single "menuItem" optionalArgs object
---         |> Query.rootQuery
-
 import Expect
 import GraphqElm.Generator.Query
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
@@ -28,7 +23,7 @@ me =
             \() ->
                 menuItemField
                     |> GraphqElm.Generator.Query.generateNew
-                    |> Expect.equal """menuItem : List (TypeLocked Argument Api.MenuItem.Type) -> Object menuItem Api.MenuItem.Type -> Field.Query menuItem
+                    |> Expect.equal """menuItem : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query menuItem
 menuItem optionalArgs object =
     Object.single "menuItem" optionalArgs object
         |> Query.rootQuery
@@ -37,7 +32,7 @@ menuItem optionalArgs object =
             \() ->
                 menuItemsField
                     |> GraphqElm.Generator.Query.generateNew
-                    |> Expect.equal """menuItems : List (TypeLocked Argument Api.MenuItem.Type) -> Object menuItem Api.MenuItem.Type -> Field.Query (List menuItem)
+                    |> Expect.equal """menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
 menuItems optionalArgs object =
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery
