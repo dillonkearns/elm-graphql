@@ -23,6 +23,19 @@ all =
                         , objects = []
                         , enums = []
                         }
+        , test "gathers object definitions" <|
+            \() ->
+                [ rootQuery, menuItem ]
+                    |> Group.gather
+                    |> Expect.equal
+                        { queries =
+                            [ meField
+                            , captainsField
+                            ]
+                        , scalars = []
+                        , objects = [ menuItem ]
+                        , enums = []
+                        }
         ]
 
 
@@ -52,3 +65,15 @@ meField =
     { name = "me"
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
+
+
+menuItem : TypeDefinition
+menuItem =
+    Type.TypeDefinition
+        "MenuItem"
+        (Type.ObjectType
+            [ { name = "name"
+              , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+              }
+            ]
+        )

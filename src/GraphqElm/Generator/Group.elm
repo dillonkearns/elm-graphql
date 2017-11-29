@@ -13,17 +13,23 @@ type alias Group =
 
 gather : List TypeDefinition -> Group
 gather definitions =
-    let
-        something =
-            definitions |> List.filter (\(Type.TypeDefinition name _) -> name == "RootQueryType")
-    in
-    case something of
-        [ Type.TypeDefinition name (Type.ObjectType fields) ] ->
-            { queries = fields
+    definitions
+        |> List.foldl addToGroup
+            { queries = []
             , scalars = []
             , objects = []
             , enums = []
             }
 
-        _ ->
-            Debug.crash "No root query type found"
+
+addToGroup : TypeDefinition -> Group -> Group
+addToGroup definition group =
+    case definition of
+        Type.TypeDefinition "RootQueryType" (Type.ObjectType fields) ->
+            { group | queries = fields }
+
+        Type.TypeDefinition name (Type.ObjectType fields) ->
+            { group | objects = definition :: group.objects }
+
+        Type.TypeDefinition name definableType ->
+            group
