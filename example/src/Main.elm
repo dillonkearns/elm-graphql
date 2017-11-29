@@ -1,7 +1,10 @@
 module Main exposing (..)
 
+import Api.Object.MenuItem as MenuItem
 import Api.Query
+import GraphqElm.Field as Field
 import GraphqElm.Http
+import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query
 import Html
 import RemoteData exposing (WebData)
@@ -16,12 +19,30 @@ type alias Model =
 
 
 type alias DecodesTo =
-    ( String, List String )
+    ( List MenuItem, List String )
+
+
+type alias MenuItem =
+    { name : String
+    , description : String
+    }
+
+
+menuItem : Object MenuItem MenuItem.Type
+menuItem =
+    MenuItem.build MenuItem
+        |> Object.with MenuItem.name
+        |> Object.with MenuItem.description
+
+
+menuItemsQuery : Field.Query (List MenuItem)
+menuItemsQuery =
+    Api.Query.menuItems [] menuItem
 
 
 makeRequest : Cmd Msg
 makeRequest =
-    GraphqElm.Query.combine (,) Api.Query.me Api.Query.captains
+    GraphqElm.Query.combine (,) menuItemsQuery Api.Query.captains
         |> GraphqElm.Http.request "http://localhost:4000/api"
         |> GraphqElm.Http.sendRemoteData GotResponse
 

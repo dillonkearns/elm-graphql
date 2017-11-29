@@ -3,6 +3,7 @@ port module Main exposing (..)
 import Dict
 import GraphqElm.Generator.Group
 import GraphqElm.Generator.Module
+import GraphqElm.Generator.Object
 import GraphqElm.Parser
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition)
 import Http
@@ -35,16 +36,17 @@ type Msg
 queryFile : GraphqElm.Generator.Group.Group -> Dict.Dict String String
 queryFile group =
     Dict.fromList
-        (( "Query.elm", GraphqElm.Generator.Module.generateNew [ "Query" ] group.queries )
+        (( "Api/Query.elm", GraphqElm.Generator.Module.generateNew [ "Query" ] group.queries )
             :: List.map
                 (\((Type.TypeDefinition name definableType) as definition) ->
                     case definableType of
                         Type.ObjectType fields ->
                             let
-                                moduleName =
-                                    [ "Object", name ]
+                                { moduleName, moduleContents } =
+                                    GraphqElm.Generator.Object.generate definition
+                                        |> Debug.log "@@@@"
                             in
-                            ( String.join "/" moduleName ++ ".elm", GraphqElm.Generator.Module.generateNew moduleName fields )
+                            ( (moduleName |> String.join "/") ++ ".elm", moduleContents )
 
                         Type.ScalarType _ ->
                             Debug.crash "TODO"

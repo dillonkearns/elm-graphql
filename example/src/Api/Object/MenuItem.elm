@@ -1,27 +1,30 @@
 module Api.Object.MenuItem exposing (..)
 
-import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
-import GraphqElm.Query as Query
-import Json.Decode as Decode exposing (Decoder)
+import Json.Decode as Decode
+
 
 type Type
     = Type
-description : Field.Query (String)
+
+
+build : (a -> constructor) -> Object (a -> constructor) Type
+build constructor =
+    Object.object constructor
+
+
+description : TypeLocked (FieldDecoder String) Type
 description =
-    Field.custom "description" (Decode.string)
-        |> Query.rootQuery
+    Field.fieldDecoder "name" Decode.string
 
 
-id : Field.Query (String)
+id : TypeLocked (FieldDecoder String) Type
 id =
-    Field.custom "id" (Decode.string)
-        |> Query.rootQuery
+    Field.fieldDecoder "name" Decode.string
 
 
-name : Field.Query (String)
+name : TypeLocked (FieldDecoder String) Type
 name =
-    Field.custom "name" (Decode.string)
-        |> Query.rootQuery
+    Field.fieldDecoder "name" Decode.string

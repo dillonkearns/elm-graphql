@@ -17,7 +17,7 @@ const onDataAvailable = (data: any) => {
     let foo = { a: 1, b: 2 }
     for (let key in generatedFile) {
       let value = generatedFile[key]
-      fs.writeFileSync('./src/Api/' + key, value)
+      fs.writeFileSync('./src/' + key, value)
     }
   })
 }
