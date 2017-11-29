@@ -9,6 +9,10 @@ import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
 
 
+type Type
+    = Type
+
+
 captains : Field.Query (List String)
 captains =
     Field.custom "captains" (Decode.string |> Decode.list)

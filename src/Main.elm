@@ -35,12 +35,16 @@ type Msg
 queryFile : GraphqElm.Generator.Group.Group -> Dict.Dict String String
 queryFile group =
     Dict.fromList
-        (( "Query.elm", GraphqElm.Generator.Module.generateNew group.queries )
+        (( "Query.elm", GraphqElm.Generator.Module.generateNew [ "Query" ] group.queries )
             :: List.map
                 (\((Type.TypeDefinition name definableType) as definition) ->
                     case definableType of
                         Type.ObjectType fields ->
-                            ( "Object/" ++ name ++ ".elm", GraphqElm.Generator.Module.generateNew fields )
+                            let
+                                moduleName =
+                                    [ "Object", name ]
+                            in
+                            ( String.join "/" moduleName ++ ".elm", GraphqElm.Generator.Module.generateNew moduleName fields )
 
                         Type.ScalarType _ ->
                             Debug.crash "TODO"
