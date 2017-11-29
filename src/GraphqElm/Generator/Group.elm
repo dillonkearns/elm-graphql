@@ -26,8 +26,4 @@ gather definitions =
             }
 
         _ ->
-            { queries = []
-            , scalars = []
-            , objects = []
-            , enums = []
-            }
+            Debug.crash "No root query type found"
