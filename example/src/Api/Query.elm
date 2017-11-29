@@ -1,5 +1,6 @@
 module Api.Query exposing (..)
 
+import Api.Enum.Weather
 import Api.Object.MenuItem
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
@@ -28,4 +29,10 @@ me =
 menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
 menuItems optionalArgs object =
     Object.listOf "menuItems" optionalArgs object
+        |> Query.rootQuery
+
+
+weather : Field.Query Api.Enum.Weather.Weather
+weather =
+    Field.custom "weather" Api.Enum.Weather.decoder
         |> Query.rootQuery

@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import Api.Enum.Weather exposing (Weather)
 import Api.Object.MenuItem as MenuItem
 import Api.Query
 import GraphqElm.Field as Field
@@ -19,7 +20,7 @@ type alias Model =
 
 
 type alias DecodesTo =
-    ( List MenuItem, List String )
+    ( List MenuItem, Weather )
 
 
 type alias MenuItem =
@@ -42,7 +43,7 @@ menuItemsQuery =
 
 makeRequest : Cmd Msg
 makeRequest =
-    GraphqElm.Query.combine (,) menuItemsQuery Api.Query.captains
+    GraphqElm.Query.combine (,) menuItemsQuery Api.Query.weather
         |> GraphqElm.Http.request "http://localhost:4000/api"
         |> GraphqElm.Http.sendRemoteData GotResponse
 
