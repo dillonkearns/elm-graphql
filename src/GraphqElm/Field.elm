@@ -23,11 +23,6 @@ decoder (Query fields decoder) =
     decoder
 
 
-listAt : String -> FieldDecoder a -> FieldDecoder (List a)
-listAt at (FieldDecoder field decoder) =
-    FieldDecoder field (decoder |> Decode.list |> Decode.field at)
-
-
 toQuery : Query a -> String
 toQuery (Query fields decoder) =
     "{\n"
