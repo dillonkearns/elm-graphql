@@ -6,14 +6,15 @@ import String.Format
 
 generate : String -> List Type.Field -> ( List String, String )
 generate name fields =
-    let
-        moduleName =
-            [ "Api", "Object", name ]
-    in
-    ( moduleName
-    , prepend (String.join "." moduleName)
+    ( moduleNameFor name
+    , prepend (moduleNameFor name |> String.join ".")
         ++ (List.map generateField fields |> String.join "\n\n")
     )
+
+
+moduleNameFor : String -> List String
+moduleNameFor name =
+    [ "Api", "Object", name ]
 
 
 prepend : String -> String

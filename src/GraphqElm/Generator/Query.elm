@@ -1,11 +1,18 @@
 module GraphqElm.Generator.Query exposing (..)
 
+import GraphqElm.Generator.Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import String.Format
 
 
 generate : List Field -> ( List String, String )
 generate fields =
+    let
+        imports =
+            fields
+                |> List.map (\{ name, typeRef } -> typeRef)
+                |> List.map GraphqElm.Generator.Imports.imports
+    in
     ( moduleName
     , prepend (moduleName |> String.join ".")
         ++ (List.map generateNew fields |> String.join "\n\n")

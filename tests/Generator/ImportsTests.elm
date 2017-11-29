@@ -13,19 +13,19 @@ all =
         [ test "scalar has no imports" <|
             \() ->
                 Imports.imports scalarRef
-                    |> Expect.equal []
+                    |> Expect.equal Nothing
         , test "list of scalars has no imports" <|
             \() ->
                 Imports.imports listOfScalarRef
-                    |> Expect.equal []
+                    |> Expect.equal Nothing
         , test "object ref has a ref" <|
             \() ->
                 Imports.imports objectRef
-                    |> Expect.equal [ "Foo" ]
+                    |> Expect.equal (Just [ "Api", "Object", "Foo" ])
         , test "list of object ref has a ref to each" <|
             \() ->
                 Imports.imports listOfObjectRef
-                    |> Expect.equal [ "Foo" ]
+                    |> Expect.equal (Just [ "Api", "Object", "Foo" ])
         ]
 
 
