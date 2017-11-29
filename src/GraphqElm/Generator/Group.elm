@@ -34,5 +34,5 @@ toPair ((Type.TypeDefinition name definableType) as definition) =
                     GraphqElm.Generator.Object.generate name fields
                         |> Just
 
-            definableType ->
+            Type.ScalarType _ ->
                 Nothing
