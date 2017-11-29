@@ -49,6 +49,8 @@ decoder =
         ++ """
 
                     _ ->
-                        Decode.fail ("Invalid Weather type, " ++ string ++ " try re-running the graphqelm CLI ")
+                        Decode.fail ("Invalid """
+        ++ enumName
+        ++ """ type, " ++ string ++ " try re-running the graphqelm CLI ")
         )
         """
