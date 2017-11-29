@@ -4,8 +4,8 @@ import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import String.Format
 
 
-generateNewFormat : String -> List Type.Field -> ( List String, String )
-generateNewFormat name fields =
+generate : String -> List Type.Field -> ( List String, String )
+generate name fields =
     let
         moduleName =
             [ "Api", "Object", name ]
@@ -14,27 +14,6 @@ generateNewFormat name fields =
     , prepend (String.join "." moduleName)
         ++ (List.map generateField fields |> String.join "\n\n")
     )
-
-
-generate : TypeDefinition -> { moduleName : List String, moduleContents : String }
-generate (Type.TypeDefinition name definableType) =
-    let
-        moduleName =
-            [ "Api", "Object", name ]
-
-        fields =
-            case definableType of
-                Type.ObjectType fields ->
-                    fields
-
-                _ ->
-                    []
-    in
-    { moduleName = moduleName
-    , moduleContents =
-        prepend (String.join "." moduleName)
-            ++ (List.map generateField fields |> String.join "\n\n")
-    }
 
 
 prepend : String -> String

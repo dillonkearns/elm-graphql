@@ -1,11 +1,6 @@
 port module Main exposing (..)
 
-import Dict
-import GraphqElm.Generator.Group
-import GraphqElm.Generator.Object
-import GraphqElm.Generator.Query
 import GraphqElm.Parser
-import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition)
 import Http
 import Json.Decode exposing (..)
 import Json.Encode
@@ -31,27 +26,6 @@ type alias Flags =
 
 type Msg
     = GotSchema (Result.Result Http.Error String)
-
-
-queryFile : GraphqElm.Generator.Group.Group -> Dict.Dict String String
-queryFile group =
-    Dict.fromList
-        (( "Api/Query.elm", GraphqElm.Generator.Query.generate [ "Query" ] group.queries )
-            :: List.map
-                (\((Type.TypeDefinition name definableType) as definition) ->
-                    case definableType of
-                        Type.ObjectType fields ->
-                            let
-                                { moduleName, moduleContents } =
-                                    GraphqElm.Generator.Object.generate definition
-                            in
-                            ( (moduleName |> String.join "/") ++ ".elm", moduleContents )
-
-                        Type.ScalarType _ ->
-                            Debug.crash "TODO"
-                )
-                group.objects
-        )
 
 
 init : Flags -> ( Model, Cmd Msg )

@@ -4,18 +4,12 @@ import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeRefere
 import String.Format
 
 
-generateNewFormat : List Field -> ( List String, String )
-generateNewFormat fields =
+generate : List Field -> ( List String, String )
+generate fields =
     ( [ "Query" ]
     , prepend "Query"
         ++ (List.map generateNew fields |> String.join "\n\n")
     )
-
-
-generate : List String -> List Field -> String
-generate moduleName fields =
-    prepend (String.join "." moduleName)
-        ++ (List.map generateNew fields |> String.join "\n\n")
 
 
 prepend : String -> String

@@ -1,28 +1,9 @@
-module GraphqElm.Generator.Group exposing (Group, gather, generateFiles)
+module GraphqElm.Generator.Group exposing (generateFiles)
 
 import Dict exposing (Dict)
 import GraphqElm.Generator.Object
 import GraphqElm.Generator.Query
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition)
-
-
-type alias Group =
-    { queries : List Field
-    , scalars : List TypeDefinition
-    , objects : List TypeDefinition
-    , enums : List TypeDefinition
-    }
-
-
-gather : List TypeDefinition -> Group
-gather definitions =
-    definitions
-        |> List.foldl addToGroup
-            { queries = []
-            , scalars = []
-            , objects = []
-            , enums = []
-            }
 
 
 generateFiles : List TypeDefinition -> Dict String String
@@ -47,27 +28,11 @@ toPair ((Type.TypeDefinition name definableType) as definition) =
         case definableType of
             Type.ObjectType fields ->
                 if name == "RootQueryType" then
-                    GraphqElm.Generator.Query.generateNewFormat fields
+                    GraphqElm.Generator.Query.generate fields
                         |> Just
                 else
-                    GraphqElm.Generator.Object.generateNewFormat name fields
+                    GraphqElm.Generator.Object.generate name fields
                         |> Just
 
             definableType ->
                 Nothing
-
-
-addToGroup : TypeDefinition -> Group -> Group
-addToGroup ((Type.TypeDefinition name definableType) as definition) group =
-    if String.startsWith "__" name then
-        group
-    else
-        case definableType of
-            Type.ObjectType fields ->
-                if name == "RootQueryType" then
-                    { group | queries = fields }
-                else
-                    { group | objects = definition :: group.objects }
-
-            definableType ->
-                group

@@ -6,9 +6,6 @@ import GraphqElm.Parser.Type as Type
 import Json.Decode as Decode exposing (Decoder)
 
 
--- decoderNew : Decoder GraphqElm.Generator.Group.Group
-
-
 decoderNew : Decoder (Dict String String)
 decoderNew =
     Type.decoder
