@@ -36,12 +36,14 @@ import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import GraphqElm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
-{2}
+"""
+        ( moduleName, imports )
+        ++ imports
+        ++ """
 
 type Type
     = Type
 """
-        ( moduleName, imports )
 
 
 generateNew : Type.Field -> String
