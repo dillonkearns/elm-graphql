@@ -56,13 +56,13 @@ queryFile group =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    let
-        fieldsResult =
-            Json.Decode.decodeValue GraphqElm.Parser.decoderNew flags.data
-    in
-    case fieldsResult of
+    case Json.Decode.decodeValue GraphqElm.Parser.decoderNew flags.data of
         Ok fields ->
-            ( (), generatedFiles (queryFile fields |> Json.Encode.Extra.dict identity Json.Encode.string) )
+            ( ()
+            , fields
+                |> Json.Encode.Extra.dict identity Json.Encode.string
+                |> generatedFiles
+            )
 
         Err error ->
             Debug.crash ("Got error " ++ toString error)
