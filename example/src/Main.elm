@@ -23,16 +23,16 @@ type alias DecodesTo =
 
 
 type alias MenuItem =
-    { name : String
-    , description : String
+    { id : String
+    , name : String
     }
 
 
 menuItem : Object MenuItem MenuItem.Type
 menuItem =
     MenuItem.build MenuItem
+        |> Object.with MenuItem.id
         |> Object.with MenuItem.name
-        |> Object.with MenuItem.description
 
 
 menuItemsQuery : Field.Query (List MenuItem)

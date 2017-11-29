@@ -52,7 +52,7 @@ generateField { name, typeRef } =
     String.Format.format3
         """{1} : TypeLocked (FieldDecoder {2}) Type
 {1} =
-    Field.fieldDecoder "name" ({3})
+    Field.fieldDecoder "{1}" ({3})
 """
         ( name, generateType typeRef, generateDecoder typeRef )
 

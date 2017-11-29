@@ -17,12 +17,12 @@ build constructor =
 
 description : TypeLocked (FieldDecoder String) Type
 description =
-    Field.fieldDecoder "name" Decode.string
+    Field.fieldDecoder "description" Decode.string
 
 
 id : TypeLocked (FieldDecoder String) Type
 id =
-    Field.fieldDecoder "name" Decode.string
+    Field.fieldDecoder "id" Decode.string
 
 
 name : TypeLocked (FieldDecoder String) Type
