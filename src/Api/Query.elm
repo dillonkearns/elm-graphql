@@ -6,6 +6,7 @@ import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query as Query
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
+import Schema.MenuItem as MenuItem
 
 
 captains : Field.Query (List String)

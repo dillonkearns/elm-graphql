@@ -50,17 +50,6 @@ generateDecoderNew typeRef =
                     "Api.Object." ++ objectName ++ ".decoder"
 
 
-
-{-
-
-   menuItem : { id : String } -> List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query menuItem
-   menuItem requiredArgs optionalArgs object =
-       Object.single "menuItem" (MenuItem.idArg requiredArgs.id :: optionalArgs) object
-           |> Query.rootQuery
-
--}
-
-
 generateType : TypeReference -> String
 generateType typeRef =
     case typeRef of
