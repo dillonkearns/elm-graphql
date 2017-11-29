@@ -1,8 +1,8 @@
 module Parser.DecodeTests exposing (all)
 
 import Expect
-import GraphqElm.Parser.TypeKind as TypeKind
 import GraphqElm.Parser.Type as Type
+import GraphqElm.Parser.TypeKind as TypeKind
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (Test, describe, test)
 
@@ -49,6 +49,7 @@ all =
                                 { name = "RootQueryType"
                                 , kind = TypeKind.Object
                                 , ofType = Nothing
+                                , enumValues = Nothing
                                 , fields =
                                     Just
                                         [ { name = "captains"

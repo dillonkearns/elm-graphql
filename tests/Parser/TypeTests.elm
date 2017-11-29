@@ -2,8 +2,8 @@ module Parser.TypeTests exposing (..)
 
 import Expect
 import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
 import GraphqElm.Parser.Type as Type
+import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
 import Test exposing (..)
 
 
@@ -16,6 +16,7 @@ all =
                     { name = "MenuItems"
                     , kind = TypeKind.Object
                     , ofType = Nothing
+                    , enumValues = Nothing
                     , fields =
                         Just
                             [ { name = "description"
@@ -89,6 +90,7 @@ all =
                     , kind = TypeKind.Scalar
                     , ofType = Nothing
                     , fields = Nothing
+                    , enumValues = Nothing
                     }
                     |> Type.parse
                     |> Expect.equal

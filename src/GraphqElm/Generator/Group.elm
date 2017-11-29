@@ -1,6 +1,7 @@
 module GraphqElm.Generator.Group exposing (generateFiles)
 
 import Dict exposing (Dict)
+import GraphqElm.Generator.Enum
 import GraphqElm.Generator.Object
 import GraphqElm.Generator.Query
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition)
@@ -36,3 +37,7 @@ toPair ((Type.TypeDefinition name definableType) as definition) =
 
             Type.ScalarType _ ->
                 Nothing
+
+            Type.EnumType enumValues ->
+                GraphqElm.Generator.Enum.generate name enumValues
+                    |> Just

@@ -89,6 +89,9 @@ generateDecoderNew typeRef =
                 Type.ObjectRef objectName ->
                     "Api.Object." ++ objectName ++ ".decoder"
 
+                Type.EnumRef _ ->
+                    "DECODERENUMTYPE"
+
 
 generateType : TypeReference -> String
 generateType typeRef =
@@ -103,3 +106,6 @@ generateType typeRef =
 
                 Type.ObjectRef objectName ->
                     "Object." ++ objectName
+
+                Type.EnumRef _ ->
+                    "QUERYENUMTYPE"

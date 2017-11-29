@@ -9,12 +9,12 @@ type TypeKind
     | List
     | NonNull
     | Ignore
+    | Enum
 
 
 
 -- | Interface
 -- | Union
--- | Enum
 -- | InputObject
 
 
@@ -36,6 +36,9 @@ decoder =
                     "NON_NULL" ->
                         Decode.succeed NonNull
 
+                    "ENUM" ->
+                        Decode.succeed Enum
+
                     _ ->
                         Decode.succeed Ignore
              -- "INTERFACE" ->
@@ -44,8 +47,6 @@ decoder =
              -- "UNION" ->
              --     Decode.succeed Union
              --
-             -- "ENUM" ->
-             --     Decode.succeed Enum
              --
              -- "INPUT_OBJECT" ->
              --     Decode.succeed InputObject

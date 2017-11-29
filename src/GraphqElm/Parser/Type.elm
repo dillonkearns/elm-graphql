@@ -7,7 +7,7 @@ import Json.Decode as Decode exposing (Decoder)
 
 decoder : Decoder RawTypeDef
 decoder =
-    Decode.map4 createType
+    Decode.map5 createType
         (Decode.field "name" Decode.string)
         (Decode.field "kind" TypeKind.decoder)
         (Decode.maybe (Decode.field "ofType" typeRefDecoder))
@@ -15,6 +15,12 @@ decoder =
             Decode.field "fields" <|
                 Decode.list <|
                     fieldDecoder
+        )
+        (Decode.string
+            |> Decode.field "name"
+            |> Decode.list
+            |> Decode.maybe
+            |> Decode.field "enumValues"
         )
 
 
@@ -53,6 +59,7 @@ type TypeDefinition
 type DefinableType
     = ScalarType String
     | ObjectType (List Field)
+    | EnumType (List String)
 
 
 type TypeReference
@@ -62,6 +69,7 @@ type TypeReference
 type ReferrableType
     = Scalar Scalar.Scalar
     | List TypeReference
+    | EnumRef String
     | ObjectRef String
 
 
@@ -97,6 +105,18 @@ parse (RawTypeDef rawType) =
             TypeDefinition
                 "Ignore"
                 (ScalarType "Ignore")
+
+        TypeKind.Enum ->
+            -- case rawType.enumValues of
+            -- Just enumValues ->
+            TypeDefinition
+                rawType.name
+                (EnumType (rawType.enumValues |> Maybe.withDefault []))
+
+
+
+-- Nothing ->
+--     Debug.crash ("Expected enum values for top-level enum definition" ++ "\n" ++ toString rawType)
 
 
 parseRef : RawTypeRef -> TypeReference
@@ -157,11 +177,27 @@ parseRef (RawTypeRef rawTypeRef) =
                         ( TypeKind.Ignore, Maybe.Just _ ) ->
                             ignoreRef
 
+                        ( TypeKind.Enum, Maybe.Just _ ) ->
+                            case rawTypeRef.name of
+                                Just objectName ->
+                                    TypeReference (EnumRef objectName) NonNullable
+
+                                Nothing ->
+                                    Debug.crash "Should not get null names for enum references"
+
                 Nothing ->
                     Debug.crash "TODO"
 
         TypeKind.Ignore ->
             ignoreRef
+
+        TypeKind.Enum ->
+            case rawTypeRef.name of
+                Just objectName ->
+                    TypeReference (EnumRef objectName) Nullable
+
+                Nothing ->
+                    Debug.crash "Should not get null names for enum references"
 
 
 ignoreRef : TypeReference
@@ -169,13 +205,14 @@ ignoreRef =
     TypeReference (Scalar (Scalar.Custom { name = "Ignore" })) NonNullable
 
 
-createType : String -> TypeKind -> Maybe RawTypeRef -> Maybe (List RawField) -> RawTypeDef
-createType name kind ofType fields =
+createType : String -> TypeKind -> Maybe RawTypeRef -> Maybe (List RawField) -> Maybe (List String) -> RawTypeDef
+createType name kind ofType fields enumValues =
     RawTypeDef
         { name = name
         , kind = kind
         , ofType = ofType
         , fields = fields
+        , enumValues = enumValues
         }
 
 
@@ -198,6 +235,7 @@ type RawTypeDef
         , kind : TypeKind
         , ofType : Maybe RawTypeRef
         , fields : Maybe (List RawField)
+        , enumValues : Maybe (List String)
         }
 
 

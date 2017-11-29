@@ -28,3 +28,7 @@ imports (Type.TypeReference referrableType isNullable) =
 
         Type.ObjectRef objectName ->
             Just (GraphqElm.Generator.Object.moduleNameFor objectName)
+
+        Type.EnumRef _ ->
+            -- TODO
+            Nothing
