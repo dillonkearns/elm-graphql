@@ -57,7 +57,7 @@ type TypeDefinition
 
 
 type DefinableType
-    = ScalarType String
+    = ScalarType
     | ObjectType (List Field)
     | EnumType (List String)
 
@@ -79,7 +79,7 @@ parse (RawTypeDef rawType) =
         TypeKind.Scalar ->
             TypeDefinition
                 "Date"
-                (ScalarType "Date")
+                ScalarType
 
         TypeKind.Object ->
             TypeDefinition
@@ -104,7 +104,7 @@ parse (RawTypeDef rawType) =
         TypeKind.Ignore ->
             TypeDefinition
                 "Ignore"
-                (ScalarType "Ignore")
+                ScalarType
 
         TypeKind.Enum ->
             -- case rawType.enumValues of

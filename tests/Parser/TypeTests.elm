@@ -96,6 +96,6 @@ all =
                     |> Expect.equal
                         (Type.TypeDefinition
                             "Date"
-                            (Type.ScalarType "Date")
+                            Type.ScalarType
                         )
         ]

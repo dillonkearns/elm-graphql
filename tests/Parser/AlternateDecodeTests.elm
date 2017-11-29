@@ -41,6 +41,24 @@ all =
                         (Ok
                             (Type.TypeDefinition "Weather" (Type.EnumType [ "CLOUDY", "SUNNY" ]))
                         )
+        , test "scalars" <|
+            \() ->
+                """
+                {
+                          "possibleTypes": null,
+                          "name": "Date",
+                          "kind": "SCALAR",
+                          "interfaces": null,
+                          "inputFields": null,
+                          "fields": null,
+                          "enumValues": null
+                        }
+                              """
+                    |> Decode.decodeString decoder
+                    |> Expect.equal
+                        (Ok
+                            (TypeDefinition "Date" ScalarType)
+                        )
         , test "decodes object" <|
             \() ->
                 """
@@ -133,8 +151,17 @@ decodeKind kind =
         "ENUM" ->
             enumDecoder
 
+        "SCALAR" ->
+            scalarDecoder
+
         _ ->
             Decode.fail ("Unknown kind " ++ kind)
+
+
+scalarDecoder : Decoder Type.TypeDefinition
+scalarDecoder =
+    Decode.map (\scalarName -> Type.TypeDefinition scalarName Type.ScalarType)
+        (Decode.field "name" Decode.string)
 
 
 objectDecoder : Decoder Type.TypeDefinition
