@@ -1,5 +1,6 @@
 module GraphqElm.Generator.Imports exposing (..)
 
+import GraphqElm.Generator.Enum
 import GraphqElm.Generator.Object
 import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 
@@ -29,6 +30,5 @@ imports (Type.TypeReference referrableType isNullable) =
         Type.ObjectRef objectName ->
             Just (GraphqElm.Generator.Object.moduleNameFor objectName)
 
-        Type.EnumRef _ ->
-            -- TODO
-            Nothing
+        Type.EnumRef enumName ->
+            Just (GraphqElm.Generator.Enum.moduleNameFor enumName)
