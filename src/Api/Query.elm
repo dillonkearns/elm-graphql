@@ -1,12 +1,12 @@
 module Api.Query exposing (..)
 
+import Api.Object.MenuItem
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query as Query
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
-import Schema.MenuItem as MenuItem
 
 
 captains : Field.Query (List String)
@@ -21,7 +21,7 @@ me =
         |> Query.rootQuery
 
 
-menuItems : List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query (List menuItem)
+menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
 menuItems optionalArgs object =
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery

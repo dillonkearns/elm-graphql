@@ -10,11 +10,15 @@ const tsDeclarationPath = args.output
 
 const onDataAvailable = (data: any) => {
   let app = Elm.Main.worker({ data })
-  app.ports.generatedFiles.subscribe(function(generatedFile: string) {
+  app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     try {
       fs.mkdirSync('./src/Api')
     } catch {}
-    fs.writeFileSync('./src/Api/Query.elm', generatedFile)
+    let foo = { a: 1, b: 2 }
+    for (let key in generatedFile) {
+      let value = generatedFile[key]
+      fs.writeFileSync('./src/Api/' + key, value)
+    }
   })
 }
 const body = `query IntrospectionQuery {

@@ -11,7 +11,7 @@ generateNew field =
             case referrableType of
                 Type.ObjectRef objectName ->
                     String.Format.format2
-                        """{1} : List (TypeLocked Argument Api.{2}.Type) -> Object {1} Api.{2}.Type -> Field.Query {1}
+                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
 {1} optionalArgs object =
     Object.single "{1}" optionalArgs object
         |> Query.rootQuery
@@ -19,7 +19,7 @@ generateNew field =
                         ( field.name, objectName )
 
                 Type.List (Type.TypeReference (Type.ObjectRef objectName) isObjectNullable) ->
-                    """menuItems : List (TypeLocked Argument Api.MenuItem.Type) -> Object menuItem Api.MenuItem.Type -> Field.Query (List menuItem)
+                    """menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
 menuItems optionalArgs object =
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery

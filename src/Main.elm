@@ -1,10 +1,14 @@
 port module Main exposing (..)
 
+import Dict
 import GraphqElm.Generator.Group
 import GraphqElm.Generator.Module
 import GraphqElm.Parser
+import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition)
 import Http
 import Json.Decode exposing (..)
+import Json.Encode
+import Json.Encode.Extra
 
 
 -- Need to import Json.Decode as a
@@ -28,9 +32,21 @@ type Msg
     = GotSchema (Result.Result Http.Error String)
 
 
-queryFile : GraphqElm.Generator.Group.Group -> String
-queryFile fields =
-    GraphqElm.Generator.Module.generateNew fields
+queryFile : GraphqElm.Generator.Group.Group -> Dict.Dict String String
+queryFile group =
+    Dict.fromList
+        (( "Query.elm", GraphqElm.Generator.Module.generateNew group.queries )
+            :: List.map
+                (\((Type.TypeDefinition name definableType) as definition) ->
+                    case definableType of
+                        Type.ObjectType fields ->
+                            ( "Object/" ++ name ++ ".elm", GraphqElm.Generator.Module.generateNew fields )
+
+                        Type.ScalarType _ ->
+                            Debug.crash "TODO"
+                )
+                group.objects
+        )
 
 
 init : Flags -> ( Model, Cmd Msg )
@@ -41,7 +57,7 @@ init flags =
     in
     case fieldsResult of
         Ok fields ->
-            ( (), generatedFiles (queryFile fields) )
+            ( (), generatedFiles (queryFile fields |> Json.Encode.Extra.dict identity Json.Encode.string) )
 
         Err error ->
             Debug.crash ("Got error " ++ toString error)
@@ -67,7 +83,7 @@ main =
         }
 
 
-port generatedFiles : String -> Cmd msg
+port generatedFiles : Json.Encode.Value -> Cmd msg
 
 
 port parsingError : String -> Cmd msg

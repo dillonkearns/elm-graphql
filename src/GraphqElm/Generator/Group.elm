@@ -23,13 +23,16 @@ gather definitions =
 
 
 addToGroup : TypeDefinition -> Group -> Group
-addToGroup definition group =
-    case definition of
-        Type.TypeDefinition "RootQueryType" (Type.ObjectType fields) ->
-            { group | queries = fields }
+addToGroup ((Type.TypeDefinition name definableType) as definition) group =
+    if String.startsWith "__" name then
+        group
+    else
+        case definableType of
+            Type.ObjectType fields ->
+                if name == "RootQueryType" then
+                    { group | queries = fields }
+                else
+                    { group | objects = definition :: group.objects }
 
-        Type.TypeDefinition name (Type.ObjectType fields) ->
-            { group | objects = definition :: group.objects }
-
-        Type.TypeDefinition name definableType ->
-            group
+            definableType ->
+                group
