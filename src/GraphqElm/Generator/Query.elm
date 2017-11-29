@@ -1,5 +1,6 @@
 module GraphqElm.Generator.Query exposing (..)
 
+import GraphqElm.Generator.Enum
 import GraphqElm.Generator.Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import String.Format
@@ -109,5 +110,7 @@ generateType typeRef =
                 Type.ObjectRef objectName ->
                     "Object." ++ objectName
 
-                Type.EnumRef _ ->
-                    "QUERYENUMTYPE"
+                Type.EnumRef enumName ->
+                    GraphqElm.Generator.Enum.moduleNameFor enumName
+                        ++ [ enumName ]
+                        |> String.join "."
