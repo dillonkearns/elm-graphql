@@ -62,6 +62,7 @@ type TypeReference
 type ReferrableType
     = Scalar Scalar.Scalar
     | List TypeReference
+    | ObjectRef String
 
 
 parse : RawTypeDef -> TypeDefinition
@@ -120,7 +121,12 @@ parseRef (RawTypeRef rawTypeRef) =
                     Debug.crash "Should not get null names for scalar references"
 
         TypeKind.Object ->
-            TypeReference (Scalar Scalar.Boolean) Nullable
+            case rawTypeRef.name of
+                Just objectName ->
+                    TypeReference (ObjectRef objectName) Nullable
+
+                Nothing ->
+                    Debug.crash "Should not get null names for object references"
 
         TypeKind.NonNull ->
             case rawTypeRef.ofType of

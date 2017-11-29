@@ -97,6 +97,5 @@ const body = `query IntrospectionQuery {
     }
   }`
 request.post('http://localhost:4000/api', { body }, function(a, response, c) {
-  console.log('response: ', response.body)
   onDataAvailable(JSON.parse(response.body))
 })

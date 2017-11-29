@@ -1,0 +1,95 @@
+module Generator.GenerateQueryTests exposing (..)
+
+-- generateThis : List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query menuItem
+-- generateThis optionalArgs object =
+--     Object.single "menuItem" optionalArgs object
+--         |> Query.rootQuery
+
+import Expect
+import GraphqElm.Generator.Query
+import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
+import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Test exposing (..)
+
+
+all : Test
+all =
+    describe "group"
+        [ test "generates correct functions for scalar queries" <|
+            \() ->
+                meField
+                    |> GraphqElm.Generator.Query.generateNew
+                    |> Expect.equal """me : Field.Query (String)
+me =
+    Field.custom "me" (Decode.string)
+        |> Query.rootQuery
+"""
+        , test "generates object queries" <|
+            \() ->
+                menuItemField
+                    |> GraphqElm.Generator.Query.generateNew
+                    |> Expect.equal """menuItem : List (TypeLocked Argument Api.MenuItem.Type) -> Object menuItem Api.MenuItem.Type -> Field.Query menuItem
+menuItem optionalArgs object =
+    Object.single "menuItem" optionalArgs object
+        |> Query.rootQuery
+"""
+        , test "generates list object queries" <|
+            \() ->
+                menuItemsField
+                    |> GraphqElm.Generator.Query.generateNew
+                    |> Expect.equal """menuItems : List (TypeLocked Argument Api.MenuItem.Type) -> Object menuItem Api.MenuItem.Type -> Field.Query (List menuItem)
+menuItems optionalArgs object =
+    Object.listOf "menuItems" optionalArgs object
+        |> Query.rootQuery
+"""
+        ]
+
+
+rootQuery : TypeDefinition
+rootQuery =
+    Type.TypeDefinition
+        "RootQueryType"
+        (Type.ObjectType
+            [ meField
+            , captainsField
+            ]
+        )
+
+
+captainsField : Type.Field
+captainsField =
+    { name = "captains"
+    , typeRef =
+        Type.TypeReference
+            (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
+            Type.NonNullable
+    }
+
+
+menuItemsField : Type.Field
+menuItemsField =
+    { name = "menuItems"
+    , typeRef =
+        Type.TypeReference
+            (Type.List
+                (Type.TypeReference
+                    (Type.ObjectRef "MenuItem")
+                    Type.NonNullable
+                )
+            )
+            Type.NonNullable
+    }
+
+
+menuItemField : Type.Field
+menuItemField =
+    { name = "menuItem"
+    , typeRef = Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable
+    }
+
+
+meField : Type.Field
+meField =
+    { name = "me"
+    , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+    }

@@ -9,7 +9,7 @@ import Json.Decode as Decode exposing (Decoder)
 import Schema.MenuItem as MenuItem
 
 
-menuItems : List (TypeLocked Argument typeLock) -> Object menuItem typeLock -> Field.Query (List menuItem)
+menuItems : List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query (List menuItem)
 menuItems optionalArgs object =
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery
@@ -18,6 +18,18 @@ menuItems optionalArgs object =
 menuItem : { id : String } -> List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query menuItem
 menuItem requiredArgs optionalArgs object =
     Object.single "menuItem" (MenuItem.idArg requiredArgs.id :: optionalArgs) object
+        |> Query.rootQuery
+
+
+generateForLists : List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query (List menuItem)
+generateForLists optionalArgs object =
+    Object.listOf "menuItems" optionalArgs object
+        |> Query.rootQuery
+
+
+generateThis : List (TypeLocked Argument MenuItem.Type) -> Object menuItem MenuItem.Type -> Field.Query menuItem
+generateThis optionalArgs object =
+    Object.single "menuItem" optionalArgs object
         |> Query.rootQuery
 
 
