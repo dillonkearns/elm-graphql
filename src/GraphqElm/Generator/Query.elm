@@ -75,7 +75,20 @@ menuItems optionalArgs object =
     Field.custom "{1}" ({3})
         |> Query.rootQuery
 """
-                        ( field.name, generateType field.typeRef, generateDecoderNew field.typeRef )
+                        ( field.name
+                        , (if isNullable == Type.Nullable then
+                            "Maybe "
+                           else
+                            ""
+                          )
+                            ++ generateType field.typeRef
+                        , generateDecoderNew field.typeRef
+                            ++ (if isNullable == Type.Nullable then
+                                    " |> Decode.maybe"
+                                else
+                                    ""
+                               )
+                        )
 
 
 generateDecoderNew : TypeReference -> String
@@ -107,7 +120,7 @@ generateType typeRef =
                     "String"
 
                 Type.List typeRef ->
-                    "List String"
+                    "(List String)"
 
                 Type.ObjectRef objectName ->
                     "Object." ++ objectName

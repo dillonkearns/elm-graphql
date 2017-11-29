@@ -15,7 +15,7 @@ captainsRef =
             (Type.List
                 (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable)
             )
-            Type.Nullable
+            Type.NonNullable
     }
 
 
@@ -42,7 +42,7 @@ me =
                 captainsRef
                     |> GraphqElm.Generator.Query.generateNew
                     |> Expect.equal
-                        """captains : Field.Query (List String)
+                        """captains : Field.Query ((List String))
 captains =
     Field.custom "captains" (Decode.string |> Decode.list)
         |> Query.rootQuery

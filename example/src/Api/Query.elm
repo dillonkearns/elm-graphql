@@ -14,9 +14,9 @@ type Type
     = Type
 
 
-captains : Field.Query (List String)
+captains : Field.Query (Maybe (List String))
 captains =
-    Field.custom "captains" (Decode.string |> Decode.list)
+    Field.custom "captains" (Decode.string |> Decode.list |> Decode.maybe)
         |> Query.rootQuery
 
 

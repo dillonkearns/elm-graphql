@@ -177,13 +177,8 @@ parseRef (RawTypeRef rawTypeRef) =
                         ( TypeKind.Ignore, Maybe.Just _ ) ->
                             ignoreRef
 
-                        ( TypeKind.Enum, Maybe.Just _ ) ->
-                            case rawTypeRef.name of
-                                Just objectName ->
-                                    TypeReference (EnumRef objectName) NonNullable
-
-                                Nothing ->
-                                    Debug.crash "Should not get null names for enum references"
+                        ( TypeKind.Enum, Maybe.Just enumName ) ->
+                            TypeReference (EnumRef enumName) NonNullable
 
                 Nothing ->
                     Debug.crash "TODO"
