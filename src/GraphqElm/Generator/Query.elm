@@ -6,16 +6,21 @@ import String.Format
 
 generate : List Field -> ( List String, String )
 generate fields =
-    ( [ "Query" ]
-    , prepend "Query"
+    ( moduleName
+    , prepend (moduleName |> String.join ".")
         ++ (List.map generateNew fields |> String.join "\n\n")
     )
+
+
+moduleName : List String
+moduleName =
+    [ "Api", "Query" ]
 
 
 prepend : String -> String
 prepend moduleName =
     String.Format.format1
-        """module Api.{1} exposing (..)
+        """module {1} exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
