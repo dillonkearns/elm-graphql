@@ -120,10 +120,21 @@ all =
 
 decoder : Decoder Type.TypeDefinition
 decoder =
-    Decode.oneOf
-        [ enumDecoder
-        , objectDecoder
-        ]
+    Decode.field "kind" Decode.string
+        |> Decode.andThen decodeKind
+
+
+decodeKind : String -> Decoder Type.TypeDefinition
+decodeKind kind =
+    case kind of
+        "OBJECT" ->
+            objectDecoder
+
+        "ENUM" ->
+            enumDecoder
+
+        _ ->
+            Decode.fail ("Unknown kind " ++ kind)
 
 
 objectDecoder : Decoder Type.TypeDefinition
