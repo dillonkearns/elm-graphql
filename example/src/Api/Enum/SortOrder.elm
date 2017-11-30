@@ -6,6 +6,8 @@ import Json.Decode as Decode exposing (Decoder)
 type SortOrder
     = ASC
     | DESC
+
+
 decoder : Decoder SortOrder
 decoder =
     Decode.string
@@ -19,6 +21,5 @@ decoder =
                         Decode.succeed DESC
 
                     _ ->
-                        Decode.fail ("Invalid Weather type, " ++ string ++ " try re-running the graphqelm CLI ")
-        )
-        
+                        Decode.fail ("Invalid SortOrder type, " ++ string ++ " try re-running the graphqelm CLI ")
+            )

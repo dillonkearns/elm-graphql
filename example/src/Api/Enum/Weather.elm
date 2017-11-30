@@ -6,6 +6,8 @@ import Json.Decode as Decode exposing (Decoder)
 type Weather
     = CLOUDY
     | SUNNY
+
+
 decoder : Decoder Weather
 decoder =
     Decode.string
@@ -20,5 +22,4 @@ decoder =
 
                     _ ->
                         Decode.fail ("Invalid Weather type, " ++ string ++ " try re-running the graphqelm CLI ")
-        )
-        
+            )
