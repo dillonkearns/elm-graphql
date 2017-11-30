@@ -65,28 +65,6 @@ createObject objectName fields =
     TypeDefinition objectName (ObjectType fields)
 
 
-
---
---
--- decoder : Decoder RawTypeDef
--- decoder =
---     Decode.map5 createType
---         (Decode.field "name" Decode.string)
---         (Decode.field "kind" TypeKind.decoder)
---         (Decode.maybe (Decode.field "ofType" typeRefDecoder))
---         (Decode.maybe <|
---             Decode.field "fields" <|
---                 Decode.list <|
---                     fieldDecoder
---         )
---         (Decode.string
---             |> Decode.field "name"
---             |> Decode.list
---             |> Decode.maybe
---             |> Decode.field "enumValues"
---         )
-
-
 typeRefDecoder : Decoder RawTypeRef
 typeRefDecoder =
     Decode.map3 createRawTypeRef
@@ -134,52 +112,6 @@ type ReferrableType
     | List TypeReference
     | EnumRef String
     | ObjectRef String
-
-
-
---
--- parse : RawTypeDef -> TypeDefinition
--- parse (RawTypeDef rawType) =
---     case rawType.kind of
---         TypeKind.Scalar ->
---             TypeDefinition
---                 "Date"
---                 ScalarType
---
---         TypeKind.Object ->
---             TypeDefinition
---                 rawType.name
---                 (ObjectType
---                     (List.map
---                         (\{ name, ofType } ->
---                             { name = name
---                             , typeRef = parseRef ofType
---                             }
---                         )
---                         (rawType.fields |> Maybe.withDefault [])
---                     )
---                 )
---
---         TypeKind.List ->
---             Debug.crash "List will not occur at the top-level definitions"
---
---         TypeKind.NonNull ->
---             Debug.crash "NonNull will not occur at the top-level definitions"
---
---         TypeKind.Ignore ->
---             TypeDefinition
---                 "Ignore"
---                 ScalarType
---
---         TypeKind.Enum ->
---             -- case rawType.enumValues of
---             -- Just enumValues ->
---             TypeDefinition
---                 rawType.name
---                 (EnumType (rawType.enumValues |> Maybe.withDefault []))
---
--- Nothing ->
---     Debug.crash ("Expected enum values for top-level enum definition" ++ "\n" ++ toString rawType)
 
 
 parseRef : RawTypeRef -> TypeReference
@@ -263,18 +195,6 @@ ignoreRef =
     TypeReference (Scalar (Scalar.Custom { name = "Ignore" })) NonNullable
 
 
-
--- createType : String -> TypeKind -> Maybe RawTypeRef -> Maybe (List RawField) -> Maybe (List String) -> RawTypeDef
--- createType name kind ofType fields enumValues =
---     RawTypeDef
---         { name = name
---         , kind = kind
---         , ofType = ofType
---         , fields = fields
---         , enumValues = enumValues
---         }
-
-
 type IsNullable
     = Nullable
     | NonNullable
@@ -286,18 +206,6 @@ type RawTypeRef
         , kind : TypeKind
         , ofType : Maybe RawTypeRef
         }
-
-
-
---
--- type RawTypeDef
---     = RawTypeDef
---         { name : String
---         , kind : TypeKind
---         , ofType : Maybe RawTypeRef
---         , fields : Maybe (List RawField)
---         , enumValues : Maybe (List String)
---         }
 
 
 type alias RawField =

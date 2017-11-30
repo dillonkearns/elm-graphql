@@ -1,4 +1,4 @@
-module Parser.AlternateDecodeTests exposing (all)
+module Parser.DecodeTests exposing (all)
 
 import Expect
 import GraphqElm.Parser.Scalar as Scalar
@@ -9,7 +9,7 @@ import Test exposing (Test, describe, test)
 
 all : Test
 all =
-    describe "alternate decoder - top-level"
+    describe "decoder - top-level"
         [ test "decodes enums" <|
             \() ->
                 """
