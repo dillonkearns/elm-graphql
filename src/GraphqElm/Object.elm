@@ -10,12 +10,12 @@ type Object decodesTo typeLock
     = Object (List Field) (Decoder decodesTo)
 
 
-listOf : String -> List (TypeLocked Argument typeLock) -> Object a typeLock -> FieldDecoder (List a)
+listOf : String -> List (TypeLocked Argument argTypeLock) -> Object a objectTypeLock -> FieldDecoder (List a)
 listOf fieldName args (Object fields decoder) =
     FieldDecoder (Composite fieldName (TypeLock.unlockAll args) fields) (Decode.list decoder |> Decode.field fieldName)
 
 
-single : String -> List (TypeLocked Argument typeLock) -> Object a typeLock -> FieldDecoder a
+single : String -> List (TypeLocked Argument argTypeLock) -> Object a objectTypeLock -> FieldDecoder a
 single fieldName args (Object fields decoder) =
     FieldDecoder (Composite fieldName (TypeLock.unlockAll args) fields) (decoder |> Decode.field fieldName)
 
