@@ -152,8 +152,8 @@ parseRef (RawTypeRef rawTypeRef) =
                                 (Scalar (scalarName |> Scalar.parse))
                                 NonNullable
 
-                        ( TypeKind.Object, _ ) ->
-                            Debug.crash "TODO a"
+                        ( TypeKind.Object, Just objectName ) ->
+                            TypeReference (ObjectRef objectName) Nullable
 
                         ( TypeKind.List, _ ) ->
                             case actualOfType.ofType of

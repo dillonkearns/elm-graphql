@@ -1,5 +1,6 @@
 module GraphqElm.Generator.Object exposing (..)
 
+import GraphqElm.Generator.Enum
 import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import String.Format
 
@@ -94,8 +95,8 @@ generateDecoder typeRef =
                 Type.ObjectRef objectName ->
                     "Api.Object." ++ objectName ++ ".decoder"
 
-                Type.EnumRef _ ->
-                    "ENUMTODO"
+                Type.EnumRef enumName ->
+                    GraphqElm.Generator.Enum.moduleNameFor enumName ++ [ "decoder" ] |> String.join "."
 
 
 generateType : TypeReference -> String
