@@ -36,7 +36,7 @@ all =
                           ]
                         }
               """
-                    |> Decode.decodeString decoder
+                    |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
                             (Type.TypeDefinition "Weather" (Type.EnumType [ "CLOUDY", "SUNNY" ]))
@@ -54,7 +54,7 @@ all =
                           "enumValues": null
                         }
                               """
-                    |> Decode.decodeString decoder
+                    |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
                             (TypeDefinition "Date" ScalarType)
@@ -121,7 +121,7 @@ all =
           "enumValues": null
         }
                         """
-                    |> Decode.decodeString decoder
+                    |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
                             (TypeDefinition "MenuItem"
@@ -134,63 +134,3 @@ all =
                             )
                         )
         ]
-
-
-decoder : Decoder Type.TypeDefinition
-decoder =
-    Decode.field "kind" Decode.string
-        |> Decode.andThen decodeKind
-
-
-decodeKind : String -> Decoder Type.TypeDefinition
-decodeKind kind =
-    case kind of
-        "OBJECT" ->
-            objectDecoder
-
-        "ENUM" ->
-            enumDecoder
-
-        "SCALAR" ->
-            scalarDecoder
-
-        _ ->
-            Decode.fail ("Unknown kind " ++ kind)
-
-
-scalarDecoder : Decoder Type.TypeDefinition
-scalarDecoder =
-    Decode.map (\scalarName -> Type.TypeDefinition scalarName Type.ScalarType)
-        (Decode.field "name" Decode.string)
-
-
-objectDecoder : Decoder Type.TypeDefinition
-objectDecoder =
-    Decode.map2 createObject
-        (Decode.field "name" Decode.string)
-        (Type.fieldDecoder
-            |> Decode.map (\{ name, ofType } -> { name = name, typeRef = Type.parseRef ofType })
-            |> Decode.list
-            |> Decode.field "fields"
-        )
-
-
-enumDecoder : Decoder Type.TypeDefinition
-enumDecoder =
-    Decode.map2 createEnum
-        (Decode.field "name" Decode.string)
-        (Decode.string
-            |> Decode.field "name"
-            |> Decode.list
-            |> Decode.field "enumValues"
-        )
-
-
-createEnum : String -> List String -> Type.TypeDefinition
-createEnum enumName enumValues =
-    Type.TypeDefinition enumName (Type.EnumType enumValues)
-
-
-createObject : String -> List Type.Field -> Type.TypeDefinition
-createObject objectName fields =
-    Type.TypeDefinition objectName (Type.ObjectType fields)
