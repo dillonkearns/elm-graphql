@@ -54,7 +54,9 @@ makeRequest : Cmd Msg
 makeRequest =
     query
         |> GraphqElm.Http.request "http://localhost:8080/graphql"
-        |> GraphqElm.Http.sendRemoteData GotResponse
+        |> GraphqElm.Http.toRequest
+        |> RemoteData.sendRequest
+        |> Cmd.map GotResponse
 
 
 init : ( Model, Cmd Msg )
