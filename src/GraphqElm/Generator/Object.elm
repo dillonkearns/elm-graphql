@@ -1,25 +1,28 @@
 module GraphqElm.Generator.Object exposing (..)
 
 import GraphqElm.Generator.Enum
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import GraphqElm.Generator.Imports as Imports
+import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import String.Format
 
 
 generate : String -> List Type.Field -> ( List String, String )
 generate name fields =
-    ( moduleNameFor name
-    , prepend (moduleNameFor name |> String.join ".")
+    ( Imports.object name
+    , prepend (Imports.object name) fields
         ++ (List.map generateField fields |> String.join "\n\n")
     )
 
 
-moduleNameFor : String -> List String
-moduleNameFor name =
-    [ "Api", "Object", name ]
-
-
-prepend : String -> String
-prepend moduleName =
+prepend : List String -> List Type.Field -> String
+prepend moduleName fields =
+    let
+        imports : String
+        imports =
+            fields
+                |> List.map (\{ name, typeRef } -> typeRef)
+                |> Imports.importsString moduleName
+    in
     String.Format.format1 """module {1} exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
@@ -27,6 +30,10 @@ import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode
+"""
+        (moduleName |> String.join ".")
+        ++ imports
+        ++ """
 
 
 type Type
@@ -37,7 +44,6 @@ build : (a -> constructor) -> Object (a -> constructor) Type
 build constructor =
     Object.object constructor
 """
-        moduleName
 
 
 generateField : Type.Field -> String

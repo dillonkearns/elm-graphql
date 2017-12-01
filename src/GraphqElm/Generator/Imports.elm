@@ -1,21 +1,33 @@
 module GraphqElm.Generator.Imports exposing (..)
 
 import GraphqElm.Generator.Enum
-import GraphqElm.Generator.Object
 import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 
 
-importsString : List TypeReference -> String
-importsString typeRefs =
+importsString : List String -> List TypeReference -> String
+importsString importingFrom typeRefs =
     typeRefs
-        |> List.filterMap imports
+        |> importsWithoutSelf importingFrom
+        |> List.map toModuleName
         |> List.map toImportString
         |> String.join "\n"
 
 
-toImportString : List String -> String
-toImportString modulePath =
-    "import " ++ (modulePath |> String.join ".")
+importsWithoutSelf : List String -> List TypeReference -> List (List String)
+importsWithoutSelf importingFrom typeRefs =
+    typeRefs
+        |> List.filterMap imports
+        |> List.filter (\moduleName -> moduleName /= importingFrom)
+
+
+toModuleName : List String -> String
+toModuleName modulePath =
+    modulePath |> String.join "."
+
+
+toImportString : String -> String
+toImportString moduleName =
+    "import " ++ moduleName
 
 
 imports : TypeReference -> Maybe (List String)
@@ -28,10 +40,15 @@ imports (Type.TypeReference referrableType isNullable) =
             imports typeRef
 
         Type.ObjectRef objectName ->
-            Just (GraphqElm.Generator.Object.moduleNameFor objectName)
+            Just (object objectName)
 
         Type.InterfaceRef interfaceName ->
-            Just (GraphqElm.Generator.Object.moduleNameFor interfaceName)
+            Just (object interfaceName)
 
         Type.EnumRef enumName ->
             Just (GraphqElm.Generator.Enum.moduleNameFor enumName)
+
+
+object : String -> List String
+object name =
+    [ "Api", "Object", name ]

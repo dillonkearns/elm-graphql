@@ -9,7 +9,7 @@ import String.Format
 generate : List Field -> ( List String, String )
 generate fields =
     ( moduleName
-    , prepend (moduleName |> String.join ".") fields
+    , prepend moduleName fields
         ++ (List.map generateNew fields |> String.join "\n\n")
     )
 
@@ -19,14 +19,14 @@ moduleName =
     [ "Api", "Query" ]
 
 
-prepend : String -> List Field -> String
+prepend : List String -> List Field -> String
 prepend moduleName fields =
     let
         imports : String
         imports =
             fields
                 |> List.map (\{ name, typeRef } -> typeRef)
-                |> GraphqElm.Generator.Imports.importsString
+                |> GraphqElm.Generator.Imports.importsString moduleName
     in
     String.Format.format2
         """module {1} exposing (..)
@@ -38,7 +38,7 @@ import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import GraphqElm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 """
-        ( moduleName, imports )
+        ( moduleName |> String.join ".", imports )
         ++ imports
         ++ """
 

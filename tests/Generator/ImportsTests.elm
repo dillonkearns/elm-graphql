@@ -26,6 +26,10 @@ all =
             \() ->
                 Imports.imports listOfObjectRef
                     |> Expect.equal (Just [ "Api", "Object", "Foo" ])
+        , test "filters out its own module name" <|
+            \() ->
+                Imports.importsWithoutSelf [ "Api", "Object", "Foo" ] [ listOfObjectRef ]
+                    |> Expect.equal []
         ]
 
 
