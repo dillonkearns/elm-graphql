@@ -28,6 +28,11 @@ name =
     Field.fieldDecoder "name" Decode.string
 
 
+friends : List (TypeLocked Argument Api.Object.Character.Type) -> Object friends Api.Object.Character.Type -> Field.FieldDecoder (List friends)
+friends optionalArgs object =
+    Object.listOf "friends" optionalArgs object
+
+
 appearsIn : TypeLocked (FieldDecoder (List Api.Enum.Episode.Episode)) lockedTo
 appearsIn =
     Field.fieldDecoder "appearsIn" (Api.Enum.Episode.decoder |> Decode.list)

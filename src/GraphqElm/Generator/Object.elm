@@ -10,7 +10,7 @@ generate : String -> List Type.Field -> ( List String, String )
 generate name fields =
     ( Imports.object name
     , prepend (Imports.object name) fields
-        ++ (List.map generateField fields |> String.join "\n\n")
+        ++ (List.map generateNew fields |> String.join "\n\n")
     )
 
 
@@ -44,6 +44,39 @@ build : (a -> constructor) -> Object (a -> constructor) Type
 build constructor =
     Object.object constructor
 """
+
+
+generateNew : Type.Field -> String
+generateNew field =
+    case field.typeRef of
+        Type.TypeReference referrableType isNullable ->
+            case referrableType of
+                Type.ObjectRef objectName ->
+                    String.Format.format2
+                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
+{1} optionalArgs object =
+    Object.single "{1}" optionalArgs object
+"""
+                        ( field.name, objectName )
+
+                Type.InterfaceRef interfaceName ->
+                    String.Format.format2
+                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
+{1} optionalArgs object =
+    Object.single "{1}" optionalArgs object
+"""
+                        ( field.name, interfaceName )
+
+                Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
+                    String.Format.format3
+                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {3} Api.Object.{2}.Type -> Field.Query (List {3})
+{1} optionalArgs object =
+    Object.listOf "{3}" optionalArgs object
+"""
+                        ( field.name, objectName, field.name )
+
+                _ ->
+                    generateField field
 
 
 generateField : Type.Field -> String

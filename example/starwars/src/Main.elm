@@ -25,6 +25,7 @@ type alias DecodesTo =
 type alias Hero =
     { id : String
     , name : String
+    , friends : List String
     , appearsIn : List Episode
     }
 
@@ -39,7 +40,14 @@ hero =
     Api.Object.Character.build Hero
         |> GraphqElm.Object.with Api.Object.Character.id
         |> GraphqElm.Object.with Api.Object.Character.name
+        |> GraphqElm.Object.with (Api.Object.Character.friends [] heroWithName)
         |> GraphqElm.Object.with Api.Object.Character.appearsIn
+
+
+heroWithName : GraphqElm.Object.Object String Api.Object.Character.Type
+heroWithName =
+    Api.Object.Character.build identity
+        |> GraphqElm.Object.with Api.Object.Character.name
 
 
 makeRequest : Cmd Msg
