@@ -10,5 +10,5 @@ decoderNew : Decoder (Dict String String)
 decoderNew =
     Type.decoder
         |> Decode.list
-        |> Decode.at [ "data", "__schema", "types" ]
+        |> Decode.at [ "__schema", "types" ]
         |> Decode.map GraphqElm.Generator.Group.generateFiles

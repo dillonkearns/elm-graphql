@@ -23,6 +23,7 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
+    "graphql-request": "^1.4.0",
     "minimist": "^1.2.0",
     "request": "^2.83.0"
   }

@@ -1,5 +1,6 @@
 const Elm = require('./Main.elm')
 import * as fs from 'fs'
+import { GraphQLClient } from 'graphql-request'
 import * as http from 'http'
 import * as minimist from 'minimist'
 import * as request from 'request'
@@ -8,20 +9,19 @@ const args = minimist(process.argv.slice(2))
 const inputPaths = args._
 const tsDeclarationPath = args.output
 
-const onDataAvailable = (data: any) => {
+const onDataAvailable = (data: {}) => {
   let app = Elm.Main.worker({ data })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     try {
       fs.mkdirSync('./src/Api')
     } catch {}
-    let foo = { a: 1, b: 2 }
     for (let key in generatedFile) {
       let value = generatedFile[key]
       fs.writeFileSync('./src/' + key, value)
     }
   })
 }
-const body = `query IntrospectionQuery {
+const introspectionQuery = `{
     __schema {
       # queryType { name
       # ...FullType
@@ -100,6 +100,13 @@ const body = `query IntrospectionQuery {
       }
     }
   }`
-request.post('http://localhost:4000/api', { body }, function(a, response, c) {
-  onDataAvailable(JSON.parse(response.body))
+new GraphQLClient('http://localhost:8080/graphql', {
+  mode: 'cors'
 })
+  .request(introspectionQuery)
+  .then(data => {
+    onDataAvailable(data)
+  })
+  .catch(err => {
+    console.log('error', err)
+  })
