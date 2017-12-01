@@ -23,24 +23,15 @@ const onDataAvailable = (data: {}) => {
 }
 const introspectionQuery = `{
     __schema {
-      # queryType { name
-      # ...FullType
-      # }
-      # mutationType { name }
-      # subscriptionType { name }
+      queryType {
+        name
+      }
+      mutationType {
+        name
+      }
       types {
         ...FullType
       }
-      # directives {
-      #   name
-      #   description
-      #   args {
-      #     ...InputValue
-      #   }
-      #   onOperation
-      #   onFragment
-      #   onField
-      # }
     }
   }
 
