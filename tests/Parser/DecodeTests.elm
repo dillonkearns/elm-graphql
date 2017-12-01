@@ -225,7 +225,7 @@ all =
                                 (InterfaceType
                                     [ { name = "id", typeRef = TypeReference (Scalar Scalar.String) NonNullable }
                                     , { name = "name", typeRef = TypeReference (Scalar Scalar.String) Nullable }
-                                    , { name = "friends", typeRef = TypeReference (List (TypeReference (Scalar (Scalar.Custom { name = "Ignore" })) NonNullable)) Nullable }
+                                    , { name = "friends", typeRef = TypeReference (List (TypeReference (InterfaceRef "Character") Nullable)) Nullable }
                                     , { name = "appearsIn", typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable }
                                     ]
                                 )
