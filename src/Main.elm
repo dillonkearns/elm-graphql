@@ -30,7 +30,7 @@ type Msg
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    case Json.Decode.decodeValue GraphqElm.Parser.decoderNew flags.data of
+    case Json.Decode.decodeValue GraphqElm.Parser.decoder flags.data of
         Ok fields ->
             ( ()
             , fields

@@ -1,4 +1,4 @@
-module GraphqElm.Parser exposing (decoderNew)
+module GraphqElm.Parser exposing (decoder)
 
 import Dict exposing (Dict)
 import GraphqElm.Generator.Group
@@ -6,8 +6,8 @@ import GraphqElm.Parser.Type as Type
 import Json.Decode as Decode exposing (Decoder)
 
 
-decoderNew : Decoder (Dict String String)
-decoderNew =
+decoder : Decoder (Dict String String)
+decoder =
     Type.decoder
         |> Decode.list
         |> Decode.at [ "__schema", "types" ]
