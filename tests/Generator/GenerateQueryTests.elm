@@ -43,7 +43,7 @@ menuItems optionalArgs object =
 rootQuery : TypeDefinition
 rootQuery =
     Type.TypeDefinition
-        "RootQueryType"
+        "Query"
         (Type.ObjectType
             [ meField
             , captainsField
