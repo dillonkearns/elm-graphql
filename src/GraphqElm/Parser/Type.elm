@@ -27,7 +27,11 @@ decodeKind kind =
             interfaceDecoder
 
         _ ->
-            Decode.fail ("Unknown kind " ++ kind)
+            scalarDecoder
+
+
+
+-- Decode.fail ("Unknown kind " ++ kind)
 
 
 scalarDecoder : Decoder TypeDefinition
@@ -132,6 +136,7 @@ type ReferrableType
     | List TypeReference
     | EnumRef String
     | ObjectRef String
+    | InterfaceRef String
 
 
 parseRef : RawTypeRef -> TypeReference
@@ -155,6 +160,14 @@ parseRef (RawTypeRef rawTypeRef) =
                 Nothing ->
                     Debug.crash "Should not get null names for scalar references"
 
+        TypeKind.Interface ->
+            case rawTypeRef.name of
+                Just interfaceName ->
+                    TypeReference (InterfaceRef interfaceName) Nullable
+
+                Nothing ->
+                    Debug.crash "Should not get null names for interface references"
+
         TypeKind.Object ->
             case rawTypeRef.name of
                 Just objectName ->
@@ -174,6 +187,9 @@ parseRef (RawTypeRef rawTypeRef) =
 
                         ( TypeKind.Object, Just objectName ) ->
                             TypeReference (ObjectRef objectName) Nullable
+
+                        ( TypeKind.Interface, Maybe.Just interfaceName ) ->
+                            TypeReference (InterfaceRef interfaceName) Nullable
 
                         ( TypeKind.List, _ ) ->
                             case actualOfType.ofType of
@@ -196,7 +212,7 @@ parseRef (RawTypeRef rawTypeRef) =
                             TypeReference (EnumRef enumName) NonNullable
 
                 Nothing ->
-                    Debug.crash "TODO"
+                    ignoreRef
 
         TypeKind.Ignore ->
             ignoreRef

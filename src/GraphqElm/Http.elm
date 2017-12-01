@@ -2,6 +2,7 @@ module GraphqElm.Http exposing (request, send, sendRemoteData, withHeader, withT
 
 import GraphqElm.Field as Field
 import Http
+import Json.Encode
 import RemoteData exposing (WebData)
 import Time exposing (Time)
 
@@ -23,9 +24,7 @@ request url query =
     { method = "POST"
     , headers = []
     , url = url
-    , body = Http.stringBody "text/plain" (Field.toQuery query)
-
-    -- TODO: using text/plain to workaround cors, should be application/json... --, body = Http.stringBody "application/json" (Field.toQuery query)
+    , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Field.toQuery query) ) ])
     , expect = Http.expectJson (Field.decoder query)
     , timeout = Nothing
     , withCredentials = False

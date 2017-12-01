@@ -95,6 +95,9 @@ generateDecoder typeRef =
                 Type.ObjectRef objectName ->
                     "Api.Object." ++ objectName ++ ".decoder"
 
+                Type.InterfaceRef interfaceName ->
+                    "Api.Object." ++ interfaceName ++ ".decoder"
+
                 Type.EnumRef enumName ->
                     GraphqElm.Generator.Enum.moduleNameFor enumName ++ [ "decoder" ] |> String.join "."
 
@@ -112,6 +115,9 @@ generateType typeRef =
 
                 Type.ObjectRef objectName ->
                     "Object." ++ objectName
+
+                Type.InterfaceRef interfaceName ->
+                    "Object." ++ interfaceName
 
                 Type.EnumRef _ ->
                     "ENUMTYPETODO"

@@ -61,6 +61,15 @@ generateNew field =
 """
                         ( field.name, objectName )
 
+                Type.InterfaceRef interfaceName ->
+                    String.Format.format2
+                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
+{1} optionalArgs object =
+    Object.single "{1}" optionalArgs object
+        |> Query.rootQuery
+          """
+                        ( field.name, interfaceName )
+
                 Type.List (Type.TypeReference (Type.ObjectRef objectName) isObjectNullable) ->
                     """menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
 menuItems optionalArgs object =
@@ -105,6 +114,9 @@ generateDecoderNew typeRef =
                 Type.ObjectRef objectName ->
                     "Api.Object." ++ objectName ++ ".decoder"
 
+                Type.InterfaceRef interfaceName ->
+                    "Api.Object." ++ interfaceName ++ ".decoder"
+
                 Type.EnumRef enumName ->
                     GraphqElm.Generator.Enum.moduleNameFor enumName
                         ++ [ "decoder" ]
@@ -124,6 +136,9 @@ generateType typeRef =
 
                 Type.ObjectRef objectName ->
                     "Object." ++ objectName
+
+                Type.InterfaceRef interfaceName ->
+                    "Object." ++ interfaceName
 
                 Type.EnumRef enumName ->
                     GraphqElm.Generator.Enum.moduleNameFor enumName

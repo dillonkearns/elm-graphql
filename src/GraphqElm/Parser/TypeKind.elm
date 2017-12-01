@@ -10,10 +10,10 @@ type TypeKind
     | NonNull
     | Ignore
     | Enum
+    | Interface
 
 
 
--- | Interface
 -- | Union
 -- | InputObject
 
@@ -38,6 +38,9 @@ decoder =
 
                     "ENUM" ->
                         Decode.succeed Enum
+
+                    "INTERFACE" ->
+                        Decode.succeed Interface
 
                     _ ->
                         Decode.succeed Ignore
