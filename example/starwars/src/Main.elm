@@ -6,7 +6,7 @@ import Api.Query
 import GraphqElm.Field
 import GraphqElm.Http
 import GraphqElm.Object
-import Html
+import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
 
@@ -30,8 +30,8 @@ type alias Hero =
     }
 
 
-heroQuery : GraphqElm.Field.Query Hero
-heroQuery =
+query : GraphqElm.Field.Query Hero
+query =
     Api.Query.hero [] hero
 
 
@@ -52,7 +52,7 @@ heroWithName =
 
 makeRequest : Cmd Msg
 makeRequest =
-    heroQuery
+    query
         |> GraphqElm.Http.request "http://localhost:8080/graphql"
         |> GraphqElm.Http.sendRemoteData GotResponse
 
@@ -83,4 +83,13 @@ main =
 
 view : Model -> Html.Html Msg
 view model =
-    Html.text (toString model)
+    div []
+        [ div []
+            [ h1 [] [ text "Generated Query" ]
+            , pre [] [ text (GraphqElm.Field.toQuery query) ]
+            ]
+        , div []
+            [ h1 [] [ text "Response" ]
+            , Html.text (toString model)
+            ]
+        ]
