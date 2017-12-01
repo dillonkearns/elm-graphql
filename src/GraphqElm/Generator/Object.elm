@@ -56,37 +56,6 @@ generateField { name, typeRef } =
         ( name, generateType typeRef, generateDecoder typeRef )
 
 
-generateBody : Type.Field -> String
-generateBody field =
-    case field.typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.ObjectRef objectName ->
-                    String.Format.format2
-                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
-{1} optionalArgs object =
-    Object.single "{1}" optionalArgs object
-        |> Query.rootQuery
-"""
-                        ( field.name, objectName )
-
-                Type.List (Type.TypeReference (Type.ObjectRef objectName) isObjectNullable) ->
-                    """menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
-menuItems optionalArgs object =
-    Object.listOf "menuItems" optionalArgs object
-        |> Query.rootQuery
-"""
-
-                _ ->
-                    String.Format.format3
-                        """{1} : Field.Query ({2})
-{1} =
-    Field.custom "{1}" ({3})
-        |> Query.rootQuery
-"""
-                        ( field.name, generateType field.typeRef, generateDecoder field.typeRef )
-
-
 generateDecoder : TypeReference -> String
 generateDecoder typeRef =
     case typeRef of
