@@ -53,7 +53,7 @@ heroWithName =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> GraphqElm.Http.request "http://localhost:8080/graphql"
+        |> GraphqElm.Http.buildRequest "http://localhost:8080/graphql"
         |> GraphqElm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse

@@ -1,4 +1,4 @@
-module GraphqElm.Http exposing (request, send, toRequest, withHeader, withTimeout)
+module GraphqElm.Http exposing (buildRequest, send, toRequest, withHeader, withTimeout)
 
 import GraphqElm.Field as Field
 import Http
@@ -18,8 +18,8 @@ type Request decodesTo
         }
 
 
-request : String -> Field.Query decodesTo -> Request decodesTo
-request url query =
+buildRequest : String -> Field.Query decodesTo -> Request decodesTo
+buildRequest url query =
     { method = "POST"
     , headers = []
     , url = url

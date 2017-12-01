@@ -57,7 +57,7 @@ menuItemsQuery =
 makeRequest : Cmd Msg
 makeRequest =
     GraphqElm.Query.combine (,) menuItemsQuery Api.Query.weather
-        |> GraphqElm.Http.request "http://localhost:4000/api"
+        |> GraphqElm.Http.buildRequest "http://localhost:4000/api"
         |> GraphqElm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
