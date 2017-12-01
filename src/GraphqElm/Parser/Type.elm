@@ -23,6 +23,9 @@ decodeKind kind =
         "SCALAR" ->
             scalarDecoder
 
+        "INTERFACE" ->
+            interfaceDecoder
+
         _ ->
             Decode.fail ("Unknown kind " ++ kind)
 
@@ -31,6 +34,17 @@ scalarDecoder : Decoder TypeDefinition
 scalarDecoder =
     Decode.map (\scalarName -> TypeDefinition scalarName ScalarType)
         (Decode.field "name" Decode.string)
+
+
+interfaceDecoder : Decoder TypeDefinition
+interfaceDecoder =
+    Decode.map2 createInterface
+        (Decode.field "name" Decode.string)
+        (fieldDecoder
+            |> Decode.map (\{ name, ofType } -> { name = name, typeRef = parseRef ofType })
+            |> Decode.list
+            |> Decode.field "fields"
+        )
 
 
 objectDecoder : Decoder TypeDefinition
@@ -63,6 +77,11 @@ createEnum enumName enumValues =
 createObject : String -> List Field -> TypeDefinition
 createObject objectName fields =
     TypeDefinition objectName (ObjectType fields)
+
+
+createInterface : String -> List Field -> TypeDefinition
+createInterface interfaceName fields =
+    TypeDefinition interfaceName (InterfaceType fields)
 
 
 typeRefDecoder : Decoder RawTypeRef
@@ -100,6 +119,7 @@ type TypeDefinition
 type DefinableType
     = ScalarType
     | ObjectType (List Field)
+    | InterfaceType (List Field)
     | EnumType (List String)
 
 

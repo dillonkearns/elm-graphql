@@ -41,3 +41,7 @@ toPair ((Type.TypeDefinition name definableType) as definition) =
             Type.EnumType enumValues ->
                 GraphqElm.Generator.Enum.generate name enumValues
                     |> Just
+
+            Type.InterfaceType fields ->
+                GraphqElm.Generator.Object.generate name fields
+                    |> Just

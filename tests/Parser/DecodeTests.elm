@@ -133,4 +133,102 @@ all =
                                 )
                             )
                         )
+        , test "decodes interface" <|
+            \() ->
+                """
+                {
+                         "kind": "INTERFACE",
+                         "name": "Character",
+                         "fields": [
+                           {
+                             "name": "id",
+                             "description": "The id of the character.",
+                             "args": [],
+                             "type": {
+                               "kind": "NON_NULL",
+                               "name": null,
+                               "ofType": {
+                                 "kind": "SCALAR",
+                                 "name": "String",
+                                 "ofType": null
+                               }
+                             },
+                             "isDeprecated": false,
+                             "deprecationReason": null
+                           },
+                           {
+                             "name": "name",
+                             "description": "The name of the character.",
+                             "args": [],
+                             "type": {
+                               "kind": "SCALAR",
+                               "name": "String",
+                               "ofType": null
+                             },
+                             "isDeprecated": false,
+                             "deprecationReason": null
+                           },
+                           {
+                             "name": "friends",
+                             "description": "The friends of the character, or an empty list if they have none.",
+                             "args": [],
+                             "type": {
+                               "kind": "LIST",
+                               "name": null,
+                               "ofType": {
+                                 "kind": "INTERFACE",
+                                 "name": "Character",
+                                 "ofType": null
+                               }
+                             },
+                             "isDeprecated": false,
+                             "deprecationReason": null
+                           },
+                           {
+                             "name": "appearsIn",
+                             "description": "Which movies they appear in.",
+                             "args": [],
+                             "type": {
+                               "kind": "LIST",
+                               "name": null,
+                               "ofType": {
+                                 "kind": "ENUM",
+                                 "name": "Episode",
+                                 "ofType": null
+                               }
+                             },
+                             "isDeprecated": false,
+                             "deprecationReason": null
+                           }
+                         ],
+                         "inputFields": null,
+                         "interfaces": null,
+                         "enumValues": null,
+                         "possibleTypes": [
+                           {
+                             "kind": "OBJECT",
+                             "name": "Human",
+                             "ofType": null
+                           },
+                           {
+                             "kind": "OBJECT",
+                             "name": "Droid",
+                             "ofType": null
+                           }
+                         ]
+                       }
+                """
+                    |> Decode.decodeString Type.decoder
+                    |> Expect.equal
+                        (Ok
+                            (TypeDefinition "Character"
+                                (InterfaceType
+                                    [ { name = "id", typeRef = TypeReference (Scalar Scalar.String) NonNullable }
+                                    , { name = "name", typeRef = TypeReference (Scalar Scalar.String) Nullable }
+                                    , { name = "friends", typeRef = TypeReference (List (TypeReference (Scalar (Scalar.Custom { name = "Ignore" })) NonNullable)) Nullable }
+                                    , { name = "appearsIn", typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable }
+                                    ]
+                                )
+                            )
+                        )
         ]
