@@ -8,7 +8,6 @@ import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query as Query
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
-import Json.Decode as Decode exposing (Decoder)
 
 
 type Type
@@ -21,13 +20,13 @@ hero optionalArgs object =
         |> Query.rootQuery
 
 
-human : List (TypeLocked Argument Api.Object.Human.Type) -> Object human Api.Object.Human.Type -> Field.Query human
-human optionalArgs object =
-    Object.single "human" optionalArgs object
+human : { id : String } -> Object human Api.Object.Human.Type -> Field.Query human
+human requiredArgs object =
+    Object.single "human" [ Argument.string "id" requiredArgs.id ] object
         |> Query.rootQuery
 
 
-droid : List (TypeLocked Argument Api.Object.Droid.Type) -> Object droid Api.Object.Droid.Type -> Field.Query droid
-droid optionalArgs object =
-    Object.single "droid" optionalArgs object
+droid : { id : String } -> Object droid Api.Object.Droid.Type -> Field.Query droid
+droid requiredArgs object =
+    Object.single "droid" [ Argument.string "id" requiredArgs.id ] object
         |> Query.rootQuery

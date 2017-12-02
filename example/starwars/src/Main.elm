@@ -2,10 +2,12 @@ module Main exposing (..)
 
 import Api.Enum.Episode exposing (Episode)
 import Api.Object.Character
+import Api.Object.Droid
 import Api.Query
 import GraphqElm.Field
 import GraphqElm.Http
 import GraphqElm.Object
+import GraphqElm.Query
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -18,9 +20,17 @@ type alias Hero =
     }
 
 
-query : GraphqElm.Field.Query Hero
+query : GraphqElm.Field.Query ( Hero, String )
 query =
-    Api.Query.hero [] hero
+    GraphqElm.Query.combine (,)
+        (Api.Query.hero [] hero)
+        (Api.Query.droid { id = "2000" } droid)
+
+
+droid : GraphqElm.Object.Object String Api.Object.Droid.Type
+droid =
+    Api.Object.Droid.build identity
+        |> GraphqElm.Object.with Api.Object.Droid.name
 
 
 hero : GraphqElm.Object.Object Hero Api.Object.Character.Type
@@ -56,7 +66,7 @@ type alias Model =
 
 
 type alias DecodesTo =
-    Hero
+    ( Hero, String )
 
 
 init : ( Model, Cmd Msg )
