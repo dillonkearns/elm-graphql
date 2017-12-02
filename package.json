@@ -1,8 +1,8 @@
 {
   "name": "graphqelm",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack -p",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "test": "elm-test",
     "gen:starwars": "npm run build && cd example/starwars && ../../bin/graphqelm && elm-format src/Api --yes && cd -"
