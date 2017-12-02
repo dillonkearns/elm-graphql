@@ -45,10 +45,17 @@ interfaceDecoder =
     Decode.map2 createInterface
         (Decode.field "name" Decode.string)
         (fieldDecoder
-            |> Decode.map (\{ name, ofType } -> { name = name, typeRef = parseRef ofType })
+            |> Decode.map parseField
             |> Decode.list
             |> Decode.field "fields"
         )
+
+
+parseField : RawField -> Field
+parseField { name, ofType } =
+    { name = name
+    , typeRef = parseRef ofType
+    }
 
 
 objectDecoder : Decoder TypeDefinition
@@ -56,7 +63,7 @@ objectDecoder =
     Decode.map2 createObject
         (Decode.field "name" Decode.string)
         (fieldDecoder
-            |> Decode.map (\{ name, ofType } -> { name = name, typeRef = parseRef ofType })
+            |> Decode.map parseField
             |> Decode.list
             |> Decode.field "fields"
         )
