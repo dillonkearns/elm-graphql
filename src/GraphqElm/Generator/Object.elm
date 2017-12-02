@@ -10,7 +10,7 @@ generate : String -> List Type.Field -> ( List String, String )
 generate name fields =
     ( Imports.object name
     , prepend (Imports.object name) fields
-        ++ (List.map generateNew fields |> String.join "\n\n")
+        ++ (List.map (generateNew name) fields |> String.join "\n\n")
     )
 
 
@@ -46,34 +46,57 @@ build constructor =
 """
 
 
-generateNew : Type.Field -> String
-generateNew field =
+generateNew : String -> Type.Field -> String
+generateNew thisObjectName field =
     case field.typeRef of
         Type.TypeReference referrableType isNullable ->
             case referrableType of
                 Type.ObjectRef objectName ->
+                    let
+                        typeLockName =
+                            if thisObjectName == objectName then
+                                "Type"
+                            else
+                                Imports.object objectName ++ [ "Type" ] |> String.join "."
+                    in
                     String.Format.format2
-                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
-{1} optionalArgs object =
-    Object.single "{1}" optionalArgs object
+                        """{1} : Object {1} {2} -> Field.Query {1}
+{1} object =
+    Object.single "{1}" [] object
 """
-                        ( field.name, objectName )
+                        ( field.name, typeLockName )
 
                 Type.InterfaceRef interfaceName ->
+                    let
+                        typeLockName =
+                            if thisObjectName == interfaceName then
+                                "Type"
+                            else
+                                Imports.object interfaceName ++ [ "Type" ] |> String.join "."
+                    in
                     String.Format.format2
-                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
-{1} optionalArgs object =
-    Object.single "{1}" optionalArgs object
+                        """{1} : Object {1} {2} -> Field.Query {1}
+{1} object =
+    Object.single "{1}" [] object
+      |> TypeLocked
 """
-                        ( field.name, interfaceName )
+                        ( field.name, typeLockName )
 
                 Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
+                    let
+                        typeLockName =
+                            if thisObjectName == objectName then
+                                "Type"
+                            else
+                                Imports.object objectName ++ [ "Type" ] |> String.join "."
+                    in
                     String.Format.format3
-                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {3} Api.Object.{2}.Type -> Field.Query (List {3})
-{1} optionalArgs object =
-    Object.listOf "{3}" optionalArgs object
+                        """{1} : Object {3} {2} -> TypeLocked (FieldDecoder (List {3})) Type
+{1} object =
+    Object.listOf "{3}" [] object
+      |> TypeLocked
 """
-                        ( field.name, objectName, field.name )
+                        ( field.name, typeLockName, field.name )
 
                 _ ->
                     generateField field

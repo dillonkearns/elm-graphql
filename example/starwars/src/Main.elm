@@ -40,7 +40,7 @@ hero =
     Api.Object.Character.build Hero
         |> GraphqElm.Object.with Api.Object.Character.id
         |> GraphqElm.Object.with Api.Object.Character.name
-        |> GraphqElm.Object.with (Api.Object.Character.friends [] heroWithName)
+        |> GraphqElm.Object.with (Api.Object.Character.friends heroWithName)
         |> GraphqElm.Object.with Api.Object.Character.appearsIn
 
 

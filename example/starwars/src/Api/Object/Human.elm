@@ -28,9 +28,9 @@ name =
     Field.fieldDecoder "name" Decode.string
 
 
-friends : List (TypeLocked Argument Api.Object.Character.Type) -> Object friends Api.Object.Character.Type -> TypeLocked (FieldDecoder (List friends)) lockedTo
-friends optionalArgs object =
-    Object.listOf "friends" optionalArgs object
+friends : Object friends Api.Object.Character.Type -> TypeLocked (FieldDecoder (List friends)) Type
+friends object =
+    Object.listOf "friends" [] object
         |> TypeLocked
 
 
