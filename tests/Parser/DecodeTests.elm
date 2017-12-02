@@ -13,29 +13,29 @@ all =
         [ test "decodes enums" <|
             \() ->
                 """
-                {
-                          "possibleTypes": null,
-                          "name": "Weather",
-                          "kind": "ENUM",
-                          "interfaces": null,
-                          "inputFields": null,
-                          "fields": null,
-                          "enumValues": [
-                            {
-                              "name": "CLOUDY",
-                              "isDeprecated": false,
-                              "description": null,
-                              "deprecationReason": null
-                            },
-                            {
-                              "name": "SUNNY",
-                              "isDeprecated": false,
-                              "description": null,
-                              "deprecationReason": null
-                            }
-                          ]
-                        }
-              """
+                 {
+                           "possibleTypes": null,
+                           "name": "Weather",
+                           "kind": "ENUM",
+                           "interfaces": null,
+                           "inputFields": null,
+                           "fields": null,
+                           "enumValues": [
+                             {
+                               "name": "CLOUDY",
+                               "isDeprecated": false,
+                               "description": null,
+                               "deprecationReason": null
+                             },
+                             {
+                               "name": "SUNNY",
+                               "isDeprecated": false,
+                               "description": null,
+                               "deprecationReason": null
+                             }
+                           ]
+                         }
+               """
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok

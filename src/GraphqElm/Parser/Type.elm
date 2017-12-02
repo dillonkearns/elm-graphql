@@ -100,7 +100,15 @@ typeRefDecoder =
 
 fieldDecoder : Decoder RawField
 fieldDecoder =
-    Decode.map2 RawField
+    Decode.map3 RawField
+        (Decode.field "name" Decode.string)
+        (Decode.field "type" typeRefDecoder)
+        (argDecoder |> Decode.list |> Decode.field "args")
+
+
+argDecoder : Decoder RawArg
+argDecoder =
+    Decode.map2 RawArg
         (Decode.field "name" Decode.string)
         (Decode.field "type" typeRefDecoder)
 
@@ -245,4 +253,11 @@ type RawTypeRef
 
 
 type alias RawField =
+    { name : String
+    , ofType : RawTypeRef
+    , args : List RawArg
+    }
+
+
+type alias RawArg =
     { name : String, ofType : RawTypeRef }
