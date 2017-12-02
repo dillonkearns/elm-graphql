@@ -10,18 +10,6 @@ import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
 
-type Msg
-    = GotResponse Model
-
-
-type alias Model =
-    WebData DecodesTo
-
-
-type alias DecodesTo =
-    Hero
-
-
 type alias Hero =
     { id : String
     , name : String
@@ -59,11 +47,37 @@ makeRequest =
         |> Cmd.map GotResponse
 
 
+type Msg
+    = GotResponse Model
+
+
+type alias Model =
+    WebData DecodesTo
+
+
+type alias DecodesTo =
+    Hero
+
+
 init : ( Model, Cmd Msg )
 init =
     ( RemoteData.Loading
     , makeRequest
     )
+
+
+view : Model -> Html.Html Msg
+view model =
+    div []
+        [ div []
+            [ h1 [] [ text "Generated Query" ]
+            , pre [] [ text (GraphqElm.Field.toQuery query) ]
+            ]
+        , div []
+            [ h1 [] [ text "Response" ]
+            , Html.text (toString model)
+            ]
+        ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -81,17 +95,3 @@ main =
         , subscriptions = \_ -> Sub.none
         , view = view
         }
-
-
-view : Model -> Html.Html Msg
-view model =
-    div []
-        [ div []
-            [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (GraphqElm.Field.toQuery query) ]
-            ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , Html.text (toString model)
-            ]
-        ]
