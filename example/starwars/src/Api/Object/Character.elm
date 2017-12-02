@@ -33,6 +33,6 @@ friends object =
         |> TypeLocked
 
 
-appearsIn : TypeLocked (FieldDecoder (List Api.Enum.Episode.Episode)) lockedTo
+appearsIn : TypeLocked (FieldDecoder (List Api.Enum.Episode.Episode)) Type
 appearsIn =
     Field.fieldDecoder "appearsIn" (Api.Enum.Episode.decoder |> Decode.list)

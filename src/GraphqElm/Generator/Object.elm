@@ -142,7 +142,7 @@ generateType typeRef =
                     "String"
 
                 Type.List typeRef ->
-                    "List String"
+                    "(List " ++ generateType typeRef ++ ")"
 
                 Type.ObjectRef objectName ->
                     "Object." ++ objectName
@@ -150,5 +150,7 @@ generateType typeRef =
                 Type.InterfaceRef interfaceName ->
                     "Object." ++ interfaceName
 
-                Type.EnumRef _ ->
-                    "ENUMTYPETODO"
+                Type.EnumRef enumName ->
+                    GraphqElm.Generator.Enum.moduleNameFor enumName
+                        ++ [ enumName ]
+                        |> String.join "."
