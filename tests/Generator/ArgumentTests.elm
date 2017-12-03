@@ -32,28 +32,82 @@ requiredArgString { name, typeRef } =
             Nothing
 
 
+requiredArgsAnnotation : List Type.Arg -> Maybe String
+requiredArgsAnnotation args =
+    let
+        stuff =
+            List.filterMap requiredArgAnnotation args
+    in
+    if stuff == [] then
+        Nothing
+    else
+        Just ("{ " ++ (stuff |> String.join "") ++ " }")
+
+
+requiredArgAnnotation : Type.Arg -> Maybe String
+requiredArgAnnotation { name, typeRef } =
+    case typeRef of
+        Type.TypeReference referrableType Type.NonNullable ->
+            String.Format.format1
+                "{1} : String"
+                name
+                |> Just
+
+        Type.TypeReference referrableType Type.Nullable ->
+            Nothing
+
+
 all : Test
 all =
-    describe "argument generator"
-        [ test "no arguments gives Nothing" <|
-            \() ->
-                []
-                    |> requiredArgsString
-                    |> Expect.equal Nothing
-        , test "all nullable arguments give Nothing" <|
-            \() ->
-                [ { name = "id"
-                  , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
-                  }
-                ]
-                    |> requiredArgsString
-                    |> Expect.equal Nothing
-        , test "single primitive required argument" <|
-            \() ->
-                [ { name = "id"
-                  , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
-                  }
-                ]
-                    |> requiredArgsString
-                    |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id ]""")
+    describe "required argmument generators"
+        [ describe "argument list"
+            [ test "no arguments gives Nothing" <|
+                \() ->
+                    []
+                        |> requiredArgsString
+                        |> Expect.equal Nothing
+            , test "all nullable arguments give Nothing" <|
+                \() ->
+                    [ { name = "id"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
+                      }
+                    ]
+                        |> requiredArgsString
+                        |> Expect.equal Nothing
+            , test "single primitive required argument" <|
+                \() ->
+                    [ { name = "id"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    ]
+                        |> requiredArgsString
+                        |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id ]""")
+            ]
+        , describe "annotations"
+            [ test "all nullable arguments give Nothing" <|
+                \() ->
+                    [ { name = "id"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
+                      }
+                    ]
+                        |> requiredArgsAnnotation
+                        |> Expect.equal Nothing
+            , test "single primitive required argument" <|
+                \() ->
+                    [ { name = "id"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    ]
+                        |> requiredArgsAnnotation
+                        |> Expect.equal (Just """{ id : String }""")
+            ]
         ]
+
+
+
+{-
+   droid : { id : String } -> Object droid Api.Object.Droid.Type -> Field.Query droid
+   droid requiredArgs object =
+       Object.single "droid" [ Argument.string "id" requiredArgs.id ] object
+           |> Query.rootQuery
+-}
