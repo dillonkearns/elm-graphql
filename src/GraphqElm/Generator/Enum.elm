@@ -1,6 +1,6 @@
 module GraphqElm.Generator.Enum exposing (..)
 
-import String.Format
+import Interpolate exposing (interpolate)
 
 
 generate : String -> List String -> ( List String, String )
@@ -17,13 +17,13 @@ moduleNameFor name =
 
 prepend : String -> List String -> String
 prepend enumName enumValues =
-    String.Format.format1 """module {1} exposing (..)
+    interpolate """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 
 
 """
-        (moduleNameFor enumName |> String.join ".")
+        [ moduleNameFor enumName |> String.join "." ]
         ++ enumType enumName enumValues
         ++ enumDecoder enumName enumValues
 
@@ -36,15 +36,15 @@ enumType enumName enumValues =
 
 enumDecoder : String -> List String -> String
 enumDecoder enumName enumValues =
-    String.Format.format1
-        """decoder : Decoder {1}
+    interpolate
+        """decoder : Decoder {0}
 decoder =
     Decode.string
         |> Decode.andThen
             (\\string ->
                 case string of
 """
-        enumName
+        [ enumName ]
         ++ (enumValues |> List.map (\enumValue -> "                    \"" ++ enumValue ++ "\" ->\n                        Decode.succeed " ++ enumValue) |> String.join "\n\n")
         ++ """
 

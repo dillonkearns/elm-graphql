@@ -1,7 +1,7 @@
 module GraphqElm.Generator.Argument exposing (requiredArgsAnnotation, requiredArgsString)
 
 import GraphqElm.Parser.Type as Type
-import String.Format
+import Interpolate exposing (interpolate)
 
 
 requiredArgsString : List Type.Arg -> Maybe String
@@ -20,9 +20,9 @@ requiredArgString : Type.Arg -> Maybe String
 requiredArgString { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
-            String.Format.format1
-                "Argument.string \"{1}\" requiredArgs.{1}"
-                name
+            interpolate
+                "Argument.string \"{0}\" requiredArgs.{1}"
+                [ name ]
                 |> Just
 
         Type.TypeReference referrableType Type.Nullable ->
@@ -45,9 +45,9 @@ requiredArgAnnotation : Type.Arg -> Maybe String
 requiredArgAnnotation { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
-            String.Format.format1
-                "{1} : String"
-                name
+            interpolate
+                "{0} : String"
+                [ name ]
                 |> Just
 
         Type.TypeReference referrableType Type.Nullable ->
