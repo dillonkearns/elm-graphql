@@ -1,60 +1,10 @@
 module Generator.ArgumentTests exposing (all)
 
 import Expect
+import GraphqElm.Generator.Argument
 import GraphqElm.Parser.Scalar as Scalar
 import GraphqElm.Parser.Type as Type
-import String.Format
 import Test exposing (Test, describe, test)
-
-
-requiredArgsString : List Type.Arg -> Maybe String
-requiredArgsString args =
-    let
-        stuff =
-            List.filterMap requiredArgString args
-    in
-    if stuff == [] then
-        Nothing
-    else
-        Just ("[ " ++ (stuff |> String.join "") ++ " ]")
-
-
-requiredArgString : Type.Arg -> Maybe String
-requiredArgString { name, typeRef } =
-    case typeRef of
-        Type.TypeReference referrableType Type.NonNullable ->
-            String.Format.format1
-                "Argument.string \"{1}\" requiredArgs.{1}"
-                name
-                |> Just
-
-        Type.TypeReference referrableType Type.Nullable ->
-            Nothing
-
-
-requiredArgsAnnotation : List Type.Arg -> Maybe String
-requiredArgsAnnotation args =
-    let
-        stuff =
-            List.filterMap requiredArgAnnotation args
-    in
-    if stuff == [] then
-        Nothing
-    else
-        Just ("{ " ++ (stuff |> String.join "") ++ " }")
-
-
-requiredArgAnnotation : Type.Arg -> Maybe String
-requiredArgAnnotation { name, typeRef } =
-    case typeRef of
-        Type.TypeReference referrableType Type.NonNullable ->
-            String.Format.format1
-                "{1} : String"
-                name
-                |> Just
-
-        Type.TypeReference referrableType Type.Nullable ->
-            Nothing
 
 
 all : Test
@@ -64,7 +14,7 @@ all =
             [ test "no arguments gives Nothing" <|
                 \() ->
                     []
-                        |> requiredArgsString
+                        |> GraphqElm.Generator.Argument.requiredArgsString
                         |> Expect.equal Nothing
             , test "all nullable arguments give Nothing" <|
                 \() ->
@@ -72,7 +22,7 @@ all =
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                       }
                     ]
-                        |> requiredArgsString
+                        |> GraphqElm.Generator.Argument.requiredArgsString
                         |> Expect.equal Nothing
             , test "single primitive required argument" <|
                 \() ->
@@ -80,7 +30,7 @@ all =
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
                     ]
-                        |> requiredArgsString
+                        |> GraphqElm.Generator.Argument.requiredArgsString
                         |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id ]""")
             ]
         , describe "annotations"
@@ -90,7 +40,7 @@ all =
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                       }
                     ]
-                        |> requiredArgsAnnotation
+                        |> GraphqElm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal Nothing
             , test "single primitive required argument" <|
                 \() ->
@@ -98,7 +48,7 @@ all =
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
                     ]
-                        |> requiredArgsAnnotation
+                        |> GraphqElm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal (Just """{ id : String }""")
             ]
         ]
