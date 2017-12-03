@@ -1,9 +1,11 @@
 module GraphqElm.Generator.Query exposing (..)
 
+import GraphqElm.Generator.Argument
 import GraphqElm.Generator.Enum
 import GraphqElm.Generator.Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import String.Format
+import String.Interpolate exposing (interpolate)
 
 
 generate : List Field -> ( List String, String )
@@ -49,13 +51,28 @@ type Type
 
 generateObjectOrInterface : Type.Field -> String -> String
 generateObjectOrInterface field name =
-    String.Format.format2
-        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
+    let
+        ( argsAnnotation, argsList ) =
+            ( GraphqElm.Generator.Argument.requiredArgsAnnotation field.args, GraphqElm.Generator.Argument.requiredArgsString field.args )
+    in
+    case ( argsAnnotation, argsList ) of
+        ( Just annotation, Just list ) ->
+            interpolate
+                """{0} : {2} -> Object {0} Api.Object.{1}.Type -> Field.Query {0}
+{0} requiredArgs object =
+    Object.single "{0}" {3} object
+        |> Query.rootQuery
+"""
+                [ field.name, name, annotation, list ]
+
+        _ ->
+            String.Format.format2
+                """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
 {1} optionalArgs object =
     Object.single "{1}" optionalArgs object
         |> Query.rootQuery
 """
-        ( field.name, name )
+                ( field.name, name )
 
 
 generateNew : Type.Field -> String
