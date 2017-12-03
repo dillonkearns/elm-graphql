@@ -3,7 +3,7 @@ module GraphqElm.Generator.Object exposing (..)
 import GraphqElm.Generator.Enum
 import GraphqElm.Generator.Imports as Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
-import String.Format
+import Interpolate exposing (interpolate)
 
 
 generate : String -> List Type.Field -> ( List String, String )
@@ -23,7 +23,7 @@ prepend moduleName fields =
                 |> List.map (\{ name, typeRef } -> typeRef)
                 |> Imports.importsString moduleName
     in
-    String.Format.format1 """module {1} exposing (..)
+    interpolate """module {0} exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
@@ -31,7 +31,7 @@ import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode
 """
-        (moduleName |> String.join ".")
+        [ moduleName |> String.join "." ]
         ++ imports
         ++ """
 
@@ -59,12 +59,12 @@ generateNew thisObjectName field =
                             else
                                 Imports.object objectName ++ [ "Type" ] |> String.join "."
                     in
-                    String.Format.format2
-                        """{1} : Object {1} {2} -> Field.Query {1}
-{1} object =
-    Object.single "{1}" [] object
+                    interpolate
+                        """{0} : Object {0} {1} -> Field.Query {0}
+{0} object =
+    Object.single "{0}" [] object
 """
-                        ( field.name, typeLockName )
+                        [ field.name, typeLockName ]
 
                 Type.InterfaceRef interfaceName ->
                     let
@@ -74,13 +74,13 @@ generateNew thisObjectName field =
                             else
                                 Imports.object interfaceName ++ [ "Type" ] |> String.join "."
                     in
-                    String.Format.format2
-                        """{1} : Object {1} {2} -> Field.Query {1}
-{1} object =
-    Object.single "{1}" [] object
+                    interpolate
+                        """{0} : Object {0} {1} -> Field.Query {0}
+{0} object =
+    Object.single "{0}" [] object
       |> TypeLocked
 """
-                        ( field.name, typeLockName )
+                        [ field.name, typeLockName ]
 
                 Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
                     let
@@ -90,13 +90,13 @@ generateNew thisObjectName field =
                             else
                                 Imports.object objectName ++ [ "Type" ] |> String.join "."
                     in
-                    String.Format.format3
-                        """{1} : Object {3} {2} -> TypeLocked (FieldDecoder (List {3})) Type
-{1} object =
-    Object.listOf "{3}" [] object
+                    interpolate
+                        """{0} : Object {2} {1} -> TypeLocked (FieldDecoder (List {2})) Type
+{0} object =
+    Object.listOf "{2}" [] object
       |> TypeLocked
 """
-                        ( field.name, typeLockName, field.name )
+                        [ field.name, typeLockName, field.name ]
 
                 _ ->
                     generateField field
@@ -104,12 +104,12 @@ generateNew thisObjectName field =
 
 generateField : Type.Field -> String
 generateField { name, typeRef } =
-    String.Format.format3
-        """{1} : TypeLocked (FieldDecoder {2}) Type
-{1} =
-    Field.fieldDecoder "{1}" ({3})
+    interpolate
+        """{0} : TypeLocked (FieldDecoder {1}) Type
+{0} =
+    Field.fieldDecoder "{0}" ({2})
 """
-        ( name, generateType typeRef, generateDecoder typeRef )
+        [ name, generateType typeRef, generateDecoder typeRef ]
 
 
 generateDecoder : TypeReference -> String

@@ -21,7 +21,7 @@ requiredArgString { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
-                "Argument.string \"{0}\" requiredArgs.{1}"
+                "Argument.string \"{0}\" requiredArgs.{0}"
                 [ name ]
                 |> Just
 
