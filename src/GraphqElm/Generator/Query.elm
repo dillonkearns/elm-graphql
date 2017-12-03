@@ -4,7 +4,6 @@ import GraphqElm.Generator.Argument
 import GraphqElm.Generator.Enum
 import GraphqElm.Generator.Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
-import String.Format
 import String.Interpolate exposing (interpolate)
 
 
@@ -30,8 +29,8 @@ prepend moduleName fields =
                 |> List.map (\{ name, typeRef } -> typeRef)
                 |> GraphqElm.Generator.Imports.importsString moduleName
     in
-    String.Format.format2
-        """module {1} exposing (..)
+    interpolate
+        """module {0} exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
@@ -40,7 +39,7 @@ import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import GraphqElm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 """
-        ( moduleName |> String.join ".", imports )
+        [ moduleName |> String.join "." ]
         ++ imports
         ++ """
 
@@ -66,13 +65,13 @@ generateObjectOrInterface field name =
                 [ field.name, name, annotation, list ]
 
         _ ->
-            String.Format.format2
-                """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
-{1} optionalArgs object =
-    Object.single "{1}" optionalArgs object
+            interpolate
+                """{0} : List (TypeLocked Argument Api.Object.{1}.Type) -> Object {0} Api.Object.{1}.Type -> Field.Query {0}
+{0} optionalArgs object =
+    Object.single "{0}" optionalArgs object
         |> Query.rootQuery
 """
-                ( field.name, name )
+                [ field.name, name ]
 
 
 generateNew : Type.Field -> String
@@ -94,13 +93,13 @@ menuItems optionalArgs object =
 """
 
                 _ ->
-                    String.Format.format3
-                        """{1} : Field.Query ({2})
-{1} =
-    Field.custom "{1}" ({3})
+                    interpolate
+                        """{0} : Field.Query ({1})
+{0} =
+    Field.custom "{0}" ({2})
         |> Query.rootQuery
 """
-                        ( field.name
+                        [ field.name
                         , (if isNullable == Type.Nullable then
                             "Maybe "
                            else
@@ -113,7 +112,7 @@ menuItems optionalArgs object =
                                 else
                                     ""
                                )
-                        )
+                        ]
 
 
 generateDecoderNew : TypeReference -> String
