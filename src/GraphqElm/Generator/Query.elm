@@ -4,7 +4,7 @@ import GraphqElm.Generator.Argument
 import GraphqElm.Generator.Enum
 import GraphqElm.Generator.Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
-import String.Interpolate exposing (interpolate)
+import Interpolate exposing (interpolate)
 
 
 generate : List Field -> ( List String, String )
@@ -38,14 +38,13 @@ import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import GraphqElm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
-"""
-        [ moduleName |> String.join "." ]
-        ++ imports
-        ++ """
+{1}
+
 
 type Type
     = Type
 """
+        [ moduleName |> String.join ".", imports ]
 
 
 generateObjectOrInterface : Type.Field -> String -> String
