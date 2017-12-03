@@ -1,5 +1,6 @@
 module Api.Query exposing (..)
 
+import Api.Enum.Episode
 import Api.Object.Character
 import Api.Object.Droid
 import Api.Object.Human
@@ -7,16 +8,22 @@ import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query as Query
-import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
-import Json.Decode as Decode exposing (Decoder)
 
 
 type Type
     = Type
 
 
-hero : List (TypeLocked Argument Api.Object.Character.Type) -> Object hero Api.Object.Character.Type -> Field.Query hero
-hero optionalArgs object =
+hero : ({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode }) -> Object hero Api.Object.Character.Type -> Field.Query hero
+hero fillInArgs object =
+    let
+        optionalArgsThing =
+            fillInArgs { episode = Nothing }
+
+        optionalArgs =
+            [ Maybe.map (\value -> Argument.enum "episode" (toString value)) optionalArgsThing.episode ]
+                |> List.filterMap identity
+    in
     Object.single "hero" optionalArgs object
         |> Query.rootQuery
 

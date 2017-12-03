@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Api.Enum.Episode exposing (Episode)
+import Api.Enum.Episode as Episode exposing (Episode)
 import Api.Object.Character
 import Api.Object.Droid
 import Api.Query
@@ -20,10 +20,14 @@ type alias Hero =
     }
 
 
-query : GraphqElm.Field.Query ( Hero, String )
+type alias DecodesTo =
+    ( Hero, String )
+
+
+query : GraphqElm.Field.Query DecodesTo
 query =
     GraphqElm.Query.combine (,)
-        (Api.Query.hero [] hero)
+        (Api.Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
         (Api.Query.droid { id = "2000" } droid)
 
 
@@ -63,10 +67,6 @@ type Msg
 
 type alias Model =
     WebData DecodesTo
-
-
-type alias DecodesTo =
-    ( Hero, String )
 
 
 init : ( Model, Cmd Msg )
