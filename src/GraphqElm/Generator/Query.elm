@@ -47,28 +47,27 @@ type Type
 """
 
 
+generateObjectOrInterface : Type.Field -> String -> String
+generateObjectOrInterface field name =
+    String.Format.format2
+        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
+{1} optionalArgs object =
+    Object.single "{1}" optionalArgs object
+        |> Query.rootQuery
+"""
+        ( field.name, name )
+
+
 generateNew : Type.Field -> String
 generateNew field =
     case field.typeRef of
         Type.TypeReference referrableType isNullable ->
             case referrableType of
                 Type.ObjectRef objectName ->
-                    String.Format.format2
-                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
-{1} optionalArgs object =
-    Object.single "{1}" optionalArgs object
-        |> Query.rootQuery
-"""
-                        ( field.name, objectName )
+                    generateObjectOrInterface field objectName
 
                 Type.InterfaceRef interfaceName ->
-                    String.Format.format2
-                        """{1} : List (TypeLocked Argument Api.Object.{2}.Type) -> Object {1} Api.Object.{2}.Type -> Field.Query {1}
-{1} optionalArgs object =
-    Object.single "{1}" optionalArgs object
-        |> Query.rootQuery
-          """
-                        ( field.name, interfaceName )
+                    generateObjectOrInterface field interfaceName
 
                 Type.List (Type.TypeReference (Type.ObjectRef objectName) isObjectNullable) ->
                     """menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
