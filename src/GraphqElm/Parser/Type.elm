@@ -52,9 +52,10 @@ interfaceDecoder =
 
 
 parseField : RawField -> Field
-parseField { name, ofType } =
+parseField { name, ofType, args } =
     { name = name
     , typeRef = parseRef ofType
+    , args = List.map (\arg -> { name = arg.name, typeRef = parseRef arg.ofType }) args
     }
 
 
@@ -125,9 +126,16 @@ createRawTypeRef stringMaybe typeKind rawTypeRefMaybe =
     RawTypeRef { name = stringMaybe, kind = typeKind, ofType = rawTypeRefMaybe }
 
 
+type alias Arg =
+    { name : String
+    , typeRef : TypeReference
+    }
+
+
 type alias Field =
     { name : String
     , typeRef : TypeReference
+    , args : List Arg
     }
 
 

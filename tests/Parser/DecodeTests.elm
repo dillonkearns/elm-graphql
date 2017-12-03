@@ -126,9 +126,18 @@ all =
                         (Ok
                             (TypeDefinition "MenuItem"
                                 (ObjectType
-                                    [ { name = "description", typeRef = TypeReference (Scalar Scalar.String) NonNullable }
-                                    , { name = "id", typeRef = TypeReference (Scalar Scalar.ID) NonNullable }
-                                    , { name = "name", typeRef = TypeReference (Scalar Scalar.String) NonNullable }
+                                    [ { name = "description"
+                                      , typeRef = TypeReference (Scalar Scalar.String) NonNullable
+                                      , args = []
+                                      }
+                                    , { name = "id"
+                                      , typeRef = TypeReference (Scalar Scalar.ID) NonNullable
+                                      , args = []
+                                      }
+                                    , { name = "name"
+                                      , typeRef = TypeReference (Scalar Scalar.String) NonNullable
+                                      , args = []
+                                      }
                                     ]
                                 )
                             )
@@ -223,10 +232,22 @@ all =
                         (Ok
                             (TypeDefinition "Character"
                                 (InterfaceType
-                                    [ { name = "id", typeRef = TypeReference (Scalar Scalar.String) NonNullable }
-                                    , { name = "name", typeRef = TypeReference (Scalar Scalar.String) Nullable }
-                                    , { name = "friends", typeRef = TypeReference (List (TypeReference (InterfaceRef "Character") Nullable)) Nullable }
-                                    , { name = "appearsIn", typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable }
+                                    [ { name = "id"
+                                      , typeRef = TypeReference (Scalar Scalar.String) NonNullable
+                                      , args = []
+                                      }
+                                    , { name = "name"
+                                      , typeRef = TypeReference (Scalar Scalar.String) Nullable
+                                      , args = []
+                                      }
+                                    , { name = "friends"
+                                      , typeRef = TypeReference (List (TypeReference (InterfaceRef "Character") Nullable)) Nullable
+                                      , args = []
+                                      }
+                                    , { name = "appearsIn"
+                                      , typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable
+                                      , args = []
+                                      }
                                     ]
                                 )
                             )

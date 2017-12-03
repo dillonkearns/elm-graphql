@@ -16,12 +16,16 @@ captainsRef =
                 (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable)
             )
             Type.NonNullable
+    , args = []
     }
 
 
 meRef : Type.Field
 meRef =
-    { name = "me", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable }
+    { name = "me"
+    , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+    , args = []
+    }
 
 
 all : Test

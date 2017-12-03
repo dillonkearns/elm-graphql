@@ -58,6 +58,7 @@ captainsField =
         Type.TypeReference
             (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
             Type.NonNullable
+    , args = []
     }
 
 
@@ -73,6 +74,7 @@ menuItemsField =
                 )
             )
             Type.NonNullable
+    , args = []
     }
 
 
@@ -80,6 +82,7 @@ menuItemField : Type.Field
 menuItemField =
     { name = "menuItem"
     , typeRef = Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable
+    , args = []
     }
 
 
@@ -87,4 +90,5 @@ meField : Type.Field
 meField =
     { name = "me"
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+    , args = []
     }

@@ -35,4 +35,5 @@ nameField : Type.Field
 nameField =
     { name = "name"
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+    , args = []
     }
