@@ -1,7 +1,6 @@
 module GraphqElm.Field exposing (..)
 
 import GraphqElm.Argument as Argument exposing (Argument)
-import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -9,7 +8,7 @@ type Query decodesTo
     = Query (List Field) (Decoder decodesTo)
 
 
-type FieldDecoder decodesTo
+type FieldDecoder decodesTo typeLock
     = FieldDecoder Field (Decoder decodesTo)
 
 
@@ -48,19 +47,18 @@ fieldDecoderToQuery field =
             fieldName
 
 
-fieldDecoder : String -> Decoder decodesTo -> TypeLocked (FieldDecoder decodesTo) lockedTo
+fieldDecoder : String -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
 fieldDecoder fieldName decoder =
     FieldDecoder (Leaf fieldName [])
         (decoder |> Decode.at [ fieldName ])
-        |> TypeLocked
 
 
-custom : String -> Decoder decodesTo -> FieldDecoder decodesTo
+custom : String -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
 custom fieldName decoder =
     FieldDecoder (Leaf fieldName [])
         (decoder |> Decode.field fieldName)
 
 
-map : (decodesTo -> mapsTo) -> TypeLocked (FieldDecoder decodesTo) typeLock -> TypeLocked (FieldDecoder mapsTo) typeLock
-map mapFunction (TypeLocked (FieldDecoder field decoder)) =
-    TypeLocked (FieldDecoder field (Decode.map mapFunction decoder))
+map : (decodesTo -> mapsTo) -> FieldDecoder decodesTo typeLock -> FieldDecoder mapsTo typeLock
+map mapFunction (FieldDecoder field decoder) =
+    FieldDecoder field (Decode.map mapFunction decoder)

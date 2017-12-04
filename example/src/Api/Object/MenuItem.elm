@@ -1,9 +1,7 @@
 module Api.Object.MenuItem exposing (..)
 
-import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
-import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode
 
 
@@ -16,16 +14,16 @@ build constructor =
     Object.object constructor
 
 
-description : TypeLocked (FieldDecoder String) Type
+description : FieldDecoder String Type
 description =
     Field.fieldDecoder "description" Decode.string
 
 
-id : TypeLocked (FieldDecoder String) Type
+id : FieldDecoder String Type
 id =
     Field.fieldDecoder "id" Decode.string
 
 
-name : TypeLocked (FieldDecoder String) Type
+name : FieldDecoder String Type
 name =
     Field.fieldDecoder "name" Decode.string

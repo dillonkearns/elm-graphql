@@ -1,4 +1,4 @@
-module Generator.GenerateQueryTests exposing (..)
+module Generator.ObjectHelperTests exposing (..)
 
 import Expect
 import GraphqElm.Generator.Query

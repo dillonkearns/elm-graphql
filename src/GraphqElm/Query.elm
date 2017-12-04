@@ -9,6 +9,6 @@ combine combineFunction (Query fieldsA decoderA) (Query fieldsB decoderB) =
     Query (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
 
 
-rootQuery : FieldDecoder decodesTo -> Query decodesTo
+rootQuery : FieldDecoder decodesTo lockedTo -> Query decodesTo
 rootQuery (FieldDecoder field decoder) =
     Query [ field ] (decoder |> Decode.field "data")

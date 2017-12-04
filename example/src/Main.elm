@@ -3,12 +3,10 @@ module Main exposing (..)
 import Api.Enum.Weather exposing (Weather)
 import Api.Object.MenuItem as MenuItem
 import Api.Query
-import GraphqElm.Argument exposing (Argument)
 import GraphqElm.Field as Field
 import GraphqElm.Http
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query
-import GraphqElm.TypeLock exposing (TypeLocked)
 import Html
 import RemoteData exposing (WebData)
 
@@ -38,20 +36,9 @@ menuItem =
         |> Object.with MenuItem.name
 
 
-queryArgs :
-    { menuItems :
-        { contains :
-            String
-            -> TypeLocked Argument Api.Query.MenuItemsArg
-        }
-    }
-queryArgs =
-    Api.Query.args
-
-
 menuItemsQuery : Field.Query (List MenuItem)
 menuItemsQuery =
-    Api.Query.menuItems [ queryArgs.menuItems.contains "Milkshake" ] menuItem
+    Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem
 
 
 makeRequest : Cmd Msg
