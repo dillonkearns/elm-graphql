@@ -10,6 +10,7 @@ import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
+import View.QueryAndResponse
 
 
 type alias Response =
@@ -79,16 +80,7 @@ init =
 
 view : Model -> Html.Html Msg
 view model =
-    div []
-        [ div []
-            [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Graphqelm.Field.toQuery query) ]
-            ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , Html.text (toString model)
-            ]
-        ]
+    View.QueryAndResponse.view query model
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
