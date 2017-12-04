@@ -14,7 +14,7 @@ all =
             \() ->
                 GraphqElm.Generator.Object.generateField nameField
                     |> Expect.equal
-                        """name : TypeLocked (FieldDecoder String) Type
+                        """name : FieldDecoder String Type
 name =
     Field.fieldDecoder "name" (Decode.string)
 """

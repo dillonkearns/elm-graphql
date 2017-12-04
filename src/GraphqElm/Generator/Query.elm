@@ -35,7 +35,6 @@ prepend moduleName fields =
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
-import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import GraphqElm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 {1}
@@ -65,8 +64,8 @@ generateObjectOrInterface field name =
 
         _ ->
             interpolate
-                """{0} : List (TypeLocked Argument Api.Object.{1}.Type) -> Object {0} Api.Object.{1}.Type -> Field.Query {0}
-{0} optionalArgs object =
+                """{0} : Object {0} Api.Object.{1}.Type -> Field.Query {0}
+{0} object =
     Object.single "{0}" optionalArgs object
         |> Query.rootQuery
 """
@@ -85,8 +84,8 @@ generateNew field =
                     generateObjectOrInterface field interfaceName
 
                 Type.List (Type.TypeReference (Type.ObjectRef objectName) isObjectNullable) ->
-                    """menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
-menuItems optionalArgs object =
+                    """menuItems : Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
+menuItems object =
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery
 """

@@ -23,8 +23,8 @@ me =
             \() ->
                 menuItemField
                     |> GraphqElm.Generator.Query.generateNew
-                    |> Expect.equal """menuItem : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query menuItem
-menuItem optionalArgs object =
+                    |> Expect.equal """menuItem : Object menuItem Api.Object.MenuItem.Type -> Field.Query menuItem
+menuItem object =
     Object.single "menuItem" optionalArgs object
         |> Query.rootQuery
 """
@@ -32,8 +32,8 @@ menuItem optionalArgs object =
             \() ->
                 menuItemsField
                     |> GraphqElm.Generator.Query.generateNew
-                    |> Expect.equal """menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
-menuItems optionalArgs object =
+                    |> Expect.equal """menuItems : Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
+menuItems object =
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery
 """

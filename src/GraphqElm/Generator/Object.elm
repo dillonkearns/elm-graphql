@@ -28,7 +28,6 @@ prepend moduleName fields =
 import GraphqElm.Argument as Argument exposing (Argument)
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
-import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode
 """
         [ moduleName |> String.join "." ]
@@ -78,7 +77,6 @@ generateNew thisObjectName field =
                         """{0} : Object {0} {1} -> Field.Query {0}
 {0} object =
     Object.single "{0}" [] object
-      |> TypeLocked
 """
                         [ field.name, typeLockName ]
 
@@ -91,10 +89,9 @@ generateNew thisObjectName field =
                                 Imports.object objectName ++ [ "Type" ] |> String.join "."
                     in
                     interpolate
-                        """{0} : Object {2} {1} -> TypeLocked (FieldDecoder (List {2})) Type
+                        """{0} : Object {2} {1} -> FieldDecoder (List {2}) Type
 {0} object =
     Object.listOf "{2}" [] object
-      |> TypeLocked
 """
                         [ field.name, typeLockName, field.name ]
 
@@ -105,7 +102,7 @@ generateNew thisObjectName field =
 generateField : Type.Field -> String
 generateField { name, typeRef } =
     interpolate
-        """{0} : TypeLocked (FieldDecoder {1}) Type
+        """{0} : FieldDecoder {1} Type
 {0} =
     Field.fieldDecoder "{0}" ({2})
 """
