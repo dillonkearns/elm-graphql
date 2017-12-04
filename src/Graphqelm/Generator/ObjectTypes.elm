@@ -48,5 +48,8 @@ nameIfDefinitionNeeded (TypeDefinition name definableType) =
         Type.InterfaceType _ ->
             Just name
 
-        _ ->
+        Type.ScalarType ->
+            Nothing
+
+        Type.EnumType _ ->
             Nothing
