@@ -20,13 +20,15 @@ type alias Hero =
     }
 
 
-type alias DecodesTo =
-    ( Hero, String )
+type alias Response =
+    { heroResponse : Hero
+    , droidResponse : String
+    }
 
 
-query : GraphqElm.Field.Query DecodesTo
+query : GraphqElm.Field.Query Response
 query =
-    GraphqElm.Query.combine (,)
+    GraphqElm.Query.combine Response
         (Api.Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
         (Api.Query.droid { id = "2000" } droid)
 
@@ -66,7 +68,7 @@ type Msg
 
 
 type alias Model =
-    WebData DecodesTo
+    WebData Response
 
 
 init : ( Model, Cmd Msg )
