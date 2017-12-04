@@ -23,18 +23,18 @@ me =
             \() ->
                 menuItemField
                     |> Graphqelm.Generator.Query.generateNew
-                    |> Expect.equal """menuItem : Object menuItem Api.Object.MenuItem.Type -> Field.Query menuItem
+                    |> Expect.equal """menuItem : Object menuItem Api.Object.MenuItem -> Field.Query menuItem
 menuItem object =
-    Object.single "menuItem" optionalArgs object
+    Object.single "menuItem" [] object
         |> Query.rootQuery
 """
         , test "generates list object queries" <|
             \() ->
                 menuItemsField
                     |> Graphqelm.Generator.Query.generateNew
-                    |> Expect.equal """menuItems : Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
+                    |> Expect.equal """menuItems : Object menuItem Api.Object.MenuItem -> Field.Query (List menuItem)
 menuItems object =
-    Object.listOf "menuItems" optionalArgs object
+    Object.listOf "menuItems" [] object
         |> Query.rootQuery
 """
         ]

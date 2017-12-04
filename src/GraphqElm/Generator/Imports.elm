@@ -40,10 +40,10 @@ imports (Type.TypeReference referrableType isNullable) =
             imports typeRef
 
         Type.ObjectRef objectName ->
-            Just (object objectName)
+            Nothing
 
         Type.InterfaceRef interfaceName ->
-            Just (object interfaceName)
+            Nothing
 
         Type.EnumRef enumName ->
             Just (Graphqelm.Generator.Enum.moduleNameFor enumName)

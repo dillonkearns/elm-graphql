@@ -18,14 +18,14 @@ all =
             \() ->
                 Imports.imports listOfScalarRef
                     |> Expect.equal Nothing
-        , test "object ref has a ref" <|
+        , test "object refs don't need imports" <|
             \() ->
                 Imports.imports objectRef
-                    |> Expect.equal (Just [ "Api", "Object", "Foo" ])
-        , test "list of object ref has a ref to each" <|
+                    |> Expect.equal Nothing
+        , test "list of object ref don't need imports" <|
             \() ->
                 Imports.imports listOfObjectRef
-                    |> Expect.equal (Just [ "Api", "Object", "Foo" ])
+                    |> Expect.equal Nothing
         , test "filters out its own module name" <|
             \() ->
                 Imports.importsWithoutSelf [ "Api", "Object", "Foo" ] [ listOfObjectRef ]

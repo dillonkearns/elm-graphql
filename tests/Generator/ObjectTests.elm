@@ -12,9 +12,9 @@ all =
     describe "group"
         [ test "generates list object queries" <|
             \() ->
-                Graphqelm.Generator.Object.generateField nameField
+                Graphqelm.Generator.Object.generateField "Api.Object.MenuItem" nameField
                     |> Expect.equal
-                        """name : FieldDecoder String Type
+                        """name : FieldDecoder String Api.Object.MenuItem
 name =
     Field.fieldDecoder "name" [] (Decode.string)
 """
