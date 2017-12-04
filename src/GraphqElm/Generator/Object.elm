@@ -104,7 +104,7 @@ generateField { name, typeRef } =
     interpolate
         """{0} : FieldDecoder {1} Type
 {0} =
-    Field.fieldDecoder "{0}" ({2})
+    Field.fieldDecoder "{0}" [] ({2})
 """
         [ name
         , GraphqElm.Generator.Decoder.generateType typeRef

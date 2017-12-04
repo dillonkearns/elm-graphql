@@ -16,7 +16,7 @@ all =
                     |> Expect.equal
                         """name : FieldDecoder String Type
 name =
-    Field.fieldDecoder "name" (Decode.string)
+    Field.fieldDecoder "name" [] (Decode.string)
 """
         ]
 

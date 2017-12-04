@@ -15,13 +15,13 @@ type Type
 
 captains : Field.Query (Maybe (List String))
 captains =
-    Field.fieldDecoder "captains" (Decode.string |> Decode.list |> Decode.maybe)
+    Field.fieldDecoder "captains" [] (Decode.string |> Decode.list |> Decode.maybe)
         |> Query.rootQuery
 
 
 me : Field.Query String
 me =
-    Field.fieldDecoder "me" Decode.string
+    Field.fieldDecoder "me" [] Decode.string
         |> Query.rootQuery
 
 
@@ -41,5 +41,5 @@ menuItems fillInArgs object =
 
 weather : Field.Query Api.Enum.Weather.Weather
 weather =
-    Field.fieldDecoder "weather" Api.Enum.Weather.decoder
+    Field.fieldDecoder "weather" [] Api.Enum.Weather.decoder
         |> Query.rootQuery

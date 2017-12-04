@@ -16,14 +16,14 @@ build constructor =
 
 description : FieldDecoder String Type
 description =
-    Field.fieldDecoder "description" Decode.string
+    Field.fieldDecoder "description" [] Decode.string
 
 
 id : FieldDecoder String Type
 id =
-    Field.fieldDecoder "id" Decode.string
+    Field.fieldDecoder "id" [] Decode.string
 
 
 name : FieldDecoder String Type
 name =
-    Field.fieldDecoder "name" Decode.string
+    Field.fieldDecoder "name" [] Decode.string

@@ -47,9 +47,9 @@ fieldDecoderToQuery field =
             fieldName
 
 
-fieldDecoder : String -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
-fieldDecoder fieldName decoder =
-    FieldDecoder (Leaf fieldName [])
+fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
+fieldDecoder fieldName args decoder =
+    FieldDecoder (Leaf fieldName args)
         (decoder |> Decode.field fieldName)
 
 
