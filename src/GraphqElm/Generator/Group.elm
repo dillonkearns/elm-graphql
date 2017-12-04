@@ -3,6 +3,7 @@ module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles)
 import Dict exposing (Dict)
 import Graphqelm.Generator.Enum
 import Graphqelm.Generator.Object
+import Graphqelm.Generator.ObjectTypes as ObjectTypes
 import Graphqelm.Generator.Query
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition)
 
@@ -15,9 +16,13 @@ type alias IntrospectionData =
 
 generateFiles : IntrospectionData -> Dict String String
 generateFiles { typeDefinitions, queryObjectName } =
+    let
+        objectTypes =
+            ( [ "Api", "Object" ], ObjectTypes.generate typeDefinitions )
+    in
     typeDefinitions
         |> List.filterMap (toPair queryObjectName)
-        |> List.append [ ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\ntype Character = Character" ) ]
+        |> List.append [ objectTypes ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 
