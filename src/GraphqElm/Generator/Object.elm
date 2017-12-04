@@ -28,85 +28,76 @@ prepend moduleName fields =
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
+import Api.Object
 import Json.Decode as Decode
-"""
-        [ moduleName |> String.join "." ]
-        ++ imports
-        ++ """
+{1}
 
 
-type Type
-    = Type
-
-
-build : (a -> constructor) -> Object (a -> constructor) Type
+build : (a -> constructor) -> Object (a -> constructor) {0}
 build constructor =
     Object.object constructor
 """
+        [ moduleName |> String.join ".", imports ]
 
 
 generateNew : String -> Type.Field -> String
 generateNew thisObjectName field =
+    let
+        thisObjectString =
+            Imports.object thisObjectName |> String.join "."
+    in
     case field.typeRef of
         Type.TypeReference referrableType isNullable ->
             case referrableType of
                 Type.ObjectRef objectName ->
                     let
                         typeLockName =
-                            if thisObjectName == objectName then
-                                "Type"
-                            else
-                                Imports.object objectName ++ [ "Type" ] |> String.join "."
+                            Imports.object objectName |> String.join "."
                     in
                     interpolate
-                        """{0} : Object {0} {1} -> Field.Query {0} Type
+                        """{0} : Object {0} {1} -> Field.Query {0} {2}
 {0} object =
     Object.single "{0}" [] object
 """
-                        [ field.name, typeLockName ]
+                        [ field.name, typeLockName, thisObjectString ]
 
                 Type.InterfaceRef interfaceName ->
                     let
                         typeLockName =
-                            if thisObjectName == interfaceName then
-                                "Type"
-                            else
-                                Imports.object interfaceName ++ [ "Type" ] |> String.join "."
+                            Imports.object interfaceName |> String.join "."
                     in
                     interpolate
-                        """{0} : Object {0} {1} -> Field.Query {0} Type
+                        """{0} : Object {0} {1} -> Field.Query {0} {2}
 {0} object =
     Object.single "{0}" [] object
 """
-                        [ field.name, typeLockName ]
+                        [ field.name, typeLockName, thisObjectString ]
 
                 Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
                     let
                         typeLockName =
-                            if thisObjectName == objectName then
-                                "Type"
-                            else
-                                Imports.object objectName ++ [ "Type" ] |> String.join "."
+                            Imports.object objectName |> String.join "."
                     in
                     interpolate
-                        """{0} : Object {2} {1} -> FieldDecoder (List {2}) Type
+                        """{0} : Object {2} {1} -> FieldDecoder (List {2}) {3}
 {0} object =
     Object.listOf "{2}" [] object
 """
-                        [ field.name, typeLockName, field.name ]
+                        [ field.name, typeLockName, field.name, thisObjectString ]
 
                 _ ->
-                    generateField field
+                    generateField thisObjectString field
 
 
-generateField : Type.Field -> String
-generateField { name, typeRef } =
+generateField : String -> Type.Field -> String
+generateField thisObjectString { name, typeRef } =
     interpolate
-        """{0} : FieldDecoder {1} Type
+        """{0} : FieldDecoder {1} {3}
 {0} =
     Field.fieldDecoder "{0}" [] ({2})
 """
         [ name
         , Graphqelm.Generator.Decoder.generateType typeRef
         , Graphqelm.Generator.Decoder.generateDecoder typeRef
+        , thisObjectString
         ]

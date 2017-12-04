@@ -34,14 +34,12 @@ prepend moduleName fields =
 
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
+import Api.Object
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 {1}
 
-
-type Type
-    = Type
 """
         [ moduleName |> String.join ".", imports ]
 
@@ -55,7 +53,7 @@ generateObjectOrInterface field name =
     case ( argsAnnotation, argsList ) of
         ( Just annotation, Just list ) ->
             interpolate
-                """{0} : {2} -> Object {0} Api.Object.{1}.Type -> Field.Query {0}
+                """{0} : {2} -> Object {0} Api.Object.{1} -> Field.Query {0}
 {0} requiredArgs object =
     Object.single "{0}" {3} object
         |> Query.rootQuery
@@ -64,9 +62,9 @@ generateObjectOrInterface field name =
 
         _ ->
             interpolate
-                """{0} : Object {0} Api.Object.{1}.Type -> Field.Query {0}
+                """{0} : Object {0} Api.Object.{1} -> Field.Query {0}
 {0} object =
-    Object.single "{0}" optionalArgs object
+    Object.single "{0}" [] object
         |> Query.rootQuery
 """
                 [ field.name, name ]
@@ -84,9 +82,9 @@ generateNew field =
                     generateObjectOrInterface field interfaceName
 
                 Type.List (Type.TypeReference (Type.ObjectRef objectName) isObjectNullable) ->
-                    """menuItems : Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
+                    """menuItems : Object menuItem Api.Object.MenuItem -> Field.Query (List menuItem)
 menuItems object =
-    Object.listOf "menuItems" optionalArgs object
+    Object.listOf "menuItems" [] object
         |> Query.rootQuery
 """
 

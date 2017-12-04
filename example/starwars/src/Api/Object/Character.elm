@@ -1,7 +1,8 @@
 module Api.Object.Character exposing (..)
 
 import Api.Enum.Episode
-import Api.Object exposing (Character)
+import Api.Object
+import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
@@ -12,21 +13,21 @@ build constructor =
     Object.object constructor
 
 
-id : FieldDecoder String Character
+id : FieldDecoder String Api.Object.Character
 id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-name : FieldDecoder String Character
+name : FieldDecoder String Api.Object.Character
 name =
     Field.fieldDecoder "name" [] Decode.string
 
 
-friends : Object friends Character -> FieldDecoder (List friends) Character
+friends : Object friends Api.Object.Character -> FieldDecoder (List friends) Api.Object.Character
 friends object =
     Object.listOf "friends" [] object
 
 
-appearsIn : FieldDecoder (List Api.Enum.Episode.Episode) Character
+appearsIn : FieldDecoder (List Api.Enum.Episode.Episode) Api.Object.Character
 appearsIn =
     Field.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
