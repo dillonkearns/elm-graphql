@@ -6,7 +6,7 @@ import Api.Object.Droid
 import Api.Query
 import GraphqElm.Field
 import GraphqElm.Http
-import GraphqElm.Object
+import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
@@ -33,25 +33,25 @@ type alias Hero =
     }
 
 
-hero : GraphqElm.Object.Object Hero Api.Object.Character.Type
+hero : Object Hero Api.Object.Character.Type
 hero =
     Api.Object.Character.build Hero
-        |> GraphqElm.Object.with Api.Object.Character.id
-        |> GraphqElm.Object.with Api.Object.Character.name
-        |> GraphqElm.Object.with (Api.Object.Character.friends heroWithName)
-        |> GraphqElm.Object.with Api.Object.Character.appearsIn
+        |> Object.with Api.Object.Character.id
+        |> Object.with Api.Object.Character.name
+        |> Object.with (Api.Object.Character.friends heroWithName)
+        |> Object.with Api.Object.Character.appearsIn
 
 
-heroWithName : GraphqElm.Object.Object String Api.Object.Character.Type
+heroWithName : Object String Api.Object.Character.Type
 heroWithName =
     Api.Object.Character.build identity
-        |> GraphqElm.Object.with Api.Object.Character.name
+        |> Object.with Api.Object.Character.name
 
 
-droid : GraphqElm.Object.Object String Api.Object.Droid.Type
+droid : Object.Object String Api.Object.Droid.Type
 droid =
     Api.Object.Droid.build identity
-        |> GraphqElm.Object.with Api.Object.Droid.name
+        |> Object.with Api.Object.Droid.name
 
 
 makeRequest : Cmd Msg
