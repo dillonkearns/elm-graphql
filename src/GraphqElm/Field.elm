@@ -50,12 +50,6 @@ fieldDecoderToQuery field =
 fieldDecoder : String -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
 fieldDecoder fieldName decoder =
     FieldDecoder (Leaf fieldName [])
-        (decoder |> Decode.at [ fieldName ])
-
-
-custom : String -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
-custom fieldName decoder =
-    FieldDecoder (Leaf fieldName [])
         (decoder |> Decode.field fieldName)
 
 

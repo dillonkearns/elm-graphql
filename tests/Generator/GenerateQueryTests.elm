@@ -16,7 +16,7 @@ all =
                     |> GraphqElm.Generator.Query.generateNew
                     |> Expect.equal """me : Field.Query (String)
 me =
-    Field.custom "me" (Decode.string)
+    Field.fieldDecoder "me" (Decode.string)
         |> Query.rootQuery
 """
         , test "generates object queries" <|

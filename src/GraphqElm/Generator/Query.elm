@@ -94,7 +94,7 @@ menuItems object =
                     interpolate
                         """{0} : Field.Query ({1})
 {0} =
-    Field.custom "{0}" ({2})
+    Field.fieldDecoder "{0}" ({2})
         |> Query.rootQuery
 """
                         [ field.name

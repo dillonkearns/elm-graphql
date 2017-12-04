@@ -38,7 +38,7 @@ all =
                     |> Expect.equal
                         """me : Field.Query (String)
 me =
-    Field.custom "me" (Decode.string)
+    Field.fieldDecoder "me" (Decode.string)
         |> Query.rootQuery
 """
         , test "list" <|
@@ -48,7 +48,7 @@ me =
                     |> Expect.equal
                         """captains : Field.Query ((List String))
 captains =
-    Field.custom "captains" (Decode.string |> Decode.list)
+    Field.fieldDecoder "captains" (Decode.string |> Decode.list)
         |> Query.rootQuery
 """
         ]
