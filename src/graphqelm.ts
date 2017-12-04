@@ -6,7 +6,8 @@ import * as minimist from 'minimist'
 import * as request from 'request'
 
 const args = minimist(process.argv.slice(2))
-const inputPaths = args._
+const graphqlUrl = args._[0]
+console.log('endpoint: ', graphqlUrl)
 const tsDeclarationPath = args.output
 
 const onDataAvailable = (data: {}) => {
@@ -91,7 +92,7 @@ const introspectionQuery = `{
       }
     }
   }`
-new GraphQLClient('http://localhost:8080/graphql', {
+new GraphQLClient(graphqlUrl, {
   mode: 'cors'
 })
   .request(introspectionQuery)

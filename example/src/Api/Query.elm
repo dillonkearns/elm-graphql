@@ -26,7 +26,7 @@ me =
         |> Query.rootQuery
 
 
-menuItems : List (TypeLocked Argument MenuItemsArg) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
+menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
 menuItems optionalArgs object =
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery
@@ -36,18 +36,3 @@ weather : Field.Query Api.Enum.Weather.Weather
 weather =
     Field.custom "weather" Api.Enum.Weather.decoder
         |> Query.rootQuery
-
-
-args :
-    { menuItems :
-        { contains : String -> TypeLocked Argument MenuItemsArg }
-    }
-args =
-    { menuItems =
-        { contains = Argument.string "contains"
-        }
-    }
-
-
-type MenuItemsArg
-    = MenuItemsArg
