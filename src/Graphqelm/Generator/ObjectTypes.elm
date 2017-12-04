@@ -1,11 +1,16 @@
 module Graphqelm.Generator.ObjectTypes exposing (generate)
 
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Interpolate exposing (interpolate)
 
 
 generate : List TypeDefinition -> String
 generate typeDefinitions =
-    if List.filterMap nameIfDefinitionNeeded typeDefinitions == [] then
+    let
+        typesToGenerate =
+            List.filterMap nameIfDefinitionNeeded typeDefinitions
+    in
+    if typesToGenerate == [] then
         """module Api.Object exposing (..)
 
 
@@ -14,18 +19,33 @@ placeholder =
     ""
 """
     else
-        """module Api.Object exposing (..)
+        interpolate
+            """module Api.Object exposing (..)
 
 
-type MyObject
-    = MyObject
+{0}
 """
+            [ typesToGenerate
+                |> List.map generateType
+                |> String.join "\n\n\n"
+            ]
+
+
+generateType : String -> String
+generateType name =
+    interpolate
+        """type {0}
+    = {0}"""
+        [ name ]
 
 
 nameIfDefinitionNeeded : TypeDefinition -> Maybe String
 nameIfDefinitionNeeded (TypeDefinition name definableType) =
     case definableType of
         Type.ObjectType _ ->
+            Just name
+
+        Type.InterfaceType _ ->
             Just name
 
         _ ->

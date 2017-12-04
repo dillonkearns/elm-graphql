@@ -30,6 +30,8 @@ placeholder =
             \() ->
                 [ Type.TypeDefinition "MyObject"
                     (Type.ObjectType [])
+                , Type.TypeDefinition "MyInterface"
+                    (Type.InterfaceType [])
                 ]
                     |> ObjectTypes.generate
                     |> Expect.equal """module Api.Object exposing (..)
@@ -37,5 +39,9 @@ placeholder =
 
 type MyObject
     = MyObject
+
+
+type MyInterface
+    = MyInterface
 """
         ]
