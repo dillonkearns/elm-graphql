@@ -1,11 +1,14 @@
 module Graphqelm.Generator.ObjectTypes exposing (generate)
 
+import Graphqelm.Parser.Type exposing (TypeDefinition)
 
-generate : a -> String
-generate a =
+
+generate : List TypeDefinition -> String
+generate typeDefinitions =
     """module Api.Object exposing (..)
 
 
-type Character
-    = Character
+placeholder : String
+placeholder =
+    ""
 """
