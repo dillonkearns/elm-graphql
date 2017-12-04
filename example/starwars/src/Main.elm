@@ -4,6 +4,7 @@ import Api.Enum.Episode as Episode exposing (Episode)
 import Api.Object
 import Api.Object.Character as Character
 import Api.Object.Droid as Droid
+import Api.Object.Human as Human
 import Api.Query as Query
 import Graphqelm.Field
 import Graphqelm.Http
@@ -17,21 +18,23 @@ import View.QueryAndResponse
 type alias Response =
     { heroResponse : Hero
     , droidResponse : Droid
+    , humanResponse : Human
     }
 
 
 query : Graphqelm.Field.Query Response
 query =
-    Graphqelm.Query.combine Response
+    Graphqelm.Query.combine3 Response
         (Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
         (Query.droid { id = "2000" } droid)
+        (Query.human { id = "1001" } human)
 
 
 type alias Hero =
     { id : String
     , name : String
     , friends : List String
-    , appearsIn : List Episode
+    , appearsIn : List ( Episode, Int )
     }
 
 
@@ -41,13 +44,34 @@ hero =
         |> Object.with Character.id
         |> Object.with Character.name
         |> Object.with (Character.friends heroWithName)
-        |> Object.with Character.appearsIn
+        |> Object.with
+            (Character.appearsIn
+                |> Graphqelm.Field.map
+                    (\episodes ->
+                        List.map
+                            (\episode -> ( episode, episodeYear episode ))
+                            episodes
+                    )
+            )
+
+
+episodeYear : Episode -> Int
+episodeYear episode =
+    case episode of
+        Episode.NEWHOPE ->
+            1977
+
+        Episode.EMPIRE ->
+            1980
+
+        Episode.JEDI ->
+            1983
 
 
 heroWithName : Object String Api.Object.Character
 heroWithName =
     Character.build identity
-        |> Object.with Character.name
+        |> Object.with Character.id
 
 
 type alias Droid =
@@ -61,6 +85,16 @@ droid =
     Droid.build Droid
         |> Object.with Droid.name
         |> Object.with Droid.primaryFunction
+
+
+type alias Human =
+    { name : String }
+
+
+human : Object.Object Human Api.Object.Human
+human =
+    Human.build Human
+        |> Object.with Human.name
 
 
 makeRequest : Cmd Msg
