@@ -1,7 +1,7 @@
 module GraphqElm.Generator.Query exposing (..)
 
 import GraphqElm.Generator.Argument
-import GraphqElm.Generator.Enum
+import GraphqElm.Generator.Decoder
 import GraphqElm.Generator.Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
@@ -104,57 +104,11 @@ menuItems optionalArgs object =
                            else
                             ""
                           )
-                            ++ generateType field.typeRef
-                        , generateDecoderNew field.typeRef
+                            ++ GraphqElm.Generator.Decoder.generateType field.typeRef
+                        , GraphqElm.Generator.Decoder.generateDecoder field.typeRef
                             ++ (if isNullable == Type.Nullable then
                                     " |> Decode.maybe"
                                 else
                                     ""
                                )
                         ]
-
-
-generateDecoderNew : TypeReference -> String
-generateDecoderNew typeRef =
-    case typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.Scalar scalar ->
-                    "Decode.string"
-
-                Type.List typeRef ->
-                    generateDecoderNew typeRef ++ " |> Decode.list"
-
-                Type.ObjectRef objectName ->
-                    "Api.Object." ++ objectName ++ ".decoder"
-
-                Type.InterfaceRef interfaceName ->
-                    "Api.Object." ++ interfaceName ++ ".decoder"
-
-                Type.EnumRef enumName ->
-                    GraphqElm.Generator.Enum.moduleNameFor enumName
-                        ++ [ "decoder" ]
-                        |> String.join "."
-
-
-generateType : TypeReference -> String
-generateType typeRef =
-    case typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.Scalar scalar ->
-                    "String"
-
-                Type.List typeRef ->
-                    "(List String)"
-
-                Type.ObjectRef objectName ->
-                    "Object." ++ objectName
-
-                Type.InterfaceRef interfaceName ->
-                    "Object." ++ interfaceName
-
-                Type.EnumRef enumName ->
-                    GraphqElm.Generator.Enum.moduleNameFor enumName
-                        ++ [ enumName ]
-                        |> String.join "."

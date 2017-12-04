@@ -1,6 +1,6 @@
 module GraphqElm.Generator.Object exposing (..)
 
-import GraphqElm.Generator.Enum
+import GraphqElm.Generator.Decoder
 import GraphqElm.Generator.Imports as Imports
 import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
@@ -109,48 +109,7 @@ generateField { name, typeRef } =
 {0} =
     Field.fieldDecoder "{0}" ({2})
 """
-        [ name, generateType typeRef, generateDecoder typeRef ]
-
-
-generateDecoder : TypeReference -> String
-generateDecoder typeRef =
-    case typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.Scalar scalar ->
-                    "Decode.string"
-
-                Type.List typeRef ->
-                    generateDecoder typeRef ++ " |> Decode.list"
-
-                Type.ObjectRef objectName ->
-                    "Api.Object." ++ objectName ++ ".decoder"
-
-                Type.InterfaceRef interfaceName ->
-                    "Api.Object." ++ interfaceName ++ ".decoder"
-
-                Type.EnumRef enumName ->
-                    GraphqElm.Generator.Enum.moduleNameFor enumName ++ [ "decoder" ] |> String.join "."
-
-
-generateType : TypeReference -> String
-generateType typeRef =
-    case typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.Scalar scalar ->
-                    "String"
-
-                Type.List typeRef ->
-                    "(List " ++ generateType typeRef ++ ")"
-
-                Type.ObjectRef objectName ->
-                    "Object." ++ objectName
-
-                Type.InterfaceRef interfaceName ->
-                    "Object." ++ interfaceName
-
-                Type.EnumRef enumName ->
-                    GraphqElm.Generator.Enum.moduleNameFor enumName
-                        ++ [ enumName ]
-                        |> String.join "."
+        [ name
+        , GraphqElm.Generator.Decoder.generateType typeRef
+        , GraphqElm.Generator.Decoder.generateDecoder typeRef
+        ]
