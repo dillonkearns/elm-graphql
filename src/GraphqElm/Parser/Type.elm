@@ -1,7 +1,7 @@
-module GraphqElm.Parser.Type exposing (..)
+module Graphqelm.Parser.Type exposing (..)
 
-import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind)
+import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
+import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
 
 

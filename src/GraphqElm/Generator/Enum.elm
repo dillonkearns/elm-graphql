@@ -1,4 +1,4 @@
-module GraphqElm.Generator.Enum exposing (..)
+module Graphqelm.Generator.Enum exposing (..)
 
 import Interpolate exposing (interpolate)
 

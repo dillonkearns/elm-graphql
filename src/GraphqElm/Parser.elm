@@ -1,8 +1,8 @@
-module GraphqElm.Parser exposing (decoder)
+module Graphqelm.Parser exposing (decoder)
 
 import Dict exposing (Dict)
-import GraphqElm.Generator.Group exposing (IntrospectionData)
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
+import Graphqelm.Generator.Group exposing (IntrospectionData)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -14,4 +14,4 @@ decoder =
             |> Decode.at [ "__schema", "types" ]
         )
         (Decode.at [ "__schema", "queryType", "name" ] Decode.string)
-        |> Decode.map GraphqElm.Generator.Group.generateFiles
+        |> Decode.map Graphqelm.Generator.Group.generateFiles

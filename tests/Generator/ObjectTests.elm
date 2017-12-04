@@ -1,9 +1,9 @@
 module Generator.ObjectTests exposing (..)
 
 import Expect
-import GraphqElm.Generator.Object
-import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphqelm.Generator.Object
+import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 
@@ -12,7 +12,7 @@ all =
     describe "group"
         [ test "generates list object queries" <|
             \() ->
-                GraphqElm.Generator.Object.generateField nameField
+                Graphqelm.Generator.Object.generateField nameField
                     |> Expect.equal
                         """name : FieldDecoder String Type
 name =

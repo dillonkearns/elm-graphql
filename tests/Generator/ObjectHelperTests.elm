@@ -1,9 +1,9 @@
 module Generator.ObjectHelperTests exposing (..)
 
 import Expect
-import GraphqElm.Generator.Query
-import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphqelm.Generator.Query
+import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 
@@ -13,7 +13,7 @@ all =
         [ test "generates correct functions for scalar queries" <|
             \() ->
                 meField
-                    |> GraphqElm.Generator.Query.generateNew
+                    |> Graphqelm.Generator.Query.generateNew
                     |> Expect.equal """me : Field.Query (String)
 me =
     Field.fieldDecoder "me" [] (Decode.string)
@@ -23,7 +23,7 @@ me =
         --         , test "generates object queries" <|
         --             \() ->
         --                 menuItemField
-        --                     |> GraphqElm.Generator.Query.generateNew
+        --                     |> Graphqelm.Generator.Query.generateNew
         --                     |> Expect.equal """menuItem : Object menuItem Api.Object.MenuItem.Type -> Field.Query menuItem
         -- menuItem object =
         --     Object.single "menuItem" optionalArgs object
@@ -32,7 +32,7 @@ me =
         --         , test "generates list object queries" <|
         --             \() ->
         --                 menuItemsField
-        --                     |> GraphqElm.Generator.Query.generateNew
+        --                     |> Graphqelm.Generator.Query.generateNew
         --                     |> Expect.equal """menuItems : Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
         -- menuItems object =
         --     Object.listOf "menuItems" optionalArgs object

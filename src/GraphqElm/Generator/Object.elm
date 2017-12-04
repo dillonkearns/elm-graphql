@@ -1,8 +1,8 @@
-module GraphqElm.Generator.Object exposing (..)
+module Graphqelm.Generator.Object exposing (..)
 
-import GraphqElm.Generator.Decoder
-import GraphqElm.Generator.Imports as Imports
-import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
+import Graphqelm.Generator.Decoder
+import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
 
 
@@ -25,9 +25,9 @@ prepend moduleName fields =
     in
     interpolate """module {0} exposing (..)
 
-import GraphqElm.Argument as Argument exposing (Argument)
-import GraphqElm.Field as Field exposing (Field, FieldDecoder)
-import GraphqElm.Object as Object exposing (Object)
+import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Field as Field exposing (Field, FieldDecoder)
+import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
 """
         [ moduleName |> String.join "." ]
@@ -107,6 +107,6 @@ generateField { name, typeRef } =
     Field.fieldDecoder "{0}" [] ({2})
 """
         [ name
-        , GraphqElm.Generator.Decoder.generateType typeRef
-        , GraphqElm.Generator.Decoder.generateDecoder typeRef
+        , Graphqelm.Generator.Decoder.generateType typeRef
+        , Graphqelm.Generator.Decoder.generateDecoder typeRef
         ]

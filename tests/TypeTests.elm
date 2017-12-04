@@ -1,9 +1,9 @@
 module TypeTests exposing (..)
 
 import Expect
-import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (RawTypeRef(RawTypeRef))
-import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
+import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
+import Graphqelm.Parser.Type as Type exposing (RawTypeRef(RawTypeRef))
+import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 

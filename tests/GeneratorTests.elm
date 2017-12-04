@@ -1,9 +1,9 @@
 module GeneratorTests exposing (all)
 
 import Expect
-import GraphqElm.Generator.Query
-import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition)
+import Graphqelm.Generator.Query
+import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition)
 import Test exposing (..)
 
 
@@ -34,7 +34,7 @@ all =
         [ test "simple string" <|
             \() ->
                 meRef
-                    |> GraphqElm.Generator.Query.generateNew
+                    |> Graphqelm.Generator.Query.generateNew
                     |> Expect.equal
                         """me : Field.Query (String)
 me =
@@ -44,7 +44,7 @@ me =
         , test "list" <|
             \() ->
                 captainsRef
-                    |> GraphqElm.Generator.Query.generateNew
+                    |> Graphqelm.Generator.Query.generateNew
                     |> Expect.equal
                         """captains : Field.Query ((List String))
 captains =

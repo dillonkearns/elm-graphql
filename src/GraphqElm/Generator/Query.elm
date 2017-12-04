@@ -1,9 +1,9 @@
-module GraphqElm.Generator.Query exposing (..)
+module Graphqelm.Generator.Query exposing (..)
 
-import GraphqElm.Generator.Argument
-import GraphqElm.Generator.Decoder
-import GraphqElm.Generator.Imports
-import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
+import Graphqelm.Generator.Argument
+import Graphqelm.Generator.Decoder
+import Graphqelm.Generator.Imports
+import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
 
 
@@ -27,15 +27,15 @@ prepend moduleName fields =
         imports =
             fields
                 |> List.map (\{ name, typeRef } -> typeRef)
-                |> GraphqElm.Generator.Imports.importsString moduleName
+                |> Graphqelm.Generator.Imports.importsString moduleName
     in
     interpolate
         """module {0} exposing (..)
 
-import GraphqElm.Argument as Argument exposing (Argument)
-import GraphqElm.Field as Field exposing (Field, FieldDecoder)
-import GraphqElm.Object as Object exposing (Object)
-import GraphqElm.Query as Query
+import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Field as Field exposing (Field, FieldDecoder)
+import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 {1}
 
@@ -50,7 +50,7 @@ generateObjectOrInterface : Type.Field -> String -> String
 generateObjectOrInterface field name =
     let
         ( argsAnnotation, argsList ) =
-            ( GraphqElm.Generator.Argument.requiredArgsAnnotation field.args, GraphqElm.Generator.Argument.requiredArgsString field.args )
+            ( Graphqelm.Generator.Argument.requiredArgsAnnotation field.args, Graphqelm.Generator.Argument.requiredArgsString field.args )
     in
     case ( argsAnnotation, argsList ) of
         ( Just annotation, Just list ) ->
@@ -103,8 +103,8 @@ menuItems object =
                            else
                             ""
                           )
-                            ++ GraphqElm.Generator.Decoder.generateType field.typeRef
-                        , GraphqElm.Generator.Decoder.generateDecoder field.typeRef
+                            ++ Graphqelm.Generator.Decoder.generateType field.typeRef
+                        , Graphqelm.Generator.Decoder.generateDecoder field.typeRef
                             ++ (if isNullable == Type.Nullable then
                                     " |> Decode.maybe"
                                 else

@@ -1,7 +1,7 @@
 module TypeKindTests exposing (..)
 
 import Expect
-import GraphqElm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
+import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind(..))
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 

@@ -3,10 +3,10 @@ module Main exposing (..)
 import Api.Enum.Weather exposing (Weather)
 import Api.Object.MenuItem as MenuItem
 import Api.Query
-import GraphqElm.Field as Field
-import GraphqElm.Http
-import GraphqElm.Object as Object exposing (Object)
-import GraphqElm.Query
+import Graphqelm.Field as Field
+import Graphqelm.Http
+import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Query
 import Html
 import RemoteData exposing (WebData)
 
@@ -43,9 +43,9 @@ menuItemsQuery =
 
 makeRequest : Cmd Msg
 makeRequest =
-    GraphqElm.Query.combine (,) menuItemsQuery Api.Query.weather
-        |> GraphqElm.Http.buildRequest "http://localhost:4000/api"
-        |> GraphqElm.Http.toRequest
+    Graphqelm.Query.combine (,) menuItemsQuery Api.Query.weather
+        |> Graphqelm.Http.buildRequest "http://localhost:4000/api"
+        |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
 

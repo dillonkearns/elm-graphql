@@ -1,7 +1,7 @@
 module Generator.EnumTests exposing (all)
 
 import Expect
-import GraphqElm.Generator.Enum as Enum
+import Graphqelm.Generator.Enum as Enum
 import Test exposing (Test, describe, test)
 
 

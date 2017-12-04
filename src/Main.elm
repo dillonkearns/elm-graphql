@@ -1,6 +1,6 @@
 port module Main exposing (..)
 
-import GraphqElm.Parser
+import Graphqelm.Parser
 import Http
 import Json.Decode exposing (..)
 import Json.Encode
@@ -30,7 +30,7 @@ type Msg
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    case Json.Decode.decodeValue GraphqElm.Parser.decoder flags.data of
+    case Json.Decode.decodeValue Graphqelm.Parser.decoder flags.data of
         Ok fields ->
             ( ()
             , fields

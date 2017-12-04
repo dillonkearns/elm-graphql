@@ -4,10 +4,10 @@ import Api.Enum.Episode as Episode exposing (Episode)
 import Api.Object.Character as Character
 import Api.Object.Droid as Droid
 import Api.Query as Query
-import GraphqElm.Field
-import GraphqElm.Http
-import GraphqElm.Object as Object exposing (Object)
-import GraphqElm.Query
+import Graphqelm.Field
+import Graphqelm.Http
+import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Query
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -18,9 +18,9 @@ type alias Response =
     }
 
 
-query : GraphqElm.Field.Query Response
+query : Graphqelm.Field.Query Response
 query =
-    GraphqElm.Query.combine Response
+    Graphqelm.Query.combine Response
         (Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
         (Query.droid { id = "2000" } droid)
 
@@ -57,7 +57,7 @@ droid =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> GraphqElm.Http.request "http://localhost:8080/graphql"
+        |> Graphqelm.Http.request "http://localhost:8080/graphql"
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
 
@@ -82,7 +82,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (GraphqElm.Field.toQuery query) ]
+            , pre [] [ text (Graphqelm.Field.toQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]

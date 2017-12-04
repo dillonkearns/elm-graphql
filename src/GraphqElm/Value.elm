@@ -1,4 +1,4 @@
-module GraphqElm.Value exposing (..)
+module Graphqelm.Value exposing (..)
 
 
 type Value

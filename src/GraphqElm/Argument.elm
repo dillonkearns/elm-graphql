@@ -1,6 +1,6 @@
-module GraphqElm.Argument exposing (Argument, enum, int, string, toQueryString)
+module Graphqelm.Argument exposing (Argument, enum, int, string, toQueryString)
 
-import GraphqElm.Value as Value exposing (Value(..))
+import Graphqelm.Value as Value exposing (Value(..))
 
 
 type Argument

@@ -1,6 +1,6 @@
-module GraphqElm.Http exposing (buildRequest, request, send, toRequest, withHeader, withTimeout)
+module Graphqelm.Http exposing (buildRequest, request, send, toRequest, withHeader, withTimeout)
 
-import GraphqElm.Field as Field
+import Graphqelm.Field as Field
 import Http
 import Json.Encode
 import Time exposing (Time)

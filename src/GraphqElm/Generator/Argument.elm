@@ -1,6 +1,6 @@
-module GraphqElm.Generator.Argument exposing (requiredArgsAnnotation, requiredArgsString)
+module Graphqelm.Generator.Argument exposing (requiredArgsAnnotation, requiredArgsString)
 
-import GraphqElm.Parser.Type as Type
+import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
 

@@ -3,8 +3,8 @@ module Tests exposing (..)
 import Api.Object.MenuItem as MenuItem
 import Api.Query as Query
 import Expect
-import GraphqElm.Field as Field exposing (FieldDecoder, Query)
-import GraphqElm.Object as Object exposing (Object)
+import Graphqelm.Field as Field exposing (FieldDecoder, Query)
+import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 
@@ -51,7 +51,7 @@ menusQuery =
 
 all : Test
 all =
-    describe "GraphqElm"
+    describe "Graphqelm"
         [ test "generate menu query" <|
             \_ ->
                 Field.toQuery menusQuery

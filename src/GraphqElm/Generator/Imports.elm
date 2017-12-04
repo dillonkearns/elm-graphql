@@ -1,7 +1,7 @@
-module GraphqElm.Generator.Imports exposing (..)
+module Graphqelm.Generator.Imports exposing (..)
 
-import GraphqElm.Generator.Enum
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphqelm.Generator.Enum
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 
 
 importsString : List String -> List TypeReference -> String
@@ -46,7 +46,7 @@ imports (Type.TypeReference referrableType isNullable) =
             Just (object interfaceName)
 
         Type.EnumRef enumName ->
-            Just (GraphqElm.Generator.Enum.moduleNameFor enumName)
+            Just (Graphqelm.Generator.Enum.moduleNameFor enumName)
 
 
 object : String -> List String

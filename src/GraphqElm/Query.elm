@@ -1,6 +1,6 @@
-module GraphqElm.Query exposing (..)
+module Graphqelm.Query exposing (..)
 
-import GraphqElm.Field exposing (Field, FieldDecoder(FieldDecoder), Query(Query))
+import Graphqelm.Field exposing (Field, FieldDecoder(FieldDecoder), Query(Query))
 import Json.Decode as Decode exposing (Decoder)
 
 

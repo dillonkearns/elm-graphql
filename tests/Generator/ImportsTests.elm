@@ -1,9 +1,9 @@
 module Generator.ImportsTests exposing (all)
 
 import Expect
-import GraphqElm.Generator.Imports as Imports
-import GraphqElm.Parser.Scalar as Scalar exposing (Scalar)
-import GraphqElm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 

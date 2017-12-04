@@ -1,7 +1,7 @@
 module Api.Object.MenuItem exposing (..)
 
-import GraphqElm.Field as Field exposing (Field, FieldDecoder)
-import GraphqElm.Object as Object exposing (Object)
+import Graphqelm.Field as Field exposing (Field, FieldDecoder)
+import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
 
 

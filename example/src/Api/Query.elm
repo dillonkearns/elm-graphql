@@ -2,10 +2,10 @@ module Api.Query exposing (..)
 
 import Api.Enum.Weather
 import Api.Object.MenuItem
-import GraphqElm.Argument as Argument
-import GraphqElm.Field as Field exposing (Field, FieldDecoder)
-import GraphqElm.Object as Object exposing (Object)
-import GraphqElm.Query as Query
+import Graphqelm.Argument as Argument
+import Graphqelm.Field as Field exposing (Field, FieldDecoder)
+import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 
 

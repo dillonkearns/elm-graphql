@@ -1,7 +1,7 @@
-module GraphqElm.Generator.Decoder exposing (generateDecoder, generateType)
+module Graphqelm.Generator.Decoder exposing (generateDecoder, generateType)
 
-import GraphqElm.Generator.Enum
-import GraphqElm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
+import Graphqelm.Generator.Enum
+import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 
 
 generateDecoder : TypeReference -> String
@@ -22,7 +22,7 @@ generateDecoder typeRef =
                     "Api.Object." ++ interfaceName ++ ".decoder"
 
                 Type.EnumRef enumName ->
-                    GraphqElm.Generator.Enum.moduleNameFor enumName
+                    Graphqelm.Generator.Enum.moduleNameFor enumName
                         ++ [ "decoder" ]
                         |> String.join "."
 
@@ -45,6 +45,6 @@ generateType typeRef =
                     "Object." ++ interfaceName
 
                 Type.EnumRef enumName ->
-                    GraphqElm.Generator.Enum.moduleNameFor enumName
+                    Graphqelm.Generator.Enum.moduleNameFor enumName
                         ++ [ enumName ]
                         |> String.join "."
