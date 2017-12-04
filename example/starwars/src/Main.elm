@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Api.Enum.Episode as Episode exposing (Episode)
+import Api.Object
 import Api.Object.Character as Character
 import Api.Object.Droid as Droid
 import Api.Query as Query
@@ -34,7 +35,7 @@ type alias Hero =
     }
 
 
-hero : Object Hero Character.Type
+hero : Object Hero Api.Object.Character
 hero =
     Character.build Hero
         |> Object.with Character.id
@@ -43,7 +44,7 @@ hero =
         |> Object.with Character.appearsIn
 
 
-heroWithName : Object String Character.Type
+heroWithName : Object String Api.Object.Character
 heroWithName =
     Character.build identity
         |> Object.with Character.name
@@ -55,7 +56,7 @@ type alias Droid =
     }
 
 
-droid : Object.Object Droid Droid.Type
+droid : Object.Object Droid Api.Object.Droid
 droid =
     Droid.build Droid
         |> Object.with Droid.name

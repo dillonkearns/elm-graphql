@@ -23,4 +23,8 @@ parse scalarName =
             ID
 
         _ ->
-            Debug.crash "Unhandled"
+            Custom { name = scalarName }
+
+
+
+-- Debug.crash "Unhandled"
