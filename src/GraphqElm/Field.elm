@@ -59,3 +59,8 @@ custom : String -> Decoder decodesTo -> FieldDecoder decodesTo
 custom fieldName decoder =
     FieldDecoder (Leaf fieldName [])
         (decoder |> Decode.field fieldName)
+
+
+map : (decodesTo -> mapsTo) -> TypeLocked (FieldDecoder decodesTo) typeLock -> TypeLocked (FieldDecoder mapsTo) typeLock
+map mapFunction (TypeLocked (FieldDecoder field decoder)) =
+    TypeLocked (FieldDecoder field (Decode.map mapFunction decoder))
