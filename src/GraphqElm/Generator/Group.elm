@@ -17,6 +17,7 @@ generateFiles : IntrospectionData -> Dict String String
 generateFiles { typeDefinitions, queryObjectName } =
     typeDefinitions
         |> List.filterMap (toPair queryObjectName)
+        |> List.append [ ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\ntype Character = Character" ) ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 
