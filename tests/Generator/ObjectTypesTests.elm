@@ -2,9 +2,7 @@ module Generator.ObjectTypesTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.ObjectTypes as ObjectTypes
-import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (..)
-import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 
 
@@ -27,5 +25,17 @@ all =
 placeholder : String
 placeholder =
     ""
+"""
+        , test "generates imports for objects and interfaces" <|
+            \() ->
+                [ Type.TypeDefinition "MyObject"
+                    (Type.ObjectType [])
+                ]
+                    |> ObjectTypes.generate
+                    |> Expect.equal """module Api.Object exposing (..)
+
+
+type MyObject
+    = MyObject
 """
         ]
