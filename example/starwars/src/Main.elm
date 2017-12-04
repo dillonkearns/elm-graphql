@@ -12,14 +12,6 @@ import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
 
-type alias Hero =
-    { id : String
-    , name : String
-    , friends : List String
-    , appearsIn : List Episode
-    }
-
-
 type alias Response =
     { heroResponse : Hero
     , droidResponse : String
@@ -33,10 +25,12 @@ query =
         (Api.Query.droid { id = "2000" } droid)
 
 
-droid : GraphqElm.Object.Object String Api.Object.Droid.Type
-droid =
-    Api.Object.Droid.build identity
-        |> GraphqElm.Object.with Api.Object.Droid.name
+type alias Hero =
+    { id : String
+    , name : String
+    , friends : List String
+    , appearsIn : List Episode
+    }
 
 
 hero : GraphqElm.Object.Object Hero Api.Object.Character.Type
@@ -52,6 +46,12 @@ heroWithName : GraphqElm.Object.Object String Api.Object.Character.Type
 heroWithName =
     Api.Object.Character.build identity
         |> GraphqElm.Object.with Api.Object.Character.name
+
+
+droid : GraphqElm.Object.Object String Api.Object.Droid.Type
+droid =
+    Api.Object.Droid.build identity
+        |> GraphqElm.Object.with Api.Object.Droid.name
 
 
 makeRequest : Cmd Msg
