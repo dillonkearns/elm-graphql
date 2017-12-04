@@ -15,7 +15,7 @@ import View.QueryAndResponse
 
 type alias Response =
     { heroResponse : Hero
-    , droidResponse : String
+    , droidResponse : Droid
     }
 
 
@@ -49,10 +49,17 @@ heroWithName =
         |> Object.with Character.name
 
 
-droid : Object.Object String Droid.Type
+type alias Droid =
+    { name : String
+    , primaryFunction : String
+    }
+
+
+droid : Object.Object Droid Droid.Type
 droid =
-    Droid.build identity
+    Droid.build Droid
         |> Object.with Droid.name
+        |> Object.with Droid.primaryFunction
 
 
 makeRequest : Cmd Msg
