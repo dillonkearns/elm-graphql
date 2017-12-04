@@ -1,9 +1,9 @@
 module Main exposing (..)
 
 import Api.Enum.Episode as Episode exposing (Episode)
-import Api.Object.Character
-import Api.Object.Droid
-import Api.Query
+import Api.Object.Character as Character
+import Api.Object.Droid as Droid
+import Api.Query as Query
 import GraphqElm.Field
 import GraphqElm.Http
 import GraphqElm.Object as Object exposing (Object)
@@ -21,8 +21,8 @@ type alias Response =
 query : GraphqElm.Field.Query Response
 query =
     GraphqElm.Query.combine Response
-        (Api.Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
-        (Api.Query.droid { id = "2000" } droid)
+        (Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
+        (Query.droid { id = "2000" } droid)
 
 
 type alias Hero =
@@ -33,25 +33,25 @@ type alias Hero =
     }
 
 
-hero : Object Hero Api.Object.Character.Type
+hero : Object Hero Character.Type
 hero =
-    Api.Object.Character.build Hero
-        |> Object.with Api.Object.Character.id
-        |> Object.with Api.Object.Character.name
-        |> Object.with (Api.Object.Character.friends heroWithName)
-        |> Object.with Api.Object.Character.appearsIn
+    Character.build Hero
+        |> Object.with Character.id
+        |> Object.with Character.name
+        |> Object.with (Character.friends heroWithName)
+        |> Object.with Character.appearsIn
 
 
-heroWithName : Object String Api.Object.Character.Type
+heroWithName : Object String Character.Type
 heroWithName =
-    Api.Object.Character.build identity
-        |> Object.with Api.Object.Character.name
+    Character.build identity
+        |> Object.with Character.name
 
 
-droid : Object.Object String Api.Object.Droid.Type
+droid : Object.Object String Droid.Type
 droid =
-    Api.Object.Droid.build identity
-        |> Object.with Api.Object.Droid.name
+    Droid.build identity
+        |> Object.with Droid.name
 
 
 makeRequest : Cmd Msg
