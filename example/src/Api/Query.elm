@@ -2,11 +2,10 @@ module Api.Query exposing (..)
 
 import Api.Enum.Weather
 import Api.Object.MenuItem
-import GraphqElm.Argument as Argument exposing (Argument)
+import GraphqElm.Argument as Argument
 import GraphqElm.Field as Field exposing (Field, FieldDecoder)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query as Query
-import GraphqElm.TypeLock exposing (TypeLocked(TypeLocked))
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -26,8 +25,16 @@ me =
         |> Query.rootQuery
 
 
-menuItems : List (TypeLocked Argument Api.Object.MenuItem.Type) -> Object menuItem Api.Object.MenuItem.Type -> Field.Query (List menuItem)
-menuItems optionalArgs object =
+menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem.Type -> Field.Query (List menuItems)
+menuItems fillInArgs object =
+    let
+        optionalArgsThing =
+            fillInArgs { contains = Nothing }
+
+        optionalArgs =
+            [ Maybe.map (\value -> Argument.string "contains" value) optionalArgsThing.contains ]
+                |> List.filterMap identity
+    in
     Object.listOf "menuItems" optionalArgs object
         |> Query.rootQuery
 

@@ -1,12 +1,13 @@
 module QueryCombineTests exposing (..)
 
+import Api.Object.MenuItem as MenuItem
+import Api.Query as Query
 import Expect
 import GraphqElm.Field as Field exposing (FieldDecoder, Query)
 import GraphqElm.Object as Object exposing (Object)
 import GraphqElm.Query as Query
+import Graphqelm
 import Json.Decode as Decode exposing (Decoder)
-import Schema.MenuItem as MenuItem
-import Schema.Query as Query
 import Test exposing (..)
 
 
@@ -23,10 +24,10 @@ menuItem =
 menusQuery : Query (List MenuItem)
 menusQuery =
     menuItem
-        |> Query.menuItems []
+        |> Query.menuItems Graphqelm.noOptionalArgs
 
 
-combinedQueries : Query ( List String, List MenuItem )
+combinedQueries : Query ( Maybe (List String), List MenuItem )
 combinedQueries =
     Query.combine (,) Query.captains menusQuery
 
@@ -60,7 +61,7 @@ name
                     |> Decode.decodeString (Field.decoder combinedQueries)
                     |> Expect.equal
                         (Ok
-                            ( [ "Kirk", "Picard" ]
+                            ( Just [ "Kirk", "Picard" ]
                             , [ { name = "Masala Chai" } ]
                             )
                         )
