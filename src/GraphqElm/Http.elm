@@ -1,4 +1,4 @@
-module GraphqElm.Http exposing (buildRequest, send, toRequest, withHeader, withTimeout)
+module GraphqElm.Http exposing (buildRequest, request, send, toRequest, withHeader, withTimeout)
 
 import GraphqElm.Field as Field
 import Http
@@ -16,6 +16,12 @@ type Request decodesTo
         , timeout : Maybe Time
         , withCredentials : Bool
         }
+
+
+request : String -> Field.Query decodesTo -> Http.Request decodesTo
+request url query =
+    buildRequest url query
+        |> toRequest
 
 
 buildRequest : String -> Field.Query decodesTo -> Request decodesTo
