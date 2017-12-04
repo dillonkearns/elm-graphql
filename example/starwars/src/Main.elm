@@ -27,14 +27,14 @@ query =
     Graphqelm.Query.combine3 Response
         (Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
         (Query.droid { id = "2000" } droid)
-        (Query.human { id = "1001" } human)
+        (Query.human { id = "1004" } human)
 
 
 type alias Hero =
     { id : String
     , name : String
     , friends : List String
-    , appearsIn : List ( Episode, Int )
+    , appearsIn : List Episode
     }
 
 
@@ -44,28 +44,7 @@ hero =
         |> Object.with Character.id
         |> Object.with Character.name
         |> Object.with (Character.friends heroWithName)
-        |> Object.with
-            (Character.appearsIn
-                |> Graphqelm.Field.map
-                    (\episodes ->
-                        List.map
-                            (\episode -> ( episode, episodeYear episode ))
-                            episodes
-                    )
-            )
-
-
-episodeYear : Episode -> Int
-episodeYear episode =
-    case episode of
-        Episode.NEWHOPE ->
-            1977
-
-        Episode.EMPIRE ->
-            1980
-
-        Episode.JEDI ->
-            1983
+        |> Object.with Character.appearsIn
 
 
 heroWithName : Object String Api.Object.Character
@@ -88,13 +67,37 @@ droid =
 
 
 type alias Human =
-    { name : String }
+    { name : String
+    , appearsIn : List ( Episode, Int )
+    }
 
 
 human : Object.Object Human Api.Object.Human
 human =
     Human.build Human
         |> Object.with Human.name
+        |> Object.with
+            (Human.appearsIn
+                |> Graphqelm.Field.map
+                    (\episodes ->
+                        List.map
+                            (\episode -> ( episode, episodeYear episode ))
+                            episodes
+                    )
+            )
+
+
+episodeYear : Episode -> Int
+episodeYear episode =
+    case episode of
+        Episode.NEWHOPE ->
+            1977
+
+        Episode.EMPIRE ->
+            1980
+
+        Episode.JEDI ->
+            1983
 
 
 makeRequest : Cmd Msg
