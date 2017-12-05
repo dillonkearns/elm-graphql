@@ -81,7 +81,7 @@ generateListOfObjectOrInterfaceRef field name =
 {0} object =
     Object.listOf "{0}" [] object
         |> Query.rootQuery
-  """
+"""
         [ field.name, typeLockName ]
 
 

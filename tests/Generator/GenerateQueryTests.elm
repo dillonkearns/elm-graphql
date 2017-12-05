@@ -32,7 +32,7 @@ menuItem object =
             \() ->
                 menuItemsField
                     |> Graphqelm.Generator.Query.generateNew
-                    |> Expect.equal """menuItems : Object menuItem Api.Object.MenuItem -> Field.Query (List menuItem)
+                    |> Expect.equal """menuItems : Object menuItems Api.Object.MenuItem -> Field.Query (List menuItems)
 menuItems object =
     Object.listOf "menuItems" [] object
         |> Query.rootQuery
