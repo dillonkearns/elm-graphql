@@ -1,6 +1,7 @@
 module Graphqelm.Generator.Decoder exposing (generateDecoder, generateType)
 
 import Graphqelm.Generator.Enum
+import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 
 
@@ -10,7 +11,24 @@ generateDecoder typeRef =
         Type.TypeReference referrableType isNullable ->
             case referrableType of
                 Type.Scalar scalar ->
-                    "Decode.string"
+                    case scalar of
+                        Scalar.String ->
+                            "Decode.string"
+
+                        Scalar.Boolean ->
+                            "Decode.bool"
+
+                        Scalar.ID ->
+                            "Decode.string"
+
+                        Scalar.Int ->
+                            "Decode.int"
+
+                        Scalar.Float ->
+                            "Decode.float"
+
+                        Scalar.Custom _ ->
+                            "Decode.string"
 
                 Type.List typeRef ->
                     generateDecoder typeRef ++ " |> Decode.list"
@@ -33,7 +51,24 @@ generateType typeRef =
         Type.TypeReference referrableType isNullable ->
             case referrableType of
                 Type.Scalar scalar ->
-                    "String"
+                    case scalar of
+                        Scalar.String ->
+                            "String"
+
+                        Scalar.Boolean ->
+                            "Bool"
+
+                        Scalar.ID ->
+                            "String"
+
+                        Scalar.Int ->
+                            "Int"
+
+                        Scalar.Float ->
+                            "Float"
+
+                        Scalar.Custom _ ->
+                            "String"
 
                 Type.List typeRef ->
                     "(List " ++ generateType typeRef ++ ")"

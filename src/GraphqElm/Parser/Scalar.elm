@@ -19,6 +19,12 @@ parse scalarName =
         "Boolean" ->
             Boolean
 
+        "Int" ->
+            Int
+
+        "Float" ->
+            Float
+
         "ID" ->
             ID
 

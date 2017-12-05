@@ -2,7 +2,7 @@ module Graphqelm.Generator.Query exposing (..)
 
 import Graphqelm.Generator.Argument
 import Graphqelm.Generator.Decoder
-import Graphqelm.Generator.Imports
+import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -27,7 +27,7 @@ prepend moduleName fields =
         imports =
             fields
                 |> List.map (\{ name, typeRef } -> typeRef)
-                |> Graphqelm.Generator.Imports.importsString moduleName
+                |> Imports.importsString moduleName
     in
     interpolate
         """module {0} exposing (..)
@@ -70,6 +70,21 @@ generateObjectOrInterface field name =
                 [ field.name, name ]
 
 
+generateListOfObjectOrInterfaceRef : Type.Field -> String -> String
+generateListOfObjectOrInterfaceRef field name =
+    let
+        typeLockName =
+            Imports.object name |> String.join "."
+    in
+    interpolate
+        """{0} : Object {0} {1} -> Field.Query (List {0})
+{0} object =
+    Object.listOf "{0}" [] object
+        |> Query.rootQuery
+  """
+        [ field.name, typeLockName ]
+
+
 generateNew : Type.Field -> String
 generateNew field =
     case field.typeRef of
@@ -82,11 +97,10 @@ generateNew field =
                     generateObjectOrInterface field interfaceName
 
                 Type.List (Type.TypeReference (Type.ObjectRef objectName) isObjectNullable) ->
-                    """menuItems : Object menuItem Api.Object.MenuItem -> Field.Query (List menuItem)
-menuItems object =
-    Object.listOf "menuItems" [] object
-        |> Query.rootQuery
-"""
+                    generateListOfObjectOrInterfaceRef field objectName
+
+                Type.List (Type.TypeReference (Type.InterfaceRef interfaceName) isObjectNullable) ->
+                    generateListOfObjectOrInterfaceRef field interfaceName
 
                 _ ->
                     interpolate
