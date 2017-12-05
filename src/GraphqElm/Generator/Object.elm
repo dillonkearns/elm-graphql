@@ -79,11 +79,11 @@ generateNew thisObjectName field =
                             Imports.object objectName |> String.join "."
                     in
                     interpolate
-                        """{0} : Object {2} {1} -> FieldDecoder (List {2}) {3}
+                        """{0} : Object {0} {1} -> FieldDecoder (List {0}) {2}
 {0} object =
-    Object.listOf "{2}" [] object
+    Object.listOf "{0}" [] object
 """
-                        [ field.name, typeLockName, field.name, thisObjectString ]
+                        [ field.name, typeLockName, thisObjectString ]
 
                 Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
                     let
