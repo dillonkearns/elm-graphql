@@ -2,7 +2,7 @@ module Graphqelm.Generator.Query exposing (..)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Generator.RequiredArgument
+import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -46,7 +46,7 @@ import Json.Decode as Decode exposing (Decoder)
 
 generateObjectOrInterface : Type.Field -> String -> String
 generateObjectOrInterface field name =
-    case Graphqelm.Generator.RequiredArgument.generate field.args of
+    case Graphqelm.Generator.RequiredArgs.generate field.args of
         Just { annotation, list } ->
             interpolate
                 """{0} : {2} -> Object {0} Api.Object.{1} -> Field.Query {0}

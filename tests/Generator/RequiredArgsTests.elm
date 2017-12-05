@@ -1,7 +1,7 @@
-module Generator.RequiredArgumentTests exposing (all)
+module Generator.RequiredArgsTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.RequiredArgument as RequiredArgument
+import Graphqelm.Generator.RequiredArgs as RequiredArgs
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type
 import Test exposing (Test, describe, test)
@@ -13,7 +13,7 @@ all =
         [ test "no arguments" <|
             \() ->
                 []
-                    |> RequiredArgument.generate
+                    |> RequiredArgs.generate
                     |> Expect.equal Nothing
         , test "all nullable arguments" <|
             \() ->
@@ -21,12 +21,12 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
-                    |> RequiredArgument.generate
+                    |> RequiredArgs.generate
                     |> Expect.equal Nothing
         , test "single primitive" <|
             \() ->
                 [ idArg ]
-                    |> RequiredArgument.generate
+                    |> RequiredArgs.generate
                     |> Expect.equal
                         (Just
                             { annotation = """{ id : String }"""
@@ -36,7 +36,7 @@ all =
         , test "multiple primitives" <|
             \() ->
                 [ idArg, nameArg ]
-                    |> RequiredArgument.generate
+                    |> RequiredArgs.generate
                     |> Expect.equal
                         (Just
                             { annotation = "{ id : String, name : String }"
@@ -46,7 +46,7 @@ all =
         , test "normalizes arguments" <|
             \() ->
                 [ { name = "type", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
-                    |> RequiredArgument.generate
+                    |> RequiredArgs.generate
                     |> Expect.equal
                         (Just
                             { annotation = "{ type_ : String }"
