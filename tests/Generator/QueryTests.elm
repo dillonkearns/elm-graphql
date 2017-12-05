@@ -9,7 +9,7 @@ import Test exposing (..)
 
 all : Test
 all =
-    describe "group"
+    describe "query generator"
         [ test "generates correct functions for scalar queries" <|
             \() ->
                 meField
