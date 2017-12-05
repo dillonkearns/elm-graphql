@@ -26,21 +26,12 @@ all =
                         |> Expect.equal Nothing
             , test "single primitive" <|
                 \() ->
-                    [ { name = "id"
-                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
-                      }
-                    ]
+                    [ idArg ]
                         |> Graphqelm.Generator.Argument.requiredArgsString
                         |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id ]""")
             , test "multiple primitives" <|
                 \() ->
-                    [ { name = "id"
-                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
-                      }
-                    , { name = "name"
-                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
-                      }
-                    ]
+                    [ idArg, nameArg ]
                         |> Graphqelm.Generator.Argument.requiredArgsString
                         |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id, Argument.string "name" requiredArgs.name ]""")
             ]
@@ -55,20 +46,13 @@ all =
                         |> Expect.equal Nothing
             , test "single primitive" <|
                 \() ->
-                    [ { name = "id"
-                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
-                      }
-                    ]
+                    [ idArg ]
                         |> Graphqelm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal (Just """{ id : String }""")
             , test "multiple primitives" <|
                 \() ->
-                    [ { name = "id"
-                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
-                      }
-                    , { name = "name"
-                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
-                      }
+                    [ idArg
+                    , nameArg
                     ]
                         |> Graphqelm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal (Just "{ id : String, name : String }")
@@ -76,10 +60,15 @@ all =
         ]
 
 
+nameArg : Type.Arg
+nameArg =
+    { name = "name"
+    , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+    }
 
-{-
-   droid : { id : String } -> Object droid Api.Object.Droid.Type -> Field.Query droid
-   droid requiredArgs object =
-       Object.single "droid" [ Argument.string "id" requiredArgs.id ] object
-           |> Query.rootQuery
--}
+
+idArg : Type.Arg
+idArg =
+    { name = "id"
+    , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+    }
