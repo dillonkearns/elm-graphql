@@ -32,6 +32,17 @@ all =
                     ]
                         |> Graphqelm.Generator.Argument.requiredArgsString
                         |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id ]""")
+            , test "multiple primitives" <|
+                \() ->
+                    [ { name = "id"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    , { name = "name"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    ]
+                        |> Graphqelm.Generator.Argument.requiredArgsString
+                        |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id, Argument.string "name" requiredArgs.name ]""")
             ]
         , describe "annotations"
             [ test "all nullable arguments give Nothing" <|

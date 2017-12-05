@@ -13,7 +13,7 @@ requiredArgsString args =
     if stuff == [] then
         Nothing
     else
-        Just ("[ " ++ (stuff |> String.join "") ++ " ]")
+        Just ("[ " ++ (stuff |> String.join ", ") ++ " ]")
 
 
 requiredArgString : Type.Arg -> Maybe String
