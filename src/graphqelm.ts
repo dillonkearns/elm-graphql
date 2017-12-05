@@ -6,6 +6,22 @@ import * as minimist from 'minimist'
 import * as request from 'request'
 
 const args = minimist(process.argv.slice(2))
+const headerArg: undefined | string | [string] = args.header
+const addHeader = (object: any, header: string) => {
+  const [headerKey, headerValue] = header.split(':')
+  object[headerKey] = headerValue
+  return object
+}
+let headers = {}
+if (typeof headerArg === 'string') {
+  addHeader(headers, headerArg)
+} else if (headerArg == undefined) {
+} else {
+  headerArg.forEach(header => {
+    addHeader(headers, header)
+  })
+}
+console.log('args', args)
 const graphqlUrl = args._[0]
 console.log('endpoint: ', graphqlUrl)
 const tsDeclarationPath = args.output
@@ -93,7 +109,8 @@ const introspectionQuery = `{
     }
   }`
 new GraphQLClient(graphqlUrl, {
-  mode: 'cors'
+  mode: 'cors',
+  headers: headers
 })
   .request(introspectionQuery)
   .then(data => {
@@ -101,4 +118,5 @@ new GraphQLClient(graphqlUrl, {
   })
   .catch(err => {
     console.log('error', err)
+    process.exit(1)
   })
