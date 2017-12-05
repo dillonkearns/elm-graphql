@@ -1,12 +1,8 @@
 module Generator.NormalizeTests exposing (all)
 
 import Expect
+import Graphqelm.Generator.Normalize as Normalize
 import Test exposing (Test, describe, test)
-
-
-fieldName : String -> String
-fieldName name =
-    name
 
 
 all : Test
@@ -14,6 +10,10 @@ all =
     describe "normalize"
         [ test "leaves valid names untouched" <|
             \() ->
-                fieldName "validFieldName"
+                Normalize.fieldName "validFieldName"
                     |> Expect.equal "validFieldName"
+        , test "type field name" <|
+            \() ->
+                Normalize.fieldName "type"
+                    |> Expect.equal "type_"
         ]
