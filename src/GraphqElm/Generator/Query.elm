@@ -1,8 +1,8 @@
 module Graphqelm.Generator.Query exposing (..)
 
-import Graphqelm.Generator.Argument
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.RequiredArgument
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -48,7 +48,7 @@ generateObjectOrInterface : Type.Field -> String -> String
 generateObjectOrInterface field name =
     let
         ( argsAnnotation, argsList ) =
-            ( Graphqelm.Generator.Argument.requiredArgsAnnotation field.args, Graphqelm.Generator.Argument.requiredArgsString field.args )
+            ( Graphqelm.Generator.RequiredArgument.requiredArgsAnnotation field.args, Graphqelm.Generator.RequiredArgument.requiredArgsString field.args )
     in
     case ( argsAnnotation, argsList ) of
         ( Just annotation, Just list ) ->
