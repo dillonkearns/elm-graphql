@@ -1,4 +1,4 @@
-module Generator.GenerateQueryTests exposing (..)
+module Generator.QueryTests exposing (..)
 
 import Expect
 import Graphqelm.Generator.Query
