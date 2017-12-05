@@ -59,27 +59,15 @@ all =
             , test "normalizes arguments" <|
                 \() ->
                     [ { name = "type", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
-                        |> both
+                        |> RequiredArgument.generate
                         |> Expect.equal
                             (Just
-                                ( "{ type_ : String }"
-                                , """[ Argument.string "type" requiredArgs.type_ ]"""
-                                )
+                                { annotation = "{ type_ : String }"
+                                , list = """[ Argument.string "type" requiredArgs.type_ ]"""
+                                }
                             )
             ]
         ]
-
-
-both : List Type.Arg -> Maybe ( String, String )
-both args =
-    let
-        annotation =
-            RequiredArgument.requiredArgsAnnotation args
-
-        argList =
-            RequiredArgument.requiredArgsString args
-    in
-    Maybe.map2 (,) annotation argList
 
 
 nameArg : Type.Arg

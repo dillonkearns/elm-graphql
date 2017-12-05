@@ -46,12 +46,8 @@ import Json.Decode as Decode exposing (Decoder)
 
 generateObjectOrInterface : Type.Field -> String -> String
 generateObjectOrInterface field name =
-    let
-        ( argsAnnotation, argsList ) =
-            ( Graphqelm.Generator.RequiredArgument.requiredArgsAnnotation field.args, Graphqelm.Generator.RequiredArgument.requiredArgsString field.args )
-    in
-    case ( argsAnnotation, argsList ) of
-        ( Just annotation, Just list ) ->
+    case Graphqelm.Generator.RequiredArgument.generate field.args of
+        Just { annotation, list } ->
             interpolate
                 """{0} : {2} -> Object {0} Api.Object.{1} -> Field.Query {0}
 {0} requiredArgs object =

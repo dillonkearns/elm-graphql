@@ -1,8 +1,19 @@
-module Graphqelm.Generator.RequiredArgument exposing (requiredArgsAnnotation, requiredArgsString)
+module Graphqelm.Generator.RequiredArgument exposing (generate, requiredArgsAnnotation, requiredArgsString)
 
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
+
+
+type alias Result =
+    { annotation : String, list : String }
+
+
+generate : List Type.Arg -> Maybe Result
+generate args =
+    Maybe.map2 Result
+        (requiredArgsAnnotation args)
+        (requiredArgsString args)
 
 
 requiredArgsString : List Type.Arg -> Maybe String
