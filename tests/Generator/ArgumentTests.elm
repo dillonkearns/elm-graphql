@@ -50,6 +50,17 @@ all =
                     ]
                         |> Graphqelm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal (Just """{ id : String }""")
+            , test "multiple primitive arguments" <|
+                \() ->
+                    [ { name = "id"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    , { name = "name"
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    ]
+                        |> Graphqelm.Generator.Argument.requiredArgsAnnotation
+                        |> Expect.equal (Just "{ id : String, name : String }")
             ]
         ]
 
