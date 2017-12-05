@@ -55,7 +55,7 @@ generateNew thisObjectName field =
                             Imports.object objectName |> String.join "."
                     in
                     interpolate
-                        """{0} : Object {0} {1} -> Field.Query {0} {2}
+                        """{0} : Object {0} {1} -> FieldDecoder {0} {2}
 {0} object =
     Object.single "{0}" [] object
 """
@@ -67,7 +67,7 @@ generateNew thisObjectName field =
                             Imports.object interfaceName |> String.join "."
                     in
                     interpolate
-                        """{0} : Object {0} {1} -> Field.Query {0} {2}
+                        """{0} : Object {0} {1} -> FieldDecoder {0} {2}
 {0} object =
     Object.single "{0}" [] object
 """
