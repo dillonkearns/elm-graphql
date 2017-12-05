@@ -52,9 +52,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder String Api.Object.User
+databaseId : FieldDecoder Int Api.Object.User
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 email : FieldDecoder String Api.Object.User
@@ -92,39 +92,39 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isBountyHunter : FieldDecoder String Api.Object.User
+isBountyHunter : FieldDecoder Bool Api.Object.User
 isBountyHunter =
-    Field.fieldDecoder "isBountyHunter" [] Decode.string
+    Field.fieldDecoder "isBountyHunter" [] Decode.bool
 
 
-isCampusExpert : FieldDecoder String Api.Object.User
+isCampusExpert : FieldDecoder Bool Api.Object.User
 isCampusExpert =
-    Field.fieldDecoder "isCampusExpert" [] Decode.string
+    Field.fieldDecoder "isCampusExpert" [] Decode.bool
 
 
-isDeveloperProgramMember : FieldDecoder String Api.Object.User
+isDeveloperProgramMember : FieldDecoder Bool Api.Object.User
 isDeveloperProgramMember =
-    Field.fieldDecoder "isDeveloperProgramMember" [] Decode.string
+    Field.fieldDecoder "isDeveloperProgramMember" [] Decode.bool
 
 
-isEmployee : FieldDecoder String Api.Object.User
+isEmployee : FieldDecoder Bool Api.Object.User
 isEmployee =
-    Field.fieldDecoder "isEmployee" [] Decode.string
+    Field.fieldDecoder "isEmployee" [] Decode.bool
 
 
-isHireable : FieldDecoder String Api.Object.User
+isHireable : FieldDecoder Bool Api.Object.User
 isHireable =
-    Field.fieldDecoder "isHireable" [] Decode.string
+    Field.fieldDecoder "isHireable" [] Decode.bool
 
 
-isSiteAdmin : FieldDecoder String Api.Object.User
+isSiteAdmin : FieldDecoder Bool Api.Object.User
 isSiteAdmin =
-    Field.fieldDecoder "isSiteAdmin" [] Decode.string
+    Field.fieldDecoder "isSiteAdmin" [] Decode.bool
 
 
-isViewer : FieldDecoder String Api.Object.User
+isViewer : FieldDecoder Bool Api.Object.User
 isViewer =
-    Field.fieldDecoder "isViewer" [] Decode.string
+    Field.fieldDecoder "isViewer" [] Decode.bool
 
 
 issueComments : Object issueComments Api.Object.IssueCommentConnection -> FieldDecoder issueComments Api.Object.User
@@ -212,14 +212,14 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanFollow : FieldDecoder String Api.Object.User
+viewerCanFollow : FieldDecoder Bool Api.Object.User
 viewerCanFollow =
-    Field.fieldDecoder "viewerCanFollow" [] Decode.string
+    Field.fieldDecoder "viewerCanFollow" [] Decode.bool
 
 
-viewerIsFollowing : FieldDecoder String Api.Object.User
+viewerIsFollowing : FieldDecoder Bool Api.Object.User
 viewerIsFollowing =
-    Field.fieldDecoder "viewerIsFollowing" [] Decode.string
+    Field.fieldDecoder "viewerIsFollowing" [] Decode.bool
 
 
 watching : Object watching Api.Object.RepositoryConnection -> FieldDecoder watching Api.Object.User

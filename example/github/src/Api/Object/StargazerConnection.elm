@@ -12,13 +12,14 @@ build constructor =
     Object.object constructor
 
 
+edges : Object edges Api.Object.StargazerEdge -> FieldDecoder (List edges) Api.Object.StargazerConnection
+edges object =
+    Object.listOf "edges" [] object
 
--- edges : FieldDecoder (List Api.Object.StargazerEdge) Api.Object.StargazerConnection
--- edges =
---     Field.fieldDecoder "edges" [] (Api.Object.StargazerEdge.decoder |> Decode.list)
--- nodes : FieldDecoder (List Api.Object.User) Api.Object.StargazerConnection
--- nodes =
---     Field.fieldDecoder "nodes" [] (Api.Object.User.decoder |> Decode.list)
+
+nodes : Object nodes Api.Object.User -> FieldDecoder (List nodes) Api.Object.StargazerConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.StargazerConnection

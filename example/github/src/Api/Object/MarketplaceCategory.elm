@@ -27,9 +27,9 @@ name =
     Field.fieldDecoder "name" [] Decode.string
 
 
-primaryListingCount : FieldDecoder String Api.Object.MarketplaceCategory
+primaryListingCount : FieldDecoder Int Api.Object.MarketplaceCategory
 primaryListingCount =
-    Field.fieldDecoder "primaryListingCount" [] Decode.string
+    Field.fieldDecoder "primaryListingCount" [] Decode.int
 
 
 resourcePath : FieldDecoder String Api.Object.MarketplaceCategory
@@ -37,9 +37,9 @@ resourcePath =
     Field.fieldDecoder "resourcePath" [] Decode.string
 
 
-secondaryListingCount : FieldDecoder String Api.Object.MarketplaceCategory
+secondaryListingCount : FieldDecoder Int Api.Object.MarketplaceCategory
 secondaryListingCount =
-    Field.fieldDecoder "secondaryListingCount" [] Decode.string
+    Field.fieldDecoder "secondaryListingCount" [] Decode.int
 
 
 slug : FieldDecoder String Api.Object.MarketplaceCategory

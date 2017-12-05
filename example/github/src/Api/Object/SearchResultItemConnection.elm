@@ -12,19 +12,19 @@ build constructor =
     Object.object constructor
 
 
-codeCount : FieldDecoder String Api.Object.SearchResultItemConnection
+codeCount : FieldDecoder Int Api.Object.SearchResultItemConnection
 codeCount =
-    Field.fieldDecoder "codeCount" [] Decode.string
+    Field.fieldDecoder "codeCount" [] Decode.int
 
 
-edges : FieldDecoder (List Object.SearchResultItemEdge) Api.Object.SearchResultItemConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.SearchResultItemEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.SearchResultItemEdge -> FieldDecoder (List edges) Api.Object.SearchResultItemConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-issueCount : FieldDecoder String Api.Object.SearchResultItemConnection
+issueCount : FieldDecoder Int Api.Object.SearchResultItemConnection
 issueCount =
-    Field.fieldDecoder "issueCount" [] Decode.string
+    Field.fieldDecoder "issueCount" [] Decode.int
 
 
 nodes : FieldDecoder (List String) Api.Object.SearchResultItemConnection
@@ -37,16 +37,16 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-repositoryCount : FieldDecoder String Api.Object.SearchResultItemConnection
+repositoryCount : FieldDecoder Int Api.Object.SearchResultItemConnection
 repositoryCount =
-    Field.fieldDecoder "repositoryCount" [] Decode.string
+    Field.fieldDecoder "repositoryCount" [] Decode.int
 
 
-userCount : FieldDecoder String Api.Object.SearchResultItemConnection
+userCount : FieldDecoder Int Api.Object.SearchResultItemConnection
 userCount =
-    Field.fieldDecoder "userCount" [] Decode.string
+    Field.fieldDecoder "userCount" [] Decode.int
 
 
-wikiCount : FieldDecoder String Api.Object.SearchResultItemConnection
+wikiCount : FieldDecoder Int Api.Object.SearchResultItemConnection
 wikiCount =
-    Field.fieldDecoder "wikiCount" [] Decode.string
+    Field.fieldDecoder "wikiCount" [] Decode.int

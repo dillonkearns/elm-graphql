@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.LabelEdge) Api.Object.LabelConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.LabelEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.LabelEdge -> FieldDecoder (List edges) Api.Object.LabelConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Label) Api.Object.LabelConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Label.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Label -> FieldDecoder (List nodes) Api.Object.LabelConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.LabelConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.LabelConnection
+totalCount : FieldDecoder Int Api.Object.LabelConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

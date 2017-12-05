@@ -18,9 +18,9 @@ email =
     Field.fieldDecoder "email" [] Decode.string
 
 
-isValid : FieldDecoder String Api.Object.UnknownSignature
+isValid : FieldDecoder Bool Api.Object.UnknownSignature
 isValid =
-    Field.fieldDecoder "isValid" [] Decode.string
+    Field.fieldDecoder "isValid" [] Decode.bool
 
 
 payload : FieldDecoder String Api.Object.UnknownSignature

@@ -33,6 +33,6 @@ users object =
     Object.single "users" [] object
 
 
-viewerHasReacted : FieldDecoder String Api.Object.ReactionGroup
+viewerHasReacted : FieldDecoder Bool Api.Object.ReactionGroup
 viewerHasReacted =
-    Field.fieldDecoder "viewerHasReacted" [] Decode.string
+    Field.fieldDecoder "viewerHasReacted" [] Decode.bool

@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.GistCommentEdge) Api.Object.GistCommentConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.GistCommentEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.GistCommentEdge -> FieldDecoder (List edges) Api.Object.GistCommentConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.GistComment) Api.Object.GistCommentConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.GistComment.decoder |> Decode.list)
+nodes : Object nodes Api.Object.GistComment -> FieldDecoder (List nodes) Api.Object.GistCommentConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.GistCommentConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.GistCommentConnection
+totalCount : FieldDecoder Int Api.Object.GistCommentConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

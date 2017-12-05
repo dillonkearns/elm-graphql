@@ -149,14 +149,14 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanAdminister : FieldDecoder String Api.Object.Team
+viewerCanAdminister : FieldDecoder Bool Api.Object.Team
 viewerCanAdminister =
-    Field.fieldDecoder "viewerCanAdminister" [] Decode.string
+    Field.fieldDecoder "viewerCanAdminister" [] Decode.bool
 
 
-viewerCanSubscribe : FieldDecoder String Api.Object.Team
+viewerCanSubscribe : FieldDecoder Bool Api.Object.Team
 viewerCanSubscribe =
-    Field.fieldDecoder "viewerCanSubscribe" [] Decode.string
+    Field.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 viewerSubscription : FieldDecoder Api.Enum.SubscriptionState.SubscriptionState Api.Object.Team

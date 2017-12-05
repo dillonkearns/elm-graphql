@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.MilestoneEdge) Api.Object.MilestoneConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.MilestoneEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.MilestoneEdge -> FieldDecoder (List edges) Api.Object.MilestoneConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Milestone) Api.Object.MilestoneConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Milestone.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Milestone -> FieldDecoder (List nodes) Api.Object.MilestoneConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.MilestoneConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.MilestoneConnection
+totalCount : FieldDecoder Int Api.Object.MilestoneConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

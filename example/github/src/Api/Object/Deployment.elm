@@ -28,9 +28,9 @@ creator object =
     Object.single "creator" [] object
 
 
-databaseId : FieldDecoder String Api.Object.Deployment
+databaseId : FieldDecoder Int Api.Object.Deployment
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 environment : FieldDecoder String Api.Object.Deployment

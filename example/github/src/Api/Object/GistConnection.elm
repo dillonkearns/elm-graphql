@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.GistEdge) Api.Object.GistConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.GistEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.GistEdge -> FieldDecoder (List edges) Api.Object.GistConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Gist) Api.Object.GistConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Gist.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Gist -> FieldDecoder (List nodes) Api.Object.GistConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.GistConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.GistConnection
+totalCount : FieldDecoder Int Api.Object.GistConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

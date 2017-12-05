@@ -14,9 +14,21 @@ codeOfConduct requiredArgs object =
         |> Query.rootQuery
 
 
+codesOfConduct : Object codesOfConduct Api.Object.CodeOfConduct -> Field.Query (List codesOfConduct)
+codesOfConduct object =
+    Object.listOf "codesOfConduct" [] object
+        |> Query.rootQuery
+
+
 license : { key : String } -> Object license Api.Object.License -> Field.Query license
 license requiredArgs object =
     Object.single "license" [ Argument.string "key" requiredArgs.key ] object
+        |> Query.rootQuery
+
+
+licenses : Object licenses Api.Object.License -> Field.Query (List licenses)
+licenses object =
+    Object.listOf "licenses" [] object
         |> Query.rootQuery
 
 
@@ -56,6 +68,12 @@ node requiredArgs object =
         |> Query.rootQuery
 
 
+nodes : Object nodes Api.Object.Node -> Field.Query (List nodes)
+nodes object =
+    Object.listOf "nodes" [] object
+        |> Query.rootQuery
+
+
 organization : { login : String } -> Object organization Api.Object.Organization -> Field.Query organization
 organization requiredArgs object =
     Object.single "organization" [ Argument.string "login" requiredArgs.login ] object
@@ -70,11 +88,7 @@ rateLimit object =
 
 repository : { owner : String, name : String } -> Object repository Api.Object.Repository -> Field.Query repository
 repository requiredArgs object =
-    Object.single "repository"
-        [ Argument.string "owner" requiredArgs.owner
-        , Argument.string "name" requiredArgs.name
-        ]
-        object
+    Object.single "repository" [ Argument.string "owner" requiredArgs.owner, Argument.string "name" requiredArgs.name ] object
         |> Query.rootQuery
 
 
@@ -87,6 +101,12 @@ repositoryOwner requiredArgs object =
 resource : { url : String } -> Object resource Api.Object.UniformResourceLocatable -> Field.Query resource
 resource requiredArgs object =
     Object.single "resource" [ Argument.string "url" requiredArgs.url ] object
+        |> Query.rootQuery
+
+
+search : { query : String, type_ : String } -> Object search Api.Object.SearchResultItemConnection -> Field.Query search
+search requiredArgs object =
+    Object.single "search" [ Argument.string "query" requiredArgs.query, Argument.string "type" requiredArgs.type_ ] object
         |> Query.rootQuery
 
 

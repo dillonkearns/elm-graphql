@@ -12,9 +12,9 @@ build constructor =
     Object.object constructor
 
 
-age : FieldDecoder String Api.Object.BlameRange
+age : FieldDecoder Int Api.Object.BlameRange
 age =
-    Field.fieldDecoder "age" [] Decode.string
+    Field.fieldDecoder "age" [] Decode.int
 
 
 commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.BlameRange
@@ -22,11 +22,11 @@ commit object =
     Object.single "commit" [] object
 
 
-endingLine : FieldDecoder String Api.Object.BlameRange
+endingLine : FieldDecoder Int Api.Object.BlameRange
 endingLine =
-    Field.fieldDecoder "endingLine" [] Decode.string
+    Field.fieldDecoder "endingLine" [] Decode.int
 
 
-startingLine : FieldDecoder String Api.Object.BlameRange
+startingLine : FieldDecoder Int Api.Object.BlameRange
 startingLine =
-    Field.fieldDecoder "startingLine" [] Decode.string
+    Field.fieldDecoder "startingLine" [] Decode.int

@@ -32,9 +32,9 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isPublic : FieldDecoder String Api.Object.Gist
+isPublic : FieldDecoder Bool Api.Object.Gist
 isPublic =
-    Field.fieldDecoder "isPublic" [] Decode.string
+    Field.fieldDecoder "isPublic" [] Decode.bool
 
 
 name : FieldDecoder String Api.Object.Gist
@@ -62,6 +62,6 @@ updatedAt =
     Field.fieldDecoder "updatedAt" [] Decode.string
 
 
-viewerHasStarred : FieldDecoder String Api.Object.Gist
+viewerHasStarred : FieldDecoder Bool Api.Object.Gist
 viewerHasStarred =
-    Field.fieldDecoder "viewerHasStarred" [] Decode.string
+    Field.fieldDecoder "viewerHasStarred" [] Decode.bool

@@ -22,6 +22,6 @@ node object =
     Object.single "node" [] object
 
 
-size : FieldDecoder String Api.Object.LanguageEdge
+size : FieldDecoder Int Api.Object.LanguageEdge
 size =
-    Field.fieldDecoder "size" [] Decode.string
+    Field.fieldDecoder "size" [] Decode.int

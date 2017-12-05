@@ -32,14 +32,14 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isDraft : FieldDecoder String Api.Object.Release
+isDraft : FieldDecoder Bool Api.Object.Release
 isDraft =
-    Field.fieldDecoder "isDraft" [] Decode.string
+    Field.fieldDecoder "isDraft" [] Decode.bool
 
 
-isPrerelease : FieldDecoder String Api.Object.Release
+isPrerelease : FieldDecoder Bool Api.Object.Release
 isPrerelease =
-    Field.fieldDecoder "isPrerelease" [] Decode.string
+    Field.fieldDecoder "isPrerelease" [] Decode.bool
 
 
 name : FieldDecoder String Api.Object.Release

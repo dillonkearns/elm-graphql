@@ -16,9 +16,9 @@ build constructor =
     Object.object constructor
 
 
-additions : FieldDecoder String Api.Object.PullRequest
+additions : FieldDecoder Int Api.Object.PullRequest
 additions =
-    Field.fieldDecoder "additions" [] Decode.string
+    Field.fieldDecoder "additions" [] Decode.int
 
 
 assignees : Object assignees Api.Object.UserConnection -> FieldDecoder assignees Api.Object.PullRequest
@@ -61,14 +61,14 @@ bodyText =
     Field.fieldDecoder "bodyText" [] Decode.string
 
 
-changedFiles : FieldDecoder String Api.Object.PullRequest
+changedFiles : FieldDecoder Int Api.Object.PullRequest
 changedFiles =
-    Field.fieldDecoder "changedFiles" [] Decode.string
+    Field.fieldDecoder "changedFiles" [] Decode.int
 
 
-closed : FieldDecoder String Api.Object.PullRequest
+closed : FieldDecoder Bool Api.Object.PullRequest
 closed =
-    Field.fieldDecoder "closed" [] Decode.string
+    Field.fieldDecoder "closed" [] Decode.bool
 
 
 closedAt : FieldDecoder String Api.Object.PullRequest
@@ -91,19 +91,19 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-createdViaEmail : FieldDecoder String Api.Object.PullRequest
+createdViaEmail : FieldDecoder Bool Api.Object.PullRequest
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.string
+    Field.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder String Api.Object.PullRequest
+databaseId : FieldDecoder Int Api.Object.PullRequest
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
-deletions : FieldDecoder String Api.Object.PullRequest
+deletions : FieldDecoder Int Api.Object.PullRequest
 deletions =
-    Field.fieldDecoder "deletions" [] Decode.string
+    Field.fieldDecoder "deletions" [] Decode.int
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequest
@@ -136,9 +136,9 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isCrossRepository : FieldDecoder String Api.Object.PullRequest
+isCrossRepository : FieldDecoder Bool Api.Object.PullRequest
 isCrossRepository =
-    Field.fieldDecoder "isCrossRepository" [] Decode.string
+    Field.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
 labels : Object labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.PullRequest
@@ -151,9 +151,9 @@ lastEditedAt =
     Field.fieldDecoder "lastEditedAt" [] Decode.string
 
 
-locked : FieldDecoder String Api.Object.PullRequest
+locked : FieldDecoder Bool Api.Object.PullRequest
 locked =
-    Field.fieldDecoder "locked" [] Decode.string
+    Field.fieldDecoder "locked" [] Decode.bool
 
 
 mergeCommit : Object mergeCommit Api.Object.Commit -> FieldDecoder mergeCommit Api.Object.PullRequest
@@ -166,9 +166,9 @@ mergeable =
     Field.fieldDecoder "mergeable" [] Api.Enum.MergeableState.decoder
 
 
-merged : FieldDecoder String Api.Object.PullRequest
+merged : FieldDecoder Bool Api.Object.PullRequest
 merged =
-    Field.fieldDecoder "merged" [] Decode.string
+    Field.fieldDecoder "merged" [] Decode.bool
 
 
 mergedAt : FieldDecoder String Api.Object.PullRequest
@@ -181,9 +181,9 @@ milestone object =
     Object.single "milestone" [] object
 
 
-number : FieldDecoder String Api.Object.PullRequest
+number : FieldDecoder Int Api.Object.PullRequest
 number =
-    Field.fieldDecoder "number" [] Decode.string
+    Field.fieldDecoder "number" [] Decode.int
 
 
 participants : Object participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.PullRequest
@@ -206,9 +206,9 @@ publishedAt =
     Field.fieldDecoder "publishedAt" [] Decode.string
 
 
-reactionGroups : FieldDecoder (List Object.ReactionGroup) Api.Object.PullRequest
-reactionGroups =
-    Field.fieldDecoder "reactionGroups" [] (Api.Object.ReactionGroup.decoder |> Decode.list)
+reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.PullRequest
+reactionGroups object =
+    Object.listOf "reactionGroups" [] object
 
 
 reactions : Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.PullRequest
@@ -251,9 +251,9 @@ state =
     Field.fieldDecoder "state" [] Api.Enum.PullRequestState.decoder
 
 
-suggestedReviewers : FieldDecoder (List Object.SuggestedReviewer) Api.Object.PullRequest
-suggestedReviewers =
-    Field.fieldDecoder "suggestedReviewers" [] (Api.Object.SuggestedReviewer.decoder |> Decode.list)
+suggestedReviewers : Object suggestedReviewers Api.Object.SuggestedReviewer -> FieldDecoder (List suggestedReviewers) Api.Object.PullRequest
+suggestedReviewers object =
+    Object.listOf "suggestedReviewers" [] object
 
 
 timeline : Object timeline Api.Object.PullRequestTimelineConnection -> FieldDecoder timeline Api.Object.PullRequest
@@ -276,19 +276,19 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanReact : FieldDecoder String Api.Object.PullRequest
+viewerCanReact : FieldDecoder Bool Api.Object.PullRequest
 viewerCanReact =
-    Field.fieldDecoder "viewerCanReact" [] Decode.string
+    Field.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
-viewerCanSubscribe : FieldDecoder String Api.Object.PullRequest
+viewerCanSubscribe : FieldDecoder Bool Api.Object.PullRequest
 viewerCanSubscribe =
-    Field.fieldDecoder "viewerCanSubscribe" [] Decode.string
+    Field.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.PullRequest
+viewerCanUpdate : FieldDecoder Bool Api.Object.PullRequest
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.PullRequest
@@ -296,9 +296,9 @@ viewerCannotUpdateReasons =
     Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
-viewerDidAuthor : FieldDecoder String Api.Object.PullRequest
+viewerDidAuthor : FieldDecoder Bool Api.Object.PullRequest
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.string
+    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool
 
 
 viewerSubscription : FieldDecoder Api.Enum.SubscriptionState.SubscriptionState Api.Object.PullRequest

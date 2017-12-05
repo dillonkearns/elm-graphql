@@ -23,9 +23,9 @@ bodyHTML =
     Field.fieldDecoder "bodyHTML" [] Decode.string
 
 
-closed : FieldDecoder String Api.Object.Project
+closed : FieldDecoder Bool Api.Object.Project
 closed =
-    Field.fieldDecoder "closed" [] Decode.string
+    Field.fieldDecoder "closed" [] Decode.bool
 
 
 closedAt : FieldDecoder String Api.Object.Project
@@ -48,9 +48,9 @@ creator object =
     Object.single "creator" [] object
 
 
-databaseId : FieldDecoder String Api.Object.Project
+databaseId : FieldDecoder Int Api.Object.Project
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.Project
@@ -63,9 +63,9 @@ name =
     Field.fieldDecoder "name" [] Decode.string
 
 
-number : FieldDecoder String Api.Object.Project
+number : FieldDecoder Int Api.Object.Project
 number =
-    Field.fieldDecoder "number" [] Decode.string
+    Field.fieldDecoder "number" [] Decode.int
 
 
 owner : Object owner Api.Object.ProjectOwner -> FieldDecoder owner Api.Object.Project
@@ -98,6 +98,6 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.Project
+viewerCanUpdate : FieldDecoder Bool Api.Object.Project
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool

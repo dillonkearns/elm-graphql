@@ -43,14 +43,14 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-createdViaEmail : FieldDecoder String Api.Object.CommitComment
+createdViaEmail : FieldDecoder Bool Api.Object.CommitComment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.string
+    Field.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder String Api.Object.CommitComment
+databaseId : FieldDecoder Int Api.Object.CommitComment
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.CommitComment
@@ -73,9 +73,9 @@ path =
     Field.fieldDecoder "path" [] Decode.string
 
 
-position : FieldDecoder String Api.Object.CommitComment
+position : FieldDecoder Int Api.Object.CommitComment
 position =
-    Field.fieldDecoder "position" [] Decode.string
+    Field.fieldDecoder "position" [] Decode.int
 
 
 publishedAt : FieldDecoder String Api.Object.CommitComment
@@ -83,9 +83,9 @@ publishedAt =
     Field.fieldDecoder "publishedAt" [] Decode.string
 
 
-reactionGroups : FieldDecoder (List Object.ReactionGroup) Api.Object.CommitComment
-reactionGroups =
-    Field.fieldDecoder "reactionGroups" [] (Api.Object.ReactionGroup.decoder |> Decode.list)
+reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.CommitComment
+reactionGroups object =
+    Object.listOf "reactionGroups" [] object
 
 
 reactions : Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.CommitComment
@@ -113,19 +113,19 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanDelete : FieldDecoder String Api.Object.CommitComment
+viewerCanDelete : FieldDecoder Bool Api.Object.CommitComment
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.string
+    Field.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
-viewerCanReact : FieldDecoder String Api.Object.CommitComment
+viewerCanReact : FieldDecoder Bool Api.Object.CommitComment
 viewerCanReact =
-    Field.fieldDecoder "viewerCanReact" [] Decode.string
+    Field.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.CommitComment
+viewerCanUpdate : FieldDecoder Bool Api.Object.CommitComment
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.CommitComment
@@ -133,6 +133,6 @@ viewerCannotUpdateReasons =
     Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
-viewerDidAuthor : FieldDecoder String Api.Object.CommitComment
+viewerDidAuthor : FieldDecoder Bool Api.Object.CommitComment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.string
+    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool

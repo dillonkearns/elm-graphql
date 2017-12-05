@@ -38,9 +38,9 @@ issues object =
     Object.single "issues" [] object
 
 
-number : FieldDecoder String Api.Object.Milestone
+number : FieldDecoder Int Api.Object.Milestone
 number =
-    Field.fieldDecoder "number" [] Decode.string
+    Field.fieldDecoder "number" [] Decode.int
 
 
 repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Milestone

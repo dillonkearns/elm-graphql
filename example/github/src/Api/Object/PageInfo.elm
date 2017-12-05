@@ -17,14 +17,14 @@ endCursor =
     Field.fieldDecoder "endCursor" [] Decode.string
 
 
-hasNextPage : FieldDecoder String Api.Object.PageInfo
+hasNextPage : FieldDecoder Bool Api.Object.PageInfo
 hasNextPage =
-    Field.fieldDecoder "hasNextPage" [] Decode.string
+    Field.fieldDecoder "hasNextPage" [] Decode.bool
 
 
-hasPreviousPage : FieldDecoder String Api.Object.PageInfo
+hasPreviousPage : FieldDecoder Bool Api.Object.PageInfo
 hasPreviousPage =
-    Field.fieldDecoder "hasPreviousPage" [] Decode.string
+    Field.fieldDecoder "hasPreviousPage" [] Decode.bool
 
 
 startCursor : FieldDecoder String Api.Object.PageInfo

@@ -23,9 +23,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder String Api.Object.ReviewDismissedEvent
+databaseId : FieldDecoder Int Api.Object.ReviewDismissedEvent
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.ReviewDismissedEvent

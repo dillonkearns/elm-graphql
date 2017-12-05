@@ -18,9 +18,9 @@ email =
     Field.fieldDecoder "email" [] Decode.string
 
 
-isValid : FieldDecoder String Api.Object.GitSignature
+isValid : FieldDecoder Bool Api.Object.GitSignature
 isValid =
-    Field.fieldDecoder "isValid" [] Decode.string
+    Field.fieldDecoder "isValid" [] Decode.bool
 
 
 payload : FieldDecoder String Api.Object.GitSignature

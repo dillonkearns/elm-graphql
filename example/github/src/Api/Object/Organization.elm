@@ -17,9 +17,9 @@ avatarUrl =
     Field.fieldDecoder "avatarUrl" [] Decode.string
 
 
-databaseId : FieldDecoder String Api.Object.Organization
+databaseId : FieldDecoder Int Api.Object.Organization
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 description : FieldDecoder String Api.Object.Organization
@@ -142,29 +142,29 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanAdminister : FieldDecoder String Api.Object.Organization
+viewerCanAdminister : FieldDecoder Bool Api.Object.Organization
 viewerCanAdminister =
-    Field.fieldDecoder "viewerCanAdminister" [] Decode.string
+    Field.fieldDecoder "viewerCanAdminister" [] Decode.bool
 
 
-viewerCanCreateProjects : FieldDecoder String Api.Object.Organization
+viewerCanCreateProjects : FieldDecoder Bool Api.Object.Organization
 viewerCanCreateProjects =
-    Field.fieldDecoder "viewerCanCreateProjects" [] Decode.string
+    Field.fieldDecoder "viewerCanCreateProjects" [] Decode.bool
 
 
-viewerCanCreateRepositories : FieldDecoder String Api.Object.Organization
+viewerCanCreateRepositories : FieldDecoder Bool Api.Object.Organization
 viewerCanCreateRepositories =
-    Field.fieldDecoder "viewerCanCreateRepositories" [] Decode.string
+    Field.fieldDecoder "viewerCanCreateRepositories" [] Decode.bool
 
 
-viewerCanCreateTeams : FieldDecoder String Api.Object.Organization
+viewerCanCreateTeams : FieldDecoder Bool Api.Object.Organization
 viewerCanCreateTeams =
-    Field.fieldDecoder "viewerCanCreateTeams" [] Decode.string
+    Field.fieldDecoder "viewerCanCreateTeams" [] Decode.bool
 
 
-viewerIsAMember : FieldDecoder String Api.Object.Organization
+viewerIsAMember : FieldDecoder Bool Api.Object.Organization
 viewerIsAMember =
-    Field.fieldDecoder "viewerIsAMember" [] Decode.string
+    Field.fieldDecoder "viewerIsAMember" [] Decode.bool
 
 
 websiteUrl : FieldDecoder String Api.Object.Organization

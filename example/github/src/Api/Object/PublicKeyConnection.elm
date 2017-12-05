@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.PublicKeyEdge) Api.Object.PublicKeyConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.PublicKeyEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.PublicKeyEdge -> FieldDecoder (List edges) Api.Object.PublicKeyConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.PublicKey) Api.Object.PublicKeyConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.PublicKey.decoder |> Decode.list)
+nodes : Object nodes Api.Object.PublicKey -> FieldDecoder (List nodes) Api.Object.PublicKeyConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.PublicKeyConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.PublicKeyConnection
+totalCount : FieldDecoder Int Api.Object.PublicKeyConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

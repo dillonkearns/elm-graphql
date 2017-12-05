@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.PullRequestCommitEdge) Api.Object.PullRequestCommitConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.PullRequestCommitEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.PullRequestCommitEdge -> FieldDecoder (List edges) Api.Object.PullRequestCommitConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.PullRequestCommit) Api.Object.PullRequestCommitConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.PullRequestCommit.decoder |> Decode.list)
+nodes : Object nodes Api.Object.PullRequestCommit -> FieldDecoder (List nodes) Api.Object.PullRequestCommitConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.PullRequestCommitConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.PullRequestCommitConnection
+totalCount : FieldDecoder Int Api.Object.PullRequestCommitConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

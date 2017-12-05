@@ -18,9 +18,9 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-viewerCanSubscribe : FieldDecoder String Api.Object.Subscribable
+viewerCanSubscribe : FieldDecoder Bool Api.Object.Subscribable
 viewerCanSubscribe =
-    Field.fieldDecoder "viewerCanSubscribe" [] Decode.string
+    Field.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 viewerSubscription : FieldDecoder Api.Enum.SubscriptionState.SubscriptionState Api.Object.Subscribable

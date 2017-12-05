@@ -22,9 +22,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder String Api.Object.DeployedEvent
+databaseId : FieldDecoder Int Api.Object.DeployedEvent
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 deployment : Object deployment Api.Object.Deployment -> FieldDecoder deployment Api.Object.DeployedEvent

@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.RepositoryCollaboratorEdge) Api.Object.RepositoryCollaboratorConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.RepositoryCollaboratorEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.RepositoryCollaboratorEdge -> FieldDecoder (List edges) Api.Object.RepositoryCollaboratorConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.User) Api.Object.RepositoryCollaboratorConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.User.decoder |> Decode.list)
+nodes : Object nodes Api.Object.User -> FieldDecoder (List nodes) Api.Object.RepositoryCollaboratorConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.RepositoryCollaboratorConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.RepositoryCollaboratorConnection
+totalCount : FieldDecoder Int Api.Object.RepositoryCollaboratorConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

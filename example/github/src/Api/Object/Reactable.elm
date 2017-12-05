@@ -12,9 +12,9 @@ build constructor =
     Object.object constructor
 
 
-databaseId : FieldDecoder String Api.Object.Reactable
+databaseId : FieldDecoder Int Api.Object.Reactable
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.Reactable
@@ -22,9 +22,9 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-reactionGroups : FieldDecoder (List Object.ReactionGroup) Api.Object.Reactable
-reactionGroups =
-    Field.fieldDecoder "reactionGroups" [] (Api.Object.ReactionGroup.decoder |> Decode.list)
+reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.Reactable
+reactionGroups object =
+    Object.listOf "reactionGroups" [] object
 
 
 reactions : Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.Reactable
@@ -32,6 +32,6 @@ reactions object =
     Object.single "reactions" [] object
 
 
-viewerCanReact : FieldDecoder String Api.Object.Reactable
+viewerCanReact : FieldDecoder Bool Api.Object.Reactable
 viewerCanReact =
-    Field.fieldDecoder "viewerCanReact" [] Decode.string
+    Field.fieldDecoder "viewerCanReact" [] Decode.bool

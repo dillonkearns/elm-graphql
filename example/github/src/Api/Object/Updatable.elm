@@ -12,6 +12,6 @@ build constructor =
     Object.object constructor
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.Updatable
+viewerCanUpdate : FieldDecoder Bool Api.Object.Updatable
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool

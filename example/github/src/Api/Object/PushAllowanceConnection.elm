@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.PushAllowanceEdge) Api.Object.PushAllowanceConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.PushAllowanceEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.PushAllowanceEdge -> FieldDecoder (List edges) Api.Object.PushAllowanceConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.PushAllowance) Api.Object.PushAllowanceConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.PushAllowance.decoder |> Decode.list)
+nodes : Object nodes Api.Object.PushAllowance -> FieldDecoder (List nodes) Api.Object.PushAllowanceConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.PushAllowanceConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.PushAllowanceConnection
+totalCount : FieldDecoder Int Api.Object.PushAllowanceConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

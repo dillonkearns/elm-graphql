@@ -17,34 +17,34 @@ creator object =
     Object.single "creator" [] object
 
 
-hasDismissableStaleReviews : FieldDecoder String Api.Object.ProtectedBranch
+hasDismissableStaleReviews : FieldDecoder Bool Api.Object.ProtectedBranch
 hasDismissableStaleReviews =
-    Field.fieldDecoder "hasDismissableStaleReviews" [] Decode.string
+    Field.fieldDecoder "hasDismissableStaleReviews" [] Decode.bool
 
 
-hasRequiredReviews : FieldDecoder String Api.Object.ProtectedBranch
+hasRequiredReviews : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRequiredReviews =
-    Field.fieldDecoder "hasRequiredReviews" [] Decode.string
+    Field.fieldDecoder "hasRequiredReviews" [] Decode.bool
 
 
-hasRequiredStatusChecks : FieldDecoder String Api.Object.ProtectedBranch
+hasRequiredStatusChecks : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRequiredStatusChecks =
-    Field.fieldDecoder "hasRequiredStatusChecks" [] Decode.string
+    Field.fieldDecoder "hasRequiredStatusChecks" [] Decode.bool
 
 
-hasRestrictedPushes : FieldDecoder String Api.Object.ProtectedBranch
+hasRestrictedPushes : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRestrictedPushes =
-    Field.fieldDecoder "hasRestrictedPushes" [] Decode.string
+    Field.fieldDecoder "hasRestrictedPushes" [] Decode.bool
 
 
-hasRestrictedReviewDismissals : FieldDecoder String Api.Object.ProtectedBranch
+hasRestrictedReviewDismissals : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRestrictedReviewDismissals =
-    Field.fieldDecoder "hasRestrictedReviewDismissals" [] Decode.string
+    Field.fieldDecoder "hasRestrictedReviewDismissals" [] Decode.bool
 
 
-hasStrictRequiredStatusChecks : FieldDecoder String Api.Object.ProtectedBranch
+hasStrictRequiredStatusChecks : FieldDecoder Bool Api.Object.ProtectedBranch
 hasStrictRequiredStatusChecks =
-    Field.fieldDecoder "hasStrictRequiredStatusChecks" [] Decode.string
+    Field.fieldDecoder "hasStrictRequiredStatusChecks" [] Decode.bool
 
 
 id : FieldDecoder String Api.Object.ProtectedBranch
@@ -52,9 +52,9 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isAdminEnforced : FieldDecoder String Api.Object.ProtectedBranch
+isAdminEnforced : FieldDecoder Bool Api.Object.ProtectedBranch
 isAdminEnforced =
-    Field.fieldDecoder "isAdminEnforced" [] Decode.string
+    Field.fieldDecoder "isAdminEnforced" [] Decode.bool
 
 
 name : FieldDecoder String Api.Object.ProtectedBranch

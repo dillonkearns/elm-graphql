@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.ReleaseEdge) Api.Object.ReleaseConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.ReleaseEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.ReleaseEdge -> FieldDecoder (List edges) Api.Object.ReleaseConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Release) Api.Object.ReleaseConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Release.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Release -> FieldDecoder (List nodes) Api.Object.ReleaseConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.ReleaseConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.ReleaseConnection
+totalCount : FieldDecoder Int Api.Object.ReleaseConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

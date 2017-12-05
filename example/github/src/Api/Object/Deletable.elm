@@ -12,6 +12,6 @@ build constructor =
     Object.object constructor
 
 
-viewerCanDelete : FieldDecoder String Api.Object.Deletable
+viewerCanDelete : FieldDecoder Bool Api.Object.Deletable
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.string
+    Field.fieldDecoder "viewerCanDelete" [] Decode.bool

@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.TeamEdge) Api.Object.TeamConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.TeamEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.TeamEdge -> FieldDecoder (List edges) Api.Object.TeamConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Team) Api.Object.TeamConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Team.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Team -> FieldDecoder (List nodes) Api.Object.TeamConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.TeamConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.TeamConnection
+totalCount : FieldDecoder Int Api.Object.TeamConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

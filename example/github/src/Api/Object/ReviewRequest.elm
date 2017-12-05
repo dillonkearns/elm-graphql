@@ -12,9 +12,9 @@ build constructor =
     Object.object constructor
 
 
-databaseId : FieldDecoder String Api.Object.ReviewRequest
+databaseId : FieldDecoder Int Api.Object.ReviewRequest
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.ReviewRequest

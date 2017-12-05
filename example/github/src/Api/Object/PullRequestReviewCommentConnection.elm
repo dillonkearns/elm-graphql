@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.PullRequestReviewCommentEdge) Api.Object.PullRequestReviewCommentConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.PullRequestReviewCommentEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.PullRequestReviewCommentEdge -> FieldDecoder (List edges) Api.Object.PullRequestReviewCommentConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.PullRequestReviewComment) Api.Object.PullRequestReviewCommentConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.PullRequestReviewComment.decoder |> Decode.list)
+nodes : Object nodes Api.Object.PullRequestReviewComment -> FieldDecoder (List nodes) Api.Object.PullRequestReviewCommentConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.PullRequestReviewCommentConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.PullRequestReviewCommentConnection
+totalCount : FieldDecoder Int Api.Object.PullRequestReviewCommentConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

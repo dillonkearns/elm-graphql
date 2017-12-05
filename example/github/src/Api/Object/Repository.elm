@@ -3,6 +3,7 @@ module Api.Object.Repository exposing (..)
 import Api.Enum.RepositoryLockReason
 import Api.Enum.SubscriptionState
 import Api.Object
+import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
@@ -38,9 +39,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder String Api.Object.Repository
+databaseId : FieldDecoder Int Api.Object.Repository
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 defaultBranchRef : Object defaultBranchRef Api.Object.Ref -> FieldDecoder defaultBranchRef Api.Object.Repository
@@ -63,14 +64,14 @@ descriptionHTML =
     Field.fieldDecoder "descriptionHTML" [] Decode.string
 
 
-diskUsage : FieldDecoder String Api.Object.Repository
+diskUsage : FieldDecoder Int Api.Object.Repository
 diskUsage =
-    Field.fieldDecoder "diskUsage" [] Decode.string
+    Field.fieldDecoder "diskUsage" [] Decode.int
 
 
-forkCount : FieldDecoder String Api.Object.Repository
+forkCount : FieldDecoder Int Api.Object.Repository
 forkCount =
-    Field.fieldDecoder "forkCount" [] Decode.string
+    Field.fieldDecoder "forkCount" [] Decode.int
 
 
 forks : Object forks Api.Object.RepositoryConnection -> FieldDecoder forks Api.Object.Repository
@@ -78,14 +79,14 @@ forks object =
     Object.single "forks" [] object
 
 
-hasIssuesEnabled : FieldDecoder String Api.Object.Repository
+hasIssuesEnabled : FieldDecoder Bool Api.Object.Repository
 hasIssuesEnabled =
-    Field.fieldDecoder "hasIssuesEnabled" [] Decode.string
+    Field.fieldDecoder "hasIssuesEnabled" [] Decode.bool
 
 
-hasWikiEnabled : FieldDecoder String Api.Object.Repository
+hasWikiEnabled : FieldDecoder Bool Api.Object.Repository
 hasWikiEnabled =
-    Field.fieldDecoder "hasWikiEnabled" [] Decode.string
+    Field.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
 homepageUrl : FieldDecoder String Api.Object.Repository
@@ -98,29 +99,29 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isArchived : FieldDecoder String Api.Object.Repository
+isArchived : FieldDecoder Bool Api.Object.Repository
 isArchived =
-    Field.fieldDecoder "isArchived" [] Decode.string
+    Field.fieldDecoder "isArchived" [] Decode.bool
 
 
-isFork : FieldDecoder String Api.Object.Repository
+isFork : FieldDecoder Bool Api.Object.Repository
 isFork =
-    Field.fieldDecoder "isFork" [] Decode.string
+    Field.fieldDecoder "isFork" [] Decode.bool
 
 
-isLocked : FieldDecoder String Api.Object.Repository
+isLocked : FieldDecoder Bool Api.Object.Repository
 isLocked =
-    Field.fieldDecoder "isLocked" [] Decode.string
+    Field.fieldDecoder "isLocked" [] Decode.bool
 
 
-isMirror : FieldDecoder String Api.Object.Repository
+isMirror : FieldDecoder Bool Api.Object.Repository
 isMirror =
-    Field.fieldDecoder "isMirror" [] Decode.string
+    Field.fieldDecoder "isMirror" [] Decode.bool
 
 
-isPrivate : FieldDecoder String Api.Object.Repository
+isPrivate : FieldDecoder Bool Api.Object.Repository
 isPrivate =
-    Field.fieldDecoder "isPrivate" [] Decode.string
+    Field.fieldDecoder "isPrivate" [] Decode.bool
 
 
 issue : Object issue Api.Object.Issue -> FieldDecoder issue Api.Object.Repository
@@ -308,29 +309,29 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanAdminister : FieldDecoder String Api.Object.Repository
+viewerCanAdminister : FieldDecoder Bool Api.Object.Repository
 viewerCanAdminister =
-    Field.fieldDecoder "viewerCanAdminister" [] Decode.string
+    Field.fieldDecoder "viewerCanAdminister" [] Decode.bool
 
 
-viewerCanCreateProjects : FieldDecoder String Api.Object.Repository
+viewerCanCreateProjects : FieldDecoder Bool Api.Object.Repository
 viewerCanCreateProjects =
-    Field.fieldDecoder "viewerCanCreateProjects" [] Decode.string
+    Field.fieldDecoder "viewerCanCreateProjects" [] Decode.bool
 
 
-viewerCanSubscribe : FieldDecoder String Api.Object.Repository
+viewerCanSubscribe : FieldDecoder Bool Api.Object.Repository
 viewerCanSubscribe =
-    Field.fieldDecoder "viewerCanSubscribe" [] Decode.string
+    Field.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
-viewerCanUpdateTopics : FieldDecoder String Api.Object.Repository
+viewerCanUpdateTopics : FieldDecoder Bool Api.Object.Repository
 viewerCanUpdateTopics =
-    Field.fieldDecoder "viewerCanUpdateTopics" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdateTopics" [] Decode.bool
 
 
-viewerHasStarred : FieldDecoder String Api.Object.Repository
+viewerHasStarred : FieldDecoder Bool Api.Object.Repository
 viewerHasStarred =
-    Field.fieldDecoder "viewerHasStarred" [] Decode.string
+    Field.fieldDecoder "viewerHasStarred" [] Decode.bool
 
 
 viewerSubscription : FieldDecoder Api.Enum.SubscriptionState.SubscriptionState Api.Object.Repository

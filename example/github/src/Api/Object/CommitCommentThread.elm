@@ -32,9 +32,9 @@ path =
     Field.fieldDecoder "path" [] Decode.string
 
 
-position : FieldDecoder String Api.Object.CommitCommentThread
+position : FieldDecoder Int Api.Object.CommitCommentThread
 position =
-    Field.fieldDecoder "position" [] Decode.string
+    Field.fieldDecoder "position" [] Decode.int
 
 
 repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.CommitCommentThread

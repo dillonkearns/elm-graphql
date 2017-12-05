@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.MarketplaceListingEdge) Api.Object.MarketplaceListingConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.MarketplaceListingEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.MarketplaceListingEdge -> FieldDecoder (List edges) Api.Object.MarketplaceListingConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.MarketplaceListing) Api.Object.MarketplaceListingConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.MarketplaceListing.decoder |> Decode.list)
+nodes : Object nodes Api.Object.MarketplaceListing -> FieldDecoder (List nodes) Api.Object.MarketplaceListingConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.MarketplaceListingConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.MarketplaceListingConnection
+totalCount : FieldDecoder Int Api.Object.MarketplaceListingConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

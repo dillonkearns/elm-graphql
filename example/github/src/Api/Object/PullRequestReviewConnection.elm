@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.PullRequestReviewEdge) Api.Object.PullRequestReviewConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.PullRequestReviewEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.PullRequestReviewEdge -> FieldDecoder (List edges) Api.Object.PullRequestReviewConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.PullRequestReview) Api.Object.PullRequestReviewConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.PullRequestReview.decoder |> Decode.list)
+nodes : Object nodes Api.Object.PullRequestReview -> FieldDecoder (List nodes) Api.Object.PullRequestReviewConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.PullRequestReviewConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.PullRequestReviewConnection
+totalCount : FieldDecoder Int Api.Object.PullRequestReviewConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

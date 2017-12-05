@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.StarredRepositoryEdge) Api.Object.StarredRepositoryConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.StarredRepositoryEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.StarredRepositoryEdge -> FieldDecoder (List edges) Api.Object.StarredRepositoryConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Repository) Api.Object.StarredRepositoryConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Repository.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Repository -> FieldDecoder (List nodes) Api.Object.StarredRepositoryConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.StarredRepositoryConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.StarredRepositoryConnection
+totalCount : FieldDecoder Int Api.Object.StarredRepositoryConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

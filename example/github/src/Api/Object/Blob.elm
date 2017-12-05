@@ -17,9 +17,9 @@ abbreviatedOid =
     Field.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
-byteSize : FieldDecoder String Api.Object.Blob
+byteSize : FieldDecoder Int Api.Object.Blob
 byteSize =
-    Field.fieldDecoder "byteSize" [] Decode.string
+    Field.fieldDecoder "byteSize" [] Decode.int
 
 
 commitResourcePath : FieldDecoder String Api.Object.Blob
@@ -37,14 +37,14 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isBinary : FieldDecoder String Api.Object.Blob
+isBinary : FieldDecoder Bool Api.Object.Blob
 isBinary =
-    Field.fieldDecoder "isBinary" [] Decode.string
+    Field.fieldDecoder "isBinary" [] Decode.bool
 
 
-isTruncated : FieldDecoder String Api.Object.Blob
+isTruncated : FieldDecoder Bool Api.Object.Blob
 isTruncated =
-    Field.fieldDecoder "isTruncated" [] Decode.string
+    Field.fieldDecoder "isTruncated" [] Decode.bool
 
 
 oid : FieldDecoder String Api.Object.Blob

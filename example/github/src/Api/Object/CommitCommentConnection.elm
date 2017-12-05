@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.CommitCommentEdge) Api.Object.CommitCommentConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.CommitCommentEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.CommitCommentEdge -> FieldDecoder (List edges) Api.Object.CommitCommentConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.CommitComment) Api.Object.CommitCommentConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.CommitComment.decoder |> Decode.list)
+nodes : Object nodes Api.Object.CommitComment -> FieldDecoder (List nodes) Api.Object.CommitCommentConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.CommitCommentConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.CommitCommentConnection
+totalCount : FieldDecoder Int Api.Object.CommitCommentConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

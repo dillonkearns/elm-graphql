@@ -22,9 +22,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-downloadCount : FieldDecoder String Api.Object.ReleaseAsset
+downloadCount : FieldDecoder Int Api.Object.ReleaseAsset
 downloadCount =
-    Field.fieldDecoder "downloadCount" [] Decode.string
+    Field.fieldDecoder "downloadCount" [] Decode.int
 
 
 downloadUrl : FieldDecoder String Api.Object.ReleaseAsset
@@ -47,9 +47,9 @@ release object =
     Object.single "release" [] object
 
 
-size : FieldDecoder String Api.Object.ReleaseAsset
+size : FieldDecoder Int Api.Object.ReleaseAsset
 size =
-    Field.fieldDecoder "size" [] Decode.string
+    Field.fieldDecoder "size" [] Decode.int
 
 
 updatedAt : FieldDecoder String Api.Object.ReleaseAsset

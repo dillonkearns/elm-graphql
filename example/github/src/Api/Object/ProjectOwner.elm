@@ -37,6 +37,6 @@ projectsUrl =
     Field.fieldDecoder "projectsUrl" [] Decode.string
 
 
-viewerCanCreateProjects : FieldDecoder String Api.Object.ProjectOwner
+viewerCanCreateProjects : FieldDecoder Bool Api.Object.ProjectOwner
 viewerCanCreateProjects =
-    Field.fieldDecoder "viewerCanCreateProjects" [] Decode.string
+    Field.fieldDecoder "viewerCanCreateProjects" [] Decode.bool

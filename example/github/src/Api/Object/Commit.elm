@@ -23,9 +23,9 @@ author object =
     Object.single "author" [] object
 
 
-authoredByCommitter : FieldDecoder String Api.Object.Commit
+authoredByCommitter : FieldDecoder Bool Api.Object.Commit
 authoredByCommitter =
-    Field.fieldDecoder "authoredByCommitter" [] Decode.string
+    Field.fieldDecoder "authoredByCommitter" [] Decode.bool
 
 
 blame : Object blame Api.Object.Blame -> FieldDecoder blame Api.Object.Commit
@@ -53,9 +53,9 @@ committedDate =
     Field.fieldDecoder "committedDate" [] Decode.string
 
 
-committedViaWeb : FieldDecoder String Api.Object.Commit
+committedViaWeb : FieldDecoder Bool Api.Object.Commit
 committedViaWeb =
-    Field.fieldDecoder "committedViaWeb" [] Decode.string
+    Field.fieldDecoder "committedViaWeb" [] Decode.bool
 
 
 committer : Object committer Api.Object.GitActor -> FieldDecoder committer Api.Object.Commit
@@ -153,9 +153,9 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanSubscribe : FieldDecoder String Api.Object.Commit
+viewerCanSubscribe : FieldDecoder Bool Api.Object.Commit
 viewerCanSubscribe =
-    Field.fieldDecoder "viewerCanSubscribe" [] Decode.string
+    Field.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 viewerSubscription : FieldDecoder Api.Enum.SubscriptionState.SubscriptionState Api.Object.Commit

@@ -27,9 +27,9 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isCrossRepository : FieldDecoder String Api.Object.CrossReferencedEvent
+isCrossRepository : FieldDecoder Bool Api.Object.CrossReferencedEvent
 isCrossRepository =
-    Field.fieldDecoder "isCrossRepository" [] Decode.string
+    Field.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
 referencedAt : FieldDecoder String Api.Object.CrossReferencedEvent
@@ -57,6 +57,6 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-willCloseTarget : FieldDecoder String Api.Object.CrossReferencedEvent
+willCloseTarget : FieldDecoder Bool Api.Object.CrossReferencedEvent
 willCloseTarget =
-    Field.fieldDecoder "willCloseTarget" [] Decode.string
+    Field.fieldDecoder "willCloseTarget" [] Decode.bool

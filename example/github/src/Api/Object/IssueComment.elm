@@ -43,14 +43,14 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-createdViaEmail : FieldDecoder String Api.Object.IssueComment
+createdViaEmail : FieldDecoder Bool Api.Object.IssueComment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.string
+    Field.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder String Api.Object.IssueComment
+databaseId : FieldDecoder Int Api.Object.IssueComment
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.IssueComment
@@ -83,9 +83,9 @@ pullRequest object =
     Object.single "pullRequest" [] object
 
 
-reactionGroups : FieldDecoder (List Object.ReactionGroup) Api.Object.IssueComment
-reactionGroups =
-    Field.fieldDecoder "reactionGroups" [] (Api.Object.ReactionGroup.decoder |> Decode.list)
+reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.IssueComment
+reactionGroups object =
+    Object.listOf "reactionGroups" [] object
 
 
 reactions : Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.IssueComment
@@ -103,19 +103,19 @@ updatedAt =
     Field.fieldDecoder "updatedAt" [] Decode.string
 
 
-viewerCanDelete : FieldDecoder String Api.Object.IssueComment
+viewerCanDelete : FieldDecoder Bool Api.Object.IssueComment
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.string
+    Field.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
-viewerCanReact : FieldDecoder String Api.Object.IssueComment
+viewerCanReact : FieldDecoder Bool Api.Object.IssueComment
 viewerCanReact =
-    Field.fieldDecoder "viewerCanReact" [] Decode.string
+    Field.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.IssueComment
+viewerCanUpdate : FieldDecoder Bool Api.Object.IssueComment
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.IssueComment
@@ -123,6 +123,6 @@ viewerCannotUpdateReasons =
     Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
-viewerDidAuthor : FieldDecoder String Api.Object.IssueComment
+viewerDidAuthor : FieldDecoder Bool Api.Object.IssueComment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.string
+    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool

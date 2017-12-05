@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.RepositoryEdge) Api.Object.RepositoryConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.RepositoryEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.RepositoryEdge -> FieldDecoder (List edges) Api.Object.RepositoryConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Repository) Api.Object.RepositoryConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Repository.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Repository -> FieldDecoder (List nodes) Api.Object.RepositoryConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.RepositoryConnection
@@ -27,11 +27,11 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.RepositoryConnection
+totalCount : FieldDecoder Int Api.Object.RepositoryConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int
 
 
-totalDiskUsage : FieldDecoder String Api.Object.RepositoryConnection
+totalDiskUsage : FieldDecoder Int Api.Object.RepositoryConnection
 totalDiskUsage =
-    Field.fieldDecoder "totalDiskUsage" [] Decode.string
+    Field.fieldDecoder "totalDiskUsage" [] Decode.int

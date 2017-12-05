@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.ReactingUserEdge) Api.Object.ReactingUserConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.ReactingUserEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.ReactingUserEdge -> FieldDecoder (List edges) Api.Object.ReactingUserConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.User) Api.Object.ReactingUserConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.User.decoder |> Decode.list)
+nodes : Object nodes Api.Object.User -> FieldDecoder (List nodes) Api.Object.ReactingUserConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.ReactingUserConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.ReactingUserConnection
+totalCount : FieldDecoder Int Api.Object.ReactingUserConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

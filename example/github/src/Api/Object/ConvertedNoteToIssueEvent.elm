@@ -22,9 +22,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder String Api.Object.ConvertedNoteToIssueEvent
+databaseId : FieldDecoder Int Api.Object.ConvertedNoteToIssueEvent
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.ConvertedNoteToIssueEvent

@@ -22,6 +22,6 @@ stargazers object =
     Object.single "stargazers" [] object
 
 
-viewerHasStarred : FieldDecoder String Api.Object.Starrable
+viewerHasStarred : FieldDecoder Bool Api.Object.Starrable
 viewerHasStarred =
-    Field.fieldDecoder "viewerHasStarred" [] Decode.string
+    Field.fieldDecoder "viewerHasStarred" [] Decode.bool

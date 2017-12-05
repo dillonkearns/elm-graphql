@@ -22,9 +22,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder String Api.Object.MovedColumnsInProjectEvent
+databaseId : FieldDecoder Int Api.Object.MovedColumnsInProjectEvent
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.MovedColumnsInProjectEvent

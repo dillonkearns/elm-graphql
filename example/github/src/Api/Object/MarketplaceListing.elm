@@ -52,19 +52,19 @@ fullDescriptionHTML =
     Field.fieldDecoder "fullDescriptionHTML" [] Decode.string
 
 
-hasApprovalBeenRequested : FieldDecoder String Api.Object.MarketplaceListing
+hasApprovalBeenRequested : FieldDecoder Bool Api.Object.MarketplaceListing
 hasApprovalBeenRequested =
-    Field.fieldDecoder "hasApprovalBeenRequested" [] Decode.string
+    Field.fieldDecoder "hasApprovalBeenRequested" [] Decode.bool
 
 
-hasPublishedFreeTrialPlans : FieldDecoder String Api.Object.MarketplaceListing
+hasPublishedFreeTrialPlans : FieldDecoder Bool Api.Object.MarketplaceListing
 hasPublishedFreeTrialPlans =
-    Field.fieldDecoder "hasPublishedFreeTrialPlans" [] Decode.string
+    Field.fieldDecoder "hasPublishedFreeTrialPlans" [] Decode.bool
 
 
-hasTermsOfService : FieldDecoder String Api.Object.MarketplaceListing
+hasTermsOfService : FieldDecoder Bool Api.Object.MarketplaceListing
 hasTermsOfService =
-    Field.fieldDecoder "hasTermsOfService" [] Decode.string
+    Field.fieldDecoder "hasTermsOfService" [] Decode.bool
 
 
 howItWorks : FieldDecoder String Api.Object.MarketplaceListing
@@ -87,34 +87,34 @@ installationUrl =
     Field.fieldDecoder "installationUrl" [] Decode.string
 
 
-installedForViewer : FieldDecoder String Api.Object.MarketplaceListing
+installedForViewer : FieldDecoder Bool Api.Object.MarketplaceListing
 installedForViewer =
-    Field.fieldDecoder "installedForViewer" [] Decode.string
+    Field.fieldDecoder "installedForViewer" [] Decode.bool
 
 
-isApproved : FieldDecoder String Api.Object.MarketplaceListing
+isApproved : FieldDecoder Bool Api.Object.MarketplaceListing
 isApproved =
-    Field.fieldDecoder "isApproved" [] Decode.string
+    Field.fieldDecoder "isApproved" [] Decode.bool
 
 
-isDelisted : FieldDecoder String Api.Object.MarketplaceListing
+isDelisted : FieldDecoder Bool Api.Object.MarketplaceListing
 isDelisted =
-    Field.fieldDecoder "isDelisted" [] Decode.string
+    Field.fieldDecoder "isDelisted" [] Decode.bool
 
 
-isDraft : FieldDecoder String Api.Object.MarketplaceListing
+isDraft : FieldDecoder Bool Api.Object.MarketplaceListing
 isDraft =
-    Field.fieldDecoder "isDraft" [] Decode.string
+    Field.fieldDecoder "isDraft" [] Decode.bool
 
 
-isPaid : FieldDecoder String Api.Object.MarketplaceListing
+isPaid : FieldDecoder Bool Api.Object.MarketplaceListing
 isPaid =
-    Field.fieldDecoder "isPaid" [] Decode.string
+    Field.fieldDecoder "isPaid" [] Decode.bool
 
 
-isRejected : FieldDecoder String Api.Object.MarketplaceListing
+isRejected : FieldDecoder Bool Api.Object.MarketplaceListing
 isRejected =
-    Field.fieldDecoder "isRejected" [] Decode.string
+    Field.fieldDecoder "isRejected" [] Decode.bool
 
 
 logoBackgroundColor : FieldDecoder String Api.Object.MarketplaceListing
@@ -202,61 +202,61 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanAddPlans : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanAddPlans : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanAddPlans =
-    Field.fieldDecoder "viewerCanAddPlans" [] Decode.string
+    Field.fieldDecoder "viewerCanAddPlans" [] Decode.bool
 
 
-viewerCanApprove : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanApprove : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanApprove =
-    Field.fieldDecoder "viewerCanApprove" [] Decode.string
+    Field.fieldDecoder "viewerCanApprove" [] Decode.bool
 
 
-viewerCanDelist : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanDelist : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanDelist =
-    Field.fieldDecoder "viewerCanDelist" [] Decode.string
+    Field.fieldDecoder "viewerCanDelist" [] Decode.bool
 
 
-viewerCanEdit : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanEdit : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanEdit =
-    Field.fieldDecoder "viewerCanEdit" [] Decode.string
+    Field.fieldDecoder "viewerCanEdit" [] Decode.bool
 
 
-viewerCanEditCategories : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanEditCategories : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanEditCategories =
-    Field.fieldDecoder "viewerCanEditCategories" [] Decode.string
+    Field.fieldDecoder "viewerCanEditCategories" [] Decode.bool
 
 
-viewerCanEditPlans : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanEditPlans : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanEditPlans =
-    Field.fieldDecoder "viewerCanEditPlans" [] Decode.string
+    Field.fieldDecoder "viewerCanEditPlans" [] Decode.bool
 
 
-viewerCanRedraft : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanRedraft : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanRedraft =
-    Field.fieldDecoder "viewerCanRedraft" [] Decode.string
+    Field.fieldDecoder "viewerCanRedraft" [] Decode.bool
 
 
-viewerCanReject : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanReject : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanReject =
-    Field.fieldDecoder "viewerCanReject" [] Decode.string
+    Field.fieldDecoder "viewerCanReject" [] Decode.bool
 
 
-viewerCanRequestApproval : FieldDecoder String Api.Object.MarketplaceListing
+viewerCanRequestApproval : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerCanRequestApproval =
-    Field.fieldDecoder "viewerCanRequestApproval" [] Decode.string
+    Field.fieldDecoder "viewerCanRequestApproval" [] Decode.bool
 
 
-viewerHasPurchased : FieldDecoder String Api.Object.MarketplaceListing
+viewerHasPurchased : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerHasPurchased =
-    Field.fieldDecoder "viewerHasPurchased" [] Decode.string
+    Field.fieldDecoder "viewerHasPurchased" [] Decode.bool
 
 
-viewerHasPurchasedForAllOrganizations : FieldDecoder String Api.Object.MarketplaceListing
+viewerHasPurchasedForAllOrganizations : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerHasPurchasedForAllOrganizations =
-    Field.fieldDecoder "viewerHasPurchasedForAllOrganizations" [] Decode.string
+    Field.fieldDecoder "viewerHasPurchasedForAllOrganizations" [] Decode.bool
 
 
-viewerIsListingAdmin : FieldDecoder String Api.Object.MarketplaceListing
+viewerIsListingAdmin : FieldDecoder Bool Api.Object.MarketplaceListing
 viewerIsListingAdmin =
-    Field.fieldDecoder "viewerIsListingAdmin" [] Decode.string
+    Field.fieldDecoder "viewerIsListingAdmin" [] Decode.bool

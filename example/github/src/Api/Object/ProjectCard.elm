@@ -33,9 +33,9 @@ creator object =
     Object.single "creator" [] object
 
 
-databaseId : FieldDecoder String Api.Object.ProjectCard
+databaseId : FieldDecoder Int Api.Object.ProjectCard
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.ProjectCard

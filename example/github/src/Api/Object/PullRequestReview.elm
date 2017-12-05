@@ -54,14 +54,14 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-createdViaEmail : FieldDecoder String Api.Object.PullRequestReview
+createdViaEmail : FieldDecoder Bool Api.Object.PullRequestReview
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.string
+    Field.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder String Api.Object.PullRequestReview
+databaseId : FieldDecoder Int Api.Object.PullRequestReview
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequestReview
@@ -119,14 +119,14 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanDelete : FieldDecoder String Api.Object.PullRequestReview
+viewerCanDelete : FieldDecoder Bool Api.Object.PullRequestReview
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.string
+    Field.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.PullRequestReview
+viewerCanUpdate : FieldDecoder Bool Api.Object.PullRequestReview
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.PullRequestReview
@@ -134,6 +134,6 @@ viewerCannotUpdateReasons =
     Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
-viewerDidAuthor : FieldDecoder String Api.Object.PullRequestReview
+viewerDidAuthor : FieldDecoder Bool Api.Object.PullRequestReview
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.string
+    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool

@@ -12,24 +12,24 @@ build constructor =
     Object.object constructor
 
 
-cost : FieldDecoder String Api.Object.RateLimit
+cost : FieldDecoder Int Api.Object.RateLimit
 cost =
-    Field.fieldDecoder "cost" [] Decode.string
+    Field.fieldDecoder "cost" [] Decode.int
 
 
-limit : FieldDecoder String Api.Object.RateLimit
+limit : FieldDecoder Int Api.Object.RateLimit
 limit =
-    Field.fieldDecoder "limit" [] Decode.string
+    Field.fieldDecoder "limit" [] Decode.int
 
 
-nodeCount : FieldDecoder String Api.Object.RateLimit
+nodeCount : FieldDecoder Int Api.Object.RateLimit
 nodeCount =
-    Field.fieldDecoder "nodeCount" [] Decode.string
+    Field.fieldDecoder "nodeCount" [] Decode.int
 
 
-remaining : FieldDecoder String Api.Object.RateLimit
+remaining : FieldDecoder Int Api.Object.RateLimit
 remaining =
-    Field.fieldDecoder "remaining" [] Decode.string
+    Field.fieldDecoder "remaining" [] Decode.int
 
 
 resetAt : FieldDecoder String Api.Object.RateLimit

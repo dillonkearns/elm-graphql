@@ -12,9 +12,9 @@ build constructor =
     Object.object constructor
 
 
-closed : FieldDecoder String Api.Object.Closable
+closed : FieldDecoder Bool Api.Object.Closable
 closed =
-    Field.fieldDecoder "closed" [] Decode.string
+    Field.fieldDecoder "closed" [] Decode.bool
 
 
 closedAt : FieldDecoder String Api.Object.Closable

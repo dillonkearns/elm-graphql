@@ -27,9 +27,9 @@ commitUrl =
     Field.fieldDecoder "commitUrl" [] Decode.string
 
 
-entries : FieldDecoder (List Object.TreeEntry) Api.Object.Tree
-entries =
-    Field.fieldDecoder "entries" [] (Api.Object.TreeEntry.decoder |> Decode.list)
+entries : Object entries Api.Object.TreeEntry -> FieldDecoder (List entries) Api.Object.Tree
+entries object =
+    Object.listOf "entries" [] object
 
 
 id : FieldDecoder String Api.Object.Tree

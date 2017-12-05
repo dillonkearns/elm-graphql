@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.LanguageEdge) Api.Object.LanguageConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.LanguageEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.LanguageEdge -> FieldDecoder (List edges) Api.Object.LanguageConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.Language) Api.Object.LanguageConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.Language.decoder |> Decode.list)
+nodes : Object nodes Api.Object.Language -> FieldDecoder (List nodes) Api.Object.LanguageConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.LanguageConnection
@@ -27,11 +27,11 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.LanguageConnection
+totalCount : FieldDecoder Int Api.Object.LanguageConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int
 
 
-totalSize : FieldDecoder String Api.Object.LanguageConnection
+totalSize : FieldDecoder Int Api.Object.LanguageConnection
 totalSize =
-    Field.fieldDecoder "totalSize" [] Decode.string
+    Field.fieldDecoder "totalSize" [] Decode.int

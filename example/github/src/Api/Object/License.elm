@@ -17,9 +17,9 @@ body =
     Field.fieldDecoder "body" [] Decode.string
 
 
-conditions : FieldDecoder (List Object.LicenseRule) Api.Object.License
-conditions =
-    Field.fieldDecoder "conditions" [] (Api.Object.LicenseRule.decoder |> Decode.list)
+conditions : Object conditions Api.Object.LicenseRule -> FieldDecoder (List conditions) Api.Object.License
+conditions object =
+    Object.listOf "conditions" [] object
 
 
 description : FieldDecoder String Api.Object.License
@@ -27,14 +27,14 @@ description =
     Field.fieldDecoder "description" [] Decode.string
 
 
-featured : FieldDecoder String Api.Object.License
+featured : FieldDecoder Bool Api.Object.License
 featured =
-    Field.fieldDecoder "featured" [] Decode.string
+    Field.fieldDecoder "featured" [] Decode.bool
 
 
-hidden : FieldDecoder String Api.Object.License
+hidden : FieldDecoder Bool Api.Object.License
 hidden =
-    Field.fieldDecoder "hidden" [] Decode.string
+    Field.fieldDecoder "hidden" [] Decode.bool
 
 
 id : FieldDecoder String Api.Object.License
@@ -52,9 +52,9 @@ key =
     Field.fieldDecoder "key" [] Decode.string
 
 
-limitations : FieldDecoder (List Object.LicenseRule) Api.Object.License
-limitations =
-    Field.fieldDecoder "limitations" [] (Api.Object.LicenseRule.decoder |> Decode.list)
+limitations : Object limitations Api.Object.LicenseRule -> FieldDecoder (List limitations) Api.Object.License
+limitations object =
+    Object.listOf "limitations" [] object
 
 
 name : FieldDecoder String Api.Object.License
@@ -67,9 +67,9 @@ nickname =
     Field.fieldDecoder "nickname" [] Decode.string
 
 
-permissions : FieldDecoder (List Object.LicenseRule) Api.Object.License
-permissions =
-    Field.fieldDecoder "permissions" [] (Api.Object.LicenseRule.decoder |> Decode.list)
+permissions : Object permissions Api.Object.LicenseRule -> FieldDecoder (List permissions) Api.Object.License
+permissions object =
+    Object.listOf "permissions" [] object
 
 
 spdxId : FieldDecoder String Api.Object.License

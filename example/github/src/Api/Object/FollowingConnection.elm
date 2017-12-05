@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.UserEdge) Api.Object.FollowingConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.UserEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.UserEdge -> FieldDecoder (List edges) Api.Object.FollowingConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.User) Api.Object.FollowingConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.User.decoder |> Decode.list)
+nodes : Object nodes Api.Object.User -> FieldDecoder (List nodes) Api.Object.FollowingConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.FollowingConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.FollowingConnection
+totalCount : FieldDecoder Int Api.Object.FollowingConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

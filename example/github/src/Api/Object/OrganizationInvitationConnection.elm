@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.OrganizationInvitationEdge) Api.Object.OrganizationInvitationConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.OrganizationInvitationEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.OrganizationInvitationEdge -> FieldDecoder (List edges) Api.Object.OrganizationInvitationConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.OrganizationInvitation) Api.Object.OrganizationInvitationConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.OrganizationInvitation.decoder |> Decode.list)
+nodes : Object nodes Api.Object.OrganizationInvitation -> FieldDecoder (List nodes) Api.Object.OrganizationInvitationConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.OrganizationInvitationConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.OrganizationInvitationConnection
+totalCount : FieldDecoder Int Api.Object.OrganizationInvitationConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

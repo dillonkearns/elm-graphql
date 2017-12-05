@@ -28,19 +28,19 @@ descriptionHTML =
     Field.fieldDecoder "descriptionHTML" [] Decode.string
 
 
-forkCount : FieldDecoder String Api.Object.RepositoryInvitationRepository
+forkCount : FieldDecoder Int Api.Object.RepositoryInvitationRepository
 forkCount =
-    Field.fieldDecoder "forkCount" [] Decode.string
+    Field.fieldDecoder "forkCount" [] Decode.int
 
 
-hasIssuesEnabled : FieldDecoder String Api.Object.RepositoryInvitationRepository
+hasIssuesEnabled : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 hasIssuesEnabled =
-    Field.fieldDecoder "hasIssuesEnabled" [] Decode.string
+    Field.fieldDecoder "hasIssuesEnabled" [] Decode.bool
 
 
-hasWikiEnabled : FieldDecoder String Api.Object.RepositoryInvitationRepository
+hasWikiEnabled : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 hasWikiEnabled =
-    Field.fieldDecoder "hasWikiEnabled" [] Decode.string
+    Field.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
 homepageUrl : FieldDecoder String Api.Object.RepositoryInvitationRepository
@@ -48,29 +48,29 @@ homepageUrl =
     Field.fieldDecoder "homepageUrl" [] Decode.string
 
 
-isArchived : FieldDecoder String Api.Object.RepositoryInvitationRepository
+isArchived : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isArchived =
-    Field.fieldDecoder "isArchived" [] Decode.string
+    Field.fieldDecoder "isArchived" [] Decode.bool
 
 
-isFork : FieldDecoder String Api.Object.RepositoryInvitationRepository
+isFork : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isFork =
-    Field.fieldDecoder "isFork" [] Decode.string
+    Field.fieldDecoder "isFork" [] Decode.bool
 
 
-isLocked : FieldDecoder String Api.Object.RepositoryInvitationRepository
+isLocked : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isLocked =
-    Field.fieldDecoder "isLocked" [] Decode.string
+    Field.fieldDecoder "isLocked" [] Decode.bool
 
 
-isMirror : FieldDecoder String Api.Object.RepositoryInvitationRepository
+isMirror : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isMirror =
-    Field.fieldDecoder "isMirror" [] Decode.string
+    Field.fieldDecoder "isMirror" [] Decode.bool
 
 
-isPrivate : FieldDecoder String Api.Object.RepositoryInvitationRepository
+isPrivate : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isPrivate =
-    Field.fieldDecoder "isPrivate" [] Decode.string
+    Field.fieldDecoder "isPrivate" [] Decode.bool
 
 
 license : FieldDecoder String Api.Object.RepositoryInvitationRepository

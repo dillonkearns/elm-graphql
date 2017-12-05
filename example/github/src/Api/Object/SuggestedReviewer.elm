@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-isAuthor : FieldDecoder String Api.Object.SuggestedReviewer
+isAuthor : FieldDecoder Bool Api.Object.SuggestedReviewer
 isAuthor =
-    Field.fieldDecoder "isAuthor" [] Decode.string
+    Field.fieldDecoder "isAuthor" [] Decode.bool
 
 
-isCommenter : FieldDecoder String Api.Object.SuggestedReviewer
+isCommenter : FieldDecoder Bool Api.Object.SuggestedReviewer
 isCommenter =
-    Field.fieldDecoder "isCommenter" [] Decode.string
+    Field.fieldDecoder "isCommenter" [] Decode.bool
 
 
 reviewer : Object reviewer Api.Object.User -> FieldDecoder reviewer Api.Object.SuggestedReviewer

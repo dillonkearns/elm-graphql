@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.DeploymentStatusEdge) Api.Object.DeploymentStatusConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.DeploymentStatusEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.DeploymentStatusEdge -> FieldDecoder (List edges) Api.Object.DeploymentStatusConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.DeploymentStatus) Api.Object.DeploymentStatusConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.DeploymentStatus.decoder |> Decode.list)
+nodes : Object nodes Api.Object.DeploymentStatus -> FieldDecoder (List nodes) Api.Object.DeploymentStatusConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.DeploymentStatusConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.DeploymentStatusConnection
+totalCount : FieldDecoder Int Api.Object.DeploymentStatusConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

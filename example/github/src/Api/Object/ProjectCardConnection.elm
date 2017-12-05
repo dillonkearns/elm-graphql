@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.ProjectCardEdge) Api.Object.ProjectCardConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.ProjectCardEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.ProjectCardEdge -> FieldDecoder (List edges) Api.Object.ProjectCardConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.ProjectCard) Api.Object.ProjectCardConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.ProjectCard.decoder |> Decode.list)
+nodes : Object nodes Api.Object.ProjectCard -> FieldDecoder (List nodes) Api.Object.ProjectCardConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.ProjectCardConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.ProjectCardConnection
+totalCount : FieldDecoder Int Api.Object.ProjectCardConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

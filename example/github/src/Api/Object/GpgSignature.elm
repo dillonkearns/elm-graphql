@@ -18,9 +18,9 @@ email =
     Field.fieldDecoder "email" [] Decode.string
 
 
-isValid : FieldDecoder String Api.Object.GpgSignature
+isValid : FieldDecoder Bool Api.Object.GpgSignature
 isValid =
-    Field.fieldDecoder "isValid" [] Decode.string
+    Field.fieldDecoder "isValid" [] Decode.bool
 
 
 keyId : FieldDecoder String Api.Object.GpgSignature

@@ -38,9 +38,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-createdViaEmail : FieldDecoder String Api.Object.GistComment
+createdViaEmail : FieldDecoder Bool Api.Object.GistComment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.string
+    Field.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.GistComment
@@ -73,14 +73,14 @@ updatedAt =
     Field.fieldDecoder "updatedAt" [] Decode.string
 
 
-viewerCanDelete : FieldDecoder String Api.Object.GistComment
+viewerCanDelete : FieldDecoder Bool Api.Object.GistComment
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.string
+    Field.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.GistComment
+viewerCanUpdate : FieldDecoder Bool Api.Object.GistComment
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.GistComment
@@ -88,6 +88,6 @@ viewerCannotUpdateReasons =
     Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
-viewerDidAuthor : FieldDecoder String Api.Object.GistComment
+viewerDidAuthor : FieldDecoder Bool Api.Object.GistComment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.string
+    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool

@@ -45,9 +45,9 @@ bodyText =
     Field.fieldDecoder "bodyText" [] Decode.string
 
 
-closed : FieldDecoder String Api.Object.Issue
+closed : FieldDecoder Bool Api.Object.Issue
 closed =
-    Field.fieldDecoder "closed" [] Decode.string
+    Field.fieldDecoder "closed" [] Decode.bool
 
 
 closedAt : FieldDecoder String Api.Object.Issue
@@ -65,14 +65,14 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-createdViaEmail : FieldDecoder String Api.Object.Issue
+createdViaEmail : FieldDecoder Bool Api.Object.Issue
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.string
+    Field.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder String Api.Object.Issue
+databaseId : FieldDecoder Int Api.Object.Issue
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.string
+    Field.fieldDecoder "databaseId" [] Decode.int
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.Issue
@@ -95,9 +95,9 @@ lastEditedAt =
     Field.fieldDecoder "lastEditedAt" [] Decode.string
 
 
-locked : FieldDecoder String Api.Object.Issue
+locked : FieldDecoder Bool Api.Object.Issue
 locked =
-    Field.fieldDecoder "locked" [] Decode.string
+    Field.fieldDecoder "locked" [] Decode.bool
 
 
 milestone : Object milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.Issue
@@ -105,9 +105,9 @@ milestone object =
     Object.single "milestone" [] object
 
 
-number : FieldDecoder String Api.Object.Issue
+number : FieldDecoder Int Api.Object.Issue
 number =
-    Field.fieldDecoder "number" [] Decode.string
+    Field.fieldDecoder "number" [] Decode.int
 
 
 participants : Object participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.Issue
@@ -125,9 +125,9 @@ publishedAt =
     Field.fieldDecoder "publishedAt" [] Decode.string
 
 
-reactionGroups : FieldDecoder (List Object.ReactionGroup) Api.Object.Issue
-reactionGroups =
-    Field.fieldDecoder "reactionGroups" [] (Api.Object.ReactionGroup.decoder |> Decode.list)
+reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.Issue
+reactionGroups object =
+    Object.listOf "reactionGroups" [] object
 
 
 reactions : Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.Issue
@@ -170,19 +170,19 @@ url =
     Field.fieldDecoder "url" [] Decode.string
 
 
-viewerCanReact : FieldDecoder String Api.Object.Issue
+viewerCanReact : FieldDecoder Bool Api.Object.Issue
 viewerCanReact =
-    Field.fieldDecoder "viewerCanReact" [] Decode.string
+    Field.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
-viewerCanSubscribe : FieldDecoder String Api.Object.Issue
+viewerCanSubscribe : FieldDecoder Bool Api.Object.Issue
 viewerCanSubscribe =
-    Field.fieldDecoder "viewerCanSubscribe" [] Decode.string
+    Field.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
-viewerCanUpdate : FieldDecoder String Api.Object.Issue
+viewerCanUpdate : FieldDecoder Bool Api.Object.Issue
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.string
+    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.Issue
@@ -190,9 +190,9 @@ viewerCannotUpdateReasons =
     Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
-viewerDidAuthor : FieldDecoder String Api.Object.Issue
+viewerDidAuthor : FieldDecoder Bool Api.Object.Issue
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.string
+    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool
 
 
 viewerSubscription : FieldDecoder Api.Enum.SubscriptionState.SubscriptionState Api.Object.Issue

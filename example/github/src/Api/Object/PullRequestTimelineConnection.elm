@@ -12,9 +12,9 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.PullRequestTimelineItemEdge) Api.Object.PullRequestTimelineConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.PullRequestTimelineItemEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.PullRequestTimelineItemEdge -> FieldDecoder (List edges) Api.Object.PullRequestTimelineConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
 nodes : FieldDecoder (List String) Api.Object.PullRequestTimelineConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.PullRequestTimelineConnection
+totalCount : FieldDecoder Int Api.Object.PullRequestTimelineConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

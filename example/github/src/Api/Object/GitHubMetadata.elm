@@ -32,9 +32,9 @@ importerIpAddresses =
     Field.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list)
 
 
-isPasswordAuthenticationVerifiable : FieldDecoder String Api.Object.GitHubMetadata
+isPasswordAuthenticationVerifiable : FieldDecoder Bool Api.Object.GitHubMetadata
 isPasswordAuthenticationVerifiable =
-    Field.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.string
+    Field.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.bool
 
 
 pagesIpAddresses : FieldDecoder (List String) Api.Object.GitHubMetadata

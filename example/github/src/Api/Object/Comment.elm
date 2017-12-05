@@ -38,9 +38,9 @@ createdAt =
     Field.fieldDecoder "createdAt" [] Decode.string
 
 
-createdViaEmail : FieldDecoder String Api.Object.Comment
+createdViaEmail : FieldDecoder Bool Api.Object.Comment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.string
+    Field.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.Comment
@@ -68,6 +68,6 @@ updatedAt =
     Field.fieldDecoder "updatedAt" [] Decode.string
 
 
-viewerDidAuthor : FieldDecoder String Api.Object.Comment
+viewerDidAuthor : FieldDecoder Bool Api.Object.Comment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.string
+    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool

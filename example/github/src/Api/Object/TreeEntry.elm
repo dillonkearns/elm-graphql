@@ -11,9 +11,9 @@ import Json.Decode as Decode
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.TreeEntry
 build constructor =
     Object.object constructor
-mode : FieldDecoder String Api.Object.TreeEntry
+mode : FieldDecoder Int Api.Object.TreeEntry
 mode =
-    Field.fieldDecoder "mode" [] (Decode.string)
+    Field.fieldDecoder "mode" [] (Decode.int)
 
 
 name : FieldDecoder String Api.Object.TreeEntry

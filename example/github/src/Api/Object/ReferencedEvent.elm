@@ -37,19 +37,19 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-isCrossReference : FieldDecoder String Api.Object.ReferencedEvent
+isCrossReference : FieldDecoder Bool Api.Object.ReferencedEvent
 isCrossReference =
-    Field.fieldDecoder "isCrossReference" [] Decode.string
+    Field.fieldDecoder "isCrossReference" [] Decode.bool
 
 
-isCrossRepository : FieldDecoder String Api.Object.ReferencedEvent
+isCrossRepository : FieldDecoder Bool Api.Object.ReferencedEvent
 isCrossRepository =
-    Field.fieldDecoder "isCrossRepository" [] Decode.string
+    Field.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
-isDirectReference : FieldDecoder String Api.Object.ReferencedEvent
+isDirectReference : FieldDecoder Bool Api.Object.ReferencedEvent
 isDirectReference =
-    Field.fieldDecoder "isDirectReference" [] Decode.string
+    Field.fieldDecoder "isDirectReference" [] Decode.bool
 
 
 subject : FieldDecoder String Api.Object.ReferencedEvent

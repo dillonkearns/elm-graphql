@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.ProtectedBranchEdge) Api.Object.ProtectedBranchConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.ProtectedBranchEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.ProtectedBranchEdge -> FieldDecoder (List edges) Api.Object.ProtectedBranchConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.ProtectedBranch) Api.Object.ProtectedBranchConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.ProtectedBranch.decoder |> Decode.list)
+nodes : Object nodes Api.Object.ProtectedBranch -> FieldDecoder (List nodes) Api.Object.ProtectedBranchConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.ProtectedBranchConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.ProtectedBranchConnection
+totalCount : FieldDecoder Int Api.Object.ProtectedBranchConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int

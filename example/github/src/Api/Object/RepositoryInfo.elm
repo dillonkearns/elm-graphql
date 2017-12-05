@@ -28,19 +28,19 @@ descriptionHTML =
     Field.fieldDecoder "descriptionHTML" [] Decode.string
 
 
-forkCount : FieldDecoder String Api.Object.RepositoryInfo
+forkCount : FieldDecoder Int Api.Object.RepositoryInfo
 forkCount =
-    Field.fieldDecoder "forkCount" [] Decode.string
+    Field.fieldDecoder "forkCount" [] Decode.int
 
 
-hasIssuesEnabled : FieldDecoder String Api.Object.RepositoryInfo
+hasIssuesEnabled : FieldDecoder Bool Api.Object.RepositoryInfo
 hasIssuesEnabled =
-    Field.fieldDecoder "hasIssuesEnabled" [] Decode.string
+    Field.fieldDecoder "hasIssuesEnabled" [] Decode.bool
 
 
-hasWikiEnabled : FieldDecoder String Api.Object.RepositoryInfo
+hasWikiEnabled : FieldDecoder Bool Api.Object.RepositoryInfo
 hasWikiEnabled =
-    Field.fieldDecoder "hasWikiEnabled" [] Decode.string
+    Field.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
 homepageUrl : FieldDecoder String Api.Object.RepositoryInfo
@@ -48,29 +48,29 @@ homepageUrl =
     Field.fieldDecoder "homepageUrl" [] Decode.string
 
 
-isArchived : FieldDecoder String Api.Object.RepositoryInfo
+isArchived : FieldDecoder Bool Api.Object.RepositoryInfo
 isArchived =
-    Field.fieldDecoder "isArchived" [] Decode.string
+    Field.fieldDecoder "isArchived" [] Decode.bool
 
 
-isFork : FieldDecoder String Api.Object.RepositoryInfo
+isFork : FieldDecoder Bool Api.Object.RepositoryInfo
 isFork =
-    Field.fieldDecoder "isFork" [] Decode.string
+    Field.fieldDecoder "isFork" [] Decode.bool
 
 
-isLocked : FieldDecoder String Api.Object.RepositoryInfo
+isLocked : FieldDecoder Bool Api.Object.RepositoryInfo
 isLocked =
-    Field.fieldDecoder "isLocked" [] Decode.string
+    Field.fieldDecoder "isLocked" [] Decode.bool
 
 
-isMirror : FieldDecoder String Api.Object.RepositoryInfo
+isMirror : FieldDecoder Bool Api.Object.RepositoryInfo
 isMirror =
-    Field.fieldDecoder "isMirror" [] Decode.string
+    Field.fieldDecoder "isMirror" [] Decode.bool
 
 
-isPrivate : FieldDecoder String Api.Object.RepositoryInfo
+isPrivate : FieldDecoder Bool Api.Object.RepositoryInfo
 isPrivate =
-    Field.fieldDecoder "isPrivate" [] Decode.string
+    Field.fieldDecoder "isPrivate" [] Decode.bool
 
 
 license : FieldDecoder String Api.Object.RepositoryInfo

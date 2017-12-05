@@ -12,6 +12,6 @@ build constructor =
     Object.object constructor
 
 
-locked : FieldDecoder String Api.Object.Lockable
+locked : FieldDecoder Bool Api.Object.Lockable
 locked =
-    Field.fieldDecoder "locked" [] Decode.string
+    Field.fieldDecoder "locked" [] Decode.bool

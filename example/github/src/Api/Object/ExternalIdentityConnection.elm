@@ -12,14 +12,14 @@ build constructor =
     Object.object constructor
 
 
-edges : FieldDecoder (List Object.ExternalIdentityEdge) Api.Object.ExternalIdentityConnection
-edges =
-    Field.fieldDecoder "edges" [] (Api.Object.ExternalIdentityEdge.decoder |> Decode.list)
+edges : Object edges Api.Object.ExternalIdentityEdge -> FieldDecoder (List edges) Api.Object.ExternalIdentityConnection
+edges object =
+    Object.listOf "edges" [] object
 
 
-nodes : FieldDecoder (List Object.ExternalIdentity) Api.Object.ExternalIdentityConnection
-nodes =
-    Field.fieldDecoder "nodes" [] (Api.Object.ExternalIdentity.decoder |> Decode.list)
+nodes : Object nodes Api.Object.ExternalIdentity -> FieldDecoder (List nodes) Api.Object.ExternalIdentityConnection
+nodes object =
+    Object.listOf "nodes" [] object
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.ExternalIdentityConnection
@@ -27,6 +27,6 @@ pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder String Api.Object.ExternalIdentityConnection
+totalCount : FieldDecoder Int Api.Object.ExternalIdentityConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.string
+    Field.fieldDecoder "totalCount" [] Decode.int
