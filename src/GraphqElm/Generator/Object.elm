@@ -73,7 +73,7 @@ generateNew thisObjectName field =
 """
                         [ field.name, typeLockName, thisObjectString ]
 
-                Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
+                Type.List (Type.TypeReference (Type.ObjectRef objectName) isNullable) ->
                     let
                         typeLockName =
                             Imports.object objectName |> String.join "."
@@ -83,6 +83,18 @@ generateNew thisObjectName field =
 {0} object =
     Object.listOf "{2}" [] object
 """
+                        [ field.name, typeLockName, field.name, thisObjectString ]
+
+                Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
+                    let
+                        typeLockName =
+                            Imports.object objectName |> String.join "."
+                    in
+                    interpolate
+                        """{0} : Object {2} {1} -> FieldDecoder (List {2}) {3}
+                        {0} object =
+                            Object.listOf "{2}" [] object
+                        """
                         [ field.name, typeLockName, field.name, thisObjectString ]
 
                 _ ->
