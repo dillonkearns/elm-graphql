@@ -11,12 +11,12 @@ all : Test
 all =
     describe "required argmument generators"
         [ describe "argument list"
-            [ test "no arguments gives Nothing" <|
+            [ test "no arguments" <|
                 \() ->
                     []
                         |> Graphqelm.Generator.Argument.requiredArgsString
                         |> Expect.equal Nothing
-            , test "all nullable arguments give Nothing" <|
+            , test "all nullable arguments" <|
                 \() ->
                     [ { name = "id"
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
@@ -24,7 +24,7 @@ all =
                     ]
                         |> Graphqelm.Generator.Argument.requiredArgsString
                         |> Expect.equal Nothing
-            , test "single primitive required argument" <|
+            , test "single primitive" <|
                 \() ->
                     [ { name = "id"
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
@@ -45,7 +45,7 @@ all =
                         |> Expect.equal (Just """[ Argument.string "id" requiredArgs.id, Argument.string "name" requiredArgs.name ]""")
             ]
         , describe "annotations"
-            [ test "all nullable arguments give Nothing" <|
+            [ test "all nullable arguments" <|
                 \() ->
                     [ { name = "id"
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
@@ -53,7 +53,7 @@ all =
                     ]
                         |> Graphqelm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal Nothing
-            , test "single primitive required argument" <|
+            , test "single primitive" <|
                 \() ->
                     [ { name = "id"
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
@@ -61,7 +61,7 @@ all =
                     ]
                         |> Graphqelm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal (Just """{ id : String }""")
-            , test "multiple primitive arguments" <|
+            , test "multiple primitives" <|
                 \() ->
                     [ { name = "id"
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
