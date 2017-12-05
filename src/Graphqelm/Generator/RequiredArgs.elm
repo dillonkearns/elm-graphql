@@ -1,4 +1,4 @@
-module Graphqelm.Generator.RequiredArgs exposing (generate, requiredArgsAnnotation, requiredArgsString)
+module Graphqelm.Generator.RequiredArgs exposing (generate)
 
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.Type as Type
