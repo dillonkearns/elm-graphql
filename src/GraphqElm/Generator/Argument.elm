@@ -1,5 +1,6 @@
 module Graphqelm.Generator.Argument exposing (requiredArgsAnnotation, requiredArgsString)
 
+import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
@@ -21,8 +22,8 @@ requiredArgString { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
-                "Argument.string \"{0}\" requiredArgs.{0}"
-                [ name ]
+                "Argument.string \"{0}\" requiredArgs.{1}"
+                [ name, Normalize.fieldName name ]
                 |> Just
 
         Type.TypeReference referrableType Type.Nullable ->
@@ -47,7 +48,7 @@ requiredArgAnnotation { name, typeRef } =
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
                 "{0} : String"
-                [ name ]
+                [ Normalize.fieldName name ]
                 |> Just
 
         Type.TypeReference referrableType Type.Nullable ->

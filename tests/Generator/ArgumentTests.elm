@@ -56,8 +56,30 @@ all =
                     ]
                         |> Graphqelm.Generator.Argument.requiredArgsAnnotation
                         |> Expect.equal (Just "{ id : String, name : String }")
+            , test "normalizes arguments" <|
+                \() ->
+                    [ { name = "type", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
+                        |> both
+                        |> Expect.equal
+                            (Just
+                                ( "{ type_ : String }"
+                                , """[ Argument.string "type" requiredArgs.type_ ]"""
+                                )
+                            )
             ]
         ]
+
+
+both : List Type.Arg -> Maybe ( String, String )
+both args =
+    let
+        annotation =
+            Graphqelm.Generator.Argument.requiredArgsAnnotation args
+
+        argList =
+            Graphqelm.Generator.Argument.requiredArgsString args
+    in
+    Maybe.map2 (,) annotation argList
 
 
 nameArg : Type.Arg
