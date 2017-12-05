@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Api.Object
+import Api.Object.ReleaseConnection
 import Api.Object.Repository as Repository
 import Api.Object.StargazerConnection
 import Api.Query as Query
@@ -14,7 +15,8 @@ import View.QueryAndResponse
 
 type alias Response =
     { createdAt : String
-    , totalCount : Int
+    , releasesCount : Int
+    , stargazersCount : Int
     }
 
 
@@ -27,7 +29,14 @@ repo : Object Response Api.Object.Repository
 repo =
     Repository.build Response
         |> Object.with Repository.createdAt
+        |> Object.with (Repository.releases releases)
         |> Object.with (Repository.stargazers stargazers)
+
+
+releases : Object Int Api.Object.ReleaseConnection
+releases =
+    Api.Object.ReleaseConnection.build identity
+        |> Object.with Api.Object.ReleaseConnection.totalCount
 
 
 stargazers : Object Int Api.Object.StargazerConnection
