@@ -10,16 +10,26 @@ import Test exposing (..)
 all : Test
 all =
     describe "field generator"
-        [ test "simple scalar" <|
+        [ test "simple scalar converts for query" <|
             \() ->
                 meField
-                    |> Field.toThing "Foo"
-                    |> Field.toQuery
+                    |> Field.toThing
+                    |> Field.forQuery
                     |> Expect.equal
-                        """me : Field.Query (String)
+                        """me : Field.Query String
 me =
       Field.fieldDecoder "me" [] (Decode.string)
           |> Query.rootQuery
+"""
+        , test "converts for object" <|
+            \() ->
+                meField
+                    |> Field.toThing
+                    |> Field.forObject "Foo"
+                    |> Expect.equal
+                        """me : FieldDecoder String Api.Object.Foo
+me =
+      Field.fieldDecoder "me" [] (Decode.string)
 """
         ]
 

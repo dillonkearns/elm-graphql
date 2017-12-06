@@ -15,10 +15,10 @@ type alias Thing =
     }
 
 
-toQuery : Thing -> String
-toQuery ({ fieldName, useArgs, decoder, decoderAnnotation } as field) =
+forQuery : Thing -> String
+forQuery ({ fieldName, useArgs, decoder, decoderAnnotation } as field) =
     interpolate
-        """{0} : Field.Query ({3})
+        """{0} : Field.Query {3}
 {0} =
       Field.fieldDecoder "{0}" {1} ({2})
           |> Query.rootQuery
@@ -26,17 +26,27 @@ toQuery ({ fieldName, useArgs, decoder, decoderAnnotation } as field) =
         [ fieldName, useArgs, decoder, decoderAnnotation ]
 
 
-toThing : String -> Type.Field -> Thing
-toThing thisObjectName field =
+forObject : String -> Thing -> String
+forObject thisObjectName ({ fieldName, useArgs, decoder, decoderAnnotation } as field) =
     let
         thisObjectString =
             Imports.object thisObjectName |> String.join "."
     in
-    toThing_ thisObjectString field.name field.args field.typeRef
+    interpolate
+        """{0} : FieldDecoder {3} {4}
+{0} =
+      Field.fieldDecoder "{0}" {1} ({2})
+"""
+        [ fieldName, useArgs, decoder, decoderAnnotation, thisObjectString ]
 
 
-toThing_ : String -> String -> List Type.Arg -> TypeReference -> Thing
-toThing_ thisObjectString fieldName fieldArgs (Type.TypeReference referrableType isNullable) =
+toThing : Type.Field -> Thing
+toThing field =
+    toThing_ field.name field.args field.typeRef
+
+
+toThing_ : String -> List Type.Arg -> TypeReference -> Thing
+toThing_ fieldName fieldArgs (Type.TypeReference referrableType isNullable) =
     { annotationList = []
     , decoderAnnotation = "String"
     , argList = []
