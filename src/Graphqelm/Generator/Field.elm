@@ -41,31 +41,44 @@ forQuery ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThin
         ]
 
 
+common : String -> Thing -> String
+common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
+    let
+        something =
+            (field.annotationList
+                ++ [ returnAnnotation ]
+            )
+                |> String.join " -> "
+    in
+    interpolate
+        """{0} : {3}
+{0} {4}=
+      {5} "{0}" {1} ({2})
+"""
+        [ fieldName
+        , field |> fieldArgsString
+        , decoder
+        , something
+        , argsListString field
+        , otherThing
+        ]
+
+
+forObject : String -> Thing -> String
+forObject thisObjectName field =
+    let
+        thisObjectString =
+            Imports.object thisObjectName |> String.join "."
+    in
+    common (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
+
+
 argsListString : { thing | argList : List String } -> String
 argsListString { argList } =
     if argList == [] then
         ""
     else
         (argList |> String.join " ") ++ " "
-
-
-forObject : String -> Thing -> String
-forObject thisObjectName ({ fieldName, fieldArgs, decoder, decoderAnnotation } as field) =
-    let
-        thisObjectString =
-            Imports.object thisObjectName |> String.join "."
-    in
-    interpolate
-        """{0} : FieldDecoder {3} {4}
-{0} =
-      Field.fieldDecoder "{0}" {1} ({2})
-"""
-        [ fieldName
-        , field |> fieldArgsString
-        , decoder
-        , decoderAnnotation
-        , thisObjectString
-        ]
 
 
 fieldArgsString : { thing | fieldArgs : List String } -> String

@@ -45,6 +45,19 @@ droid object =
       Object.single "droid" [] (object)
           |> Query.rootQuery
 """
+        , test "simple object with no args for object" <|
+            \() ->
+                { name = "droid"
+                , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
+                , args = []
+                }
+                    |> Field.toThing
+                    |> Field.forObject "Foo"
+                    |> Expect.equal
+                        """droid : Object droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
+droid object =
+      Object.single "droid" [] (object)
+"""
         ]
 
 
