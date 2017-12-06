@@ -10,24 +10,24 @@ type alias Thing =
     , decoderAnnotation : String
     , argList : List String
     , decoder : String
-    , useArgs : List String
+    , fieldArgs : List String
     , fieldName : String
     }
 
 
 forQuery : Thing -> String
-forQuery ({ fieldName, useArgs, decoder, decoderAnnotation } as field) =
+forQuery ({ fieldName, fieldArgs, decoder, decoderAnnotation } as field) =
     interpolate
         """{0} : Field.Query {3}
 {0} =
       Field.fieldDecoder "{0}" {1} ({2})
           |> Query.rootQuery
 """
-        [ fieldName, field |> useArgsString, decoder, decoderAnnotation ]
+        [ fieldName, field |> fieldArgsString, decoder, decoderAnnotation ]
 
 
 forObject : String -> Thing -> String
-forObject thisObjectName ({ fieldName, useArgs, decoder, decoderAnnotation } as field) =
+forObject thisObjectName ({ fieldName, fieldArgs, decoder, decoderAnnotation } as field) =
     let
         thisObjectString =
             Imports.object thisObjectName |> String.join "."
@@ -37,11 +37,11 @@ forObject thisObjectName ({ fieldName, useArgs, decoder, decoderAnnotation } as 
 {0} =
       Field.fieldDecoder "{0}" {1} ({2})
 """
-        [ fieldName, field |> useArgsString, decoder, decoderAnnotation, thisObjectString ]
+        [ fieldName, field |> fieldArgsString, decoder, decoderAnnotation, thisObjectString ]
 
 
-useArgsString : { thing | useArgs : List String } -> String
-useArgsString { useArgs } =
+fieldArgsString : { thing | fieldArgs : List String } -> String
+fieldArgsString { fieldArgs } =
     "[]"
 
 
@@ -59,7 +59,7 @@ emptyThing : String -> Thing
 emptyThing fieldName =
     { annotationList = []
     , argList = []
-    , useArgs = []
+    , fieldArgs = []
     , decoderAnnotation = "String"
     , decoder = "Decode.string"
     , fieldName = fieldName
