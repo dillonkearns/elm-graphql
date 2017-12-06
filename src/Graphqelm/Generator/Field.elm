@@ -78,23 +78,35 @@ toThing_ fieldName fieldArgs ((Type.TypeReference referrableType isNullable) as 
     emptyThing fieldName typeRef
 
 
+objectThing : String -> TypeReference -> String -> Thing
+objectThing fieldName typeRef refName =
+    { annotationList =
+        [ "Object droid Api.Object.Droid"
+        ]
+    , argList = [ "object" ]
+    , fieldArgs = []
+    , decoderAnnotation = fieldName
+    , decoder = "object"
+    , fieldName = fieldName
+    , otherThing = "Object.single"
+    }
+
+
 emptyThing : String -> TypeReference -> Thing
-emptyThing fieldName typeRef =
-    if fieldName == "droid" then
-        { annotationList = [ "Object droid Api.Object.Droid" ]
-        , argList = [ "object" ]
-        , fieldArgs = []
-        , decoderAnnotation = "droid"
-        , decoder = "object"
-        , fieldName = fieldName
-        , otherThing = "Object.single"
-        }
-    else
-        { annotationList = []
-        , argList = []
-        , fieldArgs = []
-        , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
-        , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
-        , fieldName = fieldName
-        , otherThing = "Field.fieldDecoder"
-        }
+emptyThing fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+    case referrableType of
+        Type.ObjectRef refName ->
+            objectThing fieldName typeRef refName
+
+        Type.InterfaceRef refName ->
+            objectThing fieldName typeRef refName
+
+        _ ->
+            { annotationList = []
+            , argList = []
+            , fieldArgs = []
+            , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
+            , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
+            , fieldName = fieldName
+            , otherThing = "Field.fieldDecoder"
+            }
