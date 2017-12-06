@@ -31,18 +31,21 @@ me =
 me =
       Field.fieldDecoder "me" [] (Decode.string)
 """
+        , test "simple object with no args" <|
+            \() ->
+                { name = "droid"
+                , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
+                , args = []
+                }
+                    |> Field.toThing
+                    |> Field.forQuery
+                    |> Expect.equal
+                        """droid : Object droid Api.Object.Droid -> Field.Query droid
+droid object =
+      Object.single "droid" [] (object)
+          |> Query.rootQuery
+"""
         ]
-
-
-rootQuery : TypeDefinition
-rootQuery =
-    Type.TypeDefinition
-        "Query"
-        (Type.ObjectType
-            [ meField
-            , captainsField
-            ]
-        )
 
 
 captainsField : Type.Field
