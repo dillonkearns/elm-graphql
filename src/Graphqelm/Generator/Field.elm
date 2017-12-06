@@ -80,9 +80,13 @@ toThing_ fieldName fieldArgs ((Type.TypeReference referrableType isNullable) as 
 
 objectThing : String -> TypeReference -> String -> Thing
 objectThing fieldName typeRef refName =
-    { annotationList =
-        [ "Object droid Api.Object.Droid"
-        ]
+    let
+        objectArgAnnotation =
+            interpolate
+                "Object {0} {1}"
+                [ fieldName, Imports.object refName |> String.join "." ]
+    in
+    { annotationList = [ objectArgAnnotation ]
     , argList = [ "object" ]
     , fieldArgs = []
     , decoderAnnotation = fieldName
