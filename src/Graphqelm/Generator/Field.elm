@@ -19,26 +19,17 @@ type alias Thing =
 
 forQuery : Thing -> String
 forQuery ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
+    common (interpolate "Field.Query {0}" [ decoderAnnotation ]) field
+        ++ "          |> Query.rootQuery\n"
+
+
+forObject : String -> Thing -> String
+forObject thisObjectName field =
     let
-        something =
-            (field.annotationList
-                ++ [ interpolate "Field.Query {0}" [ decoderAnnotation ] ]
-            )
-                |> String.join " -> "
+        thisObjectString =
+            Imports.object thisObjectName |> String.join "."
     in
-    interpolate
-        """{0} : {3}
-{0} {4}=
-      {5} "{0}" {1} ({2})
-          |> Query.rootQuery
-"""
-        [ fieldName
-        , field |> fieldArgsString
-        , decoder
-        , something
-        , argsListString field
-        , otherThing
-        ]
+    common (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
 
 
 common : String -> Thing -> String
@@ -62,15 +53,6 @@ common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, arg
         , argsListString field
         , otherThing
         ]
-
-
-forObject : String -> Thing -> String
-forObject thisObjectName field =
-    let
-        thisObjectString =
-            Imports.object thisObjectName |> String.join "."
-    in
-    common (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
 
 
 argsListString : { thing | argList : List String } -> String
