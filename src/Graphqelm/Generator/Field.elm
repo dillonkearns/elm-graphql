@@ -10,7 +10,7 @@ type alias Thing =
     , decoderAnnotation : String
     , argList : List String
     , decoder : String
-    , useArgs : String
+    , useArgs : Maybe String
     , fieldName : String
     }
 
@@ -23,7 +23,7 @@ forQuery ({ fieldName, useArgs, decoder, decoderAnnotation } as field) =
       Field.fieldDecoder "{0}" {1} ({2})
           |> Query.rootQuery
 """
-        [ fieldName, useArgs, decoder, decoderAnnotation ]
+        [ fieldName, useArgs |> Maybe.withDefault "[]", decoder, decoderAnnotation ]
 
 
 forObject : String -> Thing -> String
@@ -37,7 +37,7 @@ forObject thisObjectName ({ fieldName, useArgs, decoder, decoderAnnotation } as 
 {0} =
       Field.fieldDecoder "{0}" {1} ({2})
 """
-        [ fieldName, useArgs, decoder, decoderAnnotation, thisObjectString ]
+        [ fieldName, useArgs |> Maybe.withDefault "[]", decoder, decoderAnnotation, thisObjectString ]
 
 
 toThing : Type.Field -> Thing
@@ -47,10 +47,15 @@ toThing field =
 
 toThing_ : String -> List Type.Arg -> TypeReference -> Thing
 toThing_ fieldName fieldArgs (Type.TypeReference referrableType isNullable) =
+    emptyThing fieldName
+
+
+emptyThing : String -> Thing
+emptyThing fieldName =
     { annotationList = []
-    , decoderAnnotation = "String"
     , argList = []
-    , useArgs = "[]"
+    , useArgs = Nothing
+    , decoderAnnotation = "String"
     , decoder = "Decode.string"
     , fieldName = fieldName
     }
