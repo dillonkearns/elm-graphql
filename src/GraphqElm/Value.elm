@@ -1,21 +1,18 @@
 module Graphqelm.Value exposing (..)
 
+import Json.Encode
+
 
 type Value
-    = StringValue String
-    | IntValue Int
-    | EnumValue String
+    = EnumValue String
+    | Json Json.Encode.Value
 
 
 valueToString : Value -> String
 valueToString value =
     case value of
-        StringValue value ->
-            toString value
-
-        -- "" ++ value ++ ""
-        IntValue value ->
-            toString value
-
         EnumValue value ->
             value
+
+        Json json ->
+            Json.Encode.encode 0 json
