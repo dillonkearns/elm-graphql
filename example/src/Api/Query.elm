@@ -7,6 +7,7 @@ import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
+import Json.Encode as Encode
 
 
 type Type
@@ -32,7 +33,7 @@ menuItems fillInArgs object =
             fillInArgs { contains = Nothing }
 
         optionalArgs =
-            [ Maybe.map (\value -> Argument.string "contains" value) optionalArgsThing.contains ]
+            [ Argument.optional "contains" optionalArgsThing.contains Encode.string ]
                 |> List.filterMap identity
     in
     Object.listOf "menuItems" optionalArgs object
