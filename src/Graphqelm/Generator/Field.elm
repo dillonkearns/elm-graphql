@@ -94,8 +94,8 @@ addRequiredArgs args thing =
         Just { annotation, list } ->
             { thing
                 | argList = "requiredArgs" :: thing.argList
-                , annotationList = "{ id : String }" :: thing.annotationList
-                , fieldArgs = [ """[ Argument.string "id" requiredArgs.id ]""" ]
+                , annotationList = annotation :: thing.annotationList
+                , fieldArgs = [ list ]
             }
 
         Nothing ->
