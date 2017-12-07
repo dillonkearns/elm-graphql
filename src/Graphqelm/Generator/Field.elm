@@ -2,6 +2,7 @@ module Graphqelm.Generator.Field exposing (forObject, forQuery)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
@@ -55,8 +56,8 @@ common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, arg
                 |> String.join " -> "
     in
     interpolate
-        """{0} : {3}
-{0} {4}=
+        """{6} : {3}
+{6} {4}=
       {5} "{0}" {1} ({2})
 """
         [ fieldName
@@ -65,6 +66,7 @@ common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, arg
         , something
         , argsListString field
         , otherThing
+        , Normalize.fieldName fieldName
         ]
 
 

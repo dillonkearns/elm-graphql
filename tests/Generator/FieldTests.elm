@@ -79,6 +79,18 @@ human requiredArgs object =
       Object.single "human" [ Argument.string "id" requiredArgs.id ] (object)
           |> Query.rootQuery
 """
+        , test "normalizes reserved names" <|
+            \() ->
+                { name = "type"
+                , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                , args = []
+                }
+                    |> Field.forObject "TreeEntry"
+                    |> Expect.equal
+                        """type_ : FieldDecoder String Api.Object.TreeEntry
+type_ =
+      Field.fieldDecoder "type" [] (Decode.string)
+"""
         ]
 
 
