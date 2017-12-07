@@ -99,18 +99,12 @@ objectThing fieldName typeRef refName =
 objectListThing : String -> TypeReference -> String -> Thing
 objectListThing fieldName typeRef refName =
     let
-        objectArgAnnotation =
-            interpolate
-                "Object {0} {1}"
-                [ fieldName, Imports.object refName |> String.join "." ]
+        commonObjectThing =
+            objectThing fieldName typeRef refName
     in
-    { annotationList = [ objectArgAnnotation ]
-    , argList = [ "object" ]
-    , fieldArgs = []
-    , decoderAnnotation = interpolate "(List {0})" [ fieldName ]
-    , decoder = "object"
-    , fieldName = fieldName
-    , otherThing = "Object.listOf"
+    { commonObjectThing
+        | decoderAnnotation = interpolate "(List {0})" [ fieldName ]
+        , otherThing = "Object.listOf"
     }
 
 
