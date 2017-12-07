@@ -131,7 +131,7 @@ all =
                                       , args = []
                                       }
                                     , { name = "id"
-                                      , typeRef = TypeReference (Scalar Scalar.ID) NonNullable
+                                      , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
                                     , { name = "name"

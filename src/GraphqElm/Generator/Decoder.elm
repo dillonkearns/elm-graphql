@@ -18,17 +18,11 @@ generateDecoder typeRef =
                         Scalar.Boolean ->
                             "Decode.bool"
 
-                        Scalar.ID ->
-                            "Decode.string"
-
                         Scalar.Int ->
                             "Decode.int"
 
                         Scalar.Float ->
                             "Decode.float"
-
-                        Scalar.Custom _ ->
-                            "Decode.string"
 
                 Type.List typeRef ->
                     generateDecoder typeRef ++ " |> Decode.list"
@@ -58,17 +52,11 @@ generateType typeRef =
                         Scalar.Boolean ->
                             "Bool"
 
-                        Scalar.ID ->
-                            "String"
-
                         Scalar.Int ->
                             "Int"
 
                         Scalar.Float ->
                             "Float"
-
-                        Scalar.Custom _ ->
-                            "String"
 
                 Type.List typeRef ->
                     "(List " ++ generateType typeRef ++ ")"

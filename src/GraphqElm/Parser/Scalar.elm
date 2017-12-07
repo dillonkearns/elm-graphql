@@ -3,11 +3,10 @@ module Graphqelm.Parser.Scalar exposing (..)
 
 type Scalar
     = Boolean
-    | ID
+      -- | ID
     | String
     | Int
     | Float
-    | Custom { name : String }
 
 
 parse : String -> Scalar
@@ -26,11 +25,8 @@ parse scalarName =
             Float
 
         "ID" ->
-            ID
+            -- TODO is it worth the overhead for the user of having a special union type here?
+            String
 
         _ ->
-            Custom { name = scalarName }
-
-
-
--- Debug.crash "Unhandled"
+            String
