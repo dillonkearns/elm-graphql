@@ -96,6 +96,24 @@ objectThing fieldName typeRef refName =
     }
 
 
+objectListThing : String -> TypeReference -> String -> Thing
+objectListThing fieldName typeRef refName =
+    let
+        objectArgAnnotation =
+            interpolate
+                "Object {0} {1}"
+                [ fieldName, Imports.object refName |> String.join "." ]
+    in
+    { annotationList = [ objectArgAnnotation ]
+    , argList = [ "object" ]
+    , fieldArgs = []
+    , decoderAnnotation = interpolate "(List {0})" [ fieldName ]
+    , decoder = "object"
+    , fieldName = fieldName
+    , otherThing = "Object.listOf"
+    }
+
+
 emptyThing : String -> TypeReference -> Thing
 emptyThing fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
@@ -104,6 +122,12 @@ emptyThing fieldName ((Type.TypeReference referrableType isNullable) as typeRef)
 
         Type.InterfaceRef refName ->
             objectThing fieldName typeRef refName
+
+        Type.List (Type.TypeReference (Type.InterfaceRef refName) isInterfaceNullable) ->
+            objectListThing fieldName typeRef refName
+
+        Type.List (Type.TypeReference (Type.ObjectRef refName) isObjectNullable) ->
+            objectListThing fieldName typeRef refName
 
         _ ->
             { annotationList = []

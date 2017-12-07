@@ -58,6 +58,19 @@ droid object =
 droid object =
       Object.single "droid" [] (object)
 """
+        , test "list of objects with no args" <|
+            \() ->
+                { name = "droid"
+                , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable)) Type.NonNullable
+                , args = []
+                }
+                    |> Field.toThing
+                    |> Field.forObject "Foo"
+                    |> Expect.equal
+                        """droid : Object droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
+droid object =
+      Object.listOf "droid" [] (object)
+"""
         ]
 
 
