@@ -71,6 +71,28 @@ droid object =
 droid object =
       Object.listOf "droid" [] (object)
 """
+        , test "with required args" <|
+            \() ->
+                { name = "human"
+                , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
+                , args = [ { name = "id", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
+                }
+                    |> Field.toThing
+                    |> Field.forQuery
+                    |> Expect.equal
+                        """human : { id : String } -> Object human Api.Object.Human -> Field.Query human
+human requiredArgs object =
+      Object.single "human" [ Argument.string "id" requiredArgs.id ] (object)
+          |> Query.rootQuery
+"""
+
+        {-
+           human : { id : String } -> Object human Api.Object.Human -> Field.Query human
+           human requiredArgs object =
+               Object.single "human" [ Argument.string "id" requiredArgs.id ] object
+                   |> Query.rootQuery
+
+        -}
         ]
 
 

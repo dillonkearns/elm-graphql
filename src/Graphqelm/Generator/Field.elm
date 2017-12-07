@@ -65,17 +65,38 @@ argsListString { argList } =
 
 fieldArgsString : { thing | fieldArgs : List String } -> String
 fieldArgsString { fieldArgs } =
-    "[]"
+    case fieldArgs of
+        [] ->
+            "[]"
+
+        [ single ] ->
+            single
+
+        _ ->
+            "TODO"
 
 
 toThing : Type.Field -> Thing
 toThing field =
     toThing_ field.name field.args field.typeRef
+        |> addRequiredArgs field.args
 
 
 toThing_ : String -> List Type.Arg -> TypeReference -> Thing
 toThing_ fieldName fieldArgs ((Type.TypeReference referrableType isNullable) as typeRef) =
     emptyThing fieldName typeRef
+
+
+addRequiredArgs : List Type.Arg -> Thing -> Thing
+addRequiredArgs argList thing =
+    if argList == [] then
+        thing
+    else
+        { thing
+            | argList = "requiredArgs" :: thing.argList
+            , annotationList = "{ id : String }" :: thing.annotationList
+            , fieldArgs = [ """[ Argument.string "id" requiredArgs.id ]""" ]
+        }
 
 
 objectThing : String -> TypeReference -> String -> Thing
