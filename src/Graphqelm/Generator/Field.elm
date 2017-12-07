@@ -11,7 +11,6 @@ import Interpolate exposing (interpolate)
 type alias FieldGenerator =
     { annotatedArgs : List AnnotatedArg
     , decoderAnnotation : String
-    , argList : List String
     , decoder : String
     , fieldArgs : List String
     , fieldName : String
@@ -38,7 +37,7 @@ forObject thisObjectName field =
 
 
 forQuery_ : FieldGenerator -> String
-forQuery_ ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
+forQuery_ ({ fieldName, fieldArgs, decoder, decoderAnnotation, otherThing } as field) =
     common (interpolate "Field.Query {0}" [ decoderAnnotation ]) field
         ++ "          |> Query.rootQuery\n"
 
@@ -53,7 +52,7 @@ forObject_ thisObjectName field =
 
 
 common : String -> FieldGenerator -> String
-common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
+common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, otherThing } as field) =
     let
         something =
             ((field.annotatedArgs |> List.map .annotation)
@@ -126,7 +125,6 @@ objectThing fieldName typeRef refName =
                 [ fieldName, Imports.object refName |> String.join "." ]
     in
     { annotatedArgs = []
-    , argList = []
     , fieldArgs = []
     , decoderAnnotation = fieldName
     , decoder = "object"
@@ -141,10 +139,7 @@ objectThing fieldName typeRef refName =
 
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
 prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
-    { fieldGenerator
-        | argList = arg :: fieldGenerator.argList
-        , annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs
-    }
+    { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
 
 
 objectListThing : String -> TypeReference -> String -> FieldGenerator
@@ -181,7 +176,6 @@ init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
 initScalarField : String -> TypeReference -> FieldGenerator
 initScalarField fieldName typeRef =
     { annotatedArgs = []
-    , argList = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
     , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
