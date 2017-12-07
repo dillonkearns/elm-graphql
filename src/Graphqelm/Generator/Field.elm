@@ -37,8 +37,8 @@ forObject thisObjectName field =
 
 
 forQuery_ : FieldGenerator -> String
-forQuery_ ({ fieldName, fieldArgs, decoder, decoderAnnotation, otherThing } as field) =
-    common (interpolate "Field.Query {0}" [ decoderAnnotation ]) field
+forQuery_ field =
+    common (interpolate "Field.Query {0}" [ field.decoderAnnotation ]) field
         ++ "          |> Query.rootQuery\n"
 
 
@@ -52,7 +52,7 @@ forObject_ thisObjectName field =
 
 
 common : String -> FieldGenerator -> String
-common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, otherThing } as field) =
+common returnAnnotation field =
     let
         something =
             ((field.annotatedArgs |> List.map .annotation)
@@ -65,13 +65,13 @@ common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, oth
 {6} {4}=
       {5} "{0}" {1} ({2})
 """
-        [ fieldName
+        [ field.fieldName
         , field |> fieldArgsString
-        , decoder
+        , field.decoder
         , something
         , argsListString field
-        , otherThing
-        , Normalize.fieldName fieldName
+        , field.otherThing
+        , Normalize.fieldName field.fieldName
         ]
 
 
