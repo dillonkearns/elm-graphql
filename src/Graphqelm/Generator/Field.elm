@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Field exposing (forObject, forQuery, toThing)
+module Graphqelm.Generator.Field exposing (forObject, forQuery)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
@@ -18,14 +18,24 @@ type alias Thing =
     }
 
 
-forQuery : Thing -> String
-forQuery ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
+forQuery : Type.Field -> String
+forQuery field =
+    forQuery_ (toThing field)
+
+
+forObject : String -> Type.Field -> String
+forObject thisObjectName field =
+    forObject_ thisObjectName (toThing field)
+
+
+forQuery_ : Thing -> String
+forQuery_ ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
     common (interpolate "Field.Query {0}" [ decoderAnnotation ]) field
         ++ "          |> Query.rootQuery\n"
 
 
-forObject : String -> Thing -> String
-forObject thisObjectName field =
+forObject_ : String -> Thing -> String
+forObject_ thisObjectName field =
     let
         thisObjectString =
             Imports.object thisObjectName |> String.join "."

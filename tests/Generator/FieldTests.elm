@@ -13,7 +13,6 @@ all =
         [ test "simple scalar converts for query" <|
             \() ->
                 meField
-                    |> Field.toThing
                     |> Field.forQuery
                     |> Expect.equal
                         """me : Field.Query String
@@ -24,7 +23,6 @@ me =
         , test "converts for object" <|
             \() ->
                 meField
-                    |> Field.toThing
                     |> Field.forObject "Foo"
                     |> Expect.equal
                         """me : FieldDecoder String Api.Object.Foo
@@ -37,7 +35,6 @@ me =
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
                 , args = []
                 }
-                    |> Field.toThing
                     |> Field.forQuery
                     |> Expect.equal
                         """droid : Object droid Api.Object.Droid -> Field.Query droid
@@ -51,7 +48,6 @@ droid object =
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
                 , args = []
                 }
-                    |> Field.toThing
                     |> Field.forObject "Foo"
                     |> Expect.equal
                         """droid : Object droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
@@ -64,7 +60,6 @@ droid object =
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable)) Type.NonNullable
                 , args = []
                 }
-                    |> Field.toThing
                     |> Field.forObject "Foo"
                     |> Expect.equal
                         """droid : Object droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
@@ -77,7 +72,6 @@ droid object =
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args = [ { name = "id", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
                 }
-                    |> Field.toThing
                     |> Field.forQuery
                     |> Expect.equal
                         """human : { id : String } -> Object human Api.Object.Human -> Field.Query human
@@ -85,14 +79,6 @@ human requiredArgs object =
       Object.single "human" [ Argument.string "id" requiredArgs.id ] (object)
           |> Query.rootQuery
 """
-
-        {-
-           human : { id : String } -> Object human Api.Object.Human -> Field.Query human
-           human requiredArgs object =
-               Object.single "human" [ Argument.string "id" requiredArgs.id ] object
-                   |> Query.rootQuery
-
-        -}
         ]
 
 
