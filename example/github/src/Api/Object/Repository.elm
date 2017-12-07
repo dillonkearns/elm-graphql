@@ -124,14 +124,14 @@ isPrivate =
     Field.fieldDecoder "isPrivate" [] Decode.bool
 
 
-issue : Object issue Api.Object.Issue -> FieldDecoder issue Api.Object.Repository
-issue object =
-    Object.single "issue" [] object
+issue : { number : String } -> Object issue Api.Object.Issue -> FieldDecoder issue Api.Object.Repository
+issue requiredArgs object =
+    Object.single "issue" [ Argument.string "number" requiredArgs.number ] object
 
 
-issueOrPullRequest : FieldDecoder String Api.Object.Repository
-issueOrPullRequest =
-    Field.fieldDecoder "issueOrPullRequest" [] Decode.string
+issueOrPullRequest : { number : String } -> FieldDecoder String Api.Object.Repository
+issueOrPullRequest requiredArgs =
+    Field.fieldDecoder "issueOrPullRequest" [ Argument.string "number" requiredArgs.number ] Decode.string
 
 
 issues : Object issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Repository
@@ -139,9 +139,9 @@ issues object =
     Object.single "issues" [] object
 
 
-label : Object label Api.Object.Label -> FieldDecoder label Api.Object.Repository
-label object =
-    Object.single "label" [] object
+label : { name : String } -> Object label Api.Object.Label -> FieldDecoder label Api.Object.Repository
+label requiredArgs object =
+    Object.single "label" [ Argument.string "name" requiredArgs.name ] object
 
 
 labels : Object labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Repository
@@ -174,9 +174,9 @@ mentionableUsers object =
     Object.single "mentionableUsers" [] object
 
 
-milestone : Object milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.Repository
-milestone object =
-    Object.single "milestone" [] object
+milestone : { number : String } -> Object milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.Repository
+milestone requiredArgs object =
+    Object.single "milestone" [ Argument.string "number" requiredArgs.number ] object
 
 
 milestones : Object milestones Api.Object.MilestoneConnection -> FieldDecoder milestones Api.Object.Repository
@@ -219,9 +219,9 @@ primaryLanguage object =
     Object.single "primaryLanguage" [] object
 
 
-project : Object project Api.Object.Project -> FieldDecoder project Api.Object.Repository
-project object =
-    Object.single "project" [] object
+project : { number : String } -> Object project Api.Object.Project -> FieldDecoder project Api.Object.Repository
+project requiredArgs object =
+    Object.single "project" [ Argument.string "number" requiredArgs.number ] object
 
 
 projects : Object projects Api.Object.ProjectConnection -> FieldDecoder projects Api.Object.Repository
@@ -244,9 +244,9 @@ protectedBranches object =
     Object.single "protectedBranches" [] object
 
 
-pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.Repository
-pullRequest object =
-    Object.single "pullRequest" [] object
+pullRequest : { number : String } -> Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.Repository
+pullRequest requiredArgs object =
+    Object.single "pullRequest" [ Argument.string "number" requiredArgs.number ] object
 
 
 pullRequests : Object pullRequests Api.Object.PullRequestConnection -> FieldDecoder pullRequests Api.Object.Repository
@@ -259,24 +259,25 @@ pushedAt =
     Field.fieldDecoder "pushedAt" [] Decode.string
 
 
-ref : Object ref Api.Object.Ref -> FieldDecoder ref Api.Object.Repository
-ref object =
-    Object.single "ref" [] object
+ref : { qualifiedName : String } -> Object ref Api.Object.Ref -> FieldDecoder ref Api.Object.Repository
+ref requiredArgs object =
+    Object.single "ref" [ Argument.string "qualifiedName" requiredArgs.qualifiedName ] object
 
 
-refs : Object refs Api.Object.RefConnection -> FieldDecoder refs Api.Object.Repository
-refs object =
-    Object.single "refs" [] object
+refs : { refPrefix : String } -> Object refs Api.Object.RefConnection -> FieldDecoder refs Api.Object.Repository
+refs requiredArgs object =
+    Object.single "refs" [ Argument.string "refPrefix" requiredArgs.refPrefix ] object
 
 
-release : Object release Api.Object.Release -> FieldDecoder release Api.Object.Repository
-release object =
-    Object.single "release" [] object
+release : { tagName : String } -> Object release Api.Object.Release -> FieldDecoder release Api.Object.Repository
+release requiredArgs object =
+    Object.single "release" [ Argument.string "tagName" requiredArgs.tagName ] object
 
 
 releases : Object releases Api.Object.ReleaseConnection -> FieldDecoder releases Api.Object.Repository
 releases object =
-    Object.single "releases" [] object
+    -- Object.single "releases" [] object
+    Object.single "releases" [ Argument.int "last" 10 ] object
 
 
 repositoryTopics : Object repositoryTopics Api.Object.RepositoryTopicConnection -> FieldDecoder repositoryTopics Api.Object.Repository

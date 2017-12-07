@@ -251,7 +251,7 @@ parseRef (RawTypeRef rawTypeRef) =
 
 ignoreRef : TypeReference
 ignoreRef =
-    TypeReference (Scalar (Scalar.Custom { name = "Ignore" })) NonNullable
+    TypeReference (Scalar (Scalar.Custom { name = "Ignore" })) Nullable
 
 
 type IsNullable

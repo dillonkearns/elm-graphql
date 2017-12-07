@@ -17,9 +17,9 @@ id =
     Field.fieldDecoder "id" [] Decode.string
 
 
-project : Object project Api.Object.Project -> FieldDecoder project Api.Object.ProjectOwner
-project object =
-    Object.single "project" [] object
+project : { number : String } -> Object project Api.Object.Project -> FieldDecoder project Api.Object.ProjectOwner
+project requiredArgs object =
+    Object.single "project" [ Argument.string "number" requiredArgs.number ] object
 
 
 projects : Object projects Api.Object.ProjectConnection -> FieldDecoder projects Api.Object.ProjectOwner

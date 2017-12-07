@@ -72,9 +72,9 @@ following object =
     Object.single "following" [] object
 
 
-gist : Object gist Api.Object.Gist -> FieldDecoder gist Api.Object.User
-gist object =
-    Object.single "gist" [] object
+gist : { name : String } -> Object gist Api.Object.Gist -> FieldDecoder gist Api.Object.User
+gist requiredArgs object =
+    Object.single "gist" [ Argument.string "name" requiredArgs.name ] object
 
 
 gistComments : Object gistComments Api.Object.GistCommentConnection -> FieldDecoder gistComments Api.Object.User
@@ -152,9 +152,9 @@ name =
     Field.fieldDecoder "name" [] Decode.string
 
 
-organization : Object organization Api.Object.Organization -> FieldDecoder organization Api.Object.User
-organization object =
-    Object.single "organization" [] object
+organization : { login : String } -> Object organization Api.Object.Organization -> FieldDecoder organization Api.Object.User
+organization requiredArgs object =
+    Object.single "organization" [ Argument.string "login" requiredArgs.login ] object
 
 
 organizations : Object organizations Api.Object.OrganizationConnection -> FieldDecoder organizations Api.Object.User
@@ -187,9 +187,9 @@ repositoriesContributedTo object =
     Object.single "repositoriesContributedTo" [] object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.User
-repository object =
-    Object.single "repository" [] object
+repository : { name : String } -> Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.User
+repository requiredArgs object =
+    Object.single "repository" [ Argument.string "name" requiredArgs.name ] object
 
 
 resourcePath : FieldDecoder String Api.Object.User

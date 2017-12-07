@@ -68,9 +68,9 @@ node requiredArgs object =
         |> Query.rootQuery
 
 
-nodes : Object nodes Api.Object.Node -> Field.Query (List nodes)
-nodes object =
-    Object.listOf "nodes" [] object
+nodes : { ids : String } -> Object nodes Api.Object.Node -> Field.Query (List nodes)
+nodes requiredArgs object =
+    Object.listOf "nodes" [ Argument.string "ids" requiredArgs.ids ] object
         |> Query.rootQuery
 
 

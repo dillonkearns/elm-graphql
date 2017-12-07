@@ -37,9 +37,9 @@ repositories object =
     Object.single "repositories" [] object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.RepositoryOwner
-repository object =
-    Object.single "repository" [] object
+repository : { name : String } -> Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.RepositoryOwner
+repository requiredArgs object =
+    Object.single "repository" [ Argument.string "name" requiredArgs.name ] object
 
 
 resourcePath : FieldDecoder String Api.Object.RepositoryOwner

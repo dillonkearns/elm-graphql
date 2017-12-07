@@ -28,9 +28,9 @@ authoredByCommitter =
     Field.fieldDecoder "authoredByCommitter" [] Decode.bool
 
 
-blame : Object blame Api.Object.Blame -> FieldDecoder blame Api.Object.Commit
-blame object =
-    Object.single "blame" [] object
+blame : { path : String } -> Object blame Api.Object.Blame -> FieldDecoder blame Api.Object.Commit
+blame requiredArgs object =
+    Object.single "blame" [ Argument.string "path" requiredArgs.path ] object
 
 
 comments : Object comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.Commit

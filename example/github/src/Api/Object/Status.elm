@@ -18,9 +18,9 @@ commit object =
     Object.single "commit" [] object
 
 
-context : Object context Api.Object.StatusContext -> FieldDecoder context Api.Object.Status
-context object =
-    Object.single "context" [] object
+context : { name : String } -> Object context Api.Object.StatusContext -> FieldDecoder context Api.Object.Status
+context requiredArgs object =
+    Object.single "context" [ Argument.string "name" requiredArgs.name ] object
 
 
 contexts : FieldDecoder (List String) Api.Object.Status

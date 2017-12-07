@@ -98,9 +98,19 @@ repository object =
     Object.single "repository" [] object
 
 
+resourcePath : FieldDecoder String Api.Object.IssueComment
+resourcePath =
+    Field.fieldDecoder "resourcePath" [] Decode.string
+
+
 updatedAt : FieldDecoder String Api.Object.IssueComment
 updatedAt =
     Field.fieldDecoder "updatedAt" [] Decode.string
+
+
+url : FieldDecoder String Api.Object.IssueComment
+url =
+    Field.fieldDecoder "url" [] Decode.string
 
 
 viewerCanDelete : FieldDecoder Bool Api.Object.IssueComment

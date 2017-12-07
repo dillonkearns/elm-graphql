@@ -77,9 +77,9 @@ pinnedRepositories object =
     Object.single "pinnedRepositories" [] object
 
 
-project : Object project Api.Object.Project -> FieldDecoder project Api.Object.Organization
-project object =
-    Object.single "project" [] object
+project : { number : String } -> Object project Api.Object.Project -> FieldDecoder project Api.Object.Organization
+project requiredArgs object =
+    Object.single "project" [ Argument.string "number" requiredArgs.number ] object
 
 
 projects : Object projects Api.Object.ProjectConnection -> FieldDecoder projects Api.Object.Organization
@@ -102,9 +102,9 @@ repositories object =
     Object.single "repositories" [] object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Organization
-repository object =
-    Object.single "repository" [] object
+repository : { name : String } -> Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Organization
+repository requiredArgs object =
+    Object.single "repository" [ Argument.string "name" requiredArgs.name ] object
 
 
 resourcePath : FieldDecoder String Api.Object.Organization
@@ -117,9 +117,9 @@ samlIdentityProvider object =
     Object.single "samlIdentityProvider" [] object
 
 
-team : Object team Api.Object.Team -> FieldDecoder team Api.Object.Organization
-team object =
-    Object.single "team" [] object
+team : { slug : String } -> Object team Api.Object.Team -> FieldDecoder team Api.Object.Organization
+team requiredArgs object =
+    Object.single "team" [ Argument.string "slug" requiredArgs.slug ] object
 
 
 teams : Object teams Api.Object.TeamConnection -> FieldDecoder teams Api.Object.Organization
