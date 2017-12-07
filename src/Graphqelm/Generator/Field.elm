@@ -57,7 +57,7 @@ common : String -> FieldGenerator -> String
 common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
     let
         something =
-            (field.annotationList
+            ((field.annotatedArgs |> List.map .annotation)
                 ++ [ returnAnnotation ]
             )
                 |> String.join " -> "
@@ -77,12 +77,12 @@ common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, arg
         ]
 
 
-argsListString : { thing | argList : List String } -> String
-argsListString { argList } =
-    if argList == [] then
+argsListString : { fieldGenerator | annotatedArgs : List AnnotatedArg } -> String
+argsListString { annotatedArgs } =
+    if annotatedArgs == [] then
         ""
     else
-        (argList |> String.join " ") ++ " "
+        (annotatedArgs |> List.map .arg |> String.join " ") ++ " "
 
 
 fieldArgsString : { thing | fieldArgs : List String } -> String
