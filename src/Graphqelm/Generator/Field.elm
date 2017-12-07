@@ -20,12 +20,14 @@ type alias Thing =
 
 forQuery : Type.Field -> String
 forQuery field =
-    forQuery_ (toThing field)
+    toThing field
+        |> forQuery_
 
 
 forObject : String -> Type.Field -> String
 forObject thisObjectName field =
-    forObject_ thisObjectName (toThing field)
+    toThing field
+        |> forObject_ thisObjectName
 
 
 forQuery_ : Thing -> String
