@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Field exposing (..)
+module Graphqelm.Generator.Field exposing (forObject, forQuery, toThing)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
