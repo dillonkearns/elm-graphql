@@ -9,7 +9,7 @@ import Interpolate exposing (interpolate)
 
 
 type alias FieldGenerator =
-    { args : List AnnotatedArg
+    { annotatedArgs : List AnnotatedArg
     , annotationList : List String
     , decoderAnnotation : String
     , argList : List String
@@ -126,7 +126,7 @@ objectThing fieldName typeRef refName =
                 "Object {0} {1}"
                 [ fieldName, Imports.object refName |> String.join "." ]
     in
-    { args = []
+    { annotatedArgs = []
     , annotationList = []
     , argList = []
     , fieldArgs = []
@@ -142,10 +142,11 @@ objectThing fieldName typeRef refName =
 
 
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
-prependArg { annotation, arg } fieldGenerator =
+prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator
         | argList = arg :: fieldGenerator.argList
         , annotationList = annotation :: fieldGenerator.annotationList
+        , annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs
     }
 
 
@@ -182,7 +183,7 @@ init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
 
 initScalarField : String -> TypeReference -> FieldGenerator
 initScalarField fieldName typeRef =
-    { args = []
+    { annotatedArgs = []
     , annotationList = []
     , argList = []
     , fieldArgs = []
