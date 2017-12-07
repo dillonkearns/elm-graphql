@@ -8,7 +8,7 @@ import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeRefere
 import Interpolate exposing (interpolate)
 
 
-type alias Thing =
+type alias FieldGenerator =
     { annotationList : List String
     , decoderAnnotation : String
     , argList : List String
@@ -21,23 +21,23 @@ type alias Thing =
 
 forQuery : Type.Field -> String
 forQuery field =
-    toThing field
+    toFieldGenerator field
         |> forQuery_
 
 
 forObject : String -> Type.Field -> String
 forObject thisObjectName field =
-    toThing field
+    toFieldGenerator field
         |> forObject_ thisObjectName
 
 
-forQuery_ : Thing -> String
+forQuery_ : FieldGenerator -> String
 forQuery_ ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
     common (interpolate "Field.Query {0}" [ decoderAnnotation ]) field
         ++ "          |> Query.rootQuery\n"
 
 
-forObject_ : String -> Thing -> String
+forObject_ : String -> FieldGenerator -> String
 forObject_ thisObjectName field =
     let
         thisObjectString =
@@ -46,7 +46,7 @@ forObject_ thisObjectName field =
     common (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
 
 
-common : String -> Thing -> String
+common : String -> FieldGenerator -> String
 common returnAnnotation ({ fieldName, fieldArgs, decoder, decoderAnnotation, argList, otherThing } as field) =
     let
         something =
@@ -91,18 +91,13 @@ fieldArgsString { fieldArgs } =
             Debug.crash "TODO"
 
 
-toThing : Type.Field -> Thing
-toThing field =
-    toThing_ field.name field.args field.typeRef
+toFieldGenerator : Type.Field -> FieldGenerator
+toFieldGenerator field =
+    init field.name field.typeRef
         |> addRequiredArgs field.args
 
 
-toThing_ : String -> List Type.Arg -> TypeReference -> Thing
-toThing_ fieldName fieldArgs ((Type.TypeReference referrableType isNullable) as typeRef) =
-    init fieldName typeRef
-
-
-addRequiredArgs : List Type.Arg -> Thing -> Thing
+addRequiredArgs : List Type.Arg -> FieldGenerator -> FieldGenerator
 addRequiredArgs args thing =
     case Graphqelm.Generator.RequiredArgs.generate args of
         Just { annotation, list } ->
@@ -116,7 +111,7 @@ addRequiredArgs args thing =
             thing
 
 
-objectThing : String -> TypeReference -> String -> Thing
+objectThing : String -> TypeReference -> String -> FieldGenerator
 objectThing fieldName typeRef refName =
     let
         objectArgAnnotation =
@@ -134,7 +129,7 @@ objectThing fieldName typeRef refName =
     }
 
 
-objectListThing : String -> TypeReference -> String -> Thing
+objectListThing : String -> TypeReference -> String -> FieldGenerator
 objectListThing fieldName typeRef refName =
     let
         commonObjectThing =
@@ -146,7 +141,7 @@ objectListThing fieldName typeRef refName =
     }
 
 
-init : String -> TypeReference -> Thing
+init : String -> TypeReference -> FieldGenerator
 init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
         Type.ObjectRef refName ->
@@ -162,11 +157,16 @@ init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
             objectListThing fieldName typeRef refName
 
         _ ->
-            { annotationList = []
-            , argList = []
-            , fieldArgs = []
-            , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
-            , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
-            , fieldName = fieldName
-            , otherThing = "Field.fieldDecoder"
-            }
+            initScalarField fieldName typeRef
+
+
+initScalarField : String -> TypeReference -> FieldGenerator
+initScalarField fieldName typeRef =
+    { annotationList = []
+    , argList = []
+    , fieldArgs = []
+    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
+    , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
+    , fieldName = fieldName
+    , otherThing = "Field.fieldDecoder"
+    }
