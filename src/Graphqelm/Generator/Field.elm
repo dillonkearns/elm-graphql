@@ -84,7 +84,7 @@ toThing field =
 
 toThing_ : String -> List Type.Arg -> TypeReference -> Thing
 toThing_ fieldName fieldArgs ((Type.TypeReference referrableType isNullable) as typeRef) =
-    emptyThing fieldName typeRef
+    init fieldName typeRef
 
 
 addRequiredArgs : List Type.Arg -> Thing -> Thing
@@ -129,8 +129,8 @@ objectListThing fieldName typeRef refName =
     }
 
 
-emptyThing : String -> TypeReference -> Thing
-emptyThing fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init : String -> TypeReference -> Thing
+init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
         Type.ObjectRef refName ->
             objectThing fieldName typeRef refName
