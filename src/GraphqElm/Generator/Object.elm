@@ -1,6 +1,6 @@
 module Graphqelm.Generator.Object exposing (..)
 
-import Graphqelm.Generator.Decoder
+import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
@@ -10,7 +10,7 @@ generate : String -> List Type.Field -> ( List String, String )
 generate name fields =
     ( Imports.object name
     , prepend (Imports.object name) fields
-        ++ (List.map (generateNew name) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.forObject name) fields |> String.join "\n\n")
     )
 
 
@@ -38,78 +38,3 @@ build constructor =
     Object.object constructor
 """
         [ moduleName |> String.join ".", imports ]
-
-
-generateNew : String -> Type.Field -> String
-generateNew thisObjectName field =
-    let
-        thisObjectString =
-            Imports.object thisObjectName |> String.join "."
-    in
-    case field.typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.ObjectRef objectName ->
-                    let
-                        typeLockName =
-                            Imports.object objectName |> String.join "."
-                    in
-                    interpolate
-                        """{0} : Object {0} {1} -> FieldDecoder {0} {2}
-{0} object =
-    Object.single "{0}" [] object
-"""
-                        [ field.name, typeLockName, thisObjectString ]
-
-                Type.InterfaceRef interfaceName ->
-                    let
-                        typeLockName =
-                            Imports.object interfaceName |> String.join "."
-                    in
-                    interpolate
-                        """{0} : Object {0} {1} -> FieldDecoder {0} {2}
-{0} object =
-    Object.single "{0}" [] object
-"""
-                        [ field.name, typeLockName, thisObjectString ]
-
-                Type.List (Type.TypeReference (Type.ObjectRef objectName) isNullable) ->
-                    let
-                        typeLockName =
-                            Imports.object objectName |> String.join "."
-                    in
-                    interpolate
-                        """{0} : Object {0} {1} -> FieldDecoder (List {0}) {2}
-{0} object =
-    Object.listOf "{0}" [] object
-"""
-                        [ field.name, typeLockName, thisObjectString ]
-
-                Type.List (Type.TypeReference (Type.InterfaceRef objectName) isNullable) ->
-                    let
-                        typeLockName =
-                            Imports.object objectName |> String.join "."
-                    in
-                    interpolate
-                        """{0} : Object {2} {1} -> FieldDecoder (List {2}) {3}
-                        {0} object =
-                            Object.listOf "{2}" [] object
-                        """
-                        [ field.name, typeLockName, field.name, thisObjectString ]
-
-                _ ->
-                    generateField thisObjectString field
-
-
-generateField : String -> Type.Field -> String
-generateField thisObjectString { name, typeRef } =
-    interpolate
-        """{0} : FieldDecoder {1} {3}
-{0} =
-    Field.fieldDecoder "{0}" [] ({2})
-"""
-        [ name
-        , Graphqelm.Generator.Decoder.generateType typeRef
-        , Graphqelm.Generator.Decoder.generateDecoder typeRef
-        , thisObjectString
-        ]
