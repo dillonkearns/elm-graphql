@@ -2,6 +2,7 @@ module Graphqelm.Generator.Field exposing (forObject, forQuery, toThing)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -88,15 +89,17 @@ toThing_ fieldName fieldArgs ((Type.TypeReference referrableType isNullable) as 
 
 
 addRequiredArgs : List Type.Arg -> Thing -> Thing
-addRequiredArgs argList thing =
-    if argList == [] then
-        thing
-    else
-        { thing
-            | argList = "requiredArgs" :: thing.argList
-            , annotationList = "{ id : String }" :: thing.annotationList
-            , fieldArgs = [ """[ Argument.string "id" requiredArgs.id ]""" ]
-        }
+addRequiredArgs args thing =
+    case Graphqelm.Generator.RequiredArgs.generate args of
+        Just { annotation, list } ->
+            { thing
+                | argList = "requiredArgs" :: thing.argList
+                , annotationList = "{ id : String }" :: thing.annotationList
+                , fieldArgs = [ """[ Argument.string "id" requiredArgs.id ]""" ]
+            }
+
+        Nothing ->
+            thing
 
 
 objectThing : String -> TypeReference -> String -> Thing
