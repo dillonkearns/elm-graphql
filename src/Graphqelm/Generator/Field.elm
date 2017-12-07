@@ -9,13 +9,20 @@ import Interpolate exposing (interpolate)
 
 
 type alias FieldGenerator =
-    { annotationList : List String
+    { args : List AnnotatedArg
+    , annotationList : List String
     , decoderAnnotation : String
     , argList : List String
     , decoder : String
     , fieldArgs : List String
     , fieldName : String
     , otherThing : String
+    }
+
+
+type alias AnnotatedArg =
+    { annotation : String
+    , arg : String
     }
 
 
@@ -98,17 +105,17 @@ toFieldGenerator field =
 
 
 addRequiredArgs : List Type.Arg -> FieldGenerator -> FieldGenerator
-addRequiredArgs args thing =
+addRequiredArgs args fieldGenerator =
     case Graphqelm.Generator.RequiredArgs.generate args of
         Just { annotation, list } ->
-            { thing
-                | argList = "requiredArgs" :: thing.argList
-                , annotationList = annotation :: thing.annotationList
-                , fieldArgs = [ list ]
-            }
+            { fieldGenerator | fieldArgs = [ list ] }
+                |> prependArg
+                    { annotation = annotation
+                    , arg = "requiredArgs"
+                    }
 
         Nothing ->
-            thing
+            fieldGenerator
 
 
 objectThing : String -> TypeReference -> String -> FieldGenerator
@@ -119,13 +126,26 @@ objectThing fieldName typeRef refName =
                 "Object {0} {1}"
                 [ fieldName, Imports.object refName |> String.join "." ]
     in
-    { annotationList = [ objectArgAnnotation ]
-    , argList = [ "object" ]
+    { args = []
+    , annotationList = []
+    , argList = []
     , fieldArgs = []
     , decoderAnnotation = fieldName
     , decoder = "object"
     , fieldName = fieldName
     , otherThing = "Object.single"
+    }
+        |> prependArg
+            { annotation = objectArgAnnotation
+            , arg = "object"
+            }
+
+
+prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
+prependArg { annotation, arg } fieldGenerator =
+    { fieldGenerator
+        | argList = arg :: fieldGenerator.argList
+        , annotationList = annotation :: fieldGenerator.annotationList
     }
 
 
@@ -162,7 +182,8 @@ init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
 
 initScalarField : String -> TypeReference -> FieldGenerator
 initScalarField fieldName typeRef =
-    { annotationList = []
+    { args = []
+    , annotationList = []
     , argList = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
