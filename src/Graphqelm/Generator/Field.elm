@@ -74,7 +74,7 @@ fieldArgsString { fieldArgs } =
             single
 
         _ ->
-            "TODO"
+            Debug.crash "TODO"
 
 
 toThing : Type.Field -> Thing
