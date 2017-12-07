@@ -10,7 +10,6 @@ import Interpolate exposing (interpolate)
 
 type alias FieldGenerator =
     { annotatedArgs : List AnnotatedArg
-    , annotationList : List String
     , decoderAnnotation : String
     , argList : List String
     , decoder : String
@@ -127,7 +126,6 @@ objectThing fieldName typeRef refName =
                 [ fieldName, Imports.object refName |> String.join "." ]
     in
     { annotatedArgs = []
-    , annotationList = []
     , argList = []
     , fieldArgs = []
     , decoderAnnotation = fieldName
@@ -145,7 +143,6 @@ prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
 prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator
         | argList = arg :: fieldGenerator.argList
-        , annotationList = annotation :: fieldGenerator.annotationList
         , annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs
     }
 
@@ -184,7 +181,6 @@ init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
 initScalarField : String -> TypeReference -> FieldGenerator
 initScalarField fieldName typeRef =
     { annotatedArgs = []
-    , annotationList = []
     , argList = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
