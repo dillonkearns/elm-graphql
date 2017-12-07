@@ -27,13 +27,13 @@ me =
 
 
 menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem.Type -> Field.Query (List menuItems)
-menuItems fillInArgs object =
+menuItems fillInOptionals object =
     let
-        optionalArgsThing =
-            fillInArgs { contains = Nothing }
+        filledInOptionals =
+            fillInOptionals { contains = Nothing }
 
         optionalArgs =
-            [ Argument.optional "contains" optionalArgsThing.contains Encode.string ]
+            [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
                 |> List.filterMap identity
     in
     Object.listOf "menuItems" optionalArgs object
