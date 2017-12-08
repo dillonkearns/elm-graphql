@@ -15,14 +15,14 @@ build constructor =
 
 description : FieldDecoder String Api.Object.MenuItem
 description =
-    Field.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.MenuItem
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.MenuItem
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
