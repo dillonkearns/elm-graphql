@@ -10,6 +10,10 @@ type alias Result =
     }
 
 
+type alias OptionalArg =
+    { name : String, typeOf : Type.ReferrableType }
+
+
 (=>) : a -> b -> ( a, b )
 (=>) =
     (,)
@@ -33,10 +37,6 @@ generate allArgs =
 |> List.filterMap identity"""
                     ]
                 }
-
-
-type alias OptionalArg =
-    { name : String, typeOf : Type.ReferrableType }
 
 
 annotation : List OptionalArg -> String
