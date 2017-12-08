@@ -34,10 +34,17 @@ generate allArgs =
                     }
                 , letBindings =
                     [ "filledInOptionals" => ("fillInOptionals " ++ emptyRecord optionalArgs)
-                    , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]
-|> List.filterMap identity"""
+                    , "optionalArgs"
+                        => (argValues optionalArgs
+                                ++ "\n|> List.filterMap identity"
+                           )
                     ]
                 }
+
+
+argValues : List OptionalArg -> String
+argValues optionalArgs =
+    """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]"""
 
 
 emptyRecord : List OptionalArg -> String
