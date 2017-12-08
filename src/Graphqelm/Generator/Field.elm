@@ -3,6 +3,7 @@ module Graphqelm.Generator.Field exposing (forObject, forQuery)
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Generator.Normalize as Normalize
+import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
 import Interpolate exposing (interpolate)
@@ -15,6 +16,7 @@ type alias FieldGenerator =
     , fieldArgs : List String
     , fieldName : String
     , otherThing : String
+    , letBindings : List ( String, String )
     }
 
 
@@ -62,7 +64,7 @@ common returnAnnotation field =
     in
     interpolate
         """{6} : {3}
-{6} {4}=
+{6} {4}={7}
       {5} "{0}" {1} ({2})
 """
         [ field.fieldName
@@ -72,7 +74,24 @@ common returnAnnotation field =
         , argsListString field
         , field.otherThing
         , Normalize.fieldName field.fieldName
+        , letBindingsString field
         ]
+
+
+letBindingsString : { fieldGenerator | letBindings : List ( String, String ) } -> String
+letBindingsString { letBindings } =
+    if letBindings == [] then
+        ""
+    else
+        """
+    let
+        filledInOptionals =
+            fillInOptionals { contains = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
+                |> List.filterMap identity
+    in"""
 
 
 argsListString : { fieldGenerator | annotatedArgs : List AnnotatedArg } -> String
@@ -100,6 +119,7 @@ toFieldGenerator : Type.Field -> FieldGenerator
 toFieldGenerator field =
     init field.name field.typeRef
         |> addRequiredArgs field.args
+        |> addOptionalArgs field.args
 
 
 addRequiredArgs : List Type.Arg -> FieldGenerator -> FieldGenerator
@@ -111,6 +131,20 @@ addRequiredArgs args fieldGenerator =
                     { annotation = annotation
                     , arg = "requiredArgs"
                     }
+
+        Nothing ->
+            fieldGenerator
+
+
+addOptionalArgs : List Type.Arg -> FieldGenerator -> FieldGenerator
+addOptionalArgs args fieldGenerator =
+    case Graphqelm.Generator.OptionalArgs.generate args of
+        Just { annotatedArg, letBindings } ->
+            { fieldGenerator
+                | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
+                , letBindings = fieldGenerator.letBindings ++ letBindings
+            }
+                |> prependArg annotatedArg
 
         Nothing ->
             fieldGenerator
@@ -130,6 +164,7 @@ objectThing fieldName typeRef refName =
     , decoder = "object"
     , fieldName = fieldName
     , otherThing = "Object.single"
+    , letBindings = []
     }
         |> prependArg
             { annotation = objectArgAnnotation
@@ -181,4 +216,5 @@ initScalarField fieldName typeRef =
     , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
     , fieldName = fieldName
     , otherThing = "Field.fieldDecoder"
+    , letBindings = []
     }

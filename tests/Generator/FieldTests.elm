@@ -79,6 +79,27 @@ human requiredArgs object =
       Object.single "human" [ Argument.string "id" requiredArgs.id ] (object)
           |> Query.rootQuery
 """
+        , test "with optional args" <|
+            \() ->
+                { name = "menuItems"
+                , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable)) Type.NonNullable
+                , args = [ { name = "contains", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable } ]
+                }
+                    |> Field.forQuery
+                    |> Expect.equal
+                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> Field.Query (List menuItems)
+menuItems fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { contains = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
+                |> List.filterMap identity
+    in
+      Object.listOf "menuItems" optionalArgs (object)
+          |> Query.rootQuery
+"""
         , test "normalizes reserved names" <|
             \() ->
                 { name = "type"
