@@ -17,7 +17,7 @@ import View.QueryAndResponse
 
 type alias Response =
     -- ( ( Hero, Droid ), Human )
-    Human
+    ( Human, Human )
 
 
 query : Graphqelm.Field.Query Response
@@ -28,7 +28,9 @@ query =
     --         (Query.droid { id = "2000" } droid)
     --     )
     --     (Query.human { id = "1004" } human)
-    Query.human { id = "1004" } human
+    Graphqelm.Query.combine (,)
+        (Query.human { id = "1004" } human)
+        (Query.human { id = "1001" } human)
 
 
 type alias Hero =
