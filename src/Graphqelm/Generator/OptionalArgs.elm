@@ -33,11 +33,18 @@ generate allArgs =
                     , arg = "fillInOptionals"
                     }
                 , letBindings =
-                    [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
+                    [ "filledInOptionals" => ("fillInOptionals " ++ emptyRecord optionalArgs)
                     , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]
 |> List.filterMap identity"""
                     ]
                 }
+
+
+emptyRecord : List OptionalArg -> String
+emptyRecord optionalArgs =
+    interpolate
+        "{ {0} }"
+        [ "contains = Nothing" ]
 
 
 annotation : List OptionalArg -> String
