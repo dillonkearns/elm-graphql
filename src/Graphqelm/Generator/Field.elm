@@ -83,15 +83,17 @@ letBindingsString { letBindings } =
     if letBindings == [] then
         ""
     else
-        """
+        interpolate
+            """
     let
-        filledInOptionals =
+{0}
+    in"""
+            [ """        filledInOptionals =
             fillInOptionals { contains = Nothing }
 
         optionalArgs =
             [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
-                |> List.filterMap identity
-    in"""
+                |> List.filterMap identity""" ]
 
 
 argsListString : { fieldGenerator | annotatedArgs : List AnnotatedArg } -> String
