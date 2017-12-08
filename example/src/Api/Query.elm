@@ -12,14 +12,12 @@ import Json.Encode as Encode
 
 captains : Field.Query (List String)
 captains =
-    Field.fieldDecoder "captains" [] (Decode.string |> Decode.list)
-        |> Query.rootQuery
+    Query.fieldDecoder "captains" [] (Decode.string |> Decode.list)
 
 
 me : Field.Query String
 me =
-    Field.fieldDecoder "me" [] Decode.string
-        |> Query.rootQuery
+    Query.fieldDecoder "me" [] Decode.string
 
 
 menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> Field.Query (List menuItems)
