@@ -81,13 +81,15 @@ common returnAnnotation field =
 letBindingsString : { fieldGenerator | letBindings : List ( String, String ) } -> String
 letBindingsString { letBindings } =
     let
+        toLetString ( name, value ) =
+            interpolate
+                """        {0} =
+            {1}"""
+                [ name, value ]
+
         letString =
-            [ """        filledInOptionals =
-            fillInOptionals { contains = Nothing }"""
-            , """        optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
-                |> List.filterMap identity"""
-            ]
+            letBindings
+                |> List.map toLetString
                 |> String.join "\n\n"
     in
     if letBindings == [] then
