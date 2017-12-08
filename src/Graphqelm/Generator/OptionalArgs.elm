@@ -47,16 +47,25 @@ argValues : List OptionalArg -> String
 argValues optionalArgs =
     let
         values =
-            List.map
-                (\{ name, typeOf } ->
-                    interpolate
-                        """Argument.optional "{0}" filledInOptionals.{0} {1}"""
-                        [ name, Graphqelm.Generator.Decoder.generateEncoder (Type.TypeReference typeOf Type.NonNullable) ]
-                )
-                optionalArgs
+            optionalArgs
+                |> List.map argValue
                 |> String.join ", "
     in
-    interpolate """[ {0} ]""" [ values ]
+    interpolate "[ {0} ]" [ values ]
+
+
+argValue : OptionalArg -> String
+argValue { name, typeOf } =
+    case typeOf of
+        Type.EnumRef enumName ->
+            interpolate
+                """Argument.optionalEnum "{0}" filledInOptionals.{0}"""
+                [ name ]
+
+        _ ->
+            interpolate
+                """Argument.optional "{0}" filledInOptionals.{0} {1}"""
+                [ name, Graphqelm.Generator.Decoder.generateEncoder (Type.TypeReference typeOf Type.NonNullable) ]
 
 
 emptyRecord : List OptionalArg -> String

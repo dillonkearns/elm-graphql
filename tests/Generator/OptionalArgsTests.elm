@@ -86,6 +86,26 @@ all =
                                 ]
                             }
                         )
+        , test "with an optional enum arg" <|
+            \() ->
+                [ { name = "episode"
+                  , typeRef = Type.TypeReference (Type.EnumRef "Episode") Type.Nullable
+                  }
+                ]
+                    |> OptionalArgs.generate
+                    |> Expect.equal
+                        (Just
+                            { annotatedArg =
+                                { annotation = """({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode })"""
+                                , arg = "fillInOptionals"
+                                }
+                            , letBindings =
+                                [ "filledInOptionals" => "fillInOptionals { episode = Nothing }"
+                                , "optionalArgs" => """[ Argument.optionalEnum "episode" filledInOptionals.episode ]
+|> List.filterMap identity"""
+                                ]
+                            }
+                        )
         ]
 
 
