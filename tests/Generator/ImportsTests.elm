@@ -26,6 +26,10 @@ all =
             \() ->
                 Imports.imports listOfObjectRef
                     |> Expect.equal Nothing
+        , test "enum ref needs import" <|
+            \() ->
+                Imports.imports (Type.TypeReference (Type.EnumRef "Foo") Type.NonNullable)
+                    |> Expect.equal (Just [ "Api", "Enum", "Foo" ])
         , test "filters out its own module name" <|
             \() ->
                 Imports.importsWithoutSelf [ "Api", "Object", "Foo" ] [ listOfObjectRef ]
