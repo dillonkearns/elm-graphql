@@ -16,8 +16,8 @@ type alias Result =
 
 
 generate : List Type.Arg -> Maybe Result
-generate args =
-    case List.filterMap generateSingle args of
+generate allArgs =
+    case List.filterMap optionalArgOrNothing allArgs of
         [] ->
             Nothing
 
@@ -35,8 +35,12 @@ generate args =
                 }
 
 
-generateSingle : Type.Arg -> Maybe { name : String, typeOf : Type.ReferrableType }
-generateSingle { name, typeRef } =
+type alias OptionalArg =
+    { name : String, typeOf : Type.ReferrableType }
+
+
+optionalArgOrNothing : Type.Arg -> Maybe OptionalArg
+optionalArgOrNothing { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             Nothing
