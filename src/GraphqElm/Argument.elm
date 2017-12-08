@@ -1,4 +1,4 @@
-module Graphqelm.Argument exposing (Argument, enum, int, optional, string, toQueryString)
+module Graphqelm.Argument exposing (Argument, enum, int, optional, optionalEnum, string, toQueryString)
 
 import Graphqelm.Value as Value exposing (Value)
 import Json.Encode
@@ -12,6 +12,11 @@ optional : String -> Maybe a -> (a -> Json.Encode.Value) -> Maybe Argument
 optional fieldName maybeValue encoder =
     maybeValue
         |> Maybe.map (\value -> Argument fieldName (Value.Json (encoder value)))
+
+
+optionalEnum : String -> Maybe a -> Maybe Argument
+optionalEnum fieldName maybeValue =
+    maybeValue |> Maybe.map (\value -> Argument fieldName (Value.EnumValue (toString value)))
 
 
 argument : String -> Value -> Argument
