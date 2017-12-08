@@ -1,7 +1,7 @@
 module Graphqelm.Object exposing (..)
 
 import Graphqelm.Argument exposing (Argument)
-import Graphqelm.Field exposing (Field(Composite), FieldDecoder(FieldDecoder))
+import Graphqelm.Field as Field exposing (Field, FieldDecoder(FieldDecoder), Query(Query))
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -9,14 +9,20 @@ type Object decodesTo typeLock
     = Object (List Field) (Decoder decodesTo)
 
 
+fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
+fieldDecoder fieldName args decoder =
+    FieldDecoder (Field.Leaf fieldName args)
+        (decoder |> Decode.field fieldName)
+
+
 listOf : String -> List Argument -> Object a objectTypeLock -> FieldDecoder (List a) lockedTo
 listOf fieldName args (Object fields decoder) =
-    FieldDecoder (Composite fieldName args fields) (Decode.list decoder |> Decode.field fieldName)
+    FieldDecoder (Field.Composite fieldName args fields) (Decode.list decoder |> Decode.field fieldName)
 
 
 single : String -> List Argument -> Object a objectTypeLock -> FieldDecoder a lockedTo
 single fieldName args (Object fields decoder) =
-    FieldDecoder (Composite fieldName args fields) (decoder |> Decode.field fieldName)
+    FieldDecoder (Field.Composite fieldName args fields) (decoder |> Decode.field fieldName)
 
 
 object :

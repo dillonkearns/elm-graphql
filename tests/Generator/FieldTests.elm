@@ -26,7 +26,7 @@ me =
                     |> Expect.equal
                         """me : FieldDecoder String Api.Object.Foo
 me =
-      Field.fieldDecoder "me" [] (Decode.string)
+      Object.fieldDecoder "me" [] (Decode.string)
 """
         , test "simple object with no args" <|
             \() ->
@@ -106,7 +106,7 @@ menuItems fillInOptionals object =
                     |> Expect.equal
                         """type_ : FieldDecoder String Api.Object.TreeEntry
 type_ =
-      Field.fieldDecoder "type" [] (Decode.string)
+      Object.fieldDecoder "type" [] (Decode.string)
 """
         ]
 

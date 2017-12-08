@@ -243,7 +243,7 @@ initScalarField objectOrQuery fieldName typeRef =
     , otherThing =
         case objectOrQuery of
             GenerateObject ->
-                "Field.fieldDecoder"
+                "Object.fieldDecoder"
 
             GenerateQuery ->
                 "Query.fieldDecoder"
