@@ -5,8 +5,13 @@ import Graphqelm.Parser.Type as Type
 
 type alias Result =
     { annotatedArg : { annotation : String, arg : String }
-    , letBindings : List String
+    , letBindings : List ( String, String )
     }
+
+
+(=>) : a -> b -> ( a, b )
+(=>) =
+    (,)
 
 
 generate : List Type.Arg -> Maybe Result
@@ -19,12 +24,9 @@ generate args =
             Just
                 { annotatedArg = { annotation = """({ contains : Maybe String } -> { contains : Maybe String })""", arg = "fillInOptionals" }
                 , letBindings =
-                    [ """filledInOptionals =
-            fillInOptionals { contains = Nothing }"""
-                    , """optionalArgs =
-    [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
-        |> List.filterMap identity
-"""
+                    [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
+                    , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]
+|> List.filterMap identity"""
                     ]
                 }
 

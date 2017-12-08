@@ -34,28 +34,15 @@ all =
                         (Just
                             { annotatedArg = { annotation = """({ contains : Maybe String } -> { contains : Maybe String })""", arg = "fillInOptionals" }
                             , letBindings =
-                                [ """filledInOptionals =
-            fillInOptionals { contains = Nothing }"""
-                                , """optionalArgs =
-    [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
-        |> List.filterMap identity
-"""
+                                [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
+                                , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]
+|> List.filterMap identity"""
                                 ]
                             }
                         )
         ]
 
 
-
--- menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem.Type -> Field.Query (List menuItems)
--- menuItems fillInOptionals object =
---     let
---         filledInOptionals =
---             fillInOptionals { contains = Nothing }
---
---         optionalArgs =
---             [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
---                 |> List.filterMap identity
---     in
---     Object.listOf "menuItems" optionalArgs object
---         |> Query.rootQuery
+(=>) : a -> b -> ( a, b )
+(=>) =
+    (,)
