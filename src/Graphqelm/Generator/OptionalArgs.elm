@@ -2,6 +2,7 @@ module Graphqelm.Generator.OptionalArgs exposing (Result, generate)
 
 import Graphqelm.Generator.Let exposing (LetBinding)
 import Graphqelm.Parser.Type as Type
+import Interpolate exposing (interpolate)
 
 
 type alias Result =
@@ -41,7 +42,13 @@ generate allArgs =
 
 annotation : List OptionalArg -> String
 annotation optionalArgs =
-    """({ contains : Maybe String } -> { contains : Maybe String })"""
+    let
+        insideRecord =
+            List.map (\{ name, typeOf } -> name ++ " : Maybe String") optionalArgs
+                |> String.join ", "
+    in
+    interpolate """({ {0} } -> { {0} })"""
+        [ insideRecord ]
 
 
 optionalArgOrNothing : Type.Arg -> Maybe OptionalArg

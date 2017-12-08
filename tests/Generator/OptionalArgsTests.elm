@@ -25,7 +25,7 @@ all =
                     |> Expect.equal Nothing
         , test "with an optional arg" <|
             \() ->
-                [ { name = "id"
+                [ { name = "contains"
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
