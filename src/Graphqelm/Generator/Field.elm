@@ -2,6 +2,7 @@ module Graphqelm.Generator.Field exposing (forObject, forQuery)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
@@ -17,7 +18,7 @@ type alias FieldGenerator =
     , fieldName : String
     , otherThing : String
     , thingNamespace : String
-    , letBindings : List ( String, String )
+    , letBindings : List LetBinding
     }
 
 
@@ -79,33 +80,8 @@ common returnAnnotation field =
         , argsListString field
         , field.thingNamespace ++ field.otherThing
         , Normalize.fieldName field.fieldName
-        , letBindingsString field
+        , Let.generate field.letBindings
         ]
-
-
-letBindingsString : { fieldGenerator | letBindings : List ( String, String ) } -> String
-letBindingsString { letBindings } =
-    let
-        toLetString ( name, value ) =
-            interpolate
-                """        {0} =
-            {1}"""
-                [ name, value ]
-
-        letString =
-            letBindings
-                |> List.map toLetString
-                |> String.join "\n\n"
-    in
-    if letBindings == [] then
-        ""
-    else
-        interpolate
-            """
-    let
-{0}
-    in"""
-            [ letString ]
 
 
 argsListString : { fieldGenerator | annotatedArgs : List AnnotatedArg } -> String

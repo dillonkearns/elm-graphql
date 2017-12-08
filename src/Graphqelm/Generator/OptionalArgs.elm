@@ -1,11 +1,12 @@
 module Graphqelm.Generator.OptionalArgs exposing (Result, generate)
 
+import Graphqelm.Generator.Let exposing (LetBinding)
 import Graphqelm.Parser.Type as Type
 
 
 type alias Result =
     { annotatedArg : { annotation : String, arg : String }
-    , letBindings : List ( String, String )
+    , letBindings : List LetBinding
     }
 
 
