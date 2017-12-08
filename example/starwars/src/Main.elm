@@ -16,18 +16,19 @@ import View.QueryAndResponse
 
 
 type alias Response =
-    { heroResponse : Hero
-    , droidResponse : Droid
-    , humanResponse : Human
-    }
+    -- ( ( Hero, Droid ), Human )
+    Human
 
 
 query : Graphqelm.Field.Query Response
 query =
-    Graphqelm.Query.combine3 Response
-        (Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
-        (Query.droid { id = "2000" } droid)
-        (Query.human { id = "1004" } human)
+    -- Graphqelm.Query.combine (,)
+    --     (Graphqelm.Query.combine (,)
+    --         (Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
+    --         (Query.droid { id = "2000" } droid)
+    --     )
+    --     (Query.human { id = "1004" } human)
+    Query.human { id = "1004" } human
 
 
 type alias Hero =

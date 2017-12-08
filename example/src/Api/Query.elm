@@ -32,11 +32,9 @@ menuItems fillInOptionals object =
             [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
                 |> List.filterMap identity
     in
-    Object.listOf "menuItems" optionalArgs object
-        |> Query.rootQuery
+    Query.listOf "menuItems" optionalArgs object
 
 
 weather : Field.Query Api.Enum.Weather.Weather
 weather =
-    Field.fieldDecoder "weather" [] Api.Enum.Weather.decoder
-        |> Query.rootQuery
+    Query.fieldDecoder "weather" [] Api.Enum.Weather.decoder

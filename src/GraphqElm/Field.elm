@@ -19,13 +19,20 @@ type Field
 
 decoder : Query decodesTo -> Decoder decodesTo
 decoder (Query fields decoder) =
-    decoder
+    (case fields of
+        [ singleField ] ->
+            Decode.field "query0" decoder
+
+        multipleFields ->
+            decoder
+    )
+        |> Decode.field "data"
 
 
 toQuery : Query a -> String
 toQuery (Query fields decoder) =
     "{\n"
-        ++ (List.map fieldDecoderToQuery fields |> String.join "\n")
+        ++ (List.indexedMap (\index field -> "query" ++ toString index ++ ": " ++ fieldDecoderToQuery field) fields |> String.join "\n")
         ++ "\n}"
 
 
