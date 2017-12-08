@@ -30,6 +30,7 @@ import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Api.Object
 import Json.Decode as Decode
+import Json.Encode as Encode
 {1}
 
 

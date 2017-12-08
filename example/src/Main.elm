@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Api.Enum.Weather exposing (Weather)
+import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
 import Graphqelm.Field as Field
@@ -29,7 +30,7 @@ type alias MenuItem =
     }
 
 
-menuItem : Object MenuItem MenuItem.Type
+menuItem : Object MenuItem Api.Object.MenuItem
 menuItem =
     MenuItem.build MenuItem
         |> Object.with MenuItem.id

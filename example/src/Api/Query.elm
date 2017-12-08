@@ -1,8 +1,8 @@
 module Api.Query exposing (..)
 
 import Api.Enum.Weather
-import Api.Object.MenuItem
-import Graphqelm.Argument as Argument
+import Api.Object
+import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query as Query
@@ -10,13 +10,9 @@ import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
 
-type Type
-    = Type
-
-
-captains : Field.Query (Maybe (List String))
+captains : Field.Query (List String)
 captains =
-    Field.fieldDecoder "captains" [] (Decode.string |> Decode.list |> Decode.maybe)
+    Field.fieldDecoder "captains" [] (Decode.string |> Decode.list)
         |> Query.rootQuery
 
 
@@ -26,7 +22,7 @@ me =
         |> Query.rootQuery
 
 
-menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem.Type -> Field.Query (List menuItems)
+menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> Field.Query (List menuItems)
 menuItems fillInOptionals object =
     let
         filledInOptionals =
