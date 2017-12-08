@@ -44,7 +44,18 @@ generate allArgs =
 
 argValues : List OptionalArg -> String
 argValues optionalArgs =
-    """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]"""
+    let
+        values =
+            List.map
+                (\{ name, typeOf } ->
+                    interpolate
+                        """Argument.optional "{0}" filledInOptionals.contains Encode.string"""
+                        [ name ]
+                )
+                optionalArgs
+                |> String.join ", "
+    in
+    interpolate """[ {0} ]""" [ values ]
 
 
 emptyRecord : List OptionalArg -> String
