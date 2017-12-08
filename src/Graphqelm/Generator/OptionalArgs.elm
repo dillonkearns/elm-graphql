@@ -24,7 +24,7 @@ generate allArgs =
         optionalArgs ->
             Just
                 { annotatedArg =
-                    { annotation = """({ contains : Maybe String } -> { contains : Maybe String })"""
+                    { annotation = annotation optionalArgs
                     , arg = "fillInOptionals"
                     }
                 , letBindings =
@@ -37,6 +37,11 @@ generate allArgs =
 
 type alias OptionalArg =
     { name : String, typeOf : Type.ReferrableType }
+
+
+annotation : List OptionalArg -> String
+annotation optionalArgs =
+    """({ contains : Maybe String } -> { contains : Maybe String })"""
 
 
 optionalArgOrNothing : Type.Arg -> Maybe OptionalArg
