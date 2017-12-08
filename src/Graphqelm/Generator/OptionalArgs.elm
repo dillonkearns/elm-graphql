@@ -42,9 +42,12 @@ generate allArgs =
 
 emptyRecord : List OptionalArg -> String
 emptyRecord optionalArgs =
-    interpolate
-        "{ {0} }"
-        [ "contains = Nothing" ]
+    let
+        recordEntries =
+            List.map (\{ name } -> name ++ " = Nothing") optionalArgs
+                |> String.join ", "
+    in
+    interpolate "{ {0} }" [ recordEntries ]
 
 
 annotation : List OptionalArg -> String
