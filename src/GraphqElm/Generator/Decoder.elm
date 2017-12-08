@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Decoder exposing (generateDecoder, generateType)
+module Graphqelm.Generator.Decoder exposing (generateDecoder, generateEncoder, generateType)
 
 import Graphqelm.Generator.Enum
 import Graphqelm.Parser.Scalar as Scalar
@@ -32,6 +32,40 @@ generateDecoder typeRef =
 
                 Type.InterfaceRef interfaceName ->
                     "Api.Object." ++ interfaceName ++ ".decoder"
+
+                Type.EnumRef enumName ->
+                    Graphqelm.Generator.Enum.moduleNameFor enumName
+                        ++ [ "decoder" ]
+                        |> String.join "."
+
+
+generateEncoder : TypeReference -> String
+generateEncoder typeRef =
+    case typeRef of
+        Type.TypeReference referrableType isNullable ->
+            case referrableType of
+                Type.Scalar scalar ->
+                    case scalar of
+                        Scalar.String ->
+                            "Encode.string"
+
+                        Scalar.Boolean ->
+                            "Encode.bool"
+
+                        Scalar.Int ->
+                            "Encode.int"
+
+                        Scalar.Float ->
+                            "Encode.float"
+
+                Type.List typeRef ->
+                    generateEncoder typeRef ++ " |> Encode.list"
+
+                Type.ObjectRef objectName ->
+                    Debug.crash "I don't expect to see object references as argument types."
+
+                Type.InterfaceRef interfaceName ->
+                    Debug.crash "I don't expect to see object references as argument types."
 
                 Type.EnumRef enumName ->
                     Graphqelm.Generator.Enum.moduleNameFor enumName

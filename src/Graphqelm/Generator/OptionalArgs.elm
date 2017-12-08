@@ -1,7 +1,8 @@
 module Graphqelm.Generator.OptionalArgs exposing (Result, generate)
 
+import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Let exposing (LetBinding)
-import Graphqelm.Parser.Type as Type
+import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
 
 
@@ -49,8 +50,8 @@ argValues optionalArgs =
             List.map
                 (\{ name, typeOf } ->
                     interpolate
-                        """Argument.optional "{0}" filledInOptionals.contains Encode.string"""
-                        [ name ]
+                        """Argument.optional "{0}" filledInOptionals.{0} {1}"""
+                        [ name, Graphqelm.Generator.Decoder.generateEncoder (Type.TypeReference typeOf Type.NonNullable) ]
                 )
                 optionalArgs
                 |> String.join ", "
@@ -72,7 +73,7 @@ annotation : List OptionalArg -> String
 annotation optionalArgs =
     let
         insideRecord =
-            List.map (\{ name, typeOf } -> name ++ " : Maybe String") optionalArgs
+            List.map (\{ name, typeOf } -> name ++ " : Maybe " ++ Graphqelm.Generator.Decoder.generateType (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
                 |> String.join ", "
     in
     interpolate """({ {0} } -> { {0} })"""

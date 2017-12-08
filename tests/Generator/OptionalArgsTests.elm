@@ -61,7 +61,27 @@ all =
                                 }
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { id = Nothing, contains = Nothing }"
-                                , "optionalArgs" => """[ Argument.optional "id" filledInOptionals.contains Encode.string, Argument.optional "contains" filledInOptionals.contains Encode.string ]
+                                , "optionalArgs" => """[ Argument.optional "id" filledInOptionals.id Encode.string, Argument.optional "contains" filledInOptionals.contains Encode.string ]
+|> List.filterMap identity"""
+                                ]
+                            }
+                        )
+        , test "with an optional int arg" <|
+            \() ->
+                [ { name = "first"
+                  , typeRef = Type.TypeReference (Type.Scalar Scalar.Int) Type.Nullable
+                  }
+                ]
+                    |> OptionalArgs.generate
+                    |> Expect.equal
+                        (Just
+                            { annotatedArg =
+                                { annotation = """({ first : Maybe Int } -> { first : Maybe Int })"""
+                                , arg = "fillInOptionals"
+                                }
+                            , letBindings =
+                                [ "filledInOptionals" => "fillInOptionals { first = Nothing }"
+                                , "optionalArgs" => """[ Argument.optional "first" filledInOptionals.first Encode.int ]
 |> List.filterMap identity"""
                                 ]
                             }
