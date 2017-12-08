@@ -32,7 +32,10 @@ all =
                     |> OptionalArgs.generate
                     |> Expect.equal
                         (Just
-                            { annotatedArg = { annotation = """({ contains : Maybe String } -> { contains : Maybe String })""", arg = "fillInOptionals" }
+                            { annotatedArg =
+                                { annotation = """({ contains : Maybe String } -> { contains : Maybe String })"""
+                                , arg = "fillInOptionals"
+                                }
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
                                 , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]
