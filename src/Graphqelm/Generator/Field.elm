@@ -121,7 +121,7 @@ fieldArgsString { fieldArgs } =
             single
 
         _ ->
-            Debug.crash "TODO"
+            Debug.crash "TODO not yet handling both required and optional args"
 
 
 toFieldGenerator : Type.Field -> FieldGenerator
