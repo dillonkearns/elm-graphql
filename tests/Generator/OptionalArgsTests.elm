@@ -23,7 +23,7 @@ all =
                 ]
                     |> OptionalArgs.generate
                     |> Expect.equal Nothing
-        , test "with an optional arg" <|
+        , test "with an optional string arg" <|
             \() ->
                 [ { name = "contains"
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
@@ -39,6 +39,29 @@ all =
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
                                 , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]
+|> List.filterMap identity"""
+                                ]
+                            }
+                        )
+        , test "with multiple optional string args" <|
+            \() ->
+                [ { name = "id"
+                  , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
+                  }
+                , { name = "contains"
+                  , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
+                  }
+                ]
+                    |> OptionalArgs.generate
+                    |> Expect.equal
+                        (Just
+                            { annotatedArg =
+                                { annotation = "({ id : Maybe String, contains : Maybe String } -> { id : Maybe String, contains : Maybe String })"
+                                , arg = "fillInOptionals"
+                                }
+                            , letBindings =
+                                [ "filledInOptionals" => "fillInOptionals { id = Nothing, contains = Nothing }"
+                                , "optionalArgs" => """[ Argument.optional "id" filledInOptionals.contains Encode.string, Argument.optional "contains" filledInOptionals.contains Encode.string ]
 |> List.filterMap identity"""
                                 ]
                             }
