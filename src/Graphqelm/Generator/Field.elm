@@ -20,6 +20,11 @@ type alias FieldGenerator =
     }
 
 
+type ObjectOrQuery
+    = GenerateObject
+    | GenerateQuery
+
+
 type alias AnnotatedArg =
     { annotation : String
     , arg : String
@@ -28,20 +33,19 @@ type alias AnnotatedArg =
 
 forQuery : Type.Field -> String
 forQuery field =
-    toFieldGenerator field
+    toFieldGenerator GenerateQuery field
         |> forQuery_
 
 
 forObject : String -> Type.Field -> String
 forObject thisObjectName field =
-    toFieldGenerator field
+    toFieldGenerator GenerateObject field
         |> forObject_ thisObjectName
 
 
 forQuery_ : FieldGenerator -> String
 forQuery_ field =
     common (interpolate "Field.Query {0}" [ field.decoderAnnotation ]) field
-        ++ "          |> Query.rootQuery\n"
 
 
 forObject_ : String -> FieldGenerator -> String
@@ -124,9 +128,9 @@ fieldArgsString { fieldArgs } =
             Debug.crash "TODO not yet handling both required and optional args"
 
 
-toFieldGenerator : Type.Field -> FieldGenerator
-toFieldGenerator field =
-    init field.name field.typeRef
+toFieldGenerator : ObjectOrQuery -> Type.Field -> FieldGenerator
+toFieldGenerator objectOrQuery field =
+    init objectOrQuery field.name field.typeRef
         |> addRequiredArgs field.args
         |> addOptionalArgs field.args
 
@@ -159,8 +163,8 @@ addOptionalArgs args fieldGenerator =
             fieldGenerator
 
 
-objectThing : String -> TypeReference -> String -> FieldGenerator
-objectThing fieldName typeRef refName =
+objectThing : ObjectOrQuery -> String -> TypeReference -> String -> FieldGenerator
+objectThing objectOrQuery fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
@@ -172,7 +176,13 @@ objectThing fieldName typeRef refName =
     , decoderAnnotation = fieldName
     , decoder = "object"
     , fieldName = fieldName
-    , otherThing = "Object.single"
+    , otherThing =
+        case objectOrQuery of
+            GenerateObject ->
+                "Object.single"
+
+            GenerateQuery ->
+                "Query.single"
     , letBindings = []
     }
         |> prependArg
@@ -186,44 +196,56 @@ prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
 
 
-objectListThing : String -> TypeReference -> String -> FieldGenerator
-objectListThing fieldName typeRef refName =
+objectListThing : ObjectOrQuery -> String -> TypeReference -> String -> FieldGenerator
+objectListThing objectOrQuery fieldName typeRef refName =
     let
         commonObjectThing =
-            objectThing fieldName typeRef refName
+            objectThing objectOrQuery fieldName typeRef refName
     in
     { commonObjectThing
         | decoderAnnotation = interpolate "(List {0})" [ fieldName ]
-        , otherThing = "Object.listOf"
+        , otherThing =
+            case objectOrQuery of
+                GenerateObject ->
+                    "Object.listOf"
+
+                GenerateQuery ->
+                    "Query.listOf"
     }
 
 
-init : String -> TypeReference -> FieldGenerator
-init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init : ObjectOrQuery -> String -> TypeReference -> FieldGenerator
+init objectOrQuery fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
         Type.ObjectRef refName ->
-            objectThing fieldName typeRef refName
+            objectThing objectOrQuery fieldName typeRef refName
 
         Type.InterfaceRef refName ->
-            objectThing fieldName typeRef refName
+            objectThing objectOrQuery fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.InterfaceRef refName) isInterfaceNullable) ->
-            objectListThing fieldName typeRef refName
+            objectListThing objectOrQuery fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.ObjectRef refName) isObjectNullable) ->
-            objectListThing fieldName typeRef refName
+            objectListThing objectOrQuery fieldName typeRef refName
 
         _ ->
-            initScalarField fieldName typeRef
+            initScalarField objectOrQuery fieldName typeRef
 
 
-initScalarField : String -> TypeReference -> FieldGenerator
-initScalarField fieldName typeRef =
+initScalarField : ObjectOrQuery -> String -> TypeReference -> FieldGenerator
+initScalarField objectOrQuery fieldName typeRef =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
     , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
     , fieldName = fieldName
-    , otherThing = "Field.fieldDecoder"
+    , otherThing =
+        case objectOrQuery of
+            GenerateObject ->
+                "Field.fieldDecoder"
+
+            GenerateQuery ->
+                "Query.fieldDecoder"
     , letBindings = []
     }
