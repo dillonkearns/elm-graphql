@@ -21,9 +21,12 @@ generate args =
         [] ->
             Nothing
 
-        _ ->
+        optionalArgs ->
             Just
-                { annotatedArg = { annotation = """({ contains : Maybe String } -> { contains : Maybe String })""", arg = "fillInOptionals" }
+                { annotatedArg =
+                    { annotation = """({ contains : Maybe String } -> { contains : Maybe String })"""
+                    , arg = "fillInOptionals"
+                    }
                 , letBindings =
                     [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
                     , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains Encode.string ]
@@ -32,11 +35,11 @@ generate args =
                 }
 
 
-generateSingle : Type.Arg -> Maybe Int
+generateSingle : Type.Arg -> Maybe { name : String, typeOf : Type.ReferrableType }
 generateSingle { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             Nothing
 
         Type.TypeReference referrableType Type.Nullable ->
-            Just 123
+            Just { name = name, typeOf = referrableType }
