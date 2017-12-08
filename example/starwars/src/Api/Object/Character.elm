@@ -16,12 +16,12 @@ build constructor =
 
 id : FieldDecoder String Api.Object.Character
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.Character
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 friends : Object friends Api.Object.Character -> FieldDecoder (List friends) Api.Object.Character
@@ -31,4 +31,4 @@ friends object =
 
 appearsIn : FieldDecoder (List Api.Enum.Episode.Episode) Api.Object.Character
 appearsIn =
-    Field.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
+    Object.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)

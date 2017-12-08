@@ -16,12 +16,12 @@ build constructor =
 
 id : FieldDecoder String Api.Object.Droid
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.Droid
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 friends : Object friends Api.Object.Character -> FieldDecoder (List friends) Api.Object.Droid
@@ -31,9 +31,9 @@ friends object =
 
 appearsIn : FieldDecoder (List Api.Enum.Episode.Episode) Api.Object.Droid
 appearsIn =
-    Field.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
+    Object.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
 
 
 primaryFunction : FieldDecoder String Api.Object.Droid
 primaryFunction =
-    Field.fieldDecoder "primaryFunction" [] Decode.string
+    Object.fieldDecoder "primaryFunction" [] Decode.string
