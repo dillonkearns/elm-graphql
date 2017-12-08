@@ -80,6 +80,16 @@ common returnAnnotation field =
 
 letBindingsString : { fieldGenerator | letBindings : List ( String, String ) } -> String
 letBindingsString { letBindings } =
+    let
+        letString =
+            [ """        filledInOptionals =
+            fillInOptionals { contains = Nothing }"""
+            , """        optionalArgs =
+            [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
+                |> List.filterMap identity"""
+            ]
+                |> String.join "\n\n"
+    in
     if letBindings == [] then
         ""
     else
@@ -88,12 +98,7 @@ letBindingsString { letBindings } =
     let
 {0}
     in"""
-            [ """        filledInOptionals =
-            fillInOptionals { contains = Nothing }
-
-        optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
-                |> List.filterMap identity""" ]
+            [ letString ]
 
 
 argsListString : { fieldGenerator | annotatedArgs : List AnnotatedArg } -> String
