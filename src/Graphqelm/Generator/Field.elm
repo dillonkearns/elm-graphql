@@ -16,6 +16,7 @@ type alias FieldGenerator =
     , fieldArgs : List String
     , fieldName : String
     , otherThing : String
+    , thingNamespace : String
     , letBindings : List ( String, String )
     }
 
@@ -76,7 +77,7 @@ common returnAnnotation field =
         , field.decoder
         , something
         , argsListString field
-        , field.otherThing
+        , field.thingNamespace ++ field.otherThing
         , Normalize.fieldName field.fieldName
         , letBindingsString field
         ]
@@ -176,13 +177,14 @@ objectThing objectOrQuery fieldName typeRef refName =
     , decoderAnnotation = fieldName
     , decoder = "object"
     , fieldName = fieldName
-    , otherThing =
+    , thingNamespace =
         case objectOrQuery of
             GenerateObject ->
-                "Object.single"
+                "Object"
 
             GenerateQuery ->
-                "Query.single"
+                "Query"
+    , otherThing = ".single"
     , letBindings = []
     }
         |> prependArg
@@ -207,10 +209,10 @@ objectListThing objectOrQuery fieldName typeRef refName =
         , otherThing =
             case objectOrQuery of
                 GenerateObject ->
-                    "Object.listOf"
+                    ".listOf"
 
                 GenerateQuery ->
-                    "Query.listOf"
+                    ".listOf"
     }
 
 
@@ -240,12 +242,13 @@ initScalarField objectOrQuery fieldName typeRef =
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
     , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
     , fieldName = fieldName
-    , otherThing =
+    , thingNamespace =
         case objectOrQuery of
             GenerateObject ->
-                "Object.fieldDecoder"
+                "Object"
 
             GenerateQuery ->
-                "Query.fieldDecoder"
+                "Query"
+    , otherThing = ".fieldDecoder"
     , letBindings = []
     }
