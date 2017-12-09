@@ -5,6 +5,7 @@ import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Value as Value
 import Json.Decode as Decode
 import Json.Encode as Encode
 
@@ -41,7 +42,7 @@ comments fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "comments" optionalArgs object
@@ -79,7 +80,7 @@ history fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, path = Nothing, author = Nothing, since = Nothing, until = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author Encode.string, Argument.optional "since" filledInOptionals.since Encode.string, Argument.optional "until" filledInOptionals.until Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "path" filledInOptionals.path Value.string, Argument.optional "author" filledInOptionals.author Value.string, Argument.optional "since" filledInOptionals.since Value.string, Argument.optional "until" filledInOptionals.until Value.string ]
                 |> List.filterMap identity
     in
     Object.single "history" optionalArgs object
@@ -127,7 +128,7 @@ parents fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "parents" optionalArgs object

@@ -4,6 +4,7 @@ import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Value as Value
 import Json.Decode as Decode
 import Json.Encode as Encode
 
@@ -20,7 +21,7 @@ acceptTopicSuggestion fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "acceptTopicSuggestion" optionalArgs object
@@ -33,7 +34,7 @@ addComment fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "addComment" optionalArgs object
@@ -46,7 +47,7 @@ addProjectCard fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "addProjectCard" optionalArgs object
@@ -59,7 +60,7 @@ addProjectColumn fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "addProjectColumn" optionalArgs object
@@ -72,7 +73,7 @@ addPullRequestReview fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "addPullRequestReview" optionalArgs object
@@ -85,7 +86,7 @@ addPullRequestReviewComment fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "addPullRequestReviewComment" optionalArgs object
@@ -98,7 +99,7 @@ addReaction fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "addReaction" optionalArgs object
@@ -111,7 +112,7 @@ addStar fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "addStar" optionalArgs object
@@ -124,7 +125,7 @@ createProject fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "createProject" optionalArgs object
@@ -137,7 +138,7 @@ declineTopicSuggestion fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "declineTopicSuggestion" optionalArgs object
@@ -150,7 +151,7 @@ deleteProject fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "deleteProject" optionalArgs object
@@ -163,7 +164,7 @@ deleteProjectCard fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "deleteProjectCard" optionalArgs object
@@ -176,7 +177,7 @@ deleteProjectColumn fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "deleteProjectColumn" optionalArgs object
@@ -189,7 +190,7 @@ deletePullRequestReview fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "deletePullRequestReview" optionalArgs object
@@ -202,7 +203,7 @@ dismissPullRequestReview fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "dismissPullRequestReview" optionalArgs object
@@ -215,7 +216,7 @@ moveProjectCard fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "moveProjectCard" optionalArgs object
@@ -228,7 +229,7 @@ moveProjectColumn fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "moveProjectColumn" optionalArgs object
@@ -241,7 +242,7 @@ removeOutsideCollaborator fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "removeOutsideCollaborator" optionalArgs object
@@ -254,7 +255,7 @@ removeReaction fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "removeReaction" optionalArgs object
@@ -267,7 +268,7 @@ removeStar fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "removeStar" optionalArgs object
@@ -280,7 +281,7 @@ requestReviews fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "requestReviews" optionalArgs object
@@ -293,7 +294,7 @@ submitPullRequestReview fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "submitPullRequestReview" optionalArgs object
@@ -306,7 +307,7 @@ updateProject fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "updateProject" optionalArgs object
@@ -319,7 +320,7 @@ updateProjectCard fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "updateProjectCard" optionalArgs object
@@ -332,7 +333,7 @@ updateProjectColumn fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "updateProjectColumn" optionalArgs object
@@ -345,7 +346,7 @@ updatePullRequestReview fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "updatePullRequestReview" optionalArgs object
@@ -358,7 +359,7 @@ updatePullRequestReviewComment fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "updatePullRequestReviewComment" optionalArgs object
@@ -371,7 +372,7 @@ updateSubscription fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "updateSubscription" optionalArgs object
@@ -384,7 +385,7 @@ updateTopics fillInOptionals object =
             fillInOptionals { input = Nothing }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+            [ Argument.optional "input" filledInOptionals.input Value.string ]
                 |> List.filterMap identity
     in
     Object.single "updateTopics" optionalArgs object

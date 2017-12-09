@@ -6,6 +6,7 @@ import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Value as Value
 import Json.Decode as Decode
 import Json.Encode as Encode
 
@@ -22,7 +23,7 @@ avatarUrl fillInOptionals =
             fillInOptionals { size = Nothing }
 
         optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size Encode.int ]
+            [ Argument.optional "size" filledInOptionals.size Value.int ]
                 |> List.filterMap identity
     in
     Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
@@ -45,7 +46,7 @@ pinnedRepositories fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, privacy = Nothing, orderBy = Nothing, affiliations = Nothing, isLocked = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "privacy" filledInOptionals.privacy, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string, Argument.optional "affiliations" filledInOptionals.affiliations (Api.Enum.RepositoryAffiliation.decoder |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "privacy" filledInOptionals.privacy (Value.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy Value.string, Argument.optional "affiliations" filledInOptionals.affiliations (Value.enum toString |> Value.list), Argument.optional "isLocked" filledInOptionals.isLocked Value.bool ]
                 |> List.filterMap identity
     in
     Object.single "pinnedRepositories" optionalArgs object
@@ -58,7 +59,7 @@ repositories fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, privacy = Nothing, orderBy = Nothing, affiliations = Nothing, isLocked = Nothing, isFork = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "privacy" filledInOptionals.privacy, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string, Argument.optional "affiliations" filledInOptionals.affiliations (Api.Enum.RepositoryAffiliation.decoder |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals.isFork Encode.bool ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "privacy" filledInOptionals.privacy (Value.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy Value.string, Argument.optional "affiliations" filledInOptionals.affiliations (Value.enum toString |> Value.list), Argument.optional "isLocked" filledInOptionals.isLocked Value.bool, Argument.optional "isFork" filledInOptionals.isFork Value.bool ]
                 |> List.filterMap identity
     in
     Object.single "repositories" optionalArgs object

@@ -10,6 +10,7 @@ import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Value as Value
 import Json.Decode as Decode
 import Json.Encode as Encode
 
@@ -31,7 +32,7 @@ assignees fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "assignees" optionalArgs object
@@ -94,7 +95,7 @@ comments fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "comments" optionalArgs object
@@ -107,7 +108,7 @@ commits fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "commits" optionalArgs object
@@ -175,7 +176,7 @@ labels fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "labels" optionalArgs object
@@ -228,7 +229,7 @@ participants fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "participants" optionalArgs object
@@ -246,7 +247,7 @@ projectCards fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "projectCards" optionalArgs object
@@ -269,7 +270,7 @@ reactions fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, content = Nothing, orderBy = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "content" filledInOptionals.content, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "content" filledInOptionals.content (Value.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy Value.string ]
                 |> List.filterMap identity
     in
     Object.single "reactions" optionalArgs object
@@ -302,7 +303,7 @@ reviewRequests fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
     Object.single "reviewRequests" optionalArgs object
@@ -315,7 +316,7 @@ reviews fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, states = Nothing, author = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Api.Enum.PullRequestReviewState.decoder |> Encode.list), Argument.optional "author" filledInOptionals.author Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "states" filledInOptionals.states (Value.enum toString |> Value.list), Argument.optional "author" filledInOptionals.author Value.string ]
                 |> List.filterMap identity
     in
     Object.single "reviews" optionalArgs object
@@ -338,7 +339,7 @@ timeline fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, since = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "since" filledInOptionals.since Value.string ]
                 |> List.filterMap identity
     in
     Object.single "timeline" optionalArgs object

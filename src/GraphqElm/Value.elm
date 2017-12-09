@@ -12,6 +12,16 @@ type Value
     | Integer Int
 
 
+int : Int -> Value
+int value =
+    Integer value
+
+
+bool : Bool -> Value
+bool bool =
+    Boolean bool
+
+
 string : String -> Value
 string string =
     String string
