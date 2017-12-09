@@ -1,4 +1,8 @@
-# GraphQElm
+# GraphqElm
+
+If your GraphqElm query compiles, it is guaranteed that:
+1) It is a valid query (according to your API's GraphQL schema)
+2) The response's data type is known at compile-time
 
 **Warning** This project is currently in alpha and may see rapid change before
 the 1.0 release.
