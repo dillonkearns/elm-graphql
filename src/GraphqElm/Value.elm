@@ -12,6 +12,11 @@ type Value
     | Integer Int
 
 
+string : String -> Value
+string string =
+    String string
+
+
 enum : (a -> String) -> a -> Value
 enum enumToString enum =
     EnumValue (enumToString enum)

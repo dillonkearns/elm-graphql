@@ -47,19 +47,19 @@ generateEncoder typeRef =
                 Type.Scalar scalar ->
                     case scalar of
                         Scalar.String ->
-                            "Encode.string"
+                            "Value.string"
 
                         Scalar.Boolean ->
-                            "Encode.bool"
+                            "Value.bool"
 
                         Scalar.Int ->
-                            "Encode.int"
+                            "Value.int"
 
                         Scalar.Float ->
-                            "Encode.float"
+                            "Value.float"
 
                 Type.List typeRef ->
-                    generateEncoder typeRef ++ " |> Encode.list"
+                    generateEncoder typeRef ++ " |> Value.list"
 
                 Type.ObjectRef objectName ->
                     Debug.crash "I don't expect to see object references as argument types."
@@ -68,9 +68,7 @@ generateEncoder typeRef =
                     Debug.crash "I don't expect to see object references as argument types."
 
                 Type.EnumRef enumName ->
-                    Graphqelm.Generator.Enum.moduleNameFor enumName
-                        ++ [ "decoder" ]
-                        |> String.join "."
+                    "(Value.enum toString)"
 
 
 generateType : TypeReference -> String

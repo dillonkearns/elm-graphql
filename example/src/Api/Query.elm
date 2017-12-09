@@ -29,7 +29,7 @@ menuItems fillInOptionals object =
             fillInOptionals { contains = Nothing, order = Nothing }
 
         optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains Encode.string, Argument.opt "order" filledInOptionals.order (Value.enum Api.Enum.SortOrder.toString) ]
+            [ Argument.optional "contains" filledInOptionals.contains Value.string, Argument.optional "order" filledInOptionals.order (Value.enum toString) ]
                 |> List.filterMap identity
     in
     Query.listOf "menuItems" optionalArgs object
