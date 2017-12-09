@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query as Query
+import Graphqelm.Value as Value
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
@@ -17,7 +18,7 @@ hero fillInOptionals object =
             fillInOptionals { episode = Nothing }
 
         optionalArgs =
-            [ Argument.optionalEnum "episode" filledInOptionals.episode ]
+            [ Argument.optional "episode" filledInOptionals.episode (Value.enum toString) ]
                 |> List.filterMap identity
     in
     Query.single "hero" optionalArgs object
