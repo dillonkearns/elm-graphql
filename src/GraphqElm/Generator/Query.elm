@@ -31,6 +31,7 @@ import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
+import Graphqelm.Value as Value
 {1}
 
 """
