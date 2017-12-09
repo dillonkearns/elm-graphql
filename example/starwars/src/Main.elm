@@ -3,7 +3,6 @@ module Main exposing (..)
 import Api.Enum.Episode as Episode exposing (Episode)
 import Api.Object
 import Api.Object.Character as Character
-import Api.Object.Droid as Droid
 import Api.Object.Human as Human
 import Api.Query as Query
 import Graphqelm.Field
@@ -16,25 +15,14 @@ import View.QueryAndResponse
 
 
 type alias Response =
-    -- ( ( Hero, Droid ), Human )
     ( Human, Hero )
 
 
 query : Graphqelm.Field.Query Response
 query =
-    -- Graphqelm.Query.combine (,)
-    --     (Graphqelm.Query.combine (,)
-    --         (Query.hero (\args -> { args | episode = Just Episode.EMPIRE }) hero)
-    --         (Query.droid { id = "2000" } droid)
-    --     )
-    --     (Query.human { id = "1004" } human)
     Graphqelm.Query.combine (,)
         (Query.human { id = "1004" } human)
-        hero
-
-
-
--- (Query.human { id = "1001" } human)
+        (Query.hero identity hero)
 
 
 type alias Hero =
@@ -45,16 +33,13 @@ type alias Hero =
     }
 
 
-hero : Graphqelm.Field.Query Hero
+hero : Object Hero Api.Object.Character
 hero =
-    Query.hero identity
-        (Character.build
-            Hero
-            |> Object.with Character.name
-            |> Object.with Character.id
-            |> Object.with (Character.friends heroWithName)
-            |> Object.with Character.appearsIn
-        )
+    Character.build Hero
+        |> Object.with Character.name
+        |> Object.with Character.id
+        |> Object.with (Character.friends heroWithName)
+        |> Object.with Character.appearsIn
 
 
 heroWithName : Object String Api.Object.Character
@@ -63,22 +48,9 @@ heroWithName =
         |> Object.with Character.name
 
 
-type alias Droid =
-    { name : String
-    , primaryFunction : String
-    }
-
-
-droid : Object.Object Droid Api.Object.Droid
-droid =
-    Droid.build Droid
-        |> Object.with Droid.name
-        |> Object.with Droid.primaryFunction
-
-
 type alias Human =
     { name : String
-    , appearsIn : List ( Episode, Int )
+    , yearsActive : List Int
     }
 
 
@@ -88,12 +60,7 @@ human =
         |> Object.with Human.name
         |> Object.with
             (Human.appearsIn
-                |> Graphqelm.Field.map
-                    (\episodes ->
-                        List.map
-                            (\episode -> ( episode, episodeYear episode ))
-                            episodes
-                    )
+                |> Graphqelm.Field.map (List.map (\episode -> episodeYear episode))
             )
 
 
