@@ -1,9 +1,20 @@
 module Graphqelm.Query exposing (..)
 
 import Graphqelm.Argument exposing (Argument)
-import Graphqelm.Field as Field exposing (Field(Composite), FieldDecoder(FieldDecoder), Query(Query))
+import Graphqelm.Field as Field exposing (Field(Composite), FieldDecoder(FieldDecoder))
 import Graphqelm.Object exposing (Object(..))
 import Json.Decode as Decode exposing (Decoder)
+
+
+type Query decodesTo
+    = Query (List Field) (Decoder decodesTo)
+
+
+toQuery : Query a -> String
+toQuery (Query fields decoder) =
+    "{\n"
+        ++ (List.indexedMap (\index field -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery field) fields |> String.join "\n")
+        ++ "\n}"
 
 
 decoder : Query decodesTo -> Decoder decodesTo

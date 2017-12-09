@@ -15,7 +15,7 @@ all =
                 meField
                     |> Field.forQuery
                     |> Expect.equal
-                        """me : Field.Query String
+                        """me : Query String
 me =
       Query.fieldDecoder "me" [] (Decode.string)
 """
@@ -36,7 +36,7 @@ me =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """droid : Object droid Api.Object.Droid -> Field.Query droid
+                        """droid : Object droid Api.Object.Droid -> Query droid
 droid object =
       Query.single "droid" [] (object)
 """
@@ -72,7 +72,7 @@ droid object =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """human : { id : String } -> Object human Api.Object.Human -> Field.Query human
+                        """human : { id : String } -> Object human Api.Object.Human -> Query human
 human requiredArgs object =
       Query.single "human" [ Argument.string "id" requiredArgs.id ] (object)
 """
@@ -84,7 +84,7 @@ human requiredArgs object =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> Field.Query (List menuItems)
+                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> Query (List menuItems)
 menuItems fillInOptionals object =
     let
         filledInOptionals =

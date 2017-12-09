@@ -4,10 +4,6 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Json.Decode as Decode exposing (Decoder)
 
 
-type Query decodesTo
-    = Query (List Field) (Decoder decodesTo)
-
-
 type FieldDecoder decodesTo typeLock
     = FieldDecoder Field (Decoder decodesTo)
 
@@ -15,25 +11,6 @@ type FieldDecoder decodesTo typeLock
 type Field
     = Composite String (List Argument) (List Field)
     | Leaf String (List Argument)
-
-
-decoder : Query decodesTo -> Decoder decodesTo
-decoder (Query fields decoder) =
-    (case fields of
-        [ singleField ] ->
-            Decode.field "query0" decoder
-
-        multipleFields ->
-            decoder
-    )
-        |> Decode.field "data"
-
-
-toQuery : Query a -> String
-toQuery (Query fields decoder) =
-    "{\n"
-        ++ (List.indexedMap (\index field -> "query" ++ toString index ++ ": " ++ fieldDecoderToQuery field) fields |> String.join "\n")
-        ++ "\n}"
 
 
 fieldDecoderToQuery : Field -> String
