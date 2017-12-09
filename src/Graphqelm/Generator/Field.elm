@@ -102,7 +102,7 @@ fieldArgsString { fieldArgs } =
             single
 
         _ ->
-            Debug.crash "TODO not yet handling both required and optional args"
+            "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
 toFieldGenerator : ObjectOrQuery -> Type.Field -> FieldGenerator

@@ -64,7 +64,7 @@ argValue { name, typeOf } =
 
         _ ->
             interpolate
-                """Argument.optional "{0}" filledInOptionals.{0} {1}"""
+                """Argument.optional "{0}" filledInOptionals.{0} ({1})"""
                 [ name, Graphqelm.Generator.Decoder.generateEncoder (Type.TypeReference typeOf Type.NonNullable) ]
 
 
