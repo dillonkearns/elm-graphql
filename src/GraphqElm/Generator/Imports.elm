@@ -4,9 +4,21 @@ import Graphqelm.Generator.Enum
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 
 
-importsString : List String -> List TypeReference -> String
+allRefs : List Type.Field -> List TypeReference
+allRefs fields =
+    List.concatMap getArgRefs fields
+        ++ List.map (\{ typeRef } -> typeRef) fields
+
+
+getArgRefs : Type.Field -> List TypeReference
+getArgRefs { args } =
+    List.map .typeRef args
+
+
+importsString : List String -> List Type.Field -> String
 importsString importingFrom typeRefs =
     typeRefs
+        |> allRefs
         |> importsWithoutSelf importingFrom
         |> List.map toModuleName
         |> List.map toImportString

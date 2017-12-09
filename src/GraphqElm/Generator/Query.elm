@@ -21,13 +21,6 @@ moduleName =
 
 prepend : List String -> List Field -> String
 prepend moduleName fields =
-    let
-        imports : String
-        imports =
-            fields
-                |> List.map (\{ name, typeRef } -> typeRef)
-                |> Imports.importsString moduleName
-    in
     interpolate
         """module {0} exposing (..)
 
@@ -41,4 +34,4 @@ import Json.Encode as Encode
 {1}
 
 """
-        [ moduleName |> String.join ".", imports ]
+        [ moduleName |> String.join ".", Imports.importsString moduleName fields ]

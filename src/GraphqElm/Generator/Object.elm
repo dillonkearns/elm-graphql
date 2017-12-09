@@ -16,13 +16,6 @@ generate name fields =
 
 prepend : List String -> List Type.Field -> String
 prepend moduleName fields =
-    let
-        imports : String
-        imports =
-            fields
-                |> List.map (\{ name, typeRef } -> typeRef)
-                |> Imports.importsString moduleName
-    in
     interpolate """module {0} exposing (..)
 
 import Graphqelm.Argument as Argument exposing (Argument)
@@ -38,4 +31,4 @@ build : (a -> constructor) -> Object (a -> constructor) {0}
 build constructor =
     Object.object constructor
 """
-        [ moduleName |> String.join ".", imports ]
+        [ moduleName |> String.join ".", Imports.importsString moduleName fields ]
