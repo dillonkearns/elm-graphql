@@ -8,6 +8,16 @@ type SortOrder
     | DESC
 
 
+toString : SortOrder -> String
+toString sortOrder =
+    case sortOrder of
+        ASC ->
+            "ASC"
+
+        DESC ->
+            "DESC"
+
+
 decoder : Decoder SortOrder
 decoder =
     Decode.string

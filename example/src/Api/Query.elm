@@ -7,6 +7,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query as Query
+import Graphqelm.Value as Value
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
@@ -28,7 +29,7 @@ menuItems fillInOptionals object =
             fillInOptionals { contains = Nothing, order = Nothing }
 
         optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains Encode.string, Argument.optionalEnum "order" filledInOptionals.order ]
+            [ Argument.optional "contains" filledInOptionals.contains Encode.string, Argument.opt "order" filledInOptionals.order (Value.enum Api.Enum.SortOrder.toString) ]
                 |> List.filterMap identity
     in
     Query.listOf "menuItems" optionalArgs object
