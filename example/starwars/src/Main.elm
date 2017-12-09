@@ -41,13 +41,14 @@ type alias Hero =
     }
 
 
-hero : Object Hero Api.Object.Character
-hero =
-    Character.build Hero
-        |> Object.with Character.id
-        |> Object.with Character.name
-        |> Object.with (Character.friends heroWithName)
-        |> Object.with Character.appearsIn
+
+-- hero : Object Hero Api.Object.Character
+-- hero =
+--     Character.build Hero
+--         |> Object.with Character.id
+--         |> Object.with Character.name
+--         |> Object.with (Character.friends heroWithName)
+--         |> Object.with Character.appearsIn
 
 
 heroWithName : Object String Api.Object.Character

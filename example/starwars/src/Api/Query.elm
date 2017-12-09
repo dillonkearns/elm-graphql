@@ -11,6 +11,11 @@ import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
 
+droid : { id : String } -> Object droid Api.Object.Droid -> Field.Query droid
+droid requiredArgs object =
+    Query.single "droid" [ Argument.string "id" requiredArgs.id ] object
+
+
 hero : ({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode }) -> Object hero Api.Object.Character -> Field.Query hero
 hero fillInOptionals object =
     let
@@ -29,6 +34,6 @@ human requiredArgs object =
     Query.single "human" [ Argument.string "id" requiredArgs.id ] object
 
 
-droid : { id : String } -> Object droid Api.Object.Droid -> Field.Query droid
-droid requiredArgs object =
-    Query.single "droid" [ Argument.string "id" requiredArgs.id ] object
+node : { id : String } -> Object node Api.Object.Node -> Field.Query node
+node requiredArgs object =
+    Query.single "node" [ Argument.string "id" requiredArgs.id ] object
