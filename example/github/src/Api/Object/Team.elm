@@ -8,7 +8,7 @@ import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Value as Value
+import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode
 import Json.Encode as Encode
 
@@ -31,14 +31,14 @@ ancestors fillInOptionals object =
     Object.single "ancestors" optionalArgs object
 
 
-childTeams : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String, userLogins : Maybe (List String), immediateOnly : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String, userLogins : Maybe (List String), immediateOnly : Maybe Bool }) -> Object childTeams Api.Object.TeamConnection -> FieldDecoder childTeams Api.Object.Team
+childTeams : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, userLogins : Maybe (List String), immediateOnly : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, userLogins : Maybe (List String), immediateOnly : Maybe Bool }) -> Object childTeams Api.Object.TeamConnection -> FieldDecoder childTeams Api.Object.Team
 childTeams fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing, userLogins = Nothing, immediateOnly = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "orderBy" filledInOptionals.orderBy Value.string, Argument.optional "userLogins" filledInOptionals.userLogins (Value.string |> Value.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly Value.bool ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "userLogins" filledInOptionals.userLogins (Value.string |> Value.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly Value.bool ]
                 |> List.filterMap identity
     in
     Object.single "childTeams" optionalArgs object
@@ -140,14 +140,14 @@ privacy =
     Object.fieldDecoder "privacy" [] Api.Enum.TeamPrivacy.decoder
 
 
-repositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe String }) -> Object repositories Api.Object.TeamRepositoryConnection -> FieldDecoder repositories Api.Object.Team
+repositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe Value }) -> Object repositories Api.Object.TeamRepositoryConnection -> FieldDecoder repositories Api.Object.Team
 repositories fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, query = Nothing, orderBy = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "query" filledInOptionals.query Value.string, Argument.optional "orderBy" filledInOptionals.orderBy Value.string ]
+            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "query" filledInOptionals.query Value.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
     Object.single "repositories" optionalArgs object
