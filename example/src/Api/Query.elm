@@ -1,5 +1,6 @@
 module Api.Query exposing (..)
 
+import Api.Enum.SortOrder
 import Api.Enum.Weather
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
@@ -20,14 +21,14 @@ me =
     Query.fieldDecoder "me" [] Decode.string
 
 
-menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> Field.Query (List menuItems)
+menuItems : ({ contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder } -> { contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder }) -> Object menuItems Api.Object.MenuItem -> Field.Query (List menuItems)
 menuItems fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { contains = Nothing }
+            fillInOptionals { contains = Nothing, order = Nothing }
 
         optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains Encode.string ]
+            [ Argument.optional "contains" filledInOptionals.contains Encode.string, Argument.optionalEnum "order" filledInOptionals.order ]
                 |> List.filterMap identity
     in
     Query.listOf "menuItems" optionalArgs object
