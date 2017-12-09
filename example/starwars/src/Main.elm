@@ -17,7 +17,7 @@ import View.QueryAndResponse
 
 type alias Response =
     -- ( ( Hero, Droid ), Human )
-    ( Human, Human )
+    ( Human, Hero )
 
 
 query : Graphqelm.Field.Query Response
@@ -30,31 +30,37 @@ query =
     --     (Query.human { id = "1004" } human)
     Graphqelm.Query.combine (,)
         (Query.human { id = "1004" } human)
-        (Query.human { id = "1001" } human)
+        hero
+
+
+
+-- (Query.human { id = "1001" } human)
 
 
 type alias Hero =
-    { id : String
-    , name : String
+    { name : String
+    , id : String
     , friends : List String
     , appearsIn : List Episode
     }
 
 
-
--- hero : Object Hero Api.Object.Character
--- hero =
---     Character.build Hero
---         |> Object.with Character.id
---         |> Object.with Character.name
---         |> Object.with (Character.friends heroWithName)
---         |> Object.with Character.appearsIn
+hero : Graphqelm.Field.Query Hero
+hero =
+    Query.hero identity
+        (Character.build
+            Hero
+            |> Object.with Character.name
+            |> Object.with Character.id
+            |> Object.with (Character.friends heroWithName)
+            |> Object.with Character.appearsIn
+        )
 
 
 heroWithName : Object String Api.Object.Character
 heroWithName =
     Character.build identity
-        |> Object.with Character.id
+        |> Object.with Character.name
 
 
 type alias Droid =

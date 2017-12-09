@@ -15,29 +15,6 @@ build constructor =
     Object.object constructor
 
 
-appearsIn : FieldDecoder (List Api.Enum.Episode.Episode) Api.Object.Human
-appearsIn =
-    Object.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
-
-
-friends : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object friends Api.Object.CharacterConnection -> FieldDecoder friends Api.Object.Human
-friends fillInOptionals object =
-    let
-        filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
-
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
-                |> List.filterMap identity
-    in
-    Object.single "friends" optionalArgs object
-
-
-homePlanet : FieldDecoder String Api.Object.Human
-homePlanet =
-    Object.fieldDecoder "homePlanet" [] Decode.string
-
-
 id : FieldDecoder String Api.Object.Human
 id =
     Object.fieldDecoder "id" [] Decode.string
@@ -46,3 +23,18 @@ id =
 name : FieldDecoder String Api.Object.Human
 name =
     Object.fieldDecoder "name" [] Decode.string
+
+
+friends : Object friends Api.Object.Character -> FieldDecoder (List friends) Api.Object.Human
+friends object =
+    Object.listOf "friends" [] object
+
+
+appearsIn : FieldDecoder (List Api.Enum.Episode.Episode) Api.Object.Human
+appearsIn =
+    Object.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
+
+
+homePlanet : FieldDecoder String Api.Object.Human
+homePlanet =
+    Object.fieldDecoder "homePlanet" [] Decode.string
