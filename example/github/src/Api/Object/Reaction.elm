@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Reaction
@@ -15,22 +16,22 @@ build constructor =
 
 content : FieldDecoder Api.Enum.ReactionContent.ReactionContent Api.Object.Reaction
 content =
-    Field.fieldDecoder "content" [] Api.Enum.ReactionContent.decoder
+    Object.fieldDecoder "content" [] Api.Enum.ReactionContent.decoder
 
 
 createdAt : FieldDecoder String Api.Object.Reaction
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 databaseId : FieldDecoder Int Api.Object.Reaction
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.Reaction
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 reactable : Object reactable Api.Object.Reactable -> FieldDecoder reactable Api.Object.Reaction

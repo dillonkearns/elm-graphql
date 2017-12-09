@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.OrganizationIdentityProvider
@@ -14,27 +15,35 @@ build constructor =
 
 digestMethod : FieldDecoder String Api.Object.OrganizationIdentityProvider
 digestMethod =
-    Field.fieldDecoder "digestMethod" [] Decode.string
+    Object.fieldDecoder "digestMethod" [] Decode.string
 
 
-externalIdentities : Object externalIdentities Api.Object.ExternalIdentityConnection -> FieldDecoder externalIdentities Api.Object.OrganizationIdentityProvider
-externalIdentities object =
-    Object.single "externalIdentities" [] object
+externalIdentities : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object externalIdentities Api.Object.ExternalIdentityConnection -> FieldDecoder externalIdentities Api.Object.OrganizationIdentityProvider
+externalIdentities fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "externalIdentities" optionalArgs object
 
 
 id : FieldDecoder String Api.Object.OrganizationIdentityProvider
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 idpCertificate : FieldDecoder String Api.Object.OrganizationIdentityProvider
 idpCertificate =
-    Field.fieldDecoder "idpCertificate" [] Decode.string
+    Object.fieldDecoder "idpCertificate" [] Decode.string
 
 
 issuer : FieldDecoder String Api.Object.OrganizationIdentityProvider
 issuer =
-    Field.fieldDecoder "issuer" [] Decode.string
+    Object.fieldDecoder "issuer" [] Decode.string
 
 
 organization : Object organization Api.Object.Organization -> FieldDecoder organization Api.Object.OrganizationIdentityProvider
@@ -44,9 +53,9 @@ organization object =
 
 signatureMethod : FieldDecoder String Api.Object.OrganizationIdentityProvider
 signatureMethod =
-    Field.fieldDecoder "signatureMethod" [] Decode.string
+    Object.fieldDecoder "signatureMethod" [] Decode.string
 
 
 ssoUrl : FieldDecoder String Api.Object.OrganizationIdentityProvider
 ssoUrl =
-    Field.fieldDecoder "ssoUrl" [] Decode.string
+    Object.fieldDecoder "ssoUrl" [] Decode.string

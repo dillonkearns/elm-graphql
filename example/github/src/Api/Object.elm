@@ -649,6 +649,18 @@ type LicenseRule
     = LicenseRule
 
 
+type DeployKeyConnection
+    = DeployKeyConnection
+
+
+type DeployKeyEdge
+    = DeployKeyEdge
+
+
+type DeployKey
+    = DeployKey
+
+
 type RepositoryTopicConnection
     = RepositoryTopicConnection
 

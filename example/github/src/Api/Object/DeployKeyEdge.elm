@@ -1,4 +1,4 @@
-module Api.Object.CommitEdge exposing (..)
+module Api.Object.DeployKeyEdge exposing (..)
 
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
@@ -8,16 +8,16 @@ import Json.Decode as Decode
 import Json.Encode as Encode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.CommitEdge
+build : (a -> constructor) -> Object (a -> constructor) Api.Object.DeployKeyEdge
 build constructor =
     Object.object constructor
 
 
-cursor : FieldDecoder String Api.Object.CommitEdge
+cursor : FieldDecoder String Api.Object.DeployKeyEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : Object node Api.Object.Commit -> FieldDecoder node Api.Object.CommitEdge
+node : Object node Api.Object.DeployKey -> FieldDecoder node Api.Object.DeployKeyEdge
 node object =
     Object.single "node" [] object

@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Project
@@ -15,32 +16,40 @@ build constructor =
 
 body : FieldDecoder String Api.Object.Project
 body =
-    Field.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] Decode.string
 
 
 bodyHTML : FieldDecoder String Api.Object.Project
 bodyHTML =
-    Field.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
 closed : FieldDecoder Bool Api.Object.Project
 closed =
-    Field.fieldDecoder "closed" [] Decode.bool
+    Object.fieldDecoder "closed" [] Decode.bool
 
 
 closedAt : FieldDecoder String Api.Object.Project
 closedAt =
-    Field.fieldDecoder "closedAt" [] Decode.string
+    Object.fieldDecoder "closedAt" [] Decode.string
 
 
-columns : Object columns Api.Object.ProjectColumnConnection -> FieldDecoder columns Api.Object.Project
-columns object =
-    Object.single "columns" [] object
+columns : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object columns Api.Object.ProjectColumnConnection -> FieldDecoder columns Api.Object.Project
+columns fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "columns" optionalArgs object
 
 
 createdAt : FieldDecoder String Api.Object.Project
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 creator : Object creator Api.Object.Actor -> FieldDecoder creator Api.Object.Project
@@ -50,22 +59,22 @@ creator object =
 
 databaseId : FieldDecoder Int Api.Object.Project
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.Project
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.Project
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 number : FieldDecoder Int Api.Object.Project
 number =
-    Field.fieldDecoder "number" [] Decode.int
+    Object.fieldDecoder "number" [] Decode.int
 
 
 owner : Object owner Api.Object.ProjectOwner -> FieldDecoder owner Api.Object.Project
@@ -73,31 +82,39 @@ owner object =
     Object.single "owner" [] object
 
 
-pendingCards : Object pendingCards Api.Object.ProjectCardConnection -> FieldDecoder pendingCards Api.Object.Project
-pendingCards object =
-    Object.single "pendingCards" [] object
+pendingCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object pendingCards Api.Object.ProjectCardConnection -> FieldDecoder pendingCards Api.Object.Project
+pendingCards fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "pendingCards" optionalArgs object
 
 
 resourcePath : FieldDecoder String Api.Object.Project
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 state : FieldDecoder Api.Enum.ProjectState.ProjectState Api.Object.Project
 state =
-    Field.fieldDecoder "state" [] Api.Enum.ProjectState.decoder
+    Object.fieldDecoder "state" [] Api.Enum.ProjectState.decoder
 
 
 updatedAt : FieldDecoder String Api.Object.Project
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.Project
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string
 
 
 viewerCanUpdate : FieldDecoder Bool Api.Object.Project
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool

@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.GitHubMetadata
@@ -14,29 +15,29 @@ build constructor =
 
 gitHubServicesSha : FieldDecoder String Api.Object.GitHubMetadata
 gitHubServicesSha =
-    Field.fieldDecoder "gitHubServicesSha" [] Decode.string
+    Object.fieldDecoder "gitHubServicesSha" [] Decode.string
 
 
 gitIpAddresses : FieldDecoder (List String) Api.Object.GitHubMetadata
 gitIpAddresses =
-    Field.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list)
 
 
 hookIpAddresses : FieldDecoder (List String) Api.Object.GitHubMetadata
 hookIpAddresses =
-    Field.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list)
 
 
 importerIpAddresses : FieldDecoder (List String) Api.Object.GitHubMetadata
 importerIpAddresses =
-    Field.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list)
 
 
 isPasswordAuthenticationVerifiable : FieldDecoder Bool Api.Object.GitHubMetadata
 isPasswordAuthenticationVerifiable =
-    Field.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.bool
+    Object.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.bool
 
 
 pagesIpAddresses : FieldDecoder (List String) Api.Object.GitHubMetadata
 pagesIpAddresses =
-    Field.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list)

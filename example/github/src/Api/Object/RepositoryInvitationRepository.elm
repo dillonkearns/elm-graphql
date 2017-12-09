@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.RepositoryInvitationRepository
@@ -15,67 +16,67 @@ build constructor =
 
 createdAt : FieldDecoder String Api.Object.RepositoryInvitationRepository
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 description : FieldDecoder String Api.Object.RepositoryInvitationRepository
 description =
-    Field.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] Decode.string
 
 
 descriptionHTML : FieldDecoder String Api.Object.RepositoryInvitationRepository
 descriptionHTML =
-    Field.fieldDecoder "descriptionHTML" [] Decode.string
+    Object.fieldDecoder "descriptionHTML" [] Decode.string
 
 
 forkCount : FieldDecoder Int Api.Object.RepositoryInvitationRepository
 forkCount =
-    Field.fieldDecoder "forkCount" [] Decode.int
+    Object.fieldDecoder "forkCount" [] Decode.int
 
 
 hasIssuesEnabled : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 hasIssuesEnabled =
-    Field.fieldDecoder "hasIssuesEnabled" [] Decode.bool
+    Object.fieldDecoder "hasIssuesEnabled" [] Decode.bool
 
 
 hasWikiEnabled : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 hasWikiEnabled =
-    Field.fieldDecoder "hasWikiEnabled" [] Decode.bool
+    Object.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
 homepageUrl : FieldDecoder String Api.Object.RepositoryInvitationRepository
 homepageUrl =
-    Field.fieldDecoder "homepageUrl" [] Decode.string
+    Object.fieldDecoder "homepageUrl" [] Decode.string
 
 
 isArchived : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isArchived =
-    Field.fieldDecoder "isArchived" [] Decode.bool
+    Object.fieldDecoder "isArchived" [] Decode.bool
 
 
 isFork : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isFork =
-    Field.fieldDecoder "isFork" [] Decode.bool
+    Object.fieldDecoder "isFork" [] Decode.bool
 
 
 isLocked : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isLocked =
-    Field.fieldDecoder "isLocked" [] Decode.bool
+    Object.fieldDecoder "isLocked" [] Decode.bool
 
 
 isMirror : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isMirror =
-    Field.fieldDecoder "isMirror" [] Decode.bool
+    Object.fieldDecoder "isMirror" [] Decode.bool
 
 
 isPrivate : FieldDecoder Bool Api.Object.RepositoryInvitationRepository
 isPrivate =
-    Field.fieldDecoder "isPrivate" [] Decode.bool
+    Object.fieldDecoder "isPrivate" [] Decode.bool
 
 
 license : FieldDecoder String Api.Object.RepositoryInvitationRepository
 license =
-    Field.fieldDecoder "license" [] Decode.string
+    Object.fieldDecoder "license" [] Decode.string
 
 
 licenseInfo : Object licenseInfo Api.Object.License -> FieldDecoder licenseInfo Api.Object.RepositoryInvitationRepository
@@ -85,22 +86,22 @@ licenseInfo object =
 
 lockReason : FieldDecoder Api.Enum.RepositoryLockReason.RepositoryLockReason Api.Object.RepositoryInvitationRepository
 lockReason =
-    Field.fieldDecoder "lockReason" [] Api.Enum.RepositoryLockReason.decoder
+    Object.fieldDecoder "lockReason" [] Api.Enum.RepositoryLockReason.decoder
 
 
 mirrorUrl : FieldDecoder String Api.Object.RepositoryInvitationRepository
 mirrorUrl =
-    Field.fieldDecoder "mirrorUrl" [] Decode.string
+    Object.fieldDecoder "mirrorUrl" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.RepositoryInvitationRepository
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 nameWithOwner : FieldDecoder String Api.Object.RepositoryInvitationRepository
 nameWithOwner =
-    Field.fieldDecoder "nameWithOwner" [] Decode.string
+    Object.fieldDecoder "nameWithOwner" [] Decode.string
 
 
 owner : Object owner Api.Object.RepositoryOwner -> FieldDecoder owner Api.Object.RepositoryInvitationRepository
@@ -110,24 +111,32 @@ owner object =
 
 pushedAt : FieldDecoder String Api.Object.RepositoryInvitationRepository
 pushedAt =
-    Field.fieldDecoder "pushedAt" [] Decode.string
+    Object.fieldDecoder "pushedAt" [] Decode.string
 
 
 resourcePath : FieldDecoder String Api.Object.RepositoryInvitationRepository
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-shortDescriptionHTML : FieldDecoder String Api.Object.RepositoryInvitationRepository
-shortDescriptionHTML =
-    Field.fieldDecoder "shortDescriptionHTML" [] Decode.string
+shortDescriptionHTML : ({ limit : Maybe Int } -> { limit : Maybe Int }) -> FieldDecoder String Api.Object.RepositoryInvitationRepository
+shortDescriptionHTML fillInOptionals =
+    let
+        filledInOptionals =
+            fillInOptionals { limit = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
+                |> List.filterMap identity
+    in
+    Object.fieldDecoder "shortDescriptionHTML" optionalArgs Decode.string
 
 
 updatedAt : FieldDecoder String Api.Object.RepositoryInvitationRepository
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.RepositoryInvitationRepository
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string

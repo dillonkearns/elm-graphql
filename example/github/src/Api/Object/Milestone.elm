@@ -1,11 +1,13 @@
 module Api.Object.Milestone exposing (..)
 
+import Api.Enum.IssueState
 import Api.Enum.MilestoneState
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Milestone
@@ -20,27 +22,35 @@ creator object =
 
 description : FieldDecoder String Api.Object.Milestone
 description =
-    Field.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] Decode.string
 
 
 dueOn : FieldDecoder String Api.Object.Milestone
 dueOn =
-    Field.fieldDecoder "dueOn" [] Decode.string
+    Object.fieldDecoder "dueOn" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.Milestone
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
-issues : Object issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Milestone
-issues object =
-    Object.single "issues" [] object
+issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe String, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe String, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> Object issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Milestone
+issues fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, labels = Nothing, orderBy = Nothing, states = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Encode.string, Argument.optional "states" filledInOptionals.states (Api.Enum.IssueState.decoder |> Encode.list) ]
+                |> List.filterMap identity
+    in
+    Object.single "issues" optionalArgs object
 
 
 number : FieldDecoder Int Api.Object.Milestone
 number =
-    Field.fieldDecoder "number" [] Decode.int
+    Object.fieldDecoder "number" [] Decode.int
 
 
 repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Milestone
@@ -50,19 +60,19 @@ repository object =
 
 resourcePath : FieldDecoder String Api.Object.Milestone
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 state : FieldDecoder Api.Enum.MilestoneState.MilestoneState Api.Object.Milestone
 state =
-    Field.fieldDecoder "state" [] Api.Enum.MilestoneState.decoder
+    Object.fieldDecoder "state" [] Api.Enum.MilestoneState.decoder
 
 
 title : FieldDecoder String Api.Object.Milestone
 title =
-    Field.fieldDecoder "title" [] Decode.string
+    Object.fieldDecoder "title" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.Milestone
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string

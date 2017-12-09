@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.ReferencedEvent
@@ -29,29 +30,29 @@ commitRepository object =
 
 createdAt : FieldDecoder String Api.Object.ReferencedEvent
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.ReferencedEvent
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 isCrossReference : FieldDecoder Bool Api.Object.ReferencedEvent
 isCrossReference =
-    Field.fieldDecoder "isCrossReference" [] Decode.bool
+    Object.fieldDecoder "isCrossReference" [] Decode.bool
 
 
 isCrossRepository : FieldDecoder Bool Api.Object.ReferencedEvent
 isCrossRepository =
-    Field.fieldDecoder "isCrossRepository" [] Decode.bool
+    Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
 isDirectReference : FieldDecoder Bool Api.Object.ReferencedEvent
 isDirectReference =
-    Field.fieldDecoder "isDirectReference" [] Decode.bool
+    Object.fieldDecoder "isDirectReference" [] Decode.bool
 
 
 subject : FieldDecoder String Api.Object.ReferencedEvent
 subject =
-    Field.fieldDecoder "subject" [] Decode.string
+    Object.fieldDecoder "subject" [] Decode.string

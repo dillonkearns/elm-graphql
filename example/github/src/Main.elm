@@ -6,6 +6,7 @@ import Api.Object.ReleaseConnection
 import Api.Object.Repository as Repository
 import Api.Object.StargazerConnection
 import Api.Query as Query
+import Graphqelm
 import Graphqelm.Field
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
@@ -30,8 +31,8 @@ repo : Object Response Api.Object.Repository
 repo =
     Repository.build Response
         |> Object.with Repository.createdAt
-        |> Object.with (Repository.releases releases)
-        |> Object.with (Repository.stargazers stargazers)
+        |> Object.with (Repository.releases (\optionals -> { optionals | last = Just 10 }) releases)
+        |> Object.with (Repository.stargazers Graphqelm.noOptionalArgs stargazers)
 
 
 stargazers : Object Int Api.Object.StargazerConnection

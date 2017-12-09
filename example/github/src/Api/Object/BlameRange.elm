@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.BlameRange
@@ -14,7 +15,7 @@ build constructor =
 
 age : FieldDecoder Int Api.Object.BlameRange
 age =
-    Field.fieldDecoder "age" [] Decode.int
+    Object.fieldDecoder "age" [] Decode.int
 
 
 commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.BlameRange
@@ -24,9 +25,9 @@ commit object =
 
 endingLine : FieldDecoder Int Api.Object.BlameRange
 endingLine =
-    Field.fieldDecoder "endingLine" [] Decode.int
+    Object.fieldDecoder "endingLine" [] Decode.int
 
 
 startingLine : FieldDecoder Int Api.Object.BlameRange
 startingLine =
-    Field.fieldDecoder "startingLine" [] Decode.int
+    Object.fieldDecoder "startingLine" [] Decode.int

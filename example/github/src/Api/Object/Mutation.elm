@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Mutation
@@ -12,146 +13,378 @@ build constructor =
     Object.object constructor
 
 
-acceptTopicSuggestion : Object acceptTopicSuggestion Api.Object.AcceptTopicSuggestionPayload -> FieldDecoder acceptTopicSuggestion Api.Object.Mutation
-acceptTopicSuggestion object =
-    Object.single "acceptTopicSuggestion" [] object
+acceptTopicSuggestion : ({ input : Maybe String } -> { input : Maybe String }) -> Object acceptTopicSuggestion Api.Object.AcceptTopicSuggestionPayload -> FieldDecoder acceptTopicSuggestion Api.Object.Mutation
+acceptTopicSuggestion fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "acceptTopicSuggestion" optionalArgs object
 
 
-addComment : Object addComment Api.Object.AddCommentPayload -> FieldDecoder addComment Api.Object.Mutation
-addComment object =
-    Object.single "addComment" [] object
+addComment : ({ input : Maybe String } -> { input : Maybe String }) -> Object addComment Api.Object.AddCommentPayload -> FieldDecoder addComment Api.Object.Mutation
+addComment fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "addComment" optionalArgs object
 
 
-addProjectCard : Object addProjectCard Api.Object.AddProjectCardPayload -> FieldDecoder addProjectCard Api.Object.Mutation
-addProjectCard object =
-    Object.single "addProjectCard" [] object
+addProjectCard : ({ input : Maybe String } -> { input : Maybe String }) -> Object addProjectCard Api.Object.AddProjectCardPayload -> FieldDecoder addProjectCard Api.Object.Mutation
+addProjectCard fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "addProjectCard" optionalArgs object
 
 
-addProjectColumn : Object addProjectColumn Api.Object.AddProjectColumnPayload -> FieldDecoder addProjectColumn Api.Object.Mutation
-addProjectColumn object =
-    Object.single "addProjectColumn" [] object
+addProjectColumn : ({ input : Maybe String } -> { input : Maybe String }) -> Object addProjectColumn Api.Object.AddProjectColumnPayload -> FieldDecoder addProjectColumn Api.Object.Mutation
+addProjectColumn fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "addProjectColumn" optionalArgs object
 
 
-addPullRequestReview : Object addPullRequestReview Api.Object.AddPullRequestReviewPayload -> FieldDecoder addPullRequestReview Api.Object.Mutation
-addPullRequestReview object =
-    Object.single "addPullRequestReview" [] object
+addPullRequestReview : ({ input : Maybe String } -> { input : Maybe String }) -> Object addPullRequestReview Api.Object.AddPullRequestReviewPayload -> FieldDecoder addPullRequestReview Api.Object.Mutation
+addPullRequestReview fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "addPullRequestReview" optionalArgs object
 
 
-addPullRequestReviewComment : Object addPullRequestReviewComment Api.Object.AddPullRequestReviewCommentPayload -> FieldDecoder addPullRequestReviewComment Api.Object.Mutation
-addPullRequestReviewComment object =
-    Object.single "addPullRequestReviewComment" [] object
+addPullRequestReviewComment : ({ input : Maybe String } -> { input : Maybe String }) -> Object addPullRequestReviewComment Api.Object.AddPullRequestReviewCommentPayload -> FieldDecoder addPullRequestReviewComment Api.Object.Mutation
+addPullRequestReviewComment fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "addPullRequestReviewComment" optionalArgs object
 
 
-addReaction : Object addReaction Api.Object.AddReactionPayload -> FieldDecoder addReaction Api.Object.Mutation
-addReaction object =
-    Object.single "addReaction" [] object
+addReaction : ({ input : Maybe String } -> { input : Maybe String }) -> Object addReaction Api.Object.AddReactionPayload -> FieldDecoder addReaction Api.Object.Mutation
+addReaction fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "addReaction" optionalArgs object
 
 
-addStar : Object addStar Api.Object.AddStarPayload -> FieldDecoder addStar Api.Object.Mutation
-addStar object =
-    Object.single "addStar" [] object
+addStar : ({ input : Maybe String } -> { input : Maybe String }) -> Object addStar Api.Object.AddStarPayload -> FieldDecoder addStar Api.Object.Mutation
+addStar fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "addStar" optionalArgs object
 
 
-createProject : Object createProject Api.Object.CreateProjectPayload -> FieldDecoder createProject Api.Object.Mutation
-createProject object =
-    Object.single "createProject" [] object
+createProject : ({ input : Maybe String } -> { input : Maybe String }) -> Object createProject Api.Object.CreateProjectPayload -> FieldDecoder createProject Api.Object.Mutation
+createProject fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "createProject" optionalArgs object
 
 
-declineTopicSuggestion : Object declineTopicSuggestion Api.Object.DeclineTopicSuggestionPayload -> FieldDecoder declineTopicSuggestion Api.Object.Mutation
-declineTopicSuggestion object =
-    Object.single "declineTopicSuggestion" [] object
+declineTopicSuggestion : ({ input : Maybe String } -> { input : Maybe String }) -> Object declineTopicSuggestion Api.Object.DeclineTopicSuggestionPayload -> FieldDecoder declineTopicSuggestion Api.Object.Mutation
+declineTopicSuggestion fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "declineTopicSuggestion" optionalArgs object
 
 
-deleteProject : Object deleteProject Api.Object.DeleteProjectPayload -> FieldDecoder deleteProject Api.Object.Mutation
-deleteProject object =
-    Object.single "deleteProject" [] object
+deleteProject : ({ input : Maybe String } -> { input : Maybe String }) -> Object deleteProject Api.Object.DeleteProjectPayload -> FieldDecoder deleteProject Api.Object.Mutation
+deleteProject fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "deleteProject" optionalArgs object
 
 
-deleteProjectCard : Object deleteProjectCard Api.Object.DeleteProjectCardPayload -> FieldDecoder deleteProjectCard Api.Object.Mutation
-deleteProjectCard object =
-    Object.single "deleteProjectCard" [] object
+deleteProjectCard : ({ input : Maybe String } -> { input : Maybe String }) -> Object deleteProjectCard Api.Object.DeleteProjectCardPayload -> FieldDecoder deleteProjectCard Api.Object.Mutation
+deleteProjectCard fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "deleteProjectCard" optionalArgs object
 
 
-deleteProjectColumn : Object deleteProjectColumn Api.Object.DeleteProjectColumnPayload -> FieldDecoder deleteProjectColumn Api.Object.Mutation
-deleteProjectColumn object =
-    Object.single "deleteProjectColumn" [] object
+deleteProjectColumn : ({ input : Maybe String } -> { input : Maybe String }) -> Object deleteProjectColumn Api.Object.DeleteProjectColumnPayload -> FieldDecoder deleteProjectColumn Api.Object.Mutation
+deleteProjectColumn fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "deleteProjectColumn" optionalArgs object
 
 
-deletePullRequestReview : Object deletePullRequestReview Api.Object.DeletePullRequestReviewPayload -> FieldDecoder deletePullRequestReview Api.Object.Mutation
-deletePullRequestReview object =
-    Object.single "deletePullRequestReview" [] object
+deletePullRequestReview : ({ input : Maybe String } -> { input : Maybe String }) -> Object deletePullRequestReview Api.Object.DeletePullRequestReviewPayload -> FieldDecoder deletePullRequestReview Api.Object.Mutation
+deletePullRequestReview fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "deletePullRequestReview" optionalArgs object
 
 
-dismissPullRequestReview : Object dismissPullRequestReview Api.Object.DismissPullRequestReviewPayload -> FieldDecoder dismissPullRequestReview Api.Object.Mutation
-dismissPullRequestReview object =
-    Object.single "dismissPullRequestReview" [] object
+dismissPullRequestReview : ({ input : Maybe String } -> { input : Maybe String }) -> Object dismissPullRequestReview Api.Object.DismissPullRequestReviewPayload -> FieldDecoder dismissPullRequestReview Api.Object.Mutation
+dismissPullRequestReview fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "dismissPullRequestReview" optionalArgs object
 
 
-moveProjectCard : Object moveProjectCard Api.Object.MoveProjectCardPayload -> FieldDecoder moveProjectCard Api.Object.Mutation
-moveProjectCard object =
-    Object.single "moveProjectCard" [] object
+moveProjectCard : ({ input : Maybe String } -> { input : Maybe String }) -> Object moveProjectCard Api.Object.MoveProjectCardPayload -> FieldDecoder moveProjectCard Api.Object.Mutation
+moveProjectCard fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "moveProjectCard" optionalArgs object
 
 
-moveProjectColumn : Object moveProjectColumn Api.Object.MoveProjectColumnPayload -> FieldDecoder moveProjectColumn Api.Object.Mutation
-moveProjectColumn object =
-    Object.single "moveProjectColumn" [] object
+moveProjectColumn : ({ input : Maybe String } -> { input : Maybe String }) -> Object moveProjectColumn Api.Object.MoveProjectColumnPayload -> FieldDecoder moveProjectColumn Api.Object.Mutation
+moveProjectColumn fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "moveProjectColumn" optionalArgs object
 
 
-removeOutsideCollaborator : Object removeOutsideCollaborator Api.Object.RemoveOutsideCollaboratorPayload -> FieldDecoder removeOutsideCollaborator Api.Object.Mutation
-removeOutsideCollaborator object =
-    Object.single "removeOutsideCollaborator" [] object
+removeOutsideCollaborator : ({ input : Maybe String } -> { input : Maybe String }) -> Object removeOutsideCollaborator Api.Object.RemoveOutsideCollaboratorPayload -> FieldDecoder removeOutsideCollaborator Api.Object.Mutation
+removeOutsideCollaborator fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "removeOutsideCollaborator" optionalArgs object
 
 
-removeReaction : Object removeReaction Api.Object.RemoveReactionPayload -> FieldDecoder removeReaction Api.Object.Mutation
-removeReaction object =
-    Object.single "removeReaction" [] object
+removeReaction : ({ input : Maybe String } -> { input : Maybe String }) -> Object removeReaction Api.Object.RemoveReactionPayload -> FieldDecoder removeReaction Api.Object.Mutation
+removeReaction fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "removeReaction" optionalArgs object
 
 
-removeStar : Object removeStar Api.Object.RemoveStarPayload -> FieldDecoder removeStar Api.Object.Mutation
-removeStar object =
-    Object.single "removeStar" [] object
+removeStar : ({ input : Maybe String } -> { input : Maybe String }) -> Object removeStar Api.Object.RemoveStarPayload -> FieldDecoder removeStar Api.Object.Mutation
+removeStar fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "removeStar" optionalArgs object
 
 
-requestReviews : Object requestReviews Api.Object.RequestReviewsPayload -> FieldDecoder requestReviews Api.Object.Mutation
-requestReviews object =
-    Object.single "requestReviews" [] object
+requestReviews : ({ input : Maybe String } -> { input : Maybe String }) -> Object requestReviews Api.Object.RequestReviewsPayload -> FieldDecoder requestReviews Api.Object.Mutation
+requestReviews fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "requestReviews" optionalArgs object
 
 
-submitPullRequestReview : Object submitPullRequestReview Api.Object.SubmitPullRequestReviewPayload -> FieldDecoder submitPullRequestReview Api.Object.Mutation
-submitPullRequestReview object =
-    Object.single "submitPullRequestReview" [] object
+submitPullRequestReview : ({ input : Maybe String } -> { input : Maybe String }) -> Object submitPullRequestReview Api.Object.SubmitPullRequestReviewPayload -> FieldDecoder submitPullRequestReview Api.Object.Mutation
+submitPullRequestReview fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "submitPullRequestReview" optionalArgs object
 
 
-updateProject : Object updateProject Api.Object.UpdateProjectPayload -> FieldDecoder updateProject Api.Object.Mutation
-updateProject object =
-    Object.single "updateProject" [] object
+updateProject : ({ input : Maybe String } -> { input : Maybe String }) -> Object updateProject Api.Object.UpdateProjectPayload -> FieldDecoder updateProject Api.Object.Mutation
+updateProject fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "updateProject" optionalArgs object
 
 
-updateProjectCard : Object updateProjectCard Api.Object.UpdateProjectCardPayload -> FieldDecoder updateProjectCard Api.Object.Mutation
-updateProjectCard object =
-    Object.single "updateProjectCard" [] object
+updateProjectCard : ({ input : Maybe String } -> { input : Maybe String }) -> Object updateProjectCard Api.Object.UpdateProjectCardPayload -> FieldDecoder updateProjectCard Api.Object.Mutation
+updateProjectCard fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "updateProjectCard" optionalArgs object
 
 
-updateProjectColumn : Object updateProjectColumn Api.Object.UpdateProjectColumnPayload -> FieldDecoder updateProjectColumn Api.Object.Mutation
-updateProjectColumn object =
-    Object.single "updateProjectColumn" [] object
+updateProjectColumn : ({ input : Maybe String } -> { input : Maybe String }) -> Object updateProjectColumn Api.Object.UpdateProjectColumnPayload -> FieldDecoder updateProjectColumn Api.Object.Mutation
+updateProjectColumn fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "updateProjectColumn" optionalArgs object
 
 
-updatePullRequestReview : Object updatePullRequestReview Api.Object.UpdatePullRequestReviewPayload -> FieldDecoder updatePullRequestReview Api.Object.Mutation
-updatePullRequestReview object =
-    Object.single "updatePullRequestReview" [] object
+updatePullRequestReview : ({ input : Maybe String } -> { input : Maybe String }) -> Object updatePullRequestReview Api.Object.UpdatePullRequestReviewPayload -> FieldDecoder updatePullRequestReview Api.Object.Mutation
+updatePullRequestReview fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "updatePullRequestReview" optionalArgs object
 
 
-updatePullRequestReviewComment : Object updatePullRequestReviewComment Api.Object.UpdatePullRequestReviewCommentPayload -> FieldDecoder updatePullRequestReviewComment Api.Object.Mutation
-updatePullRequestReviewComment object =
-    Object.single "updatePullRequestReviewComment" [] object
+updatePullRequestReviewComment : ({ input : Maybe String } -> { input : Maybe String }) -> Object updatePullRequestReviewComment Api.Object.UpdatePullRequestReviewCommentPayload -> FieldDecoder updatePullRequestReviewComment Api.Object.Mutation
+updatePullRequestReviewComment fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "updatePullRequestReviewComment" optionalArgs object
 
 
-updateSubscription : Object updateSubscription Api.Object.UpdateSubscriptionPayload -> FieldDecoder updateSubscription Api.Object.Mutation
-updateSubscription object =
-    Object.single "updateSubscription" [] object
+updateSubscription : ({ input : Maybe String } -> { input : Maybe String }) -> Object updateSubscription Api.Object.UpdateSubscriptionPayload -> FieldDecoder updateSubscription Api.Object.Mutation
+updateSubscription fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "updateSubscription" optionalArgs object
 
 
-updateTopics : Object updateTopics Api.Object.UpdateTopicsPayload -> FieldDecoder updateTopics Api.Object.Mutation
-updateTopics object =
-    Object.single "updateTopics" [] object
+updateTopics : ({ input : Maybe String } -> { input : Maybe String }) -> Object updateTopics Api.Object.UpdateTopicsPayload -> FieldDecoder updateTopics Api.Object.Mutation
+updateTopics fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "updateTopics" optionalArgs object

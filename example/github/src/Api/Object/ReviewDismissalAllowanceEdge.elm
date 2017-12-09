@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.ReviewDismissalAllowanceEdge
@@ -14,7 +15,7 @@ build constructor =
 
 cursor : FieldDecoder String Api.Object.ReviewDismissalAllowanceEdge
 cursor =
-    Field.fieldDecoder "cursor" [] Decode.string
+    Object.fieldDecoder "cursor" [] Decode.string
 
 
 node : Object node Api.Object.ReviewDismissalAllowance -> FieldDecoder node Api.Object.ReviewDismissalAllowanceEdge

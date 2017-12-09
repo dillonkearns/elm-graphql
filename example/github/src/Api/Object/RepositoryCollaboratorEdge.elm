@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.RepositoryCollaboratorEdge
@@ -15,7 +16,7 @@ build constructor =
 
 cursor : FieldDecoder String Api.Object.RepositoryCollaboratorEdge
 cursor =
-    Field.fieldDecoder "cursor" [] Decode.string
+    Object.fieldDecoder "cursor" [] Decode.string
 
 
 node : Object node Api.Object.User -> FieldDecoder node Api.Object.RepositoryCollaboratorEdge
@@ -25,4 +26,4 @@ node object =
 
 permission : FieldDecoder Api.Enum.RepositoryPermission.RepositoryPermission Api.Object.RepositoryCollaboratorEdge
 permission =
-    Field.fieldDecoder "permission" [] Api.Enum.RepositoryPermission.decoder
+    Object.fieldDecoder "permission" [] Api.Enum.RepositoryPermission.decoder

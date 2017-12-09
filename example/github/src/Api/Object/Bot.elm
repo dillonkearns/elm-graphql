@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Bot
@@ -12,41 +13,49 @@ build constructor =
     Object.object constructor
 
 
-avatarUrl : FieldDecoder String Api.Object.Bot
-avatarUrl =
-    Field.fieldDecoder "avatarUrl" [] Decode.string
+avatarUrl : ({ size : Maybe Int } -> { size : Maybe Int }) -> FieldDecoder String Api.Object.Bot
+avatarUrl fillInOptionals =
+    let
+        filledInOptionals =
+            fillInOptionals { size = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "size" filledInOptionals.size Encode.int ]
+                |> List.filterMap identity
+    in
+    Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
 
 
 createdAt : FieldDecoder String Api.Object.Bot
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 databaseId : FieldDecoder Int Api.Object.Bot
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.Bot
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 login : FieldDecoder String Api.Object.Bot
 login =
-    Field.fieldDecoder "login" [] Decode.string
+    Object.fieldDecoder "login" [] Decode.string
 
 
 resourcePath : FieldDecoder String Api.Object.Bot
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 updatedAt : FieldDecoder String Api.Object.Bot
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.Bot
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string

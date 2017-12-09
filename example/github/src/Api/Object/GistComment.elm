@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.GistComment
@@ -20,27 +21,27 @@ author object =
 
 authorAssociation : FieldDecoder Api.Enum.CommentAuthorAssociation.CommentAuthorAssociation Api.Object.GistComment
 authorAssociation =
-    Field.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
+    Object.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
 
 
 body : FieldDecoder String Api.Object.GistComment
 body =
-    Field.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] Decode.string
 
 
 bodyHTML : FieldDecoder String Api.Object.GistComment
 bodyHTML =
-    Field.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
 createdAt : FieldDecoder String Api.Object.GistComment
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 createdViaEmail : FieldDecoder Bool Api.Object.GistComment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.bool
+    Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.GistComment
@@ -55,39 +56,39 @@ gist object =
 
 id : FieldDecoder String Api.Object.GistComment
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 lastEditedAt : FieldDecoder String Api.Object.GistComment
 lastEditedAt =
-    Field.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] Decode.string
 
 
 publishedAt : FieldDecoder String Api.Object.GistComment
 publishedAt =
-    Field.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] Decode.string
 
 
 updatedAt : FieldDecoder String Api.Object.GistComment
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 viewerCanDelete : FieldDecoder Bool Api.Object.GistComment
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.bool
+    Object.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
 viewerCanUpdate : FieldDecoder Bool Api.Object.GistComment
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.GistComment
 viewerCannotUpdateReasons =
-    Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
 viewerDidAuthor : FieldDecoder Bool Api.Object.GistComment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool
+    Object.fieldDecoder "viewerDidAuthor" [] Decode.bool

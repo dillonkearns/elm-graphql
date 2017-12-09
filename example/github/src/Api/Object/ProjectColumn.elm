@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.ProjectColumn
@@ -12,29 +13,37 @@ build constructor =
     Object.object constructor
 
 
-cards : Object cards Api.Object.ProjectCardConnection -> FieldDecoder cards Api.Object.ProjectColumn
-cards object =
-    Object.single "cards" [] object
+cards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object cards Api.Object.ProjectCardConnection -> FieldDecoder cards Api.Object.ProjectColumn
+cards fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "cards" optionalArgs object
 
 
 createdAt : FieldDecoder String Api.Object.ProjectColumn
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 databaseId : FieldDecoder Int Api.Object.ProjectColumn
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.ProjectColumn
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.ProjectColumn
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 project : Object project Api.Object.Project -> FieldDecoder project Api.Object.ProjectColumn
@@ -44,14 +53,14 @@ project object =
 
 resourcePath : FieldDecoder String Api.Object.ProjectColumn
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 updatedAt : FieldDecoder String Api.Object.ProjectColumn
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.ProjectColumn
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string

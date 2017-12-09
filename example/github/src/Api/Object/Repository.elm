@@ -1,12 +1,20 @@
 module Api.Object.Repository exposing (..)
 
+import Api.Enum.CollaboratorAffiliation
+import Api.Enum.IssueState
+import Api.Enum.OrderDirection
+import Api.Enum.ProjectState
+import Api.Enum.PullRequestState
+import Api.Enum.RepositoryAffiliation
 import Api.Enum.RepositoryLockReason
+import Api.Enum.RepositoryPrivacy
 import Api.Enum.SubscriptionState
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Repository
@@ -14,9 +22,17 @@ build constructor =
     Object.object constructor
 
 
-assignableUsers : Object assignableUsers Api.Object.UserConnection -> FieldDecoder assignableUsers Api.Object.Repository
-assignableUsers object =
-    Object.single "assignableUsers" [] object
+assignableUsers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object assignableUsers Api.Object.UserConnection -> FieldDecoder assignableUsers Api.Object.Repository
+assignableUsers fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "assignableUsers" optionalArgs object
 
 
 codeOfConduct : Object codeOfConduct Api.Object.CodeOfConduct -> FieldDecoder codeOfConduct Api.Object.Repository
@@ -24,24 +40,40 @@ codeOfConduct object =
     Object.single "codeOfConduct" [] object
 
 
-collaborators : Object collaborators Api.Object.RepositoryCollaboratorConnection -> FieldDecoder collaborators Api.Object.Repository
-collaborators object =
-    Object.single "collaborators" [] object
+collaborators : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, affiliation : Maybe Api.Enum.CollaboratorAffiliation.CollaboratorAffiliation } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, affiliation : Maybe Api.Enum.CollaboratorAffiliation.CollaboratorAffiliation }) -> Object collaborators Api.Object.RepositoryCollaboratorConnection -> FieldDecoder collaborators Api.Object.Repository
+collaborators fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, affiliation = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "affiliation" filledInOptionals.affiliation ]
+                |> List.filterMap identity
+    in
+    Object.single "collaborators" optionalArgs object
 
 
-commitComments : Object commitComments Api.Object.CommitCommentConnection -> FieldDecoder commitComments Api.Object.Repository
-commitComments object =
-    Object.single "commitComments" [] object
+commitComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object commitComments Api.Object.CommitCommentConnection -> FieldDecoder commitComments Api.Object.Repository
+commitComments fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "commitComments" optionalArgs object
 
 
 createdAt : FieldDecoder String Api.Object.Repository
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 databaseId : FieldDecoder Int Api.Object.Repository
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 defaultBranchRef : Object defaultBranchRef Api.Object.Ref -> FieldDecoder defaultBranchRef Api.Object.Repository
@@ -49,79 +81,108 @@ defaultBranchRef object =
     Object.single "defaultBranchRef" [] object
 
 
-deployments : Object deployments Api.Object.DeploymentConnection -> FieldDecoder deployments Api.Object.Repository
-deployments object =
-    Object.single "deployments" [] object
+deployKeys : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object deployKeys Api.Object.DeployKeyConnection -> FieldDecoder deployKeys Api.Object.Repository
+deployKeys fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "deployKeys" optionalArgs object
+
+
+deployments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, environments : Maybe (List String) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, environments : Maybe (List String) }) -> Object deployments Api.Object.DeploymentConnection -> FieldDecoder deployments Api.Object.Repository
+deployments fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, environments = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "deployments" optionalArgs object
 
 
 description : FieldDecoder String Api.Object.Repository
 description =
-    Field.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] Decode.string
 
 
 descriptionHTML : FieldDecoder String Api.Object.Repository
 descriptionHTML =
-    Field.fieldDecoder "descriptionHTML" [] Decode.string
+    Object.fieldDecoder "descriptionHTML" [] Decode.string
 
 
 diskUsage : FieldDecoder Int Api.Object.Repository
 diskUsage =
-    Field.fieldDecoder "diskUsage" [] Decode.int
+    Object.fieldDecoder "diskUsage" [] Decode.int
 
 
 forkCount : FieldDecoder Int Api.Object.Repository
 forkCount =
-    Field.fieldDecoder "forkCount" [] Decode.int
+    Object.fieldDecoder "forkCount" [] Decode.int
 
 
-forks : Object forks Api.Object.RepositoryConnection -> FieldDecoder forks Api.Object.Repository
-forks object =
-    Object.single "forks" [] object
+forks : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe String, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe String, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> Object forks Api.Object.RepositoryConnection -> FieldDecoder forks Api.Object.Repository
+forks fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, privacy = Nothing, orderBy = Nothing, affiliations = Nothing, isLocked = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "privacy" filledInOptionals.privacy, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string, Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
+                |> List.filterMap identity
+    in
+    Object.single "forks" optionalArgs object
 
 
 hasIssuesEnabled : FieldDecoder Bool Api.Object.Repository
 hasIssuesEnabled =
-    Field.fieldDecoder "hasIssuesEnabled" [] Decode.bool
+    Object.fieldDecoder "hasIssuesEnabled" [] Decode.bool
 
 
 hasWikiEnabled : FieldDecoder Bool Api.Object.Repository
 hasWikiEnabled =
-    Field.fieldDecoder "hasWikiEnabled" [] Decode.bool
+    Object.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
 homepageUrl : FieldDecoder String Api.Object.Repository
 homepageUrl =
-    Field.fieldDecoder "homepageUrl" [] Decode.string
+    Object.fieldDecoder "homepageUrl" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.Repository
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 isArchived : FieldDecoder Bool Api.Object.Repository
 isArchived =
-    Field.fieldDecoder "isArchived" [] Decode.bool
+    Object.fieldDecoder "isArchived" [] Decode.bool
 
 
 isFork : FieldDecoder Bool Api.Object.Repository
 isFork =
-    Field.fieldDecoder "isFork" [] Decode.bool
+    Object.fieldDecoder "isFork" [] Decode.bool
 
 
 isLocked : FieldDecoder Bool Api.Object.Repository
 isLocked =
-    Field.fieldDecoder "isLocked" [] Decode.bool
+    Object.fieldDecoder "isLocked" [] Decode.bool
 
 
 isMirror : FieldDecoder Bool Api.Object.Repository
 isMirror =
-    Field.fieldDecoder "isMirror" [] Decode.bool
+    Object.fieldDecoder "isMirror" [] Decode.bool
 
 
 isPrivate : FieldDecoder Bool Api.Object.Repository
 isPrivate =
-    Field.fieldDecoder "isPrivate" [] Decode.bool
+    Object.fieldDecoder "isPrivate" [] Decode.bool
 
 
 issue : { number : String } -> Object issue Api.Object.Issue -> FieldDecoder issue Api.Object.Repository
@@ -131,12 +192,20 @@ issue requiredArgs object =
 
 issueOrPullRequest : { number : String } -> FieldDecoder String Api.Object.Repository
 issueOrPullRequest requiredArgs =
-    Field.fieldDecoder "issueOrPullRequest" [ Argument.string "number" requiredArgs.number ] Decode.string
+    Object.fieldDecoder "issueOrPullRequest" [ Argument.string "number" requiredArgs.number ] Decode.string
 
 
-issues : Object issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Repository
-issues object =
-    Object.single "issues" [] object
+issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe String, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe String, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> Object issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Repository
+issues fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, labels = Nothing, orderBy = Nothing, states = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "issues" optionalArgs object
 
 
 label : { name : String } -> Object label Api.Object.Label -> FieldDecoder label Api.Object.Repository
@@ -144,19 +213,35 @@ label requiredArgs object =
     Object.single "label" [ Argument.string "name" requiredArgs.name ] object
 
 
-labels : Object labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Repository
-labels object =
-    Object.single "labels" [] object
+labels : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Repository
+labels fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "labels" optionalArgs object
 
 
-languages : Object languages Api.Object.LanguageConnection -> FieldDecoder languages Api.Object.Repository
-languages object =
-    Object.single "languages" [] object
+languages : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String }) -> Object languages Api.Object.LanguageConnection -> FieldDecoder languages Api.Object.Repository
+languages fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "languages" optionalArgs object
 
 
 license : FieldDecoder String Api.Object.Repository
 license =
-    Field.fieldDecoder "license" [] Decode.string
+    Object.fieldDecoder "license" [] Decode.string
 
 
 licenseInfo : Object licenseInfo Api.Object.License -> FieldDecoder licenseInfo Api.Object.Repository
@@ -166,12 +251,20 @@ licenseInfo object =
 
 lockReason : FieldDecoder Api.Enum.RepositoryLockReason.RepositoryLockReason Api.Object.Repository
 lockReason =
-    Field.fieldDecoder "lockReason" [] Api.Enum.RepositoryLockReason.decoder
+    Object.fieldDecoder "lockReason" [] Api.Enum.RepositoryLockReason.decoder
 
 
-mentionableUsers : Object mentionableUsers Api.Object.UserConnection -> FieldDecoder mentionableUsers Api.Object.Repository
-mentionableUsers object =
-    Object.single "mentionableUsers" [] object
+mentionableUsers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object mentionableUsers Api.Object.UserConnection -> FieldDecoder mentionableUsers Api.Object.Repository
+mentionableUsers fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "mentionableUsers" optionalArgs object
 
 
 milestone : { number : String } -> Object milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.Repository
@@ -179,29 +272,45 @@ milestone requiredArgs object =
     Object.single "milestone" [ Argument.string "number" requiredArgs.number ] object
 
 
-milestones : Object milestones Api.Object.MilestoneConnection -> FieldDecoder milestones Api.Object.Repository
-milestones object =
-    Object.single "milestones" [] object
+milestones : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object milestones Api.Object.MilestoneConnection -> FieldDecoder milestones Api.Object.Repository
+milestones fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "milestones" optionalArgs object
 
 
 mirrorUrl : FieldDecoder String Api.Object.Repository
 mirrorUrl =
-    Field.fieldDecoder "mirrorUrl" [] Decode.string
+    Object.fieldDecoder "mirrorUrl" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.Repository
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 nameWithOwner : FieldDecoder String Api.Object.Repository
 nameWithOwner =
-    Field.fieldDecoder "nameWithOwner" [] Decode.string
+    Object.fieldDecoder "nameWithOwner" [] Decode.string
 
 
-object : Object object Api.Object.GitObject -> FieldDecoder object Api.Object.Repository
-object object =
-    Object.single "object" [] object
+object : ({ oid : Maybe String, expression : Maybe String } -> { oid : Maybe String, expression : Maybe String }) -> Object object Api.Object.GitObject -> FieldDecoder object Api.Object.Repository
+object fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { oid = Nothing, expression = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "oid" filledInOptionals.oid Encode.string, Argument.optional "expression" filledInOptionals.expression Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "object" optionalArgs object
 
 
 owner : Object owner Api.Object.RepositoryOwner -> FieldDecoder owner Api.Object.Repository
@@ -224,24 +333,40 @@ project requiredArgs object =
     Object.single "project" [ Argument.string "number" requiredArgs.number ] object
 
 
-projects : Object projects Api.Object.ProjectConnection -> FieldDecoder projects Api.Object.Repository
-projects object =
-    Object.single "projects" [] object
+projects : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String, search : Maybe String, states : Maybe (List Api.Enum.ProjectState.ProjectState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String, search : Maybe String, states : Maybe (List Api.Enum.ProjectState.ProjectState) }) -> Object projects Api.Object.ProjectConnection -> FieldDecoder projects Api.Object.Repository
+projects fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing, search = Nothing, states = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string, Argument.optional "search" filledInOptionals.search Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "projects" optionalArgs object
 
 
 projectsResourcePath : FieldDecoder String Api.Object.Repository
 projectsResourcePath =
-    Field.fieldDecoder "projectsResourcePath" [] Decode.string
+    Object.fieldDecoder "projectsResourcePath" [] Decode.string
 
 
 projectsUrl : FieldDecoder String Api.Object.Repository
 projectsUrl =
-    Field.fieldDecoder "projectsUrl" [] Decode.string
+    Object.fieldDecoder "projectsUrl" [] Decode.string
 
 
-protectedBranches : Object protectedBranches Api.Object.ProtectedBranchConnection -> FieldDecoder protectedBranches Api.Object.Repository
-protectedBranches object =
-    Object.single "protectedBranches" [] object
+protectedBranches : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object protectedBranches Api.Object.ProtectedBranchConnection -> FieldDecoder protectedBranches Api.Object.Repository
+protectedBranches fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "protectedBranches" optionalArgs object
 
 
 pullRequest : { number : String } -> Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.Repository
@@ -249,14 +374,22 @@ pullRequest requiredArgs object =
     Object.single "pullRequest" [ Argument.string "number" requiredArgs.number ] object
 
 
-pullRequests : Object pullRequests Api.Object.PullRequestConnection -> FieldDecoder pullRequests Api.Object.Repository
-pullRequests object =
-    Object.single "pullRequests" [] object
+pullRequests : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe String }) -> Object pullRequests Api.Object.PullRequestConnection -> FieldDecoder pullRequests Api.Object.Repository
+pullRequests fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, states = Nothing, labels = Nothing, headRefName = Nothing, baseRefName = Nothing, orderBy = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "pullRequests" optionalArgs object
 
 
 pushedAt : FieldDecoder String Api.Object.Repository
 pushedAt =
-    Field.fieldDecoder "pushedAt" [] Decode.string
+    Object.fieldDecoder "pushedAt" [] Decode.string
 
 
 ref : { qualifiedName : String } -> Object ref Api.Object.Ref -> FieldDecoder ref Api.Object.Repository
@@ -264,9 +397,17 @@ ref requiredArgs object =
     Object.single "ref" [ Argument.string "qualifiedName" requiredArgs.qualifiedName ] object
 
 
-refs : { refPrefix : String } -> Object refs Api.Object.RefConnection -> FieldDecoder refs Api.Object.Repository
-refs requiredArgs object =
-    Object.single "refs" [ Argument.string "refPrefix" requiredArgs.refPrefix ] object
+refs : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, direction : Maybe Api.Enum.OrderDirection.OrderDirection, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, direction : Maybe Api.Enum.OrderDirection.OrderDirection, orderBy : Maybe String }) -> { refPrefix : String } -> Object refs Api.Object.RefConnection -> FieldDecoder refs Api.Object.Repository
+refs fillInOptionals requiredArgs object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, direction = Nothing, orderBy = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "direction" filledInOptionals.direction, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "refs" (optionalArgs ++ [ Argument.string "refPrefix" requiredArgs.refPrefix ]) object
 
 
 release : { tagName : String } -> Object release Api.Object.Release -> FieldDecoder release Api.Object.Repository
@@ -274,72 +415,111 @@ release requiredArgs object =
     Object.single "release" [ Argument.string "tagName" requiredArgs.tagName ] object
 
 
-releases : Object releases Api.Object.ReleaseConnection -> FieldDecoder releases Api.Object.Repository
-releases object =
-    -- Object.single "releases" [] object
-    Object.single "releases" [ Argument.int "last" 10 ] object
+releases : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String }) -> Object releases Api.Object.ReleaseConnection -> FieldDecoder releases Api.Object.Repository
+releases fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "releases" optionalArgs object
 
 
-repositoryTopics : Object repositoryTopics Api.Object.RepositoryTopicConnection -> FieldDecoder repositoryTopics Api.Object.Repository
-repositoryTopics object =
-    Object.single "repositoryTopics" [] object
+repositoryTopics : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object repositoryTopics Api.Object.RepositoryTopicConnection -> FieldDecoder repositoryTopics Api.Object.Repository
+repositoryTopics fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "repositoryTopics" optionalArgs object
 
 
 resourcePath : FieldDecoder String Api.Object.Repository
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-shortDescriptionHTML : FieldDecoder String Api.Object.Repository
-shortDescriptionHTML =
-    Field.fieldDecoder "shortDescriptionHTML" [] Decode.string
+shortDescriptionHTML : ({ limit : Maybe Int } -> { limit : Maybe Int }) -> FieldDecoder String Api.Object.Repository
+shortDescriptionHTML fillInOptionals =
+    let
+        filledInOptionals =
+            fillInOptionals { limit = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
+                |> List.filterMap identity
+    in
+    Object.fieldDecoder "shortDescriptionHTML" optionalArgs Decode.string
 
 
-stargazers : Object stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Repository
-stargazers object =
-    Object.single "stargazers" [] object
+stargazers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe String }) -> Object stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Repository
+stargazers fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "stargazers" optionalArgs object
 
 
 updatedAt : FieldDecoder String Api.Object.Repository
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.Repository
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string
 
 
 viewerCanAdminister : FieldDecoder Bool Api.Object.Repository
 viewerCanAdminister =
-    Field.fieldDecoder "viewerCanAdminister" [] Decode.bool
+    Object.fieldDecoder "viewerCanAdminister" [] Decode.bool
 
 
 viewerCanCreateProjects : FieldDecoder Bool Api.Object.Repository
 viewerCanCreateProjects =
-    Field.fieldDecoder "viewerCanCreateProjects" [] Decode.bool
+    Object.fieldDecoder "viewerCanCreateProjects" [] Decode.bool
 
 
 viewerCanSubscribe : FieldDecoder Bool Api.Object.Repository
 viewerCanSubscribe =
-    Field.fieldDecoder "viewerCanSubscribe" [] Decode.bool
+    Object.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 viewerCanUpdateTopics : FieldDecoder Bool Api.Object.Repository
 viewerCanUpdateTopics =
-    Field.fieldDecoder "viewerCanUpdateTopics" [] Decode.bool
+    Object.fieldDecoder "viewerCanUpdateTopics" [] Decode.bool
 
 
 viewerHasStarred : FieldDecoder Bool Api.Object.Repository
 viewerHasStarred =
-    Field.fieldDecoder "viewerHasStarred" [] Decode.bool
+    Object.fieldDecoder "viewerHasStarred" [] Decode.bool
 
 
 viewerSubscription : FieldDecoder Api.Enum.SubscriptionState.SubscriptionState Api.Object.Repository
 viewerSubscription =
-    Field.fieldDecoder "viewerSubscription" [] Api.Enum.SubscriptionState.decoder
+    Object.fieldDecoder "viewerSubscription" [] Api.Enum.SubscriptionState.decoder
 
 
-watchers : Object watchers Api.Object.UserConnection -> FieldDecoder watchers Api.Object.Repository
-watchers object =
-    Object.single "watchers" [] object
+watchers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object watchers Api.Object.UserConnection -> FieldDecoder watchers Api.Object.Repository
+watchers fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "watchers" optionalArgs object

@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.ReactionConnection
@@ -29,9 +30,9 @@ pageInfo object =
 
 totalCount : FieldDecoder Int Api.Object.ReactionConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.int
+    Object.fieldDecoder "totalCount" [] Decode.int
 
 
 viewerHasReacted : FieldDecoder Bool Api.Object.ReactionConnection
 viewerHasReacted =
-    Field.fieldDecoder "viewerHasReacted" [] Decode.bool
+    Object.fieldDecoder "viewerHasReacted" [] Decode.bool

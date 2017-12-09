@@ -1,11 +1,13 @@
 module Api.Object.CommitComment exposing (..)
 
 import Api.Enum.CommentAuthorAssociation
+import Api.Enum.ReactionContent
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.CommitComment
@@ -20,17 +22,17 @@ author object =
 
 authorAssociation : FieldDecoder Api.Enum.CommentAuthorAssociation.CommentAuthorAssociation Api.Object.CommitComment
 authorAssociation =
-    Field.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
+    Object.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
 
 
 body : FieldDecoder String Api.Object.CommitComment
 body =
-    Field.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] Decode.string
 
 
 bodyHTML : FieldDecoder String Api.Object.CommitComment
 bodyHTML =
-    Field.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
 commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.CommitComment
@@ -40,17 +42,17 @@ commit object =
 
 createdAt : FieldDecoder String Api.Object.CommitComment
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 createdViaEmail : FieldDecoder Bool Api.Object.CommitComment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.bool
+    Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 databaseId : FieldDecoder Int Api.Object.CommitComment
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.CommitComment
@@ -60,27 +62,27 @@ editor object =
 
 id : FieldDecoder String Api.Object.CommitComment
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 lastEditedAt : FieldDecoder String Api.Object.CommitComment
 lastEditedAt =
-    Field.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] Decode.string
 
 
 path : FieldDecoder String Api.Object.CommitComment
 path =
-    Field.fieldDecoder "path" [] Decode.string
+    Object.fieldDecoder "path" [] Decode.string
 
 
 position : FieldDecoder Int Api.Object.CommitComment
 position =
-    Field.fieldDecoder "position" [] Decode.int
+    Object.fieldDecoder "position" [] Decode.int
 
 
 publishedAt : FieldDecoder String Api.Object.CommitComment
 publishedAt =
-    Field.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] Decode.string
 
 
 reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.CommitComment
@@ -88,9 +90,17 @@ reactionGroups object =
     Object.listOf "reactionGroups" [] object
 
 
-reactions : Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.CommitComment
-reactions object =
-    Object.single "reactions" [] object
+reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe String }) -> Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.CommitComment
+reactions fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, content = Nothing, orderBy = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "content" filledInOptionals.content, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "reactions" optionalArgs object
 
 
 repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.CommitComment
@@ -100,39 +110,39 @@ repository object =
 
 resourcePath : FieldDecoder String Api.Object.CommitComment
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 updatedAt : FieldDecoder String Api.Object.CommitComment
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.CommitComment
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string
 
 
 viewerCanDelete : FieldDecoder Bool Api.Object.CommitComment
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.bool
+    Object.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
 viewerCanReact : FieldDecoder Bool Api.Object.CommitComment
 viewerCanReact =
-    Field.fieldDecoder "viewerCanReact" [] Decode.bool
+    Object.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
 viewerCanUpdate : FieldDecoder Bool Api.Object.CommitComment
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.CommitComment
 viewerCannotUpdateReasons =
-    Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
 viewerDidAuthor : FieldDecoder Bool Api.Object.CommitComment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool
+    Object.fieldDecoder "viewerDidAuthor" [] Decode.bool

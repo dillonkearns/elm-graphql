@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.ExternalIdentity
@@ -14,12 +15,12 @@ build constructor =
 
 guid : FieldDecoder String Api.Object.ExternalIdentity
 guid =
-    Field.fieldDecoder "guid" [] Decode.string
+    Object.fieldDecoder "guid" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.ExternalIdentity
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 organizationInvitation : Object organizationInvitation Api.Object.OrganizationInvitation -> FieldDecoder organizationInvitation Api.Object.ExternalIdentity

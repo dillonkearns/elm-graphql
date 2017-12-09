@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Release
@@ -19,47 +20,55 @@ author object =
 
 createdAt : FieldDecoder String Api.Object.Release
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 description : FieldDecoder String Api.Object.Release
 description =
-    Field.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.Release
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 isDraft : FieldDecoder Bool Api.Object.Release
 isDraft =
-    Field.fieldDecoder "isDraft" [] Decode.bool
+    Object.fieldDecoder "isDraft" [] Decode.bool
 
 
 isPrerelease : FieldDecoder Bool Api.Object.Release
 isPrerelease =
-    Field.fieldDecoder "isPrerelease" [] Decode.bool
+    Object.fieldDecoder "isPrerelease" [] Decode.bool
 
 
 name : FieldDecoder String Api.Object.Release
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 publishedAt : FieldDecoder String Api.Object.Release
 publishedAt =
-    Field.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-releaseAssets : Object releaseAssets Api.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Api.Object.Release
-releaseAssets object =
-    Object.single "releaseAssets" [] object
+releaseAssets : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String }) -> Object releaseAssets Api.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Api.Object.Release
+releaseAssets fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, name = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "releaseAssets" optionalArgs object
 
 
 resourcePath : FieldDecoder String Api.Object.Release
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 tag : Object tag Api.Object.Ref -> FieldDecoder tag Api.Object.Release
@@ -69,9 +78,9 @@ tag object =
 
 updatedAt : FieldDecoder String Api.Object.Release
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.Release
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string

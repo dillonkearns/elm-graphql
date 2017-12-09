@@ -7,6 +7,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.OrganizationInvitation
@@ -16,17 +17,17 @@ build constructor =
 
 email : FieldDecoder String Api.Object.OrganizationInvitation
 email =
-    Field.fieldDecoder "email" [] Decode.string
+    Object.fieldDecoder "email" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.OrganizationInvitation
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 invitationType : FieldDecoder Api.Enum.OrganizationInvitationType.OrganizationInvitationType Api.Object.OrganizationInvitation
 invitationType =
-    Field.fieldDecoder "invitationType" [] Api.Enum.OrganizationInvitationType.decoder
+    Object.fieldDecoder "invitationType" [] Api.Enum.OrganizationInvitationType.decoder
 
 
 invitee : Object invitee Api.Object.User -> FieldDecoder invitee Api.Object.OrganizationInvitation
@@ -41,4 +42,4 @@ inviter object =
 
 role : FieldDecoder Api.Enum.OrganizationInvitationRole.OrganizationInvitationRole Api.Object.OrganizationInvitation
 role =
-    Field.fieldDecoder "role" [] Api.Enum.OrganizationInvitationRole.decoder
+    Object.fieldDecoder "role" [] Api.Enum.OrganizationInvitationRole.decoder

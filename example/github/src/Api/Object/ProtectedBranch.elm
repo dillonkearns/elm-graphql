@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.ProtectedBranch
@@ -19,52 +20,60 @@ creator object =
 
 hasDismissableStaleReviews : FieldDecoder Bool Api.Object.ProtectedBranch
 hasDismissableStaleReviews =
-    Field.fieldDecoder "hasDismissableStaleReviews" [] Decode.bool
+    Object.fieldDecoder "hasDismissableStaleReviews" [] Decode.bool
 
 
 hasRequiredReviews : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRequiredReviews =
-    Field.fieldDecoder "hasRequiredReviews" [] Decode.bool
+    Object.fieldDecoder "hasRequiredReviews" [] Decode.bool
 
 
 hasRequiredStatusChecks : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRequiredStatusChecks =
-    Field.fieldDecoder "hasRequiredStatusChecks" [] Decode.bool
+    Object.fieldDecoder "hasRequiredStatusChecks" [] Decode.bool
 
 
 hasRestrictedPushes : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRestrictedPushes =
-    Field.fieldDecoder "hasRestrictedPushes" [] Decode.bool
+    Object.fieldDecoder "hasRestrictedPushes" [] Decode.bool
 
 
 hasRestrictedReviewDismissals : FieldDecoder Bool Api.Object.ProtectedBranch
 hasRestrictedReviewDismissals =
-    Field.fieldDecoder "hasRestrictedReviewDismissals" [] Decode.bool
+    Object.fieldDecoder "hasRestrictedReviewDismissals" [] Decode.bool
 
 
 hasStrictRequiredStatusChecks : FieldDecoder Bool Api.Object.ProtectedBranch
 hasStrictRequiredStatusChecks =
-    Field.fieldDecoder "hasStrictRequiredStatusChecks" [] Decode.bool
+    Object.fieldDecoder "hasStrictRequiredStatusChecks" [] Decode.bool
 
 
 id : FieldDecoder String Api.Object.ProtectedBranch
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 isAdminEnforced : FieldDecoder Bool Api.Object.ProtectedBranch
 isAdminEnforced =
-    Field.fieldDecoder "isAdminEnforced" [] Decode.bool
+    Object.fieldDecoder "isAdminEnforced" [] Decode.bool
 
 
 name : FieldDecoder String Api.Object.ProtectedBranch
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
-pushAllowances : Object pushAllowances Api.Object.PushAllowanceConnection -> FieldDecoder pushAllowances Api.Object.ProtectedBranch
-pushAllowances object =
-    Object.single "pushAllowances" [] object
+pushAllowances : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object pushAllowances Api.Object.PushAllowanceConnection -> FieldDecoder pushAllowances Api.Object.ProtectedBranch
+pushAllowances fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "pushAllowances" optionalArgs object
 
 
 repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.ProtectedBranch
@@ -74,9 +83,17 @@ repository object =
 
 requiredStatusCheckContexts : FieldDecoder (List String) Api.Object.ProtectedBranch
 requiredStatusCheckContexts =
-    Field.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.list)
 
 
-reviewDismissalAllowances : Object reviewDismissalAllowances Api.Object.ReviewDismissalAllowanceConnection -> FieldDecoder reviewDismissalAllowances Api.Object.ProtectedBranch
-reviewDismissalAllowances object =
-    Object.single "reviewDismissalAllowances" [] object
+reviewDismissalAllowances : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object reviewDismissalAllowances Api.Object.ReviewDismissalAllowanceConnection -> FieldDecoder reviewDismissalAllowances Api.Object.ProtectedBranch
+reviewDismissalAllowances fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "reviewDismissalAllowances" optionalArgs object

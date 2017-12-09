@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.LanguageEdge
@@ -14,7 +15,7 @@ build constructor =
 
 cursor : FieldDecoder String Api.Object.LanguageEdge
 cursor =
-    Field.fieldDecoder "cursor" [] Decode.string
+    Object.fieldDecoder "cursor" [] Decode.string
 
 
 node : Object node Api.Object.Language -> FieldDecoder node Api.Object.LanguageEdge
@@ -24,4 +25,4 @@ node object =
 
 size : FieldDecoder Int Api.Object.LanguageEdge
 size =
-    Field.fieldDecoder "size" [] Decode.int
+    Object.fieldDecoder "size" [] Decode.int

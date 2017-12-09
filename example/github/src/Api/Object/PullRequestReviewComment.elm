@@ -1,11 +1,13 @@
 module Api.Object.PullRequestReviewComment exposing (..)
 
 import Api.Enum.CommentAuthorAssociation
+import Api.Enum.ReactionContent
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequestReviewComment
@@ -20,22 +22,22 @@ author object =
 
 authorAssociation : FieldDecoder Api.Enum.CommentAuthorAssociation.CommentAuthorAssociation Api.Object.PullRequestReviewComment
 authorAssociation =
-    Field.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
+    Object.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
 
 
 body : FieldDecoder String Api.Object.PullRequestReviewComment
 body =
-    Field.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] Decode.string
 
 
 bodyHTML : FieldDecoder String Api.Object.PullRequestReviewComment
 bodyHTML =
-    Field.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
 bodyText : FieldDecoder String Api.Object.PullRequestReviewComment
 bodyText =
-    Field.fieldDecoder "bodyText" [] Decode.string
+    Object.fieldDecoder "bodyText" [] Decode.string
 
 
 commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.PullRequestReviewComment
@@ -45,27 +47,27 @@ commit object =
 
 createdAt : FieldDecoder String Api.Object.PullRequestReviewComment
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 createdViaEmail : FieldDecoder Bool Api.Object.PullRequestReviewComment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.bool
+    Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 databaseId : FieldDecoder Int Api.Object.PullRequestReviewComment
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 diffHunk : FieldDecoder String Api.Object.PullRequestReviewComment
 diffHunk =
-    Field.fieldDecoder "diffHunk" [] Decode.string
+    Object.fieldDecoder "diffHunk" [] Decode.string
 
 
 draftedAt : FieldDecoder String Api.Object.PullRequestReviewComment
 draftedAt =
-    Field.fieldDecoder "draftedAt" [] Decode.string
+    Object.fieldDecoder "draftedAt" [] Decode.string
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequestReviewComment
@@ -75,12 +77,12 @@ editor object =
 
 id : FieldDecoder String Api.Object.PullRequestReviewComment
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 lastEditedAt : FieldDecoder String Api.Object.PullRequestReviewComment
 lastEditedAt =
-    Field.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] Decode.string
 
 
 originalCommit : Object originalCommit Api.Object.Commit -> FieldDecoder originalCommit Api.Object.PullRequestReviewComment
@@ -90,22 +92,22 @@ originalCommit object =
 
 originalPosition : FieldDecoder Int Api.Object.PullRequestReviewComment
 originalPosition =
-    Field.fieldDecoder "originalPosition" [] Decode.int
+    Object.fieldDecoder "originalPosition" [] Decode.int
 
 
 path : FieldDecoder String Api.Object.PullRequestReviewComment
 path =
-    Field.fieldDecoder "path" [] Decode.string
+    Object.fieldDecoder "path" [] Decode.string
 
 
 position : FieldDecoder Int Api.Object.PullRequestReviewComment
 position =
-    Field.fieldDecoder "position" [] Decode.int
+    Object.fieldDecoder "position" [] Decode.int
 
 
 publishedAt : FieldDecoder String Api.Object.PullRequestReviewComment
 publishedAt =
-    Field.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] Decode.string
 
 
 pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestReviewComment
@@ -123,9 +125,17 @@ reactionGroups object =
     Object.listOf "reactionGroups" [] object
 
 
-reactions : Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.PullRequestReviewComment
-reactions object =
-    Object.single "reactions" [] object
+reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe String }) -> Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.PullRequestReviewComment
+reactions fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, content = Nothing, orderBy = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optionalEnum "content" filledInOptionals.content, Argument.optional "orderBy" filledInOptionals.orderBy Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.single "reactions" optionalArgs object
 
 
 replyTo : Object replyTo Api.Object.PullRequestReviewComment -> FieldDecoder replyTo Api.Object.PullRequestReviewComment
@@ -140,39 +150,39 @@ repository object =
 
 resourcePath : FieldDecoder String Api.Object.PullRequestReviewComment
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 updatedAt : FieldDecoder String Api.Object.PullRequestReviewComment
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.PullRequestReviewComment
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string
 
 
 viewerCanDelete : FieldDecoder Bool Api.Object.PullRequestReviewComment
 viewerCanDelete =
-    Field.fieldDecoder "viewerCanDelete" [] Decode.bool
+    Object.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
 viewerCanReact : FieldDecoder Bool Api.Object.PullRequestReviewComment
 viewerCanReact =
-    Field.fieldDecoder "viewerCanReact" [] Decode.bool
+    Object.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
 viewerCanUpdate : FieldDecoder Bool Api.Object.PullRequestReviewComment
 viewerCanUpdate =
-    Field.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.PullRequestReviewComment
 viewerCannotUpdateReasons =
-    Field.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
 
 
 viewerDidAuthor : FieldDecoder Bool Api.Object.PullRequestReviewComment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool
+    Object.fieldDecoder "viewerDidAuthor" [] Decode.bool

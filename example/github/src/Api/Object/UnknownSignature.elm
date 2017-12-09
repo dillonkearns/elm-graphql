@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.UnknownSignature
@@ -15,22 +16,22 @@ build constructor =
 
 email : FieldDecoder String Api.Object.UnknownSignature
 email =
-    Field.fieldDecoder "email" [] Decode.string
+    Object.fieldDecoder "email" [] Decode.string
 
 
 isValid : FieldDecoder Bool Api.Object.UnknownSignature
 isValid =
-    Field.fieldDecoder "isValid" [] Decode.bool
+    Object.fieldDecoder "isValid" [] Decode.bool
 
 
 payload : FieldDecoder String Api.Object.UnknownSignature
 payload =
-    Field.fieldDecoder "payload" [] Decode.string
+    Object.fieldDecoder "payload" [] Decode.string
 
 
 signature : FieldDecoder String Api.Object.UnknownSignature
 signature =
-    Field.fieldDecoder "signature" [] Decode.string
+    Object.fieldDecoder "signature" [] Decode.string
 
 
 signer : Object signer Api.Object.User -> FieldDecoder signer Api.Object.UnknownSignature
@@ -40,4 +41,4 @@ signer object =
 
 state : FieldDecoder Api.Enum.GitSignatureState.GitSignatureState Api.Object.UnknownSignature
 state =
-    Field.fieldDecoder "state" [] Api.Enum.GitSignatureState.decoder
+    Object.fieldDecoder "state" [] Api.Enum.GitSignatureState.decoder

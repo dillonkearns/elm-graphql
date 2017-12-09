@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.DeployedEvent
@@ -19,12 +20,12 @@ actor object =
 
 createdAt : FieldDecoder String Api.Object.DeployedEvent
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 databaseId : FieldDecoder Int Api.Object.DeployedEvent
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 deployment : Object deployment Api.Object.Deployment -> FieldDecoder deployment Api.Object.DeployedEvent
@@ -34,7 +35,7 @@ deployment object =
 
 id : FieldDecoder String Api.Object.DeployedEvent
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.DeployedEvent

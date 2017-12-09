@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.HeadRefDeletedEvent
@@ -19,7 +20,7 @@ actor object =
 
 createdAt : FieldDecoder String Api.Object.HeadRefDeletedEvent
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 headRef : Object headRef Api.Object.Ref -> FieldDecoder headRef Api.Object.HeadRefDeletedEvent
@@ -29,12 +30,12 @@ headRef object =
 
 headRefName : FieldDecoder String Api.Object.HeadRefDeletedEvent
 headRefName =
-    Field.fieldDecoder "headRefName" [] Decode.string
+    Object.fieldDecoder "headRefName" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.HeadRefDeletedEvent
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.HeadRefDeletedEvent

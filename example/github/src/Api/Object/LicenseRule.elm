@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.LicenseRule
@@ -14,14 +15,14 @@ build constructor =
 
 description : FieldDecoder String Api.Object.LicenseRule
 description =
-    Field.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] Decode.string
 
 
 key : FieldDecoder String Api.Object.LicenseRule
 key =
-    Field.fieldDecoder "key" [] Decode.string
+    Object.fieldDecoder "key" [] Decode.string
 
 
 label : FieldDecoder String Api.Object.LicenseRule
 label =
-    Field.fieldDecoder "label" [] Decode.string
+    Object.fieldDecoder "label" [] Decode.string

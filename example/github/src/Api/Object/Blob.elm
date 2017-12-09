@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Blob
@@ -14,42 +15,42 @@ build constructor =
 
 abbreviatedOid : FieldDecoder String Api.Object.Blob
 abbreviatedOid =
-    Field.fieldDecoder "abbreviatedOid" [] Decode.string
+    Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
 byteSize : FieldDecoder Int Api.Object.Blob
 byteSize =
-    Field.fieldDecoder "byteSize" [] Decode.int
+    Object.fieldDecoder "byteSize" [] Decode.int
 
 
 commitResourcePath : FieldDecoder String Api.Object.Blob
 commitResourcePath =
-    Field.fieldDecoder "commitResourcePath" [] Decode.string
+    Object.fieldDecoder "commitResourcePath" [] Decode.string
 
 
 commitUrl : FieldDecoder String Api.Object.Blob
 commitUrl =
-    Field.fieldDecoder "commitUrl" [] Decode.string
+    Object.fieldDecoder "commitUrl" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.Blob
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 isBinary : FieldDecoder Bool Api.Object.Blob
 isBinary =
-    Field.fieldDecoder "isBinary" [] Decode.bool
+    Object.fieldDecoder "isBinary" [] Decode.bool
 
 
 isTruncated : FieldDecoder Bool Api.Object.Blob
 isTruncated =
-    Field.fieldDecoder "isTruncated" [] Decode.bool
+    Object.fieldDecoder "isTruncated" [] Decode.bool
 
 
 oid : FieldDecoder String Api.Object.Blob
 oid =
-    Field.fieldDecoder "oid" [] Decode.string
+    Object.fieldDecoder "oid" [] Decode.string
 
 
 repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Blob
@@ -59,4 +60,4 @@ repository object =
 
 text : FieldDecoder String Api.Object.Blob
 text =
-    Field.fieldDecoder "text" [] Decode.string
+    Object.fieldDecoder "text" [] Decode.string

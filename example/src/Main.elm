@@ -9,6 +9,7 @@ import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Query
 import Html
+import Json.Encode
 import RemoteData exposing (WebData)
 
 

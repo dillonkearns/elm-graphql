@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.Comment
@@ -20,27 +21,27 @@ author object =
 
 authorAssociation : FieldDecoder Api.Enum.CommentAuthorAssociation.CommentAuthorAssociation Api.Object.Comment
 authorAssociation =
-    Field.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
+    Object.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
 
 
 body : FieldDecoder String Api.Object.Comment
 body =
-    Field.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] Decode.string
 
 
 bodyHTML : FieldDecoder String Api.Object.Comment
 bodyHTML =
-    Field.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
 createdAt : FieldDecoder String Api.Object.Comment
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 createdViaEmail : FieldDecoder Bool Api.Object.Comment
 createdViaEmail =
-    Field.fieldDecoder "createdViaEmail" [] Decode.bool
+    Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.Comment
@@ -50,24 +51,24 @@ editor object =
 
 id : FieldDecoder String Api.Object.Comment
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 lastEditedAt : FieldDecoder String Api.Object.Comment
 lastEditedAt =
-    Field.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] Decode.string
 
 
 publishedAt : FieldDecoder String Api.Object.Comment
 publishedAt =
-    Field.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] Decode.string
 
 
 updatedAt : FieldDecoder String Api.Object.Comment
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 viewerDidAuthor : FieldDecoder Bool Api.Object.Comment
 viewerDidAuthor =
-    Field.fieldDecoder "viewerDidAuthor" [] Decode.bool
+    Object.fieldDecoder "viewerDidAuthor" [] Decode.bool

@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.RepositoryConnection
@@ -29,9 +30,9 @@ pageInfo object =
 
 totalCount : FieldDecoder Int Api.Object.RepositoryConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.int
+    Object.fieldDecoder "totalCount" [] Decode.int
 
 
 totalDiskUsage : FieldDecoder Int Api.Object.RepositoryConnection
 totalDiskUsage =
-    Field.fieldDecoder "totalDiskUsage" [] Decode.int
+    Object.fieldDecoder "totalDiskUsage" [] Decode.int

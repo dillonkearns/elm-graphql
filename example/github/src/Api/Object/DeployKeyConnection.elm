@@ -1,4 +1,4 @@
-module Api.Object.ProjectCardConnection exposing (..)
+module Api.Object.DeployKeyConnection exposing (..)
 
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
@@ -8,26 +8,26 @@ import Json.Decode as Decode
 import Json.Encode as Encode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.ProjectCardConnection
+build : (a -> constructor) -> Object (a -> constructor) Api.Object.DeployKeyConnection
 build constructor =
     Object.object constructor
 
 
-edges : Object edges Api.Object.ProjectCardEdge -> FieldDecoder (List edges) Api.Object.ProjectCardConnection
+edges : Object edges Api.Object.DeployKeyEdge -> FieldDecoder (List edges) Api.Object.DeployKeyConnection
 edges object =
     Object.listOf "edges" [] object
 
 
-nodes : Object nodes Api.Object.ProjectCard -> FieldDecoder (List nodes) Api.Object.ProjectCardConnection
+nodes : Object nodes Api.Object.DeployKey -> FieldDecoder (List nodes) Api.Object.DeployKeyConnection
 nodes object =
     Object.listOf "nodes" [] object
 
 
-pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.ProjectCardConnection
+pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.DeployKeyConnection
 pageInfo object =
     Object.single "pageInfo" [] object
 
 
-totalCount : FieldDecoder Int Api.Object.ProjectCardConnection
+totalCount : FieldDecoder Int Api.Object.DeployKeyConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

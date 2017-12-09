@@ -6,6 +6,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.ProjectCard
@@ -20,12 +21,12 @@ column object =
 
 content : FieldDecoder String Api.Object.ProjectCard
 content =
-    Field.fieldDecoder "content" [] Decode.string
+    Object.fieldDecoder "content" [] Decode.string
 
 
 createdAt : FieldDecoder String Api.Object.ProjectCard
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 creator : Object creator Api.Object.Actor -> FieldDecoder creator Api.Object.ProjectCard
@@ -35,17 +36,17 @@ creator object =
 
 databaseId : FieldDecoder Int Api.Object.ProjectCard
 databaseId =
-    Field.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] Decode.int
 
 
 id : FieldDecoder String Api.Object.ProjectCard
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 note : FieldDecoder String Api.Object.ProjectCard
 note =
-    Field.fieldDecoder "note" [] Decode.string
+    Object.fieldDecoder "note" [] Decode.string
 
 
 project : Object project Api.Object.Project -> FieldDecoder project Api.Object.ProjectCard
@@ -60,19 +61,19 @@ projectColumn object =
 
 resourcePath : FieldDecoder String Api.Object.ProjectCard
 resourcePath =
-    Field.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 state : FieldDecoder Api.Enum.ProjectCardState.ProjectCardState Api.Object.ProjectCard
 state =
-    Field.fieldDecoder "state" [] Api.Enum.ProjectCardState.decoder
+    Object.fieldDecoder "state" [] Api.Enum.ProjectCardState.decoder
 
 
 updatedAt : FieldDecoder String Api.Object.ProjectCard
 updatedAt =
-    Field.fieldDecoder "updatedAt" [] Decode.string
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.ProjectCard
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string

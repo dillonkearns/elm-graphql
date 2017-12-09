@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.CodeOfConduct
@@ -14,19 +15,19 @@ build constructor =
 
 body : FieldDecoder String Api.Object.CodeOfConduct
 body =
-    Field.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] Decode.string
 
 
 key : FieldDecoder String Api.Object.CodeOfConduct
 key =
-    Field.fieldDecoder "key" [] Decode.string
+    Object.fieldDecoder "key" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.CodeOfConduct
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.CodeOfConduct
 url =
-    Field.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] Decode.string

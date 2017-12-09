@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.DeleteProjectCardPayload
@@ -14,7 +15,7 @@ build constructor =
 
 clientMutationId : FieldDecoder String Api.Object.DeleteProjectCardPayload
 clientMutationId =
-    Field.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] Decode.string
 
 
 column : Object column Api.Object.ProjectColumn -> FieldDecoder column Api.Object.DeleteProjectCardPayload
@@ -24,4 +25,4 @@ column object =
 
 deletedCardId : FieldDecoder String Api.Object.DeleteProjectCardPayload
 deletedCardId =
-    Field.fieldDecoder "deletedCardId" [] Decode.string
+    Object.fieldDecoder "deletedCardId" [] Decode.string

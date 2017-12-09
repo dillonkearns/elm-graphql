@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.GitActor
@@ -12,24 +13,32 @@ build constructor =
     Object.object constructor
 
 
-avatarUrl : FieldDecoder String Api.Object.GitActor
-avatarUrl =
-    Field.fieldDecoder "avatarUrl" [] Decode.string
+avatarUrl : ({ size : Maybe Int } -> { size : Maybe Int }) -> FieldDecoder String Api.Object.GitActor
+avatarUrl fillInOptionals =
+    let
+        filledInOptionals =
+            fillInOptionals { size = Nothing }
+
+        optionalArgs =
+            [ Argument.optional "size" filledInOptionals.size Encode.int ]
+                |> List.filterMap identity
+    in
+    Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
 
 
 date : FieldDecoder String Api.Object.GitActor
 date =
-    Field.fieldDecoder "date" [] Decode.string
+    Object.fieldDecoder "date" [] Decode.string
 
 
 email : FieldDecoder String Api.Object.GitActor
 email =
-    Field.fieldDecoder "email" [] Decode.string
+    Object.fieldDecoder "email" [] Decode.string
 
 
 name : FieldDecoder String Api.Object.GitActor
 name =
-    Field.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string
 
 
 user : Object user Api.Object.User -> FieldDecoder user Api.Object.GitActor

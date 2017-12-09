@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.RenamedTitleEvent
@@ -19,24 +20,24 @@ actor object =
 
 createdAt : FieldDecoder String Api.Object.RenamedTitleEvent
 createdAt =
-    Field.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] Decode.string
 
 
 currentTitle : FieldDecoder String Api.Object.RenamedTitleEvent
 currentTitle =
-    Field.fieldDecoder "currentTitle" [] Decode.string
+    Object.fieldDecoder "currentTitle" [] Decode.string
 
 
 id : FieldDecoder String Api.Object.RenamedTitleEvent
 id =
-    Field.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] Decode.string
 
 
 previousTitle : FieldDecoder String Api.Object.RenamedTitleEvent
 previousTitle =
-    Field.fieldDecoder "previousTitle" [] Decode.string
+    Object.fieldDecoder "previousTitle" [] Decode.string
 
 
 subject : FieldDecoder String Api.Object.RenamedTitleEvent
 subject =
-    Field.fieldDecoder "subject" [] Decode.string
+    Object.fieldDecoder "subject" [] Decode.string

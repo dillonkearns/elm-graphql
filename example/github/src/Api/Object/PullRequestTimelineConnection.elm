@@ -5,6 +5,7 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequestTimelineConnection
@@ -19,7 +20,7 @@ edges object =
 
 nodes : FieldDecoder (List String) Api.Object.PullRequestTimelineConnection
 nodes =
-    Field.fieldDecoder "nodes" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "nodes" [] (Decode.string |> Decode.list)
 
 
 pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.PullRequestTimelineConnection
@@ -29,4 +30,4 @@ pageInfo object =
 
 totalCount : FieldDecoder Int Api.Object.PullRequestTimelineConnection
 totalCount =
-    Field.fieldDecoder "totalCount" [] Decode.int
+    Object.fieldDecoder "totalCount" [] Decode.int
