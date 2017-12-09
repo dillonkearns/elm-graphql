@@ -38,6 +38,9 @@ generateDecoder typeRef =
                         ++ [ "decoder" ]
                         |> String.join "."
 
+                Type.InputObjectRef _ ->
+                    Debug.crash "Input objects are only for input not responses, shouldn't need decoder."
+
 
 generateEncoder : TypeReference -> String
 generateEncoder typeRef =
@@ -69,6 +72,9 @@ generateEncoder typeRef =
 
                 Type.EnumRef enumName ->
                     "(Value.enum toString)"
+
+                Type.InputObjectRef inputObjectName ->
+                    "identity"
 
 
 generateType : TypeReference -> String
@@ -103,3 +109,6 @@ generateType typeRef =
                     Graphqelm.Generator.Enum.moduleNameFor enumName
                         ++ [ enumName ]
                         |> String.join "."
+
+                Type.InputObjectRef _ ->
+                    "Value"

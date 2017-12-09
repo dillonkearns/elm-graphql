@@ -142,6 +142,66 @@ all =
                                 )
                             )
                         )
+        , test "decodes input object arg" <|
+            \() ->
+                """
+                                        {
+                          "possibleTypes": null,
+                          "name": "Query",
+                          "kind": "OBJECT",
+                          "interfaces": [],
+                          "inputFields": null,
+                          "fields": [
+                            {
+                              "type": {
+                                "ofType": {
+                                  "ofType": null,
+                                  "name": "MenuItem",
+                                  "kind": "OBJECT"
+                                },
+                                "name": null,
+                                "kind": "LIST"
+                              },
+                              "name": "menuItems",
+                              "isDeprecated": false,
+                              "description": null,
+                              "deprecationReason": null,
+                              "args": [
+                                {
+                                  "type": {
+                                    "ofType": {
+                                      "ofType": null,
+                                      "name": "FilterOptions",
+                                      "kind": "INPUT_OBJECT"
+                                    },
+                                    "name": null,
+                                    "kind": "NON_NULL"
+                                  },
+                                  "name": "filterOptions",
+                                  "isDeprecated": false,
+                                  "description": null,
+                                  "deprecationReason": null,
+                                  "defaultValue": null
+                                }
+                              ]
+                            }
+                          ],
+                          "enumValues": null
+                        }
+                                        """
+                    |> Decode.decodeString Type.decoder
+                    |> Expect.equal
+                        (Ok
+                            (TypeDefinition "Query"
+                                (ObjectType
+                                    [ { name = "menuItems"
+                                      , typeRef = TypeReference (List (TypeReference (ObjectRef "MenuItem") Nullable)) Nullable
+                                      , args = [ { name = "filterOptions", typeRef = TypeReference (InputObjectRef "FilterOptions") Nullable } ]
+                                      }
+                                    ]
+                                )
+                            )
+                        )
         , test "decodes interface" <|
             \() ->
                 """

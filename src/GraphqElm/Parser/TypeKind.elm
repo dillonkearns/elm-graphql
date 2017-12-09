@@ -11,11 +11,11 @@ type TypeKind
     | Ignore
     | Enum
     | Interface
+    | InputObject
 
 
 
 -- | Union
--- | InputObject
 
 
 decoder : Decoder TypeKind
@@ -42,17 +42,15 @@ decoder =
                     "INTERFACE" ->
                         Decode.succeed Interface
 
+                    "INPUT_OBJECT" ->
+                        Decode.succeed InputObject
+
                     _ ->
                         Decode.succeed Ignore
-             -- "INTERFACE" ->
-             --     Decode.succeed Interface
-             --
              -- "UNION" ->
              --     Decode.succeed Union
              --
              --
-             -- "INPUT_OBJECT" ->
-             --     Decode.succeed InputObject
              -- _ ->
              --     Decode.fail ("Invalid TypeKind " ++ string)
             )

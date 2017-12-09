@@ -60,6 +60,9 @@ imports (Type.TypeReference referrableType isNullable) =
         Type.EnumRef enumName ->
             Just (Graphqelm.Generator.Enum.moduleNameFor enumName)
 
+        Type.InputObjectRef _ ->
+            Nothing
+
 
 object : String -> List String
 object name =

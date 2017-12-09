@@ -159,6 +159,7 @@ type ReferrableType
     | List TypeReference
     | EnumRef String
     | ObjectRef String
+    | InputObjectRef String
     | InterfaceRef String
 
 
@@ -234,6 +235,9 @@ parseRef (RawTypeRef rawTypeRef) =
                         ( TypeKind.Enum, Maybe.Just enumName ) ->
                             TypeReference (EnumRef enumName) NonNullable
 
+                        ( TypeKind.InputObject, Just inputObjectName ) ->
+                            TypeReference (InputObjectRef inputObjectName) Nullable
+
                 Nothing ->
                     ignoreRef
 
@@ -247,6 +251,14 @@ parseRef (RawTypeRef rawTypeRef) =
 
                 Nothing ->
                     Debug.crash "Should not get null names for enum references"
+
+        TypeKind.InputObject ->
+            case rawTypeRef.name of
+                Just inputObjectName ->
+                    TypeReference (InputObjectRef inputObjectName) Nullable
+
+                Nothing ->
+                    Debug.crash "Should not get null names for input object references"
 
 
 ignoreRef : TypeReference
