@@ -50,6 +50,7 @@ separate (DocumentRoot documentFields decoder) =
 toQuery : DocumentRoot a -> String
 toQuery document =
     queriesString (separate document)
+        ++ "\n\n"
         ++ mutationsString (separate document)
 
 
