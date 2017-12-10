@@ -6,14 +6,23 @@ import Graphqelm.Object exposing (Object(..))
 import Json.Decode as Decode exposing (Decoder)
 
 
+type DocumentField
+    = DocumentField MutationOrQuery Field
+
+
+type MutationOrQuery
+    = QueryField
+    | MutationField
+
+
 type Query decodesTo
-    = Query (List Field) (Decoder decodesTo)
+    = Query (List DocumentField) (Decoder decodesTo)
 
 
 toQuery : Query a -> String
 toQuery (Query fields decoder) =
-    "{\n"
-        ++ (List.indexedMap (\index field -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery field) fields |> String.join "\n")
+    "query {\n"
+        ++ (List.indexedMap (\index (DocumentField mutationOrQuery field) -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery field) fields |> String.join "\n")
         ++ "\n}"
 
 
@@ -71,4 +80,4 @@ combine combineFunction (Query fieldsA decoderA) (Query fieldsB decoderB) =
 
 rootQuery : FieldDecoder decodesTo lockedTo -> Query decodesTo
 rootQuery (FieldDecoder field decoder) =
-    Query [ field ] decoder
+    Query [ DocumentField QueryField field ] decoder
