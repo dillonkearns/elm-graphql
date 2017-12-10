@@ -19,18 +19,39 @@ type Query decodesTo
     = Query (List DocumentField) (Decoder decodesTo)
 
 
+separate : Query decodesTo -> { queries : List Field, mutations : List Field }
+separate (Query documentFields decoder) =
+    List.foldl
+        (\(DocumentField mutationOrQuery field) soFar -> { soFar | queries = soFar.queries ++ [ field ] })
+        { queries = [], mutations = [] }
+        documentFields
+
+
 toQuery : Query a -> String
-toQuery (Query fields decoder) =
-    "query {\n"
-        ++ (List.indexedMap (\index (DocumentField mutationOrQuery field) -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery field) fields |> String.join "\n")
-        ++ "\n}"
+toQuery document =
+    document
+        |> separate
+        |> queriesString
+
+
+queriesString : { document | queries : List Field } -> String
+queriesString { queries } =
+    if queries == [] then
+        ""
+    else
+        "query {\n"
+            ++ (List.indexedMap (\index query -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
+            ++ "\n}"
 
 
 decoder : Query decodesTo -> Decoder decodesTo
 decoder (Query fields decoder) =
     (case fields of
-        [ singleField ] ->
+        [ DocumentField QueryField singleField ] ->
             Decode.field "query0" decoder
+
+        [ DocumentField MutationField singleField ] ->
+            Decode.field "mutation0" decoder
 
         multipleFields ->
             decoder
@@ -70,12 +91,6 @@ combine combineFunction (Query fieldsA decoderA) (Query fieldsB decoderB) =
 
         ( multipleA, multipleB ) ->
             Query (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
-
-
-
--- combine3 : (decodesToA -> decodesToB -> decodesToC -> result) -> Query decodesToA -> Query decodesToB -> Query decodesToC -> Query result
--- combine3 combineFunction (Query fieldsA decoderA) (Query fieldsB decoderB) (Query fieldsC decoderC) =
---     Query (fieldsA ++ fieldsB ++ fieldsC) (Decode.map3 combineFunction decoderA decoderB decoderC)
 
 
 rootQuery : FieldDecoder decodesTo lockedTo -> Query decodesTo
