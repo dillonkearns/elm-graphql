@@ -1,4 +1,4 @@
-module Graphqelm.Query exposing (Query, combine, decoder, fieldDecoder, listOf, single, toQuery)
+module Graphqelm.Query exposing (RootField, combine, decoder, fieldDecoder, listOf, single, toQuery)
 
 import Graphqelm.Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field(Composite), FieldDecoder(FieldDecoder))
@@ -15,19 +15,29 @@ type MutationOrQuery
     | MutationField
 
 
-type Query decodesTo
-    = Query (List DocumentField) (Decoder decodesTo)
+type RootField decodesTo
+    = RootField (List DocumentField) (Decoder decodesTo)
 
 
-separate : Query decodesTo -> { queries : List Field, mutations : List Field }
-separate (Query documentFields decoder) =
+separate : RootField decodesTo -> { queries : List Field, mutations : List Field }
+separate (RootField documentFields decoder) =
     List.foldl
-        (\(DocumentField mutationOrQuery field) soFar -> { soFar | queries = soFar.queries ++ [ field ] })
+        (\(DocumentField mutationOrQuery field) soFar ->
+            { soFar
+                | queries =
+                    case mutationOrQuery of
+                        QueryField ->
+                            soFar.queries ++ [ field ]
+
+                        MutationField ->
+                            soFar.mutations ++ [ field ]
+            }
+        )
         { queries = [], mutations = [] }
         documentFields
 
 
-toQuery : Query a -> String
+toQuery : RootField a -> String
 toQuery document =
     document
         |> separate
@@ -44,8 +54,8 @@ queriesString { queries } =
             ++ "\n}"
 
 
-decoder : Query decodesTo -> Decoder decodesTo
-decoder (Query fields decoder) =
+decoder : RootField decodesTo -> Decoder decodesTo
+decoder (RootField fields decoder) =
     (case fields of
         [ DocumentField QueryField singleField ] ->
             Decode.field "query0" decoder
@@ -59,40 +69,40 @@ decoder (Query fields decoder) =
         |> Decode.field "data"
 
 
-single : String -> List Argument -> Object a objectTypeLock -> Query a
+single : String -> List Argument -> Object a objectTypeLock -> RootField a
 single fieldName args (Object fields decoder) =
     FieldDecoder (Composite fieldName args fields) decoder
         |> rootQuery
 
 
-listOf : String -> List Argument -> Object a objectTypeLock -> Query (List a)
+listOf : String -> List Argument -> Object a objectTypeLock -> RootField (List a)
 listOf fieldName args (Object fields decoder) =
     FieldDecoder (Composite fieldName args fields) (Decode.list decoder)
         |> rootQuery
 
 
-fieldDecoder : String -> List Argument -> Decoder decodesTo -> Query decodesTo
+fieldDecoder : String -> List Argument -> Decoder decodesTo -> RootField decodesTo
 fieldDecoder fieldName args decoder =
     FieldDecoder (Field.Leaf fieldName args) decoder
         |> rootQuery
 
 
-combine : (decodesToA -> decodesToB -> decodesToC) -> Query decodesToA -> Query decodesToB -> Query decodesToC
-combine combineFunction (Query fieldsA decoderA) (Query fieldsB decoderB) =
+combine : (decodesToA -> decodesToB -> decodesToC) -> RootField decodesToA -> RootField decodesToB -> RootField decodesToC
+combine combineFunction (RootField fieldsA decoderA) (RootField fieldsB decoderB) =
     case ( fieldsA, fieldsB ) of
         ( [ singleA ], [ singleB ] ) ->
-            Query (fieldsA ++ fieldsB) (Decode.map2 combineFunction (Decode.field "query0" decoderA) (Decode.field "query1" decoderB))
+            RootField (fieldsA ++ fieldsB) (Decode.map2 combineFunction (Decode.field "query0" decoderA) (Decode.field "query1" decoderB))
 
         ( [ singleA ], multipleB ) ->
-            Query (fieldsB ++ fieldsA) (Decode.map2 combineFunction (Decode.field ("query" ++ toString (List.length fieldsB)) decoderA) decoderB)
+            RootField (fieldsB ++ fieldsA) (Decode.map2 combineFunction (Decode.field ("query" ++ toString (List.length fieldsB)) decoderA) decoderB)
 
         ( multipleA, [ singleB ] ) ->
-            Query (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA (Decode.field ("query" ++ toString (List.length fieldsA)) decoderB))
+            RootField (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA (Decode.field ("query" ++ toString (List.length fieldsA)) decoderB))
 
         ( multipleA, multipleB ) ->
-            Query (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
+            RootField (fieldsA ++ fieldsB) (Decode.map2 combineFunction decoderA decoderB)
 
 
-rootQuery : FieldDecoder decodesTo lockedTo -> Query decodesTo
+rootQuery : FieldDecoder decodesTo lockedTo -> RootField decodesTo
 rootQuery (FieldDecoder field decoder) =
-    Query [ DocumentField QueryField field ] decoder
+    RootField [ DocumentField QueryField field ] decoder

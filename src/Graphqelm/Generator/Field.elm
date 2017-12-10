@@ -47,7 +47,7 @@ forObject thisObjectName field =
 
 forQuery_ : FieldGenerator -> String
 forQuery_ field =
-    common (interpolate "Query {0}" [ field.decoderAnnotation ]) field
+    common (interpolate "RootField {0}" [ field.decoderAnnotation ]) field
 
 
 forObject_ : String -> FieldGenerator -> String
