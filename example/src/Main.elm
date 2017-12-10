@@ -4,12 +4,10 @@ import Api.Enum.Weather exposing (Weather)
 import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
-import Graphqelm.Field as Field
+import Graphqelm.Document as Document exposing (DocumentRoot)
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query
 import Html
-import Json.Encode
 import RemoteData exposing (WebData)
 
 
@@ -38,14 +36,14 @@ menuItem =
         |> Object.with MenuItem.name
 
 
-menuItemsQuery : Graphqelm.Query.Query (List MenuItem)
+menuItemsQuery : DocumentRoot (List MenuItem)
 menuItemsQuery =
     Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem
 
 
 makeRequest : Cmd Msg
 makeRequest =
-    Graphqelm.Query.combine (,) menuItemsQuery Api.Query.weather
+    Document.combine (,) menuItemsQuery Api.Query.weather
         |> Graphqelm.Http.buildRequest "http://localhost:4000/api"
         |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest

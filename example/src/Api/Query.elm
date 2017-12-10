@@ -4,25 +4,26 @@ import Api.Enum.SortOrder
 import Api.Enum.Weather
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Document exposing (DocumentRoot)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query as Query exposing (Query)
+import Graphqelm.Query as Query
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
 
-captains : Query (List String)
+captains : DocumentRoot (List String)
 captains =
     Query.fieldDecoder "captains" [] (Decode.string |> Decode.list)
 
 
-me : Query String
+me : DocumentRoot String
 me =
     Query.fieldDecoder "me" [] Decode.string
 
 
-menuItems : ({ contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder } -> { contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder }) -> Object menuItems Api.Object.MenuItem -> Query (List menuItems)
+menuItems : ({ contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder } -> { contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder }) -> Object menuItems Api.Object.MenuItem -> DocumentRoot (List menuItems)
 menuItems fillInOptionals object =
     let
         filledInOptionals =
@@ -35,6 +36,6 @@ menuItems fillInOptionals object =
     Query.listOf "menuItems" optionalArgs object
 
 
-weather : Query Api.Enum.Weather.Weather
+weather : DocumentRoot Api.Enum.Weather.Weather
 weather =
     Query.fieldDecoder "weather" [] Api.Enum.Weather.decoder
