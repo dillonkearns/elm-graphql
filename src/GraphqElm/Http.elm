@@ -1,6 +1,6 @@
 module Graphqelm.Http exposing (buildRequest, request, send, toRequest, withHeader, withTimeout)
 
-import Graphqelm.Document as Document exposing (RootField)
+import Graphqelm.Document as Document exposing (DocumentRoot)
 import Http
 import Json.Encode
 import Time exposing (Time)
@@ -18,13 +18,13 @@ type Request decodesTo
         }
 
 
-request : String -> RootField decodesTo -> Http.Request decodesTo
+request : String -> DocumentRoot decodesTo -> Http.Request decodesTo
 request url query =
     buildRequest url query
         |> toRequest
 
 
-buildRequest : String -> RootField decodesTo -> Request decodesTo
+buildRequest : String -> DocumentRoot decodesTo -> Request decodesTo
 buildRequest url query =
     { method = "POST"
     , headers = []

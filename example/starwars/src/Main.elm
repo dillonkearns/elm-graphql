@@ -5,11 +5,10 @@ import Api.Object
 import Api.Object.Character as Character
 import Api.Object.Human as Human
 import Api.Query as Query
-import Graphqelm.Document as Document exposing (RootField)
+import Graphqelm.Document as Document exposing (DocumentRoot)
 import Graphqelm.Field
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 import View.QueryAndResponse
@@ -19,7 +18,7 @@ type alias Response =
     ( Human, Hero )
 
 
-query : RootField Response
+query : DocumentRoot Response
 query =
     Document.combine (,)
         (Query.human { id = "1004" } human)

@@ -1,10 +1,10 @@
 module View.QueryAndResponse exposing (view)
 
-import Graphqelm.Document as Document exposing (RootField)
+import Graphqelm.Document as Document exposing (DocumentRoot)
 import Html exposing (div, h1, p, pre, text)
 
 
-view : RootField a -> model -> Html.Html msg
+view : DocumentRoot a -> model -> Html.Html msg
 view query model =
     div []
         [ div []
