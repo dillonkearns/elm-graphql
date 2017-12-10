@@ -1,6 +1,6 @@
 module Graphqelm.Http exposing (buildRequest, request, send, toRequest, withHeader, withTimeout)
 
-import Graphqelm.Query as Query exposing (RootField)
+import Graphqelm.Document as Document exposing (RootField)
 import Http
 import Json.Encode
 import Time exposing (Time)
@@ -29,8 +29,8 @@ buildRequest url query =
     { method = "POST"
     , headers = []
     , url = url
-    , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Query.toQuery query) ) ])
-    , expect = Http.expectJson (Query.decoder query)
+    , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.toQuery query) ) ])
+    , expect = Http.expectJson (Document.decoder query)
     , timeout = Nothing
     , withCredentials = False
     }

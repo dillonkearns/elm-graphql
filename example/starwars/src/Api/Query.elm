@@ -3,9 +3,10 @@ module Api.Query exposing (..)
 import Api.Enum.Episode
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Document exposing (RootField)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query as Query exposing (RootField)
+import Graphqelm.Query as Query
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode

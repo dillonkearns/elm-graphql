@@ -1,6 +1,6 @@
 module View.QueryAndResponse exposing (view)
 
-import Graphqelm.Query as Query exposing (RootField)
+import Graphqelm.Document as Document exposing (RootField)
 import Html exposing (div, h1, p, pre, text)
 
 
@@ -9,7 +9,7 @@ view query model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Query.toQuery query) ]
+            , pre [] [ text (Document.toQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]
