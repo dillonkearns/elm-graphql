@@ -31,25 +31,26 @@ separate : DocumentRoot decodesTo -> { queries : List Field, mutations : List Fi
 separate (DocumentRoot documentFields decoder) =
     List.foldl
         (\(DocumentField mutationOrQuery field) soFar ->
-            { soFar
-                | queries =
-                    case mutationOrQuery of
-                        QueryField ->
-                            soFar.queries ++ [ field ]
+            let
+                _ =
+                    Debug.log "foldl" mutationOrQuery
+            in
+            case mutationOrQuery of
+                QueryField ->
+                    { soFar | queries = soFar.queries ++ [ field ] }
 
-                        MutationField ->
-                            soFar.mutations ++ [ field ]
-            }
+                MutationField ->
+                    { soFar | mutations = soFar.mutations ++ [ field ] }
         )
         { queries = [], mutations = [] }
         documentFields
+        |> Debug.log "result"
 
 
 toQuery : DocumentRoot a -> String
 toQuery document =
-    document
-        |> separate
-        |> queriesString
+    queriesString (separate document)
+        ++ mutationsString (separate document)
 
 
 queriesString : { document | queries : List Field } -> String
@@ -59,6 +60,16 @@ queriesString { queries } =
     else
         "query {\n"
             ++ (List.indexedMap (\index query -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
+            ++ "\n}"
+
+
+mutationsString : { document | mutations : List Field } -> String
+mutationsString { mutations } =
+    if mutations == [] then
+        ""
+    else
+        "mutation {\n"
+            ++ (List.indexedMap (\index query -> "mutation" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) mutations |> String.join "\n")
             ++ "\n}"
 
 

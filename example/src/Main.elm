@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Api.Enum.Weather exposing (Weather)
+import Api.Mutation
 import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
@@ -17,11 +18,12 @@ type Msg
 
 
 type alias Model =
-    WebData DecodesTo
+    WebData Response
 
 
-type alias DecodesTo =
-    ( List MenuItem, Weather )
+type alias Response =
+    -- ( List MenuItem, Int )
+    Int
 
 
 type alias MenuItem =
@@ -51,9 +53,11 @@ makeRequest =
         |> Cmd.map GotResponse
 
 
-query : DocumentRoot ( List MenuItem, Weather )
+query : DocumentRoot Response
 query =
-    Document.combine (,) menuItemsQuery Api.Query.weather
+    -- Document.combine (,) menuItemsQuery
+    Api.Mutation.increment
+        |> Debug.log "query"
 
 
 init : ( Model, Cmd Msg )
