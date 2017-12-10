@@ -1,4 +1,4 @@
-module Graphqelm.Document exposing (DocumentRoot, combine, decoder, queryField, toQuery)
+module Graphqelm.Document exposing (DocumentRoot, combine, decoder, mutationField, queryField, toQuery)
 
 import Graphqelm.Field as Field exposing (Field(Composite), FieldDecoder(FieldDecoder))
 import Json.Decode as Decode exposing (Decoder)
@@ -20,6 +20,11 @@ type DocumentRoot decodesTo
 queryField : FieldDecoder decodesTo lockedTo -> DocumentRoot decodesTo
 queryField (FieldDecoder field decoder) =
     DocumentRoot [ DocumentField QueryField field ] decoder
+
+
+mutationField : FieldDecoder decodesTo lockedTo -> DocumentRoot decodesTo
+mutationField (FieldDecoder field decoder) =
+    DocumentRoot [ DocumentField MutationField field ] decoder
 
 
 separate : DocumentRoot decodesTo -> { queries : List Field, mutations : List Field }
