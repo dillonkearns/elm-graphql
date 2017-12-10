@@ -18,7 +18,7 @@ type alias Response =
     ( Human, Hero )
 
 
-query : Graphqelm.Field.Query Response
+query : Graphqelm.Query.Query Response
 query =
     Graphqelm.Query.combine (,)
         (Query.human { id = "1004" } human)

@@ -38,7 +38,7 @@ menuItem =
         |> Object.with MenuItem.name
 
 
-menuItemsQuery : Field.Query (List MenuItem)
+menuItemsQuery : Graphqelm.Query.Query (List MenuItem)
 menuItemsQuery =
     Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem
 
