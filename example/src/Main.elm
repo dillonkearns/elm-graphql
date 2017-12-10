@@ -9,6 +9,7 @@ import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
 import Html
 import RemoteData exposing (WebData)
+import View.QueryAndResponse
 
 
 type Msg
@@ -43,11 +44,16 @@ menuItemsQuery =
 
 makeRequest : Cmd Msg
 makeRequest =
-    Document.combine (,) menuItemsQuery Api.Query.weather
+    query
         |> Graphqelm.Http.buildRequest "http://localhost:4000/api"
         |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
+
+
+query : DocumentRoot ( List MenuItem, Weather )
+query =
+    Document.combine (,) menuItemsQuery Api.Query.weather
 
 
 init : ( Model, Cmd Msg )
@@ -76,4 +82,4 @@ main =
 
 view : Model -> Html.Html Msg
 view model =
-    Html.text (toString model)
+    View.QueryAndResponse.view query model
