@@ -1,4 +1,4 @@
-module Graphqelm.Query exposing (..)
+module Graphqelm.Query exposing (Query, combine, decoder, fieldDecoder, listOf, single, toQuery)
 
 import Graphqelm.Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field(Composite), FieldDecoder(FieldDecoder))
