@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Field exposing (forObject, forQuery)
+module Graphqelm.Generator.Field exposing (forMutation, forObject, forQuery)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
@@ -25,6 +25,7 @@ type alias FieldGenerator =
 type ObjectOrQuery
     = GenerateObject
     | GenerateQuery
+    | GenerateMutation
 
 
 type alias AnnotatedArg =
@@ -39,6 +40,12 @@ forQuery field =
         |> forQuery_
 
 
+forMutation : Type.Field -> String
+forMutation field =
+    toFieldGenerator GenerateMutation field
+        |> forMutation_
+
+
 forObject : String -> Type.Field -> String
 forObject thisObjectName field =
     toFieldGenerator GenerateObject field
@@ -47,6 +54,11 @@ forObject thisObjectName field =
 
 forQuery_ : FieldGenerator -> String
 forQuery_ field =
+    common (interpolate "DocumentRoot {0}" [ field.decoderAnnotation ]) field
+
+
+forMutation_ : FieldGenerator -> String
+forMutation_ field =
     common (interpolate "DocumentRoot {0}" [ field.decoderAnnotation ]) field
 
 
@@ -160,6 +172,9 @@ objectThing objectOrQuery fieldName typeRef refName =
 
             GenerateQuery ->
                 "Query"
+
+            GenerateMutation ->
+                "Mutation"
     , otherThing = ".single"
     , letBindings = []
     }
@@ -182,13 +197,7 @@ objectListThing objectOrQuery fieldName typeRef refName =
     in
     { commonObjectThing
         | decoderAnnotation = interpolate "(List {0})" [ fieldName ]
-        , otherThing =
-            case objectOrQuery of
-                GenerateObject ->
-                    ".listOf"
-
-                GenerateQuery ->
-                    ".listOf"
+        , otherThing = ".listOf"
     }
 
 
@@ -225,6 +234,9 @@ initScalarField objectOrQuery fieldName typeRef =
 
             GenerateQuery ->
                 "Query"
+
+            GenerateMutation ->
+                "Mutation"
     , otherThing = ".fieldDecoder"
     , letBindings = []
     }
