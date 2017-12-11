@@ -37,7 +37,7 @@ queriesStringNew string queries =
                     "  result"
                         ++ toString index
                         ++ ": "
-                        ++ Field.fieldDecoderToQuery 1 query
+                        ++ Field.fieldDecoderToQuery True 1 query
                 )
                 queries
                 |> String.join "\n"

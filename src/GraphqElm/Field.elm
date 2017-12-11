@@ -27,16 +27,20 @@ indent indentationLevel =
     spaces (indentationLevel * 2)
 
 
-fieldDecoderToQuery : Int -> Field -> String
-fieldDecoderToQuery indentationLevel field =
+fieldDecoderToQuery : Bool -> Int -> Field -> String
+fieldDecoderToQuery skipIndentationLevel indentationLevel field =
     case field of
         Composite fieldName args children ->
-            (indent indentationLevel
+            ((if skipIndentationLevel then
+                ""
+              else
+                indent indentationLevel
+             )
                 ++ fieldName
                 ++ Argument.toQueryString args
                 ++ " {\n"
                 ++ (children
-                        |> List.map (fieldDecoderToQuery (indentationLevel + 1))
+                        |> List.map (fieldDecoderToQuery False (indentationLevel + 1))
                         |> String.join "\n"
                    )
             )
@@ -48,7 +52,7 @@ fieldDecoderToQuery indentationLevel field =
             indent indentationLevel ++ fieldName
 
         QueryField nestedField ->
-            fieldDecoderToQuery indentationLevel nestedField
+            fieldDecoderToQuery False indentationLevel nestedField
 
 
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
