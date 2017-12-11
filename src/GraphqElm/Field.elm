@@ -22,20 +22,19 @@ spaces n =
         ""
 
 
-indent : Int -> String
-indent indentationLevel =
-    spaces (indentationLevel * 2)
+indent : Bool -> Int -> String
+indent skip indentationLevel =
+    if skip then
+        ""
+    else
+        spaces (indentationLevel * 2)
 
 
 fieldDecoderToQuery : Bool -> Int -> Field -> String
 fieldDecoderToQuery skipIndentationLevel indentationLevel field =
     case field of
         Composite fieldName args children ->
-            ((if skipIndentationLevel then
-                ""
-              else
-                indent indentationLevel
-             )
+            (indent skipIndentationLevel indentationLevel
                 ++ fieldName
                 ++ Argument.toQueryString args
                 ++ " {\n"
@@ -45,11 +44,11 @@ fieldDecoderToQuery skipIndentationLevel indentationLevel field =
                    )
             )
                 ++ "\n"
-                ++ indent indentationLevel
+                ++ indent skipIndentationLevel indentationLevel
                 ++ "}"
 
         Leaf fieldName args ->
-            indent indentationLevel ++ fieldName
+            indent skipIndentationLevel indentationLevel ++ fieldName
 
         QueryField nestedField ->
             fieldDecoderToQuery False indentationLevel nestedField
