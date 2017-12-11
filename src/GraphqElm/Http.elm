@@ -25,7 +25,7 @@ buildRequest url queryDocument query =
     , headers = []
     , url = url
     , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string queryDocument ) ])
-    , expect = Http.expectJson (Document.decoderNew query)
+    , expect = Http.expectJson (Document.decoder query)
     , timeout = Nothing
     , withCredentials = False
     }

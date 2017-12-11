@@ -1,4 +1,4 @@
-module Graphqelm.Document exposing (RootMutation, RootQuery, decoderNew, toMutationDocument, toQueryDocument)
+module Graphqelm.Document exposing (RootMutation, RootQuery, decoder, toMutationDocument, toQueryDocument)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Object exposing (Object(Object))
@@ -39,7 +39,7 @@ toDocumentString string queries =
         ++ "\n}"
 
 
-decoderNew : Object decodesTo typeLock -> Decoder decodesTo
-decoderNew (Object fields decoder) =
+decoder : Object decodesTo typeLock -> Decoder decodesTo
+decoder (Object fields decoder) =
     decoder
         |> Decode.field "data"
