@@ -6,7 +6,9 @@ import Interpolate exposing (interpolate)
 
 
 type alias Result =
-    { annotation : String, list : String }
+    { annotation : String
+    , list : String
+    }
 
 
 generate : List Type.Arg -> Maybe Result

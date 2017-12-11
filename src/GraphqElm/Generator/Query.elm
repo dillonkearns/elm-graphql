@@ -2,7 +2,7 @@ module Graphqelm.Generator.Query exposing (..)
 
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (Field)
 import Interpolate exposing (interpolate)
 
 
