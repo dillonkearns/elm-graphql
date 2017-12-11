@@ -14,25 +14,41 @@ type Field
     | QueryField Field
 
 
-fieldDecoderToQuery : Field -> String
-fieldDecoderToQuery field =
+spaces : Int -> String
+spaces n =
+    if n > 0 then
+        " " ++ spaces (n - 1)
+    else
+        ""
+
+
+indent : Int -> String
+indent indentationLevel =
+    spaces (indentationLevel * 2)
+
+
+fieldDecoderToQuery : Int -> Field -> String
+fieldDecoderToQuery indentationLevel field =
     case field of
         Composite fieldName args children ->
-            (fieldName
+            (indent indentationLevel
+                ++ fieldName
                 ++ Argument.toQueryString args
                 ++ " {\n"
                 ++ (children
-                        |> List.map fieldDecoderToQuery
+                        |> List.map (fieldDecoderToQuery (indentationLevel + 1))
                         |> String.join "\n"
                    )
             )
-                ++ "\n}"
+                ++ "\n"
+                ++ indent indentationLevel
+                ++ "}"
 
         Leaf fieldName args ->
-            fieldName
+            indent indentationLevel ++ fieldName
 
         QueryField nestedField ->
-            fieldDecoderToQuery nestedField
+            fieldDecoderToQuery indentationLevel nestedField
 
 
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo

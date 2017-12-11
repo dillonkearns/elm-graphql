@@ -34,10 +34,10 @@ queriesStringNew string queries =
         ++ " {\n"
         ++ (List.indexedMap
                 (\index query ->
-                    "result"
+                    "  result"
                         ++ toString index
                         ++ ": "
-                        ++ Field.fieldDecoderToQuery query
+                        ++ Field.fieldDecoderToQuery 1 query
                 )
                 queries
                 |> String.join "\n"
