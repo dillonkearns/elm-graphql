@@ -16,16 +16,16 @@ type RootMutation
 
 toQueryDocument : Object decodesTo RootQuery -> String
 toQueryDocument (Object fields decoder) =
-    queriesStringNew "query" fields
+    toDocumentString "query" fields
 
 
 toMutationDocument : Object decodesTo RootMutation -> String
 toMutationDocument (Object fields decoder) =
-    queriesStringNew "mutation" fields
+    toDocumentString "mutation" fields
 
 
-queriesStringNew : String -> List Field -> String
-queriesStringNew string queries =
+toDocumentString : String -> List Field -> String
+toDocumentString string queries =
     string
         ++ " {\n"
         ++ (List.indexedMap
