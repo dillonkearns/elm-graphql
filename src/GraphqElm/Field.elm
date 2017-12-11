@@ -44,7 +44,7 @@ fieldDecoderToQuery skipIndentationLevel indentationLevel field =
                    )
             )
                 ++ "\n"
-                ++ indent skipIndentationLevel indentationLevel
+                ++ indent False indentationLevel
                 ++ "}"
 
         Leaf fieldName args ->
