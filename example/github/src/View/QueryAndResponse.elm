@@ -9,7 +9,7 @@ view query model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.toQuery query |> toString) ]
+            , pre [] [ text (Document.toQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]
