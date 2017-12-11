@@ -6,7 +6,6 @@ import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
 import Graphqelm.Document as Document exposing (DocumentRoot)
-import Graphqelm.Field exposing (FieldDecoder)
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
 import Html
@@ -29,7 +28,7 @@ type alias Response =
 query : Object ( List MenuItem, String ) Document.RootQuery
 query =
     Api.Query.build (,)
-        |> Object.with menuItemsQuery
+        |> Object.with (Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem)
         |> Object.with Api.Query.me
 
 
@@ -44,11 +43,6 @@ menuItem =
     MenuItem.build MenuItem
         |> Object.with MenuItem.id
         |> Object.with MenuItem.name
-
-
-menuItemsQuery : FieldDecoder (List MenuItem) Document.RootQuery
-menuItemsQuery =
-    Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem
 
 
 makeRequest : Cmd Msg
