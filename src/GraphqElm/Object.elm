@@ -38,7 +38,7 @@ with (FieldDecoder field fieldDecoder) (Object objectFields objectDecoder) =
                 n =
                     List.length objectFields
             in
-            Object (objectFields ++ [ nestedField ]) (Decode.map2 (|>) (Decode.field ("query" ++ toString n) fieldDecoder) objectDecoder)
+            Object (objectFields ++ [ nestedField ]) (Decode.map2 (|>) (Decode.field ("result" ++ toString n) fieldDecoder) objectDecoder)
 
         _ ->
             Object (field :: objectFields) (Decode.map2 (|>) fieldDecoder objectDecoder)

@@ -1,11 +1,8 @@
 module Main exposing (..)
 
--- import Api.Enum.Weather exposing (Weather)
--- import Api.Query
-
-import Api.Mutation
 import Api.Object
 import Api.Object.MenuItem as MenuItem
+import Api.Query
 import Graphqelm.Document as Document
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
@@ -23,20 +20,14 @@ type alias Model =
 
 
 type alias Response =
-    -- ( List MenuItem, String )
-    Int
+    ( List MenuItem, String )
 
 
-query : Object Response Document.RootMutation
+query : Object Response Document.RootQuery
 query =
-    Api.Mutation.build identity
-        |> Object.with Api.Mutation.increment
-
-
-
--- Api.Query.build (,)
---     |> Object.with (Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem)
---     |> Object.with Api.Query.me
+    Api.Query.build (,)
+        |> Object.with (Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem)
+        |> Object.with Api.Query.me
 
 
 type alias MenuItem =
@@ -55,7 +46,7 @@ menuItem =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.buildMutationRequest "http://localhost:4000/api"
+        |> Graphqelm.Http.buildQueryRequest "http://localhost:4000/api"
         |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse

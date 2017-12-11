@@ -48,7 +48,7 @@ separateNew field =
 
 toQueryNew : Object decodesTo typeLock -> String
 toQueryNew (Object fields decoder) =
-    queriesStringNew "query" fields
+    queriesStringNew "" fields
 
 
 toQueryDocument : Object decodesTo RootQuery -> String
@@ -65,17 +65,8 @@ queriesStringNew : String -> List Field -> String
 queriesStringNew string queries =
     string
         ++ " {\n"
-        ++ (List.indexedMap (\index query -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
+        ++ (List.indexedMap (\index query -> "result" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
         ++ "\n}"
-
-
-
--- if queries == [] then
---     ""
--- else
---     "query {\n"
---         ++ (List.indexedMap (\index query -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
---         ++ "\n}"
 
 
 mutationsString : { document | mutations : List Field } -> String
