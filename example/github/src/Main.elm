@@ -7,9 +7,9 @@ import Api.Object.Repository as Repository
 import Api.Object.StargazerConnection
 import Api.Query as Query
 import Graphqelm
+import Graphqelm.Document exposing (DocumentRoot)
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 import View.QueryAndResponse
@@ -22,7 +22,7 @@ type alias Response =
     }
 
 
-query : Graphqelm.Query.Query Response
+query : DocumentRoot Response
 query =
     Query.repository { owner = "dillonkearns", name = "mobster" } repo
 

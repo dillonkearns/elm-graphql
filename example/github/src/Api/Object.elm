@@ -833,10 +833,6 @@ type GitHubMetadata
     = GitHubMetadata
 
 
-type Mutation
-    = Mutation
-
-
 type AddReactionPayload
     = AddReactionPayload
 
