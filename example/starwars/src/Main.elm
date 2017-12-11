@@ -6,7 +6,7 @@ import Api.Object.Character as Character
 import Api.Object.Human as Human
 import Api.Query as Query
 import Graphqelm.Document as Document exposing (RootQuery)
-import Graphqelm.Field
+import Graphqelm.Field as Field
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
 import Html exposing (div, h1, p, pre, text)
@@ -63,7 +63,7 @@ human =
     Human.build Human
         |> Object.with Human.name
         |> Object.with
-            (Human.appearsIn |> Graphqelm.Field.map (List.map episodeYear))
+            (Human.appearsIn |> Field.map (List.map episodeYear))
 
 
 episodeYear : Episode -> Int
