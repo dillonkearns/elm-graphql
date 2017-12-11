@@ -5,7 +5,7 @@ module Main exposing (..)
 import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
-import Graphqelm.Document as Document exposing (DocumentRoot)
+import Graphqelm.Document as Document
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
 import Html

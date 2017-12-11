@@ -4,7 +4,7 @@ import Api.Enum.SortOrder
 import Api.Enum.Weather
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
-import Graphqelm.Document exposing (DocumentRoot, RootQuery)
+import Graphqelm.Document exposing (RootQuery)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Value as Value exposing (Value)
