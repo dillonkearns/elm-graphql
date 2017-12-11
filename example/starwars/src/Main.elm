@@ -15,12 +15,15 @@ import View.QueryAndResponse
 
 
 type alias Response =
-    ( Human, Human, Hero )
+    { tarkin : Human
+    , vader : Human
+    , hero : Hero
+    }
 
 
 query : Object Response Document.RootQuery
 query =
-    Query.build (,,)
+    Query.build Response
         |> Object.with (Query.human { id = "1004" } human)
         |> Object.with (Query.human { id = "1001" } human)
         |> Object.with (Query.hero identity hero)
