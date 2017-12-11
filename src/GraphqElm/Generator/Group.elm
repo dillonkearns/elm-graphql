@@ -6,7 +6,7 @@ import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
 import Graphqelm.Generator.ObjectTypes as ObjectTypes
 import Graphqelm.Generator.Query
-import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition)
 
 
 type alias IntrospectionData =

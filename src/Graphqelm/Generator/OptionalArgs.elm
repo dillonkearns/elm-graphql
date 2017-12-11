@@ -2,18 +2,23 @@ module Graphqelm.Generator.OptionalArgs exposing (Result, generate)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Let exposing (LetBinding)
-import Graphqelm.Parser.Type as Type exposing (TypeReference)
+import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
 
 type alias Result =
-    { annotatedArg : { annotation : String, arg : String }
+    { annotatedArg :
+        { annotation : String
+        , arg : String
+        }
     , letBindings : List LetBinding
     }
 
 
 type alias OptionalArg =
-    { name : String, typeOf : Type.ReferrableType }
+    { name : String
+    , typeOf : Type.ReferrableType
+    }
 
 
 (=>) : a -> b -> ( a, b )

@@ -6,7 +6,7 @@ import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
-import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
 
 
