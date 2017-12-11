@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (buildQueryRequest, send, toRequest, withHeader, withTimeout)
+module Graphqelm.Http exposing (buildMutationRequest, buildQueryRequest, send, toRequest, withHeader, withTimeout)
 
 import Graphqelm.Document as Document
 import Graphqelm.Object exposing (Object)
@@ -19,17 +19,27 @@ type Request decodesTo
         }
 
 
-buildQueryRequest : String -> Object decodesTo Document.RootQuery -> Request decodesTo
-buildQueryRequest url query =
+buildRequest : String -> String -> Object decodesTo typeLock -> Request decodesTo
+buildRequest url queryDocument query =
     { method = "POST"
     , headers = []
     , url = url
-    , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.toQueryNew query) ) ])
+    , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string queryDocument ) ])
     , expect = Http.expectJson (Document.decoderNew query)
     , timeout = Nothing
     , withCredentials = False
     }
         |> Request
+
+
+buildQueryRequest : String -> Object decodesTo Document.RootQuery -> Request decodesTo
+buildQueryRequest url query =
+    buildRequest url (Document.toQueryDocument query) query
+
+
+buildMutationRequest : String -> Object decodesTo Document.RootMutation -> Request decodesTo
+buildMutationRequest url query =
+    buildRequest url (Document.toMutationDocument query) query
 
 
 send : (Result Http.Error a -> msg) -> Request a -> Cmd msg

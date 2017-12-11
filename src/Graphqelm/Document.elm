@@ -1,4 +1,4 @@
-module Graphqelm.Document exposing (DocumentQueryOrMutation, RootMutation, RootQuery, decoderNew, toQueryNew)
+module Graphqelm.Document exposing (DocumentQueryOrMutation, RootMutation, RootQuery, decoderNew, toMutationDocument, toQueryDocument, toQueryNew)
 
 import Graphqelm.Field as Field exposing (Field(Composite), FieldDecoder(FieldDecoder))
 import Graphqelm.Object exposing (Object(Object))
@@ -48,38 +48,25 @@ separateNew field =
 
 toQueryNew : Object decodesTo typeLock -> String
 toQueryNew (Object fields decoder) =
-    queriesStringNew fields
-        ++ "\n\n"
-        ++ mutationsStringNew fields
+    queriesStringNew "query" fields
 
 
-queriesString : { document | queries : List Field } -> String
-queriesString { queries } =
-    if queries == [] then
-        ""
-    else
-        "query {\n"
-            ++ (List.indexedMap (\index query -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
-            ++ "\n}"
+toQueryDocument : Object decodesTo RootQuery -> String
+toQueryDocument (Object fields decoder) =
+    queriesStringNew "query" fields
 
 
-
--- queriesStringNew : { document | queries : List Field } -> String
-
-
-queriesStringNew : List Field -> String
-queriesStringNew queries =
-    if queries == [] then
-        ""
-    else
-        "query {\n"
-            ++ (List.indexedMap (\index query -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
-            ++ "\n}"
+toMutationDocument : Object decodesTo RootMutation -> String
+toMutationDocument (Object fields decoder) =
+    queriesStringNew "mutation" fields
 
 
-mutationsStringNew : a -> String
-mutationsStringNew field =
-    ""
+queriesStringNew : String -> List Field -> String
+queriesStringNew string queries =
+    string
+        ++ " {\n"
+        ++ (List.indexedMap (\index query -> "query" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
+        ++ "\n}"
 
 
 
@@ -103,12 +90,5 @@ mutationsString { mutations } =
 
 decoderNew : Object decodesTo typeLock -> Decoder decodesTo
 decoderNew (Object fields decoder) =
-    -- decoder
-    (case fields of
-        [ singleField ] ->
-            Decode.field "query0" decoder
-
-        multipleFields ->
-            decoder
-    )
+    decoder
         |> Decode.field "data"
