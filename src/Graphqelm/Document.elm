@@ -65,7 +65,16 @@ queriesStringNew : String -> List Field -> String
 queriesStringNew string queries =
     string
         ++ " {\n"
-        ++ (List.indexedMap (\index query -> "result" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) queries |> String.join "\n")
+        ++ (List.indexedMap
+                (\index query ->
+                    "result"
+                        ++ toString index
+                        ++ ": "
+                        ++ Field.fieldDecoderToQuery query
+                )
+                queries
+                |> String.join "\n"
+           )
         ++ "\n}"
 
 
