@@ -8,7 +8,7 @@ import Api.Query as Query
 import Graphqelm.Document as Document exposing (RootQuery)
 import Graphqelm.Field as Field
 import Graphqelm.Http
-import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Object exposing (Object, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -23,9 +23,9 @@ type alias Response =
 query : Object Response Document.RootQuery
 query =
     Query.build Response
-        |> Object.with (Query.human { id = "1004" } human)
-        |> Object.with (Query.human { id = "1001" } human)
-        |> Object.with (Query.hero identity hero)
+        |> with (Query.human { id = "1004" } human)
+        |> with (Query.human { id = "1001" } human)
+        |> with (Query.hero identity hero)
 
 
 type alias Hero =
@@ -39,16 +39,16 @@ type alias Hero =
 hero : Object Hero Api.Object.Character
 hero =
     Character.build Hero
-        |> Object.with Character.name
-        |> Object.with Character.id
-        |> Object.with (Character.friends heroWithName)
-        |> Object.with Character.appearsIn
+        |> with Character.name
+        |> with Character.id
+        |> with (Character.friends heroWithName)
+        |> with Character.appearsIn
 
 
 heroWithName : Object String Api.Object.Character
 heroWithName =
     Character.build identity
-        |> Object.with Character.name
+        |> with Character.name
 
 
 type alias Human =
@@ -57,12 +57,11 @@ type alias Human =
     }
 
 
-human : Object.Object Human Api.Object.Human
+human : Object Human Api.Object.Human
 human =
     Human.build Human
-        |> Object.with Human.name
-        |> Object.with
-            (Human.appearsIn |> Field.map (List.map episodeYear))
+        |> with Human.name
+        |> with (Human.appearsIn |> Field.map (List.map episodeYear))
 
 
 episodeYear : Episode -> Int
