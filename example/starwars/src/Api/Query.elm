@@ -3,16 +3,21 @@ module Api.Query exposing (..)
 import Api.Enum.Episode
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
-import Graphqelm.Document exposing (DocumentRoot)
+import Graphqelm.Document exposing (RootQuery)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query as Query
+import Graphqelm.RootObject as RootObject
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
 
-hero : ({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode }) -> Object hero Api.Object.Character -> DocumentRoot hero
+build : (a -> constructor) -> Object (a -> constructor) RootQuery
+build constructor =
+    RootObject.object constructor
+
+
+hero : ({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode }) -> Object hero Api.Object.Character -> FieldDecoder hero RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -22,14 +27,14 @@ hero fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Value.enum toString) ]
                 |> List.filterMap identity
     in
-    Query.single "hero" optionalArgs object
+    RootObject.single "hero" optionalArgs object
 
 
-human : { id : String } -> Object human Api.Object.Human -> DocumentRoot human
+human : { id : String } -> Object human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
-    Query.single "human" [ Argument.string "id" requiredArgs.id ] object
+    RootObject.single "human" [ Argument.string "id" requiredArgs.id ] object
 
 
-droid : { id : String } -> Object droid Api.Object.Droid -> DocumentRoot droid
+droid : { id : String } -> Object droid Api.Object.Droid -> FieldDecoder droid RootQuery
 droid requiredArgs object =
-    Query.single "droid" [ Argument.string "id" requiredArgs.id ] object
+    RootObject.single "droid" [ Argument.string "id" requiredArgs.id ] object

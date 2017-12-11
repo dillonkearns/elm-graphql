@@ -5,7 +5,7 @@ import Api.Object
 import Api.Object.Character as Character
 import Api.Object.Human as Human
 import Api.Query as Query
-import Graphqelm.Document as Document exposing (DocumentRoot)
+import Graphqelm.Document as Document exposing (RootQuery)
 import Graphqelm.Field
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
@@ -18,11 +18,11 @@ type alias Response =
     ( Human, Hero )
 
 
-query : DocumentRoot Response
+query : Object ( Human, Hero ) Document.RootQuery
 query =
-    Document.combine (,)
-        (Query.human { id = "1004" } human)
-        (Query.hero identity hero)
+    Query.build (,)
+        |> Object.with (Query.human { id = "1004" } human)
+        |> Object.with (Query.hero identity hero)
 
 
 type alias Hero =
@@ -80,7 +80,8 @@ episodeYear episode =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.request "http://localhost:8080/graphql"
+        |> Graphqelm.Http.buildQueryRequest "http://localhost:8080/graphql"
+        |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
 
