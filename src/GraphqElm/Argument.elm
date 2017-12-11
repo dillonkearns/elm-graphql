@@ -24,11 +24,6 @@ argument fieldName value =
     Argument fieldName value
 
 
-json : String -> Json.Encode.Value -> Argument
-json fieldName value =
-    argument fieldName (Value.Json value)
-
-
 string : String -> String -> Argument
 string fieldName value =
     argument fieldName (Value.Json (Json.Encode.string value))
