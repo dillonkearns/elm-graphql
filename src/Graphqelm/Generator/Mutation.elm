@@ -28,12 +28,16 @@ import Graphqelm.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Api.Object
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Mutation as Mutation
-import Graphqelm.Document exposing (DocumentRoot)
+import Graphqelm.RootObject as RootObject
+import Graphqelm.Document exposing (RootMutation)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 import Graphqelm.Value as Value exposing (Value)
 {1}
 
+
+build : (a -> constructor) -> Object (a -> constructor) RootMutation
+build constructor =
+    RootObject.object constructor
 """
         [ moduleName |> String.join ".", Imports.importsString moduleName fields ]

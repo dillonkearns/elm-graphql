@@ -59,7 +59,7 @@ forQuery_ field =
 
 forMutation_ : FieldGenerator -> String
 forMutation_ field =
-    common (interpolate "FieldDecoder {0} RootQuery" [ field.decoderAnnotation ]) field
+    common (interpolate "FieldDecoder {0} RootMutation" [ field.decoderAnnotation ]) field
 
 
 forObject_ : String -> FieldGenerator -> String
