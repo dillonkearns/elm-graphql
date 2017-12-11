@@ -36,7 +36,7 @@ queriesStringNew string queries =
         ++ (List.indexedMap
                 (\index query ->
                     interpolate "  {0}: {1}"
-                        [ "result" ++ toString index, Field.fieldDecoderToQuery True 1 query ]
+                        [ "result" ++ toString (index + 1), Field.fieldDecoderToQuery True 1 query ]
                 )
                 queries
                 |> String.join "\n"

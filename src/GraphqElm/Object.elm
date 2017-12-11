@@ -40,7 +40,7 @@ with (FieldDecoder field fieldDecoder) (Object objectFields objectDecoder) =
             in
             Object (objectFields ++ [ nestedField ])
                 (Decode.map2 (|>)
-                    (Decode.field ("result" ++ toString n) fieldDecoder)
+                    (Decode.field ("result" ++ toString (n + 1)) fieldDecoder)
                     objectDecoder
                 )
 
