@@ -7,12 +7,11 @@ import Api.Object.Repository as Repository
 import Api.Object.StargazerConnection
 import Api.Query as Query
 import Graphqelm
-import Graphqelm.Document exposing (DocumentRoot)
+import Graphqelm.Document as Document
 import Graphqelm.Http
-import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Object exposing (Object, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
-import View.QueryAndResponse
 
 
 type alias Response =
@@ -22,23 +21,24 @@ type alias Response =
     }
 
 
-query : DocumentRoot Response
+query : Object Response Document.RootQuery
 query =
-    Query.repository { owner = "dillonkearns", name = "mobster" } repo
+    Query.build identity
+        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
 
 
 repo : Object Response Api.Object.Repository
 repo =
     Repository.build Response
-        |> Object.with Repository.createdAt
-        |> Object.with (Repository.releases (\optionals -> { optionals | last = Just 10 }) releases)
-        |> Object.with (Repository.stargazers Graphqelm.noOptionalArgs stargazers)
+        |> with Repository.createdAt
+        |> with (Repository.releases (\optionals -> { optionals | last = Just 10 }) releases)
+        |> with (Repository.stargazers Graphqelm.noOptionalArgs stargazers)
 
 
 stargazers : Object Int Api.Object.StargazerConnection
 stargazers =
     Api.Object.StargazerConnection.build identity
-        |> Object.with Api.Object.StargazerConnection.totalCount
+        |> with Api.Object.StargazerConnection.totalCount
 
 
 type alias ReleaseInfo =
@@ -50,8 +50,8 @@ type alias ReleaseInfo =
 releases : Object ReleaseInfo Api.Object.ReleaseConnection
 releases =
     Api.Object.ReleaseConnection.build ReleaseInfo
-        |> Object.with Api.Object.ReleaseConnection.totalCount
-        |> Object.with (Api.Object.ReleaseConnection.nodes release)
+        |> with Api.Object.ReleaseConnection.totalCount
+        |> with (Api.Object.ReleaseConnection.nodes release)
 
 
 type alias Release =
@@ -63,14 +63,14 @@ type alias Release =
 release : Object Release Api.Object.Release
 release =
     Api.Object.Release.build Release
-        |> Object.with Api.Object.Release.name
-        |> Object.with Api.Object.Release.url
+        |> with Api.Object.Release.name
+        |> with Api.Object.Release.url
 
 
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.buildRequest "https://api.github.com/graphql"
+        |> Graphqelm.Http.buildQueryRequest "https://api.github.com/graphql"
         |> Graphqelm.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
@@ -94,7 +94,16 @@ init =
 
 view : Model -> Html.Html Msg
 view model =
-    View.QueryAndResponse.view query model
+    div []
+        [ div []
+            [ h1 [] [ text "Generated Query" ]
+            , pre [] [ text (Document.toQueryDocument query) ]
+            ]
+        , div []
+            [ h1 [] [ text "Response" ]
+            , Html.text (toString model)
+            ]
+        ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

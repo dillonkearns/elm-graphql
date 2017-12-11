@@ -2,16 +2,21 @@ module Api.Mutation exposing (..)
 
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
-import Graphqelm.Document exposing (DocumentRoot)
+import Graphqelm.Document exposing (RootMutation)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
-import Graphqelm.Mutation as Mutation
 import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.RootObject as RootObject
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
 
-acceptTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object acceptTopicSuggestion Api.Object.AcceptTopicSuggestionPayload -> DocumentRoot acceptTopicSuggestion
+build : (a -> constructor) -> Object (a -> constructor) RootMutation
+build constructor =
+    RootObject.object constructor
+
+
+acceptTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object acceptTopicSuggestion Api.Object.AcceptTopicSuggestionPayload -> FieldDecoder acceptTopicSuggestion RootMutation
 acceptTopicSuggestion fillInOptionals object =
     let
         filledInOptionals =
@@ -21,10 +26,10 @@ acceptTopicSuggestion fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "acceptTopicSuggestion" optionalArgs object
+    RootObject.single "acceptTopicSuggestion" optionalArgs object
 
 
-addComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addComment Api.Object.AddCommentPayload -> DocumentRoot addComment
+addComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addComment Api.Object.AddCommentPayload -> FieldDecoder addComment RootMutation
 addComment fillInOptionals object =
     let
         filledInOptionals =
@@ -34,10 +39,10 @@ addComment fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "addComment" optionalArgs object
+    RootObject.single "addComment" optionalArgs object
 
 
-addProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addProjectCard Api.Object.AddProjectCardPayload -> DocumentRoot addProjectCard
+addProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addProjectCard Api.Object.AddProjectCardPayload -> FieldDecoder addProjectCard RootMutation
 addProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -47,10 +52,10 @@ addProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "addProjectCard" optionalArgs object
+    RootObject.single "addProjectCard" optionalArgs object
 
 
-addProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addProjectColumn Api.Object.AddProjectColumnPayload -> DocumentRoot addProjectColumn
+addProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addProjectColumn Api.Object.AddProjectColumnPayload -> FieldDecoder addProjectColumn RootMutation
 addProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -60,10 +65,10 @@ addProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "addProjectColumn" optionalArgs object
+    RootObject.single "addProjectColumn" optionalArgs object
 
 
-addPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addPullRequestReview Api.Object.AddPullRequestReviewPayload -> DocumentRoot addPullRequestReview
+addPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addPullRequestReview Api.Object.AddPullRequestReviewPayload -> FieldDecoder addPullRequestReview RootMutation
 addPullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -73,10 +78,10 @@ addPullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "addPullRequestReview" optionalArgs object
+    RootObject.single "addPullRequestReview" optionalArgs object
 
 
-addPullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addPullRequestReviewComment Api.Object.AddPullRequestReviewCommentPayload -> DocumentRoot addPullRequestReviewComment
+addPullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addPullRequestReviewComment Api.Object.AddPullRequestReviewCommentPayload -> FieldDecoder addPullRequestReviewComment RootMutation
 addPullRequestReviewComment fillInOptionals object =
     let
         filledInOptionals =
@@ -86,10 +91,10 @@ addPullRequestReviewComment fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "addPullRequestReviewComment" optionalArgs object
+    RootObject.single "addPullRequestReviewComment" optionalArgs object
 
 
-addReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addReaction Api.Object.AddReactionPayload -> DocumentRoot addReaction
+addReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addReaction Api.Object.AddReactionPayload -> FieldDecoder addReaction RootMutation
 addReaction fillInOptionals object =
     let
         filledInOptionals =
@@ -99,10 +104,10 @@ addReaction fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "addReaction" optionalArgs object
+    RootObject.single "addReaction" optionalArgs object
 
 
-addStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addStar Api.Object.AddStarPayload -> DocumentRoot addStar
+addStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addStar Api.Object.AddStarPayload -> FieldDecoder addStar RootMutation
 addStar fillInOptionals object =
     let
         filledInOptionals =
@@ -112,10 +117,10 @@ addStar fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "addStar" optionalArgs object
+    RootObject.single "addStar" optionalArgs object
 
 
-createProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object createProject Api.Object.CreateProjectPayload -> DocumentRoot createProject
+createProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object createProject Api.Object.CreateProjectPayload -> FieldDecoder createProject RootMutation
 createProject fillInOptionals object =
     let
         filledInOptionals =
@@ -125,10 +130,10 @@ createProject fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "createProject" optionalArgs object
+    RootObject.single "createProject" optionalArgs object
 
 
-declineTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object declineTopicSuggestion Api.Object.DeclineTopicSuggestionPayload -> DocumentRoot declineTopicSuggestion
+declineTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object declineTopicSuggestion Api.Object.DeclineTopicSuggestionPayload -> FieldDecoder declineTopicSuggestion RootMutation
 declineTopicSuggestion fillInOptionals object =
     let
         filledInOptionals =
@@ -138,10 +143,10 @@ declineTopicSuggestion fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "declineTopicSuggestion" optionalArgs object
+    RootObject.single "declineTopicSuggestion" optionalArgs object
 
 
-deleteProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProject Api.Object.DeleteProjectPayload -> DocumentRoot deleteProject
+deleteProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProject Api.Object.DeleteProjectPayload -> FieldDecoder deleteProject RootMutation
 deleteProject fillInOptionals object =
     let
         filledInOptionals =
@@ -151,10 +156,10 @@ deleteProject fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "deleteProject" optionalArgs object
+    RootObject.single "deleteProject" optionalArgs object
 
 
-deleteProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProjectCard Api.Object.DeleteProjectCardPayload -> DocumentRoot deleteProjectCard
+deleteProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProjectCard Api.Object.DeleteProjectCardPayload -> FieldDecoder deleteProjectCard RootMutation
 deleteProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -164,10 +169,10 @@ deleteProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "deleteProjectCard" optionalArgs object
+    RootObject.single "deleteProjectCard" optionalArgs object
 
 
-deleteProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProjectColumn Api.Object.DeleteProjectColumnPayload -> DocumentRoot deleteProjectColumn
+deleteProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProjectColumn Api.Object.DeleteProjectColumnPayload -> FieldDecoder deleteProjectColumn RootMutation
 deleteProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -177,10 +182,10 @@ deleteProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "deleteProjectColumn" optionalArgs object
+    RootObject.single "deleteProjectColumn" optionalArgs object
 
 
-deletePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deletePullRequestReview Api.Object.DeletePullRequestReviewPayload -> DocumentRoot deletePullRequestReview
+deletePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deletePullRequestReview Api.Object.DeletePullRequestReviewPayload -> FieldDecoder deletePullRequestReview RootMutation
 deletePullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -190,10 +195,10 @@ deletePullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "deletePullRequestReview" optionalArgs object
+    RootObject.single "deletePullRequestReview" optionalArgs object
 
 
-dismissPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object dismissPullRequestReview Api.Object.DismissPullRequestReviewPayload -> DocumentRoot dismissPullRequestReview
+dismissPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object dismissPullRequestReview Api.Object.DismissPullRequestReviewPayload -> FieldDecoder dismissPullRequestReview RootMutation
 dismissPullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -203,10 +208,10 @@ dismissPullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "dismissPullRequestReview" optionalArgs object
+    RootObject.single "dismissPullRequestReview" optionalArgs object
 
 
-moveProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object moveProjectCard Api.Object.MoveProjectCardPayload -> DocumentRoot moveProjectCard
+moveProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object moveProjectCard Api.Object.MoveProjectCardPayload -> FieldDecoder moveProjectCard RootMutation
 moveProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -216,10 +221,10 @@ moveProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "moveProjectCard" optionalArgs object
+    RootObject.single "moveProjectCard" optionalArgs object
 
 
-moveProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object moveProjectColumn Api.Object.MoveProjectColumnPayload -> DocumentRoot moveProjectColumn
+moveProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object moveProjectColumn Api.Object.MoveProjectColumnPayload -> FieldDecoder moveProjectColumn RootMutation
 moveProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -229,10 +234,10 @@ moveProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "moveProjectColumn" optionalArgs object
+    RootObject.single "moveProjectColumn" optionalArgs object
 
 
-removeOutsideCollaborator : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeOutsideCollaborator Api.Object.RemoveOutsideCollaboratorPayload -> DocumentRoot removeOutsideCollaborator
+removeOutsideCollaborator : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeOutsideCollaborator Api.Object.RemoveOutsideCollaboratorPayload -> FieldDecoder removeOutsideCollaborator RootMutation
 removeOutsideCollaborator fillInOptionals object =
     let
         filledInOptionals =
@@ -242,10 +247,10 @@ removeOutsideCollaborator fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "removeOutsideCollaborator" optionalArgs object
+    RootObject.single "removeOutsideCollaborator" optionalArgs object
 
 
-removeReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeReaction Api.Object.RemoveReactionPayload -> DocumentRoot removeReaction
+removeReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeReaction Api.Object.RemoveReactionPayload -> FieldDecoder removeReaction RootMutation
 removeReaction fillInOptionals object =
     let
         filledInOptionals =
@@ -255,10 +260,10 @@ removeReaction fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "removeReaction" optionalArgs object
+    RootObject.single "removeReaction" optionalArgs object
 
 
-removeStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeStar Api.Object.RemoveStarPayload -> DocumentRoot removeStar
+removeStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeStar Api.Object.RemoveStarPayload -> FieldDecoder removeStar RootMutation
 removeStar fillInOptionals object =
     let
         filledInOptionals =
@@ -268,10 +273,10 @@ removeStar fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "removeStar" optionalArgs object
+    RootObject.single "removeStar" optionalArgs object
 
 
-requestReviews : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object requestReviews Api.Object.RequestReviewsPayload -> DocumentRoot requestReviews
+requestReviews : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object requestReviews Api.Object.RequestReviewsPayload -> FieldDecoder requestReviews RootMutation
 requestReviews fillInOptionals object =
     let
         filledInOptionals =
@@ -281,10 +286,10 @@ requestReviews fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "requestReviews" optionalArgs object
+    RootObject.single "requestReviews" optionalArgs object
 
 
-submitPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object submitPullRequestReview Api.Object.SubmitPullRequestReviewPayload -> DocumentRoot submitPullRequestReview
+submitPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object submitPullRequestReview Api.Object.SubmitPullRequestReviewPayload -> FieldDecoder submitPullRequestReview RootMutation
 submitPullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -294,10 +299,10 @@ submitPullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "submitPullRequestReview" optionalArgs object
+    RootObject.single "submitPullRequestReview" optionalArgs object
 
 
-updateProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProject Api.Object.UpdateProjectPayload -> DocumentRoot updateProject
+updateProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProject Api.Object.UpdateProjectPayload -> FieldDecoder updateProject RootMutation
 updateProject fillInOptionals object =
     let
         filledInOptionals =
@@ -307,10 +312,10 @@ updateProject fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "updateProject" optionalArgs object
+    RootObject.single "updateProject" optionalArgs object
 
 
-updateProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProjectCard Api.Object.UpdateProjectCardPayload -> DocumentRoot updateProjectCard
+updateProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProjectCard Api.Object.UpdateProjectCardPayload -> FieldDecoder updateProjectCard RootMutation
 updateProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -320,10 +325,10 @@ updateProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "updateProjectCard" optionalArgs object
+    RootObject.single "updateProjectCard" optionalArgs object
 
 
-updateProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProjectColumn Api.Object.UpdateProjectColumnPayload -> DocumentRoot updateProjectColumn
+updateProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProjectColumn Api.Object.UpdateProjectColumnPayload -> FieldDecoder updateProjectColumn RootMutation
 updateProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -333,10 +338,10 @@ updateProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "updateProjectColumn" optionalArgs object
+    RootObject.single "updateProjectColumn" optionalArgs object
 
 
-updatePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updatePullRequestReview Api.Object.UpdatePullRequestReviewPayload -> DocumentRoot updatePullRequestReview
+updatePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updatePullRequestReview Api.Object.UpdatePullRequestReviewPayload -> FieldDecoder updatePullRequestReview RootMutation
 updatePullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -346,10 +351,10 @@ updatePullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "updatePullRequestReview" optionalArgs object
+    RootObject.single "updatePullRequestReview" optionalArgs object
 
 
-updatePullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updatePullRequestReviewComment Api.Object.UpdatePullRequestReviewCommentPayload -> DocumentRoot updatePullRequestReviewComment
+updatePullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updatePullRequestReviewComment Api.Object.UpdatePullRequestReviewCommentPayload -> FieldDecoder updatePullRequestReviewComment RootMutation
 updatePullRequestReviewComment fillInOptionals object =
     let
         filledInOptionals =
@@ -359,10 +364,10 @@ updatePullRequestReviewComment fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "updatePullRequestReviewComment" optionalArgs object
+    RootObject.single "updatePullRequestReviewComment" optionalArgs object
 
 
-updateSubscription : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateSubscription Api.Object.UpdateSubscriptionPayload -> DocumentRoot updateSubscription
+updateSubscription : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateSubscription Api.Object.UpdateSubscriptionPayload -> FieldDecoder updateSubscription RootMutation
 updateSubscription fillInOptionals object =
     let
         filledInOptionals =
@@ -372,10 +377,10 @@ updateSubscription fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "updateSubscription" optionalArgs object
+    RootObject.single "updateSubscription" optionalArgs object
 
 
-updateTopics : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateTopics Api.Object.UpdateTopicsPayload -> DocumentRoot updateTopics
+updateTopics : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateTopics Api.Object.UpdateTopicsPayload -> FieldDecoder updateTopics RootMutation
 updateTopics fillInOptionals object =
     let
         filledInOptionals =
@@ -385,4 +390,4 @@ updateTopics fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Mutation.single "updateTopics" optionalArgs object
+    RootObject.single "updateTopics" optionalArgs object

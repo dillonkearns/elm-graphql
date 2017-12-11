@@ -3,36 +3,41 @@ module Api.Query exposing (..)
 import Api.Enum.SearchType
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
-import Graphqelm.Document exposing (DocumentRoot)
+import Graphqelm.Document exposing (RootQuery)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query as Query
+import Graphqelm.RootObject as RootObject
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
 
-codeOfConduct : { key : String } -> Object codeOfConduct Api.Object.CodeOfConduct -> DocumentRoot codeOfConduct
+build : (a -> constructor) -> Object (a -> constructor) RootQuery
+build constructor =
+    RootObject.object constructor
+
+
+codeOfConduct : { key : String } -> Object codeOfConduct Api.Object.CodeOfConduct -> FieldDecoder codeOfConduct RootQuery
 codeOfConduct requiredArgs object =
-    Query.single "codeOfConduct" [ Argument.string "key" requiredArgs.key ] object
+    RootObject.single "codeOfConduct" [ Argument.string "key" requiredArgs.key ] object
 
 
-codesOfConduct : Object codesOfConduct Api.Object.CodeOfConduct -> DocumentRoot (List codesOfConduct)
+codesOfConduct : Object codesOfConduct Api.Object.CodeOfConduct -> FieldDecoder (List codesOfConduct) RootQuery
 codesOfConduct object =
-    Query.listOf "codesOfConduct" [] object
+    RootObject.listOf "codesOfConduct" [] object
 
 
-license : { key : String } -> Object license Api.Object.License -> DocumentRoot license
+license : { key : String } -> Object license Api.Object.License -> FieldDecoder license RootQuery
 license requiredArgs object =
-    Query.single "license" [ Argument.string "key" requiredArgs.key ] object
+    RootObject.single "license" [ Argument.string "key" requiredArgs.key ] object
 
 
-licenses : Object licenses Api.Object.License -> DocumentRoot (List licenses)
+licenses : Object licenses Api.Object.License -> FieldDecoder (List licenses) RootQuery
 licenses object =
-    Query.listOf "licenses" [] object
+    RootObject.listOf "licenses" [] object
 
 
-marketplaceCategories : ({ excludeEmpty : Maybe Bool } -> { excludeEmpty : Maybe Bool }) -> DocumentRoot (List String)
+marketplaceCategories : ({ excludeEmpty : Maybe Bool } -> { excludeEmpty : Maybe Bool }) -> FieldDecoder (List String) RootQuery
 marketplaceCategories fillInOptionals =
     let
         filledInOptionals =
@@ -42,20 +47,20 @@ marketplaceCategories fillInOptionals =
             [ Argument.optional "excludeEmpty" filledInOptionals.excludeEmpty Value.bool ]
                 |> List.filterMap identity
     in
-    Query.fieldDecoder "marketplaceCategories" optionalArgs (Decode.string |> Decode.list)
+    RootObject.fieldDecoder "marketplaceCategories" optionalArgs (Decode.string |> Decode.list)
 
 
-marketplaceCategory : { slug : String } -> Object marketplaceCategory Api.Object.MarketplaceCategory -> DocumentRoot marketplaceCategory
+marketplaceCategory : { slug : String } -> Object marketplaceCategory Api.Object.MarketplaceCategory -> FieldDecoder marketplaceCategory RootQuery
 marketplaceCategory requiredArgs object =
-    Query.single "marketplaceCategory" [ Argument.string "slug" requiredArgs.slug ] object
+    RootObject.single "marketplaceCategory" [ Argument.string "slug" requiredArgs.slug ] object
 
 
-marketplaceListing : { slug : String } -> Object marketplaceListing Api.Object.MarketplaceListing -> DocumentRoot marketplaceListing
+marketplaceListing : { slug : String } -> Object marketplaceListing Api.Object.MarketplaceListing -> FieldDecoder marketplaceListing RootQuery
 marketplaceListing requiredArgs object =
-    Query.single "marketplaceListing" [ Argument.string "slug" requiredArgs.slug ] object
+    RootObject.single "marketplaceListing" [ Argument.string "slug" requiredArgs.slug ] object
 
 
-marketplaceListings : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, categorySlug : Maybe String, viewerCanAdmin : Maybe Bool, adminId : Maybe String, organizationId : Maybe String, allStates : Maybe Bool, slugs : Maybe (List String), primaryCategoryOnly : Maybe Bool, withFreeTrialsOnly : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, categorySlug : Maybe String, viewerCanAdmin : Maybe Bool, adminId : Maybe String, organizationId : Maybe String, allStates : Maybe Bool, slugs : Maybe (List String), primaryCategoryOnly : Maybe Bool, withFreeTrialsOnly : Maybe Bool }) -> Object marketplaceListings Api.Object.MarketplaceListingConnection -> DocumentRoot marketplaceListings
+marketplaceListings : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, categorySlug : Maybe String, viewerCanAdmin : Maybe Bool, adminId : Maybe String, organizationId : Maybe String, allStates : Maybe Bool, slugs : Maybe (List String), primaryCategoryOnly : Maybe Bool, withFreeTrialsOnly : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, categorySlug : Maybe String, viewerCanAdmin : Maybe Bool, adminId : Maybe String, organizationId : Maybe String, allStates : Maybe Bool, slugs : Maybe (List String), primaryCategoryOnly : Maybe Bool, withFreeTrialsOnly : Maybe Bool }) -> Object marketplaceListings Api.Object.MarketplaceListingConnection -> FieldDecoder marketplaceListings RootQuery
 marketplaceListings fillInOptionals object =
     let
         filledInOptionals =
@@ -65,30 +70,30 @@ marketplaceListings fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Value.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Value.bool, Argument.optional "adminId" filledInOptionals.adminId Value.string, Argument.optional "organizationId" filledInOptionals.organizationId Value.string, Argument.optional "allStates" filledInOptionals.allStates Value.bool, Argument.optional "slugs" filledInOptionals.slugs (Value.string |> Value.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Value.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Value.bool ]
                 |> List.filterMap identity
     in
-    Query.single "marketplaceListings" optionalArgs object
+    RootObject.single "marketplaceListings" optionalArgs object
 
 
-meta : Object meta Api.Object.GitHubMetadata -> DocumentRoot meta
+meta : Object meta Api.Object.GitHubMetadata -> FieldDecoder meta RootQuery
 meta object =
-    Query.single "meta" [] object
+    RootObject.single "meta" [] object
 
 
-node : { id : String } -> Object node Api.Object.Node -> DocumentRoot node
+node : { id : String } -> Object node Api.Object.Node -> FieldDecoder node RootQuery
 node requiredArgs object =
-    Query.single "node" [ Argument.string "id" requiredArgs.id ] object
+    RootObject.single "node" [ Argument.string "id" requiredArgs.id ] object
 
 
-nodes : { ids : String } -> Object nodes Api.Object.Node -> DocumentRoot (List nodes)
+nodes : { ids : String } -> Object nodes Api.Object.Node -> FieldDecoder (List nodes) RootQuery
 nodes requiredArgs object =
-    Query.listOf "nodes" [ Argument.string "ids" requiredArgs.ids ] object
+    RootObject.listOf "nodes" [ Argument.string "ids" requiredArgs.ids ] object
 
 
-organization : { login : String } -> Object organization Api.Object.Organization -> DocumentRoot organization
+organization : { login : String } -> Object organization Api.Object.Organization -> FieldDecoder organization RootQuery
 organization requiredArgs object =
-    Query.single "organization" [ Argument.string "login" requiredArgs.login ] object
+    RootObject.single "organization" [ Argument.string "login" requiredArgs.login ] object
 
 
-rateLimit : ({ dryRun : Maybe Bool } -> { dryRun : Maybe Bool }) -> Object rateLimit Api.Object.RateLimit -> DocumentRoot rateLimit
+rateLimit : ({ dryRun : Maybe Bool } -> { dryRun : Maybe Bool }) -> Object rateLimit Api.Object.RateLimit -> FieldDecoder rateLimit RootQuery
 rateLimit fillInOptionals object =
     let
         filledInOptionals =
@@ -98,25 +103,25 @@ rateLimit fillInOptionals object =
             [ Argument.optional "dryRun" filledInOptionals.dryRun Value.bool ]
                 |> List.filterMap identity
     in
-    Query.single "rateLimit" optionalArgs object
+    RootObject.single "rateLimit" optionalArgs object
 
 
-repository : { owner : String, name : String } -> Object repository Api.Object.Repository -> DocumentRoot repository
+repository : { owner : String, name : String } -> Object repository Api.Object.Repository -> FieldDecoder repository RootQuery
 repository requiredArgs object =
-    Query.single "repository" [ Argument.string "owner" requiredArgs.owner, Argument.string "name" requiredArgs.name ] object
+    RootObject.single "repository" [ Argument.string "owner" requiredArgs.owner, Argument.string "name" requiredArgs.name ] object
 
 
-repositoryOwner : { login : String } -> Object repositoryOwner Api.Object.RepositoryOwner -> DocumentRoot repositoryOwner
+repositoryOwner : { login : String } -> Object repositoryOwner Api.Object.RepositoryOwner -> FieldDecoder repositoryOwner RootQuery
 repositoryOwner requiredArgs object =
-    Query.single "repositoryOwner" [ Argument.string "login" requiredArgs.login ] object
+    RootObject.single "repositoryOwner" [ Argument.string "login" requiredArgs.login ] object
 
 
-resource : { url : String } -> Object resource Api.Object.UniformResourceLocatable -> DocumentRoot resource
+resource : { url : String } -> Object resource Api.Object.UniformResourceLocatable -> FieldDecoder resource RootQuery
 resource requiredArgs object =
-    Query.single "resource" [ Argument.string "url" requiredArgs.url ] object
+    RootObject.single "resource" [ Argument.string "url" requiredArgs.url ] object
 
 
-search : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> { query : String, type_ : String } -> Object search Api.Object.SearchResultItemConnection -> DocumentRoot search
+search : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> { query : String, type_ : String } -> Object search Api.Object.SearchResultItemConnection -> FieldDecoder search RootQuery
 search fillInOptionals requiredArgs object =
     let
         filledInOptionals =
@@ -126,19 +131,19 @@ search fillInOptionals requiredArgs object =
             [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
                 |> List.filterMap identity
     in
-    Query.single "search" (optionalArgs ++ [ Argument.string "query" requiredArgs.query, Argument.string "type" requiredArgs.type_ ]) object
+    RootObject.single "search" (optionalArgs ++ [ Argument.string "query" requiredArgs.query, Argument.string "type" requiredArgs.type_ ]) object
 
 
-topic : { name : String } -> Object topic Api.Object.Topic -> DocumentRoot topic
+topic : { name : String } -> Object topic Api.Object.Topic -> FieldDecoder topic RootQuery
 topic requiredArgs object =
-    Query.single "topic" [ Argument.string "name" requiredArgs.name ] object
+    RootObject.single "topic" [ Argument.string "name" requiredArgs.name ] object
 
 
-user : { login : String } -> Object user Api.Object.User -> DocumentRoot user
+user : { login : String } -> Object user Api.Object.User -> FieldDecoder user RootQuery
 user requiredArgs object =
-    Query.single "user" [ Argument.string "login" requiredArgs.login ] object
+    RootObject.single "user" [ Argument.string "login" requiredArgs.login ] object
 
 
-viewer : Object viewer Api.Object.User -> DocumentRoot viewer
+viewer : Object viewer Api.Object.User -> FieldDecoder viewer RootQuery
 viewer object =
-    Query.single "viewer" [] object
+    RootObject.single "viewer" [] object

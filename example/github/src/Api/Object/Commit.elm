@@ -30,6 +30,11 @@ authoredByCommitter =
     Object.fieldDecoder "authoredByCommitter" [] Decode.bool
 
 
+authoredDate : FieldDecoder String Api.Object.Commit
+authoredDate =
+    Object.fieldDecoder "authoredDate" [] Decode.string
+
+
 blame : { path : String } -> Object blame Api.Object.Blame -> FieldDecoder blame Api.Object.Commit
 blame requiredArgs object =
     Object.single "blame" [ Argument.string "path" requiredArgs.path ] object
@@ -132,6 +137,11 @@ parents fillInOptionals object =
                 |> List.filterMap identity
     in
     Object.single "parents" optionalArgs object
+
+
+pushedDate : FieldDecoder String Api.Object.Commit
+pushedDate =
+    Object.fieldDecoder "pushedDate" [] Decode.string
 
 
 repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Commit

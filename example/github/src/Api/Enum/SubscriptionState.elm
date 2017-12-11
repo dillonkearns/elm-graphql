@@ -7,6 +7,7 @@ type SubscriptionState
     = UNSUBSCRIBED
     | SUBSCRIBED
     | IGNORED
+    | UNAVAILABLE
 
 
 decoder : Decoder SubscriptionState
@@ -23,6 +24,9 @@ decoder =
 
                     "IGNORED" ->
                         Decode.succeed IGNORED
+
+                    "UNAVAILABLE" ->
+                        Decode.succeed UNAVAILABLE
 
                     _ ->
                         Decode.fail ("Invalid SubscriptionState type, " ++ string ++ " try re-running the graphqelm CLI ")
