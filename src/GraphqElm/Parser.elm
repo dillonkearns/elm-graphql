@@ -14,5 +14,5 @@ decoder =
             |> Decode.at [ "__schema", "types" ]
         )
         (Decode.at [ "__schema", "queryType", "name" ] Decode.string)
-        (Decode.at [ "__schema", "mutationType", "name" ] (Decode.maybe Decode.string))
+        (Decode.maybe (Decode.at [ "__schema", "mutationType", "name" ] Decode.string))
         |> Decode.map Graphqelm.Generator.Group.generateFiles
