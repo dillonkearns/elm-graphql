@@ -56,8 +56,8 @@ makeRequest =
 query : Object ( List MenuItem, String ) Document.RootQuery
 query =
     Api.Query.build (,)
-        |> Object.queryWith menuItemsQuery
-        |> Object.queryWith Api.Query.me
+        |> Object.with menuItemsQuery
+        |> Object.with Api.Query.me
 
 
 init : ( Model, Cmd Msg )

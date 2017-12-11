@@ -76,6 +76,9 @@ separateNew field =
         Field.Leaf name args ->
             [ field ]
 
+        Field.QueryField field ->
+            separateNew field
+
 
 toQueryNew : Object decodesTo typeLock -> String
 toQueryNew (Object fields decoder) =

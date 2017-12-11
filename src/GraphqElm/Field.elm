@@ -11,24 +11,7 @@ type FieldDecoder decodesTo typeLock
 type Field
     = Composite String (List Argument) (List Field)
     | Leaf String (List Argument)
-
-
-toQuery : FieldDecoder decodesTo typeLock -> String
-toQuery (FieldDecoder field decoder) =
-    case field of
-        Composite fieldName args children ->
-            (fieldName
-                ++ Argument.toQueryString args
-                ++ " {\n"
-                ++ (children
-                        |> List.map fieldDecoderToQuery
-                        |> String.join "\n"
-                   )
-            )
-                ++ "\n}"
-
-        Leaf fieldName args ->
-            fieldName
+    | QueryField Field
 
 
 fieldDecoderToQuery : Field -> String
@@ -47,6 +30,9 @@ fieldDecoderToQuery field =
 
         Leaf fieldName args ->
             fieldName
+
+        QueryField nestedField ->
+            fieldDecoderToQuery nestedField
 
 
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
