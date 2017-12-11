@@ -2,7 +2,7 @@ module Graphqelm.Generator.Decoder exposing (generateDecoder, generateEncoder, g
 
 import Graphqelm.Generator.Enum
 import Graphqelm.Parser.Scalar as Scalar
-import Graphqelm.Parser.Type as Type exposing (Field, TypeDefinition, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
 generateDecoder : TypeReference -> String
@@ -24,8 +24,8 @@ generateDecoder typeRef =
                         Scalar.Float ->
                             "Decode.float"
 
-                Type.List typeRef ->
-                    generateDecoder typeRef ++ " |> Decode.list"
+                Type.List listTypeRef ->
+                    generateDecoder listTypeRef ++ " |> Decode.list"
 
                 Type.ObjectRef objectName ->
                     "Api.Object." ++ objectName ++ ".decoder"
