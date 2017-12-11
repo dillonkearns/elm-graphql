@@ -60,9 +60,7 @@ human =
     Human.build Human
         |> Object.with Human.name
         |> Object.with
-            (Human.appearsIn
-                |> Graphqelm.Field.map (List.map (\episode -> episodeYear episode))
-            )
+            (Human.appearsIn |> Graphqelm.Field.map (List.map episodeYear))
 
 
 episodeYear : Episode -> Int
