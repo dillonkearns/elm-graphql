@@ -4,26 +4,29 @@ import Api.Enum.SortOrder
 import Api.Enum.Weather
 import Api.Object
 import Graphqelm.Argument as Argument exposing (Argument)
-import Graphqelm.Document exposing (DocumentRoot)
+import Graphqelm.Document exposing (DocumentRoot, RootQuery)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Query as Query
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
-import Json.Encode as Encode
 
 
-captains : DocumentRoot (List String)
+build : (a -> constructor) -> Object (a -> constructor) RootQuery
+build constructor =
+    Object.object constructor
+
+
+captains : FieldDecoder (List String) RootQuery
 captains =
-    Query.fieldDecoder "captains" [] (Decode.string |> Decode.list)
+    Object.fieldDecoderQuery "captains" [] (Decode.string |> Decode.list)
 
 
-me : DocumentRoot String
+me : FieldDecoder String RootQuery
 me =
-    Query.fieldDecoder "me" [] Decode.string
+    Object.fieldDecoderQuery "me" [] Decode.string
 
 
-menuItems : ({ contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder } -> { contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder }) -> Object menuItems Api.Object.MenuItem -> DocumentRoot (List menuItems)
+menuItems : ({ contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder } -> { contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder }) -> Object menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =
@@ -33,9 +36,9 @@ menuItems fillInOptionals object =
             [ Argument.optional "contains" filledInOptionals.contains Value.string, Argument.optional "order" filledInOptionals.order (Value.enum toString) ]
                 |> List.filterMap identity
     in
-    Query.listOf "menuItems" optionalArgs object
+    Object.queryListOf "menuItems" optionalArgs object
 
 
-weather : DocumentRoot Api.Enum.Weather.Weather
+weather : FieldDecoder Api.Enum.Weather.Weather RootQuery
 weather =
-    Query.fieldDecoder "weather" [] Api.Enum.Weather.decoder
+    Object.fieldDecoder "weather" [] Api.Enum.Weather.decoder

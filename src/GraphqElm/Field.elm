@@ -13,6 +13,24 @@ type Field
     | Leaf String (List Argument)
 
 
+toQuery : FieldDecoder decodesTo typeLock -> String
+toQuery (FieldDecoder field decoder) =
+    case field of
+        Composite fieldName args children ->
+            (fieldName
+                ++ Argument.toQueryString args
+                ++ " {\n"
+                ++ (children
+                        |> List.map fieldDecoderToQuery
+                        |> String.join "\n"
+                   )
+            )
+                ++ "\n}"
+
+        Leaf fieldName args ->
+            fieldName
+
+
 fieldDecoderToQuery : Field -> String
 fieldDecoderToQuery field =
     case field of

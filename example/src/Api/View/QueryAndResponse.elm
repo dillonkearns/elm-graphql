@@ -1,15 +1,18 @@
 module View.QueryAndResponse exposing (view)
 
-import Graphqelm.Document as Document exposing (DocumentRoot)
+import Graphqelm.Field exposing (fieldDecoderToQuery)
 import Html exposing (div, h1, p, pre, text)
 
 
-view : DocumentRoot a -> model -> Html.Html msg
+-- view : Graphqelm.Field.FieldDecoder decodesTo typeLock -> model -> Html.Html msg
+
+
+view : Graphqelm.Field.FieldDecoder decodesTo typeLock -> a -> Html.Html msg
 view query model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.toQuery query |> toString) ]
+            , pre [] [ text (Graphqelm.Field.toQuery query |> toString) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]

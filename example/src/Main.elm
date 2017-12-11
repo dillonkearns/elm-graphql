@@ -1,11 +1,12 @@
 module Main exposing (..)
 
-import Api.Enum.Weather exposing (Weather)
-import Api.Mutation
+-- import Api.Enum.Weather exposing (Weather)
+
 import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
 import Graphqelm.Document as Document exposing (DocumentRoot)
+import Graphqelm.Field exposing (FieldDecoder)
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
 import Html
@@ -22,8 +23,7 @@ type alias Model =
 
 
 type alias Response =
-    -- ( List MenuItem, Int )
-    Int
+    ( List MenuItem, String )
 
 
 type alias MenuItem =
@@ -39,7 +39,7 @@ menuItem =
         |> Object.with MenuItem.name
 
 
-menuItemsQuery : DocumentRoot (List MenuItem)
+menuItemsQuery : FieldDecoder (List MenuItem) Document.RootQuery
 menuItemsQuery =
     Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem
 
@@ -47,24 +47,22 @@ menuItemsQuery =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.buildRequest "http://localhost:4000/api"
+        |> Graphqelm.Http.buildQueryRequest "http://localhost:4000/api"
         |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
 
 
-query : DocumentRoot Response
+query : Object ( List MenuItem, String ) Document.RootQuery
 query =
-    -- Document.combine (,) menuItemsQuery
-    Api.Mutation.increment
-        |> Debug.log "query"
+    Api.Query.build (,)
+        |> Object.queryWith menuItemsQuery
+        |> Object.queryWith Api.Query.me
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( RemoteData.Loading
-    , makeRequest
-    )
+    ( RemoteData.Loading, makeRequest )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
