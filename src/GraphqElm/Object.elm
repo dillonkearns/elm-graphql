@@ -9,20 +9,10 @@ type Object decodesTo typeLock
     = Object (List Field) (Decoder decodesTo)
 
 
-fieldDecoderQuery : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
-fieldDecoderQuery fieldName args decoder =
-    FieldDecoder (Field.QueryField (Field.Leaf fieldName args)) decoder
-
-
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
 fieldDecoder fieldName args decoder =
     FieldDecoder (Field.Leaf fieldName args)
         (decoder |> Decode.field fieldName)
-
-
-queryListOf : String -> List Argument -> Object a objectTypeLock -> FieldDecoder (List a) lockedTo
-queryListOf fieldName args (Object fields decoder) =
-    FieldDecoder (Field.QueryField (Field.Composite fieldName args fields)) (Decode.list decoder)
 
 
 listOf : String -> List Argument -> Object a objectTypeLock -> FieldDecoder (List a) lockedTo
@@ -35,13 +25,9 @@ single fieldName args (Object fields decoder) =
     FieldDecoder (Field.Composite fieldName args fields) (decoder |> Decode.field fieldName)
 
 
-object :
-    (a -> constructor)
-    -> Object (a -> constructor) typeLock
+object : (a -> constructor) -> Object (a -> constructor) typeLock
 object constructor =
-    Object
-        []
-        (Decode.succeed constructor)
+    Object [] (Decode.succeed constructor)
 
 
 with : FieldDecoder a typeLock -> Object (a -> b) typeLock -> Object b typeLock
@@ -56,12 +42,3 @@ with (FieldDecoder field fieldDecoder) (Object objectFields objectDecoder) =
 
         _ ->
             Object (field :: objectFields) (Decode.map2 (|>) fieldDecoder objectDecoder)
-
-
-queryWith : FieldDecoder a typeLock -> Object (a -> b) typeLock -> Object b typeLock
-queryWith (FieldDecoder field fieldDecoder) (Object objectFields objectDecoder) =
-    let
-        n =
-            List.length objectFields
-    in
-    Object (objectFields ++ [ field ]) (Decode.map2 (|>) (Decode.field ("query" ++ toString n) fieldDecoder) objectDecoder)
