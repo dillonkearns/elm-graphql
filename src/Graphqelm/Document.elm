@@ -1,4 +1,4 @@
-module Graphqelm.Document exposing (RootMutation, RootQuery, decoderNew, toMutationDocument, toQueryDocument, toQueryNew)
+module Graphqelm.Document exposing (RootMutation, RootQuery, decoderNew, toMutationDocument, toQueryDocument)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Object exposing (Object(Object))
@@ -12,11 +12,6 @@ type RootQuery
 
 type RootMutation
     = RootMutation
-
-
-toQueryNew : Object decodesTo typeLock -> String
-toQueryNew (Object fields decoder) =
-    queriesStringNew "" fields
 
 
 toQueryDocument : Object decodesTo RootQuery -> String
