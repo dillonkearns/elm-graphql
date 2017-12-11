@@ -1,4 +1,4 @@
-module Graphqelm.Document exposing (DocumentQueryOrMutation, RootMutation, RootQuery, decoderNew, toMutationDocument, toQueryDocument, toQueryNew)
+module Graphqelm.Document exposing (RootMutation, RootQuery, decoderNew, toMutationDocument, toQueryDocument, toQueryNew)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Object exposing (Object(Object))
@@ -11,23 +11,6 @@ type RootQuery
 
 type RootMutation
     = RootMutation
-
-
-type DocumentQueryOrMutation
-    = DocumentQueryOrMutation
-
-
-separateNew : Field -> List Field
-separateNew field =
-    case field of
-        Field.Composite name args fields ->
-            [ field ]
-
-        Field.Leaf name args ->
-            [ field ]
-
-        Field.QueryField field ->
-            separateNew field
 
 
 toQueryNew : Object decodesTo typeLock -> String
@@ -60,16 +43,6 @@ queriesStringNew string queries =
                 |> String.join "\n"
            )
         ++ "\n}"
-
-
-mutationsString : { document | mutations : List Field } -> String
-mutationsString { mutations } =
-    if mutations == [] then
-        ""
-    else
-        "mutation {\n"
-            ++ (List.indexedMap (\index query -> "mutation" ++ toString index ++ ": " ++ Field.fieldDecoderToQuery query) mutations |> String.join "\n")
-            ++ "\n}"
 
 
 decoderNew : Object decodesTo typeLock -> Decoder decodesTo
