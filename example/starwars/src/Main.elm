@@ -11,7 +11,6 @@ import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
-import View.QueryAndResponse
 
 
 type alias Response =
@@ -105,7 +104,16 @@ init =
 
 view : Model -> Html.Html Msg
 view model =
-    View.QueryAndResponse.view query model
+    div []
+        [ div []
+            [ h1 [] [ text "Generated Query" ]
+            , pre [] [ text (Document.toQueryDocument query) ]
+            ]
+        , div []
+            [ h1 [] [ text "Response" ]
+            , Html.text (toString model)
+            ]
+        ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
