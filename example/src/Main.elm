@@ -26,6 +26,13 @@ type alias Response =
     ( List MenuItem, String )
 
 
+query : Object ( List MenuItem, String ) Document.RootQuery
+query =
+    Api.Query.build (,)
+        |> Object.with menuItemsQuery
+        |> Object.with Api.Query.me
+
+
 type alias MenuItem =
     { id : String
     , name : String
@@ -51,13 +58,6 @@ makeRequest =
         |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
-
-
-query : Object ( List MenuItem, String ) Document.RootQuery
-query =
-    Api.Query.build (,)
-        |> Object.with menuItemsQuery
-        |> Object.with Api.Query.me
 
 
 init : ( Model, Cmd Msg )
