@@ -1,0 +1,7 @@
+{
+  "checks": {
+    "UnusedImportAlias": false,
+    "UnusedVariable": false,
+    "UnusedPatternVariable": false
+  }
+}

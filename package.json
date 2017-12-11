@@ -7,9 +7,13 @@
     "test": "elm-test",
     "gen:starwars": "npm run build && cd example/starwars && ../../bin/graphqelm http://localhost:8080/graphql && elm-format src/Api --yes && cd -",
     "gen:github": "npm run build && cd example/github && ../../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' && elm-format src/Api --yes && cd -",
-    "gen:menu": "npm run build && cd example/ && ../bin/graphqelm http://localhost:4000/api && elm-format src/Api --yes && cd -"
+    "gen:menu": "npm run build && cd example/ && ../bin/graphqelm http://localhost:4000/api && elm-format src/Api --yes && cd -",
+    "elm-analyse": "elm-analyse --serve"
   },
-  "keywords": ["elm", "graphql"],
+  "keywords": [
+    "elm",
+    "graphql"
+  ],
   "repository": "https://github.com/dillonkearns/graphqelm",
   "author": "Dillon Kearns",
   "license": "BSD-3-Clause",
@@ -21,6 +25,7 @@
     "@types/request": "^2.0.8",
     "@types/webpack": "^3.8.1",
     "elm": "^0.18.0",
+    "elm-analyse": "^0.13.1",
     "elm-hot-loader": "0.5.4",
     "elm-test": "^0.18.10",
     "elm-webpack-loader": "^4.3.1",
