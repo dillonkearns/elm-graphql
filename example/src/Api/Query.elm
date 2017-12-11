@@ -10,6 +10,7 @@ import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.RootObject as RootObject
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
+import Json.Encode as Encode
 
 
 build : (a -> constructor) -> Object (a -> constructor) RootQuery

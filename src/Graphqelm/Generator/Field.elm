@@ -54,12 +54,12 @@ forObject thisObjectName field =
 
 forQuery_ : FieldGenerator -> String
 forQuery_ field =
-    common (interpolate "DocumentRoot {0}" [ field.decoderAnnotation ]) field
+    common (interpolate "FieldDecoder {0} RootQuery" [ field.decoderAnnotation ]) field
 
 
 forMutation_ : FieldGenerator -> String
 forMutation_ field =
-    common (interpolate "DocumentRoot {0}" [ field.decoderAnnotation ]) field
+    common (interpolate "FieldDecoder {0} RootQuery" [ field.decoderAnnotation ]) field
 
 
 forObject_ : String -> FieldGenerator -> String
@@ -171,10 +171,10 @@ objectThing objectOrQuery fieldName typeRef refName =
                 "Object"
 
             GenerateQuery ->
-                "Query"
+                "RootObject"
 
             GenerateMutation ->
-                "Mutation"
+                "RootObject"
     , otherThing = ".single"
     , letBindings = []
     }
@@ -233,10 +233,10 @@ initScalarField objectOrQuery fieldName typeRef =
                 "Object"
 
             GenerateQuery ->
-                "Query"
+                "RootObject"
 
             GenerateMutation ->
-                "Mutation"
+                "RootObject"
     , otherThing = ".fieldDecoder"
     , letBindings = []
     }

@@ -11,6 +11,11 @@ import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
 
-increment : DocumentRoot Int
+decrement : FieldDecoder Int RootQuery
+decrement =
+    RootObject.fieldDecoder "decrement" [] Decode.int
+
+
+increment : FieldDecoder Int RootQuery
 increment =
-    Mutation.fieldDecoder "increment" [] Decode.int
+    RootObject.fieldDecoder "increment" [] Decode.int
