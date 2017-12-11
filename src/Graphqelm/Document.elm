@@ -2,6 +2,7 @@ module Graphqelm.Document exposing (RootMutation, RootQuery, decoderNew, toMutat
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Object exposing (Object(Object))
+import Interpolate exposing (interpolate)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -34,10 +35,8 @@ queriesStringNew string queries =
         ++ " {\n"
         ++ (List.indexedMap
                 (\index query ->
-                    "  result"
-                        ++ toString index
-                        ++ ": "
-                        ++ Field.fieldDecoderToQuery True 1 query
+                    interpolate "  {0}: {1}"
+                        [ "result" ++ toString index, Field.fieldDecoderToQuery True 1 query ]
                 )
                 queries
                 |> String.join "\n"
