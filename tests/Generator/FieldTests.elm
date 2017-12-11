@@ -15,9 +15,9 @@ all =
                 meField
                     |> Field.forQuery
                     |> Expect.equal
-                        """me : DocumentRoot String
+                        """me : FieldDecoder String RootQuery
 me =
-      Query.fieldDecoder "me" [] (Decode.string)
+      RootObject.fieldDecoder "me" [] (Decode.string)
 """
         , test "converts for object" <|
             \() ->
@@ -36,9 +36,9 @@ me =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """droid : Object droid Api.Object.Droid -> DocumentRoot droid
+                        """droid : Object droid Api.Object.Droid -> FieldDecoder droid RootQuery
 droid object =
-      Query.single "droid" [] (object)
+      RootObject.single "droid" [] (object)
 """
         , test "simple object with no args for object" <|
             \() ->
@@ -72,9 +72,9 @@ droid object =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """human : { id : String } -> Object human Api.Object.Human -> DocumentRoot human
+                        """human : { id : String } -> Object human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
-      Query.single "human" [ Argument.string "id" requiredArgs.id ] (object)
+      RootObject.single "human" [ Argument.string "id" requiredArgs.id ] (object)
 """
         , test "with optional args" <|
             \() ->
@@ -84,7 +84,7 @@ human requiredArgs object =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> DocumentRoot (List menuItems)
+                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =
@@ -94,7 +94,7 @@ menuItems fillInOptionals object =
             [ Argument.optional "contains" filledInOptionals.contains (Value.string) ]
 |> List.filterMap identity
     in
-      Query.listOf "menuItems" optionalArgs (object)
+      RootObject.listOf "menuItems" optionalArgs (object)
 """
         , test "normalizes reserved names" <|
             \() ->
