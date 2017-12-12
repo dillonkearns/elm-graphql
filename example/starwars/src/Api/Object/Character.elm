@@ -3,9 +3,10 @@ module Api.Object.Character exposing (..)
 import Api.Enum.Episode
 import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.Builder.Object as Object exposing (Object)
+import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 

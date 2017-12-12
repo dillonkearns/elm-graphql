@@ -22,7 +22,7 @@ schema.
     import Api.Object
     import Api.Object.User as User
     import Graphqelm.FieldDecoder as FieldDecoder
-    import Graphqelm.Builder.Object exposing (Object, with)
+    import Graphqelm.Object exposing (Object, with)
 
     human : Object String Api.Object.User
     human =

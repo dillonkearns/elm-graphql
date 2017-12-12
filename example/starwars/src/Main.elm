@@ -9,7 +9,7 @@ import Graphqelm exposing (RootQuery)
 import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
-import Graphqelm.Builder.Object exposing (Object, with)
+import Graphqelm.Object exposing (Object, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 

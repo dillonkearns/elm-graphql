@@ -20,7 +20,7 @@ module Graphqelm exposing (RootMutation, RootQuery, map, map2, map3, noOptionalA
 -}
 
 import Graphqelm.FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Builder.Object as Object exposing (Object)
+import Graphqelm.Object as Object exposing (Object)
 
 
 {-| Type for top-level queries which can be sent using functions
