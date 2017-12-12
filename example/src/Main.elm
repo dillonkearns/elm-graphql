@@ -4,11 +4,11 @@ import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
 import Graphqelm.Document as Document
+import Graphqelm.Document.LowLevel
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
-import Html
+import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
-import View.QueryAndResponse
 
 
 type Msg
@@ -76,4 +76,13 @@ main =
 
 view : Model -> Html.Html Msg
 view model =
-    View.QueryAndResponse.view query model
+    div []
+        [ div []
+            [ h1 [] [ text "Generated Query" ]
+            , pre [] [ text (Graphqelm.Document.LowLevel.toQueryDocument query) ]
+            ]
+        , div []
+            [ h1 [] [ text "Response" ]
+            , Html.text (toString model)
+            ]
+        ]

@@ -1,6 +1,7 @@
 module Graphqelm.Http exposing (buildMutationRequest, buildQueryRequest, send, toRequest, withHeader, withTimeout)
 
-import Graphqelm.Document as Document
+import Graphqelm.Document exposing (RootMutation, RootQuery)
+import Graphqelm.Document.LowLevel as Document
 import Graphqelm.Object exposing (Object)
 import Http
 import Json.Encode
@@ -32,12 +33,12 @@ buildRequest url queryDocument query =
         |> Request
 
 
-buildQueryRequest : String -> Object decodesTo Document.RootQuery -> Request decodesTo
+buildQueryRequest : String -> Object decodesTo RootQuery -> Request decodesTo
 buildQueryRequest url query =
     buildRequest url (Document.toQueryDocument query) query
 
 
-buildMutationRequest : String -> Object decodesTo Document.RootMutation -> Request decodesTo
+buildMutationRequest : String -> Object decodesTo RootMutation -> Request decodesTo
 buildMutationRequest url query =
     buildRequest url (Document.toMutationDocument query) query
 

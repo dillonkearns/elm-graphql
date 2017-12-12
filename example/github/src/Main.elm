@@ -8,6 +8,7 @@ import Api.Object.StargazerConnection
 import Api.Query as Query
 import Graphqelm
 import Graphqelm.Document as Document
+import Graphqelm.Document.LowLevel
 import Graphqelm.Http
 import Graphqelm.Object exposing (Object, with)
 import Html exposing (div, h1, p, pre, text)
@@ -97,7 +98,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.toQueryDocument query) ]
+            , pre [] [ text (Graphqelm.Document.LowLevel.toQueryDocument query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]

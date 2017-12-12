@@ -6,6 +6,7 @@ import Api.Object.Character as Character
 import Api.Object.Human as Human
 import Api.Query as Query
 import Graphqelm.Document as Document exposing (RootQuery)
+import Graphqelm.Document.LowLevel
 import Graphqelm.Field as Field
 import Graphqelm.Http
 import Graphqelm.Object exposing (Object, with)
@@ -106,7 +107,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.toQueryDocument query) ]
+            , pre [] [ text (Graphqelm.Document.LowLevel.toQueryDocument query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]
