@@ -1,11 +1,6 @@
 module Graphqelm.DocumentSerializer exposing (serializeMutation, serializeQuery)
 
-{-|
-
-
-## DocumentSerializer
-
-You'll usually want to use `Graphqelm.Http` to perform your queries directly.
+{-| You'll usually want to use `Graphqelm.Http` to perform your queries directly.
 This package provides low-level functions for generating GraphQL documents that
 are helpful for debugging and demo purposes.
 
