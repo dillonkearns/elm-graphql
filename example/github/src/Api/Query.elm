@@ -4,10 +4,10 @@ import Api.Enum.SearchType
 import Api.Object
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object exposing (Object)
 import Graphqelm.Builder.RootObject as RootObject
-import Graphqelm.Value as Value exposing (Value)
+import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -43,7 +43,7 @@ marketplaceCategories fillInOptionals =
             fillInOptionals { excludeEmpty = Nothing }
 
         optionalArgs =
-            [ Argument.optional "excludeEmpty" filledInOptionals.excludeEmpty Value.bool ]
+            [ Argument.optional "excludeEmpty" filledInOptionals.excludeEmpty Encode.bool ]
                 |> List.filterMap identity
     in
     RootObject.fieldDecoder "marketplaceCategories" optionalArgs (Decode.string |> Decode.list)
@@ -66,7 +66,7 @@ marketplaceListings fillInOptionals object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, categorySlug = Nothing, viewerCanAdmin = Nothing, adminId = Nothing, organizationId = Nothing, allStates = Nothing, slugs = Nothing, primaryCategoryOnly = Nothing, withFreeTrialsOnly = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Value.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Value.bool, Argument.optional "adminId" filledInOptionals.adminId Value.string, Argument.optional "organizationId" filledInOptionals.organizationId Value.string, Argument.optional "allStates" filledInOptionals.allStates Value.bool, Argument.optional "slugs" filledInOptionals.slugs (Value.string |> Value.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Value.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Value.bool ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Encode.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Encode.bool, Argument.optional "adminId" filledInOptionals.adminId Encode.string, Argument.optional "organizationId" filledInOptionals.organizationId Encode.string, Argument.optional "allStates" filledInOptionals.allStates Encode.bool, Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Encode.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Encode.bool ]
                 |> List.filterMap identity
     in
     RootObject.single "marketplaceListings" optionalArgs object
@@ -99,7 +99,7 @@ rateLimit fillInOptionals object =
             fillInOptionals { dryRun = Nothing }
 
         optionalArgs =
-            [ Argument.optional "dryRun" filledInOptionals.dryRun Value.bool ]
+            [ Argument.optional "dryRun" filledInOptionals.dryRun Encode.bool ]
                 |> List.filterMap identity
     in
     RootObject.single "rateLimit" optionalArgs object
@@ -127,7 +127,7 @@ search fillInOptionals requiredArgs object =
             fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Value.int, Argument.optional "after" filledInOptionals.after Value.string, Argument.optional "last" filledInOptionals.last Value.int, Argument.optional "before" filledInOptionals.before Value.string ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
     RootObject.single "search" (optionalArgs ++ [ Argument.string "query" requiredArgs.query, Argument.string "type" requiredArgs.type_ ]) object

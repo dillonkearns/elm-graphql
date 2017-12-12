@@ -50,19 +50,19 @@ generateEncoder typeRef =
                 Type.Scalar scalar ->
                     case scalar of
                         Scalar.String ->
-                            "Value.string"
+                            "Encode.string"
 
                         Scalar.Boolean ->
-                            "Value.bool"
+                            "Encode.bool"
 
                         Scalar.Int ->
-                            "Value.int"
+                            "Encode.int"
 
                         Scalar.Float ->
-                            "Value.float"
+                            "Encode.float"
 
                 Type.List typeRef ->
-                    generateEncoder typeRef ++ " |> Value.list"
+                    generateEncoder typeRef ++ " |> Encode.list"
 
                 Type.ObjectRef objectName ->
                     Debug.crash "I don't expect to see object references as argument types."
@@ -71,7 +71,7 @@ generateEncoder typeRef =
                     Debug.crash "I don't expect to see object references as argument types."
 
                 Type.EnumRef enumName ->
-                    "(Value.enum toString)"
+                    "(Encode.enum toString)"
 
                 Type.InputObjectRef inputObjectName ->
                     "identity"

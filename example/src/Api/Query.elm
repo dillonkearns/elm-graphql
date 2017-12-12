@@ -5,10 +5,10 @@ import Api.Enum.Weather
 import Api.Object
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object exposing (Object)
 import Graphqelm.Builder.RootObject as RootObject
-import Graphqelm.Value as Value exposing (Value)
+import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -34,7 +34,7 @@ menuItems fillInOptionals object =
             fillInOptionals { contains = Nothing, order = Nothing }
 
         optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains Value.string, Argument.optional "order" filledInOptionals.order (Value.enum toString) ]
+            [ Argument.optional "contains" filledInOptionals.contains Encode.string, Argument.optional "order" filledInOptionals.order (Encode.enum toString) ]
                 |> List.filterMap identity
     in
     RootObject.listOf "menuItems" optionalArgs object

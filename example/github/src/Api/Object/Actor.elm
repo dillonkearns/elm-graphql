@@ -2,9 +2,9 @@ module Api.Object.Actor exposing (..)
 
 import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object exposing (Object)
-import Graphqelm.Value as Value exposing (Value)
+import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Json.Decode as Decode
 
 
@@ -20,7 +20,7 @@ avatarUrl fillInOptionals =
             fillInOptionals { size = Nothing }
 
         optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size Value.int ]
+            [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
     Object.fieldDecoder "avatarUrl" optionalArgs Decode.string

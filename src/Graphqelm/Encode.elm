@@ -1,4 +1,4 @@
-module Graphqelm.Value exposing (Value, bool, enum, int, list, serialize, string)
+module Graphqelm.Encode exposing (Value, bool, enum, int, list, serialize, string)
 
 {-|
 
@@ -62,7 +62,7 @@ list toValue list =
         |> List
 
 
-{-| Low-level function for serializing a `Graphqelm.Value`
+{-| Low-level function for serializing a `Graphqelm.Encode.Value`s.
 -}
 serialize : Value -> String
 serialize value =

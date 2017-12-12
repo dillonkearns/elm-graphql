@@ -2,9 +2,9 @@ module Api.Object.Mutation exposing (..)
 
 import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Builder.Object as Object exposing (Object)
-import Graphqelm.Value as Value exposing (Value)
+import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Json.Decode as Decode
 import Json.Encode as Encode
 

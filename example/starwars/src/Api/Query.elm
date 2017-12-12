@@ -4,10 +4,10 @@ import Api.Enum.Episode
 import Api.Object
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object exposing (Object)
 import Graphqelm.Builder.RootObject as RootObject
-import Graphqelm.Value as Value exposing (Value)
+import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -23,7 +23,7 @@ hero fillInOptionals object =
             fillInOptionals { episode = Nothing }
 
         optionalArgs =
-            [ Argument.optional "episode" filledInOptionals.episode (Value.enum toString) ]
+            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
                 |> List.filterMap identity
     in
     RootObject.single "hero" optionalArgs object

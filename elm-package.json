@@ -9,7 +9,7 @@
     "exposed-modules": [
       "Graphqelm",
       "Graphqelm.Http",
-      "Graphqelm.Value",
+      "Graphqelm.Encode",
       "Graphqelm.DocumentSerializer",
       "Graphqelm.FieldDecoder"
     ],

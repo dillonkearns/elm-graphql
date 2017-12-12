@@ -3,9 +3,9 @@ module Api.Object.RepositoryInfo exposing (..)
 import Api.Enum.RepositoryLockReason
 import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object exposing (Object)
-import Graphqelm.Value as Value exposing (Value)
+import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Json.Decode as Decode
 
 
@@ -126,7 +126,7 @@ shortDescriptionHTML fillInOptionals =
             fillInOptionals { limit = Nothing }
 
         optionalArgs =
-            [ Argument.optional "limit" filledInOptionals.limit Value.int ]
+            [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
     Object.fieldDecoder "shortDescriptionHTML" optionalArgs Decode.string

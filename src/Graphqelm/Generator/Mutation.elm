@@ -31,7 +31,7 @@ import Graphqelm.Builder.Object as Object exposing (Object)
 import Graphqelm.Builder.RootObject as RootObject
 import Graphqelm exposing (RootMutation)
 import Json.Decode as Decode exposing (Decoder)
-import Graphqelm.Value as Value exposing (Value)
+import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
 

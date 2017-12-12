@@ -1,7 +1,7 @@
 module Graphqelm.DocumentSerializer.Argument exposing (serialize)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument(Argument))
-import Graphqelm.Value as Value
+import Graphqelm.Encode as Encode
 
 
 serialize : List Argument -> String
@@ -21,4 +21,4 @@ serialize args =
 
 argToString : Argument -> String
 argToString (Argument name value) =
-    name ++ ": " ++ Value.serialize value
+    name ++ ": " ++ Encode.serialize value
