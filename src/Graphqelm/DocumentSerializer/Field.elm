@@ -1,8 +1,8 @@
 module Graphqelm.DocumentSerializer.Field exposing (serialize)
 
-import Graphqelm.Field exposing (Field(Composite, Leaf, QueryField))
 import Graphqelm.DocumentSerializer.Argument as Argument
 import Graphqelm.DocumentSerializer.Indent as Indent
+import Graphqelm.Field exposing (Field(Composite, Leaf, QueryField))
 
 
 serialize : Bool -> Int -> Field -> String
