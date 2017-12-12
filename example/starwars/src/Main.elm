@@ -7,7 +7,7 @@ import Api.Object.Human as Human
 import Api.Query as Query
 import Graphqelm exposing (RootQuery)
 import Graphqelm.DocumentSerializer as DocumentSerializer
-import Graphqelm.Field as Field
+import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
 import Graphqelm.Object exposing (Object, with)
 import Html exposing (div, h1, p, pre, text)
@@ -62,7 +62,7 @@ human : Object Human Api.Object.Human
 human =
     Human.build Human
         |> with Human.name
-        |> with (Human.appearsIn |> Field.map (List.map episodeYear))
+        |> with (Human.appearsIn |> FieldDecoder.map (List.map episodeYear))
 
 
 episodeYear : Episode -> Int
