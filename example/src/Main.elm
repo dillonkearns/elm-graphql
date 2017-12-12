@@ -4,9 +4,9 @@ import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
 import Graphqelm.Document as Document
-import Graphqelm.Document.LowLevel
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.QuerySerializer as QuerySerializer
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -79,7 +79,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Graphqelm.Document.LowLevel.toQueryDocument query) ]
+            , pre [] [ text (QuerySerializer.serializeQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]

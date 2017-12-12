@@ -6,10 +6,10 @@ import Api.Object.Character as Character
 import Api.Object.Human as Human
 import Api.Query as Query
 import Graphqelm.Document as Document exposing (RootQuery)
-import Graphqelm.Document.LowLevel
 import Graphqelm.Field as Field
 import Graphqelm.Http
 import Graphqelm.Object exposing (Object, with)
+import Graphqelm.QuerySerializer as QuerySerializer
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -107,7 +107,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Graphqelm.Document.LowLevel.toQueryDocument query) ]
+            , pre [] [ text (QuerySerializer.serializeQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]

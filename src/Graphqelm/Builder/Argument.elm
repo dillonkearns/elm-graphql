@@ -1,4 +1,4 @@
-module Graphqelm.Builder.Argument exposing (Argument, enum, int, optional, string, toQueryString)
+module Graphqelm.Builder.Argument exposing (Argument(Argument), enum, int, optional, string, toQueryString)
 
 import Graphqelm.Value as Value exposing (Value)
 import Json.Encode
