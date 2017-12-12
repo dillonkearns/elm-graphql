@@ -1,7 +1,16 @@
 module Graphqelm.DocumentSerializer exposing (serializeMutation, serializeQuery)
 
-{-| TODO
+{-|
+
+
+## DocumentSerializer
+
+You'll usually want to use `Graphqelm.Http` to perform your queries directly.
+This package provides low-level functions for generating GraphQL documents that
+are helpful for debugging and demo purposes.
+
 @docs serializeQuery, serializeMutation
+
 -}
 
 import Graphqelm exposing (RootMutation, RootQuery)
@@ -11,14 +20,14 @@ import Graphqelm.Object exposing (Object(Object))
 import Interpolate exposing (interpolate)
 
 
-{-| TODO
+{-| Serialize a query object into a string for a GraphQL endpoint.
 -}
 serializeQuery : Object decodesTo RootQuery -> String
 serializeQuery (Object fields decoder) =
     serialize "query" fields
 
 
-{-| TODO
+{-| Serialize a mutation object into a string for a GraphQL endpoint.
 -}
 serializeMutation : Object decodesTo RootMutation -> String
 serializeMutation (Object fields decoder) =
