@@ -29,7 +29,7 @@ import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Api.Object
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm exposing (RootQuery)
-import Graphqelm.RootObject as RootObject
+import Graphqelm.Builder.RootObject as RootObject
 import Json.Decode as Decode exposing (Decoder)
 import Graphqelm.Value as Value exposing (Value)
 {1}

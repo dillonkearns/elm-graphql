@@ -1,4 +1,4 @@
-module Graphqelm.RootObject exposing (fieldDecoder, listOf, object, single)
+module Graphqelm.Builder.RootObject exposing (fieldDecoder, listOf, object, single)
 
 import Graphqelm.Builder.Argument exposing (Argument)
 import Graphqelm.Field exposing (Field)
