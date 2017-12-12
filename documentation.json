@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Graphqelm.Http",
+    "comment": " TODO\n@docs Request, buildMutationRequest, buildQueryRequest, send, toRequest, withHeader, withTimeout\n",
+    "aliases": [],
+    "types": [
+      {
+        "name": "Request",
+        "comment": " TODO\n",
+        "args": [
+          "decodesTo"
+        ],
+        "cases": []
+      }
+    ],
+    "values": [
+      {
+        "name": "buildMutationRequest",
+        "comment": " TODO\n",
+        "type": "String -> Graphqelm.Object.Object decodesTo Graphqelm.RootMutation -> Graphqelm.Http.Request decodesTo"
+      },
+      {
+        "name": "buildQueryRequest",
+        "comment": " TODO\n",
+        "type": "String -> Graphqelm.Object.Object decodesTo Graphqelm.RootQuery -> Graphqelm.Http.Request decodesTo"
+      },
+      {
+        "name": "send",
+        "comment": " TODO\n",
+        "type": "(Result.Result Http.Error a -> msg) -> Graphqelm.Http.Request a -> Platform.Cmd.Cmd msg"
+      },
+      {
+        "name": "toRequest",
+        "comment": " TODO\n",
+        "type": "Graphqelm.Http.Request decodesTo -> Http.Request decodesTo"
+      },
+      {
+        "name": "withHeader",
+        "comment": " TODO\n",
+        "type": "String -> String -> Graphqelm.Http.Request decodesTo -> Graphqelm.Http.Request decodesTo"
+      },
+      {
+        "name": "withTimeout",
+        "comment": " TODO\n",
+        "type": "Time.Time -> Graphqelm.Http.Request decodesTo -> Graphqelm.Http.Request decodesTo"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  },
+  {
+    "name": "Graphqelm.DocumentSerializer",
+    "comment": " You'll usually want to use `Graphqelm.Http` to perform your queries directly.\nThis package provides low-level functions for generating GraphQL documents that\nare helpful for debugging and demo purposes.\n\n@docs serializeQuery, serializeMutation\n\n",
+    "aliases": [],
+    "types": [],
+    "values": [
+      {
+        "name": "serializeMutation",
+        "comment": " Serialize a mutation object into a string for a GraphQL endpoint.\n",
+        "type": "Graphqelm.Object.Object decodesTo Graphqelm.RootMutation -> String"
+      },
+      {
+        "name": "serializeQuery",
+        "comment": " Serialize a query object into a string for a GraphQL endpoint.\n",
+        "type": "Graphqelm.Object.Object decodesTo Graphqelm.RootQuery -> String"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  },
+  {
+    "name": "Graphqelm",
+    "comment": "\n\n\n## Optional Args\n\n@docs noOptionalArgs\n\n\n## Alternative Map syntax\n\n@docs map, map2, map3\n\n\n## Top-Level Types\n\n@docs RootMutation, RootQuery\n\n",
+    "aliases": [],
+    "types": [
+      {
+        "name": "RootMutation",
+        "comment": " Type for top-level mutations which can be sent using functions\nfrom `Graphqelm.Http`.\n",
+        "args": [],
+        "cases": []
+      },
+      {
+        "name": "RootQuery",
+        "comment": " Type for top-level queries which can be sent using functions\nfrom `Graphqelm.Http`.\n",
+        "args": [],
+        "cases": []
+      }
+    ],
+    "values": [
+      {
+        "name": "map",
+        "comment": " TODO\n",
+        "type": "(placeholder -> Graphqelm.Object.Object (a -> result) typeLock) -> placeholder -> Graphqelm.Field.FieldDecoder a typeLock -> Graphqelm.Object.Object result typeLock"
+      },
+      {
+        "name": "map2",
+        "comment": " TODO\n",
+        "type": "(placeholder -> Graphqelm.Object.Object (a -> b -> result) typeLock) -> placeholder -> Graphqelm.Field.FieldDecoder a typeLock -> Graphqelm.Field.FieldDecoder b typeLock -> Graphqelm.Object.Object result typeLock"
+      },
+      {
+        "name": "map3",
+        "comment": " TODO\n",
+        "type": "(placeholder -> Graphqelm.Object.Object (a -> b -> c -> result) typeLock) -> placeholder -> Graphqelm.Field.FieldDecoder a typeLock -> Graphqelm.Field.FieldDecoder b typeLock -> Graphqelm.Field.FieldDecoder c typeLock -> Graphqelm.Object.Object result typeLock"
+      },
+      {
+        "name": "noOptionalArgs",
+        "comment": " TODO\n",
+        "type": "a -> a"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  },
+  {
+    "name": "Graphqelm.Value",
+    "comment": "\n\n@docs Value, bool, enum, int, list, string\n\n\n## Low-Level\n\n@docs serialize\n\n",
+    "aliases": [],
+    "types": [
+      {
+        "name": "Value",
+        "comment": " Values\n",
+        "args": [],
+        "cases": []
+      }
+    ],
+    "values": [
+      {
+        "name": "bool",
+        "comment": " Encode a bool\n",
+        "type": "Bool -> Graphqelm.Value.Value"
+      },
+      {
+        "name": "enum",
+        "comment": " Encode an enum\n",
+        "type": "(a -> String) -> a -> Graphqelm.Value.Value"
+      },
+      {
+        "name": "int",
+        "comment": " Encode an int\n",
+        "type": "Int -> Graphqelm.Value.Value"
+      },
+      {
+        "name": "list",
+        "comment": " Encode a list of Values\n",
+        "type": "(a -> Graphqelm.Value.Value) -> List a -> Graphqelm.Value.Value"
+      },
+      {
+        "name": "serialize",
+        "comment": " Low-level function for serializing a `Graphqelm.Value`\n",
+        "type": "Graphqelm.Value.Value -> String"
+      },
+      {
+        "name": "string",
+        "comment": " Encode a string\n",
+        "type": "String -> Graphqelm.Value.Value"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  }
+]

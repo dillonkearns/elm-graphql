@@ -25,14 +25,12 @@ prepend moduleName fields =
         """module {0} exposing (..)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Api.Object
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.RootObject as RootObject
 import Graphqelm exposing (RootMutation)
 import Json.Decode as Decode exposing (Decoder)
-import Json.Encode as Encode
 import Graphqelm.Value as Value exposing (Value)
 {1}
 
