@@ -6,7 +6,7 @@ import Api.Query
 import Graphqelm exposing (RootQuery)
 import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.Http
-import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Builder.Object as Object exposing (Object)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 

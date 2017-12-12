@@ -1,4 +1,4 @@
-module Graphqelm.Object exposing (..)
+module Graphqelm.Builder.Object exposing (..)
 
 import Graphqelm.Builder.Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field)

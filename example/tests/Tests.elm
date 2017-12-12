@@ -4,7 +4,7 @@ import Api.Object.MenuItem as MenuItem
 import Api.Query as Query
 import Expect
 import Graphqelm.Field as Field exposing (FieldDecoder, Query)
-import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Builder.Object as Object exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 

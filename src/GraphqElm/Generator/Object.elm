@@ -20,7 +20,7 @@ prepend moduleName fields =
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Builder.Object as Object exposing (Object)
 import Api.Object
 import Json.Decode as Decode
 import Graphqelm.Value as Value exposing (Value)

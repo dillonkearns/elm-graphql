@@ -12,7 +12,7 @@ The builder syntax is inspired by Luke Westby's
 import Graphqelm exposing (RootMutation, RootQuery)
 import Graphqelm.Document.LowLevel as Document
 import Graphqelm.DocumentSerializer as DocumentSerializer
-import Graphqelm.Object exposing (Object)
+import Graphqelm.Builder.Object exposing (Object)
 import Http
 import Json.Encode
 import Time exposing (Time)

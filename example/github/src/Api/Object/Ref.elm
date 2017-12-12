@@ -4,7 +4,7 @@ import Api.Enum.PullRequestState
 import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.Builder.Object as Object exposing (Object)
 import Graphqelm.Value as Value exposing (Value)
 import Json.Decode as Decode
 

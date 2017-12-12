@@ -11,7 +11,7 @@ are helpful for debugging and demo purposes.
 import Graphqelm exposing (RootMutation, RootQuery)
 import Graphqelm.DocumentSerializer.Field as Field
 import Graphqelm.Field exposing (Field)
-import Graphqelm.Object exposing (Object(Object))
+import Graphqelm.Builder.Object exposing (Object(Object))
 import Interpolate exposing (interpolate)
 
 

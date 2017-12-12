@@ -3,7 +3,7 @@ module Graphqelm.Document.LowLevel exposing (decoder)
 {-| Low level functions to build up a GraphQL query string or get a decoder.
 -}
 
-import Graphqelm.Object exposing (Object(Object))
+import Graphqelm.Builder.Object exposing (Object(Object))
 import Json.Decode as Decode exposing (Decoder)
 
 
