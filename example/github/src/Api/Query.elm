@@ -2,7 +2,7 @@ module Api.Query exposing (..)
 
 import Api.Enum.SearchType
 import Api.Object
-import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Document exposing (RootQuery)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)

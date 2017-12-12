@@ -1,6 +1,6 @@
 module Graphqelm.RootObject exposing (fieldDecoder, listOf, object, single)
 
-import Graphqelm.Argument exposing (Argument)
+import Graphqelm.Builder.Argument exposing (Argument)
 import Graphqelm.Field exposing (Field, FieldDecoder(FieldDecoder))
 import Graphqelm.Object exposing (Object(..))
 import Json.Decode as Decode exposing (Decoder)

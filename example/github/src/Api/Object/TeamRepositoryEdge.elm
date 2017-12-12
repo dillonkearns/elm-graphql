@@ -2,7 +2,7 @@ module Api.Object.TeamRepositoryEdge exposing (..)
 
 import Api.Enum.RepositoryPermission
 import Api.Object
-import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Value as Value exposing (Value)

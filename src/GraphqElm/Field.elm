@@ -1,6 +1,6 @@
 module Graphqelm.Field exposing (..)
 
-import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Json.Decode as Decode exposing (Decoder)
 
 

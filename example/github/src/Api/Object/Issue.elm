@@ -5,7 +5,7 @@ import Api.Enum.IssueState
 import Api.Enum.ReactionContent
 import Api.Enum.SubscriptionState
 import Api.Object
-import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Graphqelm.Value as Value exposing (Value)

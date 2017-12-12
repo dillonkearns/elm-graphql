@@ -1,7 +1,7 @@
 module Api.Mutation exposing (..)
 
 import Api.Object
-import Graphqelm.Argument as Argument exposing (Argument)
+import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Document exposing (RootMutation)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
