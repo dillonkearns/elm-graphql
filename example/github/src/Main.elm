@@ -32,7 +32,7 @@ repo =
     Repository.build Response
         |> with Repository.createdAt
         |> with (Repository.releases (\optionals -> { optionals | last = Just 10 }) releases)
-        |> with (Repository.stargazers Graphqelm.noOptionalArgs stargazers)
+        |> with (Repository.stargazers identity stargazers)
 
 
 stargazers : Object Int Api.Object.StargazerConnection

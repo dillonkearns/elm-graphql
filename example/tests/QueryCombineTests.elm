@@ -3,10 +3,10 @@ module QueryCombineTests exposing (..)
 import Api.Object.MenuItem as MenuItem
 import Api.Query as Query
 import Expect
-import Graphqelm.Field as Field exposing (FieldDecoder, Query)
-import Graphqelm.Builder.Object as Object exposing (Object)
-import Graphqelm.Query as Query
 import Graphqelm
+import Graphqelm.Builder.Object as Object exposing (Object)
+import Graphqelm.Field as Field exposing (FieldDecoder, Query)
+import Graphqelm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 
@@ -24,7 +24,7 @@ menuItem =
 menusQuery : Query (List MenuItem)
 menusQuery =
     menuItem
-        |> Query.menuItems Graphqelm.noOptionalArgs
+        |> Query.menuItems identity
 
 
 combinedQueries : Query ( Maybe (List String), List MenuItem )

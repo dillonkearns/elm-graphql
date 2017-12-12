@@ -1,11 +1,6 @@
-module Graphqelm exposing (RootMutation, RootQuery, map, map2, map3, noOptionalArgs)
+module Graphqelm exposing (RootMutation, RootQuery, map, map2, map3)
 
 {-|
-
-
-## Optional Args
-
-@docs noOptionalArgs
 
 
 ## Alternative Map syntax
@@ -35,13 +30,6 @@ from `Graphqelm.Http`.
 -}
 type RootMutation
     = RootMutation
-
-
-{-| TODO
--}
-noOptionalArgs : a -> a
-noOptionalArgs =
-    identity
 
 
 {-| TODO
