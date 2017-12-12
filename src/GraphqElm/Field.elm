@@ -1,4 +1,4 @@
-module Graphqelm.Field exposing (..)
+module Graphqelm.Field exposing (Field(..), FieldDecoder(FieldDecoder), fieldDecoder, map)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Json.Decode as Decode exposing (Decoder)
@@ -12,46 +12,6 @@ type Field
     = Composite String (List Argument) (List Field)
     | Leaf String (List Argument)
     | QueryField Field
-
-
-spaces : Int -> String
-spaces n =
-    if n > 0 then
-        " " ++ spaces (n - 1)
-    else
-        ""
-
-
-indent : Bool -> Int -> String
-indent skip indentationLevel =
-    if skip then
-        ""
-    else
-        spaces (indentationLevel * 2)
-
-
-fieldDecoderToQuery : Bool -> Int -> Field -> String
-fieldDecoderToQuery skipIndentationLevel indentationLevel field =
-    case field of
-        Composite fieldName args children ->
-            (indent skipIndentationLevel indentationLevel
-                ++ fieldName
-                ++ Argument.toQueryString args
-                ++ " {\n"
-                ++ (children
-                        |> List.map (fieldDecoderToQuery False (indentationLevel + 1))
-                        |> String.join "\n"
-                   )
-            )
-                ++ "\n"
-                ++ indent False indentationLevel
-                ++ "}"
-
-        Leaf fieldName args ->
-            indent skipIndentationLevel indentationLevel ++ fieldName
-
-        QueryField nestedField ->
-            fieldDecoderToQuery False indentationLevel nestedField
 
 
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
