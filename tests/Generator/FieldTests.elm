@@ -91,7 +91,7 @@ menuItems fillInOptionals object =
             fillInOptionals { contains = Nothing }
 
         optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains (Value.string) ]
+            [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
 |> List.filterMap identity
     in
       RootObject.listOf "menuItems" optionalArgs (object)

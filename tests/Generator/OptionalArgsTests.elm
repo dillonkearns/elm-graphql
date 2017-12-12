@@ -38,7 +38,7 @@ all =
                                 }
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
-                                , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains (Value.string) ]
+                                , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
 |> List.filterMap identity"""
                                 ]
                             }
@@ -61,7 +61,7 @@ all =
                                 }
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { id = Nothing, contains = Nothing }"
-                                , "optionalArgs" => """[ Argument.optional "id" filledInOptionals.id (Value.string), Argument.optional "contains" filledInOptionals.contains (Value.string) ]
+                                , "optionalArgs" => """[ Argument.optional "id" filledInOptionals.id (Encode.string), Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
 |> List.filterMap identity"""
                                 ]
                             }
@@ -81,7 +81,7 @@ all =
                                 }
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { first = Nothing }"
-                                , "optionalArgs" => """[ Argument.optional "first" filledInOptionals.first (Value.int) ]
+                                , "optionalArgs" => """[ Argument.optional "first" filledInOptionals.first (Encode.int) ]
 |> List.filterMap identity"""
                                 ]
                             }
@@ -101,7 +101,7 @@ all =
                                 }
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { episode = Nothing }"
-                                , "optionalArgs" => """[ Argument.optional "episode" filledInOptionals.episode ((Value.enum toString)) ]
+                                , "optionalArgs" => """[ Argument.optional "episode" filledInOptionals.episode ((Encode.enum toString)) ]
 |> List.filterMap identity"""
                                 ]
                             }
