@@ -1,7 +1,6 @@
 module Graphqelm.Builder.Argument exposing (Argument(Argument), enum, int, optional, string)
 
 import Graphqelm.Value as Value exposing (Value)
-import Json.Encode
 
 
 type Argument
@@ -21,14 +20,14 @@ argument fieldName value =
 
 string : String -> String -> Argument
 string fieldName value =
-    argument fieldName (Value.Json (Json.Encode.string value))
+    argument fieldName (Value.string value)
 
 
 enum : String -> String -> Argument
 enum fieldName value =
-    argument fieldName (Value.EnumValue value)
+    argument fieldName (Value.enum toString value)
 
 
 int : String -> Int -> Argument
 int fieldName value =
-    argument fieldName (Value.Json (Json.Encode.int value))
+    argument fieldName (Value.int value)

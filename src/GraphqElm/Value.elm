@@ -1,4 +1,4 @@
-module Graphqelm.Value exposing (Value(..), bool, enum, int, list, serialize, string)
+module Graphqelm.Value exposing (Value, bool, enum, int, list, serialize, string)
 
 {-|
 
