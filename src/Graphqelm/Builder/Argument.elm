@@ -34,6 +34,10 @@ int fieldName value =
     argument fieldName (Value.Json (Json.Encode.int value))
 
 
+
+-- TODO EXTRACT: query generator
+
+
 toQueryString : List Argument -> String
 toQueryString args =
     case args of
@@ -47,6 +51,10 @@ toQueryString args =
                         |> String.join ", "
                    )
                 ++ ")"
+
+
+
+-- TODO EXTRACT: query generator
 
 
 argToString : Argument -> String
