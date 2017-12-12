@@ -1,4 +1,4 @@
-module Graphqelm.Value exposing (..)
+module Graphqelm.Value exposing (Value(..), bool, enum, int, list, string)
 
 import Json.Encode
 
@@ -37,27 +37,3 @@ list toValue list =
     list
         |> List.map toValue
         |> List
-
-
-valueToString : Value -> String
-valueToString value =
-    case value of
-        EnumValue value ->
-            value
-
-        Json json ->
-            Json.Encode.encode 0 json
-
-        List values ->
-            "["
-                ++ (List.map valueToString values |> String.join ", ")
-                ++ "]"
-
-        String value ->
-            toString value
-
-        Boolean value ->
-            toString value
-
-        Integer value ->
-            toString value
