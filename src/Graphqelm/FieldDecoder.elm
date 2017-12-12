@@ -27,7 +27,10 @@ schema.
     human : Object String Api.Object.User
     human =
         User.build identity
-            |> with (User.name |> FieldDecoder.map String.toUpper)
+            |> with
+                (User.name
+                    |> FieldDecoder.map String.toUpper
+                )
 
 -}
 map : (decodesTo -> mapsTo) -> FieldDecoder decodesTo typeLock -> FieldDecoder mapsTo typeLock
