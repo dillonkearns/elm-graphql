@@ -1,14 +1,49 @@
-module Graphqelm exposing (map, map2, map3, noOptionalArgs)
+module Graphqelm exposing (RootMutation, RootQuery, map, map2, map3, noOptionalArgs)
+
+{-|
+
+
+## Optional Args
+
+@docs noOptionalArgs
+
+
+## Alternative Map syntax
+
+@docs map, map2, map3
+
+
+## Top-Level Types
+
+@docs RootMutation, RootQuery
+
+-}
 
 import Graphqelm.Field
 import Graphqelm.Object as Object exposing (Object)
 
 
+{-| TODO
+-}
+type RootQuery
+    = RootQuery
+
+
+{-| TODO
+-}
+type RootMutation
+    = RootMutation
+
+
+{-| TODO
+-}
 noOptionalArgs : a -> a
 noOptionalArgs =
     identity
 
 
+{-| TODO
+-}
 map :
     (placeholder -> Object (a -> result) typeLock)
     -> placeholder
@@ -19,6 +54,8 @@ map build buildTo a =
         |> Object.with a
 
 
+{-| TODO
+-}
 map2 :
     (placeholder -> Object (a -> b -> result) typeLock)
     -> placeholder
@@ -31,6 +68,8 @@ map2 build buildTo a b =
         |> Object.with b
 
 
+{-| TODO
+-}
 map3 :
     (placeholder -> Object (a -> b -> c -> result) typeLock)
     -> placeholder
