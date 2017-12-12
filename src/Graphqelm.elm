@@ -23,13 +23,15 @@ import Graphqelm.Field
 import Graphqelm.Object as Object exposing (Object)
 
 
-{-| TODO
+{-| Type for top-level queries which can be sent using functions
+from `Graphqelm.Http`.
 -}
 type RootQuery
     = RootQuery
 
 
-{-| TODO
+{-| Type for top-level mutations which can be sent using functions
+from `Graphqelm.Http`.
 -}
 type RootMutation
     = RootMutation

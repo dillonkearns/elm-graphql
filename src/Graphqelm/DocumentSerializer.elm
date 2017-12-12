@@ -1,17 +1,25 @@
 module Graphqelm.DocumentSerializer exposing (serializeMutation, serializeQuery)
 
-import Graphqelm.Document exposing (RootMutation, RootQuery)
+{-| TODO
+@docs serializeQuery, serializeMutation
+-}
+
+import Graphqelm exposing (RootMutation, RootQuery)
+import Graphqelm.DocumentSerializer.Field as Field
 import Graphqelm.Field exposing (Field)
 import Graphqelm.Object exposing (Object(Object))
-import Graphqelm.DocumentSerializer.Field as Field
 import Interpolate exposing (interpolate)
 
 
+{-| TODO
+-}
 serializeQuery : Object decodesTo RootQuery -> String
 serializeQuery (Object fields decoder) =
     serialize "query" fields
 
 
+{-| TODO
+-}
 serializeMutation : Object decodesTo RootMutation -> String
 serializeMutation (Object fields decoder) =
     serialize "mutation" fields

@@ -5,11 +5,11 @@ import Api.Object
 import Api.Object.Character as Character
 import Api.Object.Human as Human
 import Api.Query as Query
-import Graphqelm.Document as Document exposing (RootQuery)
+import Graphqelm exposing (RootQuery)
+import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.Field as Field
 import Graphqelm.Http
 import Graphqelm.Object exposing (Object, with)
-import Graphqelm.DocumentSerializer as DocumentSerializer
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -21,7 +21,7 @@ type alias Response =
     }
 
 
-query : Object Response Document.RootQuery
+query : Object Response RootQuery
 query =
     Query.build Response
         |> with (Query.human { id = "1004" } human)

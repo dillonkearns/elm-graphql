@@ -6,8 +6,7 @@ import Api.Object.ReleaseConnection
 import Api.Object.Repository as Repository
 import Api.Object.StargazerConnection
 import Api.Query as Query
-import Graphqelm
-import Graphqelm.Document as Document
+import Graphqelm exposing (RootQuery)
 import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.Http
 import Graphqelm.Object exposing (Object, with)
@@ -22,7 +21,7 @@ type alias Response =
     }
 
 
-query : Object Response Document.RootQuery
+query : Object Response RootQuery
 query =
     Query.build identity
         |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)

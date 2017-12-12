@@ -3,10 +3,10 @@ module Main exposing (..)
 import Api.Object
 import Api.Object.MenuItem as MenuItem
 import Api.Query
-import Graphqelm.Document as Document
+import Graphqelm exposing (RootQuery)
+import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.DocumentSerializer as DocumentSerializer
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -23,7 +23,7 @@ type alias Response =
     ( List MenuItem, String )
 
 
-query : Object Response Document.RootQuery
+query : Object Response RootQuery
 query =
     Api.Query.build (,)
         |> Object.with (Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem)

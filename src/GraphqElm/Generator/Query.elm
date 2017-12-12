@@ -28,7 +28,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field, FieldDecoder)
 import Api.Object
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.Document exposing (RootQuery)
+import Graphqelm exposing (RootQuery)
 import Graphqelm.RootObject as RootObject
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
