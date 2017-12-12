@@ -1,6 +1,6 @@
 module Graphqelm.Builder.Argument exposing (Argument(Argument), enum, int, optional, string)
 
-{-| Internal for auto-generated code from the `graphqelm` CLI.
+{-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
 @docs Argument, enum, int, optional, string
 -}
 
