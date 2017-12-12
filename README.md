@@ -1,23 +1,13 @@
 # GraphqElm
 
 If your GraphqElm query compiles, it is guaranteed that:
-1) It is a valid query (according to your API's GraphQL schema)
-2) The response's data type is known at compile-time
 
-**Warning** This project is currently in alpha and may see rapid change before
-the 1.0 release.
+1. It is a valid query (according to your API's GraphQL schema)
+2. The response's data type is known at compile-time
+
+**Warning** This project is currently in alpha and may see rapid change.
 
 See the `examples/` folder for a working example.
-
-## Design Goals
-
-GraphQElm is a tool for generating and using GraphQL queries in Elm such that:
-
-* If a query compiles it is guaranteed to be valid
-* The compiler knows the exact shape of the data a query will return at
-  compile-time
-* The user doesn't need to give any hints about the shape of the data, it's
-  inferred from the schema
 
 ## Usage
 
