@@ -1,4 +1,4 @@
-module Graphqelm.QuerySerializer.Indent exposing (generate)
+module Graphqelm.DocumentSerializer.Indent exposing (generate)
 
 
 generate : Bool -> Int -> String

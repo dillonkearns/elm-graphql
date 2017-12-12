@@ -6,7 +6,7 @@ import Api.Query
 import Graphqelm.Document as Document
 import Graphqelm.Http
 import Graphqelm.Object as Object exposing (Object)
-import Graphqelm.QuerySerializer as QuerySerializer
+import Graphqelm.DocumentSerializer as DocumentSerializer
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -79,7 +79,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (QuerySerializer.serializeQuery query) ]
+            , pre [] [ text (DocumentSerializer.serializeQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]

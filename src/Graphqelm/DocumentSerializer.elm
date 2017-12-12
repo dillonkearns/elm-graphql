@@ -1,9 +1,9 @@
-module Graphqelm.QuerySerializer exposing (serializeMutation, serializeQuery)
+module Graphqelm.DocumentSerializer exposing (serializeMutation, serializeQuery)
 
 import Graphqelm.Document exposing (RootMutation, RootQuery)
 import Graphqelm.Field exposing (Field)
 import Graphqelm.Object exposing (Object(Object))
-import Graphqelm.QuerySerializer.Field as Field
+import Graphqelm.DocumentSerializer.Field as Field
 import Interpolate exposing (interpolate)
 
 

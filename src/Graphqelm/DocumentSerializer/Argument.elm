@@ -1,7 +1,7 @@
-module Graphqelm.QuerySerializer.Argument exposing (serialize)
+module Graphqelm.DocumentSerializer.Argument exposing (serialize)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument(Argument))
-import Graphqelm.QuerySerializer.Value as Value
+import Graphqelm.DocumentSerializer.Value as Value
 
 
 serialize : List Argument -> String

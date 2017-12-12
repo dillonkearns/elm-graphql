@@ -3,7 +3,7 @@ module Graphqelm.Http exposing (buildMutationRequest, buildQueryRequest, send, t
 import Graphqelm.Document exposing (RootMutation, RootQuery)
 import Graphqelm.Document.LowLevel as Document
 import Graphqelm.Object exposing (Object)
-import Graphqelm.QuerySerializer as QuerySerializer
+import Graphqelm.DocumentSerializer as DocumentSerializer
 import Http
 import Json.Encode
 import Time exposing (Time)
@@ -36,12 +36,12 @@ buildRequest url queryDocument query =
 
 buildQueryRequest : String -> Object decodesTo RootQuery -> Request decodesTo
 buildQueryRequest url query =
-    buildRequest url (QuerySerializer.serializeQuery query) query
+    buildRequest url (DocumentSerializer.serializeQuery query) query
 
 
 buildMutationRequest : String -> Object decodesTo RootMutation -> Request decodesTo
 buildMutationRequest url query =
-    buildRequest url (QuerySerializer.serializeMutation query) query
+    buildRequest url (DocumentSerializer.serializeMutation query) query
 
 
 send : (Result Http.Error a -> msg) -> Request a -> Cmd msg

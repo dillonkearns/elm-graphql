@@ -1,4 +1,4 @@
-module Graphqelm.QuerySerializer.Value exposing (serialize)
+module Graphqelm.DocumentSerializer.Value exposing (serialize)
 
 import Graphqelm.Value exposing (Value(..))
 import Json.Encode

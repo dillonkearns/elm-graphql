@@ -8,9 +8,9 @@ import Api.Object.StargazerConnection
 import Api.Query as Query
 import Graphqelm
 import Graphqelm.Document as Document
+import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.Http
 import Graphqelm.Object exposing (Object, with)
-import Graphqelm.QuerySerializer as QuerySerializer
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -98,7 +98,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (QuerySerializer.serializeQuery query) ]
+            , pre [] [ text (DocumentSerializer.serializeQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]
