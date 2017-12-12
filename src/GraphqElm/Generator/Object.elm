@@ -19,7 +19,8 @@ prepend moduleName fields =
     interpolate """module {0} exposing (..)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.Field as Field exposing (Field, FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 import Api.Object
 import Json.Decode as Decode

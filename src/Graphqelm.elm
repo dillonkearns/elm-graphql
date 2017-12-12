@@ -19,7 +19,7 @@ module Graphqelm exposing (RootMutation, RootQuery, map, map2, map3, noOptionalA
 
 -}
 
-import Graphqelm.Field
+import Graphqelm.FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Object as Object exposing (Object)
 
 
@@ -49,7 +49,7 @@ noOptionalArgs =
 map :
     (placeholder -> Object (a -> result) typeLock)
     -> placeholder
-    -> Graphqelm.Field.FieldDecoder a typeLock
+    -> FieldDecoder a typeLock
     -> Object result typeLock
 map build buildTo a =
     build buildTo
@@ -61,8 +61,8 @@ map build buildTo a =
 map2 :
     (placeholder -> Object (a -> b -> result) typeLock)
     -> placeholder
-    -> Graphqelm.Field.FieldDecoder a typeLock
-    -> Graphqelm.Field.FieldDecoder b typeLock
+    -> FieldDecoder a typeLock
+    -> FieldDecoder b typeLock
     -> Object result typeLock
 map2 build buildTo a b =
     build buildTo
@@ -75,9 +75,9 @@ map2 build buildTo a b =
 map3 :
     (placeholder -> Object (a -> b -> c -> result) typeLock)
     -> placeholder
-    -> Graphqelm.Field.FieldDecoder a typeLock
-    -> Graphqelm.Field.FieldDecoder b typeLock
-    -> Graphqelm.Field.FieldDecoder c typeLock
+    -> FieldDecoder a typeLock
+    -> FieldDecoder b typeLock
+    -> FieldDecoder c typeLock
     -> Object result typeLock
 map3 build buildTo a b c =
     build buildTo
