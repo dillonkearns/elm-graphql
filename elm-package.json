@@ -10,7 +10,8 @@
       "Graphqelm",
       "Graphqelm.Http",
       "Graphqelm.Value",
-      "Graphqelm.DocumentSerializer"
+      "Graphqelm.DocumentSerializer",
+      "Graphqelm.FieldDecoder"
     ],
     "dependencies": {
         "elm-community/json-extra": "2.6.0 <= v < 3.0.0",
