@@ -81,7 +81,7 @@ episodeYear episode =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.buildQueryRequest "http://localhost:8080/graphql"
+        |> Graphqelm.Http.buildQueryRequest "http://localhost:4000/api"
         |> Graphqelm.Http.toRequest
         |> RemoteData.sendRequest
         |> Cmd.map GotResponse
