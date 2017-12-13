@@ -17,6 +17,11 @@ build constructor =
     RootObject.object constructor
 
 
+droid : { id : String } -> Object droid Api.Object.Droid -> FieldDecoder droid RootQuery
+droid requiredArgs object =
+    RootObject.single "droid" [ Argument.string "id" requiredArgs.id ] object
+
+
 hero : ({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode }) -> Object hero Api.Object.Character -> FieldDecoder hero RootQuery
 hero fillInOptionals object =
     let
@@ -33,8 +38,3 @@ hero fillInOptionals object =
 human : { id : String } -> Object human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
     RootObject.single "human" [ Argument.string "id" requiredArgs.id ] object
-
-
-droid : { id : String } -> Object droid Api.Object.Droid -> FieldDecoder droid RootQuery
-droid requiredArgs object =
-    RootObject.single "droid" [ Argument.string "id" requiredArgs.id ] object
