@@ -1,9 +1,10 @@
 # GraphqElm
 
-If your GraphqElm query compiles, it is guaranteed that:
+I built this package because I wanted to have something that:
 
-1. It is a valid query (according to your API's GraphQL schema)
-2. The response's data type is known at compile-time
+1. Gives you type-safe GraphQL queries (if it compiles, it's valid according to the schema),
+2. Creates decoders for you in a seamless and failsafe way, and
+3. Eliminates GraphQL features in favor of Elm language constructs where possible for a simpler UX (for example, GraphQL variables & fragments should just be Elm functions, constants, lets).
 
 **Warning** This project is currently in alpha and may see rapid change.
 
