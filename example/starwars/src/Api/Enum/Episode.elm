@@ -4,9 +4,9 @@ import Json.Decode as Decode exposing (Decoder)
 
 
 type Episode
-    = NEWHOPE
-    | EMPIRE
+    = EMPIRE
     | JEDI
+    | NEWHOPE
 
 
 decoder : Decoder Episode
@@ -15,14 +15,14 @@ decoder =
         |> Decode.andThen
             (\string ->
                 case string of
-                    "NEWHOPE" ->
-                        Decode.succeed NEWHOPE
-
                     "EMPIRE" ->
                         Decode.succeed EMPIRE
 
                     "JEDI" ->
                         Decode.succeed JEDI
+
+                    "NEWHOPE" ->
+                        Decode.succeed NEWHOPE
 
                     _ ->
                         Decode.fail ("Invalid Episode type, " ++ string ++ " try re-running the graphqelm CLI ")

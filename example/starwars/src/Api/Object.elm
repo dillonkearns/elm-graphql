@@ -5,9 +5,9 @@ type Character
     = Character
 
 
-type Human
-    = Human
-
-
 type Droid
     = Droid
+
+
+type Human
+    = Human
