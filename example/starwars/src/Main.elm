@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Api.Enum.Episode as Episode exposing (Episode)
 import Api.Object
