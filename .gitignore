@@ -1,6 +1,5 @@
 # Distribution
 build/
-dist/
 documentation.json
 
 # elm-package generated files
