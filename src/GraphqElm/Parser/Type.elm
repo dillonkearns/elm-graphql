@@ -101,8 +101,10 @@ typeRefDecoder =
     Decode.map3 createRawTypeRef
         (Decode.field "name" Decode.string |> Decode.maybe)
         (Decode.field "kind" TypeKind.decoder)
-        (Decode.field "ofType"
-            (Decode.maybe (Decode.lazy (\_ -> typeRefDecoder)))
+        (Decode.maybe
+            (Decode.field "ofType"
+                (Decode.lazy (\_ -> typeRefDecoder))
+            )
         )
 
 
