@@ -10,7 +10,16 @@ See an [example in action on Ellie](https://rebrand.ly/graphqelm).
 
 **Warning** This project is currently in alpha and may see rapid change.
 
-See the `examples/` folder for a working example.
+See end-to-end example code in the `examples/` folder.
+
+## Roadmap
+
+The following are planned but not yet supported:
+* Union types
+* Select from concerete types in interface query
+* Type-safe Input Objects
+
+See [the full roadmap on Trello](https://trello.com/b/BCIWtZeL/graphqelm).
 
 ## Usage
 
