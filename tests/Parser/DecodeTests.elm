@@ -145,39 +145,39 @@ all =
         , test "field with interface ref" <|
             \() ->
                 """
-                                                        {
-                                          "possibleTypes": null,
-                                          "name": "Character",
-                                          "kind": "INTERFACE",
-                                          "interfaces": [],
-                                          "inputFields": null,
-                                          "fields": [
-                                                      {
-                                                        "type": {
-                                                          "ofType": {
-                                                            "ofType": {
-                                                              "ofType": {
-                                                                "name": "Character",
-                                                                "kind": "INTERFACE"
-                                                              },
-                                                              "name": null,
-                                                              "kind": "NON_NULL"
-                                                            },
-                                                            "name": null,
-                                                            "kind": "LIST"
-                                                          },
-                                                          "name": null,
-                                                          "kind": "NON_NULL"
-                                                        },
-                                                        "name": "friends",
-                                                        "isDeprecated": false,
-                                                        "description": null,
-                                                        "deprecationReason": null,
-                                                        "args": []
-                                                      }
-                                                      ],
-                                          "enumValues": null
-                                        }
+                      {
+                        "possibleTypes": null,
+                        "name": "Character",
+                        "kind": "INTERFACE",
+                        "interfaces": [],
+                        "inputFields": null,
+                        "fields": [
+                                    {
+                                      "type": {
+                                        "ofType": {
+                                          "ofType": {
+                                            "ofType": {
+                                              "name": "Character",
+                                              "kind": "INTERFACE"
+                                            },
+                                            "name": null,
+                                            "kind": "NON_NULL"
+                                          },
+                                          "name": null,
+                                          "kind": "LIST"
+                                        },
+                                        "name": null,
+                                        "kind": "NON_NULL"
+                                      },
+                                      "name": "friends",
+                                      "isDeprecated": false,
+                                      "description": null,
+                                      "deprecationReason": null,
+                                      "args": []
+                                    }
+                                    ],
+                        "enumValues": null
+                      }
                                                         """
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
