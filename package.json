@@ -1,6 +1,6 @@
 {
   "name": "graphqelm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "build": "webpack -p",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
