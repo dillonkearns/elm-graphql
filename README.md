@@ -6,6 +6,8 @@ I built this package because I wanted to have something that:
 2. Creates decoders for you in a seamless and failsafe way, and
 3. Eliminates GraphQL features in favor of Elm language constructs where possible for a simpler UX (for example, GraphQL variables & fragments should just be Elm functions, constants, lets).
 
+See an [example in action on Ellie](https://rebrand.ly/graphqelm).
+
 **Warning** This project is currently in alpha and may see rapid change.
 
 See the `examples/` folder for a working example.
