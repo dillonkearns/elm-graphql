@@ -5,7 +5,7 @@
     "build": "webpack -p",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "test": "elm-test",
-    "gen:starwars": "npm run build && cd example/starwars && ../../bin/graphqelm http://localhost:4000/api && elm-format src/Api --yes && cd -",
+    "gen:starwars": "npm run build && cd example/starwars && ../../bin/graphqelm https://graphqelm.herokuapp.com/api && elm-format src/Api --yes && cd -",
     "gen:github": "npm run build && cd example/github && ../../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' && elm-format src/Api --yes && cd -",
     "gen:menu": "npm run build && cd example/ && ../bin/graphqelm http://localhost:4000/api && elm-format src/Api --yes && cd -",
     "elm-analyse": "elm-analyse --serve"
