@@ -15,7 +15,7 @@ See end-to-end example code in the `examples/` folder.
 ## Roadmap
 
 The following are planned but not yet supported:
-* Union types
+* GraphQL Unions (GraphQL Enums are already fully supported)
 * Select from concerete types in interface query
 * Type-safe Input Objects
 
