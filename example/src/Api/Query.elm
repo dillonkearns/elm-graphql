@@ -13,8 +13,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 
 
-build : (a -> constructor) -> Object (a -> constructor) RootQuery
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) RootQuery
+selection constructor =
     RootObject.object constructor
 
 

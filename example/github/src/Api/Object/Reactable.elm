@@ -10,8 +10,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.Reactable
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Reactable
+selection constructor =
     Object.object constructor
 
 

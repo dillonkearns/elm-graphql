@@ -9,8 +9,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.MilestonedEvent
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.MilestonedEvent
+selection constructor =
     Object.object constructor
 
 

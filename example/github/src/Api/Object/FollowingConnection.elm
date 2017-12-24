@@ -9,8 +9,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.FollowingConnection
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.FollowingConnection
+selection constructor =
     Object.object constructor
 
 

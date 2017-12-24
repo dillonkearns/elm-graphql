@@ -23,7 +23,7 @@ type alias Response =
 
 query : Object Response RootQuery
 query =
-    Query.build Response
+    Query.selection Response
         |> with (Query.human { id = "1004" } human)
         |> with (Query.human { id = "1001" } human)
         |> with (Query.hero identity hero)
@@ -39,7 +39,7 @@ type alias Hero =
 
 hero : Object Hero Api.Object.Character
 hero =
-    Character.build Hero
+    Character.selection Hero
         |> with Character.name
         |> with Character.id
         |> with (Character.friends heroWithName)
@@ -48,7 +48,7 @@ hero =
 
 heroWithName : Object String Api.Object.Character
 heroWithName =
-    Character.build identity
+    Character.selection identity
         |> with Character.name
 
 
@@ -60,7 +60,7 @@ type alias Human =
 
 human : Object Human Api.Object.Human
 human =
-    Human.build Human
+    Human.selection Human
         |> with Human.name
         |> with (Human.appearsIn |> FieldDecoder.map (List.map episodeYear))
 

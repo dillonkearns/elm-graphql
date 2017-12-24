@@ -15,8 +15,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequest
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequest
+selection constructor =
     Object.object constructor
 
 

@@ -9,8 +9,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.DeleteProjectColumnPayload
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.DeleteProjectColumnPayload
+selection constructor =
     Object.object constructor
 
 

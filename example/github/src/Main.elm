@@ -23,13 +23,13 @@ type alias Response =
 
 query : Object Response RootQuery
 query =
-    Query.build identity
+    Query.selection identity
         |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
 
 
 repo : Object Response Api.Object.Repository
 repo =
-    Repository.build Response
+    Repository.selection Response
         |> with Repository.createdAt
         |> with (Repository.releases (\optionals -> { optionals | last = Just 10 }) releases)
         |> with (Repository.stargazers identity stargazers)
@@ -37,7 +37,7 @@ repo =
 
 stargazers : Object Int Api.Object.StargazerConnection
 stargazers =
-    Api.Object.StargazerConnection.build identity
+    Api.Object.StargazerConnection.selection identity
         |> with Api.Object.StargazerConnection.totalCount
 
 
@@ -49,7 +49,7 @@ type alias ReleaseInfo =
 
 releases : Object ReleaseInfo Api.Object.ReleaseConnection
 releases =
-    Api.Object.ReleaseConnection.build ReleaseInfo
+    Api.Object.ReleaseConnection.selection ReleaseInfo
         |> with Api.Object.ReleaseConnection.totalCount
         |> with (Api.Object.ReleaseConnection.nodes release)
 
@@ -62,7 +62,7 @@ type alias Release =
 
 release : Object Release Api.Object.Release
 release =
-    Api.Object.Release.build Release
+    Api.Object.Release.selection Release
         |> with Api.Object.Release.name
         |> with Api.Object.Release.url
 

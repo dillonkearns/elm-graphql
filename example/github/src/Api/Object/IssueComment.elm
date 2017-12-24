@@ -11,8 +11,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.IssueComment
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.IssueComment
+selection constructor =
     Object.object constructor
 
 

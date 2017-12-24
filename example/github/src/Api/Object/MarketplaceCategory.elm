@@ -9,8 +9,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.MarketplaceCategory
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.MarketplaceCategory
+selection constructor =
     Object.object constructor
 
 

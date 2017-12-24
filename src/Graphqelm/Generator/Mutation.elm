@@ -36,8 +36,8 @@ import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
 
-build : (a -> constructor) -> Object (a -> constructor) RootMutation
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) RootMutation
+selection constructor =
     RootObject.object constructor
 """
         [ moduleName |> String.join ".", Imports.importsString moduleName fields ]

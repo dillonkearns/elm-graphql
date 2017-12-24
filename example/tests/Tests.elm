@@ -25,13 +25,13 @@ menusWithId =
 
 menuItem : Object MenuItem MenuItem.Type
 menuItem =
-    MenuItem.build MenuItem
+    MenuItem.selection MenuItem
         |> Object.with MenuItem.name
 
 
 menuItemWithId : Object MenuItemWithId MenuItem.Type
 menuItemWithId =
-    MenuItem.build MenuItemWithId
+    MenuItem.selection MenuItemWithId
         |> Object.with MenuItem.name
         |> Object.with MenuItem.id
 

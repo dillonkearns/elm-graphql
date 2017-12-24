@@ -11,8 +11,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 
 
-build : (a -> constructor) -> Object (a -> constructor) RootMutation
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) RootMutation
+selection constructor =
     RootObject.object constructor
 
 

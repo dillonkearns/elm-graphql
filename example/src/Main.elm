@@ -25,7 +25,7 @@ type alias Response =
 
 query : Object Response RootQuery
 query =
-    Api.Query.build (,)
+    Api.Query.selection (,)
         |> Object.with (Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem)
         |> Object.with Api.Query.me
 
@@ -38,7 +38,7 @@ type alias MenuItem =
 
 menuItem : Object MenuItem Api.Object.MenuItem
 menuItem =
-    MenuItem.build MenuItem
+    MenuItem.selection MenuItem
         |> Object.with MenuItem.id
         |> Object.with MenuItem.name
 

@@ -1,6 +1,6 @@
 module Graphqelm.Object exposing (Object(Object), with)
 
-{-| The auto-generated code from the `graphqelm` CLI will provide `build`
+{-| The auto-generated code from the `graphqelm` CLI will provide `selection`
 functions for Objects in your GraphQL schema. These functions take a `Graphqelm.Object`
 which describes which fields to retrieve on that Object.
 @docs Object, with
@@ -31,7 +31,7 @@ type Object decodesTo typeLock
 
     hero : Object Hero Api.Object.Character
     hero =
-        Character.build Hero
+        Character.selection Hero
             |> with Character.name
             |> with Character.id
             |> with Character.appearsIn

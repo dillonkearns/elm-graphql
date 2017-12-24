@@ -9,8 +9,8 @@ import Json.Decode as Decode
 import Json.Encode as Encode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.Mutation
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Mutation
+selection constructor =
     Object.object constructor
 
 

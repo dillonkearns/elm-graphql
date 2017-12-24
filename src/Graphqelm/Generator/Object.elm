@@ -28,8 +28,8 @@ import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
 
-build : (a -> constructor) -> Object (a -> constructor) {0}
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) {0}
+selection constructor =
     Object.object constructor
 """
         [ moduleName |> String.join ".", Imports.importsString moduleName fields ]

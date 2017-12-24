@@ -26,7 +26,7 @@ schema.
 
     human : Object String Api.Object.User
     human =
-        User.build identity
+        User.selection identity
             |> with
                 (User.name
                     |> FieldDecoder.map String.toUpper

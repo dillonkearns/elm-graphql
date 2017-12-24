@@ -42,7 +42,7 @@ leaf fieldName args =
     Graphqelm.Field.QueryField (Graphqelm.Field.Leaf fieldName args)
 
 
-{-| Used to create the `build` functions in auto-generated code.
+{-| Used to create the `selection` functions in auto-generated code.
 -}
 object : (a -> constructor) -> Object (a -> constructor) typeLock
 object constructor =

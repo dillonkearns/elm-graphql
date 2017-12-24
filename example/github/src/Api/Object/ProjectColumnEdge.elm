@@ -9,8 +9,8 @@ import Graphqelm.Object exposing (Object)
 import Json.Decode as Decode
 
 
-build : (a -> constructor) -> Object (a -> constructor) Api.Object.ProjectColumnEdge
-build constructor =
+selection : (a -> constructor) -> Object (a -> constructor) Api.Object.ProjectColumnEdge
+selection constructor =
     Object.object constructor
 
 
