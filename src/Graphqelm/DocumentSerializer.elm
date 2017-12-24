@@ -30,8 +30,8 @@ serializeMutation (SelectionSet fields decoder) =
 
 
 serialize : String -> List Field -> String
-serialize string queries =
-    string
+serialize operationName queries =
+    operationName
         ++ " {\n"
         ++ (List.indexedMap
                 (\index query ->
