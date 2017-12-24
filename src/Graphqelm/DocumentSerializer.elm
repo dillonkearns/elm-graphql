@@ -15,14 +15,14 @@ import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
 import Interpolate exposing (interpolate)
 
 
-{-| Serialize a query object into a string for a GraphQL endpoint.
+{-| Serialize a query selection set into a string for a GraphQL endpoint.
 -}
 serializeQuery : SelectionSet decodesTo RootQuery -> String
 serializeQuery (SelectionSet fields decoder) =
     serialize "query" fields
 
 
-{-| Serialize a mutation object into a string for a GraphQL endpoint.
+{-| Serialize a mutation selection set into a string for a GraphQL endpoint.
 -}
 serializeMutation : SelectionSet decodesTo RootMutation -> String
 serializeMutation (SelectionSet fields decoder) =
