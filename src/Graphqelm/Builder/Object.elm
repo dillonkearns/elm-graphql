@@ -34,12 +34,12 @@ single fieldName args (SelectionSet fields decoder) =
 
 composite : String -> List Argument -> List Field -> Field
 composite fieldName args fields =
-    Graphqelm.Field.QueryField (Graphqelm.Field.Composite fieldName args fields)
+    Graphqelm.Field.Composite fieldName args fields
 
 
 leaf : String -> List Argument -> Field
 leaf fieldName args =
-    Graphqelm.Field.QueryField (Graphqelm.Field.Leaf fieldName args)
+    Graphqelm.Field.Leaf fieldName args
 
 
 {-| Used to create the `selection` functions in auto-generated code.

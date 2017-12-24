@@ -2,7 +2,7 @@ module Graphqelm.Document.Field exposing (serialize)
 
 import Graphqelm.Document.Argument as Argument
 import Graphqelm.Document.Indent as Indent
-import Graphqelm.Field exposing (Field(Composite, Leaf, QueryField))
+import Graphqelm.Field exposing (Field(Composite, Leaf))
 import Interpolate exposing (interpolate)
 
 
@@ -33,6 +33,3 @@ serialize skipIndentationLevel indentationLevel field =
 
         Leaf fieldName args ->
             Indent.generate skipIndentationLevel indentationLevel ++ fieldName
-
-        QueryField nestedField ->
-            serialize False indentationLevel nestedField
