@@ -12,6 +12,7 @@ import Graphqelm exposing (RootMutation, RootQuery)
 import Graphqelm.Document.Field as Field
 import Graphqelm.Field exposing (Field)
 import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
+import Interpolate exposing (interpolate)
 
 
 {-| Serialize a query selection set into a string for a GraphQL endpoint.
@@ -30,7 +31,7 @@ serializeMutation (SelectionSet fields decoder) =
 
 serialize : String -> List Field -> String
 serialize operationName queries =
-    operationName
-        ++ " {\n"
-        ++ Field.serializeChildren -1 queries
-        ++ "\n}"
+    interpolate """{0} {
+{1}
+}"""
+        [ operationName, Field.serializeChildren -1 queries ]
