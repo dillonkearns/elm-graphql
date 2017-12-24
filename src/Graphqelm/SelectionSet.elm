@@ -9,6 +9,7 @@ which describes which fields to retrieve on that SelectionSet.
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecoder))
 import Json.Decode as Decode exposing (Decoder)
+import List.Extra
 
 
 {-| SelectionSet type
@@ -42,9 +43,21 @@ with (FieldDecoder field fieldDecoder) (SelectionSet objectFields objectDecoder)
     let
         n =
             List.length objectFields
+
+        fieldName =
+            Field.name field
+
+        duplicateCount =
+            List.Extra.count (\current -> fieldName == Field.name current) objectFields
+
+        decodeFieldName =
+            if duplicateCount > 0 then
+                fieldName ++ toString (duplicateCount + 1)
+            else
+                fieldName
     in
     SelectionSet (objectFields ++ [ field ])
         (Decode.map2 (|>)
-            (Decode.field ("result" ++ toString (n + 1)) fieldDecoder)
+            (Decode.field decodeFieldName fieldDecoder)
             objectDecoder
         )

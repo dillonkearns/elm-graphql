@@ -22,14 +22,25 @@ all =
                 document [ Leaf "viewer" [] ]
                     |> Graphqelm.Document.serializeQuery
                     |> Expect.equal """query {
-  result1: viewer
+  viewer
 }"""
         , test "multiple top-level" <|
             \() ->
                 document [ Leaf "viewer" [], Leaf "labels" [] ]
                     |> Graphqelm.Document.serializeQuery
                     |> Expect.equal """query {
-  result1: viewer
-  result2: labels
+  viewer
+  labels
+}"""
+        , test "duplicate top-level fields" <|
+            \() ->
+                document
+                    [ Leaf "viewer" []
+                    , Leaf "viewer" []
+                    ]
+                    |> Graphqelm.Document.serializeQuery
+                    |> Expect.equal """query {
+  viewer
+  viewer2: viewer
 }"""
         ]

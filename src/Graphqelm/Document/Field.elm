@@ -4,6 +4,28 @@ import Graphqelm.Document.Argument as Argument
 import Graphqelm.Document.Indent as Indent
 import Graphqelm.Field exposing (Field(Composite, Leaf))
 import Interpolate exposing (interpolate)
+import List.Extra
+
+
+alias : Int -> List Field -> Field -> Maybe String
+alias fieldIndex fields field =
+    let
+        fieldName =
+            Graphqelm.Field.name field
+
+        indices =
+            fields
+                |> List.Extra.findIndices
+                    (\currentField ->
+                        Graphqelm.Field.name currentField
+                            == fieldName
+                    )
+                |> List.filter (\index -> index < fieldIndex)
+    in
+    if indices == [] then
+        Nothing
+    else
+        Just (fieldName ++ toString (List.length indices + 1))
 
 
 serialize : Bool -> Int -> Field -> String
@@ -17,12 +39,19 @@ serialize skipIndentationLevel indentationLevel field =
                 ++ (children
                         |> List.indexedMap
                             (\index selection ->
-                                interpolate "  {0}: {1}"
-                                    [ "result" ++ toString (index + 1)
-                                    , serialize False
-                                        (indentationLevel + 1)
-                                        selection
-                                    ]
+                                -- interpolate "  {0}: {1}"
+                                --     [ "result" ++ toString (index + 1)
+                                --     , serialize False
+                                --         (indentationLevel + 1)
+                                --         selection
+                                --     ]
+                                case alias index children selection of
+                                    Just aliasName ->
+                                        interpolate "  {0}: {1}"
+                                            [ aliasName, serialize False (indentationLevel + 1) selection ]
+
+                                    Nothing ->
+                                        "  " ++ serialize False (indentationLevel + 1) selection
                             )
                         |> String.join "\n"
                    )
