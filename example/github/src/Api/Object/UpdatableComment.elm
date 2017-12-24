@@ -1,5 +1,6 @@
 module Api.Object.UpdatableComment exposing (..)
 
+import Api.Enum.CommentCannotUpdateReason
 import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -14,6 +15,6 @@ selection constructor =
     Object.object constructor
 
 
-viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.UpdatableComment
+viewerCannotUpdateReasons : FieldDecoder (List Api.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Api.Object.UpdatableComment
 viewerCannotUpdateReasons =
-    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Api.Enum.CommentCannotUpdateReason.decoder |> Decode.list)

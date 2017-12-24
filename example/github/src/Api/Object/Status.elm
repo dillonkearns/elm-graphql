@@ -25,9 +25,9 @@ context requiredArgs object =
     Object.single "context" [ Argument.string "name" requiredArgs.name ] object
 
 
-contexts : FieldDecoder (List String) Api.Object.Status
-contexts =
-    Object.fieldDecoder "contexts" [] (Decode.string |> Decode.list)
+contexts : SelectionSet contexts Api.Object.StatusContext -> FieldDecoder (List contexts) Api.Object.Status
+contexts object =
+    Object.listOf "contexts" [] object
 
 
 id : FieldDecoder String Api.Object.Status

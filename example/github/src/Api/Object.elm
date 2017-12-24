@@ -333,6 +333,14 @@ type TeamRepositoryEdge
     = TeamRepositoryEdge
 
 
+type ProjectConnection
+    = ProjectConnection
+
+
+type ProjectEdge
+    = ProjectEdge
+
+
 type OrganizationInvitationConnection
     = OrganizationInvitationConnection
 
@@ -375,14 +383,6 @@ type LanguageConnection
 
 type LanguageEdge
     = LanguageEdge
-
-
-type ProjectConnection
-    = ProjectConnection
-
-
-type ProjectEdge
-    = ProjectEdge
 
 
 type OrganizationIdentityProvider

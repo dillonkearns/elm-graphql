@@ -460,6 +460,11 @@ shortDescriptionHTML fillInOptionals =
     Object.fieldDecoder "shortDescriptionHTML" optionalArgs Decode.string
 
 
+sshUrl : FieldDecoder String Api.Object.Repository
+sshUrl =
+    Object.fieldDecoder "sshUrl" [] Decode.string
+
+
 stargazers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> SelectionSet stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Repository
 stargazers fillInOptionals object =
     let

@@ -14,6 +14,6 @@ selection constructor =
     Object.object constructor
 
 
-ranges : FieldDecoder (List String) Api.Object.Blame
-ranges =
-    Object.fieldDecoder "ranges" [] (Decode.string |> Decode.list)
+ranges : SelectionSet ranges Api.Object.BlameRange -> FieldDecoder (List ranges) Api.Object.Blame
+ranges object =
+    Object.listOf "ranges" [] object

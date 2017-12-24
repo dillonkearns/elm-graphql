@@ -20,6 +20,11 @@ abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
+additions : FieldDecoder Int Api.Object.Commit
+additions =
+    Object.fieldDecoder "additions" [] Decode.int
+
+
 author : SelectionSet author Api.Object.GitActor -> FieldDecoder author Api.Object.Commit
 author object =
     Object.single "author" [] object
@@ -38,6 +43,11 @@ authoredDate =
 blame : { path : String } -> SelectionSet blame Api.Object.Blame -> FieldDecoder blame Api.Object.Commit
 blame requiredArgs object =
     Object.single "blame" [ Argument.string "path" requiredArgs.path ] object
+
+
+changedFiles : FieldDecoder Int Api.Object.Commit
+changedFiles =
+    Object.fieldDecoder "changedFiles" [] Decode.int
 
 
 comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.Commit
@@ -76,6 +86,11 @@ committedViaWeb =
 committer : SelectionSet committer Api.Object.GitActor -> FieldDecoder committer Api.Object.Commit
 committer object =
     Object.single "committer" [] object
+
+
+deletions : FieldDecoder Int Api.Object.Commit
+deletions =
+    Object.fieldDecoder "deletions" [] Decode.int
 
 
 history : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String }) -> SelectionSet history Api.Object.CommitHistoryConnection -> FieldDecoder history Api.Object.Commit

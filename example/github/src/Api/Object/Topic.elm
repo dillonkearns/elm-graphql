@@ -24,6 +24,6 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-relatedTopics : FieldDecoder (List String) Api.Object.Topic
-relatedTopics =
-    Object.fieldDecoder "relatedTopics" [] (Decode.string |> Decode.list)
+relatedTopics : SelectionSet relatedTopics Api.Object.Topic -> FieldDecoder (List relatedTopics) Api.Object.Topic
+relatedTopics object =
+    Object.listOf "relatedTopics" [] object

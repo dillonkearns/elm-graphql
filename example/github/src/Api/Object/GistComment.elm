@@ -1,6 +1,7 @@
 module Api.Object.GistComment exposing (..)
 
 import Api.Enum.CommentAuthorAssociation
+import Api.Enum.CommentCannotUpdateReason
 import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -85,9 +86,9 @@ viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
-viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.GistComment
+viewerCannotUpdateReasons : FieldDecoder (List Api.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Api.Object.GistComment
 viewerCannotUpdateReasons =
-    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Api.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 viewerDidAuthor : FieldDecoder Bool Api.Object.GistComment

@@ -37,8 +37,8 @@ licenses object =
     RootObject.listOf "licenses" [] object
 
 
-marketplaceCategories : ({ excludeEmpty : Maybe Bool } -> { excludeEmpty : Maybe Bool }) -> FieldDecoder (List String) RootQuery
-marketplaceCategories fillInOptionals =
+marketplaceCategories : ({ excludeEmpty : Maybe Bool } -> { excludeEmpty : Maybe Bool }) -> SelectionSet marketplaceCategories Api.Object.MarketplaceCategory -> FieldDecoder (List marketplaceCategories) RootQuery
+marketplaceCategories fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { excludeEmpty = Nothing }
@@ -47,7 +47,7 @@ marketplaceCategories fillInOptionals =
             [ Argument.optional "excludeEmpty" filledInOptionals.excludeEmpty Encode.bool ]
                 |> List.filterMap identity
     in
-    RootObject.fieldDecoder "marketplaceCategories" optionalArgs (Decode.string |> Decode.list)
+    RootObject.listOf "marketplaceCategories" optionalArgs object
 
 
 marketplaceCategory : { slug : String } -> SelectionSet marketplaceCategory Api.Object.MarketplaceCategory -> FieldDecoder marketplaceCategory RootQuery

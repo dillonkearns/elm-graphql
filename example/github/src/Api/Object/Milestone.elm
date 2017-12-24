@@ -16,6 +16,21 @@ selection constructor =
     Object.object constructor
 
 
+closed : FieldDecoder Bool Api.Object.Milestone
+closed =
+    Object.fieldDecoder "closed" [] Decode.bool
+
+
+closedAt : FieldDecoder String Api.Object.Milestone
+closedAt =
+    Object.fieldDecoder "closedAt" [] Decode.string
+
+
+createdAt : FieldDecoder String Api.Object.Milestone
+createdAt =
+    Object.fieldDecoder "createdAt" [] Decode.string
+
+
 creator : SelectionSet creator Api.Object.Actor -> FieldDecoder creator Api.Object.Milestone
 creator object =
     Object.single "creator" [] object
@@ -72,6 +87,11 @@ state =
 title : FieldDecoder String Api.Object.Milestone
 title =
     Object.fieldDecoder "title" [] Decode.string
+
+
+updatedAt : FieldDecoder String Api.Object.Milestone
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 url : FieldDecoder String Api.Object.Milestone

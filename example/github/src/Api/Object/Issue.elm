@@ -1,6 +1,7 @@
 module Api.Object.Issue exposing (..)
 
 import Api.Enum.CommentAuthorAssociation
+import Api.Enum.CommentCannotUpdateReason
 import Api.Enum.IssueState
 import Api.Enum.ReactionContent
 import Api.Enum.SubscriptionState
@@ -244,9 +245,9 @@ viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
-viewerCannotUpdateReasons : FieldDecoder (List String) Api.Object.Issue
+viewerCannotUpdateReasons : FieldDecoder (List Api.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Api.Object.Issue
 viewerCannotUpdateReasons =
-    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Api.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 viewerDidAuthor : FieldDecoder Bool Api.Object.Issue
