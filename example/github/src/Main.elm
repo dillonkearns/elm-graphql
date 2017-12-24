@@ -16,7 +16,8 @@ import RemoteData exposing (WebData)
 
 type alias Response =
     { createdAt : String
-    , releases : ReleaseInfo
+    , earlyReleases : ReleaseInfo
+    , lateReleases : ReleaseInfo
     , stargazersCount : Int
     }
 
@@ -31,6 +32,7 @@ repo : SelectionSet Response Api.Object.Repository
 repo =
     Repository.selection Response
         |> with Repository.createdAt
+        |> with (Repository.releases (\optionals -> { optionals | first = Just 2 }) releases)
         |> with (Repository.releases (\optionals -> { optionals | last = Just 10 }) releases)
         |> with (Repository.stargazers identity stargazers)
 

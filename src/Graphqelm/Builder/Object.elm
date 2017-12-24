@@ -5,9 +5,9 @@ module Graphqelm.Builder.Object exposing (fieldDecoder, listOf, object, single)
 -}
 
 import Graphqelm.Builder.Argument exposing (Argument)
-import Graphqelm.Field as Field exposing (Field)
+import Graphqelm.Field exposing (Field)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecoder))
-import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
+import Graphqelm.SelectionSet exposing (SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -15,22 +15,31 @@ import Json.Decode as Decode exposing (Decoder)
 -}
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
 fieldDecoder fieldName args decoder =
-    FieldDecoder (Field.Leaf fieldName args)
-        (decoder |> Decode.field fieldName)
+    FieldDecoder (leaf fieldName args) decoder
 
 
 {-| Refer to list of objects in auto-generated code.
 -}
 listOf : String -> List Argument -> SelectionSet a objectTypeLock -> FieldDecoder (List a) lockedTo
 listOf fieldName args (SelectionSet fields decoder) =
-    FieldDecoder (Field.Composite fieldName args fields) (Decode.list decoder |> Decode.field fieldName)
+    FieldDecoder (composite fieldName args fields) (Decode.list decoder)
 
 
 {-| Refer to single object in auto-generated code.
 -}
 single : String -> List Argument -> SelectionSet a objectTypeLock -> FieldDecoder a lockedTo
 single fieldName args (SelectionSet fields decoder) =
-    FieldDecoder (Field.Composite fieldName args fields) (decoder |> Decode.field fieldName)
+    FieldDecoder (composite fieldName args fields) decoder
+
+
+composite : String -> List Argument -> List Field -> Field
+composite fieldName args fields =
+    Graphqelm.Field.QueryField (Graphqelm.Field.Composite fieldName args fields)
+
+
+leaf : String -> List Argument -> Field
+leaf fieldName args =
+    Graphqelm.Field.QueryField (Graphqelm.Field.Leaf fieldName args)
 
 
 {-| Used to create the `selection` functions in auto-generated code.

@@ -52,4 +52,12 @@ with (FieldDecoder field fieldDecoder) (SelectionSet objectFields objectDecoder)
                 )
 
         _ ->
-            SelectionSet (field :: objectFields) (Decode.map2 (|>) fieldDecoder objectDecoder)
+            let
+                n =
+                    List.length objectFields
+            in
+            SelectionSet (objectFields ++ [ field ])
+                (Decode.map2 (|>)
+                    (Decode.field ("result" ++ toString (n + 1)) fieldDecoder)
+                    objectDecoder
+                )
