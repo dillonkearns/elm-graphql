@@ -5,16 +5,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.CommitCommentThread
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.CommitCommentThread
 selection constructor =
     Object.object constructor
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.CommitCommentThread
+comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.CommitCommentThread
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -27,7 +27,7 @@ comments fillInOptionals object =
     Object.single "comments" optionalArgs object
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.CommitCommentThread
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.CommitCommentThread
 commit object =
     Object.single "commit" [] object
 
@@ -47,6 +47,6 @@ position =
     Object.fieldDecoder "position" [] Decode.int
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.CommitCommentThread
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.CommitCommentThread
 repository object =
     Object.single "repository" [] object

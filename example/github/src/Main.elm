@@ -9,7 +9,7 @@ import Api.Query as Query
 import Graphqelm exposing (RootQuery)
 import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.Http
-import Graphqelm.Object exposing (Object, with)
+import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -21,13 +21,13 @@ type alias Response =
     }
 
 
-query : Object Response RootQuery
+query : SelectionSet Response RootQuery
 query =
     Query.selection identity
         |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
 
 
-repo : Object Response Api.Object.Repository
+repo : SelectionSet Response Api.Object.Repository
 repo =
     Repository.selection Response
         |> with Repository.createdAt
@@ -35,7 +35,7 @@ repo =
         |> with (Repository.stargazers identity stargazers)
 
 
-stargazers : Object Int Api.Object.StargazerConnection
+stargazers : SelectionSet Int Api.Object.StargazerConnection
 stargazers =
     Api.Object.StargazerConnection.selection identity
         |> with Api.Object.StargazerConnection.totalCount
@@ -47,7 +47,7 @@ type alias ReleaseInfo =
     }
 
 
-releases : Object ReleaseInfo Api.Object.ReleaseConnection
+releases : SelectionSet ReleaseInfo Api.Object.ReleaseConnection
 releases =
     Api.Object.ReleaseConnection.selection ReleaseInfo
         |> with Api.Object.ReleaseConnection.totalCount
@@ -60,7 +60,7 @@ type alias Release =
     }
 
 
-release : Object Release Api.Object.Release
+release : SelectionSet Release Api.Object.Release
 release =
     Api.Object.Release.selection Release
         |> with Api.Object.Release.name

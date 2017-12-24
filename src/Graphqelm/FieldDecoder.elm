@@ -22,9 +22,9 @@ schema.
     import Api.Object
     import Api.Object.User as User
     import Graphqelm.FieldDecoder as FieldDecoder
-    import Graphqelm.Object exposing (Object, with)
+    import Graphqelm.SelectionSet exposing (SelectionSet, with)
 
-    human : Object String Api.Object.User
+    human : SelectionSet String Api.Object.User
     human =
         User.selection identity
             |> with

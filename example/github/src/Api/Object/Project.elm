@@ -6,11 +6,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Project
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Project
 selection constructor =
     Object.object constructor
 
@@ -35,7 +35,7 @@ closedAt =
     Object.fieldDecoder "closedAt" [] Decode.string
 
 
-columns : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object columns Api.Object.ProjectColumnConnection -> FieldDecoder columns Api.Object.Project
+columns : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet columns Api.Object.ProjectColumnConnection -> FieldDecoder columns Api.Object.Project
 columns fillInOptionals object =
     let
         filledInOptionals =
@@ -53,7 +53,7 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : Object creator Api.Object.Actor -> FieldDecoder creator Api.Object.Project
+creator : SelectionSet creator Api.Object.Actor -> FieldDecoder creator Api.Object.Project
 creator object =
     Object.single "creator" [] object
 
@@ -78,12 +78,12 @@ number =
     Object.fieldDecoder "number" [] Decode.int
 
 
-owner : Object owner Api.Object.ProjectOwner -> FieldDecoder owner Api.Object.Project
+owner : SelectionSet owner Api.Object.ProjectOwner -> FieldDecoder owner Api.Object.Project
 owner object =
     Object.single "owner" [] object
 
 
-pendingCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object pendingCards Api.Object.ProjectCardConnection -> FieldDecoder pendingCards Api.Object.Project
+pendingCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet pendingCards Api.Object.ProjectCardConnection -> FieldDecoder pendingCards Api.Object.Project
 pendingCards fillInOptionals object =
     let
         filledInOptionals =

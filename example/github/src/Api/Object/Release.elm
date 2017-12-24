@@ -5,16 +5,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Release
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Release
 selection constructor =
     Object.object constructor
 
 
-author : Object author Api.Object.User -> FieldDecoder author Api.Object.Release
+author : SelectionSet author Api.Object.User -> FieldDecoder author Api.Object.Release
 author object =
     Object.single "author" [] object
 
@@ -54,7 +54,7 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-releaseAssets : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String }) -> Object releaseAssets Api.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Api.Object.Release
+releaseAssets : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String }) -> SelectionSet releaseAssets Api.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Api.Object.Release
 releaseAssets fillInOptionals object =
     let
         filledInOptionals =
@@ -72,7 +72,7 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-tag : Object tag Api.Object.Ref -> FieldDecoder tag Api.Object.Release
+tag : SelectionSet tag Api.Object.Ref -> FieldDecoder tag Api.Object.Release
 tag object =
     Object.single "tag" [] object
 

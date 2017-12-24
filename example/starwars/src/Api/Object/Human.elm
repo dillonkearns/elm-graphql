@@ -6,11 +6,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Human
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Human
 selection constructor =
     Object.object constructor
 
@@ -20,7 +20,7 @@ appearsIn =
     Object.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
 
 
-friends : Object friends Api.Object.Character -> FieldDecoder (List friends) Api.Object.Human
+friends : SelectionSet friends Api.Object.Character -> FieldDecoder (List friends) Api.Object.Human
 friends object =
     Object.listOf "friends" [] object
 

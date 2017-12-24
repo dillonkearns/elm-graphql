@@ -4,7 +4,7 @@ import Api.Object.MenuItem as MenuItem
 import Api.Query as Query
 import Expect
 import Graphqelm
-import Graphqelm.Builder.Object as Object exposing (Object)
+import Graphqelm.Builder.Object as SelectionSet exposing (Object)
 import Graphqelm.Field as Field exposing (FieldDecoder, Query)
 import Graphqelm.Query as Query
 import Json.Decode as Decode exposing (Decoder)
@@ -15,7 +15,7 @@ type alias MenuItem =
     { name : String }
 
 
-menuItem : Object MenuItem MenuItem.Type
+menuItem : SelectionSet MenuItem MenuItem.Type
 menuItem =
     MenuItem.selection MenuItem
         |> Object.with MenuItem.name

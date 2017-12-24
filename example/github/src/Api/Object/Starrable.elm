@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Starrable
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Starrable
 selection constructor =
     Object.object constructor
 
@@ -19,7 +19,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-stargazers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> Object stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Starrable
+stargazers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> SelectionSet stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Starrable
 stargazers fillInOptionals object =
     let
         filledInOptionals =

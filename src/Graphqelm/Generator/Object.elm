@@ -21,14 +21,14 @@ prepend moduleName fields =
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Api.Object
 import Json.Decode as Decode
 import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
 
-selection : (a -> constructor) -> Object (a -> constructor) {0}
+selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
 selection constructor =
     Object.object constructor
 """

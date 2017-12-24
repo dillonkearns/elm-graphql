@@ -28,7 +28,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Api.Object
 import Graphqelm.Builder.Object as Object
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.Builder.RootObject as RootObject
 import Graphqelm exposing (RootMutation)
 import Json.Decode as Decode exposing (Decoder)
@@ -36,7 +36,7 @@ import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
 
-selection : (a -> constructor) -> Object (a -> constructor) RootMutation
+selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
     RootObject.object constructor
 """

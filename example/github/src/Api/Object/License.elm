@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.License
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.License
 selection constructor =
     Object.object constructor
 
@@ -19,7 +19,7 @@ body =
     Object.fieldDecoder "body" [] Decode.string
 
 
-conditions : Object conditions Api.Object.LicenseRule -> FieldDecoder (List conditions) Api.Object.License
+conditions : SelectionSet conditions Api.Object.LicenseRule -> FieldDecoder (List conditions) Api.Object.License
 conditions object =
     Object.listOf "conditions" [] object
 
@@ -54,7 +54,7 @@ key =
     Object.fieldDecoder "key" [] Decode.string
 
 
-limitations : Object limitations Api.Object.LicenseRule -> FieldDecoder (List limitations) Api.Object.License
+limitations : SelectionSet limitations Api.Object.LicenseRule -> FieldDecoder (List limitations) Api.Object.License
 limitations object =
     Object.listOf "limitations" [] object
 
@@ -69,7 +69,7 @@ nickname =
     Object.fieldDecoder "nickname" [] Decode.string
 
 
-permissions : Object permissions Api.Object.LicenseRule -> FieldDecoder (List permissions) Api.Object.License
+permissions : SelectionSet permissions Api.Object.LicenseRule -> FieldDecoder (List permissions) Api.Object.License
 permissions object =
     Object.listOf "permissions" [] object
 

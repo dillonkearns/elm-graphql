@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.ReleaseAsset
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.ReleaseAsset
 selection constructor =
     Object.object constructor
 
@@ -44,7 +44,7 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-release : Object release Api.Object.Release -> FieldDecoder release Api.Object.ReleaseAsset
+release : SelectionSet release Api.Object.Release -> FieldDecoder release Api.Object.ReleaseAsset
 release object =
     Object.single "release" [] object
 
@@ -59,7 +59,7 @@ updatedAt =
     Object.fieldDecoder "updatedAt" [] Decode.string
 
 
-uploadedBy : Object uploadedBy Api.Object.User -> FieldDecoder uploadedBy Api.Object.ReleaseAsset
+uploadedBy : SelectionSet uploadedBy Api.Object.User -> FieldDecoder uploadedBy Api.Object.ReleaseAsset
 uploadedBy object =
     Object.single "uploadedBy" [] object
 

@@ -6,11 +6,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.TeamMemberEdge
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.TeamMemberEdge
 selection constructor =
     Object.object constructor
 
@@ -30,7 +30,7 @@ memberAccessUrl =
     Object.fieldDecoder "memberAccessUrl" [] Decode.string
 
 
-node : Object node Api.Object.User -> FieldDecoder node Api.Object.TeamMemberEdge
+node : SelectionSet node Api.Object.User -> FieldDecoder node Api.Object.TeamMemberEdge
 node object =
     Object.single "node" [] object
 

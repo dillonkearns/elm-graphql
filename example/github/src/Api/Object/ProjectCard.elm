@@ -6,16 +6,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.ProjectCard
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.ProjectCard
 selection constructor =
     Object.object constructor
 
 
-column : Object column Api.Object.ProjectColumn -> FieldDecoder column Api.Object.ProjectCard
+column : SelectionSet column Api.Object.ProjectColumn -> FieldDecoder column Api.Object.ProjectCard
 column object =
     Object.single "column" [] object
 
@@ -30,7 +30,7 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : Object creator Api.Object.Actor -> FieldDecoder creator Api.Object.ProjectCard
+creator : SelectionSet creator Api.Object.Actor -> FieldDecoder creator Api.Object.ProjectCard
 creator object =
     Object.single "creator" [] object
 
@@ -50,12 +50,12 @@ note =
     Object.fieldDecoder "note" [] Decode.string
 
 
-project : Object project Api.Object.Project -> FieldDecoder project Api.Object.ProjectCard
+project : SelectionSet project Api.Object.Project -> FieldDecoder project Api.Object.ProjectCard
 project object =
     Object.single "project" [] object
 
 
-projectColumn : Object projectColumn Api.Object.ProjectColumn -> FieldDecoder projectColumn Api.Object.ProjectCard
+projectColumn : SelectionSet projectColumn Api.Object.ProjectColumn -> FieldDecoder projectColumn Api.Object.ProjectCard
 projectColumn object =
     Object.single "projectColumn" [] object
 

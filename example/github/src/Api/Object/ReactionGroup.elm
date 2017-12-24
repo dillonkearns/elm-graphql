@@ -6,11 +6,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.ReactionGroup
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.ReactionGroup
 selection constructor =
     Object.object constructor
 
@@ -25,12 +25,12 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-subject : Object subject Api.Object.Reactable -> FieldDecoder subject Api.Object.ReactionGroup
+subject : SelectionSet subject Api.Object.Reactable -> FieldDecoder subject Api.Object.ReactionGroup
 subject object =
     Object.single "subject" [] object
 
 
-users : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object users Api.Object.ReactingUserConnection -> FieldDecoder users Api.Object.ReactionGroup
+users : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet users Api.Object.ReactingUserConnection -> FieldDecoder users Api.Object.ReactionGroup
 users fillInOptionals object =
     let
         filledInOptionals =

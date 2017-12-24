@@ -7,16 +7,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequestReview
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.PullRequestReview
 selection constructor =
     Object.object constructor
 
 
-author : Object author Api.Object.Actor -> FieldDecoder author Api.Object.PullRequestReview
+author : SelectionSet author Api.Object.Actor -> FieldDecoder author Api.Object.PullRequestReview
 author object =
     Object.single "author" [] object
 
@@ -41,7 +41,7 @@ bodyText =
     Object.fieldDecoder "bodyText" [] Decode.string
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object comments Api.Object.PullRequestReviewCommentConnection -> FieldDecoder comments Api.Object.PullRequestReview
+comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.PullRequestReviewCommentConnection -> FieldDecoder comments Api.Object.PullRequestReview
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -54,7 +54,7 @@ comments fillInOptionals object =
     Object.single "comments" optionalArgs object
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.PullRequestReview
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.PullRequestReview
 commit object =
     Object.single "commit" [] object
 
@@ -74,7 +74,7 @@ databaseId =
     Object.fieldDecoder "databaseId" [] Decode.int
 
 
-editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequestReview
+editor : SelectionSet editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequestReview
 editor object =
     Object.single "editor" [] object
 
@@ -94,12 +94,12 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestReview
+pullRequest : SelectionSet pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestReview
 pullRequest object =
     Object.single "pullRequest" [] object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequestReview
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequestReview
 repository object =
     Object.single "repository" [] object
 

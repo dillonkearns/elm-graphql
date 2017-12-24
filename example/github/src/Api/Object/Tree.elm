@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Tree
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Tree
 selection constructor =
     Object.object constructor
 
@@ -29,7 +29,7 @@ commitUrl =
     Object.fieldDecoder "commitUrl" [] Decode.string
 
 
-entries : Object entries Api.Object.TreeEntry -> FieldDecoder (List entries) Api.Object.Tree
+entries : SelectionSet entries Api.Object.TreeEntry -> FieldDecoder (List entries) Api.Object.Tree
 entries object =
     Object.listOf "entries" [] object
 
@@ -44,6 +44,6 @@ oid =
     Object.fieldDecoder "oid" [] Decode.string
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Tree
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.Tree
 repository object =
     Object.single "repository" [] object

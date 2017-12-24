@@ -5,21 +5,21 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.MergedEvent
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.MergedEvent
 selection constructor =
     Object.object constructor
 
 
-actor : Object actor Api.Object.Actor -> FieldDecoder actor Api.Object.MergedEvent
+actor : SelectionSet actor Api.Object.Actor -> FieldDecoder actor Api.Object.MergedEvent
 actor object =
     Object.single "actor" [] object
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.MergedEvent
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.MergedEvent
 commit object =
     Object.single "commit" [] object
 
@@ -34,7 +34,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-mergeRef : Object mergeRef Api.Object.Ref -> FieldDecoder mergeRef Api.Object.MergedEvent
+mergeRef : SelectionSet mergeRef Api.Object.Ref -> FieldDecoder mergeRef Api.Object.MergedEvent
 mergeRef object =
     Object.single "mergeRef" [] object
 
@@ -44,7 +44,7 @@ mergeRefName =
     Object.fieldDecoder "mergeRefName" [] Decode.string
 
 
-pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.MergedEvent
+pullRequest : SelectionSet pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.MergedEvent
 pullRequest object =
     Object.single "pullRequest" [] object
 

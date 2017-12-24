@@ -6,21 +6,21 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Status
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Status
 selection constructor =
     Object.object constructor
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.Status
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.Status
 commit object =
     Object.single "commit" [] object
 
 
-context : { name : String } -> Object context Api.Object.StatusContext -> FieldDecoder context Api.Object.Status
+context : { name : String } -> SelectionSet context Api.Object.StatusContext -> FieldDecoder context Api.Object.Status
 context requiredArgs object =
     Object.single "context" [ Argument.string "name" requiredArgs.name ] object
 

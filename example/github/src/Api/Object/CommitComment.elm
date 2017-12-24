@@ -7,16 +7,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.CommitComment
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.CommitComment
 selection constructor =
     Object.object constructor
 
 
-author : Object author Api.Object.Actor -> FieldDecoder author Api.Object.CommitComment
+author : SelectionSet author Api.Object.Actor -> FieldDecoder author Api.Object.CommitComment
 author object =
     Object.single "author" [] object
 
@@ -36,7 +36,7 @@ bodyHTML =
     Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.CommitComment
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.CommitComment
 commit object =
     Object.single "commit" [] object
 
@@ -56,7 +56,7 @@ databaseId =
     Object.fieldDecoder "databaseId" [] Decode.int
 
 
-editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.CommitComment
+editor : SelectionSet editor Api.Object.Actor -> FieldDecoder editor Api.Object.CommitComment
 editor object =
     Object.single "editor" [] object
 
@@ -86,12 +86,12 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.CommitComment
+reactionGroups : SelectionSet reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.CommitComment
 reactionGroups object =
     Object.listOf "reactionGroups" [] object
 
 
-reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.CommitComment
+reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> SelectionSet reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.CommitComment
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -104,7 +104,7 @@ reactions fillInOptionals object =
     Object.single "reactions" optionalArgs object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.CommitComment
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.CommitComment
 repository object =
     Object.single "repository" [] object
 

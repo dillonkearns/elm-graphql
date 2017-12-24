@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.ExternalIdentity
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.ExternalIdentity
 selection constructor =
     Object.object constructor
 
@@ -24,21 +24,21 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-organizationInvitation : Object organizationInvitation Api.Object.OrganizationInvitation -> FieldDecoder organizationInvitation Api.Object.ExternalIdentity
+organizationInvitation : SelectionSet organizationInvitation Api.Object.OrganizationInvitation -> FieldDecoder organizationInvitation Api.Object.ExternalIdentity
 organizationInvitation object =
     Object.single "organizationInvitation" [] object
 
 
-samlIdentity : Object samlIdentity Api.Object.ExternalIdentitySamlAttributes -> FieldDecoder samlIdentity Api.Object.ExternalIdentity
+samlIdentity : SelectionSet samlIdentity Api.Object.ExternalIdentitySamlAttributes -> FieldDecoder samlIdentity Api.Object.ExternalIdentity
 samlIdentity object =
     Object.single "samlIdentity" [] object
 
 
-scimIdentity : Object scimIdentity Api.Object.ExternalIdentityScimAttributes -> FieldDecoder scimIdentity Api.Object.ExternalIdentity
+scimIdentity : SelectionSet scimIdentity Api.Object.ExternalIdentityScimAttributes -> FieldDecoder scimIdentity Api.Object.ExternalIdentity
 scimIdentity object =
     Object.single "scimIdentity" [] object
 
 
-user : Object user Api.Object.User -> FieldDecoder user Api.Object.ExternalIdentity
+user : SelectionSet user Api.Object.User -> FieldDecoder user Api.Object.ExternalIdentity
 user object =
     Object.single "user" [] object

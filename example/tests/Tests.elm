@@ -4,7 +4,7 @@ import Api.Object.MenuItem as MenuItem
 import Api.Query as Query
 import Expect
 import Graphqelm.Field as Field exposing (FieldDecoder, Query)
-import Graphqelm.Builder.Object as Object exposing (Object)
+import Graphqelm.Builder.Object as SelectionSet exposing (Object)
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (..)
 
@@ -23,13 +23,13 @@ menusWithId =
         |> Query.menuItems (\args -> { args | contains = Just "Milkshake" })
 
 
-menuItem : Object MenuItem MenuItem.Type
+menuItem : SelectionSet MenuItem MenuItem.Type
 menuItem =
     MenuItem.selection MenuItem
         |> Object.with MenuItem.name
 
 
-menuItemWithId : Object MenuItemWithId MenuItem.Type
+menuItemWithId : SelectionSet MenuItemWithId MenuItem.Type
 menuItemWithId =
     MenuItem.selection MenuItemWithId
         |> Object.with MenuItem.name

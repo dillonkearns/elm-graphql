@@ -6,16 +6,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Deployment
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Deployment
 selection constructor =
     Object.object constructor
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.Deployment
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.Deployment
 commit object =
     Object.single "commit" [] object
 
@@ -25,7 +25,7 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : Object creator Api.Object.Actor -> FieldDecoder creator Api.Object.Deployment
+creator : SelectionSet creator Api.Object.Actor -> FieldDecoder creator Api.Object.Deployment
 creator object =
     Object.single "creator" [] object
 
@@ -45,7 +45,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-latestStatus : Object latestStatus Api.Object.DeploymentStatus -> FieldDecoder latestStatus Api.Object.Deployment
+latestStatus : SelectionSet latestStatus Api.Object.DeploymentStatus -> FieldDecoder latestStatus Api.Object.Deployment
 latestStatus object =
     Object.single "latestStatus" [] object
 
@@ -55,7 +55,7 @@ payload =
     Object.fieldDecoder "payload" [] Decode.string
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Deployment
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.Deployment
 repository object =
     Object.single "repository" [] object
 
@@ -65,7 +65,7 @@ state =
     Object.fieldDecoder "state" [] Api.Enum.DeploymentState.decoder
 
 
-statuses : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object statuses Api.Object.DeploymentStatusConnection -> FieldDecoder statuses Api.Object.Deployment
+statuses : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet statuses Api.Object.DeploymentStatusConnection -> FieldDecoder statuses Api.Object.Deployment
 statuses fillInOptionals object =
     let
         filledInOptionals =

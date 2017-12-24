@@ -9,7 +9,7 @@ import Graphqelm exposing (RootQuery)
 import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
-import Graphqelm.Object exposing (Object, with)
+import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -21,7 +21,7 @@ type alias Response =
     }
 
 
-query : Object Response RootQuery
+query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.human { id = "1004" } human)
@@ -37,7 +37,7 @@ type alias Hero =
     }
 
 
-hero : Object Hero Api.Object.Character
+hero : SelectionSet Hero Api.Object.Character
 hero =
     Character.selection Hero
         |> with Character.name
@@ -46,7 +46,7 @@ hero =
         |> with Character.appearsIn
 
 
-heroWithName : Object String Api.Object.Character
+heroWithName : SelectionSet String Api.Object.Character
 heroWithName =
     Character.selection identity
         |> with Character.name
@@ -58,7 +58,7 @@ type alias Human =
     }
 
 
-human : Object Human Api.Object.Human
+human : SelectionSet Human Api.Object.Human
 human =
     Human.selection Human
         |> with Human.name

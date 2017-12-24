@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.OrganizationIdentityProvider
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.OrganizationIdentityProvider
 selection constructor =
     Object.object constructor
 
@@ -19,7 +19,7 @@ digestMethod =
     Object.fieldDecoder "digestMethod" [] Decode.string
 
 
-externalIdentities : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object externalIdentities Api.Object.ExternalIdentityConnection -> FieldDecoder externalIdentities Api.Object.OrganizationIdentityProvider
+externalIdentities : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet externalIdentities Api.Object.ExternalIdentityConnection -> FieldDecoder externalIdentities Api.Object.OrganizationIdentityProvider
 externalIdentities fillInOptionals object =
     let
         filledInOptionals =
@@ -47,7 +47,7 @@ issuer =
     Object.fieldDecoder "issuer" [] Decode.string
 
 
-organization : Object organization Api.Object.Organization -> FieldDecoder organization Api.Object.OrganizationIdentityProvider
+organization : SelectionSet organization Api.Object.Organization -> FieldDecoder organization Api.Object.OrganizationIdentityProvider
 organization object =
     Object.single "organization" [] object
 

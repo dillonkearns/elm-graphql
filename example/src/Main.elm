@@ -6,7 +6,7 @@ import Api.Query
 import Graphqelm exposing (RootQuery)
 import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.Http
-import Graphqelm.Object as Object exposing (Object)
+import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
 
@@ -23,11 +23,11 @@ type alias Response =
     ( List MenuItem, String )
 
 
-query : Object Response RootQuery
+query : SelectionSet Response RootQuery
 query =
     Api.Query.selection (,)
-        |> Object.with (Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem)
-        |> Object.with Api.Query.me
+        |> with (Api.Query.menuItems (\args -> { args | contains = Just "Milkshake" }) menuItem)
+        |> with Api.Query.me
 
 
 type alias MenuItem =
@@ -36,11 +36,11 @@ type alias MenuItem =
     }
 
 
-menuItem : Object MenuItem Api.Object.MenuItem
+menuItem : SelectionSet MenuItem Api.Object.MenuItem
 menuItem =
     MenuItem.selection MenuItem
-        |> Object.with MenuItem.id
-        |> Object.with MenuItem.name
+        |> with MenuItem.id
+        |> with MenuItem.name
 
 
 makeRequest : Cmd Msg

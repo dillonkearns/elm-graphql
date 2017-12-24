@@ -7,16 +7,16 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Builder.RootObject as RootObject
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
 
-selection : (a -> constructor) -> Object (a -> constructor) RootMutation
+selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
     RootObject.object constructor
 
 
-acceptTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object acceptTopicSuggestion Api.Object.AcceptTopicSuggestionPayload -> FieldDecoder acceptTopicSuggestion RootMutation
+acceptTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet acceptTopicSuggestion Api.Object.AcceptTopicSuggestionPayload -> FieldDecoder acceptTopicSuggestion RootMutation
 acceptTopicSuggestion fillInOptionals object =
     let
         filledInOptionals =
@@ -29,7 +29,7 @@ acceptTopicSuggestion fillInOptionals object =
     RootObject.single "acceptTopicSuggestion" optionalArgs object
 
 
-addComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addComment Api.Object.AddCommentPayload -> FieldDecoder addComment RootMutation
+addComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet addComment Api.Object.AddCommentPayload -> FieldDecoder addComment RootMutation
 addComment fillInOptionals object =
     let
         filledInOptionals =
@@ -42,7 +42,7 @@ addComment fillInOptionals object =
     RootObject.single "addComment" optionalArgs object
 
 
-addProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addProjectCard Api.Object.AddProjectCardPayload -> FieldDecoder addProjectCard RootMutation
+addProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet addProjectCard Api.Object.AddProjectCardPayload -> FieldDecoder addProjectCard RootMutation
 addProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -55,7 +55,7 @@ addProjectCard fillInOptionals object =
     RootObject.single "addProjectCard" optionalArgs object
 
 
-addProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addProjectColumn Api.Object.AddProjectColumnPayload -> FieldDecoder addProjectColumn RootMutation
+addProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet addProjectColumn Api.Object.AddProjectColumnPayload -> FieldDecoder addProjectColumn RootMutation
 addProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -68,7 +68,7 @@ addProjectColumn fillInOptionals object =
     RootObject.single "addProjectColumn" optionalArgs object
 
 
-addPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addPullRequestReview Api.Object.AddPullRequestReviewPayload -> FieldDecoder addPullRequestReview RootMutation
+addPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet addPullRequestReview Api.Object.AddPullRequestReviewPayload -> FieldDecoder addPullRequestReview RootMutation
 addPullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -81,7 +81,7 @@ addPullRequestReview fillInOptionals object =
     RootObject.single "addPullRequestReview" optionalArgs object
 
 
-addPullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addPullRequestReviewComment Api.Object.AddPullRequestReviewCommentPayload -> FieldDecoder addPullRequestReviewComment RootMutation
+addPullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet addPullRequestReviewComment Api.Object.AddPullRequestReviewCommentPayload -> FieldDecoder addPullRequestReviewComment RootMutation
 addPullRequestReviewComment fillInOptionals object =
     let
         filledInOptionals =
@@ -94,7 +94,7 @@ addPullRequestReviewComment fillInOptionals object =
     RootObject.single "addPullRequestReviewComment" optionalArgs object
 
 
-addReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addReaction Api.Object.AddReactionPayload -> FieldDecoder addReaction RootMutation
+addReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet addReaction Api.Object.AddReactionPayload -> FieldDecoder addReaction RootMutation
 addReaction fillInOptionals object =
     let
         filledInOptionals =
@@ -107,7 +107,7 @@ addReaction fillInOptionals object =
     RootObject.single "addReaction" optionalArgs object
 
 
-addStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object addStar Api.Object.AddStarPayload -> FieldDecoder addStar RootMutation
+addStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet addStar Api.Object.AddStarPayload -> FieldDecoder addStar RootMutation
 addStar fillInOptionals object =
     let
         filledInOptionals =
@@ -120,7 +120,7 @@ addStar fillInOptionals object =
     RootObject.single "addStar" optionalArgs object
 
 
-createProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object createProject Api.Object.CreateProjectPayload -> FieldDecoder createProject RootMutation
+createProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet createProject Api.Object.CreateProjectPayload -> FieldDecoder createProject RootMutation
 createProject fillInOptionals object =
     let
         filledInOptionals =
@@ -133,7 +133,7 @@ createProject fillInOptionals object =
     RootObject.single "createProject" optionalArgs object
 
 
-declineTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object declineTopicSuggestion Api.Object.DeclineTopicSuggestionPayload -> FieldDecoder declineTopicSuggestion RootMutation
+declineTopicSuggestion : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet declineTopicSuggestion Api.Object.DeclineTopicSuggestionPayload -> FieldDecoder declineTopicSuggestion RootMutation
 declineTopicSuggestion fillInOptionals object =
     let
         filledInOptionals =
@@ -146,7 +146,7 @@ declineTopicSuggestion fillInOptionals object =
     RootObject.single "declineTopicSuggestion" optionalArgs object
 
 
-deleteProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProject Api.Object.DeleteProjectPayload -> FieldDecoder deleteProject RootMutation
+deleteProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet deleteProject Api.Object.DeleteProjectPayload -> FieldDecoder deleteProject RootMutation
 deleteProject fillInOptionals object =
     let
         filledInOptionals =
@@ -159,7 +159,7 @@ deleteProject fillInOptionals object =
     RootObject.single "deleteProject" optionalArgs object
 
 
-deleteProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProjectCard Api.Object.DeleteProjectCardPayload -> FieldDecoder deleteProjectCard RootMutation
+deleteProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet deleteProjectCard Api.Object.DeleteProjectCardPayload -> FieldDecoder deleteProjectCard RootMutation
 deleteProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -172,7 +172,7 @@ deleteProjectCard fillInOptionals object =
     RootObject.single "deleteProjectCard" optionalArgs object
 
 
-deleteProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deleteProjectColumn Api.Object.DeleteProjectColumnPayload -> FieldDecoder deleteProjectColumn RootMutation
+deleteProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet deleteProjectColumn Api.Object.DeleteProjectColumnPayload -> FieldDecoder deleteProjectColumn RootMutation
 deleteProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -185,7 +185,7 @@ deleteProjectColumn fillInOptionals object =
     RootObject.single "deleteProjectColumn" optionalArgs object
 
 
-deletePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object deletePullRequestReview Api.Object.DeletePullRequestReviewPayload -> FieldDecoder deletePullRequestReview RootMutation
+deletePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet deletePullRequestReview Api.Object.DeletePullRequestReviewPayload -> FieldDecoder deletePullRequestReview RootMutation
 deletePullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -198,7 +198,7 @@ deletePullRequestReview fillInOptionals object =
     RootObject.single "deletePullRequestReview" optionalArgs object
 
 
-dismissPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object dismissPullRequestReview Api.Object.DismissPullRequestReviewPayload -> FieldDecoder dismissPullRequestReview RootMutation
+dismissPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet dismissPullRequestReview Api.Object.DismissPullRequestReviewPayload -> FieldDecoder dismissPullRequestReview RootMutation
 dismissPullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -211,7 +211,7 @@ dismissPullRequestReview fillInOptionals object =
     RootObject.single "dismissPullRequestReview" optionalArgs object
 
 
-moveProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object moveProjectCard Api.Object.MoveProjectCardPayload -> FieldDecoder moveProjectCard RootMutation
+moveProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet moveProjectCard Api.Object.MoveProjectCardPayload -> FieldDecoder moveProjectCard RootMutation
 moveProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -224,7 +224,7 @@ moveProjectCard fillInOptionals object =
     RootObject.single "moveProjectCard" optionalArgs object
 
 
-moveProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object moveProjectColumn Api.Object.MoveProjectColumnPayload -> FieldDecoder moveProjectColumn RootMutation
+moveProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet moveProjectColumn Api.Object.MoveProjectColumnPayload -> FieldDecoder moveProjectColumn RootMutation
 moveProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -237,7 +237,7 @@ moveProjectColumn fillInOptionals object =
     RootObject.single "moveProjectColumn" optionalArgs object
 
 
-removeOutsideCollaborator : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeOutsideCollaborator Api.Object.RemoveOutsideCollaboratorPayload -> FieldDecoder removeOutsideCollaborator RootMutation
+removeOutsideCollaborator : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet removeOutsideCollaborator Api.Object.RemoveOutsideCollaboratorPayload -> FieldDecoder removeOutsideCollaborator RootMutation
 removeOutsideCollaborator fillInOptionals object =
     let
         filledInOptionals =
@@ -250,7 +250,7 @@ removeOutsideCollaborator fillInOptionals object =
     RootObject.single "removeOutsideCollaborator" optionalArgs object
 
 
-removeReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeReaction Api.Object.RemoveReactionPayload -> FieldDecoder removeReaction RootMutation
+removeReaction : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet removeReaction Api.Object.RemoveReactionPayload -> FieldDecoder removeReaction RootMutation
 removeReaction fillInOptionals object =
     let
         filledInOptionals =
@@ -263,7 +263,7 @@ removeReaction fillInOptionals object =
     RootObject.single "removeReaction" optionalArgs object
 
 
-removeStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object removeStar Api.Object.RemoveStarPayload -> FieldDecoder removeStar RootMutation
+removeStar : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet removeStar Api.Object.RemoveStarPayload -> FieldDecoder removeStar RootMutation
 removeStar fillInOptionals object =
     let
         filledInOptionals =
@@ -276,7 +276,7 @@ removeStar fillInOptionals object =
     RootObject.single "removeStar" optionalArgs object
 
 
-requestReviews : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object requestReviews Api.Object.RequestReviewsPayload -> FieldDecoder requestReviews RootMutation
+requestReviews : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet requestReviews Api.Object.RequestReviewsPayload -> FieldDecoder requestReviews RootMutation
 requestReviews fillInOptionals object =
     let
         filledInOptionals =
@@ -289,7 +289,7 @@ requestReviews fillInOptionals object =
     RootObject.single "requestReviews" optionalArgs object
 
 
-submitPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object submitPullRequestReview Api.Object.SubmitPullRequestReviewPayload -> FieldDecoder submitPullRequestReview RootMutation
+submitPullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet submitPullRequestReview Api.Object.SubmitPullRequestReviewPayload -> FieldDecoder submitPullRequestReview RootMutation
 submitPullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -302,7 +302,7 @@ submitPullRequestReview fillInOptionals object =
     RootObject.single "submitPullRequestReview" optionalArgs object
 
 
-updateProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProject Api.Object.UpdateProjectPayload -> FieldDecoder updateProject RootMutation
+updateProject : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet updateProject Api.Object.UpdateProjectPayload -> FieldDecoder updateProject RootMutation
 updateProject fillInOptionals object =
     let
         filledInOptionals =
@@ -315,7 +315,7 @@ updateProject fillInOptionals object =
     RootObject.single "updateProject" optionalArgs object
 
 
-updateProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProjectCard Api.Object.UpdateProjectCardPayload -> FieldDecoder updateProjectCard RootMutation
+updateProjectCard : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet updateProjectCard Api.Object.UpdateProjectCardPayload -> FieldDecoder updateProjectCard RootMutation
 updateProjectCard fillInOptionals object =
     let
         filledInOptionals =
@@ -328,7 +328,7 @@ updateProjectCard fillInOptionals object =
     RootObject.single "updateProjectCard" optionalArgs object
 
 
-updateProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateProjectColumn Api.Object.UpdateProjectColumnPayload -> FieldDecoder updateProjectColumn RootMutation
+updateProjectColumn : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet updateProjectColumn Api.Object.UpdateProjectColumnPayload -> FieldDecoder updateProjectColumn RootMutation
 updateProjectColumn fillInOptionals object =
     let
         filledInOptionals =
@@ -341,7 +341,7 @@ updateProjectColumn fillInOptionals object =
     RootObject.single "updateProjectColumn" optionalArgs object
 
 
-updatePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updatePullRequestReview Api.Object.UpdatePullRequestReviewPayload -> FieldDecoder updatePullRequestReview RootMutation
+updatePullRequestReview : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet updatePullRequestReview Api.Object.UpdatePullRequestReviewPayload -> FieldDecoder updatePullRequestReview RootMutation
 updatePullRequestReview fillInOptionals object =
     let
         filledInOptionals =
@@ -354,7 +354,7 @@ updatePullRequestReview fillInOptionals object =
     RootObject.single "updatePullRequestReview" optionalArgs object
 
 
-updatePullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updatePullRequestReviewComment Api.Object.UpdatePullRequestReviewCommentPayload -> FieldDecoder updatePullRequestReviewComment RootMutation
+updatePullRequestReviewComment : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet updatePullRequestReviewComment Api.Object.UpdatePullRequestReviewCommentPayload -> FieldDecoder updatePullRequestReviewComment RootMutation
 updatePullRequestReviewComment fillInOptionals object =
     let
         filledInOptionals =
@@ -367,7 +367,7 @@ updatePullRequestReviewComment fillInOptionals object =
     RootObject.single "updatePullRequestReviewComment" optionalArgs object
 
 
-updateSubscription : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateSubscription Api.Object.UpdateSubscriptionPayload -> FieldDecoder updateSubscription RootMutation
+updateSubscription : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet updateSubscription Api.Object.UpdateSubscriptionPayload -> FieldDecoder updateSubscription RootMutation
 updateSubscription fillInOptionals object =
     let
         filledInOptionals =
@@ -380,7 +380,7 @@ updateSubscription fillInOptionals object =
     RootObject.single "updateSubscription" optionalArgs object
 
 
-updateTopics : ({ input : Maybe Value } -> { input : Maybe Value }) -> Object updateTopics Api.Object.UpdateTopicsPayload -> FieldDecoder updateTopics RootMutation
+updateTopics : ({ input : Maybe Value } -> { input : Maybe Value }) -> SelectionSet updateTopics Api.Object.UpdateTopicsPayload -> FieldDecoder updateTopics RootMutation
 updateTopics fillInOptionals object =
     let
         filledInOptionals =

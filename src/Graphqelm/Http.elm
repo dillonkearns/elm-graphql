@@ -12,7 +12,7 @@ The builder syntax is inspired by Luke Westby's
 import Graphqelm exposing (RootMutation, RootQuery)
 import Graphqelm.Document.LowLevel as Document
 import Graphqelm.DocumentSerializer as DocumentSerializer
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
 import Json.Encode
 import Time exposing (Time)
@@ -34,7 +34,7 @@ type Request decodesTo
 
 {-| TODO
 -}
-buildRequest : String -> String -> Object decodesTo typeLock -> Request decodesTo
+buildRequest : String -> String -> SelectionSet decodesTo typeLock -> Request decodesTo
 buildRequest url queryDocument query =
     { method = "POST"
     , headers = []
@@ -49,14 +49,14 @@ buildRequest url queryDocument query =
 
 {-| TODO
 -}
-buildQueryRequest : String -> Object decodesTo RootQuery -> Request decodesTo
+buildQueryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
 buildQueryRequest url query =
     buildRequest url (DocumentSerializer.serializeQuery query) query
 
 
 {-| TODO
 -}
-buildMutationRequest : String -> Object decodesTo RootMutation -> Request decodesTo
+buildMutationRequest : String -> SelectionSet decodesTo RootMutation -> Request decodesTo
 buildMutationRequest url query =
     buildRequest url (DocumentSerializer.serializeMutation query) query
 

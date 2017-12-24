@@ -36,7 +36,7 @@ me =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """droid : Object droid Api.Object.Droid -> FieldDecoder droid RootQuery
+                        """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid RootQuery
 droid object =
       RootObject.single "droid" [] (object)
 """
@@ -48,7 +48,7 @@ droid object =
                 }
                     |> Field.forObject "Foo"
                     |> Expect.equal
-                        """droid : Object droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
+                        """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
 droid object =
       Object.single "droid" [] (object)
 """
@@ -60,7 +60,7 @@ droid object =
                 }
                     |> Field.forObject "Foo"
                     |> Expect.equal
-                        """droid : Object droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
+                        """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
 droid object =
       Object.listOf "droid" [] (object)
 """
@@ -72,7 +72,7 @@ droid object =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """human : { id : String } -> Object human Api.Object.Human -> FieldDecoder human RootQuery
+                        """human : { id : String } -> SelectionSet human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
       RootObject.single "human" [ Argument.string "id" requiredArgs.id ] (object)
 """
@@ -84,7 +84,7 @@ human requiredArgs object =
                 }
                     |> Field.forQuery
                     |> Expect.equal
-                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> Object menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
+                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> SelectionSet menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =

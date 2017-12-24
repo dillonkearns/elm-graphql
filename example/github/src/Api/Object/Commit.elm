@@ -6,11 +6,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Commit
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Commit
 selection constructor =
     Object.object constructor
 
@@ -20,7 +20,7 @@ abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
-author : Object author Api.Object.GitActor -> FieldDecoder author Api.Object.Commit
+author : SelectionSet author Api.Object.GitActor -> FieldDecoder author Api.Object.Commit
 author object =
     Object.single "author" [] object
 
@@ -35,12 +35,12 @@ authoredDate =
     Object.fieldDecoder "authoredDate" [] Decode.string
 
 
-blame : { path : String } -> Object blame Api.Object.Blame -> FieldDecoder blame Api.Object.Commit
+blame : { path : String } -> SelectionSet blame Api.Object.Blame -> FieldDecoder blame Api.Object.Commit
 blame requiredArgs object =
     Object.single "blame" [ Argument.string "path" requiredArgs.path ] object
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.Commit
+comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.Commit
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -73,12 +73,12 @@ committedViaWeb =
     Object.fieldDecoder "committedViaWeb" [] Decode.bool
 
 
-committer : Object committer Api.Object.GitActor -> FieldDecoder committer Api.Object.Commit
+committer : SelectionSet committer Api.Object.GitActor -> FieldDecoder committer Api.Object.Commit
 committer object =
     Object.single "committer" [] object
 
 
-history : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String }) -> Object history Api.Object.CommitHistoryConnection -> FieldDecoder history Api.Object.Commit
+history : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String }) -> SelectionSet history Api.Object.CommitHistoryConnection -> FieldDecoder history Api.Object.Commit
 history fillInOptionals object =
     let
         filledInOptionals =
@@ -126,7 +126,7 @@ oid =
     Object.fieldDecoder "oid" [] Decode.string
 
 
-parents : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object parents Api.Object.CommitConnection -> FieldDecoder parents Api.Object.Commit
+parents : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet parents Api.Object.CommitConnection -> FieldDecoder parents Api.Object.Commit
 parents fillInOptionals object =
     let
         filledInOptionals =
@@ -144,7 +144,7 @@ pushedDate =
     Object.fieldDecoder "pushedDate" [] Decode.string
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Commit
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.Commit
 repository object =
     Object.single "repository" [] object
 
@@ -154,12 +154,12 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-signature : Object signature Api.Object.GitSignature -> FieldDecoder signature Api.Object.Commit
+signature : SelectionSet signature Api.Object.GitSignature -> FieldDecoder signature Api.Object.Commit
 signature object =
     Object.single "signature" [] object
 
 
-status : Object status Api.Object.Status -> FieldDecoder status Api.Object.Commit
+status : SelectionSet status Api.Object.Status -> FieldDecoder status Api.Object.Commit
 status object =
     Object.single "status" [] object
 
@@ -169,7 +169,7 @@ tarballUrl =
     Object.fieldDecoder "tarballUrl" [] Decode.string
 
 
-tree : Object tree Api.Object.Tree -> FieldDecoder tree Api.Object.Commit
+tree : SelectionSet tree Api.Object.Tree -> FieldDecoder tree Api.Object.Commit
 tree object =
     Object.single "tree" [] object
 

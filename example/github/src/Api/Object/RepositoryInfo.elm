@@ -6,11 +6,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.RepositoryInfo
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.RepositoryInfo
 selection constructor =
     Object.object constructor
 
@@ -80,7 +80,7 @@ license =
     Object.fieldDecoder "license" [] Decode.string
 
 
-licenseInfo : Object licenseInfo Api.Object.License -> FieldDecoder licenseInfo Api.Object.RepositoryInfo
+licenseInfo : SelectionSet licenseInfo Api.Object.License -> FieldDecoder licenseInfo Api.Object.RepositoryInfo
 licenseInfo object =
     Object.single "licenseInfo" [] object
 
@@ -105,7 +105,7 @@ nameWithOwner =
     Object.fieldDecoder "nameWithOwner" [] Decode.string
 
 
-owner : Object owner Api.Object.RepositoryOwner -> FieldDecoder owner Api.Object.RepositoryInfo
+owner : SelectionSet owner Api.Object.RepositoryOwner -> FieldDecoder owner Api.Object.RepositoryInfo
 owner object =
     Object.single "owner" [] object
 

@@ -9,16 +9,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Team
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Team
 selection constructor =
     Object.object constructor
 
 
-ancestors : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object ancestors Api.Object.TeamConnection -> FieldDecoder ancestors Api.Object.Team
+ancestors : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet ancestors Api.Object.TeamConnection -> FieldDecoder ancestors Api.Object.Team
 ancestors fillInOptionals object =
     let
         filledInOptionals =
@@ -31,7 +31,7 @@ ancestors fillInOptionals object =
     Object.single "ancestors" optionalArgs object
 
 
-childTeams : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, userLogins : Maybe (List String), immediateOnly : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, userLogins : Maybe (List String), immediateOnly : Maybe Bool }) -> Object childTeams Api.Object.TeamConnection -> FieldDecoder childTeams Api.Object.Team
+childTeams : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, userLogins : Maybe (List String), immediateOnly : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, userLogins : Maybe (List String), immediateOnly : Maybe Bool }) -> SelectionSet childTeams Api.Object.TeamConnection -> FieldDecoder childTeams Api.Object.Team
 childTeams fillInOptionals object =
     let
         filledInOptionals =
@@ -74,7 +74,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-invitations : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object invitations Api.Object.OrganizationInvitationConnection -> FieldDecoder invitations Api.Object.Team
+invitations : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet invitations Api.Object.OrganizationInvitationConnection -> FieldDecoder invitations Api.Object.Team
 invitations fillInOptionals object =
     let
         filledInOptionals =
@@ -87,7 +87,7 @@ invitations fillInOptionals object =
     Object.single "invitations" optionalArgs object
 
 
-members : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, membership : Maybe Api.Enum.TeamMembershipType.TeamMembershipType, role : Maybe Api.Enum.TeamMemberRole.TeamMemberRole } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, membership : Maybe Api.Enum.TeamMembershipType.TeamMembershipType, role : Maybe Api.Enum.TeamMemberRole.TeamMemberRole }) -> Object members Api.Object.TeamMemberConnection -> FieldDecoder members Api.Object.Team
+members : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, membership : Maybe Api.Enum.TeamMembershipType.TeamMembershipType, role : Maybe Api.Enum.TeamMemberRole.TeamMemberRole } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, membership : Maybe Api.Enum.TeamMembershipType.TeamMembershipType, role : Maybe Api.Enum.TeamMemberRole.TeamMemberRole }) -> SelectionSet members Api.Object.TeamMemberConnection -> FieldDecoder members Api.Object.Team
 members fillInOptionals object =
     let
         filledInOptionals =
@@ -125,12 +125,12 @@ newTeamUrl =
     Object.fieldDecoder "newTeamUrl" [] Decode.string
 
 
-organization : Object organization Api.Object.Organization -> FieldDecoder organization Api.Object.Team
+organization : SelectionSet organization Api.Object.Organization -> FieldDecoder organization Api.Object.Team
 organization object =
     Object.single "organization" [] object
 
 
-parentTeam : Object parentTeam Api.Object.Team -> FieldDecoder parentTeam Api.Object.Team
+parentTeam : SelectionSet parentTeam Api.Object.Team -> FieldDecoder parentTeam Api.Object.Team
 parentTeam object =
     Object.single "parentTeam" [] object
 
@@ -140,7 +140,7 @@ privacy =
     Object.fieldDecoder "privacy" [] Api.Enum.TeamPrivacy.decoder
 
 
-repositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe Value }) -> Object repositories Api.Object.TeamRepositoryConnection -> FieldDecoder repositories Api.Object.Team
+repositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, query : Maybe String, orderBy : Maybe Value }) -> SelectionSet repositories Api.Object.TeamRepositoryConnection -> FieldDecoder repositories Api.Object.Team
 repositories fillInOptionals object =
     let
         filledInOptionals =

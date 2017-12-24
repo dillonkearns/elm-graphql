@@ -7,11 +7,11 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Builder.RootObject as RootObject
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
 
-selection : (a -> constructor) -> Object (a -> constructor) RootMutation
+selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
     RootObject.object constructor
 

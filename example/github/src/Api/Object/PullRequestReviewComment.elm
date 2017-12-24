@@ -7,16 +7,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequestReviewComment
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.PullRequestReviewComment
 selection constructor =
     Object.object constructor
 
 
-author : Object author Api.Object.Actor -> FieldDecoder author Api.Object.PullRequestReviewComment
+author : SelectionSet author Api.Object.Actor -> FieldDecoder author Api.Object.PullRequestReviewComment
 author object =
     Object.single "author" [] object
 
@@ -41,7 +41,7 @@ bodyText =
     Object.fieldDecoder "bodyText" [] Decode.string
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.PullRequestReviewComment
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.PullRequestReviewComment
 commit object =
     Object.single "commit" [] object
 
@@ -71,7 +71,7 @@ draftedAt =
     Object.fieldDecoder "draftedAt" [] Decode.string
 
 
-editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequestReviewComment
+editor : SelectionSet editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequestReviewComment
 editor object =
     Object.single "editor" [] object
 
@@ -86,7 +86,7 @@ lastEditedAt =
     Object.fieldDecoder "lastEditedAt" [] Decode.string
 
 
-originalCommit : Object originalCommit Api.Object.Commit -> FieldDecoder originalCommit Api.Object.PullRequestReviewComment
+originalCommit : SelectionSet originalCommit Api.Object.Commit -> FieldDecoder originalCommit Api.Object.PullRequestReviewComment
 originalCommit object =
     Object.single "originalCommit" [] object
 
@@ -111,22 +111,22 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestReviewComment
+pullRequest : SelectionSet pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestReviewComment
 pullRequest object =
     Object.single "pullRequest" [] object
 
 
-pullRequestReview : Object pullRequestReview Api.Object.PullRequestReview -> FieldDecoder pullRequestReview Api.Object.PullRequestReviewComment
+pullRequestReview : SelectionSet pullRequestReview Api.Object.PullRequestReview -> FieldDecoder pullRequestReview Api.Object.PullRequestReviewComment
 pullRequestReview object =
     Object.single "pullRequestReview" [] object
 
 
-reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.PullRequestReviewComment
+reactionGroups : SelectionSet reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.PullRequestReviewComment
 reactionGroups object =
     Object.listOf "reactionGroups" [] object
 
 
-reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.PullRequestReviewComment
+reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> SelectionSet reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.PullRequestReviewComment
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -139,12 +139,12 @@ reactions fillInOptionals object =
     Object.single "reactions" optionalArgs object
 
 
-replyTo : Object replyTo Api.Object.PullRequestReviewComment -> FieldDecoder replyTo Api.Object.PullRequestReviewComment
+replyTo : SelectionSet replyTo Api.Object.PullRequestReviewComment -> FieldDecoder replyTo Api.Object.PullRequestReviewComment
 replyTo object =
     Object.single "replyTo" [] object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequestReviewComment
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequestReviewComment
 repository object =
     Object.single "repository" [] object
 

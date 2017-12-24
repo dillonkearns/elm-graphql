@@ -9,16 +9,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Issue
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Issue
 selection constructor =
     Object.object constructor
 
 
-assignees : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object assignees Api.Object.UserConnection -> FieldDecoder assignees Api.Object.Issue
+assignees : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet assignees Api.Object.UserConnection -> FieldDecoder assignees Api.Object.Issue
 assignees fillInOptionals object =
     let
         filledInOptionals =
@@ -31,7 +31,7 @@ assignees fillInOptionals object =
     Object.single "assignees" optionalArgs object
 
 
-author : Object author Api.Object.Actor -> FieldDecoder author Api.Object.Issue
+author : SelectionSet author Api.Object.Actor -> FieldDecoder author Api.Object.Issue
 author object =
     Object.single "author" [] object
 
@@ -66,7 +66,7 @@ closedAt =
     Object.fieldDecoder "closedAt" [] Decode.string
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object comments Api.Object.IssueCommentConnection -> FieldDecoder comments Api.Object.Issue
+comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.IssueCommentConnection -> FieldDecoder comments Api.Object.Issue
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -94,7 +94,7 @@ databaseId =
     Object.fieldDecoder "databaseId" [] Decode.int
 
 
-editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.Issue
+editor : SelectionSet editor Api.Object.Actor -> FieldDecoder editor Api.Object.Issue
 editor object =
     Object.single "editor" [] object
 
@@ -104,7 +104,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-labels : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Issue
+labels : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Issue
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -127,7 +127,7 @@ locked =
     Object.fieldDecoder "locked" [] Decode.bool
 
 
-milestone : Object milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.Issue
+milestone : SelectionSet milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.Issue
 milestone object =
     Object.single "milestone" [] object
 
@@ -137,7 +137,7 @@ number =
     Object.fieldDecoder "number" [] Decode.int
 
 
-participants : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.Issue
+participants : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.Issue
 participants fillInOptionals object =
     let
         filledInOptionals =
@@ -150,7 +150,7 @@ participants fillInOptionals object =
     Object.single "participants" optionalArgs object
 
 
-projectCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object projectCards Api.Object.ProjectCardConnection -> FieldDecoder projectCards Api.Object.Issue
+projectCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet projectCards Api.Object.ProjectCardConnection -> FieldDecoder projectCards Api.Object.Issue
 projectCards fillInOptionals object =
     let
         filledInOptionals =
@@ -168,12 +168,12 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.Issue
+reactionGroups : SelectionSet reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.Issue
 reactionGroups object =
     Object.listOf "reactionGroups" [] object
 
 
-reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.Issue
+reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> SelectionSet reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.Issue
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -186,7 +186,7 @@ reactions fillInOptionals object =
     Object.single "reactions" optionalArgs object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Issue
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.Issue
 repository object =
     Object.single "repository" [] object
 
@@ -201,7 +201,7 @@ state =
     Object.fieldDecoder "state" [] Api.Enum.IssueState.decoder
 
 
-timeline : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String }) -> Object timeline Api.Object.IssueTimelineConnection -> FieldDecoder timeline Api.Object.Issue
+timeline : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String }) -> SelectionSet timeline Api.Object.IssueTimelineConnection -> FieldDecoder timeline Api.Object.Issue
 timeline fillInOptionals object =
     let
         filledInOptionals =

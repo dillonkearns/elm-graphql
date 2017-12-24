@@ -5,26 +5,26 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.ClosedEvent
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.ClosedEvent
 selection constructor =
     Object.object constructor
 
 
-actor : Object actor Api.Object.Actor -> FieldDecoder actor Api.Object.ClosedEvent
+actor : SelectionSet actor Api.Object.Actor -> FieldDecoder actor Api.Object.ClosedEvent
 actor object =
     Object.single "actor" [] object
 
 
-closable : Object closable Api.Object.Closable -> FieldDecoder closable Api.Object.ClosedEvent
+closable : SelectionSet closable Api.Object.Closable -> FieldDecoder closable Api.Object.ClosedEvent
 closable object =
     Object.single "closable" [] object
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.ClosedEvent
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.ClosedEvent
 commit object =
     Object.single "commit" [] object
 

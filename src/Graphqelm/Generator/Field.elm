@@ -157,7 +157,7 @@ objectThing objectOrQuery fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
-                "Object {0} {1}"
+                "SelectionSet {0} {1}"
                 [ fieldName, Imports.object refName |> String.join "." ]
     in
     { annotatedArgs = []

@@ -11,11 +11,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.User
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.User
 selection constructor =
     Object.object constructor
 
@@ -43,7 +43,7 @@ bioHTML =
     Object.fieldDecoder "bioHTML" [] Decode.string
 
 
-commitComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object commitComments Api.Object.CommitCommentConnection -> FieldDecoder commitComments Api.Object.User
+commitComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet commitComments Api.Object.CommitCommentConnection -> FieldDecoder commitComments Api.Object.User
 commitComments fillInOptionals object =
     let
         filledInOptionals =
@@ -66,7 +66,7 @@ companyHTML =
     Object.fieldDecoder "companyHTML" [] Decode.string
 
 
-contributedRepositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> Object contributedRepositories Api.Object.RepositoryConnection -> FieldDecoder contributedRepositories Api.Object.User
+contributedRepositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> SelectionSet contributedRepositories Api.Object.RepositoryConnection -> FieldDecoder contributedRepositories Api.Object.User
 contributedRepositories fillInOptionals object =
     let
         filledInOptionals =
@@ -94,7 +94,7 @@ email =
     Object.fieldDecoder "email" [] Decode.string
 
 
-followers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object followers Api.Object.FollowerConnection -> FieldDecoder followers Api.Object.User
+followers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet followers Api.Object.FollowerConnection -> FieldDecoder followers Api.Object.User
 followers fillInOptionals object =
     let
         filledInOptionals =
@@ -107,7 +107,7 @@ followers fillInOptionals object =
     Object.single "followers" optionalArgs object
 
 
-following : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object following Api.Object.FollowingConnection -> FieldDecoder following Api.Object.User
+following : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet following Api.Object.FollowingConnection -> FieldDecoder following Api.Object.User
 following fillInOptionals object =
     let
         filledInOptionals =
@@ -120,12 +120,12 @@ following fillInOptionals object =
     Object.single "following" optionalArgs object
 
 
-gist : { name : String } -> Object gist Api.Object.Gist -> FieldDecoder gist Api.Object.User
+gist : { name : String } -> SelectionSet gist Api.Object.Gist -> FieldDecoder gist Api.Object.User
 gist requiredArgs object =
     Object.single "gist" [ Argument.string "name" requiredArgs.name ] object
 
 
-gistComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object gistComments Api.Object.GistCommentConnection -> FieldDecoder gistComments Api.Object.User
+gistComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet gistComments Api.Object.GistCommentConnection -> FieldDecoder gistComments Api.Object.User
 gistComments fillInOptionals object =
     let
         filledInOptionals =
@@ -138,7 +138,7 @@ gistComments fillInOptionals object =
     Object.single "gistComments" optionalArgs object
 
 
-gists : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.GistPrivacy.GistPrivacy, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.GistPrivacy.GistPrivacy, orderBy : Maybe Value }) -> Object gists Api.Object.GistConnection -> FieldDecoder gists Api.Object.User
+gists : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.GistPrivacy.GistPrivacy, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.GistPrivacy.GistPrivacy, orderBy : Maybe Value }) -> SelectionSet gists Api.Object.GistConnection -> FieldDecoder gists Api.Object.User
 gists fillInOptionals object =
     let
         filledInOptionals =
@@ -191,7 +191,7 @@ isViewer =
     Object.fieldDecoder "isViewer" [] Decode.bool
 
 
-issueComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object issueComments Api.Object.IssueCommentConnection -> FieldDecoder issueComments Api.Object.User
+issueComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet issueComments Api.Object.IssueCommentConnection -> FieldDecoder issueComments Api.Object.User
 issueComments fillInOptionals object =
     let
         filledInOptionals =
@@ -204,7 +204,7 @@ issueComments fillInOptionals object =
     Object.single "issueComments" optionalArgs object
 
 
-issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> Object issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.User
+issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> SelectionSet issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.User
 issues fillInOptionals object =
     let
         filledInOptionals =
@@ -232,12 +232,12 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-organization : { login : String } -> Object organization Api.Object.Organization -> FieldDecoder organization Api.Object.User
+organization : { login : String } -> SelectionSet organization Api.Object.Organization -> FieldDecoder organization Api.Object.User
 organization requiredArgs object =
     Object.single "organization" [ Argument.string "login" requiredArgs.login ] object
 
 
-organizations : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object organizations Api.Object.OrganizationConnection -> FieldDecoder organizations Api.Object.User
+organizations : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet organizations Api.Object.OrganizationConnection -> FieldDecoder organizations Api.Object.User
 organizations fillInOptionals object =
     let
         filledInOptionals =
@@ -250,7 +250,7 @@ organizations fillInOptionals object =
     Object.single "organizations" optionalArgs object
 
 
-pinnedRepositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> Object pinnedRepositories Api.Object.RepositoryConnection -> FieldDecoder pinnedRepositories Api.Object.User
+pinnedRepositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> SelectionSet pinnedRepositories Api.Object.RepositoryConnection -> FieldDecoder pinnedRepositories Api.Object.User
 pinnedRepositories fillInOptionals object =
     let
         filledInOptionals =
@@ -263,7 +263,7 @@ pinnedRepositories fillInOptionals object =
     Object.single "pinnedRepositories" optionalArgs object
 
 
-publicKeys : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object publicKeys Api.Object.PublicKeyConnection -> FieldDecoder publicKeys Api.Object.User
+publicKeys : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet publicKeys Api.Object.PublicKeyConnection -> FieldDecoder publicKeys Api.Object.User
 publicKeys fillInOptionals object =
     let
         filledInOptionals =
@@ -276,7 +276,7 @@ publicKeys fillInOptionals object =
     Object.single "publicKeys" optionalArgs object
 
 
-pullRequests : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe Value }) -> Object pullRequests Api.Object.PullRequestConnection -> FieldDecoder pullRequests Api.Object.User
+pullRequests : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe Value }) -> SelectionSet pullRequests Api.Object.PullRequestConnection -> FieldDecoder pullRequests Api.Object.User
 pullRequests fillInOptionals object =
     let
         filledInOptionals =
@@ -289,7 +289,7 @@ pullRequests fillInOptionals object =
     Object.single "pullRequests" optionalArgs object
 
 
-repositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool, isFork : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool, isFork : Maybe Bool }) -> Object repositories Api.Object.RepositoryConnection -> FieldDecoder repositories Api.Object.User
+repositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool, isFork : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool, isFork : Maybe Bool }) -> SelectionSet repositories Api.Object.RepositoryConnection -> FieldDecoder repositories Api.Object.User
 repositories fillInOptionals object =
     let
         filledInOptionals =
@@ -302,7 +302,7 @@ repositories fillInOptionals object =
     Object.single "repositories" optionalArgs object
 
 
-repositoriesContributedTo : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, isLocked : Maybe Bool, includeUserRepositories : Maybe Bool, contributionTypes : Maybe (List Api.Enum.RepositoryContributionType.RepositoryContributionType) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, isLocked : Maybe Bool, includeUserRepositories : Maybe Bool, contributionTypes : Maybe (List Api.Enum.RepositoryContributionType.RepositoryContributionType) }) -> Object repositoriesContributedTo Api.Object.RepositoryConnection -> FieldDecoder repositoriesContributedTo Api.Object.User
+repositoriesContributedTo : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, isLocked : Maybe Bool, includeUserRepositories : Maybe Bool, contributionTypes : Maybe (List Api.Enum.RepositoryContributionType.RepositoryContributionType) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, isLocked : Maybe Bool, includeUserRepositories : Maybe Bool, contributionTypes : Maybe (List Api.Enum.RepositoryContributionType.RepositoryContributionType) }) -> SelectionSet repositoriesContributedTo Api.Object.RepositoryConnection -> FieldDecoder repositoriesContributedTo Api.Object.User
 repositoriesContributedTo fillInOptionals object =
     let
         filledInOptionals =
@@ -315,7 +315,7 @@ repositoriesContributedTo fillInOptionals object =
     Object.single "repositoriesContributedTo" optionalArgs object
 
 
-repository : { name : String } -> Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.User
+repository : { name : String } -> SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.User
 repository requiredArgs object =
     Object.single "repository" [ Argument.string "name" requiredArgs.name ] object
 
@@ -325,7 +325,7 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-starredRepositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, ownedByViewer : Maybe Bool, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, ownedByViewer : Maybe Bool, orderBy : Maybe Value }) -> Object starredRepositories Api.Object.StarredRepositoryConnection -> FieldDecoder starredRepositories Api.Object.User
+starredRepositories : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, ownedByViewer : Maybe Bool, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, ownedByViewer : Maybe Bool, orderBy : Maybe Value }) -> SelectionSet starredRepositories Api.Object.StarredRepositoryConnection -> FieldDecoder starredRepositories Api.Object.User
 starredRepositories fillInOptionals object =
     let
         filledInOptionals =
@@ -358,7 +358,7 @@ viewerIsFollowing =
     Object.fieldDecoder "viewerIsFollowing" [] Decode.bool
 
 
-watching : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> Object watching Api.Object.RepositoryConnection -> FieldDecoder watching Api.Object.User
+watching : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> SelectionSet watching Api.Object.RepositoryConnection -> FieldDecoder watching Api.Object.User
 watching fillInOptionals object =
     let
         filledInOptionals =

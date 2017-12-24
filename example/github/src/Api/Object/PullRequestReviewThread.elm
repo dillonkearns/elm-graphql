@@ -5,16 +5,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequestReviewThread
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.PullRequestReviewThread
 selection constructor =
     Object.object constructor
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object comments Api.Object.PullRequestReviewCommentConnection -> FieldDecoder comments Api.Object.PullRequestReviewThread
+comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.PullRequestReviewCommentConnection -> FieldDecoder comments Api.Object.PullRequestReviewThread
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -32,11 +32,11 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestReviewThread
+pullRequest : SelectionSet pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestReviewThread
 pullRequest object =
     Object.single "pullRequest" [] object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequestReviewThread
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequestReviewThread
 repository object =
     Object.single "repository" [] object

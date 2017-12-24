@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.MarketplaceListing
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.MarketplaceListing
 selection constructor =
     Object.object constructor
 
@@ -152,7 +152,7 @@ pricingUrl =
     Object.fieldDecoder "pricingUrl" [] Decode.string
 
 
-primaryCategory : Object primaryCategory Api.Object.MarketplaceCategory -> FieldDecoder primaryCategory Api.Object.MarketplaceListing
+primaryCategory : SelectionSet primaryCategory Api.Object.MarketplaceCategory -> FieldDecoder primaryCategory Api.Object.MarketplaceListing
 primaryCategory object =
     Object.single "primaryCategory" [] object
 
@@ -172,7 +172,7 @@ screenshotUrls =
     Object.fieldDecoder "screenshotUrls" [] (Decode.string |> Decode.list)
 
 
-secondaryCategory : Object secondaryCategory Api.Object.MarketplaceCategory -> FieldDecoder secondaryCategory Api.Object.MarketplaceListing
+secondaryCategory : SelectionSet secondaryCategory Api.Object.MarketplaceCategory -> FieldDecoder secondaryCategory Api.Object.MarketplaceListing
 secondaryCategory object =
     Object.single "secondaryCategory" [] object
 

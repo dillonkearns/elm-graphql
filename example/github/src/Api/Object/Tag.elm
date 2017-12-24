@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Tag
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Tag
 selection constructor =
     Object.object constructor
 
@@ -49,16 +49,16 @@ oid =
     Object.fieldDecoder "oid" [] Decode.string
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Tag
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.Tag
 repository object =
     Object.single "repository" [] object
 
 
-tagger : Object tagger Api.Object.GitActor -> FieldDecoder tagger Api.Object.Tag
+tagger : SelectionSet tagger Api.Object.GitActor -> FieldDecoder tagger Api.Object.Tag
 tagger object =
     Object.single "tagger" [] object
 
 
-target : Object target Api.Object.GitObject -> FieldDecoder target Api.Object.Tag
+target : SelectionSet target Api.Object.GitObject -> FieldDecoder target Api.Object.Tag
 target object =
     Object.single "target" [] object

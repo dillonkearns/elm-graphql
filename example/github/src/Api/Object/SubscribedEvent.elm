@@ -5,16 +5,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.SubscribedEvent
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.SubscribedEvent
 selection constructor =
     Object.object constructor
 
 
-actor : Object actor Api.Object.Actor -> FieldDecoder actor Api.Object.SubscribedEvent
+actor : SelectionSet actor Api.Object.Actor -> FieldDecoder actor Api.Object.SubscribedEvent
 actor object =
     Object.single "actor" [] object
 
@@ -29,6 +29,6 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-subscribable : Object subscribable Api.Object.Subscribable -> FieldDecoder subscribable Api.Object.SubscribedEvent
+subscribable : SelectionSet subscribable Api.Object.Subscribable -> FieldDecoder subscribable Api.Object.SubscribedEvent
 subscribable object =
     Object.single "subscribable" [] object

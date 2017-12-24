@@ -5,11 +5,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.DeploymentStatusEdge
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.DeploymentStatusEdge
 selection constructor =
     Object.object constructor
 
@@ -19,6 +19,6 @@ cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : Object node Api.Object.DeploymentStatus -> FieldDecoder node Api.Object.DeploymentStatusEdge
+node : SelectionSet node Api.Object.DeploymentStatus -> FieldDecoder node Api.Object.DeploymentStatusEdge
 node object =
     Object.single "node" [] object

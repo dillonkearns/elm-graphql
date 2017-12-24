@@ -11,11 +11,11 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequest
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.PullRequest
 selection constructor =
     Object.object constructor
 
@@ -25,7 +25,7 @@ additions =
     Object.fieldDecoder "additions" [] Decode.int
 
 
-assignees : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object assignees Api.Object.UserConnection -> FieldDecoder assignees Api.Object.PullRequest
+assignees : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet assignees Api.Object.UserConnection -> FieldDecoder assignees Api.Object.PullRequest
 assignees fillInOptionals object =
     let
         filledInOptionals =
@@ -38,7 +38,7 @@ assignees fillInOptionals object =
     Object.single "assignees" optionalArgs object
 
 
-author : Object author Api.Object.Actor -> FieldDecoder author Api.Object.PullRequest
+author : SelectionSet author Api.Object.Actor -> FieldDecoder author Api.Object.PullRequest
 author object =
     Object.single "author" [] object
 
@@ -48,7 +48,7 @@ authorAssociation =
     Object.fieldDecoder "authorAssociation" [] Api.Enum.CommentAuthorAssociation.decoder
 
 
-baseRef : Object baseRef Api.Object.Ref -> FieldDecoder baseRef Api.Object.PullRequest
+baseRef : SelectionSet baseRef Api.Object.Ref -> FieldDecoder baseRef Api.Object.PullRequest
 baseRef object =
     Object.single "baseRef" [] object
 
@@ -88,7 +88,7 @@ closedAt =
     Object.fieldDecoder "closedAt" [] Decode.string
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object comments Api.Object.IssueCommentConnection -> FieldDecoder comments Api.Object.PullRequest
+comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.IssueCommentConnection -> FieldDecoder comments Api.Object.PullRequest
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -101,7 +101,7 @@ comments fillInOptionals object =
     Object.single "comments" optionalArgs object
 
 
-commits : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object commits Api.Object.PullRequestCommitConnection -> FieldDecoder commits Api.Object.PullRequest
+commits : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet commits Api.Object.PullRequestCommitConnection -> FieldDecoder commits Api.Object.PullRequest
 commits fillInOptionals object =
     let
         filledInOptionals =
@@ -134,12 +134,12 @@ deletions =
     Object.fieldDecoder "deletions" [] Decode.int
 
 
-editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequest
+editor : SelectionSet editor Api.Object.Actor -> FieldDecoder editor Api.Object.PullRequest
 editor object =
     Object.single "editor" [] object
 
 
-headRef : Object headRef Api.Object.Ref -> FieldDecoder headRef Api.Object.PullRequest
+headRef : SelectionSet headRef Api.Object.Ref -> FieldDecoder headRef Api.Object.PullRequest
 headRef object =
     Object.single "headRef" [] object
 
@@ -149,12 +149,12 @@ headRefName =
     Object.fieldDecoder "headRefName" [] Decode.string
 
 
-headRepository : Object headRepository Api.Object.Repository -> FieldDecoder headRepository Api.Object.PullRequest
+headRepository : SelectionSet headRepository Api.Object.Repository -> FieldDecoder headRepository Api.Object.PullRequest
 headRepository object =
     Object.single "headRepository" [] object
 
 
-headRepositoryOwner : Object headRepositoryOwner Api.Object.RepositoryOwner -> FieldDecoder headRepositoryOwner Api.Object.PullRequest
+headRepositoryOwner : SelectionSet headRepositoryOwner Api.Object.RepositoryOwner -> FieldDecoder headRepositoryOwner Api.Object.PullRequest
 headRepositoryOwner object =
     Object.single "headRepositoryOwner" [] object
 
@@ -169,7 +169,7 @@ isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
-labels : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.PullRequest
+labels : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.PullRequest
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -192,7 +192,7 @@ locked =
     Object.fieldDecoder "locked" [] Decode.bool
 
 
-mergeCommit : Object mergeCommit Api.Object.Commit -> FieldDecoder mergeCommit Api.Object.PullRequest
+mergeCommit : SelectionSet mergeCommit Api.Object.Commit -> FieldDecoder mergeCommit Api.Object.PullRequest
 mergeCommit object =
     Object.single "mergeCommit" [] object
 
@@ -212,7 +212,7 @@ mergedAt =
     Object.fieldDecoder "mergedAt" [] Decode.string
 
 
-milestone : Object milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.PullRequest
+milestone : SelectionSet milestone Api.Object.Milestone -> FieldDecoder milestone Api.Object.PullRequest
 milestone object =
     Object.single "milestone" [] object
 
@@ -222,7 +222,7 @@ number =
     Object.fieldDecoder "number" [] Decode.int
 
 
-participants : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.PullRequest
+participants : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.PullRequest
 participants fillInOptionals object =
     let
         filledInOptionals =
@@ -235,12 +235,12 @@ participants fillInOptionals object =
     Object.single "participants" optionalArgs object
 
 
-potentialMergeCommit : Object potentialMergeCommit Api.Object.Commit -> FieldDecoder potentialMergeCommit Api.Object.PullRequest
+potentialMergeCommit : SelectionSet potentialMergeCommit Api.Object.Commit -> FieldDecoder potentialMergeCommit Api.Object.PullRequest
 potentialMergeCommit object =
     Object.single "potentialMergeCommit" [] object
 
 
-projectCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object projectCards Api.Object.ProjectCardConnection -> FieldDecoder projectCards Api.Object.PullRequest
+projectCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet projectCards Api.Object.ProjectCardConnection -> FieldDecoder projectCards Api.Object.PullRequest
 projectCards fillInOptionals object =
     let
         filledInOptionals =
@@ -258,12 +258,12 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-reactionGroups : Object reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.PullRequest
+reactionGroups : SelectionSet reactionGroups Api.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Api.Object.PullRequest
 reactionGroups object =
     Object.listOf "reactionGroups" [] object
 
 
-reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> Object reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.PullRequest
+reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> SelectionSet reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.PullRequest
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -276,7 +276,7 @@ reactions fillInOptionals object =
     Object.single "reactions" optionalArgs object
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequest
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.PullRequest
 repository object =
     Object.single "repository" [] object
 
@@ -296,7 +296,7 @@ revertUrl =
     Object.fieldDecoder "revertUrl" [] Decode.string
 
 
-reviewRequests : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object reviewRequests Api.Object.ReviewRequestConnection -> FieldDecoder reviewRequests Api.Object.PullRequest
+reviewRequests : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet reviewRequests Api.Object.ReviewRequestConnection -> FieldDecoder reviewRequests Api.Object.PullRequest
 reviewRequests fillInOptionals object =
     let
         filledInOptionals =
@@ -309,7 +309,7 @@ reviewRequests fillInOptionals object =
     Object.single "reviewRequests" optionalArgs object
 
 
-reviews : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestReviewState.PullRequestReviewState), author : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestReviewState.PullRequestReviewState), author : Maybe String }) -> Object reviews Api.Object.PullRequestReviewConnection -> FieldDecoder reviews Api.Object.PullRequest
+reviews : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestReviewState.PullRequestReviewState), author : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestReviewState.PullRequestReviewState), author : Maybe String }) -> SelectionSet reviews Api.Object.PullRequestReviewConnection -> FieldDecoder reviews Api.Object.PullRequest
 reviews fillInOptionals object =
     let
         filledInOptionals =
@@ -327,12 +327,12 @@ state =
     Object.fieldDecoder "state" [] Api.Enum.PullRequestState.decoder
 
 
-suggestedReviewers : Object suggestedReviewers Api.Object.SuggestedReviewer -> FieldDecoder (List suggestedReviewers) Api.Object.PullRequest
+suggestedReviewers : SelectionSet suggestedReviewers Api.Object.SuggestedReviewer -> FieldDecoder (List suggestedReviewers) Api.Object.PullRequest
 suggestedReviewers object =
     Object.listOf "suggestedReviewers" [] object
 
 
-timeline : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String }) -> Object timeline Api.Object.PullRequestTimelineConnection -> FieldDecoder timeline Api.Object.PullRequest
+timeline : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String }) -> SelectionSet timeline Api.Object.PullRequestTimelineConnection -> FieldDecoder timeline Api.Object.PullRequest
 timeline fillInOptionals object =
     let
         filledInOptionals =

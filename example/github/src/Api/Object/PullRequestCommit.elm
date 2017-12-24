@@ -5,16 +5,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.PullRequestCommit
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.PullRequestCommit
 selection constructor =
     Object.object constructor
 
 
-commit : Object commit Api.Object.Commit -> FieldDecoder commit Api.Object.PullRequestCommit
+commit : SelectionSet commit Api.Object.Commit -> FieldDecoder commit Api.Object.PullRequestCommit
 commit object =
     Object.single "commit" [] object
 
@@ -24,7 +24,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-pullRequest : Object pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestCommit
+pullRequest : SelectionSet pullRequest Api.Object.PullRequest -> FieldDecoder pullRequest Api.Object.PullRequestCommit
 pullRequest object =
     Object.single "pullRequest" [] object
 

@@ -5,16 +5,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Gist
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Gist
 selection constructor =
     Object.object constructor
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object comments Api.Object.GistCommentConnection -> FieldDecoder comments Api.Object.Gist
+comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.GistCommentConnection -> FieldDecoder comments Api.Object.Gist
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -52,7 +52,7 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-owner : Object owner Api.Object.RepositoryOwner -> FieldDecoder owner Api.Object.Gist
+owner : SelectionSet owner Api.Object.RepositoryOwner -> FieldDecoder owner Api.Object.Gist
 owner object =
     Object.single "owner" [] object
 
@@ -62,7 +62,7 @@ pushedAt =
     Object.fieldDecoder "pushedAt" [] Decode.string
 
 
-stargazers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> Object stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Gist
+stargazers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> SelectionSet stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Gist
 stargazers fillInOptionals object =
     let
         filledInOptionals =

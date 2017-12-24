@@ -1,9 +1,9 @@
-module Graphqelm.Object exposing (Object(Object), with)
+module Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet), with)
 
 {-| The auto-generated code from the `graphqelm` CLI will provide `selection`
-functions for Objects in your GraphQL schema. These functions take a `Graphqelm.Object`
-which describes which fields to retrieve on that Object.
-@docs Object, with
+functions for Objects in your GraphQL schema. These functions take a `Graphqelm.SelectionSet`
+which describes which fields to retrieve on that SelectionSet.
+@docs SelectionSet, with
 -}
 
 import Graphqelm.Field as Field exposing (Field)
@@ -11,17 +11,17 @@ import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecode
 import Json.Decode as Decode exposing (Decoder)
 
 
-{-| Object type
+{-| SelectionSet type
 -}
-type Object decodesTo typeLock
-    = Object (List Field) (Decoder decodesTo)
+type SelectionSet decodesTo typeLock
+    = SelectionSet (List Field) (Decoder decodesTo)
 
 
 {-| Used to pick out fields on an object.
 
     import Api.Enum.Episode as Episode exposing (Episode)
     import Api.Object
-    import Graphqelm.Object exposing (Object, with)
+    import Graphqelm.SelectionSet exposing (SelectionSet, with)
 
     type alias Hero =
         { name : String
@@ -29,7 +29,7 @@ type Object decodesTo typeLock
         , appearsIn : List Episode
         }
 
-    hero : Object Hero Api.Object.Character
+    hero : SelectionSet Hero Api.Object.Character
     hero =
         Character.selection Hero
             |> with Character.name
@@ -37,19 +37,19 @@ type Object decodesTo typeLock
             |> with Character.appearsIn
 
 -}
-with : FieldDecoder a typeLock -> Object (a -> b) typeLock -> Object b typeLock
-with (FieldDecoder field fieldDecoder) (Object objectFields objectDecoder) =
+with : FieldDecoder a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
+with (FieldDecoder field fieldDecoder) (SelectionSet objectFields objectDecoder) =
     case field of
         Field.QueryField nestedField ->
             let
                 n =
                     List.length objectFields
             in
-            Object (objectFields ++ [ nestedField ])
+            SelectionSet (objectFields ++ [ nestedField ])
                 (Decode.map2 (|>)
                     (Decode.field ("result" ++ toString (n + 1)) fieldDecoder)
                     objectDecoder
                 )
 
         _ ->
-            Object (field :: objectFields) (Decode.map2 (|>) fieldDecoder objectDecoder)
+            SelectionSet (field :: objectFields) (Decode.map2 (|>) fieldDecoder objectDecoder)

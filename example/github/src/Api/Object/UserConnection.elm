@@ -5,26 +5,26 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.UserConnection
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.UserConnection
 selection constructor =
     Object.object constructor
 
 
-edges : Object edges Api.Object.UserEdge -> FieldDecoder (List edges) Api.Object.UserConnection
+edges : SelectionSet edges Api.Object.UserEdge -> FieldDecoder (List edges) Api.Object.UserConnection
 edges object =
     Object.listOf "edges" [] object
 
 
-nodes : Object nodes Api.Object.User -> FieldDecoder (List nodes) Api.Object.UserConnection
+nodes : SelectionSet nodes Api.Object.User -> FieldDecoder (List nodes) Api.Object.UserConnection
 nodes object =
     Object.listOf "nodes" [] object
 
 
-pageInfo : Object pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.UserConnection
+pageInfo : SelectionSet pageInfo Api.Object.PageInfo -> FieldDecoder pageInfo Api.Object.UserConnection
 pageInfo object =
     Object.single "pageInfo" [] object
 

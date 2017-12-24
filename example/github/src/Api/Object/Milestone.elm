@@ -7,16 +7,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Milestone
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Milestone
 selection constructor =
     Object.object constructor
 
 
-creator : Object creator Api.Object.Actor -> FieldDecoder creator Api.Object.Milestone
+creator : SelectionSet creator Api.Object.Actor -> FieldDecoder creator Api.Object.Milestone
 creator object =
     Object.single "creator" [] object
 
@@ -36,7 +36,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> Object issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Milestone
+issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> SelectionSet issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Milestone
 issues fillInOptionals object =
     let
         filledInOptionals =
@@ -54,7 +54,7 @@ number =
     Object.fieldDecoder "number" [] Decode.int
 
 
-repository : Object repository Api.Object.Repository -> FieldDecoder repository Api.Object.Milestone
+repository : SelectionSet repository Api.Object.Repository -> FieldDecoder repository Api.Object.Milestone
 repository object =
     Object.single "repository" [] object
 

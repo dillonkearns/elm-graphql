@@ -9,11 +9,11 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Builder.RootObject as RootObject
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
 
-selection : (a -> constructor) -> Object (a -> constructor) RootQuery
+selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
 selection constructor =
     RootObject.object constructor
 
@@ -28,7 +28,7 @@ me =
     RootObject.fieldDecoder "me" [] Decode.string
 
 
-menuItems : ({ contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder } -> { contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder }) -> Object menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
+menuItems : ({ contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder } -> { contains : Maybe String, order : Maybe Api.Enum.SortOrder.SortOrder }) -> SelectionSet menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =

@@ -6,16 +6,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.Comment
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Comment
 selection constructor =
     Object.object constructor
 
 
-author : Object author Api.Object.Actor -> FieldDecoder author Api.Object.Comment
+author : SelectionSet author Api.Object.Actor -> FieldDecoder author Api.Object.Comment
 author object =
     Object.single "author" [] object
 
@@ -45,7 +45,7 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-editor : Object editor Api.Object.Actor -> FieldDecoder editor Api.Object.Comment
+editor : SelectionSet editor Api.Object.Actor -> FieldDecoder editor Api.Object.Comment
 editor object =
     Object.single "editor" [] object
 

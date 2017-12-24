@@ -5,16 +5,16 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Object exposing (Object)
+import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> Object (a -> constructor) Api.Object.ProjectColumn
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.ProjectColumn
 selection constructor =
     Object.object constructor
 
 
-cards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> Object cards Api.Object.ProjectCardConnection -> FieldDecoder cards Api.Object.ProjectColumn
+cards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet cards Api.Object.ProjectCardConnection -> FieldDecoder cards Api.Object.ProjectColumn
 cards fillInOptionals object =
     let
         filledInOptionals =
@@ -47,7 +47,7 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-project : Object project Api.Object.Project -> FieldDecoder project Api.Object.ProjectColumn
+project : SelectionSet project Api.Object.Project -> FieldDecoder project Api.Object.ProjectColumn
 project object =
     Object.single "project" [] object
 
