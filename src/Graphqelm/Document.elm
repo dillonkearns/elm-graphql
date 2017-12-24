@@ -34,4 +34,4 @@ serialize operationName queries =
     interpolate """{0} {
 {1}
 }"""
-        [ operationName, Field.serializeChildren -1 queries ]
+        [ operationName, Field.serializeChildren 0 queries ]

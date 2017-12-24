@@ -3,7 +3,7 @@ module DocumentTests exposing (all)
 import Expect
 import Graphqelm
 import Graphqelm.Document
-import Graphqelm.Field exposing (Field(Leaf))
+import Graphqelm.Field exposing (Field(Composite, Leaf))
 import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
 import Json.Decode as Decode
 import Test exposing (Test, describe, test)
@@ -42,5 +42,21 @@ all =
                     |> Expect.equal """query {
   viewer
   viewer2: viewer
+}"""
+        , test "duplicate nested fields" <|
+            \() ->
+                document
+                    [ Composite "topLevel"
+                        []
+                        [ Leaf "viewer" []
+                        , Leaf "viewer" []
+                        ]
+                    ]
+                    |> Graphqelm.Document.serializeQuery
+                    |> Expect.equal """query {
+  topLevel {
+    viewer
+    viewer2: viewer
+  }
 }"""
         ]
