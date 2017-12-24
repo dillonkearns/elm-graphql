@@ -1,12 +1,9 @@
 module Graphqelm.Document.Indent exposing (generate)
 
 
-generate : Bool -> Int -> String
-generate skip indentationLevel =
-    if skip then
-        ""
-    else
-        spaces (indentationLevel * 2)
+generate : Int -> String
+generate indentationLevel =
+    spaces (indentationLevel * 2)
 
 
 spaces : Int -> String

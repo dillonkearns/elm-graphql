@@ -28,22 +28,22 @@ alias fieldIndex fields field =
         Just (fieldName ++ toString (List.length indices + 1))
 
 
-serialize : Bool -> Int -> Field -> String
-serialize skipIndentationLevel indentationLevel field =
+serialize : Int -> Field -> String
+serialize indentationLevel field =
     case field of
         Composite fieldName args children ->
-            (Indent.generate skipIndentationLevel indentationLevel
+            (Indent.generate indentationLevel
                 ++ fieldName
                 ++ Argument.serialize args
                 ++ " {\n"
                 ++ serializeChildren indentationLevel children
             )
                 ++ "\n"
-                ++ Indent.generate False indentationLevel
+                ++ Indent.generate indentationLevel
                 ++ "}"
 
         Leaf fieldName args ->
-            Indent.generate skipIndentationLevel indentationLevel ++ fieldName
+            Indent.generate indentationLevel ++ fieldName
 
 
 serializeChildren : Int -> List Field -> String
@@ -54,9 +54,9 @@ serializeChildren indentationLevel children =
                 case alias index children selection of
                     Just aliasName ->
                         interpolate "  {0}: {1}"
-                            [ aliasName, serialize False (indentationLevel + 1) selection ]
+                            [ aliasName, serialize (indentationLevel + 1) selection ]
 
                     Nothing ->
-                        "  " ++ serialize False (indentationLevel + 1) selection
+                        "  " ++ serialize (indentationLevel + 1) selection
             )
         |> String.join "\n"
