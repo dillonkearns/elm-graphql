@@ -39,25 +39,12 @@ type SelectionSet decodesTo typeLock
 -}
 with : FieldDecoder a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
 with (FieldDecoder field fieldDecoder) (SelectionSet objectFields objectDecoder) =
-    case field of
-        Field.QueryField nestedField ->
-            let
-                n =
-                    List.length objectFields
-            in
-            SelectionSet (objectFields ++ [ nestedField ])
-                (Decode.map2 (|>)
-                    (Decode.field ("result" ++ toString (n + 1)) fieldDecoder)
-                    objectDecoder
-                )
-
-        _ ->
-            let
-                n =
-                    List.length objectFields
-            in
-            SelectionSet (objectFields ++ [ field ])
-                (Decode.map2 (|>)
-                    (Decode.field ("result" ++ toString (n + 1)) fieldDecoder)
-                    objectDecoder
-                )
+    let
+        n =
+            List.length objectFields
+    in
+    SelectionSet (objectFields ++ [ field ])
+        (Decode.map2 (|>)
+            (Decode.field ("result" ++ toString (n + 1)) fieldDecoder)
+            objectDecoder
+        )
