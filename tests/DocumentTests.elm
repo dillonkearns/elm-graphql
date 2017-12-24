@@ -24,4 +24,12 @@ all =
                     |> Expect.equal """query {
   result1: viewer
 }"""
+        , test "multiple top-level" <|
+            \() ->
+                document [ Leaf "viewer" [], Leaf "labels" [] ]
+                    |> Graphqelm.Document.serializeQuery
+                    |> Expect.equal """query {
+  result1: viewer
+  result2: labels
+}"""
         ]
