@@ -7,7 +7,7 @@ import Api.Object.Repository as Repository
 import Api.Object.StargazerConnection
 import Api.Query as Query
 import Graphqelm exposing (RootQuery)
-import Graphqelm.DocumentSerializer as DocumentSerializer
+import Graphqelm.Document as Document
 import Graphqelm.Http
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
@@ -97,7 +97,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (DocumentSerializer.serializeQuery query) ]
+            , pre [] [ text (Document.serializeQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]

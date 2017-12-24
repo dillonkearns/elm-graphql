@@ -10,8 +10,8 @@ The builder syntax is inspired by Luke Westby's
 -}
 
 import Graphqelm exposing (RootMutation, RootQuery)
+import Graphqelm.Document as Document
 import Graphqelm.Document.LowLevel as Document
-import Graphqelm.DocumentSerializer as DocumentSerializer
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
 import Json.Encode
@@ -51,14 +51,14 @@ buildRequest url queryDocument query =
 -}
 buildQueryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
 buildQueryRequest url query =
-    buildRequest url (DocumentSerializer.serializeQuery query) query
+    buildRequest url (Document.serializeQuery query) query
 
 
 {-| TODO
 -}
 buildMutationRequest : String -> SelectionSet decodesTo RootMutation -> Request decodesTo
 buildMutationRequest url query =
-    buildRequest url (DocumentSerializer.serializeMutation query) query
+    buildRequest url (Document.serializeMutation query) query
 
 
 {-| Send the `Graphqelm.Request`

@@ -1,7 +1,7 @@
-module Graphqelm.DocumentSerializer.Field exposing (serialize)
+module Graphqelm.Document.Field exposing (serialize)
 
-import Graphqelm.DocumentSerializer.Argument as Argument
-import Graphqelm.DocumentSerializer.Indent as Indent
+import Graphqelm.Document.Argument as Argument
+import Graphqelm.Document.Indent as Indent
 import Graphqelm.Field exposing (Field(Composite, Leaf, QueryField))
 
 

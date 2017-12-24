@@ -1,4 +1,4 @@
-module Graphqelm.DocumentSerializer.Argument exposing (serialize)
+module Graphqelm.Document.Argument exposing (serialize)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument(Argument))
 import Graphqelm.Encode as Encode

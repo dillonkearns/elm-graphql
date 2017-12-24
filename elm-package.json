@@ -11,7 +11,7 @@
         "Graphqelm.Http",
         "Graphqelm.SelectionSet",
         "Graphqelm.Encode",
-        "Graphqelm.DocumentSerializer",
+        "Graphqelm.Document",
         "Graphqelm.FieldDecoder",
         "Graphqelm.Builder.Argument",
         "Graphqelm.Builder.Object",

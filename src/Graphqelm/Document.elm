@@ -1,4 +1,4 @@
-module Graphqelm.DocumentSerializer exposing (serializeMutation, serializeQuery)
+module Graphqelm.Document exposing (serializeMutation, serializeQuery)
 
 {-| You'll usually want to use `Graphqelm.Http` to perform your queries directly.
 This package provides low-level functions for generating GraphQL documents that
@@ -9,7 +9,7 @@ are helpful for debugging and demo purposes.
 -}
 
 import Graphqelm exposing (RootMutation, RootQuery)
-import Graphqelm.DocumentSerializer.Field as Field
+import Graphqelm.Document.Field as Field
 import Graphqelm.Field exposing (Field)
 import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
 import Interpolate exposing (interpolate)
