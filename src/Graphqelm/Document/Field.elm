@@ -39,12 +39,6 @@ serialize skipIndentationLevel indentationLevel field =
                 ++ (children
                         |> List.indexedMap
                             (\index selection ->
-                                -- interpolate "  {0}: {1}"
-                                --     [ "result" ++ toString (index + 1)
-                                --     , serialize False
-                                --         (indentationLevel + 1)
-                                --         selection
-                                --     ]
                                 case alias index children selection of
                                     Just aliasName ->
                                         interpolate "  {0}: {1}"
