@@ -1,4 +1,4 @@
-module Graphqelm.Document.Field exposing (serialize)
+module Graphqelm.Document.Field exposing (serialize, serializeChildren)
 
 import Graphqelm.Document.Argument as Argument
 import Graphqelm.Document.Indent as Indent
