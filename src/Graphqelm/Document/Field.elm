@@ -36,19 +36,7 @@ serialize skipIndentationLevel indentationLevel field =
                 ++ fieldName
                 ++ Argument.serialize args
                 ++ " {\n"
-                ++ (children
-                        |> List.indexedMap
-                            (\index selection ->
-                                case alias index children selection of
-                                    Just aliasName ->
-                                        interpolate "  {0}: {1}"
-                                            [ aliasName, serialize False (indentationLevel + 1) selection ]
-
-                                    Nothing ->
-                                        "  " ++ serialize False (indentationLevel + 1) selection
-                            )
-                        |> String.join "\n"
-                   )
+                ++ serializeChildren indentationLevel children
             )
                 ++ "\n"
                 ++ Indent.generate False indentationLevel
@@ -56,3 +44,19 @@ serialize skipIndentationLevel indentationLevel field =
 
         Leaf fieldName args ->
             Indent.generate skipIndentationLevel indentationLevel ++ fieldName
+
+
+serializeChildren : Int -> List Field -> String
+serializeChildren indentationLevel children =
+    children
+        |> List.indexedMap
+            (\index selection ->
+                case alias index children selection of
+                    Just aliasName ->
+                        interpolate "  {0}: {1}"
+                            [ aliasName, serialize False (indentationLevel + 1) selection ]
+
+                    Nothing ->
+                        "  " ++ serialize False (indentationLevel + 1) selection
+            )
+        |> String.join "\n"
