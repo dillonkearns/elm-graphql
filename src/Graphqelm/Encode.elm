@@ -56,7 +56,7 @@ string string =
         |> Json
 
 
-{-| Encode an enum
+{-| Encode an enum. The first argument is the toString function for that enum.
 -}
 enum : (a -> String) -> a -> Value
 enum enumToString enum =
