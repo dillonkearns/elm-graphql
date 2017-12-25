@@ -22,7 +22,6 @@ type Value
     = EnumValue String
     | Json Json.Encode.Value
     | List (List Value)
-    | String String
     | Integer Int
 
 
@@ -45,7 +44,8 @@ bool bool =
 -}
 string : String -> Value
 string string =
-    String string
+    Json.Encode.string string
+        |> Json
 
 
 {-| Encode an enum
@@ -79,9 +79,6 @@ serialize value =
             "["
                 ++ (List.map serialize values |> String.join ", ")
                 ++ "]"
-
-        String value ->
-            toString value
 
         Integer value ->
             toString value
