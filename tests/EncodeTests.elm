@@ -18,4 +18,9 @@ all =
                 Graphqelm.Encode.bool False
                     |> Graphqelm.Encode.serialize
                     |> Expect.equal "false"
+        , test "int" <|
+            \() ->
+                Graphqelm.Encode.int 123
+                    |> Graphqelm.Encode.serialize
+                    |> Expect.equal "123"
         ]

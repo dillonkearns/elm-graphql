@@ -22,14 +22,14 @@ type Value
     = EnumValue String
     | Json Json.Encode.Value
     | List (List Value)
-    | Integer Int
 
 
 {-| Encode an int
 -}
 int : Int -> Value
 int value =
-    Integer value
+    Json.Encode.int value
+        |> Json
 
 
 {-| Encode a bool
@@ -79,6 +79,3 @@ serialize value =
             "["
                 ++ (List.map serialize values |> String.join ", ")
                 ++ "]"
-
-        Integer value ->
-            toString value
