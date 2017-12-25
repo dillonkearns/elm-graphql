@@ -29,7 +29,6 @@ import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Api.Object
 import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
-import Graphqelm.Builder.RootObject as RootObject
 import Graphqelm exposing (RootMutation)
 import Json.Decode as Decode exposing (Decoder)
 import Graphqelm.Encode as Encode exposing (Value)
@@ -38,6 +37,6 @@ import Graphqelm.Encode as Encode exposing (Value)
 
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
-    RootObject.object constructor
+    Object.object constructor
 """
         [ moduleName |> String.join ".", Imports.importsString moduleName fields ]

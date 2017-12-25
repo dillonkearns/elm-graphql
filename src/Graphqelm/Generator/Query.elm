@@ -30,7 +30,6 @@ import Api.Object
 import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm exposing (RootQuery)
-import Graphqelm.Builder.RootObject as RootObject
 import Json.Decode as Decode exposing (Decoder)
 import Graphqelm.Encode as Encode exposing (Value)
 {1}
@@ -38,6 +37,6 @@ import Graphqelm.Encode as Encode exposing (Value)
 
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
 selection constructor =
-    RootObject.object constructor
+    Object.object constructor
 """
         [ moduleName |> String.join ".", Imports.importsString moduleName fields ]

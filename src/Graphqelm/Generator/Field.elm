@@ -165,16 +165,7 @@ objectThing objectOrQuery fieldName typeRef refName =
     , decoderAnnotation = fieldName
     , decoder = "object"
     , fieldName = fieldName
-    , thingNamespace =
-        case objectOrQuery of
-            GenerateObject ->
-                "Object"
-
-            GenerateQuery ->
-                "RootObject"
-
-            GenerateMutation ->
-                "RootObject"
+    , thingNamespace = "Object"
     , otherThing = ".single"
     , letBindings = []
     }
@@ -227,16 +218,7 @@ initScalarField objectOrQuery fieldName typeRef =
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
     , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
     , fieldName = fieldName
-    , thingNamespace =
-        case objectOrQuery of
-            GenerateObject ->
-                "Object"
-
-            GenerateQuery ->
-                "RootObject"
-
-            GenerateMutation ->
-                "RootObject"
+    , thingNamespace = "Object"
     , otherThing = ".fieldDecoder"
     , letBindings = []
     }

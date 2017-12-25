@@ -17,7 +17,7 @@ all =
                     |> Expect.equal
                         """me : FieldDecoder String RootQuery
 me =
-      RootObject.fieldDecoder "me" [] (Decode.string)
+      Object.fieldDecoder "me" [] (Decode.string)
 """
         , test "converts for object" <|
             \() ->
@@ -38,7 +38,7 @@ me =
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid RootQuery
 droid object =
-      RootObject.single "droid" [] (object)
+      Object.single "droid" [] (object)
 """
         , test "simple object with no args for object" <|
             \() ->
@@ -74,7 +74,7 @@ droid object =
                     |> Expect.equal
                         """human : { id : String } -> SelectionSet human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
-      RootObject.single "human" [ Argument.string "id" requiredArgs.id ] (object)
+      Object.single "human" [ Argument.string "id" requiredArgs.id ] (object)
 """
         , test "with optional args" <|
             \() ->
@@ -94,7 +94,7 @@ menuItems fillInOptionals object =
             [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
 |> List.filterMap identity
     in
-      RootObject.listOf "menuItems" optionalArgs (object)
+      Object.listOf "menuItems" optionalArgs (object)
 """
         , test "normalizes reserved names" <|
             \() ->
