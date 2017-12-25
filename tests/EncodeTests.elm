@@ -34,4 +34,19 @@ all =
                     []
                     |> Graphqelm.Encode.serialize
                     |> Expect.equal """{}"""
+        , test "non-empty object" <|
+            \() ->
+                Graphqelm.Encode.object
+                    [ "number" => Graphqelm.Encode.int 47
+                    , "boolean" => Graphqelm.Encode.bool True
+                    , "enum" => Graphqelm.Encode.enum toString EMPIRE
+                    ]
+                    |> Graphqelm.Encode.serialize
+                    |> Expect.equal """{number: 47, boolean: true, enum: EMPIRE}"""
         ]
+
+
+type Episode
+    = EMPIRE
+    | JEDI
+    | NEWHOPE

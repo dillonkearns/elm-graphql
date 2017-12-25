@@ -89,4 +89,9 @@ serialize value =
                 ++ "]"
 
         Object keyValuePairs ->
-            "{}"
+            "{"
+                ++ (List.map (\( key, value ) -> key ++ ": " ++ serialize value)
+                        keyValuePairs
+                        |> String.join ", "
+                   )
+                ++ "}"
