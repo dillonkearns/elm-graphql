@@ -21,12 +21,6 @@ type alias FieldGenerator =
     }
 
 
-type ObjectOrQuery
-    = GenerateObject
-    | GenerateQuery
-    | GenerateMutation
-
-
 type alias AnnotatedArg =
     { annotation : String
     , arg : String
