@@ -17,7 +17,6 @@ type alias FieldGenerator =
     , fieldArgs : List String
     , fieldName : String
     , otherThing : String
-    , thingNamespace : String
     , letBindings : List LetBinding
     }
 
@@ -90,7 +89,7 @@ common returnAnnotation field =
         , field.decoder
         , something
         , argsListString field
-        , field.thingNamespace ++ field.otherThing
+        , "Object" ++ field.otherThing
         , Normalize.fieldName field.fieldName
         , Let.generate field.letBindings
         ]
@@ -165,7 +164,6 @@ objectThing objectOrQuery fieldName typeRef refName =
     , decoderAnnotation = fieldName
     , decoder = "object"
     , fieldName = fieldName
-    , thingNamespace = "Object"
     , otherThing = ".single"
     , letBindings = []
     }
@@ -218,7 +216,6 @@ initScalarField objectOrQuery fieldName typeRef =
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
     , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
     , fieldName = fieldName
-    , thingNamespace = "Object"
     , otherThing = ".fieldDecoder"
     , letBindings = []
     }
