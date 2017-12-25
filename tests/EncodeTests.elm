@@ -13,4 +13,9 @@ all =
                 Graphqelm.Encode.string "hello"
                     |> Graphqelm.Encode.serialize
                     |> Expect.equal "\"hello\""
+        , test "boolean" <|
+            \() ->
+                Graphqelm.Encode.bool False
+                    |> Graphqelm.Encode.serialize
+                    |> Expect.equal "false"
         ]

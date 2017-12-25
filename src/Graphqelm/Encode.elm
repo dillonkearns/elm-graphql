@@ -23,7 +23,6 @@ type Value
     | Json Json.Encode.Value
     | List (List Value)
     | String String
-    | Boolean Bool
     | Integer Int
 
 
@@ -38,7 +37,8 @@ int value =
 -}
 bool : Bool -> Value
 bool bool =
-    Boolean bool
+    Json.Encode.bool bool
+        |> Json
 
 
 {-| Encode a string
@@ -81,9 +81,6 @@ serialize value =
                 ++ "]"
 
         String value ->
-            toString value
-
-        Boolean value ->
             toString value
 
         Integer value ->
