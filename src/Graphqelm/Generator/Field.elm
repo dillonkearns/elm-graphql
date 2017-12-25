@@ -35,19 +35,19 @@ type alias AnnotatedArg =
 
 forQuery : Type.Field -> String
 forQuery field =
-    toFieldGenerator GenerateQuery field
+    toFieldGenerator field
         |> forQuery_
 
 
 forMutation : Type.Field -> String
 forMutation field =
-    toFieldGenerator GenerateMutation field
+    toFieldGenerator field
         |> forMutation_
 
 
 forObject : String -> Type.Field -> String
 forObject thisObjectName field =
-    toFieldGenerator GenerateObject field
+    toFieldGenerator field
         |> forObject_ thisObjectName
 
 
@@ -116,9 +116,9 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
-toFieldGenerator : ObjectOrQuery -> Type.Field -> FieldGenerator
-toFieldGenerator objectOrQuery field =
-    init objectOrQuery field.name field.typeRef
+toFieldGenerator : Type.Field -> FieldGenerator
+toFieldGenerator field =
+    init field.name field.typeRef
         |> addRequiredArgs field.args
         |> addOptionalArgs field.args
 
@@ -151,8 +151,8 @@ addOptionalArgs args fieldGenerator =
             fieldGenerator
 
 
-objectThing : ObjectOrQuery -> String -> TypeReference -> String -> FieldGenerator
-objectThing objectOrQuery fieldName typeRef refName =
+objectThing : String -> TypeReference -> String -> FieldGenerator
+objectThing fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
@@ -178,11 +178,11 @@ prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
 
 
-objectListThing : ObjectOrQuery -> String -> TypeReference -> String -> FieldGenerator
-objectListThing objectOrQuery fieldName typeRef refName =
+objectListThing : String -> TypeReference -> String -> FieldGenerator
+objectListThing fieldName typeRef refName =
     let
         commonObjectThing =
-            objectThing objectOrQuery fieldName typeRef refName
+            objectThing fieldName typeRef refName
     in
     { commonObjectThing
         | decoderAnnotation = interpolate "(List {0})" [ fieldName ]
@@ -190,27 +190,27 @@ objectListThing objectOrQuery fieldName typeRef refName =
     }
 
 
-init : ObjectOrQuery -> String -> TypeReference -> FieldGenerator
-init objectOrQuery fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init : String -> TypeReference -> FieldGenerator
+init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
         Type.ObjectRef refName ->
-            objectThing objectOrQuery fieldName typeRef refName
+            objectThing fieldName typeRef refName
 
         Type.InterfaceRef refName ->
-            objectThing objectOrQuery fieldName typeRef refName
+            objectThing fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.InterfaceRef refName) isInterfaceNullable) ->
-            objectListThing objectOrQuery fieldName typeRef refName
+            objectListThing fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.ObjectRef refName) isObjectNullable) ->
-            objectListThing objectOrQuery fieldName typeRef refName
+            objectListThing fieldName typeRef refName
 
         _ ->
-            initScalarField objectOrQuery fieldName typeRef
+            initScalarField fieldName typeRef
 
 
-initScalarField : ObjectOrQuery -> String -> TypeReference -> FieldGenerator
-initScalarField objectOrQuery fieldName typeRef =
+initScalarField : String -> TypeReference -> FieldGenerator
+initScalarField fieldName typeRef =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
