@@ -5,6 +5,10 @@ import * as http from 'http'
 import * as minimist from 'minimist'
 import * as request from 'request'
 
+const usage = `Usage:
+  graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
+  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`
+
 const args = minimist(process.argv.slice(2))
 const headerArg: undefined | string | [string] = args.header
 const addHeader = (object: any, header: string) => {
@@ -21,9 +25,11 @@ if (typeof headerArg === 'string') {
     addHeader(headers, header)
   })
 }
-console.log('args', args)
-const graphqlUrl = args._[0]
-console.log('endpoint: ', graphqlUrl)
+const graphqlUrl: undefined | string = args._[0]
+if (!graphqlUrl) {
+  console.log(usage)
+  process.exit(0)
+}
 const tsDeclarationPath = args.output
 
 const onDataAvailable = (data: {}) => {
