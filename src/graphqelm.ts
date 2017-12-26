@@ -1,5 +1,5 @@
 const Elm = require('./Main.elm')
-import * as fs from 'fs'
+import * as fs from 'fs-extra'
 import { GraphQLClient } from 'graphql-request'
 import * as http from 'http'
 import * as minimist from 'minimist'
@@ -35,9 +35,8 @@ const tsDeclarationPath = args.output
 const onDataAvailable = (data: {}) => {
   let app = Elm.Main.worker({ data })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
-    try {
-      fs.mkdirSync('./src/Api')
-    } catch {}
+    fs.mkdirpSync('./src/Api/Object')
+    fs.mkdirpSync('./src/Api/Enum')
     for (let key in generatedFile) {
       let value = generatedFile[key]
       fs.writeFileSync('./src/' + key, value)
