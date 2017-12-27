@@ -20,7 +20,8 @@ import Json.Encode
 import Time exposing (Time)
 
 
-{-| TODO
+{-| An internal request as its built up. Once its built up, send the
+request with `Graphqelm.Http.send`.
 -}
 type Request decodesTo
     = Request
