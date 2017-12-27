@@ -165,6 +165,16 @@ type ReferrableType
     | InterfaceRef String
 
 
+expectString : Maybe String -> String
+expectString maybeString =
+    case maybeString of
+        Just string ->
+            string
+
+        Nothing ->
+            Debug.crash "Expected string but got Nothing"
+
+
 parseRef : RawTypeRef -> TypeReference
 parseRef (RawTypeRef rawTypeRef) =
     case rawTypeRef.kind of
@@ -206,16 +216,16 @@ parseRef (RawTypeRef rawTypeRef) =
             case rawTypeRef.ofType of
                 Just (RawTypeRef actualOfType) ->
                     case ( actualOfType.kind, actualOfType.name ) of
-                        ( TypeKind.Scalar, Just scalarName ) ->
+                        ( TypeKind.Scalar, scalarName ) ->
                             TypeReference
-                                (Scalar (scalarName |> Scalar.parse))
+                                (Scalar (scalarName |> expectString |> Scalar.parse))
                                 NonNullable
 
-                        ( TypeKind.Object, Just objectName ) ->
-                            TypeReference (ObjectRef objectName) Nullable
+                        ( TypeKind.Object, objectName ) ->
+                            TypeReference (objectName |> expectString |> ObjectRef) Nullable
 
-                        ( TypeKind.Interface, Maybe.Just interfaceName ) ->
-                            TypeReference (InterfaceRef interfaceName) Nullable
+                        ( TypeKind.Interface, interfaceName ) ->
+                            TypeReference (interfaceName |> expectString |> InterfaceRef) Nullable
 
                         ( TypeKind.List, _ ) ->
                             case actualOfType.ofType of
@@ -226,19 +236,16 @@ parseRef (RawTypeRef rawTypeRef) =
                                     Debug.crash ""
 
                         ( TypeKind.NonNull, _ ) ->
-                            Debug.crash "TODO c"
+                            Debug.crash "Can't have nested non-null types"
 
-                        ( _, Maybe.Nothing ) ->
-                            Debug.crash "TODO d"
-
-                        ( TypeKind.Ignore, Maybe.Just _ ) ->
+                        ( TypeKind.Ignore, _ ) ->
                             ignoreRef
 
-                        ( TypeKind.Enum, Maybe.Just enumName ) ->
-                            TypeReference (EnumRef enumName) NonNullable
+                        ( TypeKind.Enum, enumName ) ->
+                            TypeReference (enumName |> expectString |> EnumRef) NonNullable
 
-                        ( TypeKind.InputObject, Just inputObjectName ) ->
-                            TypeReference (InputObjectRef inputObjectName) Nullable
+                        ( TypeKind.InputObject, inputObjectName ) ->
+                            TypeReference (inputObjectName |> expectString |> InputObjectRef) Nullable
 
                 Nothing ->
                     ignoreRef
