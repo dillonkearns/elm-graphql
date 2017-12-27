@@ -82,7 +82,7 @@ toPair queryObjectName mutationObjectName ((Type.TypeDefinition name definableTy
                 Graphqelm.Generator.Query.generate { query = queryObjectName, mutation = mutationObjectName } fields
                     |> Just
             else if Just name == mutationObjectName then
-                Graphqelm.Generator.Mutation.generate fields
+                Graphqelm.Generator.Mutation.generate { query = queryObjectName, mutation = mutationObjectName } fields
                     |> Just
             else
                 Graphqelm.Generator.Object.generate { query = queryObjectName, mutation = mutationObjectName } name fields

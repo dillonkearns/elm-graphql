@@ -8244,6 +8244,12 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Imports$object = F2(
 			ctor: '::',
 			_0: 'RootQuery',
 			_1: {ctor: '[]'}
+		} : (_elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$Maybe$Just(name),
+			_p1.mutation) ? {
+			ctor: '::',
+			_0: 'RootMutation',
+			_1: {ctor: '[]'}
 		} : {
 			ctor: '::',
 			_0: 'Api',
@@ -8256,7 +8262,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Imports$object = F2(
 					_1: {ctor: '[]'}
 				}
 			}
-		};
+		});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Imports$imports = function (_p2) {
 	imports:
@@ -8842,19 +8848,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_ = F3(
 				}),
 			field);
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation_ = function (field) {
-	return A2(
-		_dillonkearns$graphqelm$Graphqelm_Generator_Field$common,
-		A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'FieldDecoder {0} RootMutation',
-			{
-				ctor: '::',
-				_0: field.decoderAnnotation,
-				_1: {ctor: '[]'}
-			}),
-		field);
-};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$generate = F3(
 	function (specialObjectNames, thisObjectName, field) {
 		return A3(
@@ -8863,13 +8856,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$generate = F3(
 			thisObjectName,
 			A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator, specialObjectNames, field));
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation = function (field) {
-	return _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation_(
-		A2(
-			_dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator,
-			{query: '', mutation: _elm_lang$core$Maybe$Nothing},
-			field));
-};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$FieldGenerator = F7(
 	function (a, b, c, d, e, f, g) {
 		return {annotatedArgs: a, decoderAnnotation: b, decoder: c, fieldArgs: d, fieldName: e, otherThing: f, letBindings: g};
@@ -8903,19 +8889,26 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$moduleName = {
 		_1: {ctor: '[]'}
 	}
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$generate = function (fields) {
-	return {
-		ctor: '_Tuple2',
-		_0: _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$moduleName,
-		_1: A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(_dillonkearns$graphqelm$Graphqelm_Generator_Mutation$prepend, _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$moduleName, fields),
-			A2(
-				_elm_lang$core$String$join,
-				'\n\n',
-				A2(_elm_lang$core$List$map, _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation, fields)))
-	};
-};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$generate = F2(
+	function (specialObjectNames, fields) {
+		return {
+			ctor: '_Tuple2',
+			_0: _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$moduleName,
+			_1: A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(_dillonkearns$graphqelm$Graphqelm_Generator_Mutation$prepend, _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$moduleName, fields),
+				A2(
+					_elm_lang$core$String$join,
+					'\n\n',
+					A2(
+						_elm_lang$core$List$map,
+						A2(
+							_dillonkearns$graphqelm$Graphqelm_Generator_Field$generate,
+							specialObjectNames,
+							A2(_elm_lang$core$Maybe$withDefault, '', specialObjectNames.mutation)),
+						fields)))
+		};
+	});
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Object$prepend = F2(
 	function (moduleName, fields) {
@@ -9052,7 +9045,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$toPair = F3(
 						_p3)) : (_elm_lang$core$Native_Utils.eq(
 					_elm_lang$core$Maybe$Just(_p4),
 					mutationObjectName) ? _elm_lang$core$Maybe$Just(
-					_dillonkearns$graphqelm$Graphqelm_Generator_Mutation$generate(_p3)) : _elm_lang$core$Maybe$Just(
+					A2(
+						_dillonkearns$graphqelm$Graphqelm_Generator_Mutation$generate,
+						{query: queryObjectName, mutation: mutationObjectName},
+						_p3)) : _elm_lang$core$Maybe$Just(
 					A3(
 						_dillonkearns$graphqelm$Graphqelm_Generator_Object$generate,
 						{query: queryObjectName, mutation: mutationObjectName},

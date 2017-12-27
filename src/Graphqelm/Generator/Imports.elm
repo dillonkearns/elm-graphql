@@ -69,5 +69,7 @@ object : SpecialObjectNames -> String -> List String
 object { query, mutation } name =
     if name == query then
         [ "RootQuery" ]
+    else if Just name == mutation then
+        [ "RootMutation" ]
     else
         [ "Api", "Object", name ]
