@@ -85,7 +85,7 @@ toPair queryObjectName mutationObjectName ((Type.TypeDefinition name definableTy
                 Graphqelm.Generator.Mutation.generate fields
                     |> Just
             else
-                Graphqelm.Generator.Object.generate name fields
+                Graphqelm.Generator.Object.generate { query = queryObjectName, mutation = mutationObjectName } name fields
                     |> Just
 
         Type.ScalarType ->
@@ -96,5 +96,5 @@ toPair queryObjectName mutationObjectName ((Type.TypeDefinition name definableTy
                 |> Just
 
         Type.InterfaceType fields ->
-            Graphqelm.Generator.Object.generate name fields
+            Graphqelm.Generator.Object.generate { query = queryObjectName, mutation = mutationObjectName } name fields
                 |> Just

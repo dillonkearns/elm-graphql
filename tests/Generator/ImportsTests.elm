@@ -34,6 +34,10 @@ all =
             \() ->
                 Imports.importsWithoutSelf [ "Api", "Object", "Foo" ] [ listOfObjectRef ]
                     |> Expect.equal []
+        , test "use RootQuery module name" <|
+            \() ->
+                Imports.object { query = "RootQueryType", mutation = Nothing } "RootQueryType"
+                    |> Expect.equal [ "RootQuery" ]
         ]
 
 

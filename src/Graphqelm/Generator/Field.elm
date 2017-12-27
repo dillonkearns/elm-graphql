@@ -40,10 +40,10 @@ forMutation field =
         |> forMutation_
 
 
-forObject : String -> Type.Field -> String
-forObject thisObjectName field =
+forObject : SpecialObjectNames -> String -> Type.Field -> String
+forObject specialObjectNames thisObjectName field =
     toFieldGenerator { query = "", mutation = Nothing } field
-        |> forObject_ thisObjectName
+        |> forObject_ specialObjectNames thisObjectName
 
 
 forQuery_ : FieldGenerator -> String
@@ -56,11 +56,11 @@ forMutation_ field =
     common (interpolate "FieldDecoder {0} RootMutation" [ field.decoderAnnotation ]) field
 
 
-forObject_ : String -> FieldGenerator -> String
-forObject_ thisObjectName field =
+forObject_ : SpecialObjectNames -> String -> FieldGenerator -> String
+forObject_ specialObjectNames thisObjectName field =
     let
         thisObjectString =
-            Imports.object thisObjectName |> String.join "."
+            Imports.object specialObjectNames thisObjectName |> String.join "."
     in
     common (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
 
@@ -147,12 +147,12 @@ addOptionalArgs args fieldGenerator =
 
 
 objectThing : SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
-objectThing { query, mutation } fieldName typeRef refName =
+objectThing specialObjectNames fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
                 "SelectionSet {0} {1}"
-                [ fieldName, Imports.object refName |> String.join "." ]
+                [ fieldName, Imports.object specialObjectNames refName |> String.join "." ]
     in
     { annotatedArgs = []
     , fieldArgs = []

@@ -2,15 +2,16 @@ module Graphqelm.Generator.Object exposing (..)
 
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
 
-generate : String -> List Type.Field -> ( List String, String )
-generate name fields =
-    ( Imports.object name
-    , prepend (Imports.object name) fields
-        ++ (List.map (FieldGenerator.forObject name) fields |> String.join "\n\n")
+generate : SpecialObjectNames -> String -> List Type.Field -> ( List String, String )
+generate specialObjectNames name fields =
+    ( Imports.object specialObjectNames name
+    , prepend (Imports.object specialObjectNames name) fields
+        ++ (List.map (FieldGenerator.forObject specialObjectNames name) fields |> String.join "\n\n")
     )
 
 

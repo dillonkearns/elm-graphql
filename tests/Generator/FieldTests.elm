@@ -22,7 +22,7 @@ me =
         , test "converts for object" <|
             \() ->
                 meField
-                    |> Field.forObject "Foo"
+                    |> Field.forObject { query = "RootQuery", mutation = Nothing } "Foo"
                     |> Expect.equal
                         """me : FieldDecoder String Api.Object.Foo
 me =
@@ -46,7 +46,7 @@ droid object =
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
                 , args = []
                 }
-                    |> Field.forObject "Foo"
+                    |> Field.forObject { query = "RootQuery", mutation = Nothing } "Foo"
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
 droid object =
@@ -58,7 +58,7 @@ droid object =
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable)) Type.NonNullable
                 , args = []
                 }
-                    |> Field.forObject "Foo"
+                    |> Field.forObject { query = "RootQuery", mutation = Nothing } "Foo"
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
 droid object =
@@ -102,7 +102,7 @@ menuItems fillInOptionals object =
                 , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                 , args = []
                 }
-                    |> Field.forObject "TreeEntry"
+                    |> Field.forObject { query = "RootQuery", mutation = Nothing } "TreeEntry"
                     |> Expect.equal
                         """type_ : FieldDecoder String Api.Object.TreeEntry
 type_ =

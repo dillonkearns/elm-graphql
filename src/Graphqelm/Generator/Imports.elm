@@ -1,6 +1,7 @@
 module Graphqelm.Generator.Imports exposing (..)
 
 import Graphqelm.Generator.Enum
+import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 
 
@@ -64,6 +65,9 @@ imports (Type.TypeReference referrableType isNullable) =
             Nothing
 
 
-object : String -> List String
-object name =
-    [ "Api", "Object", name ]
+object : SpecialObjectNames -> String -> List String
+object { query, mutation } name =
+    if name == query then
+        [ "RootQuery" ]
+    else
+        [ "Api", "Object", name ]
