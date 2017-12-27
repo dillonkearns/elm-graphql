@@ -15,7 +15,8 @@
         "Graphqelm.FieldDecoder",
         "Graphqelm.Builder.Argument",
         "Graphqelm.Builder.Object",
-        "Graphqelm.OptionalArgument"
+        "Graphqelm.OptionalArgument",
+        "Graphqelm.Http.GraphqlError"
     ],
     "dependencies": {
         "elm-community/json-extra": "2.6.0 <= v < 3.0.0",
