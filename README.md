@@ -10,11 +10,14 @@ See an [example in action on Ellie](https://rebrand.ly/graphqelm).
 
 **Warning** This project is currently in alpha and may see rapid change.
 
-See end-to-end example code in the `examples/` folder.
+See end-to-end example code in the
+[`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
+folder.
 
 ## Roadmap
 
 The following are planned but not yet supported:
+
 * GraphQL Unions (GraphQL Enums are already fully supported)
 * Select from concerete types in interface query
 * Type-safe Input Objects

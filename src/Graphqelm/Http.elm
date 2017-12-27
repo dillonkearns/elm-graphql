@@ -1,6 +1,8 @@
 module Graphqelm.Http exposing (Error, Request, buildMutationRequest, buildQueryRequest, send, withHeader, withTimeout)
 
-{-| Send requests to your GraphQL endpoint. See the `examples/` folder for an end-to-end example.
+{-| Send requests to your GraphQL endpoint. See the
+[`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
+folder for some end-to-end examples.
 The builder syntax is inspired by Luke Westby's
 [elm-http-builder package](http://package.elm-lang.org/packages/lukewestby/elm-http-builder/latest).
 
