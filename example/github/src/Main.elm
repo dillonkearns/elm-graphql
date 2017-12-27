@@ -12,6 +12,7 @@ import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
+import PrintAny
 import RemoteData exposing (RemoteData)
 
 
@@ -102,7 +103,7 @@ view model =
             ]
         , div []
             [ h1 [] [ text "Response" ]
-            , Html.text (toString model)
+            , PrintAny.view model
             ]
         ]
 
