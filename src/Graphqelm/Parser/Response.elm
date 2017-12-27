@@ -10,9 +10,10 @@ type alias Error =
     }
 
 
-errorDecoder : Decoder Error
+errorDecoder : Decoder (List Error)
 errorDecoder =
-    Decode.succeed
-        { message = "You must provide a `first` or `last` value to properly paginate the `releases` connection."
-        , details = Dict.empty
-        }
+    Decode.map2 Error
+        (Decode.field "message" Decode.string)
+        (Decode.succeed Dict.empty)
+        |> Decode.list
+        |> Decode.field "errors"

@@ -16,8 +16,9 @@ all =
                     |> Json.Decode.decodeString Graphqelm.Parser.Response.errorDecoder
                     |> Expect.equal
                         (Ok
-                            { message = "You must provide a `first` or `last` value to properly paginate the `releases` connection."
-                            , details = Dict.empty
-                            }
+                            [ { message = "You must provide a `first` or `last` value to properly paginate the `releases` connection."
+                              , details = Dict.empty
+                              }
+                            ]
                         )
         ]
