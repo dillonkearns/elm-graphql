@@ -12,7 +12,7 @@ import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
-import RemoteData exposing (WebData)
+import RemoteData exposing (RemoteData)
 
 
 type alias Response =
@@ -83,9 +83,7 @@ makeRequest : Cmd Msg
 makeRequest =
     query
         |> Graphqelm.Http.buildQueryRequest "https://graphqelm.herokuapp.com/api"
-        |> Graphqelm.Http.toRequest
-        |> RemoteData.sendRequest
-        |> Cmd.map GotResponse
+        |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
@@ -93,7 +91,7 @@ type Msg
 
 
 type alias Model =
-    WebData Response
+    RemoteData Graphqelm.Http.Error Response
 
 
 init : ( Model, Cmd Msg )
