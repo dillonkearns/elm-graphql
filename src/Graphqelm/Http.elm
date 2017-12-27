@@ -35,8 +35,6 @@ type Request decodesTo
         }
 
 
-{-| TODO
--}
 buildRequest : String -> String -> SelectionSet decodesTo typeLock -> Request decodesTo
 buildRequest url queryDocument query =
     { method = "POST"
@@ -50,21 +48,24 @@ buildRequest url queryDocument query =
         |> Request
 
 
-{-| TODO
+{-| Initialize a basic request from a Query. You can add on options with `withHeader`,
+`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
 -}
 buildQueryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
 buildQueryRequest url query =
     buildRequest url (Document.serializeQuery query) query
 
 
-{-| TODO
+{-| Initialize a basic request from a Mutation. You can add on options with `withHeader`,
+`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
 -}
 buildMutationRequest : String -> SelectionSet decodesTo RootMutation -> Request decodesTo
 buildMutationRequest url query =
     buildRequest url (Document.serializeMutation query) query
 
 
-{-| TODO
+{-| Represents the two types of errors you can get, an Http error or a GraphQL error.
+See the `Graphqelm.Http.GraphqlError` module docs for more details.
 -}
 type Error
     = GraphqlError (List GraphqlError.GraphqlError)
