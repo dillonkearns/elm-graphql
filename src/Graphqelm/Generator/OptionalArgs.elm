@@ -42,7 +42,7 @@ generate allArgs =
                     [ "filledInOptionals" => ("fillInOptionals " ++ emptyRecord optionalArgs)
                     , "optionalArgs"
                         => (argValues optionalArgs
-                                ++ "\n|> List.filterMap identity"
+                                ++ "\n                |> List.filterMap identity"
                            )
                     ]
                 }

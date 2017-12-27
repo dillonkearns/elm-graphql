@@ -39,7 +39,7 @@ all =
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
                                 , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
-|> List.filterMap identity"""
+                |> List.filterMap identity"""
                                 ]
                             }
                         )
@@ -62,7 +62,7 @@ all =
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { id = Nothing, contains = Nothing }"
                                 , "optionalArgs" => """[ Argument.optional "id" filledInOptionals.id (Encode.string), Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
-|> List.filterMap identity"""
+                |> List.filterMap identity"""
                                 ]
                             }
                         )
@@ -82,7 +82,7 @@ all =
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { first = Nothing }"
                                 , "optionalArgs" => """[ Argument.optional "first" filledInOptionals.first (Encode.int) ]
-|> List.filterMap identity"""
+                |> List.filterMap identity"""
                                 ]
                             }
                         )
@@ -102,7 +102,7 @@ all =
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { episode = Nothing }"
                                 , "optionalArgs" => """[ Argument.optional "episode" filledInOptionals.episode ((Encode.enum toString)) ]
-|> List.filterMap identity"""
+                |> List.filterMap identity"""
                                 ]
                             }
                         )

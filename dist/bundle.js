@@ -8481,7 +8481,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$generate = function
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValues(_p10),
-								'\n|> List.filterMap identity')),
+								'\n                |> List.filterMap identity')),
 						_1: {ctor: '[]'}
 					}
 				}
