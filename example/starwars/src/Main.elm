@@ -9,6 +9,7 @@ import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
@@ -26,7 +27,7 @@ query =
     Query.selection Response
         |> with (Query.human { id = "1004" } human)
         |> with (Query.human { id = "1001" } human)
-        |> with (Query.hero (\optionals -> { optionals | episode = Just Episode.EMPIRE }) hero)
+        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
 
 
 type alias Hero =

@@ -5,6 +5,7 @@ module Graphqelm.Builder.Argument exposing (Argument(Argument), enum, int, optio
 -}
 
 import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument)
 
 
 {-| Argument type.
@@ -15,10 +16,19 @@ type Argument
 
 {-| Used for passing optional arguments in generated code.
 -}
-optional : String -> Maybe a -> (a -> Value) -> Maybe Argument
+optional : String -> OptionalArgument a -> (a -> Value) -> Maybe Argument
 optional fieldName maybeValue toValue =
-    maybeValue
-        |> Maybe.map (\value -> Argument fieldName (toValue value))
+    case maybeValue of
+        OptionalArgument.Present value ->
+            Argument fieldName (toValue value)
+                |> Just
+
+        OptionalArgument.Absent ->
+            Nothing
+
+        OptionalArgument.Null ->
+            Argument fieldName Encode.null
+                |> Just
 
 
 argument : String -> Value -> Argument

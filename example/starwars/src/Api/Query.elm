@@ -7,6 +7,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument)
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
@@ -21,11 +22,11 @@ droid requiredArgs object =
     Object.single "droid" [ Argument.string "id" requiredArgs.id ] object
 
 
-hero : ({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode }) -> SelectionSet hero Api.Object.Character -> FieldDecoder hero RootQuery
+hero : ({ episode : OptionalArgument Api.Enum.Episode.Episode } -> { episode : OptionalArgument Api.Enum.Episode.Episode }) -> SelectionSet hero Api.Object.Character -> FieldDecoder hero RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { episode = Nothing }
+            fillInOptionals { episode = OptionalArgument.Absent }
 
         optionalArgs =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
