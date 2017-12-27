@@ -13,7 +13,7 @@ all =
         [ test "no args" <|
             \() ->
                 []
-                    |> OptionalArgs.generate
+                    |> OptionalArgs.generate [ "Api" ]
                     |> Expect.equal Nothing
         , test "no optional args, only required" <|
             \() ->
@@ -21,7 +21,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
                 ]
-                    |> OptionalArgs.generate
+                    |> OptionalArgs.generate [ "Api" ]
                     |> Expect.equal Nothing
         , test "with an optional string arg" <|
             \() ->
@@ -29,7 +29,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate
+                    |> OptionalArgs.generate [ "Api" ]
                     |> Expect.equal
                         (Just
                             { annotatedArg =
@@ -52,7 +52,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate
+                    |> OptionalArgs.generate [ "Api" ]
                     |> Expect.equal
                         (Just
                             { annotatedArg =
@@ -72,7 +72,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.Int) Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate
+                    |> OptionalArgs.generate [ "Api" ]
                     |> Expect.equal
                         (Just
                             { annotatedArg =
@@ -92,7 +92,7 @@ all =
                   , typeRef = Type.TypeReference (Type.EnumRef "Episode") Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate
+                    |> OptionalArgs.generate [ "Api" ]
                     |> Expect.equal
                         (Just
                             { annotatedArg =

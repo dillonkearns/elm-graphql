@@ -31,14 +31,14 @@ type alias AnnotatedArg =
 generate : List String -> SpecialObjectNames -> String -> Type.Field -> String
 generate apiSubmodule specialObjectNames thisObjectName field =
     toFieldGenerator apiSubmodule specialObjectNames field
-        |> forObject_ specialObjectNames thisObjectName
+        |> forObject_ apiSubmodule specialObjectNames thisObjectName
 
 
-forObject_ : SpecialObjectNames -> String -> FieldGenerator -> String
-forObject_ specialObjectNames thisObjectName field =
+forObject_ : List String -> SpecialObjectNames -> String -> FieldGenerator -> String
+forObject_ apiSubmodule specialObjectNames thisObjectName field =
     let
         thisObjectString =
-            Imports.object specialObjectNames thisObjectName |> String.join "."
+            Imports.object apiSubmodule specialObjectNames thisObjectName |> String.join "."
     in
     common (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
 
@@ -124,13 +124,13 @@ addOptionalArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-objectThing : SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
-objectThing specialObjectNames fieldName typeRef refName =
+objectThing : List String -> SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
+objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
                 "SelectionSet {0} {1}"
-                [ fieldName, Imports.object specialObjectNames refName |> String.join "." ]
+                [ fieldName, Imports.object apiSubmodule specialObjectNames refName |> String.join "." ]
     in
     { annotatedArgs = []
     , fieldArgs = []
@@ -151,11 +151,11 @@ prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
 
 
-objectListThing : SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
-objectListThing specialObjectNames fieldName typeRef refName =
+objectListThing : List String -> SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
+objectListThing apiSubmodule specialObjectNames fieldName typeRef refName =
     let
         commonObjectThing =
-            objectThing specialObjectNames fieldName typeRef refName
+            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
     in
     { commonObjectThing
         | decoderAnnotation = interpolate "(List {0})" [ fieldName ]
@@ -167,19 +167,19 @@ init : List String -> SpecialObjectNames -> String -> TypeReference -> FieldGene
 init apiSubmodule specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
         Type.ObjectRef refName ->
-            objectThing specialObjectNames fieldName typeRef refName
+            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
 
         Type.InterfaceRef refName ->
-            objectThing specialObjectNames fieldName typeRef refName
+            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.InterfaceRef refName) isInterfaceNullable) ->
-            objectListThing specialObjectNames fieldName typeRef refName
+            objectListThing apiSubmodule specialObjectNames fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.ObjectRef refName) isObjectNullable) ->
-            objectListThing specialObjectNames fieldName typeRef refName
+            objectListThing apiSubmodule specialObjectNames fieldName typeRef refName
 
         _ ->
-            initScalarField [] fieldName typeRef
+            initScalarField apiSubmodule fieldName typeRef
 
 
 initScalarField : List String -> String -> TypeReference -> FieldGenerator
@@ -187,7 +187,7 @@ initScalarField apiSubmodule fieldName typeRef =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
-    , decoder = Graphqelm.Generator.Decoder.generateDecoder [] typeRef
+    , decoder = Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
     , fieldName = fieldName
     , otherThing = ".fieldDecoder"
     , letBindings = []

@@ -17,7 +17,7 @@ all =
         [ test "enum has no object definitions" <|
             \() ->
                 [ Type.TypeDefinition "Weather" (Type.EnumType [ "CLOUDY", "SUNNY" ]) ]
-                    |> ObjectTypes.generate
+                    |> ObjectTypes.generate [ "Api" ]
                     |> Expect.equal
                         """module Api.Object exposing (..)
 
@@ -33,7 +33,7 @@ placeholder =
                 , Type.TypeDefinition "MyInterface"
                     (Type.InterfaceType [])
                 ]
-                    |> ObjectTypes.generate
+                    |> ObjectTypes.generate [ "Api" ]
                     |> Expect.equal """module Api.Object exposing (..)
 
 

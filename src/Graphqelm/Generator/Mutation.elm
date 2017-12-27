@@ -9,15 +9,15 @@ import Interpolate exposing (interpolate)
 
 generate : List String -> SpecialObjectNames -> List Field -> ( List String, String )
 generate apiSubmodule specialObjectNames fields =
-    ( moduleName
-    , prepend apiSubmodule moduleName fields
+    ( moduleName apiSubmodule
+    , prepend apiSubmodule (moduleName apiSubmodule) fields
         ++ (List.map (FieldGenerator.generate apiSubmodule specialObjectNames (specialObjectNames.mutation |> Maybe.withDefault "")) fields |> String.join "\n\n")
     )
 
 
-moduleName : List String
-moduleName =
-    [ "Api", "Mutation" ]
+moduleName : List String -> List String
+moduleName apiSubmodule =
+    apiSubmodule ++ [ "Mutation" ]
 
 
 prepend : List String -> List String -> List Field -> String
@@ -27,7 +27,7 @@ prepend apiSubmodule moduleName fields =
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Api.Object
+import {2}.Object
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
@@ -41,4 +41,7 @@ selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
     Object.object constructor
 """
-        [ moduleName |> String.join ".", Imports.importsString apiSubmodule moduleName fields ]
+        [ moduleName |> String.join "."
+        , Imports.importsString apiSubmodule moduleName fields
+        , apiSubmodule |> String.join "."
+        ]

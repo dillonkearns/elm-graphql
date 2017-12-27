@@ -28,14 +28,15 @@ generateDecoder apiSubmodule typeRef =
                     generateDecoder apiSubmodule listTypeRef ++ " |> Decode.list"
 
                 Type.ObjectRef objectName ->
-                    "Api.Object." ++ objectName ++ ".decoder"
+                    apiSubmodule ++ [ "Object", objectName, "decoder" ] |> String.join "."
 
                 Type.InterfaceRef interfaceName ->
-                    "Api.Object." ++ interfaceName ++ ".decoder"
+                    apiSubmodule ++ [ "Object", interfaceName, "decoder" ] |> String.join "."
 
                 Type.EnumRef enumName ->
-                    Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
+                    (Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
                         ++ [ "decoder" ]
+                    )
                         |> String.join "."
 
                 Type.InputObjectRef _ ->

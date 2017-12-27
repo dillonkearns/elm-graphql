@@ -4,28 +4,31 @@ import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)
 
 
-generate : List TypeDefinition -> String
-generate typeDefinitions =
+generate : List String -> List TypeDefinition -> String
+generate apiSubmodule typeDefinitions =
     let
         typesToGenerate =
             List.filterMap nameIfDefinitionNeeded typeDefinitions
     in
     if typesToGenerate == [] then
-        """module Api.Object exposing (..)
+        interpolate
+            """module {0}.Object exposing (..)
 
 
 placeholder : String
 placeholder =
     ""
 """
+            [ apiSubmodule |> String.join "." ]
     else
         interpolate
-            """module Api.Object exposing (..)
+            """module {0}.Object exposing (..)
 
 
-{0}
+{1}
 """
-            [ typesToGenerate
+            [ apiSubmodule |> String.join "."
+            , typesToGenerate
                 |> List.map generateType
                 |> String.join "\n\n\n"
             ]

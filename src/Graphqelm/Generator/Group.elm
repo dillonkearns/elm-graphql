@@ -20,8 +20,8 @@ generateFiles : List String -> IntrospectionData -> Dict String String
 generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName } =
     let
         objectTypes =
-            ( [ "Api", "Object" ]
-            , ObjectTypes.generate
+            ( apiSubmodule ++ [ "Object" ]
+            , ObjectTypes.generate apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery queryObjectName

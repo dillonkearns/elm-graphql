@@ -9,8 +9,8 @@ import Interpolate exposing (interpolate)
 
 generate : List String -> SpecialObjectNames -> String -> List Type.Field -> ( List String, String )
 generate apiSubmodule specialObjectNames name fields =
-    ( Imports.object specialObjectNames name
-    , prepend apiSubmodule (Imports.object specialObjectNames name) fields
+    ( Imports.object apiSubmodule specialObjectNames name
+    , prepend apiSubmodule (Imports.object apiSubmodule specialObjectNames name) fields
         ++ (List.map (FieldGenerator.generate apiSubmodule specialObjectNames name) fields |> String.join "\n\n")
     )
 
@@ -24,7 +24,7 @@ import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Api.Object
+import {2}.Object
 import Json.Decode as Decode
 import Graphqelm.Encode as Encode exposing (Value)
 {1}
@@ -34,4 +34,7 @@ selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
 selection constructor =
     Object.object constructor
 """
-        [ moduleName |> String.join ".", Imports.importsString apiSubmodule moduleName fields ]
+        [ moduleName |> String.join "."
+        , Imports.importsString apiSubmodule moduleName fields
+        , apiSubmodule |> String.join "."
+        ]

@@ -12,7 +12,7 @@ generate apiSubmodule enumName enumValues =
 
 moduleNameFor : List String -> String -> List String
 moduleNameFor apiSubmodule name =
-    [ "Api", "Enum", name ]
+    apiSubmodule ++ [ "Enum", name ]
 
 
 prepend : List String -> String -> List String -> String

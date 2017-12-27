@@ -12,31 +12,31 @@ all =
     describe "group"
         [ test "scalar has no imports" <|
             \() ->
-                Imports.imports scalarRef
+                Imports.imports [ "Api" ] scalarRef
                     |> Expect.equal Nothing
         , test "list of scalars has no imports" <|
             \() ->
-                Imports.imports listOfScalarRef
+                Imports.imports [ "Api" ] listOfScalarRef
                     |> Expect.equal Nothing
         , test "object refs don't need imports" <|
             \() ->
-                Imports.imports objectRef
+                Imports.imports [ "Api" ] objectRef
                     |> Expect.equal Nothing
         , test "list of object ref don't need imports" <|
             \() ->
-                Imports.imports listOfObjectRef
+                Imports.imports [ "Api" ] listOfObjectRef
                     |> Expect.equal Nothing
         , test "enum ref needs import" <|
             \() ->
-                Imports.imports (Type.TypeReference (Type.EnumRef "Foo") Type.NonNullable)
+                Imports.imports [ "Api" ] (Type.TypeReference (Type.EnumRef "Foo") Type.NonNullable)
                     |> Expect.equal (Just [ "Api", "Enum", "Foo" ])
         , test "filters out its own module name" <|
             \() ->
-                Imports.importsWithoutSelf [ "Api", "Object", "Foo" ] [ listOfObjectRef ]
+                Imports.importsWithoutSelf [ "Api" ] [ "Api", "Object", "Foo" ] [ listOfObjectRef ]
                     |> Expect.equal []
         , test "use RootQuery module name" <|
             \() ->
-                Imports.object { query = "RootQueryType", mutation = Nothing } "RootQueryType"
+                Imports.object [ "Api" ] { query = "RootQueryType", mutation = Nothing } "RootQueryType"
                     |> Expect.equal [ "RootQuery" ]
         ]
 
