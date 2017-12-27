@@ -1,17 +1,18 @@
-module Graphqelm.Http exposing (Request, buildMutationRequest, buildQueryRequest, send, toRequest, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error, Request, buildMutationRequest, buildQueryRequest, send, toRequest, withHeader, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See the `examples/` folder for an end-to-end example.
 The builder syntax is inspired by Luke Westby's
 [elm-http-builder package](http://package.elm-lang.org/packages/lukewestby/elm-http-builder/latest).
 
 @docs buildQueryRequest, buildMutationRequest, send, toRequest, withHeader, withTimeout
-@docs Request
+@docs Request, Error
 
 -}
 
 import Graphqelm exposing (RootMutation, RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.Document.LowLevel as Document
+import Graphqelm.Parser.Response
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
 import Json.Decode
@@ -62,13 +63,40 @@ buildMutationRequest url query =
     buildRequest url (Document.serializeMutation query) query
 
 
+{-| TODO
+-}
+type Error
+    = GraphQLError (List Graphqelm.Parser.Response.Error)
+    | HttpError Http.Error
+
+
+type SuccessOrError a
+    = Success a
+    | ErrorThing (List Graphqelm.Parser.Response.Error)
+
+
+convertResult : Result Http.Error (SuccessOrError a) -> Result Error a
+convertResult httpResult =
+    case httpResult of
+        Ok successOrError ->
+            case successOrError of
+                Success value ->
+                    Ok value
+
+                ErrorThing error ->
+                    Err (GraphQLError error)
+
+        Err httpError ->
+            Err (HttpError httpError)
+
+
 {-| Send the `Graphqelm.Request`
 -}
-send : (Result Http.Error a -> msg) -> Request a -> Cmd msg
+send : (Result Error a -> msg) -> Request a -> Cmd msg
 send resultToMessage graphqelmRequest =
     graphqelmRequest
         |> toRequest
-        |> Http.send resultToMessage
+        |> Http.send (convertResult >> resultToMessage)
 
 
 {-| Convert to a `Graphqelm.Http.Request` to an `Http.Request`.
@@ -84,10 +112,18 @@ Useful for using libraries like
             |> Cmd.map GotResponse
 
 -}
-toRequest : Request decodesTo -> Http.Request decodesTo
+toRequest : Request decodesTo -> Http.Request (SuccessOrError decodesTo)
 toRequest (Request request) =
-    { request | expect = Http.expectJson request.expect }
+    { request | expect = Http.expectJson (decoderOrError request.expect) }
         |> Http.request
+
+
+decoderOrError : Json.Decode.Decoder a -> Json.Decode.Decoder (SuccessOrError a)
+decoderOrError decoder =
+    Json.Decode.oneOf
+        [ decoder |> Json.Decode.map Success
+        , Graphqelm.Parser.Response.errorDecoder |> Json.Decode.map ErrorThing
+        ]
 
 
 {-| Add a header.
