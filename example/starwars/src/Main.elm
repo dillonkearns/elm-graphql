@@ -26,7 +26,7 @@ query =
     Query.selection Response
         |> with (Query.human { id = "1004" } human)
         |> with (Query.human { id = "1001" } human)
-        |> with (Query.hero identity hero)
+        |> with (Query.hero (\optionals -> { optionals | episode = Just Episode.EMPIRE }) hero)
 
 
 type alias Hero =
