@@ -1,10 +1,10 @@
-module Graphqelm.Http exposing (Error, Request, buildMutationRequest, buildQueryRequest, send, toRequest, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error, Request, buildMutationRequest, buildQueryRequest, send, withHeader, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See the `examples/` folder for an end-to-end example.
 The builder syntax is inspired by Luke Westby's
 [elm-http-builder package](http://package.elm-lang.org/packages/lukewestby/elm-http-builder/latest).
 
-@docs buildQueryRequest, buildMutationRequest, send, toRequest, withHeader, withTimeout
+@docs buildQueryRequest, buildMutationRequest, send, withHeader, withTimeout
 @docs Request, Error
 
 -}
@@ -91,6 +91,29 @@ convertResult httpResult =
 
 
 {-| Send the `Graphqelm.Request`
+You can use it on its own, or with a library like
+[RemoteData](http://package.elm-lang.org/packages/krisajenkins/remotedata/latest/).
+
+
+## With RemoteData
+
+    import Graphqelm.Http
+    import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
+    import RemoteData exposing (RemoteData)
+
+    type Msg
+        = GotResponse RemoteData Graphqelm.Http.Error Response
+
+    makeRequest : Cmd Msg
+    makeRequest =
+        query
+            |> Graphqelm.Http.buildQueryRequest "https://graphqelm.herokuapp.com/"
+            |> Graphqelm.Http.withHeader "authorization" "Bearer abcdefgh12345678"
+            -- If you're not using remote data, it's just
+            -- |> Graphqelm.Http.send GotResponse
+            -- Otherwise, it's as below
+            |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+
 -}
 send : (Result Error a -> msg) -> Request a -> Cmd msg
 send resultToMessage graphqelmRequest =
@@ -99,19 +122,6 @@ send resultToMessage graphqelmRequest =
         |> Http.send (convertResult >> resultToMessage)
 
 
-{-| Convert to a `Graphqelm.Http.Request` to an `Http.Request`.
-Useful for using libraries like
-[RemoteData](http://package.elm-lang.org/packages/krisajenkins/remotedata/latest/).
-
-    makeRequest : Cmd Msg
-    makeRequest =
-        query
-            |> Graphqelm.Http.buildQueryRequest "http://localhost:4000/api"
-            |> Graphqelm.Http.toRequest
-            |> RemoteData.sendRequest
-            |> Cmd.map GotResponse
-
--}
 toRequest : Request decodesTo -> Http.Request (SuccessOrError decodesTo)
 toRequest (Request request) =
     { request | expect = Http.expectJson (decoderOrError request.expect) }
