@@ -1,4 +1,4 @@
-module Graphqelm.Parser.Response exposing (errorDecoder)
+module Graphqelm.Parser.Response exposing (Error, errorDecoder)
 
 import Dict exposing (Dict)
 import Json.Decode as Decode exposing (Decoder)

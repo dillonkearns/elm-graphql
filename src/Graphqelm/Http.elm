@@ -14,6 +14,7 @@ import Graphqelm.Document as Document
 import Graphqelm.Document.LowLevel as Document
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
+import Json.Decode
 import Json.Encode
 import Time exposing (Time)
 
@@ -26,7 +27,7 @@ type Request decodesTo
         , headers : List Http.Header
         , url : String
         , body : Http.Body
-        , expect : Http.Expect decodesTo
+        , expect : Json.Decode.Decoder decodesTo
         , timeout : Maybe Time
         , withCredentials : Bool
         }
@@ -40,7 +41,7 @@ buildRequest url queryDocument query =
     , headers = []
     , url = url
     , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string queryDocument ) ])
-    , expect = Http.expectJson (Document.decoder query)
+    , expect = Document.decoder query
     , timeout = Nothing
     , withCredentials = False
     }
@@ -85,7 +86,7 @@ Useful for using libraries like
 -}
 toRequest : Request decodesTo -> Http.Request decodesTo
 toRequest (Request request) =
-    request
+    { request | expect = Http.expectJson request.expect }
         |> Http.request
 
 
