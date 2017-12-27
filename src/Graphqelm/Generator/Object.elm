@@ -11,7 +11,7 @@ generate : SpecialObjectNames -> String -> List Type.Field -> ( List String, Str
 generate specialObjectNames name fields =
     ( Imports.object specialObjectNames name
     , prepend (Imports.object specialObjectNames name) fields
-        ++ (List.map (FieldGenerator.forObject specialObjectNames name) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generate specialObjectNames name) fields |> String.join "\n\n")
     )
 
 

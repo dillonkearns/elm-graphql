@@ -8868,7 +8868,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forQuery_ = function (fiel
 			}),
 		field);
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject = F3(
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$generate = F3(
 	function (specialObjectNames, thisObjectName, field) {
 		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_,
@@ -8969,7 +8969,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Object$generate = F3(
 					'\n\n',
 					A2(
 						_elm_lang$core$List$map,
-						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject, specialObjectNames, name),
+						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generate, specialObjectNames, name),
 						fields)))
 		};
 	});

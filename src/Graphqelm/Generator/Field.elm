@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Field exposing (forMutation, forObject, forQuery)
+module Graphqelm.Generator.Field exposing (forMutation, forQuery, generate)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
@@ -40,8 +40,8 @@ forMutation field =
         |> forMutation_
 
 
-forObject : SpecialObjectNames -> String -> Type.Field -> String
-forObject specialObjectNames thisObjectName field =
+generate : SpecialObjectNames -> String -> Type.Field -> String
+generate specialObjectNames thisObjectName field =
     toFieldGenerator { query = "", mutation = Nothing } field
         |> forObject_ specialObjectNames thisObjectName
 
