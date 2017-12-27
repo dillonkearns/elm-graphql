@@ -38,8 +38,6 @@ const tsDeclarationPath = args.output
 const onDataAvailable = (data: {}) => {
   let app = Elm.Main.worker({ data, baseModule })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
-    console.log('mkdirpSync', `./src/${baseModule.join('/')}/Object`)
-    console.log('mkdirpSync', `./src/${baseModule.join('/')}/Enum`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Object`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Enum`)
     for (let key in generatedFile) {
