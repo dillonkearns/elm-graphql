@@ -12,7 +12,7 @@ The builder syntax is inspired by Luke Westby's
 import Graphqelm exposing (RootMutation, RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.Document.LowLevel as Document
-import Graphqelm.Parser.Response
+import Graphqelm.Http.GraphqlError as GraphqlError
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
 import Json.Decode
@@ -66,13 +66,13 @@ buildMutationRequest url query =
 {-| TODO
 -}
 type Error
-    = GraphQLError (List Graphqelm.Parser.Response.Error)
+    = GraphqlError (List GraphqlError.GraphqlError)
     | HttpError Http.Error
 
 
 type SuccessOrError a
     = Success a
-    | ErrorThing (List Graphqelm.Parser.Response.Error)
+    | ErrorThing (List GraphqlError.GraphqlError)
 
 
 convertResult : Result Http.Error (SuccessOrError a) -> Result Error a
@@ -84,7 +84,7 @@ convertResult httpResult =
                     Ok value
 
                 ErrorThing error ->
-                    Err (GraphQLError error)
+                    Err (GraphqlError error)
 
         Err httpError ->
             Err (HttpError httpError)
@@ -122,7 +122,7 @@ decoderOrError : Json.Decode.Decoder a -> Json.Decode.Decoder (SuccessOrError a)
 decoderOrError decoder =
     Json.Decode.oneOf
         [ decoder |> Json.Decode.map Success
-        , Graphqelm.Parser.Response.errorDecoder |> Json.Decode.map ErrorThing
+        , GraphqlError.decoder |> Json.Decode.map ErrorThing
         ]
 
 

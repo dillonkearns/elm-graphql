@@ -1,8 +1,8 @@
-module ResponseTests exposing (all)
+module Http.GraphqlErrorTests exposing (all)
 
 import Dict
 import Expect
-import Graphqelm.Parser.Response
+import Graphqelm.Http.GraphqlError as GraphqlError
 import Json.Decode
 import Test exposing (Test, describe, test)
 
@@ -13,7 +13,7 @@ all =
         [ test "error with location" <|
             \() ->
                 """{"data":null,"errors":[{"message":"You must provide a `first` or `last` value to properly paginate the `releases` connection.","locations":[{"line":4,"column":5}]}]}"""
-                    |> Json.Decode.decodeString Graphqelm.Parser.Response.errorDecoder
+                    |> Json.Decode.decodeString GraphqlError.decoder
                     |> Expect.equal
                         (Ok
                             [ { message = "You must provide a `first` or `last` value to properly paginate the `releases` connection."
@@ -26,7 +26,7 @@ all =
             \() ->
                 """{"data":null,"errors":[{"message":"Something went wrong while executing your query. Please include `94FE:5EA5:458434C:62871CD:5A44024B` when reporting this issue."}]}
 """
-                    |> Json.Decode.decodeString Graphqelm.Parser.Response.errorDecoder
+                    |> Json.Decode.decodeString GraphqlError.decoder
                     |> Expect.equal
                         (Ok
                             [ { message = "Something went wrong while executing your query. Please include `94FE:5EA5:458434C:62871CD:5A44024B` when reporting this issue."
