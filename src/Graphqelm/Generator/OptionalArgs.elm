@@ -70,7 +70,7 @@ emptyRecord : List OptionalArg -> String
 emptyRecord optionalArgs =
     let
         recordEntries =
-            List.map (\{ name } -> name ++ " = Nothing") optionalArgs
+            List.map (\{ name } -> name ++ " = Absent") optionalArgs
                 |> String.join ", "
     in
     interpolate "{ {0} }" [ recordEntries ]
@@ -80,7 +80,7 @@ annotation : List OptionalArg -> String
 annotation optionalArgs =
     let
         insideRecord =
-            List.map (\{ name, typeOf } -> name ++ " : Maybe " ++ Graphqelm.Generator.Decoder.generateType (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
+            List.map (\{ name, typeOf } -> name ++ " : OptionalArgument " ++ Graphqelm.Generator.Decoder.generateType (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
                 |> String.join ", "
     in
     interpolate """({ {0} } -> { {0} })"""

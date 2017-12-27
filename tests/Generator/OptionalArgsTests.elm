@@ -33,11 +33,11 @@ all =
                     |> Expect.equal
                         (Just
                             { annotatedArg =
-                                { annotation = """({ contains : Maybe String } -> { contains : Maybe String })"""
+                                { annotation = """({ contains : OptionalArgument String } -> { contains : OptionalArgument String })"""
                                 , arg = "fillInOptionals"
                                 }
                             , letBindings =
-                                [ "filledInOptionals" => "fillInOptionals { contains = Nothing }"
+                                [ "filledInOptionals" => "fillInOptionals { contains = Absent }"
                                 , "optionalArgs" => """[ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
                 |> List.filterMap identity"""
                                 ]
@@ -56,11 +56,11 @@ all =
                     |> Expect.equal
                         (Just
                             { annotatedArg =
-                                { annotation = "({ id : Maybe String, contains : Maybe String } -> { id : Maybe String, contains : Maybe String })"
+                                { annotation = "({ id : OptionalArgument String, contains : OptionalArgument String } -> { id : OptionalArgument String, contains : OptionalArgument String })"
                                 , arg = "fillInOptionals"
                                 }
                             , letBindings =
-                                [ "filledInOptionals" => "fillInOptionals { id = Nothing, contains = Nothing }"
+                                [ "filledInOptionals" => "fillInOptionals { id = Absent, contains = Absent }"
                                 , "optionalArgs" => """[ Argument.optional "id" filledInOptionals.id (Encode.string), Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
                 |> List.filterMap identity"""
                                 ]
@@ -76,11 +76,11 @@ all =
                     |> Expect.equal
                         (Just
                             { annotatedArg =
-                                { annotation = """({ first : Maybe Int } -> { first : Maybe Int })"""
+                                { annotation = """({ first : OptionalArgument Int } -> { first : OptionalArgument Int })"""
                                 , arg = "fillInOptionals"
                                 }
                             , letBindings =
-                                [ "filledInOptionals" => "fillInOptionals { first = Nothing }"
+                                [ "filledInOptionals" => "fillInOptionals { first = Absent }"
                                 , "optionalArgs" => """[ Argument.optional "first" filledInOptionals.first (Encode.int) ]
                 |> List.filterMap identity"""
                                 ]
@@ -96,11 +96,11 @@ all =
                     |> Expect.equal
                         (Just
                             { annotatedArg =
-                                { annotation = """({ episode : Maybe Api.Enum.Episode.Episode } -> { episode : Maybe Api.Enum.Episode.Episode })"""
+                                { annotation = """({ episode : OptionalArgument Api.Enum.Episode.Episode } -> { episode : OptionalArgument Api.Enum.Episode.Episode })"""
                                 , arg = "fillInOptionals"
                                 }
                             , letBindings =
-                                [ "filledInOptionals" => "fillInOptionals { episode = Nothing }"
+                                [ "filledInOptionals" => "fillInOptionals { episode = Absent }"
                                 , "optionalArgs" => """[ Argument.optional "episode" filledInOptionals.episode ((Encode.enum toString)) ]
                 |> List.filterMap identity"""
                                 ]

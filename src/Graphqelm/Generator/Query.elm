@@ -29,6 +29,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Api.Object
 import Graphqelm.Builder.Object as Object
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm exposing (RootQuery)
 import Json.Decode as Decode exposing (Decoder)

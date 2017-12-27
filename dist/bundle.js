@@ -8400,7 +8400,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$annotation = functi
 					_p4.name,
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						' : Maybe ',
+						' : OptionalArgument ',
 						_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType(
 							A2(_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference, _p4.typeOf, _dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable))));
 			},
@@ -8422,7 +8422,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$emptyRecord = funct
 			_elm_lang$core$List$map,
 			function (_p5) {
 				var _p6 = _p5;
-				return A2(_elm_lang$core$Basics_ops['++'], _p6.name, ' = Nothing');
+				return A2(_elm_lang$core$Basics_ops['++'], _p6.name, ' = Absent');
 			},
 			optionalArgs));
 	return A2(
@@ -8869,7 +8869,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$prepend = F2(
 	function (moduleName, fields) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Api.Object\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm exposing (RootMutation)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation\nselection constructor =\n    Object.object constructor\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Api.Object\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm exposing (RootMutation)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation\nselection constructor =\n    Object.object constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
@@ -8914,7 +8914,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Object$prepend = F2(
 	function (moduleName, fields) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Api.Object\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.object constructor\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Api.Object\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.object constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
@@ -8992,7 +8992,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Query$prepend = F2(
 	function (moduleName, fields) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Api.Object\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm exposing (RootQuery)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.object constructor\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Api.Object\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm exposing (RootQuery)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.object constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),

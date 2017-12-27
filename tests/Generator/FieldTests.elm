@@ -84,11 +84,11 @@ human requiredArgs object =
                 }
                     |> Field.generate { query = "RootQuery", mutation = Nothing } "RootQuery"
                     |> Expect.equal
-                        """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> SelectionSet menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
+                        """menuItems : ({ contains : OptionalArgument String } -> { contains : OptionalArgument String }) -> SelectionSet menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { contains = Nothing }
+            fillInOptionals { contains = Absent }
 
         optionalArgs =
             [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
