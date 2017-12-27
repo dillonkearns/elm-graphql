@@ -7,11 +7,11 @@ import Graphqelm.Parser.Type as Type exposing (Field)
 import Interpolate exposing (interpolate)
 
 
-generate : SpecialObjectNames -> List Field -> ( List String, String )
-generate specialObjectNames fields =
+generate : List String -> SpecialObjectNames -> List Field -> ( List String, String )
+generate apiSubmodule specialObjectNames fields =
     ( moduleName
-    , prepend moduleName fields
-        ++ (List.map (FieldGenerator.generate specialObjectNames specialObjectNames.query) fields |> String.join "\n\n")
+    , prepend apiSubmodule moduleName fields
+        ++ (List.map (FieldGenerator.generate apiSubmodule specialObjectNames specialObjectNames.query) fields |> String.join "\n\n")
     )
 
 
@@ -20,8 +20,8 @@ moduleName =
     [ "Api", "Query" ]
 
 
-prepend : List String -> List Field -> String
-prepend moduleName fields =
+prepend : List String -> List String -> List Field -> String
+prepend apiSubmodule moduleName fields =
     interpolate
         """module {0} exposing (..)
 
@@ -41,4 +41,4 @@ selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
 selection constructor =
     Object.object constructor
 """
-        [ moduleName |> String.join ".", Imports.importsString moduleName fields ]
+        [ moduleName |> String.join ".", Imports.importsString apiSubmodule moduleName fields ]

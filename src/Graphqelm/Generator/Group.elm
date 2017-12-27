@@ -16,8 +16,8 @@ type alias IntrospectionData =
     }
 
 
-generateFiles : IntrospectionData -> Dict String String
-generateFiles { typeDefinitions, queryObjectName, mutationObjectName } =
+generateFiles : List String -> IntrospectionData -> Dict String String
+generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName } =
     let
         objectTypes =
             ( [ "Api", "Object" ]
@@ -31,7 +31,7 @@ generateFiles { typeDefinitions, queryObjectName, mutationObjectName } =
     in
     typeDefinitions
         |> excludeBuiltIns
-        |> List.filterMap (toPair queryObjectName mutationObjectName)
+        |> List.filterMap (toPair apiSubmodule queryObjectName mutationObjectName)
         |> List.append [ objectTypes ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
@@ -74,27 +74,27 @@ moduleToFileName modulePath =
         ++ ".elm"
 
 
-toPair : String -> Maybe String -> TypeDefinition -> Maybe ( List String, String )
-toPair queryObjectName mutationObjectName ((Type.TypeDefinition name definableType) as definition) =
+toPair : List String -> String -> Maybe String -> TypeDefinition -> Maybe ( List String, String )
+toPair apiSubmodule queryObjectName mutationObjectName ((Type.TypeDefinition name definableType) as definition) =
     case definableType of
         Type.ObjectType fields ->
             if name == queryObjectName then
-                Graphqelm.Generator.Query.generate { query = queryObjectName, mutation = mutationObjectName } fields
+                Graphqelm.Generator.Query.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } fields
                     |> Just
             else if Just name == mutationObjectName then
-                Graphqelm.Generator.Mutation.generate { query = queryObjectName, mutation = mutationObjectName } fields
+                Graphqelm.Generator.Mutation.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } fields
                     |> Just
             else
-                Graphqelm.Generator.Object.generate { query = queryObjectName, mutation = mutationObjectName } name fields
+                Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } name fields
                     |> Just
 
         Type.ScalarType ->
             Nothing
 
         Type.EnumType enumValues ->
-            Graphqelm.Generator.Enum.generate name enumValues
+            Graphqelm.Generator.Enum.generate apiSubmodule name enumValues
                 |> Just
 
         Type.InterfaceType fields ->
-            Graphqelm.Generator.Object.generate { query = queryObjectName, mutation = mutationObjectName } name fields
+            Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } name fields
                 |> Just

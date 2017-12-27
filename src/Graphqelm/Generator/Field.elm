@@ -28,9 +28,9 @@ type alias AnnotatedArg =
     }
 
 
-generate : SpecialObjectNames -> String -> Type.Field -> String
-generate specialObjectNames thisObjectName field =
-    toFieldGenerator specialObjectNames field
+generate : List String -> SpecialObjectNames -> String -> Type.Field -> String
+generate apiSubmodule specialObjectNames thisObjectName field =
+    toFieldGenerator apiSubmodule specialObjectNames field
         |> forObject_ specialObjectNames thisObjectName
 
 
@@ -89,11 +89,11 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
-toFieldGenerator : SpecialObjectNames -> Type.Field -> FieldGenerator
-toFieldGenerator specialObjectNames field =
-    init specialObjectNames field.name field.typeRef
+toFieldGenerator : List String -> SpecialObjectNames -> Type.Field -> FieldGenerator
+toFieldGenerator apiSubmodule specialObjectNames field =
+    init apiSubmodule specialObjectNames field.name field.typeRef
         |> addRequiredArgs field.args
-        |> addOptionalArgs field.args
+        |> addOptionalArgs apiSubmodule field.args
 
 
 addRequiredArgs : List Type.Arg -> FieldGenerator -> FieldGenerator
@@ -110,9 +110,9 @@ addRequiredArgs args fieldGenerator =
             fieldGenerator
 
 
-addOptionalArgs : List Type.Arg -> FieldGenerator -> FieldGenerator
-addOptionalArgs args fieldGenerator =
-    case Graphqelm.Generator.OptionalArgs.generate args of
+addOptionalArgs : List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
+addOptionalArgs apiSubmodule args fieldGenerator =
+    case Graphqelm.Generator.OptionalArgs.generate apiSubmodule args of
         Just { annotatedArg, letBindings } ->
             { fieldGenerator
                 | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
@@ -163,8 +163,8 @@ objectListThing specialObjectNames fieldName typeRef refName =
     }
 
 
-init : SpecialObjectNames -> String -> TypeReference -> FieldGenerator
-init specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init : List String -> SpecialObjectNames -> String -> TypeReference -> FieldGenerator
+init apiSubmodule specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
         Type.ObjectRef refName ->
             objectThing specialObjectNames fieldName typeRef refName
@@ -179,15 +179,15 @@ init specialObjectNames fieldName ((Type.TypeReference referrableType isNullable
             objectListThing specialObjectNames fieldName typeRef refName
 
         _ ->
-            initScalarField fieldName typeRef
+            initScalarField [] fieldName typeRef
 
 
-initScalarField : String -> TypeReference -> FieldGenerator
-initScalarField fieldName typeRef =
+initScalarField : List String -> String -> TypeReference -> FieldGenerator
+initScalarField apiSubmodule fieldName typeRef =
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType typeRef
-    , decoder = Graphqelm.Generator.Decoder.generateDecoder typeRef
+    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
+    , decoder = Graphqelm.Generator.Decoder.generateDecoder [] typeRef
     , fieldName = fieldName
     , otherThing = ".fieldDecoder"
     , letBindings = []

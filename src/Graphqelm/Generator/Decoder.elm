@@ -5,8 +5,8 @@ import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
-generateDecoder : TypeReference -> String
-generateDecoder typeRef =
+generateDecoder : List String -> TypeReference -> String
+generateDecoder apiSubmodule typeRef =
     case typeRef of
         Type.TypeReference referrableType isNullable ->
             case referrableType of
@@ -25,7 +25,7 @@ generateDecoder typeRef =
                             "Decode.float"
 
                 Type.List listTypeRef ->
-                    generateDecoder listTypeRef ++ " |> Decode.list"
+                    generateDecoder apiSubmodule listTypeRef ++ " |> Decode.list"
 
                 Type.ObjectRef objectName ->
                     "Api.Object." ++ objectName ++ ".decoder"
@@ -34,7 +34,7 @@ generateDecoder typeRef =
                     "Api.Object." ++ interfaceName ++ ".decoder"
 
                 Type.EnumRef enumName ->
-                    Graphqelm.Generator.Enum.moduleNameFor enumName
+                    Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
                         ++ [ "decoder" ]
                         |> String.join "."
 
@@ -77,8 +77,8 @@ generateEncoder typeRef =
                     "identity"
 
 
-generateType : TypeReference -> String
-generateType typeRef =
+generateType : List String -> TypeReference -> String
+generateType apiSubmodule typeRef =
     case typeRef of
         Type.TypeReference referrableType isNullable ->
             case referrableType of
@@ -97,7 +97,7 @@ generateType typeRef =
                             "Float"
 
                 Type.List typeRef ->
-                    "(List " ++ generateType typeRef ++ ")"
+                    "(List " ++ generateType apiSubmodule typeRef ++ ")"
 
                 Type.ObjectRef objectName ->
                     "Object." ++ objectName
@@ -106,7 +106,7 @@ generateType typeRef =
                     "Object." ++ interfaceName
 
                 Type.EnumRef enumName ->
-                    Graphqelm.Generator.Enum.moduleNameFor enumName
+                    Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
                         ++ [ enumName ]
                         |> String.join "."
 

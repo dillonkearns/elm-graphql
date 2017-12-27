@@ -16,20 +16,20 @@ getArgRefs { args } =
     List.map .typeRef args
 
 
-importsString : List String -> List Type.Field -> String
-importsString importingFrom typeRefs =
+importsString : List String -> List String -> List Type.Field -> String
+importsString apiSubmodule importingFrom typeRefs =
     typeRefs
         |> allRefs
-        |> importsWithoutSelf importingFrom
+        |> importsWithoutSelf apiSubmodule importingFrom
         |> List.map toModuleName
         |> List.map toImportString
         |> String.join "\n"
 
 
-importsWithoutSelf : List String -> List TypeReference -> List (List String)
-importsWithoutSelf importingFrom typeRefs =
+importsWithoutSelf : List String -> List String -> List TypeReference -> List (List String)
+importsWithoutSelf apiSubmodule importingFrom typeRefs =
     typeRefs
-        |> List.filterMap imports
+        |> List.filterMap (imports apiSubmodule)
         |> List.filter (\moduleName -> moduleName /= importingFrom)
 
 
@@ -43,14 +43,14 @@ toImportString moduleName =
     "import " ++ moduleName
 
 
-imports : TypeReference -> Maybe (List String)
-imports (Type.TypeReference referrableType isNullable) =
+imports : List String -> TypeReference -> Maybe (List String)
+imports apiSubmodule (Type.TypeReference referrableType isNullable) =
     case referrableType of
         Type.Scalar _ ->
             Nothing
 
         Type.List typeRef ->
-            imports typeRef
+            imports apiSubmodule typeRef
 
         Type.ObjectRef objectName ->
             Nothing
@@ -59,7 +59,7 @@ imports (Type.TypeReference referrableType isNullable) =
             Nothing
 
         Type.EnumRef enumName ->
-            Just (Graphqelm.Generator.Enum.moduleNameFor enumName)
+            Just (Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName)
 
         Type.InputObjectRef _ ->
             Nothing

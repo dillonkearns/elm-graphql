@@ -26,8 +26,8 @@ type alias OptionalArg =
     (,)
 
 
-generate : List Type.Arg -> Maybe Result
-generate allArgs =
+generate : List String -> List Type.Arg -> Maybe Result
+generate apiSubmodule allArgs =
     case List.filterMap optionalArgOrNothing allArgs of
         [] ->
             Nothing
@@ -35,7 +35,7 @@ generate allArgs =
         optionalArgs ->
             Just
                 { annotatedArg =
-                    { annotation = annotation optionalArgs
+                    { annotation = annotation apiSubmodule optionalArgs
                     , arg = "fillInOptionals"
                     }
                 , letBindings =
@@ -76,11 +76,11 @@ emptyRecord optionalArgs =
     interpolate "{ {0} }" [ recordEntries ]
 
 
-annotation : List OptionalArg -> String
-annotation optionalArgs =
+annotation : List String -> List OptionalArg -> String
+annotation apiSubmodule optionalArgs =
     let
         insideRecord =
-            List.map (\{ name, typeOf } -> name ++ " : OptionalArgument " ++ Graphqelm.Generator.Decoder.generateType (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
+            List.map (\{ name, typeOf } -> name ++ " : OptionalArgument " ++ Graphqelm.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
                 |> String.join ", "
     in
     interpolate """({ {0} } -> { {0} })"""

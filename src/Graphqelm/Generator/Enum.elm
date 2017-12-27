@@ -3,27 +3,27 @@ module Graphqelm.Generator.Enum exposing (..)
 import Interpolate exposing (interpolate)
 
 
-generate : String -> List String -> ( List String, String )
-generate enumName enumValues =
-    ( moduleNameFor enumName
-    , prepend enumName enumValues
+generate : List String -> String -> List String -> ( List String, String )
+generate apiSubmodule enumName enumValues =
+    ( moduleNameFor apiSubmodule enumName
+    , prepend apiSubmodule enumName enumValues
     )
 
 
-moduleNameFor : String -> List String
-moduleNameFor name =
+moduleNameFor : List String -> String -> List String
+moduleNameFor apiSubmodule name =
     [ "Api", "Enum", name ]
 
 
-prepend : String -> List String -> String
-prepend enumName enumValues =
+prepend : List String -> String -> List String -> String
+prepend apiSubmodule enumName enumValues =
     interpolate """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 
 
 """
-        [ moduleNameFor enumName |> String.join "." ]
+        [ moduleNameFor apiSubmodule enumName |> String.join "." ]
         ++ enumType enumName enumValues
         ++ enumDecoder enumName enumValues
 
