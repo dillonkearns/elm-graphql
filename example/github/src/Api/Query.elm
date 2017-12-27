@@ -105,6 +105,11 @@ rateLimit fillInOptionals object =
     Object.single "rateLimit" optionalArgs object
 
 
+relay : SelectionSet relay RootQuery -> FieldDecoder relay RootQuery
+relay object =
+    Object.single "relay" [] object
+
+
 repository : { owner : String, name : String } -> SelectionSet repository Api.Object.Repository -> FieldDecoder repository RootQuery
 repository requiredArgs object =
     Object.single "repository" [ Argument.string "owner" requiredArgs.owner, Argument.string "name" requiredArgs.name ] object

@@ -6,6 +6,7 @@ import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
+import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -27,21 +28,21 @@ type alias AnnotatedArg =
     }
 
 
-forQuery : Type.Field -> String
-forQuery field =
-    toFieldGenerator field
+forQuery : SpecialObjectNames -> Type.Field -> String
+forQuery specialObjectNames field =
+    toFieldGenerator specialObjectNames field
         |> forQuery_
 
 
 forMutation : Type.Field -> String
 forMutation field =
-    toFieldGenerator field
+    toFieldGenerator { query = "", mutation = Nothing } field
         |> forMutation_
 
 
 forObject : String -> Type.Field -> String
 forObject thisObjectName field =
-    toFieldGenerator field
+    toFieldGenerator { query = "", mutation = Nothing } field
         |> forObject_ thisObjectName
 
 
@@ -110,9 +111,9 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
-toFieldGenerator : Type.Field -> FieldGenerator
-toFieldGenerator field =
-    init field.name field.typeRef
+toFieldGenerator : SpecialObjectNames -> Type.Field -> FieldGenerator
+toFieldGenerator specialObjectNames field =
+    init specialObjectNames field.name field.typeRef
         |> addRequiredArgs field.args
         |> addOptionalArgs field.args
 
@@ -145,8 +146,8 @@ addOptionalArgs args fieldGenerator =
             fieldGenerator
 
 
-objectThing : String -> TypeReference -> String -> FieldGenerator
-objectThing fieldName typeRef refName =
+objectThing : SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
+objectThing { query, mutation } fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
@@ -172,11 +173,11 @@ prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
 
 
-objectListThing : String -> TypeReference -> String -> FieldGenerator
-objectListThing fieldName typeRef refName =
+objectListThing : SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
+objectListThing specialObjectNames fieldName typeRef refName =
     let
         commonObjectThing =
-            objectThing fieldName typeRef refName
+            objectThing specialObjectNames fieldName typeRef refName
     in
     { commonObjectThing
         | decoderAnnotation = interpolate "(List {0})" [ fieldName ]
@@ -184,20 +185,20 @@ objectListThing fieldName typeRef refName =
     }
 
 
-init : String -> TypeReference -> FieldGenerator
-init fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init : SpecialObjectNames -> String -> TypeReference -> FieldGenerator
+init specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case referrableType of
         Type.ObjectRef refName ->
-            objectThing fieldName typeRef refName
+            objectThing specialObjectNames fieldName typeRef refName
 
         Type.InterfaceRef refName ->
-            objectThing fieldName typeRef refName
+            objectThing specialObjectNames fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.InterfaceRef refName) isInterfaceNullable) ->
-            objectListThing fieldName typeRef refName
+            objectListThing specialObjectNames fieldName typeRef refName
 
         Type.List (Type.TypeReference (Type.ObjectRef refName) isObjectNullable) ->
-            objectListThing fieldName typeRef refName
+            objectListThing specialObjectNames fieldName typeRef refName
 
         _ ->
             initScalarField fieldName typeRef
