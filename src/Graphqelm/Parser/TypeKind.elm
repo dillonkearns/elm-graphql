@@ -45,12 +45,9 @@ decoder =
                     "INPUT_OBJECT" ->
                         Decode.succeed InputObject
 
-                    _ ->
+                    "UNION" ->
                         Decode.succeed Ignore
-             -- "UNION" ->
-             --     Decode.succeed Union
-             --
-             --
-             -- _ ->
-             --     Decode.fail ("Invalid TypeKind " ++ string)
+
+                    _ ->
+                        Decode.fail ("Invalid TypeKind" ++ string)
             )

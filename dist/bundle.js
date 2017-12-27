@@ -7698,12 +7698,29 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_TypeKind$decoder = A2(
 				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$graphqelm$Graphqelm_Parser_TypeKind$Interface);
 			case 'INPUT_OBJECT':
 				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$graphqelm$Graphqelm_Parser_TypeKind$InputObject);
-			default:
+			case 'UNION':
 				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$graphqelm$Graphqelm_Parser_TypeKind$Ignore);
+			default:
+				return _elm_lang$core$Json_Decode$fail(
+					A2(_elm_lang$core$Basics_ops['++'], 'Invalid TypeKind', string));
 		}
 	},
 	_elm_lang$core$Json_Decode$string);
 
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString = function (maybeString) {
+	var _p0 = maybeString;
+	if (_p0.ctor === 'Just') {
+		return _p0._0;
+	} else {
+		return _elm_lang$core$Native_Utils.crashCase(
+			'Graphqelm.Parser.Type',
+			{
+				start: {line: 170, column: 5},
+				end: {line: 175, column: 58}
+			},
+			_p0)('Expected string but got Nothing');
+	}
+};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$Arg = F2(
 	function (a, b) {
 		return {name: a, typeRef: b};
@@ -7798,215 +7815,186 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$ignoreRef = A2(
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$Scalar(_dillonkearns$graphqelm$Graphqelm_Parser_Scalar$String),
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p0) {
-	var _p1 = _p0;
-	var _p22 = _p1._0;
-	var _p2 = _p22.kind;
-	switch (_p2.ctor) {
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
+	var _p3 = _p2;
+	var _p23 = _p3._0;
+	var _p4 = _p23.kind;
+	switch (_p4.ctor) {
 		case 'List':
-			var _p3 = _p22.ofType;
-			if (_p3.ctor === 'Just') {
-				return A2(
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$List(
-						_dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p3._0)),
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphqelm.Parser.Type',
-					{
-						start: {line: 172, column: 13},
-						end: {line: 177, column: 73}
-					},
-					_p3)('Missing nested type for List reference');
-			}
-		case 'Scalar':
-			var _p5 = _p22.name;
+			var _p5 = _p23.ofType;
 			if (_p5.ctor === 'Just') {
 				return A2(
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Scalar(
-						_dillonkearns$graphqelm$Graphqelm_Parser_Scalar$parse(_p5._0)),
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$List(
+						_dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p5._0)),
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
 			} else {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 180, column: 13},
-						end: {line: 187, column: 82}
+						start: {line: 182, column: 13},
+						end: {line: 187, column: 73}
 					},
-					_p5)('Should not get null names for scalar references');
+					_p5)('Missing nested type for List reference');
 			}
-		case 'Interface':
-			var _p7 = _p22.name;
+		case 'Scalar':
+			var _p7 = _p23.name;
 			if (_p7.ctor === 'Just') {
 				return A2(
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceRef(_p7._0),
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Scalar(
+						_dillonkearns$graphqelm$Graphqelm_Parser_Scalar$parse(_p7._0)),
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
 			} else {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
 						start: {line: 190, column: 13},
-						end: {line: 195, column: 85}
+						end: {line: 197, column: 82}
 					},
-					_p7)('Should not get null names for interface references');
+					_p7)('Should not get null names for scalar references');
 			}
-		case 'Object':
-			var _p9 = _p22.name;
+		case 'Interface':
+			var _p9 = _p23.name;
 			if (_p9.ctor === 'Just') {
 				return A2(
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectRef(_p9._0),
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceRef(_p9._0),
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
 			} else {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 198, column: 13},
-						end: {line: 203, column: 82}
+						start: {line: 200, column: 13},
+						end: {line: 205, column: 85}
 					},
-					_p9)('Should not get null names for object references');
+					_p9)('Should not get null names for interface references');
 			}
-		case 'NonNull':
-			var _p11 = _p22.ofType;
+		case 'Object':
+			var _p11 = _p23.name;
 			if (_p11.ctor === 'Just') {
-				var _p17 = _p11._0._0;
-				var _p12 = {ctor: '_Tuple2', _0: _p17.kind, _1: _p17.name};
-				_v7_5:
-				do {
-					switch (_p12._0.ctor) {
-						case 'Scalar':
-							if (_p12._1.ctor === 'Just') {
-								return A2(
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$Scalar(
-										_dillonkearns$graphqelm$Graphqelm_Parser_Scalar$parse(_p12._1._0)),
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
-							} else {
-								break _v7_5;
-							}
-						case 'Object':
-							if (_p12._1.ctor === 'Just') {
-								return A2(
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectRef(_p12._1._0),
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
-							} else {
-								break _v7_5;
-							}
-						case 'Interface':
-							if (_p12._1.ctor === 'Just') {
-								return A2(
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceRef(_p12._1._0),
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
-							} else {
-								break _v7_5;
-							}
-						case 'List':
-							var _p13 = _p17.ofType;
-							if (_p13.ctor === 'Just') {
-								return A2(
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$List(
-										_dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p13._0)),
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
-							} else {
-								return _elm_lang$core$Native_Utils.crashCase(
-									'Graphqelm.Parser.Type',
-									{
-										start: {line: 221, column: 29},
-										end: {line: 226, column: 51}
-									},
-									_p13)('');
-							}
-						case 'NonNull':
-							return _elm_lang$core$Native_Utils.crashCase(
-								'Graphqelm.Parser.Type',
-								{
-									start: {line: 208, column: 21},
-									end: {line: 241, column: 84}
-								},
-								_p12)('TODO c');
-						case 'Ignore':
-							if (_p12._1.ctor === 'Nothing') {
-								break _v7_5;
-							} else {
-								return _dillonkearns$graphqelm$Graphqelm_Parser_Type$ignoreRef;
-							}
-						case 'Enum':
-							if (_p12._1.ctor === 'Nothing') {
-								break _v7_5;
-							} else {
-								return A2(
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumRef(_p12._1._0),
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
-							}
-						default:
-							if (_p12._1.ctor === 'Nothing') {
-								break _v7_5;
-							} else {
-								return A2(
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$InputObjectRef(_p12._1._0),
-									_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
-							}
-					}
-				} while(false);
+				return A2(
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectRef(_p11._0),
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
+			} else {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 208, column: 21},
-						end: {line: 241, column: 84}
+						start: {line: 208, column: 13},
+						end: {line: 213, column: 82}
 					},
-					_p12)('TODO d');
+					_p11)('Should not get null names for object references');
+			}
+		case 'NonNull':
+			var _p13 = _p23.ofType;
+			if (_p13.ctor === 'Just') {
+				var _p18 = _p13._0._0;
+				var _p14 = {ctor: '_Tuple2', _0: _p18.kind, _1: _p18.name};
+				switch (_p14._0.ctor) {
+					case 'Scalar':
+						return A2(
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$Scalar(
+								_dillonkearns$graphqelm$Graphqelm_Parser_Scalar$parse(
+									_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1))),
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
+					case 'Object':
+						return A2(
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectRef(
+								_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1)),
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
+					case 'Interface':
+						return A2(
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceRef(
+								_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1)),
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
+					case 'List':
+						var _p15 = _p18.ofType;
+						if (_p15.ctor === 'Just') {
+							return A2(
+								_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
+								_dillonkearns$graphqelm$Graphqelm_Parser_Type$List(
+									_dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p15._0)),
+								_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
+						} else {
+							return _elm_lang$core$Native_Utils.crashCase(
+								'Graphqelm.Parser.Type',
+								{
+									start: {line: 231, column: 29},
+									end: {line: 236, column: 51}
+								},
+								_p15)('');
+						}
+					case 'NonNull':
+						return _elm_lang$core$Native_Utils.crashCase(
+							'Graphqelm.Parser.Type',
+							{
+								start: {line: 218, column: 21},
+								end: {line: 248, column: 103}
+							},
+							_p14)('Can\'t have nested non-null types');
+					case 'Ignore':
+						return _dillonkearns$graphqelm$Graphqelm_Parser_Type$ignoreRef;
+					case 'Enum':
+						return A2(
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumRef(
+								_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1)),
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
+					default:
+						return A2(
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$InputObjectRef(
+								_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1)),
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
+				}
 			} else {
 				return _dillonkearns$graphqelm$Graphqelm_Parser_Type$ignoreRef;
 			}
 		case 'Ignore':
 			return _dillonkearns$graphqelm$Graphqelm_Parser_Type$ignoreRef;
 		case 'Enum':
-			var _p18 = _p22.name;
-			if (_p18.ctor === 'Just') {
+			var _p19 = _p23.name;
+			if (_p19.ctor === 'Just') {
 				return A2(
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumRef(_p18._0),
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumRef(_p19._0),
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
 			} else {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 250, column: 13},
-						end: {line: 255, column: 80}
+						start: {line: 257, column: 13},
+						end: {line: 262, column: 80}
 					},
-					_p18)('Should not get null names for enum references');
+					_p19)('Should not get null names for enum references');
 			}
 		default:
-			var _p20 = _p22.name;
-			if (_p20.ctor === 'Just') {
+			var _p21 = _p23.name;
+			if (_p21.ctor === 'Just') {
 				return A2(
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$InputObjectRef(_p20._0),
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$InputObjectRef(_p21._0),
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
 			} else {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 258, column: 13},
-						end: {line: 263, column: 88}
+						start: {line: 265, column: 13},
+						end: {line: 270, column: 88}
 					},
-					_p20)('Should not get null names for input object references');
+					_p21)('Should not get null names for input object references');
 			}
 	}
 };
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField = function (_p23) {
-	var _p24 = _p23;
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField = function (_p24) {
+	var _p25 = _p24;
 	return {
-		name: _p24.name,
-		typeRef: _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p24.ofType),
+		name: _p25.name,
+		typeRef: _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p25.ofType),
 		args: A2(
 			_elm_lang$core$List$map,
 			function (arg) {
@@ -8015,7 +8003,7 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField = function (_p23) {
 					typeRef: _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(arg.ofType)
 				};
 			},
-			_p24.args)
+			_p25.args)
 	};
 };
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$RawTypeRef = function (a) {
@@ -8037,7 +8025,7 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$typeRefDecoder = A4(
 			_elm_lang$core$Json_Decode$field,
 			'ofType',
 			_elm_lang$core$Json_Decode$lazy(
-				function (_p25) {
+				function (_p26) {
 					return _dillonkearns$graphqelm$Graphqelm_Parser_Type$typeRefDecoder;
 				}))));
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$argDecoder = A3(
@@ -8073,8 +8061,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$objectDecoder = A3(
 		_elm_lang$core$Json_Decode$list(
 			A2(_elm_lang$core$Json_Decode$map, _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField, _dillonkearns$graphqelm$Graphqelm_Parser_Type$fieldDecoder))));
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$decodeKind = function (kind) {
-	var _p26 = kind;
-	switch (_p26) {
+	var _p27 = kind;
+	switch (_p27) {
 		case 'OBJECT':
 			return _dillonkearns$graphqelm$Graphqelm_Parser_Type$objectDecoder;
 		case 'ENUM':
