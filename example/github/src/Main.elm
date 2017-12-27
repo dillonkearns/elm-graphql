@@ -12,7 +12,7 @@ import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
-import RemoteData exposing (WebData)
+import RemoteData exposing (RemoteData)
 
 
 type alias Response =
@@ -83,7 +83,7 @@ type Msg
 
 
 type alias Model =
-    RemoteData.RemoteData Graphqelm.Http.Error Response
+    RemoteData Graphqelm.Http.Error Response
 
 
 init : ( Model, Cmd Msg )
