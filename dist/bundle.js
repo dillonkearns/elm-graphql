@@ -1569,8 +1569,9 @@ var Elm = __webpack_require__(29);
 var fs = __webpack_require__(30);
 var graphql_request_1 = __webpack_require__(55);
 var minimist = __webpack_require__(86);
-var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
+var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 var args = minimist(process.argv.slice(2));
+var baseModuleArg = args.base;
 var headerArg = args.header;
 var addHeader = function (object, header) {
     var _a = header.split(':'), headerKey = _a[0], headerValue = _a[1];
@@ -1588,6 +1589,7 @@ else {
         addHeader(headers, header);
     });
 }
+var baseModule = baseModuleArg ? baseModuleArg.split('.') : ['Api'];
 var graphqlUrl = args._[0];
 if (!graphqlUrl) {
     console.log(usage);
@@ -1595,10 +1597,12 @@ if (!graphqlUrl) {
 }
 var tsDeclarationPath = args.output;
 var onDataAvailable = function (data) {
-    var app = Elm.Main.worker({ data: data });
+    var app = Elm.Main.worker({ data: data, baseModule: baseModule });
     app.ports.generatedFiles.subscribe(function (generatedFile) {
-        fs.mkdirpSync('./src/Api/Object');
-        fs.mkdirpSync('./src/Api/Enum');
+        console.log('mkdirpSync', "./src/" + baseModule.join('/') + "/Object");
+        console.log('mkdirpSync', "./src/" + baseModule.join('/') + "/Enum");
+        fs.mkdirpSync("./src/" + baseModule.join('/') + "/Object");
+        fs.mkdirpSync("./src/" + baseModule.join('/') + "/Enum");
         for (var key in generatedFile) {
             var value = generatedFile[key];
             fs.writeFileSync('./src/' + key, value);
@@ -9238,46 +9242,13 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$IntrospectionData = F3(
 		return {typeDefinitions: a, queryObjectName: b, mutationObjectName: c};
 	});
 
-var _dillonkearns$graphqelm$Graphqelm_Parser$decoder = A2(
-	_elm_lang$core$Json_Decode$map,
-	_dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles(
-		{
-			ctor: '::',
-			_0: 'Api',
-			_1: {ctor: '[]'}
-		}),
-	A4(
-		_elm_lang$core$Json_Decode$map3,
-		_dillonkearns$graphqelm$Graphqelm_Generator_Group$IntrospectionData,
-		A2(
-			_elm_lang$core$Json_Decode$at,
-			{
-				ctor: '::',
-				_0: '__schema',
-				_1: {
-					ctor: '::',
-					_0: 'types',
-					_1: {ctor: '[]'}
-				}
-			},
-			_elm_lang$core$Json_Decode$list(_dillonkearns$graphqelm$Graphqelm_Parser_Type$decoder)),
-		A2(
-			_elm_lang$core$Json_Decode$at,
-			{
-				ctor: '::',
-				_0: '__schema',
-				_1: {
-					ctor: '::',
-					_0: 'queryType',
-					_1: {
-						ctor: '::',
-						_0: 'name',
-						_1: {ctor: '[]'}
-					}
-				}
-			},
-			_elm_lang$core$Json_Decode$string),
-		_elm_lang$core$Json_Decode$maybe(
+var _dillonkearns$graphqelm$Graphqelm_Parser$decoder = function (baseModule) {
+	return A2(
+		_elm_lang$core$Json_Decode$map,
+		_dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles(baseModule),
+		A4(
+			_elm_lang$core$Json_Decode$map3,
+			_dillonkearns$graphqelm$Graphqelm_Generator_Group$IntrospectionData,
 			A2(
 				_elm_lang$core$Json_Decode$at,
 				{
@@ -9285,7 +9256,19 @@ var _dillonkearns$graphqelm$Graphqelm_Parser$decoder = A2(
 					_0: '__schema',
 					_1: {
 						ctor: '::',
-						_0: 'mutationType',
+						_0: 'types',
+						_1: {ctor: '[]'}
+					}
+				},
+				_elm_lang$core$Json_Decode$list(_dillonkearns$graphqelm$Graphqelm_Parser_Type$decoder)),
+			A2(
+				_elm_lang$core$Json_Decode$at,
+				{
+					ctor: '::',
+					_0: '__schema',
+					_1: {
+						ctor: '::',
+						_0: 'queryType',
 						_1: {
 							ctor: '::',
 							_0: 'name',
@@ -9293,7 +9276,25 @@ var _dillonkearns$graphqelm$Graphqelm_Parser$decoder = A2(
 						}
 					}
 				},
-				_elm_lang$core$Json_Decode$string))));
+				_elm_lang$core$Json_Decode$string),
+			_elm_lang$core$Json_Decode$maybe(
+				A2(
+					_elm_lang$core$Json_Decode$at,
+					{
+						ctor: '::',
+						_0: '__schema',
+						_1: {
+							ctor: '::',
+							_0: 'mutationType',
+							_1: {
+								ctor: '::',
+								_0: 'name',
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					_elm_lang$core$Json_Decode$string))));
+};
 
 var _elm_lang$http$Native_Http = function() {
 
@@ -10105,7 +10106,10 @@ var _dillonkearns$graphqelm$Main$generatedFiles = _elm_lang$core$Native_Platform
 		return v;
 	});
 var _dillonkearns$graphqelm$Main$init = function (flags) {
-	var _p2 = A2(_elm_lang$core$Json_Decode$decodeValue, _dillonkearns$graphqelm$Graphqelm_Parser$decoder, flags.data);
+	var _p2 = A2(
+		_elm_lang$core$Json_Decode$decodeValue,
+		_dillonkearns$graphqelm$Graphqelm_Parser$decoder(flags.baseModule),
+		flags.data);
 	if (_p2.ctor === 'Ok') {
 		return {
 			ctor: '_Tuple2',
@@ -10137,19 +10141,28 @@ var _dillonkearns$graphqelm$Main$main = _elm_lang$core$Platform$programWithFlags
 	})(
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		function (data) {
-			return _elm_lang$core$Json_Decode$succeed(
-				{data: data});
+		function (baseModule) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (data) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{baseModule: baseModule, data: data});
+				},
+				A2(_elm_lang$core$Json_Decode$field, 'data', _elm_lang$core$Json_Decode$value));
 		},
-		A2(_elm_lang$core$Json_Decode$field, 'data', _elm_lang$core$Json_Decode$value)));
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'baseModule',
+			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string))));
 var _dillonkearns$graphqelm$Main$parsingError = _elm_lang$core$Native_Platform.outgoingPort(
 	'parsingError',
 	function (v) {
 		return v;
 	});
-var _dillonkearns$graphqelm$Main$Flags = function (a) {
-	return {data: a};
-};
+var _dillonkearns$graphqelm$Main$Flags = F2(
+	function (a, b) {
+		return {data: a, baseModule: b};
+	});
 var _dillonkearns$graphqelm$Main$GotSchema = function (a) {
 	return {ctor: 'GotSchema', _0: a};
 };

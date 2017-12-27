@@ -7,9 +7,11 @@ import * as request from 'request'
 
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
+  graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
   graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`
 
 const args = minimist(process.argv.slice(2))
+const baseModuleArg: undefined | string = args.base
 const headerArg: undefined | string | [string] = args.header
 const addHeader = (object: any, header: string) => {
   const [headerKey, headerValue] = header.split(':')
@@ -25,6 +27,7 @@ if (typeof headerArg === 'string') {
     addHeader(headers, header)
   })
 }
+const baseModule = baseModuleArg ? baseModuleArg.split('.') : ['Api']
 const graphqlUrl: undefined | string = args._[0]
 if (!graphqlUrl) {
   console.log(usage)
@@ -33,10 +36,12 @@ if (!graphqlUrl) {
 const tsDeclarationPath = args.output
 
 const onDataAvailable = (data: {}) => {
-  let app = Elm.Main.worker({ data })
+  let app = Elm.Main.worker({ data, baseModule })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
-    fs.mkdirpSync('./src/Api/Object')
-    fs.mkdirpSync('./src/Api/Enum')
+    console.log('mkdirpSync', `./src/${baseModule.join('/')}/Object`)
+    console.log('mkdirpSync', `./src/${baseModule.join('/')}/Enum`)
+    fs.mkdirpSync(`./src/${baseModule.join('/')}/Object`)
+    fs.mkdirpSync(`./src/${baseModule.join('/')}/Enum`)
     for (let key in generatedFile) {
       let value = generatedFile[key]
       fs.writeFileSync('./src/' + key, value)

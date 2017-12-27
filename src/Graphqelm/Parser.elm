@@ -6,8 +6,8 @@ import Graphqelm.Parser.Type as Type
 import Json.Decode as Decode exposing (Decoder)
 
 
-decoder : Decoder (Dict String String)
-decoder =
+decoder : List String -> Decoder (Dict String String)
+decoder baseModule =
     Decode.map3 IntrospectionData
         (Type.decoder
             |> Decode.list
@@ -15,4 +15,4 @@ decoder =
         )
         (Decode.at [ "__schema", "queryType", "name" ] Decode.string)
         (Decode.maybe (Decode.at [ "__schema", "mutationType", "name" ] Decode.string))
-        |> Decode.map (Graphqelm.Generator.Group.generateFiles [ "Api" ])
+        |> Decode.map (Graphqelm.Generator.Group.generateFiles baseModule)

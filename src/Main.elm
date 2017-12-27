@@ -21,7 +21,7 @@ type alias Model =
 
 
 type alias Flags =
-    { data : Json.Decode.Value }
+    { data : Json.Decode.Value, baseModule : List String }
 
 
 type Msg
@@ -30,7 +30,7 @@ type Msg
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    case Json.Decode.decodeValue Graphqelm.Parser.decoder flags.data of
+    case Json.Decode.decodeValue (Graphqelm.Parser.decoder flags.baseModule) flags.data of
         Ok fields ->
             ( ()
             , fields
