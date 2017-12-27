@@ -11,7 +11,7 @@ generate : SpecialObjectNames -> List Field -> ( List String, String )
 generate specialObjectNames fields =
     ( moduleName
     , prepend moduleName fields
-        ++ (List.map (FieldGenerator.forQuery specialObjectNames) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generate specialObjectNames specialObjectNames.query) fields |> String.join "\n\n")
     )
 
 

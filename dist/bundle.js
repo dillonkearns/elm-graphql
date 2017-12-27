@@ -8855,29 +8855,13 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation_ = function (f
 			}),
 		field);
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forQuery_ = function (field) {
-	return A2(
-		_dillonkearns$graphqelm$Graphqelm_Generator_Field$common,
-		A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'FieldDecoder {0} RootQuery',
-			{
-				ctor: '::',
-				_0: field.decoderAnnotation,
-				_1: {ctor: '[]'}
-			}),
-		field);
-};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$generate = F3(
 	function (specialObjectNames, thisObjectName, field) {
 		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_,
 			specialObjectNames,
 			thisObjectName,
-			A2(
-				_dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator,
-				{query: '', mutation: _elm_lang$core$Maybe$Nothing},
-				field));
+			A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator, specialObjectNames, field));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation = function (field) {
 	return _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation_(
@@ -8886,11 +8870,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forMutation = function (fi
 			{query: '', mutation: _elm_lang$core$Maybe$Nothing},
 			field));
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forQuery = F2(
-	function (specialObjectNames, field) {
-		return _dillonkearns$graphqelm$Graphqelm_Generator_Field$forQuery_(
-			A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator, specialObjectNames, field));
-	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$FieldGenerator = F7(
 	function (a, b, c, d, e, f, g) {
 		return {annotatedArgs: a, decoderAnnotation: b, decoder: c, fieldArgs: d, fieldName: e, otherThing: f, letBindings: g};
@@ -9053,7 +9032,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Query$generate = F2(
 					'\n\n',
 					A2(
 						_elm_lang$core$List$map,
-						_dillonkearns$graphqelm$Graphqelm_Generator_Field$forQuery(specialObjectNames),
+						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generate, specialObjectNames, specialObjectNames.query),
 						fields)))
 		};
 	});

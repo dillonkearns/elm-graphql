@@ -34,7 +34,7 @@ me =
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
                 , args = []
                 }
-                    |> Field.forQuery { query = "", mutation = Nothing }
+                    |> Field.generate { query = "RootQuery", mutation = Nothing } "RootQuery"
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid RootQuery
 droid object =
@@ -70,7 +70,7 @@ droid object =
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args = [ { name = "id", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
                 }
-                    |> Field.forQuery { query = "", mutation = Nothing }
+                    |> Field.generate { query = "RootQuery", mutation = Nothing } "RootQuery"
                     |> Expect.equal
                         """human : { id : String } -> SelectionSet human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
@@ -82,7 +82,7 @@ human requiredArgs object =
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable)) Type.NonNullable
                 , args = [ { name = "contains", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable } ]
                 }
-                    |> Field.forQuery { query = "", mutation = Nothing }
+                    |> Field.generate { query = "RootQuery", mutation = Nothing } "RootQuery"
                     |> Expect.equal
                         """menuItems : ({ contains : Maybe String } -> { contains : Maybe String }) -> SelectionSet menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
 menuItems fillInOptionals object =

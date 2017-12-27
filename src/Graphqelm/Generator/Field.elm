@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Field exposing (forMutation, forQuery, generate)
+module Graphqelm.Generator.Field exposing (forMutation, generate)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Imports as Imports
@@ -28,12 +28,6 @@ type alias AnnotatedArg =
     }
 
 
-forQuery : SpecialObjectNames -> Type.Field -> String
-forQuery specialObjectNames field =
-    toFieldGenerator specialObjectNames field
-        |> forQuery_
-
-
 forMutation : Type.Field -> String
 forMutation field =
     toFieldGenerator { query = "", mutation = Nothing } field
@@ -42,13 +36,8 @@ forMutation field =
 
 generate : SpecialObjectNames -> String -> Type.Field -> String
 generate specialObjectNames thisObjectName field =
-    toFieldGenerator { query = "", mutation = Nothing } field
+    toFieldGenerator specialObjectNames field
         |> forObject_ specialObjectNames thisObjectName
-
-
-forQuery_ : FieldGenerator -> String
-forQuery_ field =
-    common (interpolate "FieldDecoder {0} RootQuery" [ field.decoderAnnotation ]) field
 
 
 forMutation_ : FieldGenerator -> String
