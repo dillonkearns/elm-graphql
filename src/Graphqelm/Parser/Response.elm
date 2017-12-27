@@ -6,7 +6,7 @@ import Json.Decode as Decode exposing (Decoder)
 
 type alias Error =
     { message : String
-    , locations : List Location
+    , locations : Maybe (List Location)
     , details : Dict String Decode.Value
     }
 
@@ -26,7 +26,7 @@ errorDecoder : Decoder (List Error)
 errorDecoder =
     Decode.map3 Error
         (Decode.field "message" Decode.string)
-        (Decode.field "locations" (Decode.list locationDecoder))
+        (Decode.maybe (Decode.field "locations" (Decode.list locationDecoder)))
         (Decode.dict Decode.value
             |> Decode.map (Dict.remove "message")
             |> Decode.map (Dict.remove "locations")
