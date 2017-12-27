@@ -14,6 +14,6 @@ errorDecoder : Decoder (List Error)
 errorDecoder =
     Decode.map2 Error
         (Decode.field "message" Decode.string)
-        (Decode.succeed Dict.empty)
+        (Decode.dict Decode.value |> Decode.map (Dict.remove "message"))
         |> Decode.list
         |> Decode.field "errors"
