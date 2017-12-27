@@ -1,4 +1,4 @@
-module Api.Enum.Episode exposing (..)
+module Swapi.Enum.Episode exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

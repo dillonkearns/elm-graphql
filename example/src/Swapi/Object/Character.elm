@@ -1,7 +1,5 @@
-module Api.Object.Character exposing (..)
+module Swapi.Object.Character exposing (..)
 
-import Api.Enum.Episode
-import Api.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -9,28 +7,30 @@ import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
+import Swapi.Enum.Episode
+import Swapi.Object
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Api.Object.Character
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Object.Character
 selection constructor =
     Object.object constructor
 
 
-appearsIn : FieldDecoder (List Api.Enum.Episode.Episode) Api.Object.Character
+appearsIn : FieldDecoder (List Swapi.Enum.Episode.Episode) Swapi.Object.Character
 appearsIn =
-    Object.fieldDecoder "appearsIn" [] (Api.Enum.Episode.decoder |> Decode.list)
+    Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
-friends : SelectionSet friends Api.Object.Character -> FieldDecoder (List friends) Api.Object.Character
+friends : SelectionSet friends Swapi.Object.Character -> FieldDecoder (List friends) Swapi.Object.Character
 friends object =
     Object.listOf "friends" [] object
 
 
-id : FieldDecoder String Api.Object.Character
+id : FieldDecoder String Swapi.Object.Character
 id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-name : FieldDecoder String Api.Object.Character
+name : FieldDecoder String Swapi.Object.Character
 name =
     Object.fieldDecoder "name" [] Decode.string

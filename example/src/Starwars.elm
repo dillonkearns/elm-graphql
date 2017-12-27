@@ -1,10 +1,5 @@
 module Main exposing (main)
 
-import Api.Enum.Episode as Episode exposing (Episode)
-import Api.Object
-import Api.Object.Character as Character
-import Api.Object.Human as Human
-import Api.Query as Query
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder as FieldDecoder
@@ -14,6 +9,11 @@ import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
+import Swapi.Enum.Episode as Episode exposing (Episode)
+import Swapi.Object
+import Swapi.Object.Character as Character
+import Swapi.Object.Human as Human
+import Swapi.Query as Query
 
 
 type alias Response =
@@ -39,7 +39,7 @@ type alias Hero =
     }
 
 
-hero : SelectionSet Hero Api.Object.Character
+hero : SelectionSet Hero Swapi.Object.Character
 hero =
     Character.selection Hero
         |> with Character.name
@@ -48,7 +48,7 @@ hero =
         |> with Character.appearsIn
 
 
-heroWithName : SelectionSet String Api.Object.Character
+heroWithName : SelectionSet String Swapi.Object.Character
 heroWithName =
     Character.selection identity
         |> with Character.name
@@ -60,7 +60,7 @@ type alias Human =
     }
 
 
-human : SelectionSet Human Api.Object.Human
+human : SelectionSet Human Swapi.Object.Human
 human =
     Human.selection Human
         |> with Human.name

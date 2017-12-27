@@ -1,4 +1,4 @@
-module Api.Object exposing (..)
+module Swapi.Object exposing (..)
 
 
 type Character
