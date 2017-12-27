@@ -7,6 +7,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -51,11 +52,11 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> SelectionSet issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Milestone
+issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Value, states : OptionalArgument (List Api.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Value, states : OptionalArgument (List Api.Enum.IssueState.IssueState) }) -> SelectionSet issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Milestone
 issues fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, labels = Nothing, orderBy = Nothing, states = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list) ]

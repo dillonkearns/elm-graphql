@@ -5,6 +5,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -54,11 +55,11 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] Decode.string
 
 
-releaseAssets : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, name : Maybe String }) -> SelectionSet releaseAssets Api.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Api.Object.Release
+releaseAssets : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }) -> SelectionSet releaseAssets Api.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Api.Object.Release
 releaseAssets fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, name = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]

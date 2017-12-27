@@ -10,6 +10,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -19,11 +20,11 @@ selection constructor =
     Object.object constructor
 
 
-assignees : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet assignees Api.Object.UserConnection -> FieldDecoder assignees Api.Object.Issue
+assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet assignees Api.Object.UserConnection -> FieldDecoder assignees Api.Object.Issue
 assignees fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -67,11 +68,11 @@ closedAt =
     Object.fieldDecoder "closedAt" [] Decode.string
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.IssueCommentConnection -> FieldDecoder comments Api.Object.Issue
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Api.Object.IssueCommentConnection -> FieldDecoder comments Api.Object.Issue
 comments fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -105,11 +106,11 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-labels : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Issue
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Issue
 labels fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -138,11 +139,11 @@ number =
     Object.fieldDecoder "number" [] Decode.int
 
 
-participants : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.Issue
+participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet participants Api.Object.UserConnection -> FieldDecoder participants Api.Object.Issue
 participants fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -151,11 +152,11 @@ participants fillInOptionals object =
     Object.single "participants" optionalArgs object
 
 
-projectCards : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet projectCards Api.Object.ProjectCardConnection -> FieldDecoder projectCards Api.Object.Issue
+projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet projectCards Api.Object.ProjectCardConnection -> FieldDecoder projectCards Api.Object.Issue
 projectCards fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -174,11 +175,11 @@ reactionGroups object =
     Object.listOf "reactionGroups" [] object
 
 
-reactions : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, content : Maybe Api.Enum.ReactionContent.ReactionContent, orderBy : Maybe Value }) -> SelectionSet reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.Issue
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Api.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Api.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Api.Object.ReactionConnection -> FieldDecoder reactions Api.Object.Issue
 reactions fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, content = Nothing, orderBy = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity ]
@@ -202,11 +203,11 @@ state =
     Object.fieldDecoder "state" [] Api.Enum.IssueState.decoder
 
 
-timeline : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, since : Maybe String }) -> SelectionSet timeline Api.Object.IssueTimelineConnection -> FieldDecoder timeline Api.Object.Issue
+timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String }) -> SelectionSet timeline Api.Object.IssueTimelineConnection -> FieldDecoder timeline Api.Object.Issue
 timeline fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, since = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, since = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since Encode.string ]

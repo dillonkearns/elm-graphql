@@ -5,6 +5,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -124,11 +125,11 @@ logoBackgroundColor =
     Object.fieldDecoder "logoBackgroundColor" [] Decode.string
 
 
-logoUrl : ({ size : Maybe Int } -> { size : Maybe Int }) -> FieldDecoder String Api.Object.MarketplaceListing
+logoUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Api.Object.MarketplaceListing
 logoUrl fillInOptionals =
     let
         filledInOptionals =
-            fillInOptionals { size = Nothing }
+            fillInOptionals { size = Absent }
 
         optionalArgs =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]

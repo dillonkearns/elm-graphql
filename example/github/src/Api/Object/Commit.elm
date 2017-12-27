@@ -6,6 +6,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -50,11 +51,11 @@ changedFiles =
     Object.fieldDecoder "changedFiles" [] Decode.int
 
 
-comments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.Commit
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Api.Object.CommitCommentConnection -> FieldDecoder comments Api.Object.Commit
 comments fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -93,11 +94,11 @@ deletions =
     Object.fieldDecoder "deletions" [] Decode.int
 
 
-history : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, path : Maybe String, author : Maybe Value, since : Maybe String, until : Maybe String }) -> SelectionSet history Api.Object.CommitHistoryConnection -> FieldDecoder history Api.Object.Commit
+history : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Value, since : OptionalArgument String, until : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Value, since : OptionalArgument String, until : OptionalArgument String }) -> SelectionSet history Api.Object.CommitHistoryConnection -> FieldDecoder history Api.Object.Commit
 history fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, path = Nothing, author = Nothing, since = Nothing, until = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author identity, Argument.optional "since" filledInOptionals.since Encode.string, Argument.optional "until" filledInOptionals.until Encode.string ]
@@ -141,11 +142,11 @@ oid =
     Object.fieldDecoder "oid" [] Decode.string
 
 
-parents : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet parents Api.Object.CommitConnection -> FieldDecoder parents Api.Object.Commit
+parents : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet parents Api.Object.CommitConnection -> FieldDecoder parents Api.Object.Commit
 parents fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]

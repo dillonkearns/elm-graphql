@@ -9,6 +9,7 @@ import Api.Query as Query
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.Http
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (WebData)
@@ -32,8 +33,8 @@ repo : SelectionSet Response Api.Object.Repository
 repo =
     Repository.selection Response
         |> with Repository.createdAt
-        |> with (Repository.releases (\optionals -> { optionals | first = Just 2 }) releases)
-        |> with (Repository.releases (\optionals -> { optionals | last = Just 10 }) releases)
+        |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
+        |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
         |> with (Repository.stargazers identity stargazers)
 
 

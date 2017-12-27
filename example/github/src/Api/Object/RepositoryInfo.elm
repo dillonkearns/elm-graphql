@@ -6,6 +6,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -120,11 +121,11 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-shortDescriptionHTML : ({ limit : Maybe Int } -> { limit : Maybe Int }) -> FieldDecoder String Api.Object.RepositoryInfo
+shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder String Api.Object.RepositoryInfo
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
-            fillInOptionals { limit = Nothing }
+            fillInOptionals { limit = Absent }
 
         optionalArgs =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]

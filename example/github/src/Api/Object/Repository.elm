@@ -14,6 +14,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -23,11 +24,11 @@ selection constructor =
     Object.object constructor
 
 
-assignableUsers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet assignableUsers Api.Object.UserConnection -> FieldDecoder assignableUsers Api.Object.Repository
+assignableUsers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet assignableUsers Api.Object.UserConnection -> FieldDecoder assignableUsers Api.Object.Repository
 assignableUsers fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -41,11 +42,11 @@ codeOfConduct object =
     Object.single "codeOfConduct" [] object
 
 
-collaborators : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, affiliation : Maybe Api.Enum.CollaboratorAffiliation.CollaboratorAffiliation } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, affiliation : Maybe Api.Enum.CollaboratorAffiliation.CollaboratorAffiliation }) -> SelectionSet collaborators Api.Object.RepositoryCollaboratorConnection -> FieldDecoder collaborators Api.Object.Repository
+collaborators : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, affiliation : OptionalArgument Api.Enum.CollaboratorAffiliation.CollaboratorAffiliation } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, affiliation : OptionalArgument Api.Enum.CollaboratorAffiliation.CollaboratorAffiliation }) -> SelectionSet collaborators Api.Object.RepositoryCollaboratorConnection -> FieldDecoder collaborators Api.Object.Repository
 collaborators fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, affiliation = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, affiliation = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "affiliation" filledInOptionals.affiliation (Encode.enum toString) ]
@@ -54,11 +55,11 @@ collaborators fillInOptionals object =
     Object.single "collaborators" optionalArgs object
 
 
-commitComments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet commitComments Api.Object.CommitCommentConnection -> FieldDecoder commitComments Api.Object.Repository
+commitComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet commitComments Api.Object.CommitCommentConnection -> FieldDecoder commitComments Api.Object.Repository
 commitComments fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -82,11 +83,11 @@ defaultBranchRef object =
     Object.single "defaultBranchRef" [] object
 
 
-deployKeys : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet deployKeys Api.Object.DeployKeyConnection -> FieldDecoder deployKeys Api.Object.Repository
+deployKeys : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet deployKeys Api.Object.DeployKeyConnection -> FieldDecoder deployKeys Api.Object.Repository
 deployKeys fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -95,11 +96,11 @@ deployKeys fillInOptionals object =
     Object.single "deployKeys" optionalArgs object
 
 
-deployments : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, environments : Maybe (List String) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, environments : Maybe (List String) }) -> SelectionSet deployments Api.Object.DeploymentConnection -> FieldDecoder deployments Api.Object.Repository
+deployments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, environments : OptionalArgument (List String) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, environments : OptionalArgument (List String) }) -> SelectionSet deployments Api.Object.DeploymentConnection -> FieldDecoder deployments Api.Object.Repository
 deployments fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, environments = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, environments = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "environments" filledInOptionals.environments (Encode.string |> Encode.list) ]
@@ -128,11 +129,11 @@ forkCount =
     Object.fieldDecoder "forkCount" [] Decode.int
 
 
-forks : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, privacy : Maybe Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : Maybe Value, affiliations : Maybe (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : Maybe Bool }) -> SelectionSet forks Api.Object.RepositoryConnection -> FieldDecoder forks Api.Object.Repository
+forks : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Api.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List Api.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : OptionalArgument Bool }) -> SelectionSet forks Api.Object.RepositoryConnection -> FieldDecoder forks Api.Object.Repository
 forks fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, privacy = Nothing, orderBy = Nothing, affiliations = Nothing, isLocked = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum toString |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
@@ -196,11 +197,11 @@ issueOrPullRequest requiredArgs =
     Object.fieldDecoder "issueOrPullRequest" [ Argument.string "number" requiredArgs.number ] Decode.string
 
 
-issues : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, labels : Maybe (List String), orderBy : Maybe Value, states : Maybe (List Api.Enum.IssueState.IssueState) }) -> SelectionSet issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Repository
+issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Value, states : OptionalArgument (List Api.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Value, states : OptionalArgument (List Api.Enum.IssueState.IssueState) }) -> SelectionSet issues Api.Object.IssueConnection -> FieldDecoder issues Api.Object.Repository
 issues fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, labels = Nothing, orderBy = Nothing, states = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list) ]
@@ -214,11 +215,11 @@ label requiredArgs object =
     Object.single "label" [ Argument.string "name" requiredArgs.name ] object
 
 
-labels : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Repository
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Api.Object.LabelConnection -> FieldDecoder labels Api.Object.Repository
 labels fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -227,11 +228,11 @@ labels fillInOptionals object =
     Object.single "labels" optionalArgs object
 
 
-languages : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> SelectionSet languages Api.Object.LanguageConnection -> FieldDecoder languages Api.Object.Repository
+languages : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet languages Api.Object.LanguageConnection -> FieldDecoder languages Api.Object.Repository
 languages fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
@@ -255,11 +256,11 @@ lockReason =
     Object.fieldDecoder "lockReason" [] Api.Enum.RepositoryLockReason.decoder
 
 
-mentionableUsers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet mentionableUsers Api.Object.UserConnection -> FieldDecoder mentionableUsers Api.Object.Repository
+mentionableUsers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet mentionableUsers Api.Object.UserConnection -> FieldDecoder mentionableUsers Api.Object.Repository
 mentionableUsers fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -273,11 +274,11 @@ milestone requiredArgs object =
     Object.single "milestone" [ Argument.string "number" requiredArgs.number ] object
 
 
-milestones : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet milestones Api.Object.MilestoneConnection -> FieldDecoder milestones Api.Object.Repository
+milestones : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet milestones Api.Object.MilestoneConnection -> FieldDecoder milestones Api.Object.Repository
 milestones fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -301,11 +302,11 @@ nameWithOwner =
     Object.fieldDecoder "nameWithOwner" [] Decode.string
 
 
-object : ({ oid : Maybe String, expression : Maybe String } -> { oid : Maybe String, expression : Maybe String }) -> SelectionSet object Api.Object.GitObject -> FieldDecoder object Api.Object.Repository
+object : ({ oid : OptionalArgument String, expression : OptionalArgument String } -> { oid : OptionalArgument String, expression : OptionalArgument String }) -> SelectionSet object Api.Object.GitObject -> FieldDecoder object Api.Object.Repository
 object fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { oid = Nothing, expression = Nothing }
+            fillInOptionals { oid = Absent, expression = Absent }
 
         optionalArgs =
             [ Argument.optional "oid" filledInOptionals.oid Encode.string, Argument.optional "expression" filledInOptionals.expression Encode.string ]
@@ -334,11 +335,11 @@ project requiredArgs object =
     Object.single "project" [ Argument.string "number" requiredArgs.number ] object
 
 
-projects : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, search : Maybe String, states : Maybe (List Api.Enum.ProjectState.ProjectState) } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value, search : Maybe String, states : Maybe (List Api.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Api.Object.ProjectConnection -> FieldDecoder projects Api.Object.Repository
+projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Api.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Api.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Api.Object.ProjectConnection -> FieldDecoder projects Api.Object.Repository
 projects fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing, search = Nothing, states = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list) ]
@@ -357,11 +358,11 @@ projectsUrl =
     Object.fieldDecoder "projectsUrl" [] Decode.string
 
 
-protectedBranches : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet protectedBranches Api.Object.ProtectedBranchConnection -> FieldDecoder protectedBranches Api.Object.Repository
+protectedBranches : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet protectedBranches Api.Object.ProtectedBranchConnection -> FieldDecoder protectedBranches Api.Object.Repository
 protectedBranches fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -375,11 +376,11 @@ pullRequest requiredArgs object =
     Object.single "pullRequest" [ Argument.string "number" requiredArgs.number ] object
 
 
-pullRequests : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, states : Maybe (List Api.Enum.PullRequestState.PullRequestState), labels : Maybe (List String), headRefName : Maybe String, baseRefName : Maybe String, orderBy : Maybe Value }) -> SelectionSet pullRequests Api.Object.PullRequestConnection -> FieldDecoder pullRequests Api.Object.Repository
+pullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Api.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Api.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet pullRequests Api.Object.PullRequestConnection -> FieldDecoder pullRequests Api.Object.Repository
 pullRequests fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, states = Nothing, labels = Nothing, headRefName = Nothing, baseRefName = Nothing, orderBy = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
@@ -398,11 +399,11 @@ ref requiredArgs object =
     Object.single "ref" [ Argument.string "qualifiedName" requiredArgs.qualifiedName ] object
 
 
-refs : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, direction : Maybe Api.Enum.OrderDirection.OrderDirection, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, direction : Maybe Api.Enum.OrderDirection.OrderDirection, orderBy : Maybe Value }) -> { refPrefix : String } -> SelectionSet refs Api.Object.RefConnection -> FieldDecoder refs Api.Object.Repository
+refs : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, direction : OptionalArgument Api.Enum.OrderDirection.OrderDirection, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, direction : OptionalArgument Api.Enum.OrderDirection.OrderDirection, orderBy : OptionalArgument Value }) -> { refPrefix : String } -> SelectionSet refs Api.Object.RefConnection -> FieldDecoder refs Api.Object.Repository
 refs fillInOptionals requiredArgs object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, direction = Nothing, orderBy = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, direction = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "direction" filledInOptionals.direction (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity ]
@@ -416,11 +417,11 @@ release requiredArgs object =
     Object.single "release" [ Argument.string "tagName" requiredArgs.tagName ] object
 
 
-releases : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> SelectionSet releases Api.Object.ReleaseConnection -> FieldDecoder releases Api.Object.Repository
+releases : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet releases Api.Object.ReleaseConnection -> FieldDecoder releases Api.Object.Repository
 releases fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
@@ -429,11 +430,11 @@ releases fillInOptionals object =
     Object.single "releases" optionalArgs object
 
 
-repositoryTopics : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet repositoryTopics Api.Object.RepositoryTopicConnection -> FieldDecoder repositoryTopics Api.Object.Repository
+repositoryTopics : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet repositoryTopics Api.Object.RepositoryTopicConnection -> FieldDecoder repositoryTopics Api.Object.Repository
 repositoryTopics fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -447,11 +448,11 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-shortDescriptionHTML : ({ limit : Maybe Int } -> { limit : Maybe Int }) -> FieldDecoder String Api.Object.Repository
+shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder String Api.Object.Repository
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
-            fillInOptionals { limit = Nothing }
+            fillInOptionals { limit = Absent }
 
         optionalArgs =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
@@ -465,11 +466,11 @@ sshUrl =
     Object.fieldDecoder "sshUrl" [] Decode.string
 
 
-stargazers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String, orderBy : Maybe Value }) -> SelectionSet stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Repository
+stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet stargazers Api.Object.StargazerConnection -> FieldDecoder stargazers Api.Object.Repository
 stargazers fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing, orderBy = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
@@ -518,11 +519,11 @@ viewerSubscription =
     Object.fieldDecoder "viewerSubscription" [] Api.Enum.SubscriptionState.decoder
 
 
-watchers : ({ first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String } -> { first : Maybe Int, after : Maybe String, last : Maybe Int, before : Maybe String }) -> SelectionSet watchers Api.Object.UserConnection -> FieldDecoder watchers Api.Object.Repository
+watchers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet watchers Api.Object.UserConnection -> FieldDecoder watchers Api.Object.Repository
 watchers fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Nothing, after = Nothing, last = Nothing, before = Nothing }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
