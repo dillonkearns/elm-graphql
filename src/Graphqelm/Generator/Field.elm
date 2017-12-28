@@ -40,11 +40,11 @@ forObject_ apiSubmodule specialObjectNames thisObjectName field =
         thisObjectString =
             Imports.object apiSubmodule specialObjectNames thisObjectName |> String.join "."
     in
-    common (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
+    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
 
 
-common : String -> FieldGenerator -> String
-common returnAnnotation field =
+fieldGeneratorToString : String -> FieldGenerator -> String
+fieldGeneratorToString returnAnnotation field =
     let
         something =
             ((field.annotatedArgs |> List.map .annotation)
