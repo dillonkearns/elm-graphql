@@ -22,9 +22,9 @@ clientMutationId =
 
 pullRequestReview : SelectionSet pullRequestReview Github.Object.PullRequestReview -> FieldDecoder pullRequestReview Github.Object.AddPullRequestReviewPayload
 pullRequestReview object =
-    Object.single "pullRequestReview" [] object
+    Object.selectionFieldDecoder "pullRequestReview" [] object identity
 
 
 reviewEdge : SelectionSet reviewEdge Github.Object.PullRequestReviewEdge -> FieldDecoder reviewEdge Github.Object.AddPullRequestReviewPayload
 reviewEdge object =
-    Object.single "reviewEdge" [] object
+    Object.selectionFieldDecoder "reviewEdge" [] object identity

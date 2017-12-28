@@ -17,7 +17,7 @@ selection constructor =
 
 cardEdge : SelectionSet cardEdge Github.Object.ProjectCardEdge -> FieldDecoder cardEdge Github.Object.AddProjectCardPayload
 cardEdge object =
-    Object.single "cardEdge" [] object
+    Object.selectionFieldDecoder "cardEdge" [] object identity
 
 
 clientMutationId : FieldDecoder String Github.Object.AddProjectCardPayload
@@ -27,4 +27,4 @@ clientMutationId =
 
 projectColumn : SelectionSet projectColumn Github.Object.Project -> FieldDecoder projectColumn Github.Object.AddProjectCardPayload
 projectColumn object =
-    Object.single "projectColumn" [] object
+    Object.selectionFieldDecoder "projectColumn" [] object identity

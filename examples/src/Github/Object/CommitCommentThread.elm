@@ -25,12 +25,12 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "comments" optionalArgs object
+    Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.CommitCommentThread
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 id : FieldDecoder String Github.Object.CommitCommentThread
@@ -50,4 +50,4 @@ position =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.CommitCommentThread
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity

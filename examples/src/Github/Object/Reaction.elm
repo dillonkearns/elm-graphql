@@ -38,9 +38,9 @@ id =
 
 reactable : SelectionSet reactable Github.Object.Reactable -> FieldDecoder reactable Github.Object.Reaction
 reactable object =
-    Object.single "reactable" [] object
+    Object.selectionFieldDecoder "reactable" [] object identity
 
 
 user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.Reaction
 user object =
-    Object.single "user" [] object
+    Object.selectionFieldDecoder "user" [] object identity

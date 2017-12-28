@@ -155,7 +155,7 @@ pricingUrl =
 
 primaryCategory : SelectionSet primaryCategory Github.Object.MarketplaceCategory -> FieldDecoder primaryCategory Github.Object.MarketplaceListing
 primaryCategory object =
-    Object.single "primaryCategory" [] object
+    Object.selectionFieldDecoder "primaryCategory" [] object identity
 
 
 privacyPolicyUrl : FieldDecoder String Github.Object.MarketplaceListing
@@ -175,7 +175,7 @@ screenshotUrls =
 
 secondaryCategory : SelectionSet secondaryCategory Github.Object.MarketplaceCategory -> FieldDecoder secondaryCategory Github.Object.MarketplaceListing
 secondaryCategory object =
-    Object.single "secondaryCategory" [] object
+    Object.selectionFieldDecoder "secondaryCategory" [] object identity
 
 
 shortDescription : FieldDecoder String Github.Object.MarketplaceListing

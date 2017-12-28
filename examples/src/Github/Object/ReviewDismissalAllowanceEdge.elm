@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.ReviewDismissalAllowance -> FieldDecoder node Github.Object.ReviewDismissalAllowanceEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

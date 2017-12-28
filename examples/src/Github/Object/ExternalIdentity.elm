@@ -27,19 +27,19 @@ id =
 
 organizationInvitation : SelectionSet organizationInvitation Github.Object.OrganizationInvitation -> FieldDecoder organizationInvitation Github.Object.ExternalIdentity
 organizationInvitation object =
-    Object.single "organizationInvitation" [] object
+    Object.selectionFieldDecoder "organizationInvitation" [] object identity
 
 
 samlIdentity : SelectionSet samlIdentity Github.Object.ExternalIdentitySamlAttributes -> FieldDecoder samlIdentity Github.Object.ExternalIdentity
 samlIdentity object =
-    Object.single "samlIdentity" [] object
+    Object.selectionFieldDecoder "samlIdentity" [] object identity
 
 
 scimIdentity : SelectionSet scimIdentity Github.Object.ExternalIdentityScimAttributes -> FieldDecoder scimIdentity Github.Object.ExternalIdentity
 scimIdentity object =
-    Object.single "scimIdentity" [] object
+    Object.selectionFieldDecoder "scimIdentity" [] object identity
 
 
 user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.ExternalIdentity
 user object =
-    Object.single "user" [] object
+    Object.selectionFieldDecoder "user" [] object identity

@@ -83,7 +83,7 @@ license =
 
 licenseInfo : SelectionSet licenseInfo Github.Object.License -> FieldDecoder licenseInfo Github.Object.RepositoryInvitationRepository
 licenseInfo object =
-    Object.single "licenseInfo" [] object
+    Object.selectionFieldDecoder "licenseInfo" [] object identity
 
 
 lockReason : FieldDecoder Github.Enum.RepositoryLockReason.RepositoryLockReason Github.Object.RepositoryInvitationRepository
@@ -108,7 +108,7 @@ nameWithOwner =
 
 owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder owner Github.Object.RepositoryInvitationRepository
 owner object =
-    Object.single "owner" [] object
+    Object.selectionFieldDecoder "owner" [] object identity
 
 
 pushedAt : FieldDecoder String Github.Object.RepositoryInvitationRepository

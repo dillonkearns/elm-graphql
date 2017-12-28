@@ -27,4 +27,4 @@ id =
 
 protectedBranch : SelectionSet protectedBranch Github.Object.ProtectedBranch -> FieldDecoder protectedBranch Github.Object.ReviewDismissalAllowance
 protectedBranch object =
-    Object.single "protectedBranch" [] object
+    Object.selectionFieldDecoder "protectedBranch" [] object identity

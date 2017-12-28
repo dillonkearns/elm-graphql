@@ -27,4 +27,4 @@ isCommenter =
 
 reviewer : SelectionSet reviewer Github.Object.User -> FieldDecoder reviewer Github.Object.SuggestedReviewer
 reviewer object =
-    Object.single "reviewer" [] object
+    Object.selectionFieldDecoder "reviewer" [] object identity

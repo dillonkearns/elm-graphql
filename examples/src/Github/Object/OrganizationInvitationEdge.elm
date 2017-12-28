@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.OrganizationInvitation -> FieldDecoder node Github.Object.OrganizationInvitationEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

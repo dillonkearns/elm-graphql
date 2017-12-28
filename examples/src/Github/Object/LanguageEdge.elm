@@ -22,7 +22,7 @@ cursor =
 
 node : SelectionSet node Github.Object.Language -> FieldDecoder node Github.Object.LanguageEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity
 
 
 size : FieldDecoder Int Github.Object.LanguageEdge

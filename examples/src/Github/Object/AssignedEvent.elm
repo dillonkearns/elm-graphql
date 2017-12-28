@@ -17,12 +17,12 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.AssignedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 assignable : SelectionSet assignable Github.Object.Assignable -> FieldDecoder assignable Github.Object.AssignedEvent
 assignable object =
-    Object.single "assignable" [] object
+    Object.selectionFieldDecoder "assignable" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.AssignedEvent
@@ -37,4 +37,4 @@ id =
 
 user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.AssignedEvent
 user object =
-    Object.single "user" [] object
+    Object.selectionFieldDecoder "user" [] object identity

@@ -22,4 +22,4 @@ clientMutationId =
 
 subscribable : SelectionSet subscribable Github.Object.Subscribable -> FieldDecoder subscribable Github.Object.UpdateSubscriptionPayload
 subscribable object =
-    Object.single "subscribable" [] object
+    Object.selectionFieldDecoder "subscribable" [] object identity

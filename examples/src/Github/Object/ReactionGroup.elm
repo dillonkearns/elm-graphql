@@ -28,7 +28,7 @@ createdAt =
 
 subject : SelectionSet subject Github.Object.Reactable -> FieldDecoder subject Github.Object.ReactionGroup
 subject object =
-    Object.single "subject" [] object
+    Object.selectionFieldDecoder "subject" [] object identity
 
 
 users : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet users Github.Object.ReactingUserConnection -> FieldDecoder users Github.Object.ReactionGroup
@@ -41,7 +41,7 @@ users fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "users" optionalArgs object
+    Object.selectionFieldDecoder "users" optionalArgs object identity
 
 
 viewerHasReacted : FieldDecoder Bool Github.Object.ReactionGroup

@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.ReleaseAsset -> FieldDecoder node Github.Object.ReleaseAssetEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

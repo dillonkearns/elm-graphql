@@ -17,12 +17,12 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.ReopenedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 closable : SelectionSet closable Github.Object.Closable -> FieldDecoder closable Github.Object.ReopenedEvent
 closable object =
-    Object.single "closable" [] object
+    Object.selectionFieldDecoder "closable" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.ReopenedEvent

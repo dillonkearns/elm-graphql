@@ -22,7 +22,7 @@ body =
 
 conditions : SelectionSet conditions Github.Object.LicenseRule -> FieldDecoder (List conditions) Github.Object.License
 conditions object =
-    Object.listOf "conditions" [] object
+    Object.selectionFieldDecoder "conditions" [] object (identity >> Decode.list)
 
 
 description : FieldDecoder String Github.Object.License
@@ -57,7 +57,7 @@ key =
 
 limitations : SelectionSet limitations Github.Object.LicenseRule -> FieldDecoder (List limitations) Github.Object.License
 limitations object =
-    Object.listOf "limitations" [] object
+    Object.selectionFieldDecoder "limitations" [] object (identity >> Decode.list)
 
 
 name : FieldDecoder String Github.Object.License
@@ -72,7 +72,7 @@ nickname =
 
 permissions : SelectionSet permissions Github.Object.LicenseRule -> FieldDecoder (List permissions) Github.Object.License
 permissions object =
-    Object.listOf "permissions" [] object
+    Object.selectionFieldDecoder "permissions" [] object (identity >> Decode.list)
 
 
 spdxId : FieldDecoder String Github.Object.License

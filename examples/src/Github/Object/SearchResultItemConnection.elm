@@ -22,7 +22,7 @@ codeCount =
 
 edges : SelectionSet edges Github.Object.SearchResultItemEdge -> FieldDecoder (List edges) Github.Object.SearchResultItemConnection
 edges object =
-    Object.listOf "edges" [] object
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
 
 
 issueCount : FieldDecoder Int Github.Object.SearchResultItemConnection
@@ -37,7 +37,7 @@ nodes =
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.SearchResultItemConnection
 pageInfo object =
-    Object.single "pageInfo" [] object
+    Object.selectionFieldDecoder "pageInfo" [] object identity
 
 
 repositoryCount : FieldDecoder Int Github.Object.SearchResultItemConnection

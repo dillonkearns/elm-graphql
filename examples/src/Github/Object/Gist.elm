@@ -25,7 +25,7 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "comments" optionalArgs object
+    Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
 createdAt : FieldDecoder String Github.Object.Gist
@@ -55,7 +55,7 @@ name =
 
 owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder owner Github.Object.Gist
 owner object =
-    Object.single "owner" [] object
+    Object.selectionFieldDecoder "owner" [] object identity
 
 
 pushedAt : FieldDecoder String Github.Object.Gist
@@ -73,7 +73,7 @@ stargazers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
-    Object.single "stargazers" optionalArgs object
+    Object.selectionFieldDecoder "stargazers" optionalArgs object identity
 
 
 updatedAt : FieldDecoder String Github.Object.Gist

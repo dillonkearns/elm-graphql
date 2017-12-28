@@ -20,7 +20,7 @@ selection constructor =
 
 author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.PullRequestReviewComment
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.PullRequestReviewComment
@@ -45,7 +45,7 @@ bodyText =
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.PullRequestReviewComment
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.PullRequestReviewComment
@@ -75,7 +75,7 @@ draftedAt =
 
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.PullRequestReviewComment
 editor object =
-    Object.single "editor" [] object
+    Object.selectionFieldDecoder "editor" [] object identity
 
 
 id : FieldDecoder String Github.Object.PullRequestReviewComment
@@ -90,7 +90,7 @@ lastEditedAt =
 
 originalCommit : SelectionSet originalCommit Github.Object.Commit -> FieldDecoder originalCommit Github.Object.PullRequestReviewComment
 originalCommit object =
-    Object.single "originalCommit" [] object
+    Object.selectionFieldDecoder "originalCommit" [] object identity
 
 
 originalPosition : FieldDecoder Int Github.Object.PullRequestReviewComment
@@ -115,17 +115,17 @@ publishedAt =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestReviewComment
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 pullRequestReview : SelectionSet pullRequestReview Github.Object.PullRequestReview -> FieldDecoder pullRequestReview Github.Object.PullRequestReviewComment
 pullRequestReview object =
-    Object.single "pullRequestReview" [] object
+    Object.selectionFieldDecoder "pullRequestReview" [] object identity
 
 
 reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.PullRequestReviewComment
 reactionGroups object =
-    Object.listOf "reactionGroups" [] object
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.PullRequestReviewComment
@@ -138,17 +138,17 @@ reactions fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
-    Object.single "reactions" optionalArgs object
+    Object.selectionFieldDecoder "reactions" optionalArgs object identity
 
 
 replyTo : SelectionSet replyTo Github.Object.PullRequestReviewComment -> FieldDecoder replyTo Github.Object.PullRequestReviewComment
 replyTo object =
-    Object.single "replyTo" [] object
+    Object.selectionFieldDecoder "replyTo" [] object identity
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.PullRequestReviewComment
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.PullRequestReviewComment

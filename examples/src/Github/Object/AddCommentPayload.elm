@@ -22,14 +22,14 @@ clientMutationId =
 
 commentEdge : SelectionSet commentEdge Github.Object.IssueCommentEdge -> FieldDecoder commentEdge Github.Object.AddCommentPayload
 commentEdge object =
-    Object.single "commentEdge" [] object
+    Object.selectionFieldDecoder "commentEdge" [] object identity
 
 
 subject : SelectionSet subject Github.Object.Node -> FieldDecoder subject Github.Object.AddCommentPayload
 subject object =
-    Object.single "subject" [] object
+    Object.selectionFieldDecoder "subject" [] object identity
 
 
 timelineEdge : SelectionSet timelineEdge Github.Object.IssueTimelineItemEdge -> FieldDecoder timelineEdge Github.Object.AddCommentPayload
 timelineEdge object =
-    Object.single "timelineEdge" [] object
+    Object.selectionFieldDecoder "timelineEdge" [] object identity

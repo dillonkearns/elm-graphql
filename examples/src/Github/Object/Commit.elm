@@ -28,7 +28,7 @@ additions =
 
 author : SelectionSet author Github.Object.GitActor -> FieldDecoder author Github.Object.Commit
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 authoredByCommitter : FieldDecoder Bool Github.Object.Commit
@@ -43,7 +43,7 @@ authoredDate =
 
 blame : { path : String } -> SelectionSet blame Github.Object.Blame -> FieldDecoder blame Github.Object.Commit
 blame requiredArgs object =
-    Object.single "blame" [ Argument.string "path" requiredArgs.path ] object
+    Object.selectionFieldDecoder "blame" [ Argument.string "path" requiredArgs.path ] object identity
 
 
 changedFiles : FieldDecoder Int Github.Object.Commit
@@ -61,7 +61,7 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "comments" optionalArgs object
+    Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
 commitResourcePath : FieldDecoder String Github.Object.Commit
@@ -86,7 +86,7 @@ committedViaWeb =
 
 committer : SelectionSet committer Github.Object.GitActor -> FieldDecoder committer Github.Object.Commit
 committer object =
-    Object.single "committer" [] object
+    Object.selectionFieldDecoder "committer" [] object identity
 
 
 deletions : FieldDecoder Int Github.Object.Commit
@@ -104,7 +104,7 @@ history fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author identity, Argument.optional "since" filledInOptionals.since Encode.string, Argument.optional "until" filledInOptionals.until Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "history" optionalArgs object
+    Object.selectionFieldDecoder "history" optionalArgs object identity
 
 
 id : FieldDecoder String Github.Object.Commit
@@ -152,7 +152,7 @@ parents fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "parents" optionalArgs object
+    Object.selectionFieldDecoder "parents" optionalArgs object identity
 
 
 pushedDate : FieldDecoder String Github.Object.Commit
@@ -162,7 +162,7 @@ pushedDate =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Commit
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.Commit
@@ -172,12 +172,12 @@ resourcePath =
 
 signature : SelectionSet signature Github.Object.GitSignature -> FieldDecoder signature Github.Object.Commit
 signature object =
-    Object.single "signature" [] object
+    Object.selectionFieldDecoder "signature" [] object identity
 
 
 status : SelectionSet status Github.Object.Status -> FieldDecoder status Github.Object.Commit
 status object =
-    Object.single "status" [] object
+    Object.selectionFieldDecoder "status" [] object identity
 
 
 tarballUrl : FieldDecoder String Github.Object.Commit
@@ -187,7 +187,7 @@ tarballUrl =
 
 tree : SelectionSet tree Github.Object.Tree -> FieldDecoder tree Github.Object.Commit
 tree object =
-    Object.single "tree" [] object
+    Object.selectionFieldDecoder "tree" [] object identity
 
 
 treeResourcePath : FieldDecoder String Github.Object.Commit

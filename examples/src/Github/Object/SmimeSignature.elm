@@ -38,7 +38,7 @@ signature =
 
 signer : SelectionSet signer Github.Object.User -> FieldDecoder signer Github.Object.SmimeSignature
 signer object =
-    Object.single "signer" [] object
+    Object.selectionFieldDecoder "signer" [] object identity
 
 
 state : FieldDecoder Github.Enum.GitSignatureState.GitSignatureState Github.Object.SmimeSignature

@@ -18,7 +18,7 @@ selection constructor =
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.Deployment
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.Deployment
@@ -28,7 +28,7 @@ createdAt =
 
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.Deployment
 creator object =
-    Object.single "creator" [] object
+    Object.selectionFieldDecoder "creator" [] object identity
 
 
 databaseId : FieldDecoder Int Github.Object.Deployment
@@ -48,7 +48,7 @@ id =
 
 latestStatus : SelectionSet latestStatus Github.Object.DeploymentStatus -> FieldDecoder latestStatus Github.Object.Deployment
 latestStatus object =
-    Object.single "latestStatus" [] object
+    Object.selectionFieldDecoder "latestStatus" [] object identity
 
 
 payload : FieldDecoder String Github.Object.Deployment
@@ -58,7 +58,7 @@ payload =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Deployment
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 state : FieldDecoder Github.Enum.DeploymentState.DeploymentState Github.Object.Deployment
@@ -76,4 +76,4 @@ statuses fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "statuses" optionalArgs object
+    Object.selectionFieldDecoder "statuses" optionalArgs object identity

@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.GistComment -> FieldDecoder node Github.Object.GistCommentEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

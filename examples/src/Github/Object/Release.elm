@@ -17,7 +17,7 @@ selection constructor =
 
 author : SelectionSet author Github.Object.User -> FieldDecoder author Github.Object.Release
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.Release
@@ -65,7 +65,7 @@ releaseAssets fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "releaseAssets" optionalArgs object
+    Object.selectionFieldDecoder "releaseAssets" optionalArgs object identity
 
 
 resourcePath : FieldDecoder String Github.Object.Release
@@ -75,7 +75,7 @@ resourcePath =
 
 tag : SelectionSet tag Github.Object.Ref -> FieldDecoder tag Github.Object.Release
 tag object =
-    Object.single "tag" [] object
+    Object.selectionFieldDecoder "tag" [] object identity
 
 
 updatedAt : FieldDecoder String Github.Object.Release

@@ -25,7 +25,7 @@ cards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "cards" optionalArgs object
+    Object.selectionFieldDecoder "cards" optionalArgs object identity
 
 
 createdAt : FieldDecoder String Github.Object.ProjectColumn
@@ -50,7 +50,7 @@ name =
 
 project : SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.ProjectColumn
 project object =
-    Object.single "project" [] object
+    Object.selectionFieldDecoder "project" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.ProjectColumn

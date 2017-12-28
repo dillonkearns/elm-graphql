@@ -23,12 +23,12 @@ createdAt =
 
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.DeploymentStatus
 creator object =
-    Object.single "creator" [] object
+    Object.selectionFieldDecoder "creator" [] object identity
 
 
 deployment : SelectionSet deployment Github.Object.Deployment -> FieldDecoder deployment Github.Object.DeploymentStatus
 deployment object =
-    Object.single "deployment" [] object
+    Object.selectionFieldDecoder "deployment" [] object identity
 
 
 description : FieldDecoder String Github.Object.DeploymentStatus

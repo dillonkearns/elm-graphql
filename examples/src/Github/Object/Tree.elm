@@ -32,7 +32,7 @@ commitUrl =
 
 entries : SelectionSet entries Github.Object.TreeEntry -> FieldDecoder (List entries) Github.Object.Tree
 entries object =
-    Object.listOf "entries" [] object
+    Object.selectionFieldDecoder "entries" [] object (identity >> Decode.list)
 
 
 id : FieldDecoder String Github.Object.Tree
@@ -47,4 +47,4 @@ oid =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Tree
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity

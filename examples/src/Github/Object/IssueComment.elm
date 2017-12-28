@@ -20,7 +20,7 @@ selection constructor =
 
 author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.IssueComment
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.IssueComment
@@ -60,7 +60,7 @@ databaseId =
 
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.IssueComment
 editor object =
-    Object.single "editor" [] object
+    Object.selectionFieldDecoder "editor" [] object identity
 
 
 id : FieldDecoder String Github.Object.IssueComment
@@ -70,7 +70,7 @@ id =
 
 issue : SelectionSet issue Github.Object.Issue -> FieldDecoder issue Github.Object.IssueComment
 issue object =
-    Object.single "issue" [] object
+    Object.selectionFieldDecoder "issue" [] object identity
 
 
 lastEditedAt : FieldDecoder String Github.Object.IssueComment
@@ -85,12 +85,12 @@ publishedAt =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.IssueComment
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.IssueComment
 reactionGroups object =
-    Object.listOf "reactionGroups" [] object
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.IssueComment
@@ -103,12 +103,12 @@ reactions fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
-    Object.single "reactions" optionalArgs object
+    Object.selectionFieldDecoder "reactions" optionalArgs object identity
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.IssueComment
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.IssueComment

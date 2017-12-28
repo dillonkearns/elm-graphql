@@ -30,7 +30,7 @@ stargazers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
-    Object.single "stargazers" optionalArgs object
+    Object.selectionFieldDecoder "stargazers" optionalArgs object identity
 
 
 viewerHasStarred : FieldDecoder Bool Github.Object.Starrable

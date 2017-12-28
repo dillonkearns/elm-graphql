@@ -17,17 +17,17 @@ selection constructor =
 
 edges : SelectionSet edges Github.Object.PullRequestEdge -> FieldDecoder (List edges) Github.Object.PullRequestConnection
 edges object =
-    Object.listOf "edges" [] object
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
 
 
 nodes : SelectionSet nodes Github.Object.PullRequest -> FieldDecoder (List nodes) Github.Object.PullRequestConnection
 nodes object =
-    Object.listOf "nodes" [] object
+    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.list)
 
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.PullRequestConnection
 pageInfo object =
-    Object.single "pageInfo" [] object
+    Object.selectionFieldDecoder "pageInfo" [] object identity
 
 
 totalCount : FieldDecoder Int Github.Object.PullRequestConnection

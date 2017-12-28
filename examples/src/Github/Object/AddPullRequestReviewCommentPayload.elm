@@ -22,9 +22,9 @@ clientMutationId =
 
 comment : SelectionSet comment Github.Object.PullRequestReviewComment -> FieldDecoder comment Github.Object.AddPullRequestReviewCommentPayload
 comment object =
-    Object.single "comment" [] object
+    Object.selectionFieldDecoder "comment" [] object identity
 
 
 commentEdge : SelectionSet commentEdge Github.Object.PullRequestReviewCommentEdge -> FieldDecoder commentEdge Github.Object.AddPullRequestReviewCommentPayload
 commentEdge object =
-    Object.single "commentEdge" [] object
+    Object.selectionFieldDecoder "commentEdge" [] object identity

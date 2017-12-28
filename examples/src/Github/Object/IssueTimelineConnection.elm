@@ -17,7 +17,7 @@ selection constructor =
 
 edges : SelectionSet edges Github.Object.IssueTimelineItemEdge -> FieldDecoder (List edges) Github.Object.IssueTimelineConnection
 edges object =
-    Object.listOf "edges" [] object
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
 
 
 nodes : FieldDecoder (List String) Github.Object.IssueTimelineConnection
@@ -27,7 +27,7 @@ nodes =
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.IssueTimelineConnection
 pageInfo object =
-    Object.single "pageInfo" [] object
+    Object.selectionFieldDecoder "pageInfo" [] object identity
 
 
 totalCount : FieldDecoder Int Github.Object.IssueTimelineConnection

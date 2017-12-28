@@ -22,7 +22,7 @@ clientMutationId =
 
 column : SelectionSet column Github.Object.ProjectColumn -> FieldDecoder column Github.Object.DeleteProjectCardPayload
 column object =
-    Object.single "column" [] object
+    Object.selectionFieldDecoder "column" [] object identity
 
 
 deletedCardId : FieldDecoder String Github.Object.DeleteProjectCardPayload

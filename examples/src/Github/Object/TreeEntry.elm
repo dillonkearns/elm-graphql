@@ -27,7 +27,7 @@ name =
 
 object : SelectionSet object Github.Object.GitObject -> FieldDecoder object Github.Object.TreeEntry
 object object =
-    Object.single "object" [] object
+    Object.selectionFieldDecoder "object" [] object identity
 
 
 oid : FieldDecoder String Github.Object.TreeEntry
@@ -37,7 +37,7 @@ oid =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.TreeEntry
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 type_ : FieldDecoder String Github.Object.TreeEntry

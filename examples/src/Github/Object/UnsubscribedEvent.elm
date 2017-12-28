@@ -17,7 +17,7 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.UnsubscribedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.UnsubscribedEvent
@@ -32,4 +32,4 @@ id =
 
 subscribable : SelectionSet subscribable Github.Object.Subscribable -> FieldDecoder subscribable Github.Object.UnsubscribedEvent
 subscribable object =
-    Object.single "subscribable" [] object
+    Object.selectionFieldDecoder "subscribable" [] object identity

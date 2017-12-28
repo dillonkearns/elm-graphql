@@ -19,7 +19,7 @@ selection constructor =
 
 author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.GistComment
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.GistComment
@@ -49,12 +49,12 @@ createdViaEmail =
 
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.GistComment
 editor object =
-    Object.single "editor" [] object
+    Object.selectionFieldDecoder "editor" [] object identity
 
 
 gist : SelectionSet gist Github.Object.Gist -> FieldDecoder gist Github.Object.GistComment
 gist object =
-    Object.single "gist" [] object
+    Object.selectionFieldDecoder "gist" [] object identity
 
 
 id : FieldDecoder String Github.Object.GistComment

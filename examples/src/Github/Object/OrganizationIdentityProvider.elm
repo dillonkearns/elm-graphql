@@ -30,7 +30,7 @@ externalIdentities fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "externalIdentities" optionalArgs object
+    Object.selectionFieldDecoder "externalIdentities" optionalArgs object identity
 
 
 id : FieldDecoder String Github.Object.OrganizationIdentityProvider
@@ -50,7 +50,7 @@ issuer =
 
 organization : SelectionSet organization Github.Object.Organization -> FieldDecoder organization Github.Object.OrganizationIdentityProvider
 organization object =
-    Object.single "organization" [] object
+    Object.selectionFieldDecoder "organization" [] object identity
 
 
 signatureMethod : FieldDecoder String Github.Object.OrganizationIdentityProvider

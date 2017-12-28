@@ -22,7 +22,7 @@ createdAt =
 
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.UserContentEdit
 editor object =
-    Object.single "editor" [] object
+    Object.selectionFieldDecoder "editor" [] object identity
 
 
 id : FieldDecoder String Github.Object.UserContentEdit

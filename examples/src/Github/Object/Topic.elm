@@ -27,4 +27,4 @@ name =
 
 relatedTopics : SelectionSet relatedTopics Github.Object.Topic -> FieldDecoder (List relatedTopics) Github.Object.Topic
 relatedTopics object =
-    Object.listOf "relatedTopics" [] object
+    Object.selectionFieldDecoder "relatedTopics" [] object (identity >> Decode.list)

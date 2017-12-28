@@ -22,4 +22,4 @@ clientMutationId =
 
 pullRequestReview : SelectionSet pullRequestReview Github.Object.PullRequestReview -> FieldDecoder pullRequestReview Github.Object.DeletePullRequestReviewPayload
 pullRequestReview object =
-    Object.single "pullRequestReview" [] object
+    Object.selectionFieldDecoder "pullRequestReview" [] object identity

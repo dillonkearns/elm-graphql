@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.DeployKey -> FieldDecoder node Github.Object.DeployKeyEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

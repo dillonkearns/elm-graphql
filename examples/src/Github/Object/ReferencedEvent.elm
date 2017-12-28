@@ -17,17 +17,17 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.ReferencedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.ReferencedEvent
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 commitRepository : SelectionSet commitRepository Github.Object.Repository -> FieldDecoder commitRepository Github.Object.ReferencedEvent
 commitRepository object =
-    Object.single "commitRepository" [] object
+    Object.selectionFieldDecoder "commitRepository" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.ReferencedEvent

@@ -23,7 +23,7 @@ id =
 
 project : { number : String } -> SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.ProjectOwner
 project requiredArgs object =
-    Object.single "project" [ Argument.string "number" requiredArgs.number ] object
+    Object.selectionFieldDecoder "project" [ Argument.string "number" requiredArgs.number ] object identity
 
 
 projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Object.ProjectOwner
@@ -36,7 +36,7 @@ projects fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.single "projects" optionalArgs object
+    Object.selectionFieldDecoder "projects" optionalArgs object identity
 
 
 projectsResourcePath : FieldDecoder String Github.Object.ProjectOwner

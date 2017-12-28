@@ -37,12 +37,12 @@ assignees fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "assignees" optionalArgs object
+    Object.selectionFieldDecoder "assignees" optionalArgs object identity
 
 
 author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.PullRequest
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.PullRequest
@@ -52,7 +52,7 @@ authorAssociation =
 
 baseRef : SelectionSet baseRef Github.Object.Ref -> FieldDecoder baseRef Github.Object.PullRequest
 baseRef object =
-    Object.single "baseRef" [] object
+    Object.selectionFieldDecoder "baseRef" [] object identity
 
 
 baseRefName : FieldDecoder String Github.Object.PullRequest
@@ -100,7 +100,7 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "comments" optionalArgs object
+    Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
 commits : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet commits Github.Object.PullRequestCommitConnection -> FieldDecoder commits Github.Object.PullRequest
@@ -113,7 +113,7 @@ commits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "commits" optionalArgs object
+    Object.selectionFieldDecoder "commits" optionalArgs object identity
 
 
 createdAt : FieldDecoder String Github.Object.PullRequest
@@ -138,12 +138,12 @@ deletions =
 
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.PullRequest
 editor object =
-    Object.single "editor" [] object
+    Object.selectionFieldDecoder "editor" [] object identity
 
 
 headRef : SelectionSet headRef Github.Object.Ref -> FieldDecoder headRef Github.Object.PullRequest
 headRef object =
-    Object.single "headRef" [] object
+    Object.selectionFieldDecoder "headRef" [] object identity
 
 
 headRefName : FieldDecoder String Github.Object.PullRequest
@@ -153,12 +153,12 @@ headRefName =
 
 headRepository : SelectionSet headRepository Github.Object.Repository -> FieldDecoder headRepository Github.Object.PullRequest
 headRepository object =
-    Object.single "headRepository" [] object
+    Object.selectionFieldDecoder "headRepository" [] object identity
 
 
 headRepositoryOwner : SelectionSet headRepositoryOwner Github.Object.RepositoryOwner -> FieldDecoder headRepositoryOwner Github.Object.PullRequest
 headRepositoryOwner object =
-    Object.single "headRepositoryOwner" [] object
+    Object.selectionFieldDecoder "headRepositoryOwner" [] object identity
 
 
 id : FieldDecoder String Github.Object.PullRequest
@@ -181,7 +181,7 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "labels" optionalArgs object
+    Object.selectionFieldDecoder "labels" optionalArgs object identity
 
 
 lastEditedAt : FieldDecoder String Github.Object.PullRequest
@@ -196,7 +196,7 @@ locked =
 
 mergeCommit : SelectionSet mergeCommit Github.Object.Commit -> FieldDecoder mergeCommit Github.Object.PullRequest
 mergeCommit object =
-    Object.single "mergeCommit" [] object
+    Object.selectionFieldDecoder "mergeCommit" [] object identity
 
 
 mergeable : FieldDecoder Github.Enum.MergeableState.MergeableState Github.Object.PullRequest
@@ -216,7 +216,7 @@ mergedAt =
 
 milestone : SelectionSet milestone Github.Object.Milestone -> FieldDecoder milestone Github.Object.PullRequest
 milestone object =
-    Object.single "milestone" [] object
+    Object.selectionFieldDecoder "milestone" [] object identity
 
 
 number : FieldDecoder Int Github.Object.PullRequest
@@ -234,12 +234,12 @@ participants fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "participants" optionalArgs object
+    Object.selectionFieldDecoder "participants" optionalArgs object identity
 
 
 potentialMergeCommit : SelectionSet potentialMergeCommit Github.Object.Commit -> FieldDecoder potentialMergeCommit Github.Object.PullRequest
 potentialMergeCommit object =
-    Object.single "potentialMergeCommit" [] object
+    Object.selectionFieldDecoder "potentialMergeCommit" [] object identity
 
 
 projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet projectCards Github.Object.ProjectCardConnection -> FieldDecoder projectCards Github.Object.PullRequest
@@ -252,7 +252,7 @@ projectCards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "projectCards" optionalArgs object
+    Object.selectionFieldDecoder "projectCards" optionalArgs object identity
 
 
 publishedAt : FieldDecoder String Github.Object.PullRequest
@@ -262,7 +262,7 @@ publishedAt =
 
 reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.PullRequest
 reactionGroups object =
-    Object.listOf "reactionGroups" [] object
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.PullRequest
@@ -275,12 +275,12 @@ reactions fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
-    Object.single "reactions" optionalArgs object
+    Object.selectionFieldDecoder "reactions" optionalArgs object identity
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.PullRequest
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.PullRequest
@@ -308,7 +308,7 @@ reviewRequests fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "reviewRequests" optionalArgs object
+    Object.selectionFieldDecoder "reviewRequests" optionalArgs object identity
 
 
 reviews : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }) -> SelectionSet reviews Github.Object.PullRequestReviewConnection -> FieldDecoder reviews Github.Object.PullRequest
@@ -321,7 +321,7 @@ reviews fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list), Argument.optional "author" filledInOptionals.author Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "reviews" optionalArgs object
+    Object.selectionFieldDecoder "reviews" optionalArgs object identity
 
 
 state : FieldDecoder Github.Enum.PullRequestState.PullRequestState Github.Object.PullRequest
@@ -331,7 +331,7 @@ state =
 
 suggestedReviewers : SelectionSet suggestedReviewers Github.Object.SuggestedReviewer -> FieldDecoder (List suggestedReviewers) Github.Object.PullRequest
 suggestedReviewers object =
-    Object.listOf "suggestedReviewers" [] object
+    Object.selectionFieldDecoder "suggestedReviewers" [] object (identity >> Decode.list)
 
 
 timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String }) -> SelectionSet timeline Github.Object.PullRequestTimelineConnection -> FieldDecoder timeline Github.Object.PullRequest
@@ -344,7 +344,7 @@ timeline fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "timeline" optionalArgs object
+    Object.selectionFieldDecoder "timeline" optionalArgs object identity
 
 
 title : FieldDecoder String Github.Object.PullRequest

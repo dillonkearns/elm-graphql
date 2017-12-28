@@ -17,7 +17,7 @@ selection constructor =
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.PullRequestCommit
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 id : FieldDecoder String Github.Object.PullRequestCommit
@@ -27,7 +27,7 @@ id =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestCommit
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.PullRequestCommit

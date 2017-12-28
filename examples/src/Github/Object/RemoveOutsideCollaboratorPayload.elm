@@ -22,4 +22,4 @@ clientMutationId =
 
 removedUser : SelectionSet removedUser Github.Object.User -> FieldDecoder removedUser Github.Object.RemoveOutsideCollaboratorPayload
 removedUser object =
-    Object.single "removedUser" [] object
+    Object.selectionFieldDecoder "removedUser" [] object identity

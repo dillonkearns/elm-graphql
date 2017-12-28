@@ -17,4 +17,4 @@ selection constructor =
 
 ranges : SelectionSet ranges Github.Object.BlameRange -> FieldDecoder (List ranges) Github.Object.Blame
 ranges object =
-    Object.listOf "ranges" [] object
+    Object.selectionFieldDecoder "ranges" [] object (identity >> Decode.list)

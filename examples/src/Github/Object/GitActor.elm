@@ -45,4 +45,4 @@ name =
 
 user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.GitActor
 user object =
-    Object.single "user" [] object
+    Object.selectionFieldDecoder "user" [] object identity

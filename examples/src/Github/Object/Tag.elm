@@ -52,14 +52,14 @@ oid =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Tag
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 tagger : SelectionSet tagger Github.Object.GitActor -> FieldDecoder tagger Github.Object.Tag
 tagger object =
-    Object.single "tagger" [] object
+    Object.selectionFieldDecoder "tagger" [] object identity
 
 
 target : SelectionSet target Github.Object.GitObject -> FieldDecoder target Github.Object.Tag
 target object =
-    Object.single "target" [] object
+    Object.selectionFieldDecoder "target" [] object identity

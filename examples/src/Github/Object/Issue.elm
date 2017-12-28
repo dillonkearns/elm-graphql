@@ -30,12 +30,12 @@ assignees fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "assignees" optionalArgs object
+    Object.selectionFieldDecoder "assignees" optionalArgs object identity
 
 
 author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.Issue
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Issue
@@ -78,7 +78,7 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "comments" optionalArgs object
+    Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
 createdAt : FieldDecoder String Github.Object.Issue
@@ -98,7 +98,7 @@ databaseId =
 
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.Issue
 editor object =
-    Object.single "editor" [] object
+    Object.selectionFieldDecoder "editor" [] object identity
 
 
 id : FieldDecoder String Github.Object.Issue
@@ -116,7 +116,7 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "labels" optionalArgs object
+    Object.selectionFieldDecoder "labels" optionalArgs object identity
 
 
 lastEditedAt : FieldDecoder String Github.Object.Issue
@@ -131,7 +131,7 @@ locked =
 
 milestone : SelectionSet milestone Github.Object.Milestone -> FieldDecoder milestone Github.Object.Issue
 milestone object =
-    Object.single "milestone" [] object
+    Object.selectionFieldDecoder "milestone" [] object identity
 
 
 number : FieldDecoder Int Github.Object.Issue
@@ -149,7 +149,7 @@ participants fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "participants" optionalArgs object
+    Object.selectionFieldDecoder "participants" optionalArgs object identity
 
 
 projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet projectCards Github.Object.ProjectCardConnection -> FieldDecoder projectCards Github.Object.Issue
@@ -162,7 +162,7 @@ projectCards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "projectCards" optionalArgs object
+    Object.selectionFieldDecoder "projectCards" optionalArgs object identity
 
 
 publishedAt : FieldDecoder String Github.Object.Issue
@@ -172,7 +172,7 @@ publishedAt =
 
 reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.Issue
 reactionGroups object =
-    Object.listOf "reactionGroups" [] object
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.Issue
@@ -185,12 +185,12 @@ reactions fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
-    Object.single "reactions" optionalArgs object
+    Object.selectionFieldDecoder "reactions" optionalArgs object identity
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Issue
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.Issue
@@ -213,7 +213,7 @@ timeline fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "timeline" optionalArgs object
+    Object.selectionFieldDecoder "timeline" optionalArgs object identity
 
 
 title : FieldDecoder String Github.Object.Issue

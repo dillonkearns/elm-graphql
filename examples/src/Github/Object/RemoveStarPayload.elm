@@ -22,4 +22,4 @@ clientMutationId =
 
 starrable : SelectionSet starrable Github.Object.Starrable -> FieldDecoder starrable Github.Object.RemoveStarPayload
 starrable object =
-    Object.single "starrable" [] object
+    Object.selectionFieldDecoder "starrable" [] object identity

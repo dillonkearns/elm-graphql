@@ -22,4 +22,4 @@ clientMutationId =
 
 pullRequestReviewComment : SelectionSet pullRequestReviewComment Github.Object.PullRequestReviewComment -> FieldDecoder pullRequestReviewComment Github.Object.UpdatePullRequestReviewCommentPayload
 pullRequestReviewComment object =
-    Object.single "pullRequestReviewComment" [] object
+    Object.selectionFieldDecoder "pullRequestReviewComment" [] object identity

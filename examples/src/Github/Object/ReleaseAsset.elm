@@ -47,7 +47,7 @@ name =
 
 release : SelectionSet release Github.Object.Release -> FieldDecoder release Github.Object.ReleaseAsset
 release object =
-    Object.single "release" [] object
+    Object.selectionFieldDecoder "release" [] object identity
 
 
 size : FieldDecoder Int Github.Object.ReleaseAsset
@@ -62,7 +62,7 @@ updatedAt =
 
 uploadedBy : SelectionSet uploadedBy Github.Object.User -> FieldDecoder uploadedBy Github.Object.ReleaseAsset
 uploadedBy object =
-    Object.single "uploadedBy" [] object
+    Object.selectionFieldDecoder "uploadedBy" [] object identity
 
 
 url : FieldDecoder String Github.Object.ReleaseAsset

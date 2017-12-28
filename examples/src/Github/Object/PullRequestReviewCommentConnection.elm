@@ -17,17 +17,17 @@ selection constructor =
 
 edges : SelectionSet edges Github.Object.PullRequestReviewCommentEdge -> FieldDecoder (List edges) Github.Object.PullRequestReviewCommentConnection
 edges object =
-    Object.listOf "edges" [] object
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
 
 
 nodes : SelectionSet nodes Github.Object.PullRequestReviewComment -> FieldDecoder (List nodes) Github.Object.PullRequestReviewCommentConnection
 nodes object =
-    Object.listOf "nodes" [] object
+    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.list)
 
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.PullRequestReviewCommentConnection
 pageInfo object =
-    Object.single "pageInfo" [] object
+    Object.selectionFieldDecoder "pageInfo" [] object identity
 
 
 totalCount : FieldDecoder Int Github.Object.PullRequestReviewCommentConnection

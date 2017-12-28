@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.Ref -> FieldDecoder node Github.Object.RefEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

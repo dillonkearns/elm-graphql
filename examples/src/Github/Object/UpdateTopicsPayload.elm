@@ -27,4 +27,4 @@ invalidTopicNames =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.UpdateTopicsPayload
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity

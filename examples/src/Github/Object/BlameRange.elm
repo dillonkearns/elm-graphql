@@ -22,7 +22,7 @@ age =
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.BlameRange
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 endingLine : FieldDecoder Int Github.Object.BlameRange

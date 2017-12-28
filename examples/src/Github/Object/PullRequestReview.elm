@@ -20,7 +20,7 @@ selection constructor =
 
 author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.PullRequestReview
 author object =
-    Object.single "author" [] object
+    Object.selectionFieldDecoder "author" [] object identity
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.PullRequestReview
@@ -53,12 +53,12 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "comments" optionalArgs object
+    Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.PullRequestReview
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.PullRequestReview
@@ -78,7 +78,7 @@ databaseId =
 
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.PullRequestReview
 editor object =
-    Object.single "editor" [] object
+    Object.selectionFieldDecoder "editor" [] object identity
 
 
 id : FieldDecoder String Github.Object.PullRequestReview
@@ -98,12 +98,12 @@ publishedAt =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestReview
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.PullRequestReview
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.PullRequestReview

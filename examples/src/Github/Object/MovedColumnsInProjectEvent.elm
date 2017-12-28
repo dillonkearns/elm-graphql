@@ -17,7 +17,7 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.MovedColumnsInProjectEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.MovedColumnsInProjectEvent

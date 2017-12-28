@@ -22,4 +22,4 @@ clientMutationId =
 
 owner : SelectionSet owner Github.Object.ProjectOwner -> FieldDecoder owner Github.Object.DeleteProjectPayload
 owner object =
-    Object.single "owner" [] object
+    Object.selectionFieldDecoder "owner" [] object identity

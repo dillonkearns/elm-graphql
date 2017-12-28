@@ -22,4 +22,4 @@ clientMutationId =
 
 columnEdge : SelectionSet columnEdge Github.Object.ProjectColumnEdge -> FieldDecoder columnEdge Github.Object.MoveProjectColumnPayload
 columnEdge object =
-    Object.single "columnEdge" [] object
+    Object.selectionFieldDecoder "columnEdge" [] object identity

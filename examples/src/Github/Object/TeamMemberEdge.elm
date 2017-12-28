@@ -33,7 +33,7 @@ memberAccessUrl =
 
 node : SelectionSet node Github.Object.User -> FieldDecoder node Github.Object.TeamMemberEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity
 
 
 role : FieldDecoder Github.Enum.TeamMemberRole.TeamMemberRole Github.Object.TeamMemberEdge

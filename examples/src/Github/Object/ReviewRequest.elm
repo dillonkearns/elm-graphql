@@ -27,7 +27,7 @@ id =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.ReviewRequest
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 requestedReviewer : FieldDecoder String Github.Object.ReviewRequest
@@ -37,4 +37,4 @@ requestedReviewer =
 
 reviewer : SelectionSet reviewer Github.Object.User -> FieldDecoder reviewer Github.Object.ReviewRequest
 reviewer object =
-    Object.single "reviewer" [] object
+    Object.selectionFieldDecoder "reviewer" [] object identity

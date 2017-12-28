@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.MarketplaceListing -> FieldDecoder node Github.Object.MarketplaceListingEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

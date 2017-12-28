@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.PullRequest -> FieldDecoder node Github.Object.PullRequestEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

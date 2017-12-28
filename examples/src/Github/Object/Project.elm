@@ -46,7 +46,7 @@ columns fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "columns" optionalArgs object
+    Object.selectionFieldDecoder "columns" optionalArgs object identity
 
 
 createdAt : FieldDecoder String Github.Object.Project
@@ -56,7 +56,7 @@ createdAt =
 
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.Project
 creator object =
-    Object.single "creator" [] object
+    Object.selectionFieldDecoder "creator" [] object identity
 
 
 databaseId : FieldDecoder Int Github.Object.Project
@@ -81,7 +81,7 @@ number =
 
 owner : SelectionSet owner Github.Object.ProjectOwner -> FieldDecoder owner Github.Object.Project
 owner object =
-    Object.single "owner" [] object
+    Object.selectionFieldDecoder "owner" [] object identity
 
 
 pendingCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet pendingCards Github.Object.ProjectCardConnection -> FieldDecoder pendingCards Github.Object.Project
@@ -94,7 +94,7 @@ pendingCards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "pendingCards" optionalArgs object
+    Object.selectionFieldDecoder "pendingCards" optionalArgs object identity
 
 
 resourcePath : FieldDecoder String Github.Object.Project

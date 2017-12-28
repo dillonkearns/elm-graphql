@@ -34,12 +34,12 @@ invitationType =
 
 invitee : SelectionSet invitee Github.Object.User -> FieldDecoder invitee Github.Object.OrganizationInvitation
 invitee object =
-    Object.single "invitee" [] object
+    Object.selectionFieldDecoder "invitee" [] object identity
 
 
 inviter : SelectionSet inviter Github.Object.User -> FieldDecoder inviter Github.Object.OrganizationInvitation
 inviter object =
-    Object.single "inviter" [] object
+    Object.selectionFieldDecoder "inviter" [] object identity
 
 
 role : FieldDecoder Github.Enum.OrganizationInvitationRole.OrganizationInvitationRole Github.Object.OrganizationInvitation

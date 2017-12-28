@@ -22,9 +22,9 @@ clientMutationId =
 
 reaction : SelectionSet reaction Github.Object.Reaction -> FieldDecoder reaction Github.Object.AddReactionPayload
 reaction object =
-    Object.single "reaction" [] object
+    Object.selectionFieldDecoder "reaction" [] object identity
 
 
 subject : SelectionSet subject Github.Object.Reactable -> FieldDecoder subject Github.Object.AddReactionPayload
 subject object =
-    Object.single "subject" [] object
+    Object.selectionFieldDecoder "subject" [] object identity

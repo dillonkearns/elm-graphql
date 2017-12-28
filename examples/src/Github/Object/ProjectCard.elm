@@ -18,7 +18,7 @@ selection constructor =
 
 column : SelectionSet column Github.Object.ProjectColumn -> FieldDecoder column Github.Object.ProjectCard
 column object =
-    Object.single "column" [] object
+    Object.selectionFieldDecoder "column" [] object identity
 
 
 content : FieldDecoder String Github.Object.ProjectCard
@@ -33,7 +33,7 @@ createdAt =
 
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.ProjectCard
 creator object =
-    Object.single "creator" [] object
+    Object.selectionFieldDecoder "creator" [] object identity
 
 
 databaseId : FieldDecoder Int Github.Object.ProjectCard
@@ -53,12 +53,12 @@ note =
 
 project : SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.ProjectCard
 project object =
-    Object.single "project" [] object
+    Object.selectionFieldDecoder "project" [] object identity
 
 
 projectColumn : SelectionSet projectColumn Github.Object.ProjectColumn -> FieldDecoder projectColumn Github.Object.ProjectCard
 projectColumn object =
-    Object.single "projectColumn" [] object
+    Object.selectionFieldDecoder "projectColumn" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.ProjectCard

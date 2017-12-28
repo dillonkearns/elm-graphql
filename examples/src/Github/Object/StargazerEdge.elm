@@ -22,7 +22,7 @@ cursor =
 
 node : SelectionSet node Github.Object.User -> FieldDecoder node Github.Object.StargazerEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity
 
 
 starredAt : FieldDecoder String Github.Object.StargazerEdge

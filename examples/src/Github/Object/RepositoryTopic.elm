@@ -27,7 +27,7 @@ resourcePath =
 
 topic : SelectionSet topic Github.Object.Topic -> FieldDecoder topic Github.Object.RepositoryTopic
 topic object =
-    Object.single "topic" [] object
+    Object.selectionFieldDecoder "topic" [] object identity
 
 
 url : FieldDecoder String Github.Object.RepositoryTopic

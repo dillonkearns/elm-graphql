@@ -17,7 +17,7 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.DeployedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.DeployedEvent
@@ -32,7 +32,7 @@ databaseId =
 
 deployment : SelectionSet deployment Github.Object.Deployment -> FieldDecoder deployment Github.Object.DeployedEvent
 deployment object =
-    Object.single "deployment" [] object
+    Object.selectionFieldDecoder "deployment" [] object identity
 
 
 id : FieldDecoder String Github.Object.DeployedEvent
@@ -42,9 +42,9 @@ id =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.DeployedEvent
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 ref : SelectionSet ref Github.Object.Ref -> FieldDecoder ref Github.Object.DeployedEvent
 ref object =
-    Object.single "ref" [] object
+    Object.selectionFieldDecoder "ref" [] object identity

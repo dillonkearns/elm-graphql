@@ -17,7 +17,7 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.ReviewRequestedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.ReviewRequestedEvent
@@ -32,7 +32,7 @@ id =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.ReviewRequestedEvent
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 requestedReviewer : FieldDecoder String Github.Object.ReviewRequestedEvent
@@ -42,4 +42,4 @@ requestedReviewer =
 
 subject : SelectionSet subject Github.Object.User -> FieldDecoder subject Github.Object.ReviewRequestedEvent
 subject object =
-    Object.single "subject" [] object
+    Object.selectionFieldDecoder "subject" [] object identity

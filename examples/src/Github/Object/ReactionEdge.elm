@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.Reaction -> FieldDecoder node Github.Object.ReactionEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

@@ -17,17 +17,17 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.BaseRefForcePushedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 afterCommit : SelectionSet afterCommit Github.Object.Commit -> FieldDecoder afterCommit Github.Object.BaseRefForcePushedEvent
 afterCommit object =
-    Object.single "afterCommit" [] object
+    Object.selectionFieldDecoder "afterCommit" [] object identity
 
 
 beforeCommit : SelectionSet beforeCommit Github.Object.Commit -> FieldDecoder beforeCommit Github.Object.BaseRefForcePushedEvent
 beforeCommit object =
-    Object.single "beforeCommit" [] object
+    Object.selectionFieldDecoder "beforeCommit" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.BaseRefForcePushedEvent
@@ -42,9 +42,9 @@ id =
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.BaseRefForcePushedEvent
 pullRequest object =
-    Object.single "pullRequest" [] object
+    Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 ref : SelectionSet ref Github.Object.Ref -> FieldDecoder ref Github.Object.BaseRefForcePushedEvent
 ref object =
-    Object.single "ref" [] object
+    Object.selectionFieldDecoder "ref" [] object identity

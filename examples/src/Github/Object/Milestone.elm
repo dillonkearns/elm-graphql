@@ -34,7 +34,7 @@ createdAt =
 
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.Milestone
 creator object =
-    Object.single "creator" [] object
+    Object.selectionFieldDecoder "creator" [] object identity
 
 
 description : FieldDecoder String Github.Object.Milestone
@@ -62,7 +62,7 @@ issues fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.single "issues" optionalArgs object
+    Object.selectionFieldDecoder "issues" optionalArgs object identity
 
 
 number : FieldDecoder Int Github.Object.Milestone
@@ -72,7 +72,7 @@ number =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Milestone
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.Milestone

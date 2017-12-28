@@ -29,7 +29,7 @@ ancestors fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "ancestors" optionalArgs object
+    Object.selectionFieldDecoder "ancestors" optionalArgs object identity
 
 
 childTeams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool }) -> SelectionSet childTeams Github.Object.TeamConnection -> FieldDecoder childTeams Github.Object.Team
@@ -42,7 +42,7 @@ childTeams fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.single "childTeams" optionalArgs object
+    Object.selectionFieldDecoder "childTeams" optionalArgs object identity
 
 
 combinedSlug : FieldDecoder String Github.Object.Team
@@ -85,7 +85,7 @@ invitations fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "invitations" optionalArgs object
+    Object.selectionFieldDecoder "invitations" optionalArgs object identity
 
 
 members : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType, role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType, role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole }) -> SelectionSet members Github.Object.TeamMemberConnection -> FieldDecoder members Github.Object.Team
@@ -98,7 +98,7 @@ members fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "membership" filledInOptionals.membership (Encode.enum toString), Argument.optional "role" filledInOptionals.role (Encode.enum toString) ]
                 |> List.filterMap identity
     in
-    Object.single "members" optionalArgs object
+    Object.selectionFieldDecoder "members" optionalArgs object identity
 
 
 membersResourcePath : FieldDecoder String Github.Object.Team
@@ -128,12 +128,12 @@ newTeamUrl =
 
 organization : SelectionSet organization Github.Object.Organization -> FieldDecoder organization Github.Object.Team
 organization object =
-    Object.single "organization" [] object
+    Object.selectionFieldDecoder "organization" [] object identity
 
 
 parentTeam : SelectionSet parentTeam Github.Object.Team -> FieldDecoder parentTeam Github.Object.Team
 parentTeam object =
-    Object.single "parentTeam" [] object
+    Object.selectionFieldDecoder "parentTeam" [] object identity
 
 
 privacy : FieldDecoder Github.Enum.TeamPrivacy.TeamPrivacy Github.Object.Team
@@ -151,7 +151,7 @@ repositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity ]
                 |> List.filterMap identity
     in
-    Object.single "repositories" optionalArgs object
+    Object.selectionFieldDecoder "repositories" optionalArgs object identity
 
 
 repositoriesResourcePath : FieldDecoder String Github.Object.Team

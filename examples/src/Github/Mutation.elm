@@ -26,7 +26,7 @@ acceptTopicSuggestion fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "acceptTopicSuggestion" optionalArgs object
+    Object.selectionFieldDecoder "acceptTopicSuggestion" optionalArgs object identity
 
 
 addComment : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet addComment Github.Object.AddCommentPayload -> FieldDecoder addComment RootMutation
@@ -39,7 +39,7 @@ addComment fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "addComment" optionalArgs object
+    Object.selectionFieldDecoder "addComment" optionalArgs object identity
 
 
 addProjectCard : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet addProjectCard Github.Object.AddProjectCardPayload -> FieldDecoder addProjectCard RootMutation
@@ -52,7 +52,7 @@ addProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "addProjectCard" optionalArgs object
+    Object.selectionFieldDecoder "addProjectCard" optionalArgs object identity
 
 
 addProjectColumn : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet addProjectColumn Github.Object.AddProjectColumnPayload -> FieldDecoder addProjectColumn RootMutation
@@ -65,7 +65,7 @@ addProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "addProjectColumn" optionalArgs object
+    Object.selectionFieldDecoder "addProjectColumn" optionalArgs object identity
 
 
 addPullRequestReview : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet addPullRequestReview Github.Object.AddPullRequestReviewPayload -> FieldDecoder addPullRequestReview RootMutation
@@ -78,7 +78,7 @@ addPullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "addPullRequestReview" optionalArgs object
+    Object.selectionFieldDecoder "addPullRequestReview" optionalArgs object identity
 
 
 addPullRequestReviewComment : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet addPullRequestReviewComment Github.Object.AddPullRequestReviewCommentPayload -> FieldDecoder addPullRequestReviewComment RootMutation
@@ -91,7 +91,7 @@ addPullRequestReviewComment fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "addPullRequestReviewComment" optionalArgs object
+    Object.selectionFieldDecoder "addPullRequestReviewComment" optionalArgs object identity
 
 
 addReaction : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet addReaction Github.Object.AddReactionPayload -> FieldDecoder addReaction RootMutation
@@ -104,7 +104,7 @@ addReaction fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "addReaction" optionalArgs object
+    Object.selectionFieldDecoder "addReaction" optionalArgs object identity
 
 
 addStar : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet addStar Github.Object.AddStarPayload -> FieldDecoder addStar RootMutation
@@ -117,7 +117,7 @@ addStar fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "addStar" optionalArgs object
+    Object.selectionFieldDecoder "addStar" optionalArgs object identity
 
 
 createProject : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet createProject Github.Object.CreateProjectPayload -> FieldDecoder createProject RootMutation
@@ -130,7 +130,7 @@ createProject fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "createProject" optionalArgs object
+    Object.selectionFieldDecoder "createProject" optionalArgs object identity
 
 
 declineTopicSuggestion : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet declineTopicSuggestion Github.Object.DeclineTopicSuggestionPayload -> FieldDecoder declineTopicSuggestion RootMutation
@@ -143,7 +143,7 @@ declineTopicSuggestion fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "declineTopicSuggestion" optionalArgs object
+    Object.selectionFieldDecoder "declineTopicSuggestion" optionalArgs object identity
 
 
 deleteProject : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet deleteProject Github.Object.DeleteProjectPayload -> FieldDecoder deleteProject RootMutation
@@ -156,7 +156,7 @@ deleteProject fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "deleteProject" optionalArgs object
+    Object.selectionFieldDecoder "deleteProject" optionalArgs object identity
 
 
 deleteProjectCard : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet deleteProjectCard Github.Object.DeleteProjectCardPayload -> FieldDecoder deleteProjectCard RootMutation
@@ -169,7 +169,7 @@ deleteProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "deleteProjectCard" optionalArgs object
+    Object.selectionFieldDecoder "deleteProjectCard" optionalArgs object identity
 
 
 deleteProjectColumn : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet deleteProjectColumn Github.Object.DeleteProjectColumnPayload -> FieldDecoder deleteProjectColumn RootMutation
@@ -182,7 +182,7 @@ deleteProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "deleteProjectColumn" optionalArgs object
+    Object.selectionFieldDecoder "deleteProjectColumn" optionalArgs object identity
 
 
 deletePullRequestReview : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet deletePullRequestReview Github.Object.DeletePullRequestReviewPayload -> FieldDecoder deletePullRequestReview RootMutation
@@ -195,7 +195,7 @@ deletePullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "deletePullRequestReview" optionalArgs object
+    Object.selectionFieldDecoder "deletePullRequestReview" optionalArgs object identity
 
 
 dismissPullRequestReview : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet dismissPullRequestReview Github.Object.DismissPullRequestReviewPayload -> FieldDecoder dismissPullRequestReview RootMutation
@@ -208,7 +208,7 @@ dismissPullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "dismissPullRequestReview" optionalArgs object
+    Object.selectionFieldDecoder "dismissPullRequestReview" optionalArgs object identity
 
 
 moveProjectCard : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet moveProjectCard Github.Object.MoveProjectCardPayload -> FieldDecoder moveProjectCard RootMutation
@@ -221,7 +221,7 @@ moveProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "moveProjectCard" optionalArgs object
+    Object.selectionFieldDecoder "moveProjectCard" optionalArgs object identity
 
 
 moveProjectColumn : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet moveProjectColumn Github.Object.MoveProjectColumnPayload -> FieldDecoder moveProjectColumn RootMutation
@@ -234,7 +234,7 @@ moveProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "moveProjectColumn" optionalArgs object
+    Object.selectionFieldDecoder "moveProjectColumn" optionalArgs object identity
 
 
 removeOutsideCollaborator : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet removeOutsideCollaborator Github.Object.RemoveOutsideCollaboratorPayload -> FieldDecoder removeOutsideCollaborator RootMutation
@@ -247,7 +247,7 @@ removeOutsideCollaborator fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "removeOutsideCollaborator" optionalArgs object
+    Object.selectionFieldDecoder "removeOutsideCollaborator" optionalArgs object identity
 
 
 removeReaction : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet removeReaction Github.Object.RemoveReactionPayload -> FieldDecoder removeReaction RootMutation
@@ -260,7 +260,7 @@ removeReaction fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "removeReaction" optionalArgs object
+    Object.selectionFieldDecoder "removeReaction" optionalArgs object identity
 
 
 removeStar : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet removeStar Github.Object.RemoveStarPayload -> FieldDecoder removeStar RootMutation
@@ -273,7 +273,7 @@ removeStar fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "removeStar" optionalArgs object
+    Object.selectionFieldDecoder "removeStar" optionalArgs object identity
 
 
 requestReviews : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet requestReviews Github.Object.RequestReviewsPayload -> FieldDecoder requestReviews RootMutation
@@ -286,7 +286,7 @@ requestReviews fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "requestReviews" optionalArgs object
+    Object.selectionFieldDecoder "requestReviews" optionalArgs object identity
 
 
 submitPullRequestReview : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet submitPullRequestReview Github.Object.SubmitPullRequestReviewPayload -> FieldDecoder submitPullRequestReview RootMutation
@@ -299,7 +299,7 @@ submitPullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "submitPullRequestReview" optionalArgs object
+    Object.selectionFieldDecoder "submitPullRequestReview" optionalArgs object identity
 
 
 updateProject : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet updateProject Github.Object.UpdateProjectPayload -> FieldDecoder updateProject RootMutation
@@ -312,7 +312,7 @@ updateProject fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "updateProject" optionalArgs object
+    Object.selectionFieldDecoder "updateProject" optionalArgs object identity
 
 
 updateProjectCard : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet updateProjectCard Github.Object.UpdateProjectCardPayload -> FieldDecoder updateProjectCard RootMutation
@@ -325,7 +325,7 @@ updateProjectCard fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "updateProjectCard" optionalArgs object
+    Object.selectionFieldDecoder "updateProjectCard" optionalArgs object identity
 
 
 updateProjectColumn : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet updateProjectColumn Github.Object.UpdateProjectColumnPayload -> FieldDecoder updateProjectColumn RootMutation
@@ -338,7 +338,7 @@ updateProjectColumn fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "updateProjectColumn" optionalArgs object
+    Object.selectionFieldDecoder "updateProjectColumn" optionalArgs object identity
 
 
 updatePullRequestReview : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet updatePullRequestReview Github.Object.UpdatePullRequestReviewPayload -> FieldDecoder updatePullRequestReview RootMutation
@@ -351,7 +351,7 @@ updatePullRequestReview fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "updatePullRequestReview" optionalArgs object
+    Object.selectionFieldDecoder "updatePullRequestReview" optionalArgs object identity
 
 
 updatePullRequestReviewComment : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet updatePullRequestReviewComment Github.Object.UpdatePullRequestReviewCommentPayload -> FieldDecoder updatePullRequestReviewComment RootMutation
@@ -364,7 +364,7 @@ updatePullRequestReviewComment fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "updatePullRequestReviewComment" optionalArgs object
+    Object.selectionFieldDecoder "updatePullRequestReviewComment" optionalArgs object identity
 
 
 updateSubscription : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet updateSubscription Github.Object.UpdateSubscriptionPayload -> FieldDecoder updateSubscription RootMutation
@@ -377,7 +377,7 @@ updateSubscription fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "updateSubscription" optionalArgs object
+    Object.selectionFieldDecoder "updateSubscription" optionalArgs object identity
 
 
 updateTopics : ({ input : OptionalArgument Value } -> { input : OptionalArgument Value }) -> SelectionSet updateTopics Github.Object.UpdateTopicsPayload -> FieldDecoder updateTopics RootMutation
@@ -390,4 +390,4 @@ updateTopics fillInOptionals object =
             [ Argument.optional "input" filledInOptionals.input identity ]
                 |> List.filterMap identity
     in
-    Object.single "updateTopics" optionalArgs object
+    Object.selectionFieldDecoder "updateTopics" optionalArgs object identity

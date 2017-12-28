@@ -22,14 +22,14 @@ id =
 
 invitee : SelectionSet invitee Github.Object.User -> FieldDecoder invitee Github.Object.RepositoryInvitation
 invitee object =
-    Object.single "invitee" [] object
+    Object.selectionFieldDecoder "invitee" [] object identity
 
 
 inviter : SelectionSet inviter Github.Object.User -> FieldDecoder inviter Github.Object.RepositoryInvitation
 inviter object =
-    Object.single "inviter" [] object
+    Object.selectionFieldDecoder "inviter" [] object identity
 
 
 repository : SelectionSet repository Github.Object.RepositoryInvitationRepository -> FieldDecoder repository Github.Object.RepositoryInvitation
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity

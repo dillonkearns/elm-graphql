@@ -17,7 +17,7 @@ selection constructor =
 
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.ProtectedBranch
 creator object =
-    Object.single "creator" [] object
+    Object.selectionFieldDecoder "creator" [] object identity
 
 
 hasDismissableStaleReviews : FieldDecoder Bool Github.Object.ProtectedBranch
@@ -75,12 +75,12 @@ pushAllowances fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "pushAllowances" optionalArgs object
+    Object.selectionFieldDecoder "pushAllowances" optionalArgs object identity
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.ProtectedBranch
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
 
 
 requiredStatusCheckContexts : FieldDecoder (List String) Github.Object.ProtectedBranch
@@ -98,4 +98,4 @@ reviewDismissalAllowances fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "reviewDismissalAllowances" optionalArgs object
+    Object.selectionFieldDecoder "reviewDismissalAllowances" optionalArgs object identity

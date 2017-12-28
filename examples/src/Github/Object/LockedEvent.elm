@@ -17,7 +17,7 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.LockedEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.LockedEvent
@@ -32,4 +32,4 @@ id =
 
 lockable : SelectionSet lockable Github.Object.Lockable -> FieldDecoder lockable Github.Object.LockedEvent
 lockable object =
-    Object.single "lockable" [] object
+    Object.selectionFieldDecoder "lockable" [] object identity

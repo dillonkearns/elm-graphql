@@ -18,7 +18,7 @@ selection constructor =
 
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.StatusContext
 commit object =
-    Object.single "commit" [] object
+    Object.selectionFieldDecoder "commit" [] object identity
 
 
 context : FieldDecoder String Github.Object.StatusContext
@@ -33,7 +33,7 @@ createdAt =
 
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.StatusContext
 creator object =
-    Object.single "creator" [] object
+    Object.selectionFieldDecoder "creator" [] object identity
 
 
 description : FieldDecoder String Github.Object.StatusContext

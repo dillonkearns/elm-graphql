@@ -17,7 +17,7 @@ selection constructor =
 
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.UnlabeledEvent
 actor object =
-    Object.single "actor" [] object
+    Object.selectionFieldDecoder "actor" [] object identity
 
 
 createdAt : FieldDecoder String Github.Object.UnlabeledEvent
@@ -32,9 +32,9 @@ id =
 
 label : SelectionSet label Github.Object.Label -> FieldDecoder label Github.Object.UnlabeledEvent
 label object =
-    Object.single "label" [] object
+    Object.selectionFieldDecoder "label" [] object identity
 
 
 labelable : SelectionSet labelable Github.Object.Labelable -> FieldDecoder labelable Github.Object.UnlabeledEvent
 labelable object =
-    Object.single "labelable" [] object
+    Object.selectionFieldDecoder "labelable" [] object identity

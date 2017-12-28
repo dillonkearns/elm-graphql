@@ -22,4 +22,4 @@ cursor =
 
 node : SelectionSet node Github.Object.Milestone -> FieldDecoder node Github.Object.MilestoneEdge
 node object =
-    Object.single "node" [] object
+    Object.selectionFieldDecoder "node" [] object identity

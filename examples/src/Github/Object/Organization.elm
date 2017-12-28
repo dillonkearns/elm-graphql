@@ -73,7 +73,7 @@ members fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.single "members" optionalArgs object
+    Object.selectionFieldDecoder "members" optionalArgs object identity
 
 
 name : FieldDecoder String Github.Object.Organization
@@ -106,12 +106,12 @@ pinnedRepositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum toString |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.single "pinnedRepositories" optionalArgs object
+    Object.selectionFieldDecoder "pinnedRepositories" optionalArgs object identity
 
 
 project : { number : String } -> SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.Organization
 project requiredArgs object =
-    Object.single "project" [ Argument.string "number" requiredArgs.number ] object
+    Object.selectionFieldDecoder "project" [ Argument.string "number" requiredArgs.number ] object identity
 
 
 projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Object.Organization
@@ -124,7 +124,7 @@ projects fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.single "projects" optionalArgs object
+    Object.selectionFieldDecoder "projects" optionalArgs object identity
 
 
 projectsResourcePath : FieldDecoder String Github.Object.Organization
@@ -147,12 +147,12 @@ repositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum toString |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals.isFork Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.single "repositories" optionalArgs object
+    Object.selectionFieldDecoder "repositories" optionalArgs object identity
 
 
 repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Organization
 repository requiredArgs object =
-    Object.single "repository" [ Argument.string "name" requiredArgs.name ] object
+    Object.selectionFieldDecoder "repository" [ Argument.string "name" requiredArgs.name ] object identity
 
 
 resourcePath : FieldDecoder String Github.Object.Organization
@@ -162,12 +162,12 @@ resourcePath =
 
 samlIdentityProvider : SelectionSet samlIdentityProvider Github.Object.OrganizationIdentityProvider -> FieldDecoder samlIdentityProvider Github.Object.Organization
 samlIdentityProvider object =
-    Object.single "samlIdentityProvider" [] object
+    Object.selectionFieldDecoder "samlIdentityProvider" [] object identity
 
 
 team : { slug : String } -> SelectionSet team Github.Object.Team -> FieldDecoder team Github.Object.Organization
 team requiredArgs object =
-    Object.single "team" [ Argument.string "slug" requiredArgs.slug ] object
+    Object.selectionFieldDecoder "team" [ Argument.string "slug" requiredArgs.slug ] object identity
 
 
 teams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy, role : OptionalArgument Github.Enum.TeamRole.TeamRole, query : OptionalArgument String, userLogins : OptionalArgument (List String), orderBy : OptionalArgument Value, ldapMapped : OptionalArgument Bool, rootTeamsOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy, role : OptionalArgument Github.Enum.TeamRole.TeamRole, query : OptionalArgument String, userLogins : OptionalArgument (List String), orderBy : OptionalArgument Value, ldapMapped : OptionalArgument Bool, rootTeamsOnly : OptionalArgument Bool }) -> SelectionSet teams Github.Object.TeamConnection -> FieldDecoder teams Github.Object.Organization
@@ -180,7 +180,7 @@ teams fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "role" filledInOptionals.role (Encode.enum toString), Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "ldapMapped" filledInOptionals.ldapMapped Encode.bool, Argument.optional "rootTeamsOnly" filledInOptionals.rootTeamsOnly Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.single "teams" optionalArgs object
+    Object.selectionFieldDecoder "teams" optionalArgs object identity
 
 
 teamsResourcePath : FieldDecoder String Github.Object.Organization

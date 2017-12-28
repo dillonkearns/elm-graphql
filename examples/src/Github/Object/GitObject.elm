@@ -42,4 +42,4 @@ oid =
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.GitObject
 repository object =
-    Object.single "repository" [] object
+    Object.selectionFieldDecoder "repository" [] object identity
