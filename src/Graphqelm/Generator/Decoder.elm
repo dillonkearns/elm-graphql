@@ -6,111 +6,105 @@ import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
 generateDecoder : List String -> TypeReference -> List String
-generateDecoder apiSubmodule typeRef =
-    case typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.Scalar scalar ->
-                    case scalar of
-                        Scalar.String ->
-                            [ "Decode.string" ]
+generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
+    case referrableType of
+        Type.Scalar scalar ->
+            case scalar of
+                Scalar.String ->
+                    [ "Decode.string" ]
 
-                        Scalar.Boolean ->
-                            [ "Decode.bool" ]
+                Scalar.Boolean ->
+                    [ "Decode.bool" ]
 
-                        Scalar.Int ->
-                            [ "Decode.int" ]
+                Scalar.Int ->
+                    [ "Decode.int" ]
 
-                        Scalar.Float ->
-                            [ "Decode.float" ]
+                Scalar.Float ->
+                    [ "Decode.float" ]
 
-                Type.List listTypeRef ->
-                    generateDecoder apiSubmodule listTypeRef ++ [ "Decode.list" ]
+        Type.List listTypeRef ->
+            generateDecoder apiSubmodule listTypeRef ++ [ "Decode.list" ]
 
-                Type.ObjectRef objectName ->
-                    [ "identity" ]
+        Type.ObjectRef objectName ->
+            [ "identity" ]
 
-                Type.InterfaceRef interfaceName ->
-                    [ "identity" ]
+        Type.InterfaceRef interfaceName ->
+            [ "identity" ]
 
-                Type.EnumRef enumName ->
-                    [ (Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
-                        ++ [ "decoder" ]
-                      )
-                        |> String.join "."
-                    ]
+        Type.EnumRef enumName ->
+            [ (Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
+                ++ [ "decoder" ]
+              )
+                |> String.join "."
+            ]
 
-                Type.InputObjectRef _ ->
-                    Debug.crash "Input objects are only for input not responses, shouldn't need decoder."
+        Type.InputObjectRef _ ->
+            Debug.crash "Input objects are only for input not responses, shouldn't need decoder."
 
 
 generateEncoder : TypeReference -> String
-generateEncoder typeRef =
-    case typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.Scalar scalar ->
-                    case scalar of
-                        Scalar.String ->
-                            "Encode.string"
+generateEncoder (Type.TypeReference referrableType isNullable) =
+    case referrableType of
+        Type.Scalar scalar ->
+            case scalar of
+                Scalar.String ->
+                    "Encode.string"
 
-                        Scalar.Boolean ->
-                            "Encode.bool"
+                Scalar.Boolean ->
+                    "Encode.bool"
 
-                        Scalar.Int ->
-                            "Encode.int"
+                Scalar.Int ->
+                    "Encode.int"
 
-                        Scalar.Float ->
-                            "Encode.float"
+                Scalar.Float ->
+                    "Encode.float"
 
-                Type.List typeRef ->
-                    generateEncoder typeRef ++ " |> Encode.list"
+        Type.List typeRef ->
+            generateEncoder typeRef ++ " |> Encode.list"
 
-                Type.ObjectRef objectName ->
-                    Debug.crash "I don't expect to see object references as argument types."
+        Type.ObjectRef objectName ->
+            Debug.crash "I don't expect to see object references as argument types."
 
-                Type.InterfaceRef interfaceName ->
-                    Debug.crash "I don't expect to see object references as argument types."
+        Type.InterfaceRef interfaceName ->
+            Debug.crash "I don't expect to see object references as argument types."
 
-                Type.EnumRef enumName ->
-                    "(Encode.enum toString)"
+        Type.EnumRef enumName ->
+            "(Encode.enum toString)"
 
-                Type.InputObjectRef inputObjectName ->
-                    "identity"
+        Type.InputObjectRef inputObjectName ->
+            "identity"
 
 
 generateType : List String -> String -> TypeReference -> String
-generateType apiSubmodule fieldName typeRef =
-    case typeRef of
-        Type.TypeReference referrableType isNullable ->
-            case referrableType of
-                Type.Scalar scalar ->
-                    case scalar of
-                        Scalar.String ->
-                            "String"
+generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullable) =
+    case referrableType of
+        Type.Scalar scalar ->
+            case scalar of
+                Scalar.String ->
+                    "String"
 
-                        Scalar.Boolean ->
-                            "Bool"
+                Scalar.Boolean ->
+                    "Bool"
 
-                        Scalar.Int ->
-                            "Int"
+                Scalar.Int ->
+                    "Int"
 
-                        Scalar.Float ->
-                            "Float"
+                Scalar.Float ->
+                    "Float"
 
-                Type.List typeRef ->
-                    "(List " ++ generateType apiSubmodule fieldName typeRef ++ ")"
+        Type.List typeRef ->
+            "(List " ++ generateType apiSubmodule fieldName typeRef ++ ")"
 
-                Type.ObjectRef objectName ->
-                    fieldName
+        Type.ObjectRef objectName ->
+            fieldName
 
-                Type.InterfaceRef interfaceName ->
-                    fieldName
+        Type.InterfaceRef interfaceName ->
+            fieldName
 
-                Type.EnumRef enumName ->
-                    Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
-                        ++ [ enumName ]
-                        |> String.join "."
+        Type.EnumRef enumName ->
+            Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
+                ++ [ enumName ]
+                |> String.join "."
 
-                Type.InputObjectRef _ ->
-                    "Value"
+        Type.InputObjectRef _ ->
+            "Value"
