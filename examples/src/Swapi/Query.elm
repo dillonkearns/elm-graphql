@@ -19,7 +19,7 @@ selection constructor =
 
 droid : { id : String } -> SelectionSet droid Swapi.Object.Droid -> FieldDecoder droid RootQuery
 droid requiredArgs object =
-    Object.single "droid" [ Argument.string "id" requiredArgs.id ] object
+    Object.selectionFieldDecoder "droid" [ Argument.string "id" requiredArgs.id ] object identity
 
 
 hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Object.Character -> FieldDecoder hero RootQuery
@@ -32,9 +32,9 @@ hero fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
                 |> List.filterMap identity
     in
-    Object.single "hero" optionalArgs object
+    Object.selectionFieldDecoder "hero" optionalArgs object identity
 
 
 human : { id : String } -> SelectionSet human Swapi.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
-    Object.single "human" [ Argument.string "id" requiredArgs.id ] object
+    Object.selectionFieldDecoder "human" [ Argument.string "id" requiredArgs.id ] object identity
