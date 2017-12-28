@@ -4,6 +4,7 @@ import { GraphQLClient } from 'graphql-request'
 import * as http from 'http'
 import * as minimist from 'minimist'
 import * as request from 'request'
+import { spawn } from 'child_process'
 
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
@@ -35,14 +36,40 @@ if (!graphqlUrl) {
 }
 const tsDeclarationPath = args.output
 
+const writeWithElmFormat = (path: string, value: string): void => {
+  const elmFormat = spawn('./node_modules/.bin/elm-format', [
+    '--stdin',
+    '--output',
+    path
+  ])
+
+  elmFormat.stdin.write(value)
+  elmFormat.stdin.end()
+
+  elmFormat.stdout.on('data', data => {
+    console.log(data.toString())
+  })
+
+  elmFormat.stderr.on('data', data => {
+    console.log(data.toString())
+  })
+
+  elmFormat.on('close', code => {
+    if (code !== 0) {
+      console.log(`elm-format process exited with code ${code}`)
+    }
+  })
+}
+
 const onDataAvailable = (data: {}) => {
   let app = Elm.Main.worker({ data, baseModule })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Object`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Enum`)
     for (let key in generatedFile) {
+      let path = './src/' + key
       let value = generatedFile[key]
-      fs.writeFileSync('./src/' + key, value)
+      writeWithElmFormat(path, value)
     }
   })
 }
