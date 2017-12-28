@@ -1617,7 +1617,7 @@ new graphql_request_1.GraphQLClient(graphqlUrl, {
     onDataAvailable(data);
 })
     .catch(function (err) {
-    console.log('error', err);
+    console.log(err.response);
     process.exit(1);
 });
 
@@ -8804,7 +8804,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString = function 
 				_p14)),
 		' ');
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$common = F2(
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F2(
 	function (returnAnnotation, field) {
 		var something = A2(
 			_elm_lang$core$String$join,
@@ -8866,7 +8866,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_ = F4(
 			'.',
 			A3(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$object, apiSubmodule, specialObjectNames, thisObjectName));
 		return A2(
-			_dillonkearns$graphqelm$Graphqelm_Generator_Field$common,
+			_dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString,
 			A2(
 				_dillonkearns$graphqelm$Interpolate$interpolate,
 				'FieldDecoder {0} {1}',
