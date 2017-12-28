@@ -23,7 +23,7 @@ appearsIn =
 
 friends : SelectionSet friends Swapi.Object.Character -> FieldDecoder (List friends) Swapi.Object.Character
 friends object =
-    Object.listOf "friends" [] object
+    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
 
 
 id : FieldDecoder String Swapi.Object.Character
