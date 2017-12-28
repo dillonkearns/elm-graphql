@@ -5,7 +5,7 @@ import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
-generateDecoder : List String -> TypeReference -> String
+generateDecoder : List String -> TypeReference -> List String
 generateDecoder apiSubmodule typeRef =
     case typeRef of
         Type.TypeReference referrableType isNullable ->
@@ -13,31 +13,32 @@ generateDecoder apiSubmodule typeRef =
                 Type.Scalar scalar ->
                     case scalar of
                         Scalar.String ->
-                            "Decode.string"
+                            [ "Decode.string" ]
 
                         Scalar.Boolean ->
-                            "Decode.bool"
+                            [ "Decode.bool" ]
 
                         Scalar.Int ->
-                            "Decode.int"
+                            [ "Decode.int" ]
 
                         Scalar.Float ->
-                            "Decode.float"
+                            [ "Decode.float" ]
 
                 Type.List listTypeRef ->
-                    generateDecoder apiSubmodule listTypeRef ++ " |> Decode.list"
+                    generateDecoder apiSubmodule listTypeRef ++ [ "Decode.list" ]
 
                 Type.ObjectRef objectName ->
-                    apiSubmodule ++ [ "Object", objectName, "decoder" ] |> String.join "."
+                    [ "identity" ]
 
                 Type.InterfaceRef interfaceName ->
-                    apiSubmodule ++ [ "Object", interfaceName, "decoder" ] |> String.join "."
+                    [ "identity" ]
 
                 Type.EnumRef enumName ->
-                    (Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
+                    [ (Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName
                         ++ [ "decoder" ]
-                    )
+                      )
                         |> String.join "."
+                    ]
 
                 Type.InputObjectRef _ ->
                     Debug.crash "Input objects are only for input not responses, shouldn't need decoder."
@@ -78,8 +79,8 @@ generateEncoder typeRef =
                     "identity"
 
 
-generateType : List String -> TypeReference -> String
-generateType apiSubmodule typeRef =
+generateType : List String -> String -> TypeReference -> String
+generateType apiSubmodule fieldName typeRef =
     case typeRef of
         Type.TypeReference referrableType isNullable ->
             case referrableType of
@@ -98,13 +99,13 @@ generateType apiSubmodule typeRef =
                             "Float"
 
                 Type.List typeRef ->
-                    "(List " ++ generateType apiSubmodule typeRef ++ ")"
+                    "(List " ++ generateType apiSubmodule fieldName typeRef ++ ")"
 
                 Type.ObjectRef objectName ->
-                    "Object." ++ objectName
+                    fieldName
 
                 Type.InterfaceRef interfaceName ->
-                    "Object." ++ interfaceName
+                    fieldName
 
                 Type.EnumRef enumName ->
                     Graphqelm.Generator.Enum.moduleNameFor apiSubmodule enumName

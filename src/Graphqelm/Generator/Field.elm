@@ -7,7 +7,7 @@ import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
-import Graphqelm.Parser.Type as Type exposing (TypeReference)
+import Graphqelm.Parser.Type as Type exposing (ReferrableType, TypeReference)
 import Interpolate exposing (interpolate)
 
 
@@ -19,6 +19,7 @@ type alias FieldGenerator =
     , fieldName : String
     , otherThing : String
     , letBindings : List LetBinding
+    , objectDecoderChain : Maybe String
     }
 
 
@@ -55,7 +56,7 @@ fieldGeneratorToString returnAnnotation field =
     interpolate
         """{6} : {3}
 {6} {4}={7}
-      {5} "{0}" {1} ({2})
+      {5} "{0}" {1} ({2}){8}
 """
         [ field.fieldName
         , field |> fieldArgsString
@@ -65,6 +66,7 @@ fieldGeneratorToString returnAnnotation field =
         , "Object" ++ field.otherThing
         , Normalize.fieldName field.fieldName
         , Let.generate field.letBindings
+        , field.objectDecoderChain |> Maybe.withDefault ""
         ]
 
 
@@ -124,6 +126,36 @@ addOptionalArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
+compositeDecoders : TypeReference -> List String
+compositeDecoders ((Type.TypeReference referrableType isNullable) as typeRef) =
+    (case isNullable of
+        Type.Nullable ->
+            [ "Decode.maybe" ]
+
+        Type.NonNullable ->
+            []
+    )
+        ++ (case referrableType of
+                Type.List nestedTypeRef ->
+                    "Decode.list" :: compositeDecoders nestedTypeRef
+
+                Type.Scalar _ ->
+                    []
+
+                Type.EnumRef _ ->
+                    []
+
+                Type.ObjectRef _ ->
+                    []
+
+                Type.InputObjectRef _ ->
+                    Debug.crash "TODO"
+
+                Type.InterfaceRef _ ->
+                    []
+           )
+
+
 objectThing : List String -> SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
 objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
     let
@@ -134,11 +166,18 @@ objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
     in
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = fieldName
+    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule fieldName typeRef
     , decoder = "object"
     , fieldName = fieldName
-    , otherThing = ".single"
+    , otherThing = ".selectionFieldDecoder"
     , letBindings = []
+    , objectDecoderChain =
+        " ("
+            ++ (Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
+                    |> String.join " >> "
+               )
+            ++ ")"
+            |> Just
     }
         |> prependArg
             { annotation = objectArgAnnotation
@@ -151,34 +190,48 @@ prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
 
 
-objectListThing : List String -> SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
-objectListThing apiSubmodule specialObjectNames fieldName typeRef refName =
-    let
-        commonObjectThing =
-            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
-    in
-    { commonObjectThing
-        | decoderAnnotation = interpolate "(List {0})" [ fieldName ]
-        , otherThing = ".listOf"
-    }
+type LeafRef
+    = ObjectLeaf String
+    | InterfaceLeaf String
+    | EnumLeaf
+    | ScalarLeaf
+
+
+leafType : TypeReference -> LeafRef
+leafType (Type.TypeReference referrableType isNullable) =
+    case referrableType of
+        Type.ObjectRef refName ->
+            ObjectLeaf refName
+
+        Type.InterfaceRef refName ->
+            InterfaceLeaf refName
+
+        Type.Scalar _ ->
+            ScalarLeaf
+
+        Type.List nestedReferrableType ->
+            leafType nestedReferrableType
+
+        Type.EnumRef _ ->
+            EnumLeaf
+
+        Type.InputObjectRef _ ->
+            Debug.crash "Unexpected type"
 
 
 init : List String -> SpecialObjectNames -> String -> TypeReference -> FieldGenerator
 init apiSubmodule specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
-    case referrableType of
-        Type.ObjectRef refName ->
+    case leafType typeRef of
+        ObjectLeaf refName ->
             objectThing apiSubmodule specialObjectNames fieldName typeRef refName
 
-        Type.InterfaceRef refName ->
+        InterfaceLeaf refName ->
             objectThing apiSubmodule specialObjectNames fieldName typeRef refName
 
-        Type.List (Type.TypeReference (Type.InterfaceRef refName) isInterfaceNullable) ->
-            objectListThing apiSubmodule specialObjectNames fieldName typeRef refName
+        EnumLeaf ->
+            initScalarField apiSubmodule fieldName typeRef
 
-        Type.List (Type.TypeReference (Type.ObjectRef refName) isObjectNullable) ->
-            objectListThing apiSubmodule specialObjectNames fieldName typeRef refName
-
-        _ ->
+        ScalarLeaf ->
             initScalarField apiSubmodule fieldName typeRef
 
 
@@ -186,9 +239,12 @@ initScalarField : List String -> String -> TypeReference -> FieldGenerator
 initScalarField apiSubmodule fieldName typeRef =
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
-    , decoder = Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
+    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule fieldName typeRef
+    , decoder =
+        Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
+            |> String.join " |> "
     , fieldName = fieldName
     , otherThing = ".fieldDecoder"
     , letBindings = []
+    , objectDecoderChain = Nothing
     }

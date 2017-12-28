@@ -38,7 +38,7 @@ me =
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid RootQuery
 droid object =
-      Object.single "droid" [] (object)
+      Object.selectionFieldDecoder "droid" [] (object) (identity)
 """
         , test "simple object with no args for object" <|
             \() ->
@@ -50,7 +50,7 @@ droid object =
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
 droid object =
-      Object.single "droid" [] (object)
+      Object.selectionFieldDecoder "droid" [] (object) (identity)
 """
         , test "list of objects with no args" <|
             \() ->
@@ -62,7 +62,7 @@ droid object =
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
 droid object =
-      Object.listOf "droid" [] (object)
+      Object.selectionFieldDecoder "droid" [] (object) (identity >> Decode.list)
 """
         , test "with required args" <|
             \() ->
@@ -74,7 +74,7 @@ droid object =
                     |> Expect.equal
                         """human : { id : String } -> SelectionSet human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
-      Object.single "human" [ Argument.string "id" requiredArgs.id ] (object)
+      Object.selectionFieldDecoder "human" [ Argument.string "id" requiredArgs.id ] (object) (identity)
 """
         , test "with optional args" <|
             \() ->
@@ -94,7 +94,7 @@ menuItems fillInOptionals object =
             [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.listOf "menuItems" optionalArgs (object)
+      Object.selectionFieldDecoder "menuItems" optionalArgs (object) (identity >> Decode.list)
 """
         , test "normalizes reserved names" <|
             \() ->
