@@ -8014,6 +8014,88 @@ var _dillonkearns$graphqelm$Interpolate$interpolate = F2(
 			string);
 	});
 
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argDoc = function (_p0) {
+	var _p1 = _p0;
+	return A2(
+		_elm_lang$core$Maybe$map,
+		function (aDescription) {
+			return A2(
+				_dillonkearns$graphqelm$Interpolate$interpolate,
+				'  - {0} - {1}',
+				{
+					ctor: '::',
+					_0: _p1.name,
+					_1: {
+						ctor: '::',
+						_0: aDescription,
+						_1: {ctor: '[]'}
+					}
+				});
+		},
+		_p1.description);
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argsDoc = function (args) {
+	var _p2 = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argDoc, args);
+	if (_p2.ctor === '[]') {
+		return '';
+	} else {
+		return A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'\n\n{0}\n',
+			{
+				ctor: '::',
+				_0: A2(_elm_lang$core$String$join, '\n', _p2),
+				_1: {ctor: '[]'}
+			});
+	}
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs = F2(
+	function (mainDescription, itemDescriptions) {
+		var _p3 = mainDescription;
+		if (_p3.ctor === 'Just') {
+			return true;
+		} else {
+			return !_elm_lang$core$List$isEmpty(
+				A2(
+					_elm_lang$core$List$filterMap,
+					function (_) {
+						return _.description;
+					},
+					itemDescriptions));
+		}
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_ = F2(
+	function (mainDescription, itemDescriptions) {
+		return A2(_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs, mainDescription, itemDescriptions) ? A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'{-|{0}{1}\n-}\n',
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Maybe$withDefault,
+					'',
+					A2(
+						_elm_lang$core$Maybe$map,
+						function (description) {
+							return A2(_elm_lang$core$Basics_ops['++'], ' ', description);
+						},
+						mainDescription)),
+				_1: {
+					ctor: '::',
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argsDoc(itemDescriptions),
+					_1: {ctor: '[]'}
+				}
+			}) : '';
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate = function (_p4) {
+	var _p5 = _p4;
+	return A2(_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_, _p5.description, _p5.args);
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generateForEnum = F2(
+	function (description, enumValues) {
+		return A2(_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_, description, enumValues);
+	});
+
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 	function (enumName, enumValues) {
 		return A2(
@@ -8117,7 +8199,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend = F4(
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDocs = F2(
 	function (enumDescription, enumValues) {
-		return '{-| One of the films in the Star Wars Trilogy\n\n  - NEWHOPE - Released in 1977.\n  - EMPIRE - Released in 1980.\n  - JEDI - Released in 1983.\n\n-}\n';
+		return A2(_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generateForEnum, enumDescription, enumValues);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$generate = F4(
 	function (apiSubmodule, enumName, enumValues, description) {
@@ -8339,80 +8421,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 				}
 			}());
 	});
-
-var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argDoc = function (_p0) {
-	var _p1 = _p0;
-	return A2(
-		_elm_lang$core$Maybe$map,
-		function (aDescription) {
-			return A2(
-				_dillonkearns$graphqelm$Interpolate$interpolate,
-				'  - {0} - {1}',
-				{
-					ctor: '::',
-					_0: _p1.name,
-					_1: {
-						ctor: '::',
-						_0: aDescription,
-						_1: {ctor: '[]'}
-					}
-				});
-		},
-		_p1.description);
-};
-var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argsDoc = function (args) {
-	var _p2 = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argDoc, args);
-	if (_p2.ctor === '[]') {
-		return '';
-	} else {
-		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'\n\n{0}\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '\n', _p2),
-				_1: {ctor: '[]'}
-			});
-	}
-};
-var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs = function (_p3) {
-	var _p4 = _p3;
-	var _p5 = _p4.description;
-	if (_p5.ctor === 'Just') {
-		return true;
-	} else {
-		return !_elm_lang$core$List$isEmpty(
-			A2(
-				_elm_lang$core$List$filterMap,
-				function (_) {
-					return _.description;
-				},
-				_p4.args));
-	}
-};
-var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate = function (_p6) {
-	var _p7 = _p6;
-	return _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs(_p7) ? A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
-		'{-|{0}{1}\n-}\n',
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$core$Maybe$withDefault,
-				'',
-				A2(
-					_elm_lang$core$Maybe$map,
-					function (description) {
-						return A2(_elm_lang$core$Basics_ops['++'], ' ', description);
-					},
-					_p7.description)),
-			_1: {
-				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argsDoc(_p7.args),
-				_1: {ctor: '[]'}
-			}
-		}) : '';
-};
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_SpecialObjectNames$SpecialObjectNames = F2(
 	function (a, b) {

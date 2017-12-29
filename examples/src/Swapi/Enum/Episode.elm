@@ -5,9 +5,9 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| One of the films in the Star Wars Trilogy
 
-  - NEWHOPE - Released in 1977.
   - EMPIRE - Released in 1980.
   - JEDI - Released in 1983.
+  - NEWHOPE - Released in 1977.
 
 -}
 type Episode

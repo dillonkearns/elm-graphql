@@ -1,5 +1,6 @@
 module Graphqelm.Generator.Enum exposing (..)
 
+import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
@@ -13,14 +14,7 @@ generate apiSubmodule enumName enumValues description =
 
 enumDocs : Maybe String -> List EnumValue -> String
 enumDocs enumDescription enumValues =
-    """{-| One of the films in the Star Wars Trilogy
-
-  - NEWHOPE - Released in 1977.
-  - EMPIRE - Released in 1980.
-  - JEDI - Released in 1983.
-
--}
-"""
+    DocComment.generateForEnum enumDescription enumValues
 
 
 moduleNameFor : List String -> String -> List String

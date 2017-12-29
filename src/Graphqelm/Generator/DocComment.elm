@@ -1,33 +1,43 @@
-module Graphqelm.Generator.DocComment exposing (generate)
+module Graphqelm.Generator.DocComment exposing (generate, generateForEnum)
 
-import Graphqelm.Parser.Type as Type exposing (Field, ReferrableType, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (EnumValue, Field, ReferrableType, TypeReference)
 import Interpolate exposing (interpolate)
 
 
-hasDocs : Field -> Bool
-hasDocs { description, args } =
-    case description of
+hasDocs : Maybe String -> List { item | name : String, description : Maybe String } -> Bool
+hasDocs mainDescription itemDescriptions =
+    case mainDescription of
         Just string ->
             True
 
         Nothing ->
-            List.filterMap .description args
+            List.filterMap .description itemDescriptions
                 |> List.isEmpty
                 |> not
 
 
 generate : Field -> String
-generate ({ description, args } as field) =
-    if hasDocs field then
+generate { description, args } =
+    generate_ description args
+
+
+generate_ : Maybe String -> List { item | name : String, description : Maybe String } -> String
+generate_ mainDescription itemDescriptions =
+    if hasDocs mainDescription itemDescriptions then
         interpolate """{-|{0}{1}
 -}
 """
-            [ description |> Maybe.map (\description -> " " ++ description) |> Maybe.withDefault "", argsDoc args ]
+            [ mainDescription |> Maybe.map (\description -> " " ++ description) |> Maybe.withDefault "", argsDoc itemDescriptions ]
     else
         ""
 
 
-argsDoc : List Type.Arg -> String
+generateForEnum : Maybe String -> List EnumValue -> String
+generateForEnum description enumValues =
+    generate_ description enumValues
+
+
+argsDoc : List { item | name : String, description : Maybe String } -> String
 argsDoc args =
     case List.filterMap argDoc args of
         [] ->
@@ -37,7 +47,7 @@ argsDoc args =
             interpolate "\n\n{0}\n" [ argDocs |> String.join "\n" ]
 
 
-argDoc : Type.Arg -> Maybe String
+argDoc : { item | name : String, description : Maybe String } -> Maybe String
 argDoc { name, description } =
     Maybe.map
         (\aDescription ->
