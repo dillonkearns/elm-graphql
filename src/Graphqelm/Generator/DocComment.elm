@@ -24,7 +24,7 @@ argsDoc args =
             ""
 
         _ ->
-            "\n\n  - id - The human's id.\n"
+            interpolate "\n\n{0}\n" [ "  - id - The human's id." ]
 
 
 argDoc : Type.Arg -> String
