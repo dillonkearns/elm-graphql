@@ -7453,8 +7453,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString = function (maybe
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Graphqelm.Parser.Type',
 			{
-				start: {line: 195, column: 5},
-				end: {line: 200, column: 58}
+				start: {line: 196, column: 5},
+				end: {line: 201, column: 58}
 			},
 			_p0)('Expected string but got Nothing');
 	}
@@ -7487,24 +7487,27 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$RawArg = F3(
 	function (a, b, c) {
 		return {name: a, description: b, ofType: c};
 	});
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition = F2(
-	function (a, b) {
-		return {ctor: 'TypeDefinition', _0: a, _1: b};
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition = F3(
+	function (a, b, c) {
+		return {ctor: 'TypeDefinition', _0: a, _1: b, _2: c};
 	});
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumType = function (a) {
 	return {ctor: 'EnumType', _0: a};
 };
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$createEnum = F2(
-	function (enumName, enumValues) {
-		return A2(
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$createEnum = F3(
+	function (enumName, description, enumValues) {
+		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition,
 			enumName,
-			_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumType(enumValues));
+			_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumType(enumValues),
+			description);
 	});
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$enumDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$enumDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$createEnum,
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	_elm_lang$core$Json_Decode$maybe(
+		A2(_elm_lang$core$Json_Decode$field, 'description', _elm_lang$core$Json_Decode$string)),
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'enumValues',
@@ -7514,26 +7517,28 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceType = function (a) {
 };
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$createInterface = F2(
 	function (interfaceName, fields) {
-		return A2(
+		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition,
 			interfaceName,
-			_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceType(fields));
+			_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceType(fields),
+			_elm_lang$core$Maybe$Nothing);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectType = function (a) {
 	return {ctor: 'ObjectType', _0: a};
 };
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$createObject = F2(
 	function (objectName, fields) {
-		return A2(
+		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition,
 			objectName,
-			_dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectType(fields));
+			_dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectType(fields),
+			_elm_lang$core$Maybe$Nothing);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$ScalarType = {ctor: 'ScalarType'};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$scalarDecoder = A2(
 	_elm_lang$core$Json_Decode$map,
 	function (scalarName) {
-		return A2(_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition, scalarName, _dillonkearns$graphqelm$Graphqelm_Parser_Type$ScalarType);
+		return A3(_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition, scalarName, _dillonkearns$graphqelm$Graphqelm_Parser_Type$ScalarType, _elm_lang$core$Maybe$Nothing);
 	},
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string));
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference = F2(
@@ -7581,8 +7586,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 207, column: 13},
-						end: {line: 212, column: 73}
+						start: {line: 208, column: 13},
+						end: {line: 213, column: 73}
 					},
 					_p5)('Missing nested type for List reference');
 			}
@@ -7598,8 +7603,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 215, column: 13},
-						end: {line: 222, column: 82}
+						start: {line: 216, column: 13},
+						end: {line: 223, column: 82}
 					},
 					_p7)('Should not get null names for scalar references');
 			}
@@ -7614,8 +7619,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 225, column: 13},
-						end: {line: 230, column: 85}
+						start: {line: 226, column: 13},
+						end: {line: 231, column: 85}
 					},
 					_p9)('Should not get null names for interface references');
 			}
@@ -7630,8 +7635,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 233, column: 13},
-						end: {line: 238, column: 82}
+						start: {line: 234, column: 13},
+						end: {line: 239, column: 82}
 					},
 					_p11)('Should not get null names for object references');
 			}
@@ -7672,8 +7677,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 							return _elm_lang$core$Native_Utils.crashCase(
 								'Graphqelm.Parser.Type',
 								{
-									start: {line: 256, column: 29},
-									end: {line: 261, column: 51}
+									start: {line: 257, column: 29},
+									end: {line: 262, column: 51}
 								},
 								_p15)('');
 						}
@@ -7681,8 +7686,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Graphqelm.Parser.Type',
 							{
-								start: {line: 243, column: 21},
-								end: {line: 273, column: 103}
+								start: {line: 244, column: 21},
+								end: {line: 274, column: 103}
 							},
 							_p14)('Can\'t have nested non-null types');
 					case 'Ignore':
@@ -7716,8 +7721,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 282, column: 13},
-						end: {line: 287, column: 80}
+						start: {line: 283, column: 13},
+						end: {line: 288, column: 80}
 					},
 					_p19)('Should not get null names for enum references');
 			}
@@ -7732,8 +7737,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 290, column: 13},
-						end: {line: 295, column: 88}
+						start: {line: 291, column: 13},
+						end: {line: 296, column: 88}
 					},
 					_p21)('Should not get null names for input object references');
 			}
@@ -8087,8 +8092,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$moduleNameFor = F2(
 				}
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend = F3(
-	function (apiSubmodule, enumName, enumValues) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend = F4(
+	function (apiSubmodule, enumName, enumValues, docComment) {
 		return A2(
 			_elm_lang$core$Basics_ops['++'],
 			A2(
@@ -8104,15 +8109,27 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend = F3(
 				}),
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumType, enumName, enumValues),
-				A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder, enumName, enumValues)));
+				docComment,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumType, enumName, enumValues),
+					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder, enumName, enumValues))));
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$generate = F3(
-	function (apiSubmodule, enumName, enumValues) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDocs = F2(
+	function (enumDescription, enumValues) {
+		return '{-| One of the films in the Star Wars Trilogy\n\n  - NEWHOPE - Released in 1977.\n  - EMPIRE - Released in 1980.\n  - JEDI - Released in 1983.\n\n-}\n';
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$generate = F4(
+	function (apiSubmodule, enumName, enumValues, description) {
 		return {
 			ctor: '_Tuple2',
 			_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$moduleNameFor, apiSubmodule, enumName),
-			_1: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend, apiSubmodule, enumName, enumValues)
+			_1: A4(
+				_dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend,
+				apiSubmodule,
+				enumName,
+				enumValues,
+				A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDocs, description, enumValues))
 		};
 	});
 
@@ -9327,7 +9344,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$toPair = F4(
 				return _elm_lang$core$Maybe$Nothing;
 			case 'EnumType':
 				return _elm_lang$core$Maybe$Just(
-					A3(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$generate, apiSubmodule, _p4, _p2._0));
+					A4(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$generate, apiSubmodule, _p4, _p2._0, _p1._2));
 			default:
 				return _elm_lang$core$Maybe$Just(
 					A4(

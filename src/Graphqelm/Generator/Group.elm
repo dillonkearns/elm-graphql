@@ -92,7 +92,7 @@ toPair apiSubmodule queryObjectName mutationObjectName ((Type.TypeDefinition nam
             Nothing
 
         Type.EnumType enumValues ->
-            Graphqelm.Generator.Enum.generate apiSubmodule name enumValues
+            Graphqelm.Generator.Enum.generate apiSubmodule name enumValues description
                 |> Just
 
         Type.InterfaceType fields ->

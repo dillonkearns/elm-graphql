@@ -4,11 +4,23 @@ import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
 
-generate : List String -> String -> List EnumValue -> ( List String, String )
-generate apiSubmodule enumName enumValues =
+generate : List String -> String -> List EnumValue -> Maybe String -> ( List String, String )
+generate apiSubmodule enumName enumValues description =
     ( moduleNameFor apiSubmodule enumName
-    , prepend apiSubmodule enumName enumValues
+    , prepend apiSubmodule enumName enumValues (enumDocs description enumValues)
     )
+
+
+enumDocs : Maybe String -> List EnumValue -> String
+enumDocs enumDescription enumValues =
+    """{-| One of the films in the Star Wars Trilogy
+
+  - NEWHOPE - Released in 1977.
+  - EMPIRE - Released in 1980.
+  - JEDI - Released in 1983.
+
+-}
+"""
 
 
 moduleNameFor : List String -> String -> List String
@@ -16,8 +28,8 @@ moduleNameFor apiSubmodule name =
     apiSubmodule ++ [ "Enum", name ]
 
 
-prepend : List String -> String -> List EnumValue -> String
-prepend apiSubmodule enumName enumValues =
+prepend : List String -> String -> List EnumValue -> String -> String
+prepend apiSubmodule enumName enumValues docComment =
     interpolate """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
@@ -25,6 +37,7 @@ import Json.Decode as Decode exposing (Decoder)
 
 """
         [ moduleNameFor apiSubmodule enumName |> String.join "." ]
+        ++ docComment
         ++ enumType enumName enumValues
         ++ enumDecoder enumName enumValues
 
