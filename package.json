@@ -7,7 +7,7 @@
     "test": "elm-test",
     "gen:starwars": "npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd -",
     "gen:github": "npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -",
-    "approve": "npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd -",
+    "approve": "npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'",
     "elm-analyse": "elm-analyse --serve"
   },
   "keywords": [
