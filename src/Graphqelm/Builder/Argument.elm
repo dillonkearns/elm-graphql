@@ -1,7 +1,7 @@
-module Graphqelm.Builder.Argument exposing (Argument(Argument), enum, int, optional, string)
+module Graphqelm.Builder.Argument exposing (Argument(Argument), optional, string)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs Argument, enum, int, optional, string
+@docs Argument, optional, string
 -}
 
 import Graphqelm.Encode as Encode exposing (Value)
@@ -41,17 +41,3 @@ argument fieldName value =
 string : String -> String -> Argument
 string fieldName value =
     argument fieldName (Encode.string value)
-
-
-{-| Enum argument.
--}
-enum : String -> String -> Argument
-enum fieldName value =
-    argument fieldName (Encode.enum toString value)
-
-
-{-| Int argument.
--}
-int : String -> Int -> Argument
-int fieldName value =
-    argument fieldName (Encode.int value)
