@@ -1570,6 +1570,7 @@ var fs = __webpack_require__(30);
 var graphql_request_1 = __webpack_require__(55);
 var minimist = __webpack_require__(86);
 var formatted_write_1 = __webpack_require__(87);
+var introspection_query_1 = __webpack_require__(89);
 var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 var args = minimist(process.argv.slice(2));
 var baseModuleArg = args.base;
@@ -1609,12 +1610,11 @@ var onDataAvailable = function (data) {
         }
     });
 };
-var introspectionQuery = "{\n    __schema {\n      queryType {\n        name\n      }\n      mutationType {\n        name\n      }\n      types {\n        ...FullType\n      }\n    }\n  }\n\n  fragment FullType on __Type {\n    kind\n    name\n    description\n    fields(includeDeprecated: true) {\n      name\n      description\n      args {\n        ...InputValue\n      }\n      type {\n        ...TypeRef\n      }\n      isDeprecated\n      deprecationReason\n    }\n    inputFields {\n      ...InputValue\n    }\n    interfaces {\n      ...TypeRef\n    }\n    enumValues(includeDeprecated: true) {\n      name\n      description\n      isDeprecated\n      deprecationReason\n    }\n    possibleTypes {\n      ...TypeRef\n    }\n  }\n\n  fragment InputValue on __InputValue {\n    name\n    description\n    type { ...TypeRef }\n    defaultValue\n  }\n\n  fragment TypeRef on __Type {\n    kind\n    name\n    ofType {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }";
 new graphql_request_1.GraphQLClient(graphqlUrl, {
     mode: 'cors',
     headers: headers
 })
-    .request(introspectionQuery)
+    .request(introspection_query_1.introspectionQuery)
     .then(function (data) {
     onDataAvailable(data);
 })
@@ -16332,6 +16332,16 @@ exports.writeWithElmFormat = function (path, value) {
 /***/ (function(module, exports) {
 
 module.exports = require("child_process");
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.introspectionQuery = "{\n    __schema {\n      queryType {\n        name\n      }\n      mutationType {\n        name\n      }\n      types {\n        ...FullType\n      }\n    }\n  }\n\n  fragment FullType on __Type {\n    kind\n    name\n    description\n    fields(includeDeprecated: true) {\n      name\n      description\n      args {\n        ...InputValue\n      }\n      type {\n        ...TypeRef\n      }\n      isDeprecated\n      deprecationReason\n    }\n    inputFields {\n      ...InputValue\n    }\n    interfaces {\n      ...TypeRef\n    }\n    enumValues(includeDeprecated: true) {\n      name\n      description\n      isDeprecated\n      deprecationReason\n    }\n    possibleTypes {\n      ...TypeRef\n    }\n  }\n\n  fragment InputValue on __InputValue {\n    name\n    description\n    type { ...TypeRef }\n    defaultValue\n  }\n\n  fragment TypeRef on __Type {\n    kind\n    name\n    ofType {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }";
+
 
 /***/ })
 /******/ ]);
