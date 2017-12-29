@@ -16,26 +16,36 @@ selection constructor =
     Object.object constructor
 
 
+{-| Which movies they appear in.
+-}
 appearsIn : FieldDecoder (List Swapi.Enum.Episode.Episode) Swapi.Object.Human
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
+{-| The friends of the human, or an empty list if they have none.
+-}
 friends : SelectionSet friends Swapi.Object.Character -> FieldDecoder (List friends) Swapi.Object.Human
 friends object =
     Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
 
 
-homePlanet : FieldDecoder String Swapi.Object.Human
+{-| The home planet of the human, or null if unknown.
+-}
+homePlanet : FieldDecoder (Maybe String) Swapi.Object.Human
 homePlanet =
-    Object.fieldDecoder "homePlanet" [] Decode.string
+    Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.maybe)
 
 
+{-| The ID of the human.
+-}
 id : FieldDecoder String Swapi.Object.Human
 id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The name of the human.
+-}
 name : FieldDecoder String Swapi.Object.Human
 name =
     Object.fieldDecoder "name" [] Decode.string

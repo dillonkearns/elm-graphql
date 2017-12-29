@@ -32,20 +32,33 @@ type alias AnnotatedArg =
 generate : List String -> SpecialObjectNames -> String -> Type.Field -> String
 generate apiSubmodule specialObjectNames thisObjectName field =
     toFieldGenerator apiSubmodule specialObjectNames field
-        |> forObject_ apiSubmodule specialObjectNames thisObjectName
+        |> forObject_ apiSubmodule specialObjectNames thisObjectName field.description
 
 
-forObject_ : List String -> SpecialObjectNames -> String -> FieldGenerator -> String
-forObject_ apiSubmodule specialObjectNames thisObjectName field =
+forObject_ : List String -> SpecialObjectNames -> String -> Maybe String -> FieldGenerator -> String
+forObject_ apiSubmodule specialObjectNames thisObjectName description field =
     let
         thisObjectString =
             Imports.object apiSubmodule specialObjectNames thisObjectName |> String.join "."
     in
-    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) field
+    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) description field
 
 
-fieldGeneratorToString : String -> FieldGenerator -> String
-fieldGeneratorToString returnAnnotation field =
+generateDescription : Maybe String -> String
+generateDescription maybeDescription =
+    case maybeDescription of
+        Just description ->
+            interpolate """{-| {0}
+-}
+"""
+                [ description ]
+
+        Nothing ->
+            ""
+
+
+fieldGeneratorToString : String -> Maybe String -> FieldGenerator -> String
+fieldGeneratorToString returnAnnotation description field =
     let
         something =
             ((field.annotatedArgs |> List.map .annotation)
@@ -54,7 +67,7 @@ fieldGeneratorToString returnAnnotation field =
                 |> String.join " -> "
     in
     interpolate
-        """{6} : {3}
+        """{9}{6} : {3}
 {6} {4}={7}
       {5} "{0}" {1} ({2}){8}
 """
@@ -67,6 +80,7 @@ fieldGeneratorToString returnAnnotation field =
         , Normalize.fieldName field.fieldName
         , Let.generate field.letBindings
         , field.objectDecoderChain |> Maybe.withDefault ""
+        , generateDescription description
         ]
 
 
