@@ -83,9 +83,9 @@ node requiredArgs object =
     Object.selectionFieldDecoder "node" [ Argument.required "id" (requiredArgs.id |> Encode.string) ] object (identity >> Decode.maybe)
 
 
-nodes : { ids : String } -> SelectionSet nodes Github.Object.Node -> FieldDecoder (List (Maybe nodes)) RootQuery
+nodes : { ids : List Int } -> SelectionSet nodes Github.Object.Node -> FieldDecoder (List (Maybe nodes)) RootQuery
 nodes requiredArgs object =
-    Object.selectionFieldDecoder "nodes" [ Argument.required "ids" (requiredArgs.ids |> Encode.string) ] object (identity >> Decode.maybe >> Decode.list)
+    Object.selectionFieldDecoder "nodes" [ Argument.required "ids" (requiredArgs.ids |> Encode.list Encode.int) ] object (identity >> Decode.maybe >> Decode.list)
 
 
 organization : { login : String } -> SelectionSet organization Github.Object.Organization -> FieldDecoder (Maybe organization) RootQuery

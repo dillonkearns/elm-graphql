@@ -33,6 +33,16 @@ all =
                             , list = """[ Argument.required "id" (requiredArgs.id |> Encode.string) ]"""
                             }
                         )
+        , test "composite" <|
+            \() ->
+                [ numbersArg ]
+                    |> RequiredArgs.generate
+                    |> Expect.equal
+                        (Just
+                            { annotation = """{ numbers : (List Int) }"""
+                            , list = """[ Argument.required "numbers" (requiredArgs.numbers |> Encode.list Encode.int) ]"""
+                            }
+                        )
         , test "multiple primitives" <|
             \() ->
                 [ idArg, nameArg ]
@@ -67,4 +77,11 @@ idArg : Type.Arg
 idArg =
     { name = "id"
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+    }
+
+
+numbersArg : Type.Arg
+numbersArg =
+    { name = "numbers"
+    , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.Int) Type.NonNullable)) Type.NonNullable
     }

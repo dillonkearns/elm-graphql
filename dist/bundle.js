@@ -8189,8 +8189,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = functi
 		case 'List':
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
-				_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder(_p9._0),
-				A2(_elm_lang$core$Basics_ops['++'], isNullableString, ' |> Encode.list'));
+				'Encode.list ',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder(_p9._0),
+					isNullableString));
 		case 'ObjectRef':
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Graphqelm.Generator.Decoder',
@@ -8605,16 +8608,26 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$OptionalArg = F2(
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgAnnotation = function (_p0) {
 	var _p1 = _p0;
-	var _p2 = _p1.typeRef;
+	var _p3 = _p1.typeRef;
+	var _p2 = _p3;
 	if (_p2._1.ctor === 'NonNullable') {
+		var fieldName = _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(_p1.name);
 		return _elm_lang$core$Maybe$Just(
 			A2(
 				_dillonkearns$graphqelm$Interpolate$interpolate,
-				'{0} : String',
+				'{0} : {1}',
 				{
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(_p1.name),
-					_1: {ctor: '[]'}
+					_0: fieldName,
+					_1: {
+						ctor: '::',
+						_0: A3(
+							_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType,
+							{ctor: '[]'},
+							fieldName,
+							_p3),
+						_1: {ctor: '[]'}
+					}
 				}));
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
@@ -8633,22 +8646,27 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsAnnotat
 				A2(_elm_lang$core$String$join, ', ', stuff),
 				' }')));
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString = function (_p3) {
-	var _p4 = _p3;
-	var _p6 = _p4.name;
-	var _p5 = _p4.typeRef;
-	if (_p5._1.ctor === 'NonNullable') {
+var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString = function (_p4) {
+	var _p5 = _p4;
+	var _p8 = _p5.typeRef;
+	var _p7 = _p5.name;
+	var _p6 = _p8;
+	if (_p6._1.ctor === 'NonNullable') {
 		return _elm_lang$core$Maybe$Just(
 			A2(
 				_dillonkearns$graphqelm$Interpolate$interpolate,
-				'Argument.required \"{0}\" (requiredArgs.{1} |> Encode.string)',
+				'Argument.required \"{0}\" (requiredArgs.{1} |> {2})',
 				{
 					ctor: '::',
-					_0: _p6,
+					_0: _p7,
 					_1: {
 						ctor: '::',
-						_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(_p6),
-						_1: {ctor: '[]'}
+						_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(_p7),
+						_1: {
+							ctor: '::',
+							_0: _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder(_p8),
+							_1: {ctor: '[]'}
+						}
 					}
 				}));
 	} else {
