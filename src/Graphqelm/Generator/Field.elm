@@ -126,36 +126,6 @@ addOptionalArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-compositeDecoders : TypeReference -> List String
-compositeDecoders ((Type.TypeReference referrableType isNullable) as typeRef) =
-    (case isNullable of
-        Type.Nullable ->
-            [ "Decode.maybe" ]
-
-        Type.NonNullable ->
-            []
-    )
-        ++ (case referrableType of
-                Type.List nestedTypeRef ->
-                    "Decode.list" :: compositeDecoders nestedTypeRef
-
-                Type.Scalar _ ->
-                    []
-
-                Type.EnumRef _ ->
-                    []
-
-                Type.ObjectRef _ ->
-                    []
-
-                Type.InputObjectRef _ ->
-                    Debug.crash "TODO"
-
-                Type.InterfaceRef _ ->
-                    []
-           )
-
-
 objectThing : List String -> SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
 objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
     let
