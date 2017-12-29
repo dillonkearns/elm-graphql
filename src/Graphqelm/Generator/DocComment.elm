@@ -4,17 +4,27 @@ import Graphqelm.Parser.Type as Type exposing (Field, ReferrableType, TypeRefere
 import Interpolate exposing (interpolate)
 
 
-generate : Field -> String
-generate { description, args } =
+hasDocs : Field -> Bool
+hasDocs { description, args } =
     case description of
-        Just actualDescription ->
-            interpolate """{-| {0}{1}
--}
-"""
-                [ actualDescription, argsDoc args ]
+        Just string ->
+            True
 
         Nothing ->
-            ""
+            List.filterMap .description args
+                |> List.isEmpty
+                |> not
+
+
+generate : Field -> String
+generate ({ description, args } as field) =
+    if hasDocs field then
+        interpolate """{-|{0}{1}
+-}
+"""
+            [ description |> Maybe.map (\description -> " " ++ description) |> Maybe.withDefault "", argsDoc args ]
+    else
+        ""
 
 
 argsDoc : List Type.Arg -> String
