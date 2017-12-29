@@ -8189,11 +8189,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = functi
 		case 'List':
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
-				'Encode.list ',
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder(_p9._0),
-					isNullableString));
+				_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder(_p9._0),
+				A2(_elm_lang$core$Basics_ops['++'], isNullableString, ' |> Encode.list'));
 		case 'ObjectRef':
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Graphqelm.Generator.Decoder',
@@ -8655,7 +8652,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString =
 		return _elm_lang$core$Maybe$Just(
 			A2(
 				_dillonkearns$graphqelm$Interpolate$interpolate,
-				'Argument.required \"{0}\" (requiredArgs.{1} |> {2})',
+				'Argument.required \"{0}\" requiredArgs.{1} ({2})',
 				{
 					ctor: '::',
 					_0: _p7,

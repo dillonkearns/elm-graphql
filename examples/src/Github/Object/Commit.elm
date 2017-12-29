@@ -43,7 +43,7 @@ authoredDate =
 
 blame : { path : String } -> SelectionSet blame Github.Object.Blame -> FieldDecoder blame Github.Object.Commit
 blame requiredArgs object =
-    Object.selectionFieldDecoder "blame" [ Argument.required "path" (requiredArgs.path |> Encode.string) ] object identity
+    Object.selectionFieldDecoder "blame" [ Argument.required "path" requiredArgs.path Encode.string ] object identity
 
 
 changedFiles : FieldDecoder Int Github.Object.Commit

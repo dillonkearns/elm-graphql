@@ -68,7 +68,7 @@ repositories fillInOptionals object =
 
 repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder (Maybe repository) Github.Object.RepositoryOwner
 repository requiredArgs object =
-    Object.selectionFieldDecoder "repository" [ Argument.required "name" (requiredArgs.name |> Encode.string) ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
 
 resourcePath : FieldDecoder String Github.Object.RepositoryOwner

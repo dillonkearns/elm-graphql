@@ -77,7 +77,7 @@ generateEncoder (Type.TypeReference referrableType isNullable) =
                     "Encode.float" ++ isNullableString
 
         Type.List typeRef ->
-            "Encode.list " ++ generateEncoder typeRef ++ isNullableString
+            generateEncoder typeRef ++ isNullableString ++ " |> Encode.list"
 
         Type.ObjectRef objectName ->
             Debug.crash "I don't expect to see object references as argument types."

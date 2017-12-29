@@ -23,7 +23,7 @@ commit object =
 
 context : { name : String } -> SelectionSet context Github.Object.StatusContext -> FieldDecoder (Maybe context) Github.Object.Status
 context requiredArgs object =
-    Object.selectionFieldDecoder "context" [ Argument.required "name" (requiredArgs.name |> Encode.string) ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "context" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
 
 contexts : SelectionSet contexts Github.Object.StatusContext -> FieldDecoder (List contexts) Github.Object.Status

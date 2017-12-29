@@ -33,9 +33,9 @@ optional fieldName maybeValue toValue =
 
 {-| Used for passing required arguments in generated code.
 -}
-required : String -> Encode.Value -> Argument
-required fieldName value =
-    Argument fieldName value
+required : String -> a -> (a -> Value) -> Argument
+required fieldName value encode =
+    Argument fieldName (encode value)
 
 
 argument : String -> Value -> Argument

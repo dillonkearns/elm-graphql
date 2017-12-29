@@ -36,7 +36,7 @@ requiredArgString { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
-                "Argument.required \"{0}\" (requiredArgs.{1} |> {2})"
+                "Argument.required \"{0}\" requiredArgs.{1} ({2})"
                 [ name
                 , Normalize.fieldName name
                 , Graphqelm.Generator.Decoder.generateEncoder typeRef
