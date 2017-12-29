@@ -30,7 +30,7 @@ all =
                     |> Expect.equal
                         (Just
                             { annotation = """{ id : String }"""
-                            , list = """[ Argument.string "id" requiredArgs.id ]"""
+                            , list = """[ Argument.required "id" (requiredArgs.id |> Encode.string) ]"""
                             }
                         )
         , test "multiple primitives" <|
@@ -40,7 +40,7 @@ all =
                     |> Expect.equal
                         (Just
                             { annotation = "{ id : String, name : String }"
-                            , list = """[ Argument.string "id" requiredArgs.id, Argument.string "name" requiredArgs.name ]"""
+                            , list = """[ Argument.required "id" (requiredArgs.id |> Encode.string), Argument.required "name" (requiredArgs.name |> Encode.string) ]"""
                             }
                         )
         , test "normalizes arguments" <|
@@ -50,7 +50,7 @@ all =
                     |> Expect.equal
                         (Just
                             { annotation = "{ type_ : String }"
-                            , list = """[ Argument.string "type" requiredArgs.type_ ]"""
+                            , list = """[ Argument.required "type" (requiredArgs.type_ |> Encode.string) ]"""
                             }
                         )
         ]

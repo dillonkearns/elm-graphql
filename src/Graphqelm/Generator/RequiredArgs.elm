@@ -35,7 +35,7 @@ requiredArgString { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
-                "Argument.string \"{0}\" requiredArgs.{1}"
+                "Argument.required \"{0}\" (requiredArgs.{1} |> Encode.string)"
                 [ name, Normalize.fieldName name ]
                 |> Just
 

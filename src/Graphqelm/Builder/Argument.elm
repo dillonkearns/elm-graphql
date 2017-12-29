@@ -1,7 +1,7 @@
-module Graphqelm.Builder.Argument exposing (Argument(Argument), optional, string)
+module Graphqelm.Builder.Argument exposing (Argument(Argument), optional, required, string)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs Argument, optional, string
+@docs Argument, optional, required, string
 -}
 
 import Graphqelm.Encode as Encode exposing (Value)
@@ -29,6 +29,13 @@ optional fieldName maybeValue toValue =
         OptionalArgument.Null ->
             Argument fieldName Encode.null
                 |> Just
+
+
+{-| Used for passing required arguments in generated code.
+-}
+required : String -> Encode.Value -> Argument
+required fieldName value =
+    Argument fieldName value
 
 
 argument : String -> Value -> Argument

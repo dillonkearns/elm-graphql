@@ -74,7 +74,7 @@ droid object =
                     |> Expect.equal
                         """human : { id : String } -> SelectionSet human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
-      Object.selectionFieldDecoder "human" [ Argument.string "id" requiredArgs.id ] (object) (identity)
+      Object.selectionFieldDecoder "human" [ Argument.required "id" (requiredArgs.id |> Encode.string) ] (object) (identity)
 """
         , test "with optional args" <|
             \() ->

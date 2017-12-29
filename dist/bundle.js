@@ -8641,7 +8641,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString =
 		return _elm_lang$core$Maybe$Just(
 			A2(
 				_dillonkearns$graphqelm$Interpolate$interpolate,
-				'Argument.string \"{0}\" requiredArgs.{1}',
+				'Argument.required \"{0}\" (requiredArgs.{1} |> Encode.string)',
 				{
 					ctor: '::',
 					_0: _p6,
