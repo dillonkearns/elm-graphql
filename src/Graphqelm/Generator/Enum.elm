@@ -1,9 +1,10 @@
 module Graphqelm.Generator.Enum exposing (..)
 
+import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
 
-generate : List String -> String -> List String -> ( List String, String )
+generate : List String -> String -> List EnumValue -> ( List String, String )
 generate apiSubmodule enumName enumValues =
     ( moduleNameFor apiSubmodule enumName
     , prepend apiSubmodule enumName enumValues
@@ -15,7 +16,7 @@ moduleNameFor apiSubmodule name =
     apiSubmodule ++ [ "Enum", name ]
 
 
-prepend : List String -> String -> List String -> String
+prepend : List String -> String -> List EnumValue -> String
 prepend apiSubmodule enumName enumValues =
     interpolate """module {0} exposing (..)
 
@@ -28,13 +29,13 @@ import Json.Decode as Decode exposing (Decoder)
         ++ enumDecoder enumName enumValues
 
 
-enumType : String -> List String -> String
+enumType : String -> List EnumValue -> String
 enumType enumName enumValues =
     "type " ++ enumName ++ """
-    = """ ++ (enumValues |> String.join "\n    | ") ++ "\n"
+    = """ ++ (enumValues |> List.map .name |> String.join "\n    | ") ++ "\n"
 
 
-enumDecoder : String -> List String -> String
+enumDecoder : String -> List EnumValue -> String
 enumDecoder enumName enumValues =
     interpolate
         """decoder : Decoder {0}
@@ -45,7 +46,7 @@ decoder =
                 case string of
 """
         [ enumName ]
-        ++ (enumValues |> List.map (\enumValue -> "                    \"" ++ enumValue ++ "\" ->\n                        Decode.succeed " ++ enumValue) |> String.join "\n\n")
+        ++ (enumValues |> List.map .name |> List.map (\enumValue -> "                    \"" ++ enumValue ++ "\" ->\n                        Decode.succeed " ++ enumValue) |> String.join "\n\n")
         ++ """
 
                     _ ->

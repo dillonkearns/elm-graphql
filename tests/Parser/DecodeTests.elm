@@ -39,7 +39,13 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (Type.TypeDefinition "Weather" (Type.EnumType [ "CLOUDY", "SUNNY" ]))
+                            (Type.TypeDefinition "Weather"
+                                (Type.EnumType
+                                    [ { name = "CLOUDY", description = Nothing }
+                                    , { name = "SUNNY", description = Nothing }
+                                    ]
+                                )
+                            )
                         )
         , test "scalars" <|
             \() ->

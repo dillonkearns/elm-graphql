@@ -83,14 +83,26 @@ enumDecoder : Decoder TypeDefinition
 enumDecoder =
     Decode.map2 createEnum
         (Decode.field "name" Decode.string)
-        (Decode.string
-            |> Decode.field "name"
+        (enumValueDecoder
             |> Decode.list
             |> Decode.field "enumValues"
         )
 
 
-createEnum : String -> List String -> TypeDefinition
+enumValueDecoder : Decoder EnumValue
+enumValueDecoder =
+    Decode.map2 EnumValue
+        (Decode.field "name" Decode.string)
+        (Decode.field "description" (Decode.maybe Decode.string))
+
+
+type alias EnumValue =
+    { name : String
+    , description : Maybe String
+    }
+
+
+createEnum : String -> List EnumValue -> TypeDefinition
 createEnum enumName enumValues =
     TypeDefinition enumName (EnumType enumValues)
 
@@ -162,7 +174,7 @@ type DefinableType
     = ScalarType
     | ObjectType (List Field)
     | InterfaceType (List Field)
-    | EnumType (List String)
+    | EnumType (List EnumValue)
 
 
 type TypeReference

@@ -16,7 +16,13 @@ all =
     describe "object types generator"
         [ test "enum has no object definitions" <|
             \() ->
-                [ Type.TypeDefinition "Weather" (Type.EnumType [ "CLOUDY", "SUNNY" ]) ]
+                [ Type.TypeDefinition "Weather"
+                    (Type.EnumType
+                        [ { name = "CLOUDY", description = Nothing }
+                        , { name = "SUNNY", description = Nothing }
+                        ]
+                    )
+                ]
                     |> ObjectTypes.generate [ "Api" ]
                     |> Expect.equal
                         """module Api.Object exposing (..)
