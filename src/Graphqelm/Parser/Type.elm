@@ -36,7 +36,7 @@ decodeKind kind =
 
 scalarDecoder : Decoder TypeDefinition
 scalarDecoder =
-    Decode.map (\scalarName -> TypeDefinition scalarName ScalarType)
+    Decode.map (\scalarName -> TypeDefinition scalarName ScalarType Nothing)
         (Decode.field "name" Decode.string)
 
 
@@ -81,8 +81,9 @@ objectDecoder =
 
 enumDecoder : Decoder TypeDefinition
 enumDecoder =
-    Decode.map2 createEnum
+    Decode.map3 createEnum
         (Decode.field "name" Decode.string)
+        (Decode.maybe (Decode.field "description" Decode.string))
         (enumValueDecoder
             |> Decode.list
             |> Decode.field "enumValues"
@@ -102,19 +103,19 @@ type alias EnumValue =
     }
 
 
-createEnum : String -> List EnumValue -> TypeDefinition
-createEnum enumName enumValues =
-    TypeDefinition enumName (EnumType enumValues)
+createEnum : String -> Maybe String -> List EnumValue -> TypeDefinition
+createEnum enumName description enumValues =
+    TypeDefinition enumName (EnumType enumValues) description
 
 
 createObject : String -> List Field -> TypeDefinition
 createObject objectName fields =
-    TypeDefinition objectName (ObjectType fields)
+    TypeDefinition objectName (ObjectType fields) Nothing
 
 
 createInterface : String -> List Field -> TypeDefinition
 createInterface interfaceName fields =
-    TypeDefinition interfaceName (InterfaceType fields)
+    TypeDefinition interfaceName (InterfaceType fields) Nothing
 
 
 typeRefDecoder : Decoder RawTypeRef
@@ -167,7 +168,7 @@ type alias Field =
 
 
 type TypeDefinition
-    = TypeDefinition String DefinableType
+    = TypeDefinition String DefinableType (Maybe String)
 
 
 type DefinableType

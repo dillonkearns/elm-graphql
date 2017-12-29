@@ -10,7 +10,10 @@ all =
     describe "enum"
         [ test "generate enum" <|
             \() ->
-                Enum.enumType "Beverage" [ "Tea", "Coffee" ]
+                Enum.enumType "Beverage"
+                    [ { name = "Tea", description = Nothing }
+                    , { name = "Coffee", description = Nothing }
+                    ]
                     |> Expect.equal """type Beverage
     = Tea
     | Coffee

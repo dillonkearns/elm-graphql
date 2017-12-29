@@ -43,7 +43,7 @@ generateType name =
 
 
 nameIfDefinitionNeeded : TypeDefinition -> Maybe String
-nameIfDefinitionNeeded (TypeDefinition name definableType) =
+nameIfDefinitionNeeded (TypeDefinition name definableType description) =
     case definableType of
         Type.ObjectType _ ->
             Just name

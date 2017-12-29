@@ -22,6 +22,7 @@ all =
                         , { name = "SUNNY", description = Nothing }
                         ]
                     )
+                    Nothing
                 ]
                     |> ObjectTypes.generate [ "Api" ]
                     |> Expect.equal
@@ -36,8 +37,10 @@ placeholder =
             \() ->
                 [ Type.TypeDefinition "MyObject"
                     (Type.ObjectType [])
+                    Nothing
                 , Type.TypeDefinition "MyInterface"
                     (Type.InterfaceType [])
+                    Nothing
                 ]
                     |> ObjectTypes.generate [ "Api" ]
                     |> Expect.equal """module Api.Object exposing (..)

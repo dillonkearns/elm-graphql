@@ -46,7 +46,7 @@ excludeBuiltIns typeDefinitions =
 excludeQuery : String -> List TypeDefinition -> List TypeDefinition
 excludeQuery queryObjectName typeDefinitions =
     typeDefinitions
-        |> List.filter (\(Type.TypeDefinition name definableType) -> name /= queryObjectName)
+        |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= queryObjectName)
 
 
 excludeMutation : Maybe String -> List TypeDefinition -> List TypeDefinition
@@ -54,14 +54,14 @@ excludeMutation maybeMutationObjectName typeDefinitions =
     case maybeMutationObjectName of
         Just mutationObjectName ->
             typeDefinitions
-                |> List.filter (\(Type.TypeDefinition name definableType) -> name /= mutationObjectName)
+                |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= mutationObjectName)
 
         Nothing ->
             typeDefinitions
 
 
 isBuiltIn : TypeDefinition -> Maybe TypeDefinition
-isBuiltIn ((Type.TypeDefinition name definableType) as definition) =
+isBuiltIn ((Type.TypeDefinition name definableType description) as definition) =
     if String.startsWith "__" name then
         Nothing
     else
@@ -75,7 +75,7 @@ moduleToFileName modulePath =
 
 
 toPair : List String -> String -> Maybe String -> TypeDefinition -> Maybe ( List String, String )
-toPair apiSubmodule queryObjectName mutationObjectName ((Type.TypeDefinition name definableType) as definition) =
+toPair apiSubmodule queryObjectName mutationObjectName ((Type.TypeDefinition name definableType description) as definition) =
     case definableType of
         Type.ObjectType fields ->
             if name == queryObjectName then

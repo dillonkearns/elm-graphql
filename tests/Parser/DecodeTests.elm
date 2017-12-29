@@ -45,6 +45,7 @@ all =
                                     , { name = "SUNNY", description = Nothing }
                                     ]
                                 )
+                                Nothing
                             )
                         )
         , test "scalars" <|
@@ -63,7 +64,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (TypeDefinition "Date" ScalarType)
+                            (TypeDefinition "Date" ScalarType Nothing)
                         )
         , test "decodes object" <|
             \() ->
@@ -149,6 +150,7 @@ all =
                                       }
                                     ]
                                 )
+                                Nothing
                             )
                         )
         , test "decodes non-nullable object" <|
@@ -192,6 +194,7 @@ all =
                                       }
                                     ]
                                 )
+                                Nothing
                             )
                         )
         , test "field with interface ref" <|
@@ -246,6 +249,7 @@ all =
                                       }
                                     ]
                                 )
+                                Nothing
                             )
                         )
         , test "decodes input object arg" <|
@@ -312,6 +316,7 @@ all =
                                       }
                                     ]
                                 )
+                                Nothing
                             )
                         )
         , test "decodes interface" <|
@@ -426,6 +431,7 @@ all =
                                       }
                                     ]
                                 )
+                                Nothing
                             )
                         )
         ]
