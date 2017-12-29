@@ -18,9 +18,9 @@ selection constructor =
     Object.object constructor
 
 
-author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.PullRequestReviewComment
+author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequestReviewComment
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.PullRequestReviewComment
@@ -58,9 +58,9 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder Int Github.Object.PullRequestReviewComment
+databaseId : FieldDecoder (Maybe Int) Github.Object.PullRequestReviewComment
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 diffHunk : FieldDecoder String Github.Object.PullRequestReviewComment
@@ -73,9 +73,9 @@ draftedAt =
     Object.fieldDecoder "draftedAt" [] Decode.string
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.PullRequestReviewComment
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequestReviewComment
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.PullRequestReviewComment
@@ -83,14 +83,14 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-lastEditedAt : FieldDecoder String Github.Object.PullRequestReviewComment
+lastEditedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReviewComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
 
 
-originalCommit : SelectionSet originalCommit Github.Object.Commit -> FieldDecoder originalCommit Github.Object.PullRequestReviewComment
+originalCommit : SelectionSet originalCommit Github.Object.Commit -> FieldDecoder (Maybe originalCommit) Github.Object.PullRequestReviewComment
 originalCommit object =
-    Object.selectionFieldDecoder "originalCommit" [] object identity
+    Object.selectionFieldDecoder "originalCommit" [] object (identity >> Decode.maybe)
 
 
 originalPosition : FieldDecoder Int Github.Object.PullRequestReviewComment
@@ -103,14 +103,14 @@ path =
     Object.fieldDecoder "path" [] Decode.string
 
 
-position : FieldDecoder Int Github.Object.PullRequestReviewComment
+position : FieldDecoder (Maybe Int) Github.Object.PullRequestReviewComment
 position =
-    Object.fieldDecoder "position" [] Decode.int
+    Object.fieldDecoder "position" [] (Decode.int |> Decode.maybe)
 
 
-publishedAt : FieldDecoder String Github.Object.PullRequestReviewComment
+publishedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReviewComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestReviewComment
@@ -118,14 +118,14 @@ pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
-pullRequestReview : SelectionSet pullRequestReview Github.Object.PullRequestReview -> FieldDecoder pullRequestReview Github.Object.PullRequestReviewComment
+pullRequestReview : SelectionSet pullRequestReview Github.Object.PullRequestReview -> FieldDecoder (Maybe pullRequestReview) Github.Object.PullRequestReviewComment
 pullRequestReview object =
-    Object.selectionFieldDecoder "pullRequestReview" [] object identity
+    Object.selectionFieldDecoder "pullRequestReview" [] object (identity >> Decode.maybe)
 
 
-reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.PullRequestReviewComment
+reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (Maybe (List reactionGroups)) Github.Object.PullRequestReviewComment
 reactionGroups object =
-    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.PullRequestReviewComment
@@ -141,9 +141,9 @@ reactions fillInOptionals object =
     Object.selectionFieldDecoder "reactions" optionalArgs object identity
 
 
-replyTo : SelectionSet replyTo Github.Object.PullRequestReviewComment -> FieldDecoder replyTo Github.Object.PullRequestReviewComment
+replyTo : SelectionSet replyTo Github.Object.PullRequestReviewComment -> FieldDecoder (Maybe replyTo) Github.Object.PullRequestReviewComment
 replyTo object =
-    Object.selectionFieldDecoder "replyTo" [] object identity
+    Object.selectionFieldDecoder "replyTo" [] object (identity >> Decode.maybe)
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.PullRequestReviewComment

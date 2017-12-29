@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.RemoveReactionPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveReactionPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 reaction : SelectionSet reaction Github.Object.Reaction -> FieldDecoder reaction Github.Object.RemoveReactionPayload

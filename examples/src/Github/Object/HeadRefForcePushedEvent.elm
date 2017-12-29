@@ -15,19 +15,19 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.HeadRefForcePushedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.HeadRefForcePushedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
-afterCommit : SelectionSet afterCommit Github.Object.Commit -> FieldDecoder afterCommit Github.Object.HeadRefForcePushedEvent
+afterCommit : SelectionSet afterCommit Github.Object.Commit -> FieldDecoder (Maybe afterCommit) Github.Object.HeadRefForcePushedEvent
 afterCommit object =
-    Object.selectionFieldDecoder "afterCommit" [] object identity
+    Object.selectionFieldDecoder "afterCommit" [] object (identity >> Decode.maybe)
 
 
-beforeCommit : SelectionSet beforeCommit Github.Object.Commit -> FieldDecoder beforeCommit Github.Object.HeadRefForcePushedEvent
+beforeCommit : SelectionSet beforeCommit Github.Object.Commit -> FieldDecoder (Maybe beforeCommit) Github.Object.HeadRefForcePushedEvent
 beforeCommit object =
-    Object.selectionFieldDecoder "beforeCommit" [] object identity
+    Object.selectionFieldDecoder "beforeCommit" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.HeadRefForcePushedEvent
@@ -45,6 +45,6 @@ pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
-ref : SelectionSet ref Github.Object.Ref -> FieldDecoder ref Github.Object.HeadRefForcePushedEvent
+ref : SelectionSet ref Github.Object.Ref -> FieldDecoder (Maybe ref) Github.Object.HeadRefForcePushedEvent
 ref object =
-    Object.selectionFieldDecoder "ref" [] object identity
+    Object.selectionFieldDecoder "ref" [] object (identity >> Decode.maybe)

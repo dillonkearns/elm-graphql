@@ -45,9 +45,9 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-release : SelectionSet release Github.Object.Release -> FieldDecoder release Github.Object.ReleaseAsset
+release : SelectionSet release Github.Object.Release -> FieldDecoder (Maybe release) Github.Object.ReleaseAsset
 release object =
-    Object.selectionFieldDecoder "release" [] object identity
+    Object.selectionFieldDecoder "release" [] object (identity >> Decode.maybe)
 
 
 size : FieldDecoder Int Github.Object.ReleaseAsset

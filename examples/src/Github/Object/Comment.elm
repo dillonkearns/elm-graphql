@@ -16,9 +16,9 @@ selection constructor =
     Object.object constructor
 
 
-author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.Comment
+author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.Comment
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Comment
@@ -46,9 +46,9 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.Comment
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.Comment
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Comment
@@ -56,14 +56,14 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-lastEditedAt : FieldDecoder String Github.Object.Comment
+lastEditedAt : FieldDecoder (Maybe String) Github.Object.Comment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
 
 
-publishedAt : FieldDecoder String Github.Object.Comment
+publishedAt : FieldDecoder (Maybe String) Github.Object.Comment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
 updatedAt : FieldDecoder String Github.Object.Comment

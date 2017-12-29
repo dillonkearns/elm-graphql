@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-color : FieldDecoder String Github.Object.Language
+color : FieldDecoder (Maybe String) Github.Object.Language
 color =
-    Object.fieldDecoder "color" [] Decode.string
+    Object.fieldDecoder "color" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Language

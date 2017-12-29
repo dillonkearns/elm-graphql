@@ -5,9 +5,11 @@ import Github.Object.Release
 import Github.Object.ReleaseConnection
 import Github.Object.Repository as Repository
 import Github.Object.StargazerConnection
+import Github.Object.Topic
 import Github.Query as Query
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
+import Graphqelm.FieldDecoder
 import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
@@ -17,6 +19,12 @@ import RemoteData exposing (RemoteData)
 
 
 type alias Response =
+    { repoInfo : Maybe RepositoryInfo
+    , topicId : Maybe String
+    }
+
+
+type alias RepositoryInfo =
     { createdAt : String
     , earlyReleases : ReleaseInfo
     , lateReleases : ReleaseInfo
@@ -26,13 +34,14 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection identity
+    Query.selection Response
         |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
+        |> with (Query.topic { name = "" } (Github.Object.Topic.selection identity |> with Github.Object.Topic.id))
 
 
-repo : SelectionSet Response Github.Object.Repository
+repo : SelectionSet RepositoryInfo Github.Object.Repository
 repo =
-    Repository.selection Response
+    Repository.selection RepositoryInfo
         |> with Repository.createdAt
         |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
         |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
@@ -47,7 +56,7 @@ stargazers =
 
 type alias ReleaseInfo =
     { totalCount : Int
-    , releases : List Release
+    , releases : Maybe (List (Maybe Release))
     }
 
 
@@ -67,7 +76,7 @@ type alias Release =
 release : SelectionSet Release Github.Object.Release
 release =
     Github.Object.Release.selection Release
-        |> with Github.Object.Release.name
+        |> with (Github.Object.Release.name |> Graphqelm.FieldDecoder.map (Maybe.withDefault ""))
         |> with Github.Object.Release.url
 
 

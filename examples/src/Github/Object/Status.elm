@@ -16,14 +16,14 @@ selection constructor =
     Object.object constructor
 
 
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.Status
+commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.Status
 commit object =
-    Object.selectionFieldDecoder "commit" [] object identity
+    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
 
-context : { name : String } -> SelectionSet context Github.Object.StatusContext -> FieldDecoder context Github.Object.Status
+context : { name : String } -> SelectionSet context Github.Object.StatusContext -> FieldDecoder (Maybe context) Github.Object.Status
 context requiredArgs object =
-    Object.selectionFieldDecoder "context" [ Argument.string "name" requiredArgs.name ] object identity
+    Object.selectionFieldDecoder "context" [ Argument.string "name" requiredArgs.name ] object (identity >> Decode.maybe)
 
 
 contexts : SelectionSet contexts Github.Object.StatusContext -> FieldDecoder (List contexts) Github.Object.Status

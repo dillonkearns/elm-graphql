@@ -18,9 +18,9 @@ selection constructor =
     Object.object constructor
 
 
-author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.IssueComment
+author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.IssueComment
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.IssueComment
@@ -53,14 +53,14 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder Int Github.Object.IssueComment
+databaseId : FieldDecoder (Maybe Int) Github.Object.IssueComment
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.IssueComment
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.IssueComment
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.IssueComment
@@ -73,24 +73,24 @@ issue object =
     Object.selectionFieldDecoder "issue" [] object identity
 
 
-lastEditedAt : FieldDecoder String Github.Object.IssueComment
+lastEditedAt : FieldDecoder (Maybe String) Github.Object.IssueComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
 
 
-publishedAt : FieldDecoder String Github.Object.IssueComment
+publishedAt : FieldDecoder (Maybe String) Github.Object.IssueComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.IssueComment
+pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder (Maybe pullRequest) Github.Object.IssueComment
 pullRequest object =
-    Object.selectionFieldDecoder "pullRequest" [] object identity
+    Object.selectionFieldDecoder "pullRequest" [] object (identity >> Decode.maybe)
 
 
-reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.IssueComment
+reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (Maybe (List reactionGroups)) Github.Object.IssueComment
 reactionGroups object =
-    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.IssueComment

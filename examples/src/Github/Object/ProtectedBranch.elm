@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.ProtectedBranch
+creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.ProtectedBranch
 creator object =
-    Object.selectionFieldDecoder "creator" [] object identity
+    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
 hasDismissableStaleReviews : FieldDecoder Bool Github.Object.ProtectedBranch
@@ -83,9 +83,9 @@ repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
 
-requiredStatusCheckContexts : FieldDecoder (List String) Github.Object.ProtectedBranch
+requiredStatusCheckContexts : FieldDecoder (Maybe (List (Maybe String))) Github.Object.ProtectedBranch
 requiredStatusCheckContexts =
-    Object.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.maybe |> Decode.list |> Decode.maybe)
 
 
 reviewDismissalAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet reviewDismissalAllowances Github.Object.ReviewDismissalAllowanceConnection -> FieldDecoder reviewDismissalAllowances Github.Object.ProtectedBranch

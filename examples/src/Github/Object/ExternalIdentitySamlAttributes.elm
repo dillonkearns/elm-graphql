@@ -15,6 +15,6 @@ selection constructor =
     Object.object constructor
 
 
-nameId : FieldDecoder String Github.Object.ExternalIdentitySamlAttributes
+nameId : FieldDecoder (Maybe String) Github.Object.ExternalIdentitySamlAttributes
 nameId =
-    Object.fieldDecoder "nameId" [] Decode.string
+    Object.fieldDecoder "nameId" [] (Decode.string |> Decode.maybe)

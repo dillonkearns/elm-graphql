@@ -18,9 +18,9 @@ selection constructor =
     Object.object constructor
 
 
-author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.PullRequestReview
+author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequestReview
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.PullRequestReview
@@ -56,9 +56,9 @@ comments fillInOptionals object =
     Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.PullRequestReview
+commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.PullRequestReview
 commit object =
-    Object.selectionFieldDecoder "commit" [] object identity
+    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.PullRequestReview
@@ -71,14 +71,14 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder Int Github.Object.PullRequestReview
+databaseId : FieldDecoder (Maybe Int) Github.Object.PullRequestReview
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.PullRequestReview
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequestReview
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.PullRequestReview
@@ -86,14 +86,14 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-lastEditedAt : FieldDecoder String Github.Object.PullRequestReview
+lastEditedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReview
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
 
 
-publishedAt : FieldDecoder String Github.Object.PullRequestReview
+publishedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReview
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestReview
@@ -116,9 +116,9 @@ state =
     Object.fieldDecoder "state" [] Github.Enum.PullRequestReviewState.decoder
 
 
-submittedAt : FieldDecoder String Github.Object.PullRequestReview
+submittedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReview
 submittedAt =
-    Object.fieldDecoder "submittedAt" [] Decode.string
+    Object.fieldDecoder "submittedAt" [] (Decode.string |> Decode.maybe)
 
 
 updatedAt : FieldDecoder String Github.Object.PullRequestReview

@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : FieldDecoder String Github.Object.ReviewDismissalAllowance
+actor : FieldDecoder (Maybe String) Github.Object.ReviewDismissalAllowance
 actor =
-    Object.fieldDecoder "actor" [] Decode.string
+    Object.fieldDecoder "actor" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.ReviewDismissalAllowance

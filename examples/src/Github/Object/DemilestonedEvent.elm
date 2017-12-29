@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.DemilestonedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.DemilestonedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.DemilestonedEvent
@@ -35,6 +35,6 @@ milestoneTitle =
     Object.fieldDecoder "milestoneTitle" [] Decode.string
 
 
-subject : FieldDecoder String Github.Object.DemilestonedEvent
+subject : FieldDecoder (Maybe String) Github.Object.DemilestonedEvent
 subject =
-    Object.fieldDecoder "subject" [] Decode.string
+    Object.fieldDecoder "subject" [] (Decode.string |> Decode.maybe)

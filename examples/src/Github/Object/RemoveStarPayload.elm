@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.RemoveStarPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveStarPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 starrable : SelectionSet starrable Github.Object.Starrable -> FieldDecoder starrable Github.Object.RemoveStarPayload

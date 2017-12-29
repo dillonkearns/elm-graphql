@@ -20,19 +20,19 @@ gitHubServicesSha =
     Object.fieldDecoder "gitHubServicesSha" [] Decode.string
 
 
-gitIpAddresses : FieldDecoder (List String) Github.Object.GitHubMetadata
+gitIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
 gitIpAddresses =
-    Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
-hookIpAddresses : FieldDecoder (List String) Github.Object.GitHubMetadata
+hookIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
 hookIpAddresses =
-    Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
-importerIpAddresses : FieldDecoder (List String) Github.Object.GitHubMetadata
+importerIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
 importerIpAddresses =
-    Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
 isPasswordAuthenticationVerifiable : FieldDecoder Bool Github.Object.GitHubMetadata
@@ -40,6 +40,6 @@ isPasswordAuthenticationVerifiable =
     Object.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.bool
 
 
-pagesIpAddresses : FieldDecoder (List String) Github.Object.GitHubMetadata
+pagesIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
 pagesIpAddresses =
-    Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)

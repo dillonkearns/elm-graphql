@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.ReopenedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.ReopenedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 closable : SelectionSet closable Github.Object.Closable -> FieldDecoder closable Github.Object.ReopenedEvent

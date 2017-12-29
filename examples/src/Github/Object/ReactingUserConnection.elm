@@ -15,14 +15,14 @@ selection constructor =
     Object.object constructor
 
 
-edges : SelectionSet edges Github.Object.ReactingUserEdge -> FieldDecoder (List edges) Github.Object.ReactingUserConnection
+edges : SelectionSet edges Github.Object.ReactingUserEdge -> FieldDecoder (Maybe (List (Maybe edges))) Github.Object.ReactingUserConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
-nodes : SelectionSet nodes Github.Object.User -> FieldDecoder (List nodes) Github.Object.ReactingUserConnection
+nodes : SelectionSet nodes Github.Object.User -> FieldDecoder (Maybe (List (Maybe nodes))) Github.Object.ReactingUserConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.ReactingUserConnection

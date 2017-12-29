@@ -28,21 +28,21 @@ avatarUrl fillInOptionals =
     Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
 
 
-date : FieldDecoder String Github.Object.GitActor
+date : FieldDecoder (Maybe String) Github.Object.GitActor
 date =
-    Object.fieldDecoder "date" [] Decode.string
+    Object.fieldDecoder "date" [] (Decode.string |> Decode.maybe)
 
 
-email : FieldDecoder String Github.Object.GitActor
+email : FieldDecoder (Maybe String) Github.Object.GitActor
 email =
-    Object.fieldDecoder "email" [] Decode.string
+    Object.fieldDecoder "email" [] (Decode.string |> Decode.maybe)
 
 
-name : FieldDecoder String Github.Object.GitActor
+name : FieldDecoder (Maybe String) Github.Object.GitActor
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] (Decode.string |> Decode.maybe)
 
 
-user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.GitActor
+user : SelectionSet user Github.Object.User -> FieldDecoder (Maybe user) Github.Object.GitActor
 user object =
-    Object.selectionFieldDecoder "user" [] object identity
+    Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)

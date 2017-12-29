@@ -16,9 +16,9 @@ selection constructor =
     Object.object constructor
 
 
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.Deployment
+commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.Deployment
 commit object =
-    Object.selectionFieldDecoder "commit" [] object identity
+    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.Deployment
@@ -26,19 +26,19 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.Deployment
+creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.Deployment
 creator object =
-    Object.selectionFieldDecoder "creator" [] object identity
+    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-databaseId : FieldDecoder Int Github.Object.Deployment
+databaseId : FieldDecoder (Maybe Int) Github.Object.Deployment
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
-environment : FieldDecoder String Github.Object.Deployment
+environment : FieldDecoder (Maybe String) Github.Object.Deployment
 environment =
-    Object.fieldDecoder "environment" [] Decode.string
+    Object.fieldDecoder "environment" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Deployment
@@ -46,14 +46,14 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-latestStatus : SelectionSet latestStatus Github.Object.DeploymentStatus -> FieldDecoder latestStatus Github.Object.Deployment
+latestStatus : SelectionSet latestStatus Github.Object.DeploymentStatus -> FieldDecoder (Maybe latestStatus) Github.Object.Deployment
 latestStatus object =
-    Object.selectionFieldDecoder "latestStatus" [] object identity
+    Object.selectionFieldDecoder "latestStatus" [] object (identity >> Decode.maybe)
 
 
-payload : FieldDecoder String Github.Object.Deployment
+payload : FieldDecoder (Maybe String) Github.Object.Deployment
 payload =
-    Object.fieldDecoder "payload" [] Decode.string
+    Object.fieldDecoder "payload" [] (Decode.string |> Decode.maybe)
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Deployment
@@ -61,12 +61,12 @@ repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
 
-state : FieldDecoder Github.Enum.DeploymentState.DeploymentState Github.Object.Deployment
+state : FieldDecoder (Maybe Github.Enum.DeploymentState.DeploymentState) Github.Object.Deployment
 state =
-    Object.fieldDecoder "state" [] Github.Enum.DeploymentState.decoder
+    Object.fieldDecoder "state" [] (Github.Enum.DeploymentState.decoder |> Decode.maybe)
 
 
-statuses : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet statuses Github.Object.DeploymentStatusConnection -> FieldDecoder statuses Github.Object.Deployment
+statuses : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet statuses Github.Object.DeploymentStatusConnection -> FieldDecoder (Maybe statuses) Github.Object.Deployment
 statuses fillInOptionals object =
     let
         filledInOptionals =
@@ -76,4 +76,4 @@ statuses fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "statuses" optionalArgs object identity
+    Object.selectionFieldDecoder "statuses" optionalArgs object (identity >> Decode.maybe)

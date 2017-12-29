@@ -20,6 +20,6 @@ closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
-closedAt : FieldDecoder String Github.Object.Closable
+closedAt : FieldDecoder (Maybe String) Github.Object.Closable
 closedAt =
-    Object.fieldDecoder "closedAt" [] Decode.string
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)

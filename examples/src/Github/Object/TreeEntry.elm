@@ -25,9 +25,9 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-object : SelectionSet object Github.Object.GitObject -> FieldDecoder object Github.Object.TreeEntry
+object : SelectionSet object Github.Object.GitObject -> FieldDecoder (Maybe object) Github.Object.TreeEntry
 object object =
-    Object.selectionFieldDecoder "object" [] object identity
+    Object.selectionFieldDecoder "object" [] object (identity >> Decode.maybe)
 
 
 oid : FieldDecoder String Github.Object.TreeEntry

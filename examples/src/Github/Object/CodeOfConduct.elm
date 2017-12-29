@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-body : FieldDecoder String Github.Object.CodeOfConduct
+body : FieldDecoder (Maybe String) Github.Object.CodeOfConduct
 body =
-    Object.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
 
 
 key : FieldDecoder String Github.Object.CodeOfConduct
@@ -30,6 +30,6 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-url : FieldDecoder String Github.Object.CodeOfConduct
+url : FieldDecoder (Maybe String) Github.Object.CodeOfConduct
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.maybe)

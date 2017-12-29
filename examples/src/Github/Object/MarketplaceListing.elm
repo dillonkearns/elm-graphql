@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-companyUrl : FieldDecoder String Github.Object.MarketplaceListing
+companyUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 companyUrl =
-    Object.fieldDecoder "companyUrl" [] Decode.string
+    Object.fieldDecoder "companyUrl" [] (Decode.string |> Decode.maybe)
 
 
 configurationResourcePath : FieldDecoder String Github.Object.MarketplaceListing
@@ -30,14 +30,14 @@ configurationUrl =
     Object.fieldDecoder "configurationUrl" [] Decode.string
 
 
-documentationUrl : FieldDecoder String Github.Object.MarketplaceListing
+documentationUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 documentationUrl =
-    Object.fieldDecoder "documentationUrl" [] Decode.string
+    Object.fieldDecoder "documentationUrl" [] (Decode.string |> Decode.maybe)
 
 
-extendedDescription : FieldDecoder String Github.Object.MarketplaceListing
+extendedDescription : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 extendedDescription =
-    Object.fieldDecoder "extendedDescription" [] Decode.string
+    Object.fieldDecoder "extendedDescription" [] (Decode.string |> Decode.maybe)
 
 
 extendedDescriptionHTML : FieldDecoder String Github.Object.MarketplaceListing
@@ -70,9 +70,9 @@ hasTermsOfService =
     Object.fieldDecoder "hasTermsOfService" [] Decode.bool
 
 
-howItWorks : FieldDecoder String Github.Object.MarketplaceListing
+howItWorks : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 howItWorks =
-    Object.fieldDecoder "howItWorks" [] Decode.string
+    Object.fieldDecoder "howItWorks" [] (Decode.string |> Decode.maybe)
 
 
 howItWorksHTML : FieldDecoder String Github.Object.MarketplaceListing
@@ -85,9 +85,9 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-installationUrl : FieldDecoder String Github.Object.MarketplaceListing
+installationUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 installationUrl =
-    Object.fieldDecoder "installationUrl" [] Decode.string
+    Object.fieldDecoder "installationUrl" [] (Decode.string |> Decode.maybe)
 
 
 installedForViewer : FieldDecoder Bool Github.Object.MarketplaceListing
@@ -125,7 +125,7 @@ logoBackgroundColor =
     Object.fieldDecoder "logoBackgroundColor" [] Decode.string
 
 
-logoUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Object.MarketplaceListing
+logoUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 logoUrl fillInOptionals =
     let
         filledInOptionals =
@@ -135,7 +135,7 @@ logoUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "logoUrl" optionalArgs Decode.string
+    Object.fieldDecoder "logoUrl" optionalArgs (Decode.string |> Decode.maybe)
 
 
 name : FieldDecoder String Github.Object.MarketplaceListing
@@ -148,9 +148,9 @@ normalizedShortDescription =
     Object.fieldDecoder "normalizedShortDescription" [] Decode.string
 
 
-pricingUrl : FieldDecoder String Github.Object.MarketplaceListing
+pricingUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 pricingUrl =
-    Object.fieldDecoder "pricingUrl" [] Decode.string
+    Object.fieldDecoder "pricingUrl" [] (Decode.string |> Decode.maybe)
 
 
 primaryCategory : SelectionSet primaryCategory Github.Object.MarketplaceCategory -> FieldDecoder primaryCategory Github.Object.MarketplaceListing
@@ -168,14 +168,14 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-screenshotUrls : FieldDecoder (List String) Github.Object.MarketplaceListing
+screenshotUrls : FieldDecoder (List (Maybe String)) Github.Object.MarketplaceListing
 screenshotUrls =
-    Object.fieldDecoder "screenshotUrls" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "screenshotUrls" [] (Decode.string |> Decode.maybe |> Decode.list)
 
 
-secondaryCategory : SelectionSet secondaryCategory Github.Object.MarketplaceCategory -> FieldDecoder secondaryCategory Github.Object.MarketplaceListing
+secondaryCategory : SelectionSet secondaryCategory Github.Object.MarketplaceCategory -> FieldDecoder (Maybe secondaryCategory) Github.Object.MarketplaceListing
 secondaryCategory object =
-    Object.selectionFieldDecoder "secondaryCategory" [] object identity
+    Object.selectionFieldDecoder "secondaryCategory" [] object (identity >> Decode.maybe)
 
 
 shortDescription : FieldDecoder String Github.Object.MarketplaceListing
@@ -188,14 +188,14 @@ slug =
     Object.fieldDecoder "slug" [] Decode.string
 
 
-statusUrl : FieldDecoder String Github.Object.MarketplaceListing
+statusUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 statusUrl =
-    Object.fieldDecoder "statusUrl" [] Decode.string
+    Object.fieldDecoder "statusUrl" [] (Decode.string |> Decode.maybe)
 
 
-supportEmail : FieldDecoder String Github.Object.MarketplaceListing
+supportEmail : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 supportEmail =
-    Object.fieldDecoder "supportEmail" [] Decode.string
+    Object.fieldDecoder "supportEmail" [] (Decode.string |> Decode.maybe)
 
 
 supportUrl : FieldDecoder String Github.Object.MarketplaceListing
@@ -203,9 +203,9 @@ supportUrl =
     Object.fieldDecoder "supportUrl" [] Decode.string
 
 
-termsOfServiceUrl : FieldDecoder String Github.Object.MarketplaceListing
+termsOfServiceUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
 termsOfServiceUrl =
-    Object.fieldDecoder "termsOfServiceUrl" [] Decode.string
+    Object.fieldDecoder "termsOfServiceUrl" [] (Decode.string |> Decode.maybe)
 
 
 url : FieldDecoder String Github.Object.MarketplaceListing

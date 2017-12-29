@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.AcceptTopicSuggestionPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.AcceptTopicSuggestionPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 topic : SelectionSet topic Github.Object.Topic -> FieldDecoder topic Github.Object.AcceptTopicSuggestionPayload

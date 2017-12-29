@@ -33,19 +33,19 @@ avatarUrl fillInOptionals =
     Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
 
 
-databaseId : FieldDecoder Int Github.Object.Organization
+databaseId : FieldDecoder (Maybe Int) Github.Object.Organization
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
-description : FieldDecoder String Github.Object.Organization
+description : FieldDecoder (Maybe String) Github.Object.Organization
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
-email : FieldDecoder String Github.Object.Organization
+email : FieldDecoder (Maybe String) Github.Object.Organization
 email =
-    Object.fieldDecoder "email" [] Decode.string
+    Object.fieldDecoder "email" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Organization
@@ -53,9 +53,9 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-location : FieldDecoder String Github.Object.Organization
+location : FieldDecoder (Maybe String) Github.Object.Organization
 location =
-    Object.fieldDecoder "location" [] Decode.string
+    Object.fieldDecoder "location" [] (Decode.string |> Decode.maybe)
 
 
 login : FieldDecoder String Github.Object.Organization
@@ -76,9 +76,9 @@ members fillInOptionals object =
     Object.selectionFieldDecoder "members" optionalArgs object identity
 
 
-name : FieldDecoder String Github.Object.Organization
+name : FieldDecoder (Maybe String) Github.Object.Organization
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] (Decode.string |> Decode.maybe)
 
 
 newTeamResourcePath : FieldDecoder String Github.Object.Organization
@@ -91,27 +91,27 @@ newTeamUrl =
     Object.fieldDecoder "newTeamUrl" [] Decode.string
 
 
-organizationBillingEmail : FieldDecoder String Github.Object.Organization
+organizationBillingEmail : FieldDecoder (Maybe String) Github.Object.Organization
 organizationBillingEmail =
-    Object.fieldDecoder "organizationBillingEmail" [] Decode.string
+    Object.fieldDecoder "organizationBillingEmail" [] (Decode.string |> Decode.maybe)
 
 
-pinnedRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List Github.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List Github.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : OptionalArgument Bool }) -> SelectionSet pinnedRepositories Github.Object.RepositoryConnection -> FieldDecoder pinnedRepositories Github.Object.Organization
+pinnedRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet pinnedRepositories Github.Object.RepositoryConnection -> FieldDecoder pinnedRepositories Github.Object.Organization
 pinnedRepositories fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum toString |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "pinnedRepositories" optionalArgs object identity
 
 
-project : { number : String } -> SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.Organization
+project : { number : String } -> SelectionSet project Github.Object.Project -> FieldDecoder (Maybe project) Github.Object.Organization
 project requiredArgs object =
-    Object.selectionFieldDecoder "project" [ Argument.string "number" requiredArgs.number ] object identity
+    Object.selectionFieldDecoder "project" [ Argument.string "number" requiredArgs.number ] object (identity >> Decode.maybe)
 
 
 projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Object.Organization
@@ -137,22 +137,22 @@ projectsUrl =
     Object.fieldDecoder "projectsUrl" [] Decode.string
 
 
-repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List Github.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List Github.Enum.RepositoryAffiliation.RepositoryAffiliation), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }) -> SelectionSet repositories Github.Object.RepositoryConnection -> FieldDecoder repositories Github.Object.Organization
+repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }) -> SelectionSet repositories Github.Object.RepositoryConnection -> FieldDecoder repositories Github.Object.Organization
 repositories fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent, isFork = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum toString |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals.isFork Encode.bool ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals.isFork Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "repositories" optionalArgs object identity
 
 
-repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Organization
+repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder (Maybe repository) Github.Object.Organization
 repository requiredArgs object =
-    Object.selectionFieldDecoder "repository" [ Argument.string "name" requiredArgs.name ] object identity
+    Object.selectionFieldDecoder "repository" [ Argument.string "name" requiredArgs.name ] object (identity >> Decode.maybe)
 
 
 resourcePath : FieldDecoder String Github.Object.Organization
@@ -160,14 +160,14 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-samlIdentityProvider : SelectionSet samlIdentityProvider Github.Object.OrganizationIdentityProvider -> FieldDecoder samlIdentityProvider Github.Object.Organization
+samlIdentityProvider : SelectionSet samlIdentityProvider Github.Object.OrganizationIdentityProvider -> FieldDecoder (Maybe samlIdentityProvider) Github.Object.Organization
 samlIdentityProvider object =
-    Object.selectionFieldDecoder "samlIdentityProvider" [] object identity
+    Object.selectionFieldDecoder "samlIdentityProvider" [] object (identity >> Decode.maybe)
 
 
-team : { slug : String } -> SelectionSet team Github.Object.Team -> FieldDecoder team Github.Object.Organization
+team : { slug : String } -> SelectionSet team Github.Object.Team -> FieldDecoder (Maybe team) Github.Object.Organization
 team requiredArgs object =
-    Object.selectionFieldDecoder "team" [ Argument.string "slug" requiredArgs.slug ] object identity
+    Object.selectionFieldDecoder "team" [ Argument.string "slug" requiredArgs.slug ] object (identity >> Decode.maybe)
 
 
 teams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy, role : OptionalArgument Github.Enum.TeamRole.TeamRole, query : OptionalArgument String, userLogins : OptionalArgument (List String), orderBy : OptionalArgument Value, ldapMapped : OptionalArgument Bool, rootTeamsOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy, role : OptionalArgument Github.Enum.TeamRole.TeamRole, query : OptionalArgument String, userLogins : OptionalArgument (List String), orderBy : OptionalArgument Value, ldapMapped : OptionalArgument Bool, rootTeamsOnly : OptionalArgument Bool }) -> SelectionSet teams Github.Object.TeamConnection -> FieldDecoder teams Github.Object.Organization
@@ -223,6 +223,6 @@ viewerIsAMember =
     Object.fieldDecoder "viewerIsAMember" [] Decode.bool
 
 
-websiteUrl : FieldDecoder String Github.Object.Organization
+websiteUrl : FieldDecoder (Maybe String) Github.Object.Organization
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] Decode.string
+    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.maybe)

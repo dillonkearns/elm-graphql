@@ -21,9 +21,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.DeploymentStatus
+creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.DeploymentStatus
 creator object =
-    Object.selectionFieldDecoder "creator" [] object identity
+    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
 deployment : SelectionSet deployment Github.Object.Deployment -> FieldDecoder deployment Github.Object.DeploymentStatus
@@ -31,14 +31,14 @@ deployment object =
     Object.selectionFieldDecoder "deployment" [] object identity
 
 
-description : FieldDecoder String Github.Object.DeploymentStatus
+description : FieldDecoder (Maybe String) Github.Object.DeploymentStatus
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
-environmentUrl : FieldDecoder String Github.Object.DeploymentStatus
+environmentUrl : FieldDecoder (Maybe String) Github.Object.DeploymentStatus
 environmentUrl =
-    Object.fieldDecoder "environmentUrl" [] Decode.string
+    Object.fieldDecoder "environmentUrl" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.DeploymentStatus
@@ -46,9 +46,9 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-logUrl : FieldDecoder String Github.Object.DeploymentStatus
+logUrl : FieldDecoder (Maybe String) Github.Object.DeploymentStatus
 logUrl =
-    Object.fieldDecoder "logUrl" [] Decode.string
+    Object.fieldDecoder "logUrl" [] (Decode.string |> Decode.maybe)
 
 
 state : FieldDecoder Github.Enum.DeploymentStatusState.DeploymentStatusState Github.Object.DeploymentStatus

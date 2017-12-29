@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.CrossReferencedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.CrossReferencedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.CrossReferencedEvent
@@ -45,14 +45,14 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-source : FieldDecoder String Github.Object.CrossReferencedEvent
+source : FieldDecoder (Maybe String) Github.Object.CrossReferencedEvent
 source =
-    Object.fieldDecoder "source" [] Decode.string
+    Object.fieldDecoder "source" [] (Decode.string |> Decode.maybe)
 
 
-target : FieldDecoder String Github.Object.CrossReferencedEvent
+target : FieldDecoder (Maybe String) Github.Object.CrossReferencedEvent
 target =
-    Object.fieldDecoder "target" [] Decode.string
+    Object.fieldDecoder "target" [] (Decode.string |> Decode.maybe)
 
 
 url : FieldDecoder String Github.Object.CrossReferencedEvent

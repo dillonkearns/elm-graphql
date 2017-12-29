@@ -21,9 +21,9 @@ content =
     Object.fieldDecoder "content" [] Github.Enum.ReactionContent.decoder
 
 
-createdAt : FieldDecoder String Github.Object.ReactionGroup
+createdAt : FieldDecoder (Maybe String) Github.Object.ReactionGroup
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.maybe)
 
 
 subject : SelectionSet subject Github.Object.Reactable -> FieldDecoder subject Github.Object.ReactionGroup

@@ -20,9 +20,9 @@ codeCount =
     Object.fieldDecoder "codeCount" [] Decode.int
 
 
-edges : SelectionSet edges Github.Object.SearchResultItemEdge -> FieldDecoder (List edges) Github.Object.SearchResultItemConnection
+edges : SelectionSet edges Github.Object.SearchResultItemEdge -> FieldDecoder (Maybe (List (Maybe edges))) Github.Object.SearchResultItemConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 issueCount : FieldDecoder Int Github.Object.SearchResultItemConnection
@@ -30,9 +30,9 @@ issueCount =
     Object.fieldDecoder "issueCount" [] Decode.int
 
 
-nodes : FieldDecoder (List String) Github.Object.SearchResultItemConnection
+nodes : FieldDecoder (Maybe (List (Maybe String))) Github.Object.SearchResultItemConnection
 nodes =
-    Object.fieldDecoder "nodes" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "nodes" [] (Decode.string |> Decode.maybe |> Decode.list |> Decode.maybe)
 
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.SearchResultItemConnection

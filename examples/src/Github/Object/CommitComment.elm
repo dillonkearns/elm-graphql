@@ -18,9 +18,9 @@ selection constructor =
     Object.object constructor
 
 
-author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.CommitComment
+author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.CommitComment
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.CommitComment
@@ -38,9 +38,9 @@ bodyHTML =
     Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.CommitComment
+commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.CommitComment
 commit object =
-    Object.selectionFieldDecoder "commit" [] object identity
+    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.CommitComment
@@ -53,14 +53,14 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder Int Github.Object.CommitComment
+databaseId : FieldDecoder (Maybe Int) Github.Object.CommitComment
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.CommitComment
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.CommitComment
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.CommitComment
@@ -68,29 +68,29 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-lastEditedAt : FieldDecoder String Github.Object.CommitComment
+lastEditedAt : FieldDecoder (Maybe String) Github.Object.CommitComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
 
 
-path : FieldDecoder String Github.Object.CommitComment
+path : FieldDecoder (Maybe String) Github.Object.CommitComment
 path =
-    Object.fieldDecoder "path" [] Decode.string
+    Object.fieldDecoder "path" [] (Decode.string |> Decode.maybe)
 
 
-position : FieldDecoder Int Github.Object.CommitComment
+position : FieldDecoder (Maybe Int) Github.Object.CommitComment
 position =
-    Object.fieldDecoder "position" [] Decode.int
+    Object.fieldDecoder "position" [] (Decode.int |> Decode.maybe)
 
 
-publishedAt : FieldDecoder String Github.Object.CommitComment
+publishedAt : FieldDecoder (Maybe String) Github.Object.CommitComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
-reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.CommitComment
+reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (Maybe (List reactionGroups)) Github.Object.CommitComment
 reactionGroups object =
-    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.CommitComment

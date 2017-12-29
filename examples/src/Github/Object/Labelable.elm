@@ -15,7 +15,7 @@ selection constructor =
     Object.object constructor
 
 
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder labels Github.Object.Labelable
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder (Maybe labels) Github.Object.Labelable
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -25,4 +25,4 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "labels" optionalArgs object identity
+    Object.selectionFieldDecoder "labels" optionalArgs object (identity >> Decode.maybe)

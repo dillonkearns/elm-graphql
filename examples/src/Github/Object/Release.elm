@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-author : SelectionSet author Github.Object.User -> FieldDecoder author Github.Object.Release
+author : SelectionSet author Github.Object.User -> FieldDecoder (Maybe author) Github.Object.Release
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.Release
@@ -25,9 +25,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-description : FieldDecoder String Github.Object.Release
+description : FieldDecoder (Maybe String) Github.Object.Release
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Release
@@ -45,14 +45,14 @@ isPrerelease =
     Object.fieldDecoder "isPrerelease" [] Decode.bool
 
 
-name : FieldDecoder String Github.Object.Release
+name : FieldDecoder (Maybe String) Github.Object.Release
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.fieldDecoder "name" [] (Decode.string |> Decode.maybe)
 
 
-publishedAt : FieldDecoder String Github.Object.Release
+publishedAt : FieldDecoder (Maybe String) Github.Object.Release
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
 releaseAssets : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }) -> SelectionSet releaseAssets Github.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Github.Object.Release
@@ -73,9 +73,9 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-tag : SelectionSet tag Github.Object.Ref -> FieldDecoder tag Github.Object.Release
+tag : SelectionSet tag Github.Object.Ref -> FieldDecoder (Maybe tag) Github.Object.Release
 tag object =
-    Object.selectionFieldDecoder "tag" [] object identity
+    Object.selectionFieldDecoder "tag" [] object (identity >> Decode.maybe)
 
 
 updatedAt : FieldDecoder String Github.Object.Release

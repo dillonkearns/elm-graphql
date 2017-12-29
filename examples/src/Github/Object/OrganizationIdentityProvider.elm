@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-digestMethod : FieldDecoder String Github.Object.OrganizationIdentityProvider
+digestMethod : FieldDecoder (Maybe String) Github.Object.OrganizationIdentityProvider
 digestMethod =
-    Object.fieldDecoder "digestMethod" [] Decode.string
+    Object.fieldDecoder "digestMethod" [] (Decode.string |> Decode.maybe)
 
 
 externalIdentities : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet externalIdentities Github.Object.ExternalIdentityConnection -> FieldDecoder externalIdentities Github.Object.OrganizationIdentityProvider
@@ -38,26 +38,26 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-idpCertificate : FieldDecoder String Github.Object.OrganizationIdentityProvider
+idpCertificate : FieldDecoder (Maybe String) Github.Object.OrganizationIdentityProvider
 idpCertificate =
-    Object.fieldDecoder "idpCertificate" [] Decode.string
+    Object.fieldDecoder "idpCertificate" [] (Decode.string |> Decode.maybe)
 
 
-issuer : FieldDecoder String Github.Object.OrganizationIdentityProvider
+issuer : FieldDecoder (Maybe String) Github.Object.OrganizationIdentityProvider
 issuer =
-    Object.fieldDecoder "issuer" [] Decode.string
+    Object.fieldDecoder "issuer" [] (Decode.string |> Decode.maybe)
 
 
-organization : SelectionSet organization Github.Object.Organization -> FieldDecoder organization Github.Object.OrganizationIdentityProvider
+organization : SelectionSet organization Github.Object.Organization -> FieldDecoder (Maybe organization) Github.Object.OrganizationIdentityProvider
 organization object =
-    Object.selectionFieldDecoder "organization" [] object identity
+    Object.selectionFieldDecoder "organization" [] object (identity >> Decode.maybe)
 
 
-signatureMethod : FieldDecoder String Github.Object.OrganizationIdentityProvider
+signatureMethod : FieldDecoder (Maybe String) Github.Object.OrganizationIdentityProvider
 signatureMethod =
-    Object.fieldDecoder "signatureMethod" [] Decode.string
+    Object.fieldDecoder "signatureMethod" [] (Decode.string |> Decode.maybe)
 
 
-ssoUrl : FieldDecoder String Github.Object.OrganizationIdentityProvider
+ssoUrl : FieldDecoder (Maybe String) Github.Object.OrganizationIdentityProvider
 ssoUrl =
-    Object.fieldDecoder "ssoUrl" [] Decode.string
+    Object.fieldDecoder "ssoUrl" [] (Decode.string |> Decode.maybe)

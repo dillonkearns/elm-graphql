@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.RemoveOutsideCollaboratorPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 removedUser : SelectionSet removedUser Github.Object.User -> FieldDecoder removedUser Github.Object.RemoveOutsideCollaboratorPayload

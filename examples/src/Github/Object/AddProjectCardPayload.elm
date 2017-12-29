@@ -20,9 +20,9 @@ cardEdge object =
     Object.selectionFieldDecoder "cardEdge" [] object identity
 
 
-clientMutationId : FieldDecoder String Github.Object.AddProjectCardPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.AddProjectCardPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 projectColumn : SelectionSet projectColumn Github.Object.Project -> FieldDecoder projectColumn Github.Object.AddProjectCardPayload

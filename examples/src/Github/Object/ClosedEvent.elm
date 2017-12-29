@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.ClosedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.ClosedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 closable : SelectionSet closable Github.Object.Closable -> FieldDecoder closable Github.Object.ClosedEvent
@@ -25,9 +25,9 @@ closable object =
     Object.selectionFieldDecoder "closable" [] object identity
 
 
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.ClosedEvent
+commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.ClosedEvent
 commit object =
-    Object.selectionFieldDecoder "commit" [] object identity
+    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.ClosedEvent

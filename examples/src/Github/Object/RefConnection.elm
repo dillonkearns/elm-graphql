@@ -15,14 +15,14 @@ selection constructor =
     Object.object constructor
 
 
-edges : SelectionSet edges Github.Object.RefEdge -> FieldDecoder (List edges) Github.Object.RefConnection
+edges : SelectionSet edges Github.Object.RefEdge -> FieldDecoder (Maybe (List (Maybe edges))) Github.Object.RefConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
-nodes : SelectionSet nodes Github.Object.Ref -> FieldDecoder (List nodes) Github.Object.RefConnection
+nodes : SelectionSet nodes Github.Object.Ref -> FieldDecoder (Maybe (List (Maybe nodes))) Github.Object.RefConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.RefConnection

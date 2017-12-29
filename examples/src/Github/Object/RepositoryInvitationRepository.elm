@@ -21,9 +21,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-description : FieldDecoder String Github.Object.RepositoryInvitationRepository
+description : FieldDecoder (Maybe String) Github.Object.RepositoryInvitationRepository
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
 descriptionHTML : FieldDecoder String Github.Object.RepositoryInvitationRepository
@@ -46,9 +46,9 @@ hasWikiEnabled =
     Object.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
-homepageUrl : FieldDecoder String Github.Object.RepositoryInvitationRepository
+homepageUrl : FieldDecoder (Maybe String) Github.Object.RepositoryInvitationRepository
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] Decode.string
+    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.maybe)
 
 
 isArchived : FieldDecoder Bool Github.Object.RepositoryInvitationRepository
@@ -76,24 +76,24 @@ isPrivate =
     Object.fieldDecoder "isPrivate" [] Decode.bool
 
 
-license : FieldDecoder String Github.Object.RepositoryInvitationRepository
+license : FieldDecoder (Maybe String) Github.Object.RepositoryInvitationRepository
 license =
-    Object.fieldDecoder "license" [] Decode.string
+    Object.fieldDecoder "license" [] (Decode.string |> Decode.maybe)
 
 
-licenseInfo : SelectionSet licenseInfo Github.Object.License -> FieldDecoder licenseInfo Github.Object.RepositoryInvitationRepository
+licenseInfo : SelectionSet licenseInfo Github.Object.License -> FieldDecoder (Maybe licenseInfo) Github.Object.RepositoryInvitationRepository
 licenseInfo object =
-    Object.selectionFieldDecoder "licenseInfo" [] object identity
+    Object.selectionFieldDecoder "licenseInfo" [] object (identity >> Decode.maybe)
 
 
-lockReason : FieldDecoder Github.Enum.RepositoryLockReason.RepositoryLockReason Github.Object.RepositoryInvitationRepository
+lockReason : FieldDecoder (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Object.RepositoryInvitationRepository
 lockReason =
-    Object.fieldDecoder "lockReason" [] Github.Enum.RepositoryLockReason.decoder
+    Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.maybe)
 
 
-mirrorUrl : FieldDecoder String Github.Object.RepositoryInvitationRepository
+mirrorUrl : FieldDecoder (Maybe String) Github.Object.RepositoryInvitationRepository
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] Decode.string
+    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.maybe)
 
 
 name : FieldDecoder String Github.Object.RepositoryInvitationRepository
@@ -111,9 +111,9 @@ owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 
 
-pushedAt : FieldDecoder String Github.Object.RepositoryInvitationRepository
+pushedAt : FieldDecoder (Maybe String) Github.Object.RepositoryInvitationRepository
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] Decode.string
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.maybe)
 
 
 resourcePath : FieldDecoder String Github.Object.RepositoryInvitationRepository

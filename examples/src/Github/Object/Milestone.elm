@@ -22,9 +22,9 @@ closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
-closedAt : FieldDecoder String Github.Object.Milestone
+closedAt : FieldDecoder (Maybe String) Github.Object.Milestone
 closedAt =
-    Object.fieldDecoder "closedAt" [] Decode.string
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.Milestone
@@ -32,19 +32,19 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.Milestone
+creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.Milestone
 creator object =
-    Object.selectionFieldDecoder "creator" [] object identity
+    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-description : FieldDecoder String Github.Object.Milestone
+description : FieldDecoder (Maybe String) Github.Object.Milestone
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
-dueOn : FieldDecoder String Github.Object.Milestone
+dueOn : FieldDecoder (Maybe String) Github.Object.Milestone
 dueOn =
-    Object.fieldDecoder "dueOn" [] Decode.string
+    Object.fieldDecoder "dueOn" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Milestone

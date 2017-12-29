@@ -60,6 +60,6 @@ repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
 
-text : FieldDecoder String Github.Object.Blob
+text : FieldDecoder (Maybe String) Github.Object.Blob
 text =
-    Object.fieldDecoder "text" [] Decode.string
+    Object.fieldDecoder "text" [] (Decode.string |> Decode.maybe)

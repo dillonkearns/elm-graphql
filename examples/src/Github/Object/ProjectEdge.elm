@@ -20,6 +20,6 @@ cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet node Github.Object.Project -> FieldDecoder node Github.Object.ProjectEdge
+node : SelectionSet node Github.Object.Project -> FieldDecoder (Maybe node) Github.Object.ProjectEdge
 node object =
-    Object.selectionFieldDecoder "node" [] object identity
+    Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

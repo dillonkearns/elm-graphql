@@ -16,9 +16,9 @@ selection constructor =
     Object.object constructor
 
 
-body : FieldDecoder String Github.Object.Project
+body : FieldDecoder (Maybe String) Github.Object.Project
 body =
-    Object.fieldDecoder "body" [] Decode.string
+    Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
 
 
 bodyHTML : FieldDecoder String Github.Object.Project
@@ -31,9 +31,9 @@ closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
-closedAt : FieldDecoder String Github.Object.Project
+closedAt : FieldDecoder (Maybe String) Github.Object.Project
 closedAt =
-    Object.fieldDecoder "closedAt" [] Decode.string
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
 
 
 columns : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet columns Github.Object.ProjectColumnConnection -> FieldDecoder columns Github.Object.Project
@@ -54,14 +54,14 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.Project
+creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.Project
 creator object =
-    Object.selectionFieldDecoder "creator" [] object identity
+    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-databaseId : FieldDecoder Int Github.Object.Project
+databaseId : FieldDecoder (Maybe Int) Github.Object.Project
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Project

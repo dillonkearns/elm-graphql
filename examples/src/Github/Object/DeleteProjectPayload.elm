@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.DeleteProjectPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.DeleteProjectPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 owner : SelectionSet owner Github.Object.ProjectOwner -> FieldDecoder owner Github.Object.DeleteProjectPayload

@@ -40,9 +40,9 @@ assignees fillInOptionals object =
     Object.selectionFieldDecoder "assignees" optionalArgs object identity
 
 
-author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.PullRequest
+author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequest
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.PullRequest
@@ -50,9 +50,9 @@ authorAssociation =
     Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
-baseRef : SelectionSet baseRef Github.Object.Ref -> FieldDecoder baseRef Github.Object.PullRequest
+baseRef : SelectionSet baseRef Github.Object.Ref -> FieldDecoder (Maybe baseRef) Github.Object.PullRequest
 baseRef object =
-    Object.selectionFieldDecoder "baseRef" [] object identity
+    Object.selectionFieldDecoder "baseRef" [] object (identity >> Decode.maybe)
 
 
 baseRefName : FieldDecoder String Github.Object.PullRequest
@@ -85,9 +85,9 @@ closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
-closedAt : FieldDecoder String Github.Object.PullRequest
+closedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
 closedAt =
-    Object.fieldDecoder "closedAt" [] Decode.string
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
 
 
 comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Github.Object.IssueCommentConnection -> FieldDecoder comments Github.Object.PullRequest
@@ -126,9 +126,9 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder Int Github.Object.PullRequest
+databaseId : FieldDecoder (Maybe Int) Github.Object.PullRequest
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 deletions : FieldDecoder Int Github.Object.PullRequest
@@ -136,14 +136,14 @@ deletions =
     Object.fieldDecoder "deletions" [] Decode.int
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.PullRequest
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequest
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
-headRef : SelectionSet headRef Github.Object.Ref -> FieldDecoder headRef Github.Object.PullRequest
+headRef : SelectionSet headRef Github.Object.Ref -> FieldDecoder (Maybe headRef) Github.Object.PullRequest
 headRef object =
-    Object.selectionFieldDecoder "headRef" [] object identity
+    Object.selectionFieldDecoder "headRef" [] object (identity >> Decode.maybe)
 
 
 headRefName : FieldDecoder String Github.Object.PullRequest
@@ -151,14 +151,14 @@ headRefName =
     Object.fieldDecoder "headRefName" [] Decode.string
 
 
-headRepository : SelectionSet headRepository Github.Object.Repository -> FieldDecoder headRepository Github.Object.PullRequest
+headRepository : SelectionSet headRepository Github.Object.Repository -> FieldDecoder (Maybe headRepository) Github.Object.PullRequest
 headRepository object =
-    Object.selectionFieldDecoder "headRepository" [] object identity
+    Object.selectionFieldDecoder "headRepository" [] object (identity >> Decode.maybe)
 
 
-headRepositoryOwner : SelectionSet headRepositoryOwner Github.Object.RepositoryOwner -> FieldDecoder headRepositoryOwner Github.Object.PullRequest
+headRepositoryOwner : SelectionSet headRepositoryOwner Github.Object.RepositoryOwner -> FieldDecoder (Maybe headRepositoryOwner) Github.Object.PullRequest
 headRepositoryOwner object =
-    Object.selectionFieldDecoder "headRepositoryOwner" [] object identity
+    Object.selectionFieldDecoder "headRepositoryOwner" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.PullRequest
@@ -171,7 +171,7 @@ isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder labels Github.Object.PullRequest
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder (Maybe labels) Github.Object.PullRequest
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -181,12 +181,12 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "labels" optionalArgs object identity
+    Object.selectionFieldDecoder "labels" optionalArgs object (identity >> Decode.maybe)
 
 
-lastEditedAt : FieldDecoder String Github.Object.PullRequest
+lastEditedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
 
 
 locked : FieldDecoder Bool Github.Object.PullRequest
@@ -194,9 +194,9 @@ locked =
     Object.fieldDecoder "locked" [] Decode.bool
 
 
-mergeCommit : SelectionSet mergeCommit Github.Object.Commit -> FieldDecoder mergeCommit Github.Object.PullRequest
+mergeCommit : SelectionSet mergeCommit Github.Object.Commit -> FieldDecoder (Maybe mergeCommit) Github.Object.PullRequest
 mergeCommit object =
-    Object.selectionFieldDecoder "mergeCommit" [] object identity
+    Object.selectionFieldDecoder "mergeCommit" [] object (identity >> Decode.maybe)
 
 
 mergeable : FieldDecoder Github.Enum.MergeableState.MergeableState Github.Object.PullRequest
@@ -209,14 +209,14 @@ merged =
     Object.fieldDecoder "merged" [] Decode.bool
 
 
-mergedAt : FieldDecoder String Github.Object.PullRequest
+mergedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
 mergedAt =
-    Object.fieldDecoder "mergedAt" [] Decode.string
+    Object.fieldDecoder "mergedAt" [] (Decode.string |> Decode.maybe)
 
 
-milestone : SelectionSet milestone Github.Object.Milestone -> FieldDecoder milestone Github.Object.PullRequest
+milestone : SelectionSet milestone Github.Object.Milestone -> FieldDecoder (Maybe milestone) Github.Object.PullRequest
 milestone object =
-    Object.selectionFieldDecoder "milestone" [] object identity
+    Object.selectionFieldDecoder "milestone" [] object (identity >> Decode.maybe)
 
 
 number : FieldDecoder Int Github.Object.PullRequest
@@ -237,9 +237,9 @@ participants fillInOptionals object =
     Object.selectionFieldDecoder "participants" optionalArgs object identity
 
 
-potentialMergeCommit : SelectionSet potentialMergeCommit Github.Object.Commit -> FieldDecoder potentialMergeCommit Github.Object.PullRequest
+potentialMergeCommit : SelectionSet potentialMergeCommit Github.Object.Commit -> FieldDecoder (Maybe potentialMergeCommit) Github.Object.PullRequest
 potentialMergeCommit object =
-    Object.selectionFieldDecoder "potentialMergeCommit" [] object identity
+    Object.selectionFieldDecoder "potentialMergeCommit" [] object (identity >> Decode.maybe)
 
 
 projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet projectCards Github.Object.ProjectCardConnection -> FieldDecoder projectCards Github.Object.PullRequest
@@ -255,14 +255,14 @@ projectCards fillInOptionals object =
     Object.selectionFieldDecoder "projectCards" optionalArgs object identity
 
 
-publishedAt : FieldDecoder String Github.Object.PullRequest
+publishedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
-reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.PullRequest
+reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (Maybe (List reactionGroups)) Github.Object.PullRequest
 reactionGroups object =
-    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.PullRequest
@@ -298,7 +298,7 @@ revertUrl =
     Object.fieldDecoder "revertUrl" [] Decode.string
 
 
-reviewRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet reviewRequests Github.Object.ReviewRequestConnection -> FieldDecoder reviewRequests Github.Object.PullRequest
+reviewRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet reviewRequests Github.Object.ReviewRequestConnection -> FieldDecoder (Maybe reviewRequests) Github.Object.PullRequest
 reviewRequests fillInOptionals object =
     let
         filledInOptionals =
@@ -308,10 +308,10 @@ reviewRequests fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "reviewRequests" optionalArgs object identity
+    Object.selectionFieldDecoder "reviewRequests" optionalArgs object (identity >> Decode.maybe)
 
 
-reviews : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }) -> SelectionSet reviews Github.Object.PullRequestReviewConnection -> FieldDecoder reviews Github.Object.PullRequest
+reviews : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }) -> SelectionSet reviews Github.Object.PullRequestReviewConnection -> FieldDecoder (Maybe reviews) Github.Object.PullRequest
 reviews fillInOptionals object =
     let
         filledInOptionals =
@@ -321,7 +321,7 @@ reviews fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum toString |> Encode.list), Argument.optional "author" filledInOptionals.author Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "reviews" optionalArgs object identity
+    Object.selectionFieldDecoder "reviews" optionalArgs object (identity >> Decode.maybe)
 
 
 state : FieldDecoder Github.Enum.PullRequestState.PullRequestState Github.Object.PullRequest
@@ -329,9 +329,9 @@ state =
     Object.fieldDecoder "state" [] Github.Enum.PullRequestState.decoder
 
 
-suggestedReviewers : SelectionSet suggestedReviewers Github.Object.SuggestedReviewer -> FieldDecoder (List suggestedReviewers) Github.Object.PullRequest
+suggestedReviewers : SelectionSet suggestedReviewers Github.Object.SuggestedReviewer -> FieldDecoder (List (Maybe suggestedReviewers)) Github.Object.PullRequest
 suggestedReviewers object =
-    Object.selectionFieldDecoder "suggestedReviewers" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "suggestedReviewers" [] object (identity >> Decode.maybe >> Decode.list)
 
 
 timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String }) -> SelectionSet timeline Github.Object.PullRequestTimelineConnection -> FieldDecoder timeline Github.Object.PullRequest

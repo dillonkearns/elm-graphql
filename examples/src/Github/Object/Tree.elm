@@ -30,9 +30,9 @@ commitUrl =
     Object.fieldDecoder "commitUrl" [] Decode.string
 
 
-entries : SelectionSet entries Github.Object.TreeEntry -> FieldDecoder (List entries) Github.Object.Tree
+entries : SelectionSet entries Github.Object.TreeEntry -> FieldDecoder (Maybe (List entries)) Github.Object.Tree
 entries object =
-    Object.selectionFieldDecoder "entries" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "entries" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Tree

@@ -16,14 +16,14 @@ selection constructor =
     Object.object constructor
 
 
-column : SelectionSet column Github.Object.ProjectColumn -> FieldDecoder column Github.Object.ProjectCard
+column : SelectionSet column Github.Object.ProjectColumn -> FieldDecoder (Maybe column) Github.Object.ProjectCard
 column object =
-    Object.selectionFieldDecoder "column" [] object identity
+    Object.selectionFieldDecoder "column" [] object (identity >> Decode.maybe)
 
 
-content : FieldDecoder String Github.Object.ProjectCard
+content : FieldDecoder (Maybe String) Github.Object.ProjectCard
 content =
-    Object.fieldDecoder "content" [] Decode.string
+    Object.fieldDecoder "content" [] (Decode.string |> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.ProjectCard
@@ -31,14 +31,14 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.ProjectCard
+creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.ProjectCard
 creator object =
-    Object.selectionFieldDecoder "creator" [] object identity
+    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-databaseId : FieldDecoder Int Github.Object.ProjectCard
+databaseId : FieldDecoder (Maybe Int) Github.Object.ProjectCard
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.ProjectCard
@@ -46,9 +46,9 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-note : FieldDecoder String Github.Object.ProjectCard
+note : FieldDecoder (Maybe String) Github.Object.ProjectCard
 note =
-    Object.fieldDecoder "note" [] Decode.string
+    Object.fieldDecoder "note" [] (Decode.string |> Decode.maybe)
 
 
 project : SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.ProjectCard
@@ -66,9 +66,9 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-state : FieldDecoder Github.Enum.ProjectCardState.ProjectCardState Github.Object.ProjectCard
+state : FieldDecoder (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
 state =
-    Object.fieldDecoder "state" [] Github.Enum.ProjectCardState.decoder
+    Object.fieldDecoder "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.maybe)
 
 
 updatedAt : FieldDecoder String Github.Object.ProjectCard

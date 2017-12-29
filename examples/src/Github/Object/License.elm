@@ -20,14 +20,14 @@ body =
     Object.fieldDecoder "body" [] Decode.string
 
 
-conditions : SelectionSet conditions Github.Object.LicenseRule -> FieldDecoder (List conditions) Github.Object.License
+conditions : SelectionSet conditions Github.Object.LicenseRule -> FieldDecoder (List (Maybe conditions)) Github.Object.License
 conditions object =
-    Object.selectionFieldDecoder "conditions" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "conditions" [] object (identity >> Decode.maybe >> Decode.list)
 
 
-description : FieldDecoder String Github.Object.License
+description : FieldDecoder (Maybe String) Github.Object.License
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
 featured : FieldDecoder Bool Github.Object.License
@@ -45,9 +45,9 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-implementation : FieldDecoder String Github.Object.License
+implementation : FieldDecoder (Maybe String) Github.Object.License
 implementation =
-    Object.fieldDecoder "implementation" [] Decode.string
+    Object.fieldDecoder "implementation" [] (Decode.string |> Decode.maybe)
 
 
 key : FieldDecoder String Github.Object.License
@@ -55,9 +55,9 @@ key =
     Object.fieldDecoder "key" [] Decode.string
 
 
-limitations : SelectionSet limitations Github.Object.LicenseRule -> FieldDecoder (List limitations) Github.Object.License
+limitations : SelectionSet limitations Github.Object.LicenseRule -> FieldDecoder (List (Maybe limitations)) Github.Object.License
 limitations object =
-    Object.selectionFieldDecoder "limitations" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "limitations" [] object (identity >> Decode.maybe >> Decode.list)
 
 
 name : FieldDecoder String Github.Object.License
@@ -65,21 +65,21 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-nickname : FieldDecoder String Github.Object.License
+nickname : FieldDecoder (Maybe String) Github.Object.License
 nickname =
-    Object.fieldDecoder "nickname" [] Decode.string
+    Object.fieldDecoder "nickname" [] (Decode.string |> Decode.maybe)
 
 
-permissions : SelectionSet permissions Github.Object.LicenseRule -> FieldDecoder (List permissions) Github.Object.License
+permissions : SelectionSet permissions Github.Object.LicenseRule -> FieldDecoder (List (Maybe permissions)) Github.Object.License
 permissions object =
-    Object.selectionFieldDecoder "permissions" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "permissions" [] object (identity >> Decode.maybe >> Decode.list)
 
 
-spdxId : FieldDecoder String Github.Object.License
+spdxId : FieldDecoder (Maybe String) Github.Object.License
 spdxId =
-    Object.fieldDecoder "spdxId" [] Decode.string
+    Object.fieldDecoder "spdxId" [] (Decode.string |> Decode.maybe)
 
 
-url : FieldDecoder String Github.Object.License
+url : FieldDecoder (Maybe String) Github.Object.License
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.maybe)

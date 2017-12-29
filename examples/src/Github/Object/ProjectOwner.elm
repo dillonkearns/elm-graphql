@@ -21,9 +21,9 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-project : { number : String } -> SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.ProjectOwner
+project : { number : String } -> SelectionSet project Github.Object.Project -> FieldDecoder (Maybe project) Github.Object.ProjectOwner
 project requiredArgs object =
-    Object.selectionFieldDecoder "project" [ Argument.string "number" requiredArgs.number ] object identity
+    Object.selectionFieldDecoder "project" [ Argument.string "number" requiredArgs.number ] object (identity >> Decode.maybe)
 
 
 projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Object.ProjectOwner

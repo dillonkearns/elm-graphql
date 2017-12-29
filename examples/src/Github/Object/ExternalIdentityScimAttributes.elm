@@ -15,6 +15,6 @@ selection constructor =
     Object.object constructor
 
 
-username : FieldDecoder String Github.Object.ExternalIdentityScimAttributes
+username : FieldDecoder (Maybe String) Github.Object.ExternalIdentityScimAttributes
 username =
-    Object.fieldDecoder "username" [] Decode.string
+    Object.fieldDecoder "username" [] (Decode.string |> Decode.maybe)

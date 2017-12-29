@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-databaseId : FieldDecoder Int Github.Object.ReviewRequest
+databaseId : FieldDecoder (Maybe Int) Github.Object.ReviewRequest
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.ReviewRequest
@@ -30,11 +30,11 @@ pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
-requestedReviewer : FieldDecoder String Github.Object.ReviewRequest
+requestedReviewer : FieldDecoder (Maybe String) Github.Object.ReviewRequest
 requestedReviewer =
-    Object.fieldDecoder "requestedReviewer" [] Decode.string
+    Object.fieldDecoder "requestedReviewer" [] (Decode.string |> Decode.maybe)
 
 
-reviewer : SelectionSet reviewer Github.Object.User -> FieldDecoder reviewer Github.Object.ReviewRequest
+reviewer : SelectionSet reviewer Github.Object.User -> FieldDecoder (Maybe reviewer) Github.Object.ReviewRequest
 reviewer object =
-    Object.selectionFieldDecoder "reviewer" [] object identity
+    Object.selectionFieldDecoder "reviewer" [] object (identity >> Decode.maybe)

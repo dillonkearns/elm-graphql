@@ -15,14 +15,14 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.UpdateTopicsPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.UpdateTopicsPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
-invalidTopicNames : FieldDecoder (List String) Github.Object.UpdateTopicsPayload
+invalidTopicNames : FieldDecoder (Maybe (List String)) Github.Object.UpdateTopicsPayload
 invalidTopicNames =
-    Object.fieldDecoder "invalidTopicNames" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.UpdateTopicsPayload

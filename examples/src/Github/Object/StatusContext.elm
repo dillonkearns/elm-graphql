@@ -16,9 +16,9 @@ selection constructor =
     Object.object constructor
 
 
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.StatusContext
+commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.StatusContext
 commit object =
-    Object.selectionFieldDecoder "commit" [] object identity
+    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
 
 context : FieldDecoder String Github.Object.StatusContext
@@ -31,14 +31,14 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder creator Github.Object.StatusContext
+creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.StatusContext
 creator object =
-    Object.selectionFieldDecoder "creator" [] object identity
+    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-description : FieldDecoder String Github.Object.StatusContext
+description : FieldDecoder (Maybe String) Github.Object.StatusContext
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.StatusContext
@@ -51,6 +51,6 @@ state =
     Object.fieldDecoder "state" [] Github.Enum.StatusState.decoder
 
 
-targetUrl : FieldDecoder String Github.Object.StatusContext
+targetUrl : FieldDecoder (Maybe String) Github.Object.StatusContext
 targetUrl =
-    Object.fieldDecoder "targetUrl" [] Decode.string
+    Object.fieldDecoder "targetUrl" [] (Decode.string |> Decode.maybe)

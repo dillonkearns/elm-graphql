@@ -15,14 +15,14 @@ selection constructor =
     Object.object constructor
 
 
-description : FieldDecoder String Github.Object.MarketplaceCategory
+description : FieldDecoder (Maybe String) Github.Object.MarketplaceCategory
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
-howItWorks : FieldDecoder String Github.Object.MarketplaceCategory
+howItWorks : FieldDecoder (Maybe String) Github.Object.MarketplaceCategory
 howItWorks =
-    Object.fieldDecoder "howItWorks" [] Decode.string
+    Object.fieldDecoder "howItWorks" [] (Decode.string |> Decode.maybe)
 
 
 name : FieldDecoder String Github.Object.MarketplaceCategory

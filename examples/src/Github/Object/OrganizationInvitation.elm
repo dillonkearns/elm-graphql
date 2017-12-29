@@ -17,9 +17,9 @@ selection constructor =
     Object.object constructor
 
 
-email : FieldDecoder String Github.Object.OrganizationInvitation
+email : FieldDecoder (Maybe String) Github.Object.OrganizationInvitation
 email =
-    Object.fieldDecoder "email" [] Decode.string
+    Object.fieldDecoder "email" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.OrganizationInvitation
@@ -32,9 +32,9 @@ invitationType =
     Object.fieldDecoder "invitationType" [] Github.Enum.OrganizationInvitationType.decoder
 
 
-invitee : SelectionSet invitee Github.Object.User -> FieldDecoder invitee Github.Object.OrganizationInvitation
+invitee : SelectionSet invitee Github.Object.User -> FieldDecoder (Maybe invitee) Github.Object.OrganizationInvitation
 invitee object =
-    Object.selectionFieldDecoder "invitee" [] object identity
+    Object.selectionFieldDecoder "invitee" [] object (identity >> Decode.maybe)
 
 
 inviter : SelectionSet inviter Github.Object.User -> FieldDecoder inviter Github.Object.OrganizationInvitation

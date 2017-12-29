@@ -33,9 +33,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder Int Github.Object.Bot
+databaseId : FieldDecoder (Maybe Int) Github.Object.Bot
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Bot

@@ -33,9 +33,9 @@ assignees fillInOptionals object =
     Object.selectionFieldDecoder "assignees" optionalArgs object identity
 
 
-author : SelectionSet author Github.Object.Actor -> FieldDecoder author Github.Object.Issue
+author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.Issue
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Issue
@@ -63,9 +63,9 @@ closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
-closedAt : FieldDecoder String Github.Object.Issue
+closedAt : FieldDecoder (Maybe String) Github.Object.Issue
 closedAt =
-    Object.fieldDecoder "closedAt" [] Decode.string
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
 
 
 comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Github.Object.IssueCommentConnection -> FieldDecoder comments Github.Object.Issue
@@ -91,14 +91,14 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-databaseId : FieldDecoder Int Github.Object.Issue
+databaseId : FieldDecoder (Maybe Int) Github.Object.Issue
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.Issue
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.Issue
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Issue
@@ -106,7 +106,7 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder labels Github.Object.Issue
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder (Maybe labels) Github.Object.Issue
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -116,12 +116,12 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "labels" optionalArgs object identity
+    Object.selectionFieldDecoder "labels" optionalArgs object (identity >> Decode.maybe)
 
 
-lastEditedAt : FieldDecoder String Github.Object.Issue
+lastEditedAt : FieldDecoder (Maybe String) Github.Object.Issue
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] Decode.string
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
 
 
 locked : FieldDecoder Bool Github.Object.Issue
@@ -129,9 +129,9 @@ locked =
     Object.fieldDecoder "locked" [] Decode.bool
 
 
-milestone : SelectionSet milestone Github.Object.Milestone -> FieldDecoder milestone Github.Object.Issue
+milestone : SelectionSet milestone Github.Object.Milestone -> FieldDecoder (Maybe milestone) Github.Object.Issue
 milestone object =
-    Object.selectionFieldDecoder "milestone" [] object identity
+    Object.selectionFieldDecoder "milestone" [] object (identity >> Decode.maybe)
 
 
 number : FieldDecoder Int Github.Object.Issue
@@ -165,14 +165,14 @@ projectCards fillInOptionals object =
     Object.selectionFieldDecoder "projectCards" optionalArgs object identity
 
 
-publishedAt : FieldDecoder String Github.Object.Issue
+publishedAt : FieldDecoder (Maybe String) Github.Object.Issue
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] Decode.string
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
-reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (List reactionGroups) Github.Object.Issue
+reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (Maybe (List reactionGroups)) Github.Object.Issue
 reactionGroups object =
-    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.Issue

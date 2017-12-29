@@ -38,14 +38,14 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-path : FieldDecoder String Github.Object.CommitCommentThread
+path : FieldDecoder (Maybe String) Github.Object.CommitCommentThread
 path =
-    Object.fieldDecoder "path" [] Decode.string
+    Object.fieldDecoder "path" [] (Decode.string |> Decode.maybe)
 
 
-position : FieldDecoder Int Github.Object.CommitCommentThread
+position : FieldDecoder (Maybe Int) Github.Object.CommitCommentThread
 position =
-    Object.fieldDecoder "position" [] Decode.int
+    Object.fieldDecoder "position" [] (Decode.int |> Decode.maybe)
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.CommitCommentThread

@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.AssignedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.AssignedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 assignable : SelectionSet assignable Github.Object.Assignable -> FieldDecoder assignable Github.Object.AssignedEvent
@@ -35,6 +35,6 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.AssignedEvent
+user : SelectionSet user Github.Object.User -> FieldDecoder (Maybe user) Github.Object.AssignedEvent
 user object =
-    Object.selectionFieldDecoder "user" [] object identity
+    Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)

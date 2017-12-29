@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.HeadRefDeletedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.HeadRefDeletedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.HeadRefDeletedEvent
@@ -25,9 +25,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-headRef : SelectionSet headRef Github.Object.Ref -> FieldDecoder headRef Github.Object.HeadRefDeletedEvent
+headRef : SelectionSet headRef Github.Object.Ref -> FieldDecoder (Maybe headRef) Github.Object.HeadRefDeletedEvent
 headRef object =
-    Object.selectionFieldDecoder "headRef" [] object identity
+    Object.selectionFieldDecoder "headRef" [] object (identity >> Decode.maybe)
 
 
 headRefName : FieldDecoder String Github.Object.HeadRefDeletedEvent

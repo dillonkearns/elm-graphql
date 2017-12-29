@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.ConvertedNoteToIssueEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.ConvertedNoteToIssueEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.ConvertedNoteToIssueEvent
@@ -25,9 +25,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder Int Github.Object.ConvertedNoteToIssueEvent
+databaseId : FieldDecoder (Maybe Int) Github.Object.ConvertedNoteToIssueEvent
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.ConvertedNoteToIssueEvent

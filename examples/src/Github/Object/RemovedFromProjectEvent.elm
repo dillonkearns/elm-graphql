@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.RemovedFromProjectEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.RemovedFromProjectEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.RemovedFromProjectEvent
@@ -25,9 +25,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder Int Github.Object.RemovedFromProjectEvent
+databaseId : FieldDecoder (Maybe Int) Github.Object.RemovedFromProjectEvent
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.RemovedFromProjectEvent

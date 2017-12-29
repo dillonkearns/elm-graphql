@@ -26,9 +26,9 @@ isValid =
     Object.fieldDecoder "isValid" [] Decode.bool
 
 
-keyId : FieldDecoder String Github.Object.GpgSignature
+keyId : FieldDecoder (Maybe String) Github.Object.GpgSignature
 keyId =
-    Object.fieldDecoder "keyId" [] Decode.string
+    Object.fieldDecoder "keyId" [] (Decode.string |> Decode.maybe)
 
 
 payload : FieldDecoder String Github.Object.GpgSignature
@@ -41,9 +41,9 @@ signature =
     Object.fieldDecoder "signature" [] Decode.string
 
 
-signer : SelectionSet signer Github.Object.User -> FieldDecoder signer Github.Object.GpgSignature
+signer : SelectionSet signer Github.Object.User -> FieldDecoder (Maybe signer) Github.Object.GpgSignature
 signer object =
-    Object.selectionFieldDecoder "signer" [] object identity
+    Object.selectionFieldDecoder "signer" [] object (identity >> Decode.maybe)
 
 
 state : FieldDecoder Github.Enum.GitSignatureState.GitSignatureState Github.Object.GpgSignature

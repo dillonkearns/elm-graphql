@@ -26,9 +26,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-databaseId : FieldDecoder Int Github.Object.Reaction
+databaseId : FieldDecoder (Maybe Int) Github.Object.Reaction
 databaseId =
-    Object.fieldDecoder "databaseId" [] Decode.int
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Reaction
@@ -41,6 +41,6 @@ reactable object =
     Object.selectionFieldDecoder "reactable" [] object identity
 
 
-user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.Reaction
+user : SelectionSet user Github.Object.User -> FieldDecoder (Maybe user) Github.Object.Reaction
 user object =
-    Object.selectionFieldDecoder "user" [] object identity
+    Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)

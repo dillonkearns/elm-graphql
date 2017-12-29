@@ -33,9 +33,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-description : FieldDecoder String Github.Object.Gist
+description : FieldDecoder (Maybe String) Github.Object.Gist
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.Gist
@@ -53,14 +53,14 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
-owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder owner Github.Object.Gist
+owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder (Maybe owner) Github.Object.Gist
 owner object =
-    Object.selectionFieldDecoder "owner" [] object identity
+    Object.selectionFieldDecoder "owner" [] object (identity >> Decode.maybe)
 
 
-pushedAt : FieldDecoder String Github.Object.Gist
+pushedAt : FieldDecoder (Maybe String) Github.Object.Gist
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] Decode.string
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.maybe)
 
 
 stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet stargazers Github.Object.StargazerConnection -> FieldDecoder stargazers Github.Object.Gist

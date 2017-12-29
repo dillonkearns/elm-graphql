@@ -15,14 +15,14 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.ReferencedEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.ReferencedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.ReferencedEvent
+commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.ReferencedEvent
 commit object =
-    Object.selectionFieldDecoder "commit" [] object identity
+    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
 
 commitRepository : SelectionSet commitRepository Github.Object.Repository -> FieldDecoder commitRepository Github.Object.ReferencedEvent
@@ -55,6 +55,6 @@ isDirectReference =
     Object.fieldDecoder "isDirectReference" [] Decode.bool
 
 
-subject : FieldDecoder String Github.Object.ReferencedEvent
+subject : FieldDecoder (Maybe String) Github.Object.ReferencedEvent
 subject =
-    Object.fieldDecoder "subject" [] Decode.string
+    Object.fieldDecoder "subject" [] (Decode.string |> Decode.maybe)

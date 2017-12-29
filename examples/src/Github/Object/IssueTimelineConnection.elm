@@ -15,14 +15,14 @@ selection constructor =
     Object.object constructor
 
 
-edges : SelectionSet edges Github.Object.IssueTimelineItemEdge -> FieldDecoder (List edges) Github.Object.IssueTimelineConnection
+edges : SelectionSet edges Github.Object.IssueTimelineItemEdge -> FieldDecoder (Maybe (List (Maybe edges))) Github.Object.IssueTimelineConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
-nodes : FieldDecoder (List String) Github.Object.IssueTimelineConnection
+nodes : FieldDecoder (Maybe (List (Maybe String))) Github.Object.IssueTimelineConnection
 nodes =
-    Object.fieldDecoder "nodes" [] (Decode.string |> Decode.list)
+    Object.fieldDecoder "nodes" [] (Decode.string |> Decode.maybe |> Decode.list |> Decode.maybe)
 
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.IssueTimelineConnection

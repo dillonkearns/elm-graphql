@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-endCursor : FieldDecoder String Github.Object.PageInfo
+endCursor : FieldDecoder (Maybe String) Github.Object.PageInfo
 endCursor =
-    Object.fieldDecoder "endCursor" [] Decode.string
+    Object.fieldDecoder "endCursor" [] (Decode.string |> Decode.maybe)
 
 
 hasNextPage : FieldDecoder Bool Github.Object.PageInfo
@@ -30,6 +30,6 @@ hasPreviousPage =
     Object.fieldDecoder "hasPreviousPage" [] Decode.bool
 
 
-startCursor : FieldDecoder String Github.Object.PageInfo
+startCursor : FieldDecoder (Maybe String) Github.Object.PageInfo
 startCursor =
-    Object.fieldDecoder "startCursor" [] Decode.string
+    Object.fieldDecoder "startCursor" [] (Decode.string |> Decode.maybe)

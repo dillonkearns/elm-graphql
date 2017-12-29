@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.UpdateProjectPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.UpdateProjectPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 project : SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.UpdateProjectPayload

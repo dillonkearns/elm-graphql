@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-clientMutationId : FieldDecoder String Github.Object.AddPullRequestReviewCommentPayload
+clientMutationId : FieldDecoder (Maybe String) Github.Object.AddPullRequestReviewCommentPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] Decode.string
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 comment : SelectionSet comment Github.Object.PullRequestReviewComment -> FieldDecoder comment Github.Object.AddPullRequestReviewCommentPayload

@@ -20,6 +20,6 @@ cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : FieldDecoder String Github.Object.IssueTimelineItemEdge
+node : FieldDecoder (Maybe String) Github.Object.IssueTimelineItemEdge
 node =
-    Object.fieldDecoder "node" [] Decode.string
+    Object.fieldDecoder "node" [] (Decode.string |> Decode.maybe)

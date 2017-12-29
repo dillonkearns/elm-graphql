@@ -25,21 +25,21 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-organizationInvitation : SelectionSet organizationInvitation Github.Object.OrganizationInvitation -> FieldDecoder organizationInvitation Github.Object.ExternalIdentity
+organizationInvitation : SelectionSet organizationInvitation Github.Object.OrganizationInvitation -> FieldDecoder (Maybe organizationInvitation) Github.Object.ExternalIdentity
 organizationInvitation object =
-    Object.selectionFieldDecoder "organizationInvitation" [] object identity
+    Object.selectionFieldDecoder "organizationInvitation" [] object (identity >> Decode.maybe)
 
 
-samlIdentity : SelectionSet samlIdentity Github.Object.ExternalIdentitySamlAttributes -> FieldDecoder samlIdentity Github.Object.ExternalIdentity
+samlIdentity : SelectionSet samlIdentity Github.Object.ExternalIdentitySamlAttributes -> FieldDecoder (Maybe samlIdentity) Github.Object.ExternalIdentity
 samlIdentity object =
-    Object.selectionFieldDecoder "samlIdentity" [] object identity
+    Object.selectionFieldDecoder "samlIdentity" [] object (identity >> Decode.maybe)
 
 
-scimIdentity : SelectionSet scimIdentity Github.Object.ExternalIdentityScimAttributes -> FieldDecoder scimIdentity Github.Object.ExternalIdentity
+scimIdentity : SelectionSet scimIdentity Github.Object.ExternalIdentityScimAttributes -> FieldDecoder (Maybe scimIdentity) Github.Object.ExternalIdentity
 scimIdentity object =
-    Object.selectionFieldDecoder "scimIdentity" [] object identity
+    Object.selectionFieldDecoder "scimIdentity" [] object (identity >> Decode.maybe)
 
 
-user : SelectionSet user Github.Object.User -> FieldDecoder user Github.Object.ExternalIdentity
+user : SelectionSet user Github.Object.User -> FieldDecoder (Maybe user) Github.Object.ExternalIdentity
 user object =
-    Object.selectionFieldDecoder "user" [] object identity
+    Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)

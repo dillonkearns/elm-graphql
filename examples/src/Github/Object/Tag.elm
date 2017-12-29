@@ -35,9 +35,9 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
-message : FieldDecoder String Github.Object.Tag
+message : FieldDecoder (Maybe String) Github.Object.Tag
 message =
-    Object.fieldDecoder "message" [] Decode.string
+    Object.fieldDecoder "message" [] (Decode.string |> Decode.maybe)
 
 
 name : FieldDecoder String Github.Object.Tag
@@ -55,9 +55,9 @@ repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
 
-tagger : SelectionSet tagger Github.Object.GitActor -> FieldDecoder tagger Github.Object.Tag
+tagger : SelectionSet tagger Github.Object.GitActor -> FieldDecoder (Maybe tagger) Github.Object.Tag
 tagger object =
-    Object.selectionFieldDecoder "tagger" [] object identity
+    Object.selectionFieldDecoder "tagger" [] object (identity >> Decode.maybe)
 
 
 target : SelectionSet target Github.Object.GitObject -> FieldDecoder target Github.Object.Tag

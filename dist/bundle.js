@@ -7904,13 +7904,13 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
 							_dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectRef(
 								_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1)),
-							_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
 					case 'Interface':
 						return A2(
 							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
 							_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceRef(
 								_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1)),
-							_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
+							_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
 					case 'List':
 						var _p15 = _p18.ofType;
 						if (_p15.ctor === 'Just') {
@@ -8083,171 +8083,208 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$decoder = A2(
 var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType = F3(
 	function (apiSubmodule, fieldName, _p0) {
 		var _p1 = _p0;
-		var _p2 = _p1._0;
-		switch (_p2.ctor) {
-			case 'Scalar':
-				var _p3 = _p2._0;
-				switch (_p3.ctor) {
-					case 'String':
-						return 'String';
-					case 'Boolean':
-						return 'Bool';
-					case 'Int':
-						return 'Int';
-					default:
-						return 'Float';
-				}
-			case 'List':
+		return function (typeString) {
+			var _p2 = _p1._1;
+			if (_p2.ctor === 'Nullable') {
 				return A2(
 					_elm_lang$core$Basics_ops['++'],
-					'(List ',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, fieldName, _p2._0),
-						')'));
-			case 'ObjectRef':
-				return fieldName;
-			case 'InterfaceRef':
-				return fieldName;
-			case 'EnumRef':
-				var _p4 = _p2._0;
-				return A2(
-					_elm_lang$core$String$join,
-					'.',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$moduleNameFor, apiSubmodule, _p4),
-						{
-							ctor: '::',
-							_0: _p4,
-							_1: {ctor: '[]'}
-						}));
-			default:
-				return 'Value';
-		}
+					'(Maybe ',
+					A2(_elm_lang$core$Basics_ops['++'], typeString, ')'));
+			} else {
+				return typeString;
+			}
+		}(
+			function () {
+				var _p3 = _p1._0;
+				switch (_p3.ctor) {
+					case 'Scalar':
+						var _p4 = _p3._0;
+						switch (_p4.ctor) {
+							case 'String':
+								return 'String';
+							case 'Boolean':
+								return 'Bool';
+							case 'Int':
+								return 'Int';
+							default:
+								return 'Float';
+						}
+					case 'List':
+						return A2(
+							_elm_lang$core$Basics_ops['++'],
+							'(List ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, fieldName, _p3._0),
+								')'));
+					case 'ObjectRef':
+						return fieldName;
+					case 'InterfaceRef':
+						return fieldName;
+					case 'EnumRef':
+						var _p5 = _p3._0;
+						return A2(
+							_elm_lang$core$String$join,
+							'.',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$moduleNameFor, apiSubmodule, _p5),
+								{
+									ctor: '::',
+									_0: _p5,
+									_1: {ctor: '[]'}
+								}));
+					default:
+						return 'Value';
+				}
+			}());
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = function (_p5) {
-	var _p6 = _p5;
-	var _p7 = _p6._0;
-	switch (_p7.ctor) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = function (_p6) {
+	var _p7 = _p6;
+	var isNullableString = function () {
+		var _p8 = _p7._1;
+		if (_p8.ctor === 'Nullable') {
+			return ' |> Encode.maybe';
+		} else {
+			return '';
+		}
+	}();
+	var _p9 = _p7._0;
+	switch (_p9.ctor) {
 		case 'Scalar':
-			var _p8 = _p7._0;
-			switch (_p8.ctor) {
+			var _p10 = _p9._0;
+			switch (_p10.ctor) {
 				case 'String':
-					return 'Encode.string';
+					return A2(_elm_lang$core$Basics_ops['++'], 'Encode.string', isNullableString);
 				case 'Boolean':
-					return 'Encode.bool';
+					return A2(_elm_lang$core$Basics_ops['++'], 'Encode.bool', isNullableString);
 				case 'Int':
-					return 'Encode.int';
+					return A2(_elm_lang$core$Basics_ops['++'], 'Encode.int', isNullableString);
 				default:
-					return 'Encode.float';
+					return A2(_elm_lang$core$Basics_ops['++'], 'Encode.float', isNullableString);
 			}
 		case 'List':
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
-				_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder(_p7._0),
-				' |> Encode.list');
+				_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder(_p9._0),
+				A2(_elm_lang$core$Basics_ops['++'], isNullableString, ' |> Encode.list'));
 		case 'ObjectRef':
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Graphqelm.Generator.Decoder',
 				{
-					start: {line: 47, column: 5},
-					end: {line: 75, column: 23}
+					start: {line: 64, column: 5},
+					end: {line: 92, column: 43}
 				},
-				_p7)('I don\'t expect to see object references as argument types.');
+				_p9)('I don\'t expect to see object references as argument types.');
 		case 'InterfaceRef':
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Graphqelm.Generator.Decoder',
 				{
-					start: {line: 47, column: 5},
-					end: {line: 75, column: 23}
+					start: {line: 64, column: 5},
+					end: {line: 92, column: 43}
 				},
-				_p7)('I don\'t expect to see object references as argument types.');
+				_p9)('I don\'t expect to see object references as argument types.');
 		case 'EnumRef':
-			return '(Encode.enum toString)';
+			return A2(_elm_lang$core$Basics_ops['++'], '(Encode.enum toString)', isNullableString);
 		default:
-			return 'identity';
+			return A2(_elm_lang$core$Basics_ops['++'], 'identity', isNullableString);
 	}
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
-	function (apiSubmodule, _p11) {
-		var _p12 = _p11;
-		var _p13 = _p12._0;
-		switch (_p13.ctor) {
-			case 'Scalar':
-				var _p14 = _p13._0;
-				switch (_p14.ctor) {
-					case 'String':
+	function (apiSubmodule, _p13) {
+		var _p14 = _p13;
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			function () {
+				var _p15 = _p14._0;
+				switch (_p15.ctor) {
+					case 'Scalar':
+						var _p16 = _p15._0;
+						switch (_p16.ctor) {
+							case 'String':
+								return {
+									ctor: '::',
+									_0: 'Decode.string',
+									_1: {ctor: '[]'}
+								};
+							case 'Boolean':
+								return {
+									ctor: '::',
+									_0: 'Decode.bool',
+									_1: {ctor: '[]'}
+								};
+							case 'Int':
+								return {
+									ctor: '::',
+									_0: 'Decode.int',
+									_1: {ctor: '[]'}
+								};
+							default:
+								return {
+									ctor: '::',
+									_0: 'Decode.float',
+									_1: {ctor: '[]'}
+								};
+						}
+					case 'List':
+						return A2(
+							_elm_lang$core$Basics_ops['++'],
+							A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder, apiSubmodule, _p15._0),
+							{
+								ctor: '::',
+								_0: 'Decode.list',
+								_1: {ctor: '[]'}
+							});
+					case 'ObjectRef':
 						return {
 							ctor: '::',
-							_0: 'Decode.string',
+							_0: 'identity',
 							_1: {ctor: '[]'}
 						};
-					case 'Boolean':
+					case 'InterfaceRef':
 						return {
 							ctor: '::',
-							_0: 'Decode.bool',
+							_0: 'identity',
 							_1: {ctor: '[]'}
 						};
-					case 'Int':
+					case 'EnumRef':
 						return {
 							ctor: '::',
-							_0: 'Decode.int',
+							_0: A2(
+								_elm_lang$core$String$join,
+								'.',
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$moduleNameFor, apiSubmodule, _p15._0),
+									{
+										ctor: '::',
+										_0: 'decoder',
+										_1: {ctor: '[]'}
+									})),
 							_1: {ctor: '[]'}
 						};
 					default:
-						return {
-							ctor: '::',
-							_0: 'Decode.float',
-							_1: {ctor: '[]'}
-						};
-				}
-			case 'List':
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder, apiSubmodule, _p13._0),
-					{
-						ctor: '::',
-						_0: 'Decode.list',
-						_1: {ctor: '[]'}
-					});
-			case 'ObjectRef':
-				return {
-					ctor: '::',
-					_0: 'identity',
-					_1: {ctor: '[]'}
-				};
-			case 'InterfaceRef':
-				return {
-					ctor: '::',
-					_0: 'identity',
-					_1: {ctor: '[]'}
-				};
-			case 'EnumRef':
-				return {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						'.',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$moduleNameFor, apiSubmodule, _p13._0),
+						return _elm_lang$core$Native_Utils.crashCase(
+							'Graphqelm.Generator.Decoder',
 							{
-								ctor: '::',
-								_0: 'decoder',
-								_1: {ctor: '[]'}
-							})),
-					_1: {ctor: '[]'}
-				};
-			default:
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphqelm.Generator.Decoder',
-					{
-						start: {line: 10, column: 5},
-						end: {line: 42, column: 98}
-					},
-					_p13)('Input objects are only for input not responses, shouldn\'t need decoder.');
-		}
+								start: {line: 10, column: 6},
+								end: {line: 42, column: 98}
+							},
+							_p15)('Input objects are only for input not responses, shouldn\'t need decoder.');
+				}
+			}(),
+			function () {
+				var _p18 = _p14._1;
+				if (_p18.ctor === 'Nullable') {
+					return {
+						ctor: '::',
+						_0: 'Decode.maybe',
+						_1: {ctor: '[]'}
+					};
+				} else {
+					return {ctor: '[]'};
+				}
+			}());
 	});
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_SpecialObjectNames$SpecialObjectNames = F2(

@@ -36,9 +36,9 @@ signature =
     Object.fieldDecoder "signature" [] Decode.string
 
 
-signer : SelectionSet signer Github.Object.User -> FieldDecoder signer Github.Object.UnknownSignature
+signer : SelectionSet signer Github.Object.User -> FieldDecoder (Maybe signer) Github.Object.UnknownSignature
 signer object =
-    Object.selectionFieldDecoder "signer" [] object identity
+    Object.selectionFieldDecoder "signer" [] object (identity >> Decode.maybe)
 
 
 state : FieldDecoder Github.Enum.GitSignatureState.GitSignatureState Github.Object.UnknownSignature

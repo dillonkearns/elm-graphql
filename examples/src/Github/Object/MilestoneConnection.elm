@@ -15,14 +15,14 @@ selection constructor =
     Object.object constructor
 
 
-edges : SelectionSet edges Github.Object.MilestoneEdge -> FieldDecoder (List edges) Github.Object.MilestoneConnection
+edges : SelectionSet edges Github.Object.MilestoneEdge -> FieldDecoder (Maybe (List (Maybe edges))) Github.Object.MilestoneConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
-nodes : SelectionSet nodes Github.Object.Milestone -> FieldDecoder (List nodes) Github.Object.MilestoneConnection
+nodes : SelectionSet nodes Github.Object.Milestone -> FieldDecoder (Maybe (List (Maybe nodes))) Github.Object.MilestoneConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.list)
+    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.MilestoneConnection

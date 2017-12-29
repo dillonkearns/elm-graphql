@@ -15,9 +15,9 @@ selection constructor =
     Object.object constructor
 
 
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder actor Github.Object.RenamedTitleEvent
+actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.RenamedTitleEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object identity
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 createdAt : FieldDecoder String Github.Object.RenamedTitleEvent
@@ -40,6 +40,6 @@ previousTitle =
     Object.fieldDecoder "previousTitle" [] Decode.string
 
 
-subject : FieldDecoder String Github.Object.RenamedTitleEvent
+subject : FieldDecoder (Maybe String) Github.Object.RenamedTitleEvent
 subject =
-    Object.fieldDecoder "subject" [] Decode.string
+    Object.fieldDecoder "subject" [] (Decode.string |> Decode.maybe)

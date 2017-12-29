@@ -26,9 +26,9 @@ additions =
     Object.fieldDecoder "additions" [] Decode.int
 
 
-author : SelectionSet author Github.Object.GitActor -> FieldDecoder author Github.Object.Commit
+author : SelectionSet author Github.Object.GitActor -> FieldDecoder (Maybe author) Github.Object.Commit
 author object =
-    Object.selectionFieldDecoder "author" [] object identity
+    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
 
 authoredByCommitter : FieldDecoder Bool Github.Object.Commit
@@ -84,9 +84,9 @@ committedViaWeb =
     Object.fieldDecoder "committedViaWeb" [] Decode.bool
 
 
-committer : SelectionSet committer Github.Object.GitActor -> FieldDecoder committer Github.Object.Commit
+committer : SelectionSet committer Github.Object.GitActor -> FieldDecoder (Maybe committer) Github.Object.Commit
 committer object =
-    Object.selectionFieldDecoder "committer" [] object identity
+    Object.selectionFieldDecoder "committer" [] object (identity >> Decode.maybe)
 
 
 deletions : FieldDecoder Int Github.Object.Commit
@@ -155,9 +155,9 @@ parents fillInOptionals object =
     Object.selectionFieldDecoder "parents" optionalArgs object identity
 
 
-pushedDate : FieldDecoder String Github.Object.Commit
+pushedDate : FieldDecoder (Maybe String) Github.Object.Commit
 pushedDate =
-    Object.fieldDecoder "pushedDate" [] Decode.string
+    Object.fieldDecoder "pushedDate" [] (Decode.string |> Decode.maybe)
 
 
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Commit
@@ -170,14 +170,14 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
-signature : SelectionSet signature Github.Object.GitSignature -> FieldDecoder signature Github.Object.Commit
+signature : SelectionSet signature Github.Object.GitSignature -> FieldDecoder (Maybe signature) Github.Object.Commit
 signature object =
-    Object.selectionFieldDecoder "signature" [] object identity
+    Object.selectionFieldDecoder "signature" [] object (identity >> Decode.maybe)
 
 
-status : SelectionSet status Github.Object.Status -> FieldDecoder status Github.Object.Commit
+status : SelectionSet status Github.Object.Status -> FieldDecoder (Maybe status) Github.Object.Commit
 status object =
-    Object.selectionFieldDecoder "status" [] object identity
+    Object.selectionFieldDecoder "status" [] object (identity >> Decode.maybe)
 
 
 tarballUrl : FieldDecoder String Github.Object.Commit

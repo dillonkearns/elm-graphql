@@ -20,9 +20,9 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder editor Github.Object.UserContentEdit
+editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.UserContentEdit
 editor object =
-    Object.selectionFieldDecoder "editor" [] object identity
+    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.UserContentEdit

@@ -30,6 +30,6 @@ inviter object =
     Object.selectionFieldDecoder "inviter" [] object identity
 
 
-repository : SelectionSet repository Github.Object.RepositoryInvitationRepository -> FieldDecoder repository Github.Object.RepositoryInvitation
+repository : SelectionSet repository Github.Object.RepositoryInvitationRepository -> FieldDecoder (Maybe repository) Github.Object.RepositoryInvitation
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionFieldDecoder "repository" [] object (identity >> Decode.maybe)
