@@ -1,5 +1,7 @@
 # GraphqElm
 
+[![Build Status](https://travis-ci.org/dillonkearns/graphqelm.svg?branch=master)](https://travis-ci.org/dillonkearns/graphqelm)
+
 I built this package because I wanted to have something that:
 
 1. Gives you type-safe GraphQL queries (if it compiles, it's valid according to the schema),
