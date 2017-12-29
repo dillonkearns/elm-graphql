@@ -1,7 +1,7 @@
-module Graphqelm.Builder.Object exposing (fieldDecoder, listOf, object, selectionFieldDecoder, single)
+module Graphqelm.Builder.Object exposing (fieldDecoder, object, selectionFieldDecoder)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs fieldDecoder, listOf, object, single, selectionFieldDecoder
+@docs fieldDecoder, object, selectionFieldDecoder
 -}
 
 import Graphqelm.Builder.Argument exposing (Argument)
@@ -16,20 +16,6 @@ import Json.Decode as Decode exposing (Decoder)
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
 fieldDecoder fieldName args decoder =
     FieldDecoder (leaf fieldName args) decoder
-
-
-{-| Refer to list of objects in auto-generated code.
--}
-listOf : String -> List Argument -> SelectionSet a objectTypeLock -> FieldDecoder (List a) lockedTo
-listOf fieldName args (SelectionSet fields decoder) =
-    FieldDecoder (composite fieldName args fields) (Decode.list decoder)
-
-
-{-| Refer to single object in auto-generated code.
--}
-single : String -> List Argument -> SelectionSet a objectTypeLock -> FieldDecoder a lockedTo
-single fieldName args (SelectionSet fields decoder) =
-    FieldDecoder (composite fieldName args fields) decoder
 
 
 {-| Refer to an object in auto-generated code.
