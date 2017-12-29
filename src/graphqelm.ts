@@ -6,6 +6,8 @@ import * as minimist from 'minimist'
 import * as request from 'request'
 import { spawn } from 'child_process'
 
+const elmFormatPath = `${__dirname}/../node_modules/.bin/elm-format`
+
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
   graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
@@ -37,7 +39,7 @@ if (!graphqlUrl) {
 const tsDeclarationPath = args.output
 
 const writeWithElmFormat = (path: string, value: string): void => {
-  const elmFormat = spawn('./node_modules/.bin/elm-format', [
+  const elmFormat = spawn(elmFormatPath, [
     '--stdin',
     '--output',
     path

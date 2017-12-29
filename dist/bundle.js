@@ -1570,6 +1570,7 @@ var fs = __webpack_require__(30);
 var graphql_request_1 = __webpack_require__(55);
 var minimist = __webpack_require__(86);
 var child_process_1 = __webpack_require__(87);
+var elmFormatPath = __dirname + "/../node_modules/.bin/elm-format";
 var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 var args = minimist(process.argv.slice(2));
 var baseModuleArg = args.base;
@@ -1598,7 +1599,7 @@ if (!graphqlUrl) {
 }
 var tsDeclarationPath = args.output;
 var writeWithElmFormat = function (path, value) {
-    var elmFormat = child_process_1.spawn('./node_modules/.bin/elm-format', [
+    var elmFormat = child_process_1.spawn(elmFormatPath, [
         '--stdin',
         '--output',
         path
@@ -12479,15 +12480,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
-            t[p[i]] = s[p[i]];
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var types_1 = __webpack_require__(23);
 var types_2 = __webpack_require__(23);
@@ -12511,21 +12503,20 @@ var GraphQLClient = (function () {
     }
     GraphQLClient.prototype.request = function (query, variables) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, headers, others, body, response, result, errorResult;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var body, response, result, errorResult;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _a = this.options, headers = _a.headers, others = __rest(_a, ["headers"]);
                         body = JSON.stringify({
                             query: query,
                             variables: variables ? variables : undefined,
                         });
-                        return [4 /*yield*/, fetch(this.url, __assign({ method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, headers), body: body }, others))];
+                        return [4 /*yield*/, fetch(this.url, __assign({ method: 'POST' }, this.options, { headers: Object.assign({ 'Content-Type': 'application/json' }, this.options.headers), body: body }))];
                     case 1:
-                        response = _b.sent();
+                        response = _a.sent();
                         return [4 /*yield*/, getResult(response)];
                     case 2:
-                        result = _b.sent();
+                        result = _a.sent();
                         if (response.ok && !result.errors && result.data) {
                             return [2 /*return*/, result.data];
                         }
@@ -12537,21 +12528,6 @@ var GraphQLClient = (function () {
                 }
             });
         });
-    };
-    GraphQLClient.prototype.setHeaders = function (headers) {
-        this.options.headers = headers;
-        return this;
-    };
-    GraphQLClient.prototype.setHeader = function (key, value) {
-        var headers = this.options.headers;
-        if (headers) {
-            headers[key] = value;
-        }
-        else {
-            this.options.headers = (_a = {}, _a[key] = value, _a);
-        }
-        return this;
-        var _a;
     };
     return GraphQLClient;
 }());
@@ -12578,9 +12554,11 @@ function getResult(response) {
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var fetchNode = __webpack_require__(57);
 var fetch = fetchNode.fetch.bind({});
-
 fetch.polyfill = true;
 
 if (!global.fetch) {
@@ -12595,9 +12573,12 @@ if (!global.fetch) {
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var realFetch = __webpack_require__(58);
 
-var fetch = function (url, options) {
+var fetch = function(url, options) {
   // Support schemaless URIs on the server for parity with the browser.
   // Ex: //github.com/ -> https://github.com/
   if (/^\/\//.test(url)) {
@@ -12606,13 +12587,14 @@ var fetch = function (url, options) {
   return realFetch.call(this, url, options);
 };
 
-fetch.fetch = fetch;
-fetch.Response = realFetch.Response,
-fetch.Headers = realFetch.Headers,
-fetch.Request = realFetch.Request,
 fetch.polyfill = false;
 
-module.exports = fetch;
+module.exports = {
+  fetch: fetch,
+  Response: realFetch.Response,
+  Headers: realFetch.Headers,
+  Request: realFetch.Request,
+};
 
 
 /***/ }),
