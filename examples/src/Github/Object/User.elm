@@ -123,7 +123,7 @@ following fillInOptionals object =
 
 gist : { name : String } -> SelectionSet gist Github.Object.Gist -> FieldDecoder (Maybe gist) Github.Object.User
 gist requiredArgs object =
-    Object.selectionFieldDecoder "gist" [ Argument.string "name" requiredArgs.name ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "gist" [ Argument.required "name" (requiredArgs.name |> Encode.string) ] object (identity >> Decode.maybe)
 
 
 gistComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet gistComments Github.Object.GistCommentConnection -> FieldDecoder gistComments Github.Object.User
@@ -235,7 +235,7 @@ name =
 
 organization : { login : String } -> SelectionSet organization Github.Object.Organization -> FieldDecoder (Maybe organization) Github.Object.User
 organization requiredArgs object =
-    Object.selectionFieldDecoder "organization" [ Argument.string "login" requiredArgs.login ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "organization" [ Argument.required "login" (requiredArgs.login |> Encode.string) ] object (identity >> Decode.maybe)
 
 
 organizations : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet organizations Github.Object.OrganizationConnection -> FieldDecoder organizations Github.Object.User
@@ -318,7 +318,7 @@ repositoriesContributedTo fillInOptionals object =
 
 repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder (Maybe repository) Github.Object.User
 repository requiredArgs object =
-    Object.selectionFieldDecoder "repository" [ Argument.string "name" requiredArgs.name ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "repository" [ Argument.required "name" (requiredArgs.name |> Encode.string) ] object (identity >> Decode.maybe)
 
 
 resourcePath : FieldDecoder String Github.Object.User

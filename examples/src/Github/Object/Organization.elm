@@ -111,7 +111,7 @@ pinnedRepositories fillInOptionals object =
 
 project : { number : String } -> SelectionSet project Github.Object.Project -> FieldDecoder (Maybe project) Github.Object.Organization
 project requiredArgs object =
-    Object.selectionFieldDecoder "project" [ Argument.string "number" requiredArgs.number ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "project" [ Argument.required "number" (requiredArgs.number |> Encode.string) ] object (identity >> Decode.maybe)
 
 
 projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Object.Organization
@@ -152,7 +152,7 @@ repositories fillInOptionals object =
 
 repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder (Maybe repository) Github.Object.Organization
 repository requiredArgs object =
-    Object.selectionFieldDecoder "repository" [ Argument.string "name" requiredArgs.name ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "repository" [ Argument.required "name" (requiredArgs.name |> Encode.string) ] object (identity >> Decode.maybe)
 
 
 resourcePath : FieldDecoder String Github.Object.Organization
@@ -167,7 +167,7 @@ samlIdentityProvider object =
 
 team : { slug : String } -> SelectionSet team Github.Object.Team -> FieldDecoder (Maybe team) Github.Object.Organization
 team requiredArgs object =
-    Object.selectionFieldDecoder "team" [ Argument.string "slug" requiredArgs.slug ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "team" [ Argument.required "slug" (requiredArgs.slug |> Encode.string) ] object (identity >> Decode.maybe)
 
 
 teams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy, role : OptionalArgument Github.Enum.TeamRole.TeamRole, query : OptionalArgument String, userLogins : OptionalArgument (List String), orderBy : OptionalArgument Value, ldapMapped : OptionalArgument Bool, rootTeamsOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy, role : OptionalArgument Github.Enum.TeamRole.TeamRole, query : OptionalArgument String, userLogins : OptionalArgument (List String), orderBy : OptionalArgument Value, ldapMapped : OptionalArgument Bool, rootTeamsOnly : OptionalArgument Bool }) -> SelectionSet teams Github.Object.TeamConnection -> FieldDecoder teams Github.Object.Organization
