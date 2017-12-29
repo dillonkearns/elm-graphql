@@ -4,6 +4,9 @@ const path = require('path')
 module.exports = {
   entry: './src/graphqelm.ts',
   target: 'node',
+  resolve: {
+    extensions: ['.ts', '.js', '.json']
+  },
   node: {
     __dirname: false
   },

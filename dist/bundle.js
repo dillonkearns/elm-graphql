@@ -1569,8 +1569,7 @@ var Elm = __webpack_require__(29);
 var fs = __webpack_require__(30);
 var graphql_request_1 = __webpack_require__(55);
 var minimist = __webpack_require__(86);
-var child_process_1 = __webpack_require__(87);
-var elmFormatPath = __dirname + "/../node_modules/.bin/elm-format";
+var formatted_write_1 = __webpack_require__(87);
 var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 var args = minimist(process.argv.slice(2));
 var baseModuleArg = args.base;
@@ -1598,26 +1597,6 @@ if (!graphqlUrl) {
     process.exit(0);
 }
 var tsDeclarationPath = args.output;
-var writeWithElmFormat = function (path, value) {
-    var elmFormat = child_process_1.spawn(elmFormatPath, [
-        '--stdin',
-        '--output',
-        path
-    ]);
-    elmFormat.stdin.write(value);
-    elmFormat.stdin.end();
-    elmFormat.stdout.on('data', function (data) {
-        console.log(data.toString());
-    });
-    elmFormat.stderr.on('data', function (data) {
-        console.log(data.toString());
-    });
-    elmFormat.on('close', function (code) {
-        if (code !== 0) {
-            console.log("elm-format process exited with code " + code);
-        }
-    });
-};
 var onDataAvailable = function (data) {
     var app = Elm.Main.worker({ data: data, baseModule: baseModule });
     app.ports.generatedFiles.subscribe(function (generatedFile) {
@@ -1626,7 +1605,7 @@ var onDataAvailable = function (data) {
         for (var key in generatedFile) {
             var path_1 = './src/' + key;
             var value = generatedFile[key];
-            writeWithElmFormat(path_1, value);
+            formatted_write_1.writeWithElmFormat(path_1, value);
         }
     });
 };
@@ -16323,6 +16302,33 @@ function isNumber (x) {
 
 /***/ }),
 /* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var child_process_1 = __webpack_require__(88);
+var elmFormatPath = __dirname + "/../node_modules/.bin/elm-format";
+exports.writeWithElmFormat = function (path, value) {
+    var elmFormat = child_process_1.spawn(elmFormatPath, ['--stdin', '--output', path]);
+    elmFormat.stdin.write(value);
+    elmFormat.stdin.end();
+    elmFormat.stdout.on('data', function (data) {
+        console.log(data.toString());
+    });
+    elmFormat.stderr.on('data', function (data) {
+        console.log(data.toString());
+    });
+    elmFormat.on('close', function (code) {
+        if (code !== 0) {
+            console.log("elm-format process exited with code " + code);
+        }
+    });
+};
+
+
+/***/ }),
+/* 88 */
 /***/ (function(module, exports) {
 
 module.exports = require("child_process");
