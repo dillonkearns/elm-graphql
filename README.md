@@ -24,7 +24,7 @@ all your feedback and for the elm-format PR!
 The following are planned but not yet supported:
 
 * GraphQL Unions (GraphQL Enums are already fully supported)
-* Select from concerete types in interface query
+* Select from concrete types in interface query
 * Type-safe Input Objects
 
 See [the full roadmap on Trello](https://trello.com/b/BCIWtZeL/graphqelm).
