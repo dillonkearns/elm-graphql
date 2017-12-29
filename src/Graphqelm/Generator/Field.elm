@@ -37,19 +37,19 @@ generate apiSubmodule specialObjectNames thisObjectName field =
 
 
 forObject_ : List String -> SpecialObjectNames -> String -> Maybe String -> FieldGenerator -> String
-forObject_ apiSubmodule specialObjectNames thisObjectName description field =
+forObject_ apiSubmodule specialObjectNames thisObjectName description fieldGenerator =
     let
         thisObjectString =
             Imports.object apiSubmodule specialObjectNames thisObjectName |> String.join "."
     in
-    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) description field
+    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectString ]) description fieldGenerator
 
 
 fieldGeneratorToString : String -> Maybe String -> FieldGenerator -> String
-fieldGeneratorToString returnAnnotation description field =
+fieldGeneratorToString returnAnnotation description fieldGenerator =
     let
         something =
-            ((field.annotatedArgs |> List.map .annotation)
+            ((fieldGenerator.annotatedArgs |> List.map .annotation)
                 ++ [ returnAnnotation ]
             )
                 |> String.join " -> "
@@ -59,15 +59,15 @@ fieldGeneratorToString returnAnnotation description field =
 {6} {4}={7}
       {5} "{0}" {1} ({2}){8}
 """
-        [ field.fieldName
-        , field |> fieldArgsString
-        , field.decoder
+        [ fieldGenerator.fieldName
+        , fieldGenerator |> fieldArgsString
+        , fieldGenerator.decoder
         , something
-        , argsListString field
-        , "Object" ++ field.otherThing
-        , Normalize.fieldName field.fieldName
-        , Let.generate field.letBindings
-        , field.objectDecoderChain |> Maybe.withDefault ""
+        , argsListString fieldGenerator
+        , "Object" ++ fieldGenerator.otherThing
+        , Normalize.fieldName fieldGenerator.fieldName
+        , Let.generate fieldGenerator.letBindings
+        , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
         , DocComment.generate description
         ]
 
