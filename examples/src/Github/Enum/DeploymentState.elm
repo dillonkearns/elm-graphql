@@ -3,6 +3,17 @@ module Github.Enum.DeploymentState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible states in which a deployment can be.
+
+  - ABANDONED - The pending deployment was not updated after 30 minutes.
+  - ACTIVE - The deployment is currently active.
+  - DESTROYED - An inactive transient deployment.
+  - ERROR - The deployment experienced an error.
+  - FAILURE - The deployment has failed.
+  - INACTIVE - The deployment is inactive.
+  - PENDING - The deployment is pending.
+
+-}
 type DeploymentState
     = ABANDONED
     | ACTIVE

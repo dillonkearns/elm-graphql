@@ -3,6 +3,12 @@ module Github.Enum.RefOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Properties by which ref connections can be ordered.
+
+  - TAG_COMMIT_DATE - Order refs by underlying commit date if the ref prefix is refs/tags/
+  - ALPHABETICAL - Order refs by their alphanumeric name
+
+-}
 type RefOrderField
     = TAG_COMMIT_DATE
     | ALPHABETICAL

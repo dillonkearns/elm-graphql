@@ -3,6 +3,12 @@ module Github.Enum.IssuePubSubTopic exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible PubSub channels for an issue.
+
+  - UPDATED - The channel ID for observing issue updates.
+  - MARKASREAD - The channel ID for marking an issue as read.
+
+-}
 type IssuePubSubTopic
     = UPDATED
     | MARKASREAD

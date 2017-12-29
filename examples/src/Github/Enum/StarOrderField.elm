@@ -3,6 +3,11 @@ module Github.Enum.StarOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Properties by which star connections can be ordered.
+
+  - STARRED_AT - Allows ordering a list of stars by when they were created.
+
+-}
 type StarOrderField
     = STARRED_AT
 

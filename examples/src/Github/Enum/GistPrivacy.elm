@@ -3,6 +3,13 @@ module Github.Enum.GistPrivacy exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The privacy of a Gist
+
+  - PUBLIC - Public
+  - SECRET - Secret
+  - ALL - Gists that are public and secret
+
+-}
 type GistPrivacy
     = PUBLIC
     | SECRET

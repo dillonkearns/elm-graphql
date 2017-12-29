@@ -3,6 +3,16 @@ module Github.Enum.ReactionContent exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Emojis that can be attached to Issues, Pull Requests and Comments.
+
+  - THUMBS_UP - Represents the 👍 emoji.
+  - THUMBS_DOWN - Represents the 👎 emoji.
+  - LAUGH - Represents the 😄 emoji.
+  - HOORAY - Represents the 🎉 emoji.
+  - CONFUSED - Represents the 😕 emoji.
+  - HEART - Represents the ❤️ emoji.
+
+-}
 type ReactionContent
     = THUMBS_UP
     | THUMBS_DOWN

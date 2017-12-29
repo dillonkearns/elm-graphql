@@ -3,6 +3,12 @@ module Github.Enum.OrderDirection exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Possible directions in which to order a list of items when provided an `orderBy` argument.
+
+  - ASC - Specifies an ascending order for a given `orderBy` argument.
+  - DESC - Specifies a descending order for a given `orderBy` argument.
+
+-}
 type OrderDirection
     = ASC
     | DESC

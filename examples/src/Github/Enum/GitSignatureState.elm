@@ -3,6 +3,23 @@ module Github.Enum.GitSignatureState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The state of a Git signature.
+
+  - VALID - Valid signature and verified by GitHub.
+  - INVALID - Invalid signature.
+  - MALFORMED_SIG - Malformed signature.
+  - UNKNOWN_KEY - Key used for signing not known to GitHub.
+  - BAD_EMAIL - Invalid email used for signing.
+  - UNVERIFIED_EMAIL - Email used for signing unverified on GitHub.
+  - NO_USER - Email used for signing not known to GitHub.
+  - UNKNOWN_SIG_TYPE - Unknown signature type.
+  - UNSIGNED - Unsigned.
+  - GPGVERIFY_UNAVAILABLE - Internal error - the GPG verification service is unavailable at the moment.
+  - GPGVERIFY_ERROR - Internal error - the GPG verification service misbehaved.
+  - NOT_SIGNING_KEY - The usage flags for the key that signed this don't allow signing.
+  - EXPIRED_KEY - Signing key expired.
+
+-}
 type GitSignatureState
     = VALID
     | INVALID

@@ -3,6 +3,12 @@ module Github.Enum.RepositoryCollaboratorAffiliation exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The affiliation type between collaborator and repository.
+
+  - ALL - All collaborators of the repository.
+  - OUTSIDE - All outside collaborators of an organization-owned repository.
+
+-}
 type RepositoryCollaboratorAffiliation
     = ALL
     | OUTSIDE

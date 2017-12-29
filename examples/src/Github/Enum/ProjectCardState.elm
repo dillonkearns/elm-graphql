@@ -3,6 +3,13 @@ module Github.Enum.ProjectCardState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Various content states of a ProjectCard
+
+  - CONTENT_ONLY - The card has content only.
+  - NOTE_ONLY - The card has a note only.
+  - REDACTED - The card is redacted.
+
+-}
 type ProjectCardState
     = CONTENT_ONLY
     | NOTE_ONLY

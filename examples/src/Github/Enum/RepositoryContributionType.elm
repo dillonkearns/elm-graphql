@@ -3,6 +3,15 @@ module Github.Enum.RepositoryContributionType exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The reason a repository is listed as 'contributed'.
+
+  - COMMIT - Created a commit
+  - ISSUE - Created an issue
+  - PULL_REQUEST - Created a pull request
+  - REPOSITORY - Created the repository
+  - PULL_REQUEST_REVIEW - Reviewed a pull request
+
+-}
 type RepositoryContributionType
     = COMMIT
     | ISSUE

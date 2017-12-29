@@ -3,6 +3,12 @@ module Github.Enum.RepositoryPrivacy exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The privacy of a repository
+
+  - PUBLIC - Public
+  - PRIVATE - Private
+
+-}
 type RepositoryPrivacy
     = PUBLIC
     | PRIVATE

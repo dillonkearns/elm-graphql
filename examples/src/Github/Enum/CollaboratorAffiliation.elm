@@ -3,6 +3,13 @@ module Github.Enum.CollaboratorAffiliation exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Collaborators affiliation level with a repository.
+
+  - OUTSIDE - All outside collaborators of an organization-owned repository.
+  - DIRECT - All collaborators with permissions to an organization-owned repository, regardless of organization membership status.
+  - ALL - All collaborators the authenticated user can see.
+
+-}
 type CollaboratorAffiliation
     = OUTSIDE
     | DIRECT

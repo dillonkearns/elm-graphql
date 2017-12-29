@@ -3,6 +3,12 @@ module Github.Enum.ProjectState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| State of the project; either 'open' or 'closed'
+
+  - OPEN - The project is open.
+  - CLOSED - The project is closed.
+
+-}
 type ProjectState
     = OPEN
     | CLOSED

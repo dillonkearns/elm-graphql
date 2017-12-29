@@ -3,6 +3,14 @@ module Github.Enum.SubscriptionState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible states of a subscription.
+
+  - UNSUBSCRIBED - The User is only notified when particpating or @mentioned.
+  - SUBSCRIBED - The User is notified of all conversations.
+  - IGNORED - The User is never notified.
+  - UNAVAILABLE - Subscriptions are currently unavailable
+
+-}
 type SubscriptionState
     = UNSUBSCRIBED
     | SUBSCRIBED

@@ -3,6 +3,13 @@ module Github.Enum.RepositoryPermission exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The access level to a repository
+
+  - ADMIN - Can read, clone, push, and add collaborators
+  - WRITE - Can read, clone and push
+  - READ - Can read and clone
+
+-}
 type RepositoryPermission
     = ADMIN
     | WRITE

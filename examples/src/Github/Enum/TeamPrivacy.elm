@@ -3,6 +3,12 @@ module Github.Enum.TeamPrivacy exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible team privacy values.
+
+  - SECRET - A secret team can only be seen by its members.
+  - VISIBLE - A visible team can be seen and @mentioned by every member of the organization.
+
+-}
 type TeamPrivacy
     = SECRET
     | VISIBLE

@@ -3,6 +3,12 @@ module Github.Enum.MilestoneState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible states of a milestone.
+
+  - OPEN - A milestone that is still open.
+  - CLOSED - A milestone that has been closed.
+
+-}
 type MilestoneState
     = OPEN
     | CLOSED

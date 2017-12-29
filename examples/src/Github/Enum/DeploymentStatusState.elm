@@ -3,6 +3,15 @@ module Github.Enum.DeploymentStatusState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible states for a deployment status.
+
+  - PENDING - The deployment is pending.
+  - SUCCESS - The deployment was successful.
+  - FAILURE - The deployment has failed.
+  - INACTIVE - The deployment is inactive.
+  - ERROR - The deployment experienced an error.
+
+-}
 type DeploymentStatusState
     = PENDING
     | SUCCESS

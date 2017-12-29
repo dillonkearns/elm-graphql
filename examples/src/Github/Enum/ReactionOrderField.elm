@@ -3,6 +3,11 @@ module Github.Enum.ReactionOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| A list of fields that reactions can be ordered by.
+
+  - CREATED_AT - Allows ordering a list of reactions by when they were created.
+
+-}
 type ReactionOrderField
     = CREATED_AT
 

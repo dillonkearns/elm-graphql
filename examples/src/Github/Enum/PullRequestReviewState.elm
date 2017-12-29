@@ -3,6 +3,15 @@ module Github.Enum.PullRequestReviewState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible states of a pull request review.
+
+  - PENDING - A review that has not yet been submitted.
+  - COMMENTED - An informational review.
+  - APPROVED - A review allowing the pull request to merge.
+  - CHANGES_REQUESTED - A review blocking the pull request from merging.
+  - DISMISSED - A review that has been dismissed.
+
+-}
 type PullRequestReviewState
     = PENDING
     | COMMENTED

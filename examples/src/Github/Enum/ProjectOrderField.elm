@@ -3,6 +3,13 @@ module Github.Enum.ProjectOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Properties by which project connections can be ordered.
+
+  - CREATED_AT - Order projects by creation time
+  - UPDATED_AT - Order projects by update time
+  - NAME - Order projects by name
+
+-}
 type ProjectOrderField
     = CREATED_AT
     | UPDATED_AT

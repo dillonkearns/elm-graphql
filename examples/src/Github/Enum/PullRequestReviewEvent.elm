@@ -3,6 +3,14 @@ module Github.Enum.PullRequestReviewEvent exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible events to perform on a pull request review.
+
+  - COMMENT - Submit general feedback without explicit approval.
+  - APPROVE - Submit feedback and approve merging these changes.
+  - REQUEST_CHANGES - Submit feedback that must be addressed before merging.
+  - DISMISS - Dismiss review so it now longer effects merging.
+
+-}
 type PullRequestReviewEvent
     = COMMENT
     | APPROVE

@@ -3,6 +3,13 @@ module Github.Enum.PullRequestPubSubTopic exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible PubSub channels for a pull request.
+
+  - UPDATED - The channel ID for observing pull request updates.
+  - MARKASREAD - The channel ID for marking an pull request as read.
+  - HEAD_REF - The channel ID for observing head ref updates.
+
+-}
 type PullRequestPubSubTopic
     = UPDATED
     | MARKASREAD

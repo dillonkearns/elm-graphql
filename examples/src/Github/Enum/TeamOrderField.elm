@@ -3,6 +3,11 @@ module Github.Enum.TeamOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Properties by which team connections can be ordered.
+
+  - NAME - Allows ordering a list of teams by name.
+
+-}
 type TeamOrderField
     = NAME
 

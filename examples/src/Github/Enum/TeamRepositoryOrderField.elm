@@ -3,6 +3,16 @@ module Github.Enum.TeamRepositoryOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Properties by which team repository connections can be ordered.
+
+  - CREATED_AT - Order repositories by creation time
+  - UPDATED_AT - Order repositories by update time
+  - PUSHED_AT - Order repositories by push time
+  - NAME - Order repositories by name
+  - PERMISSION - Order repositories by permission
+  - STARGAZERS - Order repositories by number of stargazers
+
+-}
 type TeamRepositoryOrderField
     = CREATED_AT
     | UPDATED_AT

@@ -3,6 +3,12 @@ module Github.Enum.OrganizationInvitationType exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible organization invitation types.
+
+  - USER - The invitation was to an existing user.
+  - EMAIL - The invitation was to an email address.
+
+-}
 type OrganizationInvitationType
     = USER
     | EMAIL

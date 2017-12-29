@@ -3,6 +3,13 @@ module Github.Enum.IssueOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Properties by which issue connections can be ordered.
+
+  - CREATED_AT - Order issues by creation time
+  - UPDATED_AT - Order issues by update time
+  - COMMENTS - Order issues by comment count
+
+-}
 type IssueOrderField
     = CREATED_AT
     | UPDATED_AT

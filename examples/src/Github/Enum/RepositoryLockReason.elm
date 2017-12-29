@@ -3,6 +3,14 @@ module Github.Enum.RepositoryLockReason exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible reasons a given repository could be in a locked state.
+
+  - MOVING - The repository is locked due to a move.
+  - BILLING - The repository is locked due to a billing related reason.
+  - RENAME - The repository is locked due to a rename.
+  - MIGRATING - The repository is locked due to a migration.
+
+-}
 type RepositoryLockReason
     = MOVING
     | BILLING

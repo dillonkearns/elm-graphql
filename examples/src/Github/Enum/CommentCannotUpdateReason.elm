@@ -3,6 +3,15 @@ module Github.Enum.CommentCannotUpdateReason exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible errors that will prevent a user from updating a comment.
+
+  - INSUFFICIENT_ACCESS - You must be the author or have write access to this repository to update this comment.
+  - LOCKED - Unable to create comment because issue is locked.
+  - LOGIN_REQUIRED - You must be logged in to update this comment.
+  - MAINTENANCE - Repository is under maintenance.
+  - VERIFIED_EMAIL_REQUIRED - At least one email address must be verified to update this comment.
+
+-}
 type CommentCannotUpdateReason
     = INSUFFICIENT_ACCESS
     | LOCKED

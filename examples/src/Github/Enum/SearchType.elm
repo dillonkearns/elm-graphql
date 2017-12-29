@@ -3,6 +3,13 @@ module Github.Enum.SearchType exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Represents the individual results of a search.
+
+  - ISSUE - Returns results matching issues in repositories.
+  - REPOSITORY - Returns results matching repositories.
+  - USER - Returns results matching users and organizations on GitHub.
+
+-}
 type SearchType
     = ISSUE
     | REPOSITORY

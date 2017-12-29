@@ -3,6 +3,13 @@ module Github.Enum.PullRequestState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible states of a pull request.
+
+  - OPEN - A pull request that is still open.
+  - CLOSED - A pull request that has been closed without being merged.
+  - MERGED - A pull request that has been closed by being merged.
+
+-}
 type PullRequestState
     = OPEN
     | CLOSED

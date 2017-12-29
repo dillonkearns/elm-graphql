@@ -3,6 +3,12 @@ module Github.Enum.TeamRole exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The role of a user on a team.
+
+  - ADMIN - User has admin rights on the team.
+  - MEMBER - User is a member of the team.
+
+-}
 type TeamRole
     = ADMIN
     | MEMBER

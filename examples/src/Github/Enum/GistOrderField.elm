@@ -3,6 +3,13 @@ module Github.Enum.GistOrderField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Properties by which gist connections can be ordered.
+
+  - CREATED_AT - Order gists by creation time
+  - UPDATED_AT - Order gists by update time
+  - PUSHED_AT - Order gists by push time
+
+-}
 type GistOrderField
     = CREATED_AT
     | UPDATED_AT

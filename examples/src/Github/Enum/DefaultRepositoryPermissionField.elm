@@ -3,6 +3,13 @@ module Github.Enum.DefaultRepositoryPermissionField exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| The possible default permissions for organization-owned repositories.
+
+  - READ - Members have read access to org repos by default
+  - WRITE - Members have read and write access to org repos by default
+  - ADMIN - Members have read, write, and admin access to org repos by default
+
+-}
 type DefaultRepositoryPermissionField
     = READ
     | WRITE

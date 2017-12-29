@@ -3,6 +3,13 @@ module Github.Enum.MergeableState exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Whether or not a PullRequest can be merged.
+
+  - MERGEABLE - The pull request can be merged.
+  - CONFLICTING - The pull request cannot be merged due to merge conflicts.
+  - UNKNOWN - The mergeability of the pull request is still being calculated.
+
+-}
 type MergeableState
     = MERGEABLE
     | CONFLICTING
