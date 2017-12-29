@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| The Git commit object
+-}
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.PullRequestCommit
 commit object =
     Object.selectionFieldDecoder "commit" [] object identity
@@ -25,16 +27,22 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The pull request this commit belongs to
+-}
 pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestCommit
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
+{-| The HTTP path for this pull request commit
+-}
 resourcePath : FieldDecoder String Github.Object.PullRequestCommit
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
+{-| The HTTP URL for this pull request commit
+-}
 url : FieldDecoder String Github.Object.PullRequestCommit
 url =
     Object.fieldDecoder "url" [] Decode.string

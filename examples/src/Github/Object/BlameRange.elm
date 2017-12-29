@@ -15,21 +15,29 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the recency of the change, from 1 (new) to 10 (old). This is calculated as a 2-quantile and determines the length of distance between the median age of all the changes in the file and the recency of the current range's change.
+-}
 age : FieldDecoder Int Github.Object.BlameRange
 age =
     Object.fieldDecoder "age" [] Decode.int
 
 
+{-| Identifies the line author
+-}
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.BlameRange
 commit object =
     Object.selectionFieldDecoder "commit" [] object identity
 
 
+{-| The ending line for the range
+-}
 endingLine : FieldDecoder Int Github.Object.BlameRange
 endingLine =
     Object.fieldDecoder "endingLine" [] Decode.int
 
 
+{-| The starting line for the range
+-}
 startingLine : FieldDecoder Int Github.Object.BlameRange
 startingLine =
     Object.fieldDecoder "startingLine" [] Decode.int

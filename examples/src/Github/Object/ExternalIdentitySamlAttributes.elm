@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| The NameID of the SAML identity
+-}
 nameId : FieldDecoder (Maybe String) Github.Object.ExternalIdentitySamlAttributes
 nameId =
     Object.fieldDecoder "nameId" [] (Decode.string |> Decode.maybe)

@@ -20,16 +20,22 @@ edges object =
     Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
+{-| A list of nodes.
+-}
 nodes : SelectionSet nodes Github.Object.Commit -> FieldDecoder (Maybe (List (Maybe nodes))) Github.Object.CommitHistoryConnection
 nodes object =
     Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
+{-| Information to aid in pagination.
+-}
 pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.CommitHistoryConnection
 pageInfo object =
     Object.selectionFieldDecoder "pageInfo" [] object identity
 
 
+{-| Identifies the total count of items in the connection.
+-}
 totalCount : FieldDecoder Int Github.Object.CommitHistoryConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

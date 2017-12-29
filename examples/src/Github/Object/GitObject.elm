@@ -15,16 +15,22 @@ selection constructor =
     Object.object constructor
 
 
+{-| An abbreviated version of the Git object ID
+-}
 abbreviatedOid : FieldDecoder String Github.Object.GitObject
 abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
+{-| The HTTP path for this Git object
+-}
 commitResourcePath : FieldDecoder String Github.Object.GitObject
 commitResourcePath =
     Object.fieldDecoder "commitResourcePath" [] Decode.string
 
 
+{-| The HTTP URL for this Git object
+-}
 commitUrl : FieldDecoder String Github.Object.GitObject
 commitUrl =
     Object.fieldDecoder "commitUrl" [] Decode.string
@@ -35,11 +41,15 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The Git object ID
+-}
 oid : FieldDecoder String Github.Object.GitObject
 oid =
     Object.fieldDecoder "oid" [] Decode.string
 
 
+{-| The Repository the Git object belongs to
+-}
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.GitObject
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity

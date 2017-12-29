@@ -15,16 +15,22 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.DeleteProjectCardPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The column the deleted card was in.
+-}
 column : SelectionSet column Github.Object.ProjectColumn -> FieldDecoder column Github.Object.DeleteProjectCardPayload
 column object =
     Object.selectionFieldDecoder "column" [] object identity
 
 
+{-| The deleted card ID.
+-}
 deletedCardId : FieldDecoder String Github.Object.DeleteProjectCardPayload
 deletedCardId =
     Object.fieldDecoder "deletedCardId" [] Decode.string

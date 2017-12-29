@@ -26,6 +26,8 @@ node object =
     Object.selectionFieldDecoder "node" [] object identity
 
 
+{-| The permission level the team has on the repository
+-}
 permission : FieldDecoder Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.TeamRepositoryEdge
 permission =
     Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder

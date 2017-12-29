@@ -16,26 +16,42 @@ selection constructor =
     Object.object constructor
 
 
+{-| The project's description body.
+-}
 body : FieldDecoder (Maybe String) Github.Object.Project
 body =
     Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
 
 
+{-| The projects description body rendered to HTML.
+-}
 bodyHTML : FieldDecoder String Github.Object.Project
 bodyHTML =
     Object.fieldDecoder "bodyHTML" [] Decode.string
 
 
+{-| `true` if the object is closed (definition of closed may depend on type)
+-}
 closed : FieldDecoder Bool Github.Object.Project
 closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
+{-| Identifies the date and time when the object was closed.
+-}
 closedAt : FieldDecoder (Maybe String) Github.Object.Project
 closedAt =
     Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
 
 
+{-| List of columns in the project
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+
+-}
 columns : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet columns Github.Object.ProjectColumnConnection -> FieldDecoder columns Github.Object.Project
 columns fillInOptionals object =
     let
@@ -49,16 +65,22 @@ columns fillInOptionals object =
     Object.selectionFieldDecoder "columns" optionalArgs object identity
 
 
+{-| Identifies the date and time when the object was created.
+-}
 createdAt : FieldDecoder String Github.Object.Project
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
+{-| The actor who originally created the project.
+-}
 creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.Project
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the primary key from the database.
+-}
 databaseId : FieldDecoder (Maybe Int) Github.Object.Project
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
@@ -69,21 +91,35 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The project's name.
+-}
 name : FieldDecoder String Github.Object.Project
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
+{-| The project's number.
+-}
 number : FieldDecoder Int Github.Object.Project
 number =
     Object.fieldDecoder "number" [] Decode.int
 
 
+{-| The project's owner. Currently limited to repositories and organizations.
+-}
 owner : SelectionSet owner Github.Object.ProjectOwner -> FieldDecoder owner Github.Object.Project
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 
 
+{-| List of pending cards in this project
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+
+-}
 pendingCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet pendingCards Github.Object.ProjectCardConnection -> FieldDecoder pendingCards Github.Object.Project
 pendingCards fillInOptionals object =
     let
@@ -97,26 +133,36 @@ pendingCards fillInOptionals object =
     Object.selectionFieldDecoder "pendingCards" optionalArgs object identity
 
 
+{-| The HTTP path for this project
+-}
 resourcePath : FieldDecoder String Github.Object.Project
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
+{-| Whether the project is open or closed.
+-}
 state : FieldDecoder Github.Enum.ProjectState.ProjectState Github.Object.Project
 state =
     Object.fieldDecoder "state" [] Github.Enum.ProjectState.decoder
 
 
+{-| Identifies the date and time when the object was last updated.
+-}
 updatedAt : FieldDecoder String Github.Object.Project
 updatedAt =
     Object.fieldDecoder "updatedAt" [] Decode.string
 
 
+{-| The HTTP URL for this project
+-}
 url : FieldDecoder String Github.Object.Project
 url =
     Object.fieldDecoder "url" [] Decode.string
 
 
+{-| Check if the current viewer can update this object.
+-}
 viewerCanUpdate : FieldDecoder Bool Github.Object.Project
 viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool

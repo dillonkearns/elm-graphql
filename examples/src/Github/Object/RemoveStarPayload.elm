@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveStarPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The starrable.
+-}
 starrable : SelectionSet starrable Github.Object.Starrable -> FieldDecoder starrable Github.Object.RemoveStarPayload
 starrable object =
     Object.selectionFieldDecoder "starrable" [] object identity

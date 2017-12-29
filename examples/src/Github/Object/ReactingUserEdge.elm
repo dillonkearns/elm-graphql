@@ -25,6 +25,8 @@ node object =
     Object.selectionFieldDecoder "node" [] object identity
 
 
+{-| The moment when the user made the reaction.
+-}
 reactedAt : FieldDecoder String Github.Object.ReactingUserEdge
 reactedAt =
     Object.fieldDecoder "reactedAt" [] Decode.string

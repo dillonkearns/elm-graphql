@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.MoveProjectColumnPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The new edge of the moved column.
+-}
 columnEdge : SelectionSet columnEdge Github.Object.ProjectColumnEdge -> FieldDecoder columnEdge Github.Object.MoveProjectColumnPayload
 columnEdge object =
     Object.selectionFieldDecoder "columnEdge" [] object identity

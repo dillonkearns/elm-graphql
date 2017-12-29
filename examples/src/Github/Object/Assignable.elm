@@ -15,6 +15,14 @@ selection constructor =
     Object.object constructor
 
 
+{-| A list of Users assigned to this object.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+
+-}
 assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet assignees Github.Object.UserConnection -> FieldDecoder assignees Github.Object.Assignable
 assignees fillInOptionals object =
     let

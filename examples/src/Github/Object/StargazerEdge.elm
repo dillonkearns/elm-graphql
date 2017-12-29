@@ -25,6 +25,8 @@ node object =
     Object.selectionFieldDecoder "node" [] object identity
 
 
+{-| Identifies when the item was starred.
+-}
 starredAt : FieldDecoder String Github.Object.StargazerEdge
 starredAt =
     Object.fieldDecoder "starredAt" [] Decode.string

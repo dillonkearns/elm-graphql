@@ -15,16 +15,22 @@ selection constructor =
     Object.object constructor
 
 
+{-| A description of the rule
+-}
 description : FieldDecoder String Github.Object.LicenseRule
 description =
     Object.fieldDecoder "description" [] Decode.string
 
 
+{-| The machine-readable rule key
+-}
 key : FieldDecoder String Github.Object.LicenseRule
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
+{-| The human-readable rule label
+-}
 label : FieldDecoder String Github.Object.LicenseRule
 label =
     Object.fieldDecoder "label" [] Decode.string

@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the date and time when the object was created.
+-}
 createdAt : FieldDecoder String Github.Object.DeployKey
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
@@ -25,21 +27,29 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The deploy key.
+-}
 key : FieldDecoder String Github.Object.DeployKey
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
+{-| Whether or not the deploy key is read only.
+-}
 readOnly : FieldDecoder Bool Github.Object.DeployKey
 readOnly =
     Object.fieldDecoder "readOnly" [] Decode.bool
 
 
+{-| The deploy key title.
+-}
 title : FieldDecoder String Github.Object.DeployKey
 title =
     Object.fieldDecoder "title" [] Decode.string
 
 
+{-| Whether or not the deploy key has been verified.
+-}
 verified : FieldDecoder Bool Github.Object.DeployKey
 verified =
     Object.fieldDecoder "verified" [] Decode.bool

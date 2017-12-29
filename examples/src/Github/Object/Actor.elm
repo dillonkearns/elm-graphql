@@ -15,6 +15,11 @@ selection constructor =
     Object.object constructor
 
 
+{-| A URL pointing to the actor's public avatar.
+
+  - size - The size of the resulting square image.
+
+-}
 avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Object.Actor
 avatarUrl fillInOptionals =
     let
@@ -28,16 +33,22 @@ avatarUrl fillInOptionals =
     Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
 
 
+{-| The username of the actor.
+-}
 login : FieldDecoder String Github.Object.Actor
 login =
     Object.fieldDecoder "login" [] Decode.string
 
 
+{-| The HTTP path for this actor.
+-}
 resourcePath : FieldDecoder String Github.Object.Actor
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
+{-| The HTTP URL for this actor.
+-}
 url : FieldDecoder String Github.Object.Actor
 url =
     Object.fieldDecoder "url" [] Decode.string

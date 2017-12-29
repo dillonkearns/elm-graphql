@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| The HTML path to this resource.
+-}
 resourcePath : FieldDecoder String Github.Object.UniformResourceLocatable
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
+{-| The URL to this resource.
+-}
 url : FieldDecoder String Github.Object.UniformResourceLocatable
 url =
     Object.fieldDecoder "url" [] Decode.string

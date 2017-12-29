@@ -20,16 +20,22 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The user who received the invitation.
+-}
 invitee : SelectionSet invitee Github.Object.User -> FieldDecoder invitee Github.Object.RepositoryInvitation
 invitee object =
     Object.selectionFieldDecoder "invitee" [] object identity
 
 
+{-| The user who created the invitation.
+-}
 inviter : SelectionSet inviter Github.Object.User -> FieldDecoder inviter Github.Object.RepositoryInvitation
 inviter object =
     Object.selectionFieldDecoder "inviter" [] object identity
 
 
+{-| The Repository the user is invited to.
+-}
 repository : SelectionSet repository Github.Object.RepositoryInvitationRepository -> FieldDecoder (Maybe repository) Github.Object.RepositoryInvitation
 repository object =
     Object.selectionFieldDecoder "repository" [] object (identity >> Decode.maybe)

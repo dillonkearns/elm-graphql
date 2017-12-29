@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The user that was removed as an outside collaborator.
+-}
 removedUser : SelectionSet removedUser Github.Object.User -> FieldDecoder removedUser Github.Object.RemoveOutsideCollaboratorPayload
 removedUser object =
     Object.selectionFieldDecoder "removedUser" [] object identity

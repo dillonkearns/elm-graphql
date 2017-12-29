@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| ID of the object.
+-}
 id : FieldDecoder String Github.Object.Node
 id =
     Object.fieldDecoder "id" [] Decode.string

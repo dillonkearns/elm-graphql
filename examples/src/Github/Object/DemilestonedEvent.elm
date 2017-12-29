@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the actor who performed the event.
+-}
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.DemilestonedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the date and time when the object was created.
+-}
 createdAt : FieldDecoder String Github.Object.DemilestonedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
@@ -30,11 +34,15 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| Identifies the milestone title associated with the 'demilestoned' event.
+-}
 milestoneTitle : FieldDecoder String Github.Object.DemilestonedEvent
 milestoneTitle =
     Object.fieldDecoder "milestoneTitle" [] Decode.string
 
 
+{-| Object referenced by event.
+-}
 subject : FieldDecoder (Maybe String) Github.Object.DemilestonedEvent
 subject =
     Object.fieldDecoder "subject" [] (Decode.string |> Decode.maybe)

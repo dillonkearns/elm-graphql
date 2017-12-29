@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.UpdatePullRequestReviewCommentPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The updated comment.
+-}
 pullRequestReviewComment : SelectionSet pullRequestReviewComment Github.Object.PullRequestReviewComment -> FieldDecoder pullRequestReviewComment Github.Object.UpdatePullRequestReviewCommentPayload
 pullRequestReviewComment object =
     Object.selectionFieldDecoder "pullRequestReviewComment" [] object identity

@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A cursor for use in pagination.
+-}
 cursor : FieldDecoder String Github.Object.UserEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
+{-| The item at the end of the edge.
+-}
 node : SelectionSet node Github.Object.User -> FieldDecoder (Maybe node) Github.Object.UserEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

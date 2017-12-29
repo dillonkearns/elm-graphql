@@ -16,6 +16,19 @@ selection constructor =
     Object.object constructor
 
 
+{-| A list of pull requests with this ref as the head ref.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+  - states - A list of states to filter the pull requests by.
+  - labels - A list of label names to filter the pull requests by.
+  - headRefName - The head ref name to filter the pull requests by.
+  - baseRefName - The base ref name to filter the pull requests by.
+  - orderBy - Ordering options for pull requests returned from the connection.
+
+-}
 associatedPullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet associatedPullRequests Github.Object.PullRequestConnection -> FieldDecoder associatedPullRequests Github.Object.Ref
 associatedPullRequests fillInOptionals object =
     let
@@ -34,21 +47,29 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The ref name.
+-}
 name : FieldDecoder String Github.Object.Ref
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
+{-| The ref's prefix, such as `refs/heads/` or `refs/tags/`.
+-}
 prefix : FieldDecoder String Github.Object.Ref
 prefix =
     Object.fieldDecoder "prefix" [] Decode.string
 
 
+{-| The repository the ref belongs to.
+-}
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Ref
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
 
+{-| The object the ref points to.
+-}
 target : SelectionSet target Github.Object.GitObject -> FieldDecoder target Github.Object.Ref
 target object =
     Object.selectionFieldDecoder "target" [] object identity

@@ -21,11 +21,27 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| Find project by number.
+
+  - number - The project number to find.
+
+-}
 project : { number : Int } -> SelectionSet project Github.Object.Project -> FieldDecoder (Maybe project) Github.Object.ProjectOwner
 project requiredArgs object =
     Object.selectionFieldDecoder "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.maybe)
 
 
+{-| A list of projects under the owner.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+  - orderBy - Ordering options for projects returned from the connection
+  - search - Query to search projects by, currently only searching by name.
+  - states - A list of states to filter the projects by.
+
+-}
 projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Object.ProjectOwner
 projects fillInOptionals object =
     let
@@ -39,16 +55,22 @@ projects fillInOptionals object =
     Object.selectionFieldDecoder "projects" optionalArgs object identity
 
 
+{-| The HTTP path listing owners projects
+-}
 projectsResourcePath : FieldDecoder String Github.Object.ProjectOwner
 projectsResourcePath =
     Object.fieldDecoder "projectsResourcePath" [] Decode.string
 
 
+{-| The HTTP URL listing owners projects
+-}
 projectsUrl : FieldDecoder String Github.Object.ProjectOwner
 projectsUrl =
     Object.fieldDecoder "projectsUrl" [] Decode.string
 
 
+{-| Can the current viewer create new projects on this owner.
+-}
 viewerCanCreateProjects : FieldDecoder Bool Github.Object.ProjectOwner
 viewerCanCreateProjects =
     Object.fieldDecoder "viewerCanCreateProjects" [] Decode.bool

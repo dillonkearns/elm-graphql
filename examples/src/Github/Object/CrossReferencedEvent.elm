@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the actor who performed the event.
+-}
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.CrossReferencedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the date and time when the object was created.
+-}
 createdAt : FieldDecoder String Github.Object.CrossReferencedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
@@ -30,36 +34,50 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| Reference originated in a different repository.
+-}
 isCrossRepository : FieldDecoder Bool Github.Object.CrossReferencedEvent
 isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
+{-| Identifies when the reference was made.
+-}
 referencedAt : FieldDecoder String Github.Object.CrossReferencedEvent
 referencedAt =
     Object.fieldDecoder "referencedAt" [] Decode.string
 
 
+{-| The HTTP path for this pull request.
+-}
 resourcePath : FieldDecoder String Github.Object.CrossReferencedEvent
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
+{-| Issue or pull request that made the reference.
+-}
 source : FieldDecoder (Maybe String) Github.Object.CrossReferencedEvent
 source =
     Object.fieldDecoder "source" [] (Decode.string |> Decode.maybe)
 
 
+{-| Issue or pull request to which the reference was made.
+-}
 target : FieldDecoder (Maybe String) Github.Object.CrossReferencedEvent
 target =
     Object.fieldDecoder "target" [] (Decode.string |> Decode.maybe)
 
 
+{-| The HTTP URL for this pull request.
+-}
 url : FieldDecoder String Github.Object.CrossReferencedEvent
 url =
     Object.fieldDecoder "url" [] Decode.string
 
 
+{-| Checks if the target will be closed when the source is merged.
+-}
 willCloseTarget : FieldDecoder Bool Github.Object.CrossReferencedEvent
 willCloseTarget =
     Object.fieldDecoder "willCloseTarget" [] Decode.bool

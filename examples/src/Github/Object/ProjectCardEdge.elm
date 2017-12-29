@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A cursor for use in pagination.
+-}
 cursor : FieldDecoder String Github.Object.ProjectCardEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
+{-| The item at the end of the edge.
+-}
 node : SelectionSet node Github.Object.ProjectCard -> FieldDecoder (Maybe node) Github.Object.ProjectCardEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

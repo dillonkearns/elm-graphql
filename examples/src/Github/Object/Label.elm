@@ -17,6 +17,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the label color.
+-}
 color : FieldDecoder String Github.Object.Label
 color =
     Object.fieldDecoder "color" [] Decode.string
@@ -27,6 +29,17 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| A list of issues associated with this label.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+  - labels - A list of label names to filter the pull requests by.
+  - orderBy - Ordering options for issues returned from the connection.
+  - states - A list of states to filter the issues by.
+
+-}
 issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Value, states : OptionalArgument (List Github.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Value, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }) -> SelectionSet issues Github.Object.IssueConnection -> FieldDecoder issues Github.Object.Label
 issues fillInOptionals object =
     let
@@ -40,11 +53,26 @@ issues fillInOptionals object =
     Object.selectionFieldDecoder "issues" optionalArgs object identity
 
 
+{-| Identifies the label name.
+-}
 name : FieldDecoder String Github.Object.Label
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
+{-| A list of pull requests associated with this label.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+  - states - A list of states to filter the pull requests by.
+  - labels - A list of label names to filter the pull requests by.
+  - headRefName - The head ref name to filter the pull requests by.
+  - baseRefName - The base ref name to filter the pull requests by.
+  - orderBy - Ordering options for pull requests returned from the connection.
+
+-}
 pullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet pullRequests Github.Object.PullRequestConnection -> FieldDecoder pullRequests Github.Object.Label
 pullRequests fillInOptionals object =
     let
@@ -58,6 +86,8 @@ pullRequests fillInOptionals object =
     Object.selectionFieldDecoder "pullRequests" optionalArgs object identity
 
 
+{-| The repository associated with this label.
+-}
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Label
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity

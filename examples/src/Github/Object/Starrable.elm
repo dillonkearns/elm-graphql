@@ -20,6 +20,15 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| A list of users who have starred this starrable.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+  - orderBy - Order for connection
+
+-}
 stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet stargazers Github.Object.StargazerConnection -> FieldDecoder stargazers Github.Object.Starrable
 stargazers fillInOptionals object =
     let
@@ -33,6 +42,8 @@ stargazers fillInOptionals object =
     Object.selectionFieldDecoder "stargazers" optionalArgs object identity
 
 
+{-| Returns a boolean indicating whether the viewing user has starred this starrable.
+-}
 viewerHasStarred : FieldDecoder Bool Github.Object.Starrable
 viewerHasStarred =
     Object.fieldDecoder "viewerHasStarred" [] Decode.bool

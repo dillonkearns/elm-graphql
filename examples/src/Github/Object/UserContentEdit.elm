@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the date and time when the object was created.
+-}
 createdAt : FieldDecoder String Github.Object.UserContentEdit
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
+{-| The actor who edited this content,
+-}
 editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.UserContentEdit
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
@@ -30,6 +34,8 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| Identifies the date and time when the object was last updated.
+-}
 updatedAt : FieldDecoder String Github.Object.UserContentEdit
 updatedAt =
     Object.fieldDecoder "updatedAt" [] Decode.string

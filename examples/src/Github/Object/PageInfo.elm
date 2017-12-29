@@ -15,21 +15,29 @@ selection constructor =
     Object.object constructor
 
 
+{-| When paginating forwards, the cursor to continue.
+-}
 endCursor : FieldDecoder (Maybe String) Github.Object.PageInfo
 endCursor =
     Object.fieldDecoder "endCursor" [] (Decode.string |> Decode.maybe)
 
 
+{-| When paginating forwards, are there more items?
+-}
 hasNextPage : FieldDecoder Bool Github.Object.PageInfo
 hasNextPage =
     Object.fieldDecoder "hasNextPage" [] Decode.bool
 
 
+{-| When paginating backwards, are there more items?
+-}
 hasPreviousPage : FieldDecoder Bool Github.Object.PageInfo
 hasPreviousPage =
     Object.fieldDecoder "hasPreviousPage" [] Decode.bool
 
 
+{-| When paginating backwards, the cursor to continue.
+-}
 startCursor : FieldDecoder (Maybe String) Github.Object.PageInfo
 startCursor =
     Object.fieldDecoder "startCursor" [] (Decode.string |> Decode.maybe)

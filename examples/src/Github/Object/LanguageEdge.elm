@@ -25,6 +25,8 @@ node object =
     Object.selectionFieldDecoder "node" [] object identity
 
 
+{-| The number of bytes of code written in the language.
+-}
 size : FieldDecoder Int Github.Object.LanguageEdge
 size =
     Object.fieldDecoder "size" [] Decode.int

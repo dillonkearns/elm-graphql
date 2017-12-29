@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| Check if the current viewer can update this object.
+-}
 viewerCanUpdate : FieldDecoder Bool Github.Object.Updatable
 viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool

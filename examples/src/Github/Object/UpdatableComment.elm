@@ -16,6 +16,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| Reasons why the current viewer can not update this comment.
+-}
 viewerCannotUpdateReasons : FieldDecoder (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.UpdatableComment
 viewerCannotUpdateReasons =
     Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)

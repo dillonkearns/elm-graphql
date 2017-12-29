@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the actor who performed the event.
+-}
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.SubscribedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the date and time when the object was created.
+-}
 createdAt : FieldDecoder String Github.Object.SubscribedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
@@ -30,6 +34,8 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| Object referenced by event.
+-}
 subscribable : SelectionSet subscribable Github.Object.Subscribable -> FieldDecoder subscribable Github.Object.SubscribedEvent
 subscribable object =
     Object.selectionFieldDecoder "subscribable" [] object identity

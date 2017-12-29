@@ -15,16 +15,22 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveReactionPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The reaction object.
+-}
 reaction : SelectionSet reaction Github.Object.Reaction -> FieldDecoder reaction Github.Object.RemoveReactionPayload
 reaction object =
     Object.selectionFieldDecoder "reaction" [] object identity
 
 
+{-| The reactable subject.
+-}
 subject : SelectionSet subject Github.Object.Reactable -> FieldDecoder subject Github.Object.RemoveReactionPayload
 subject object =
     Object.selectionFieldDecoder "subject" [] object identity

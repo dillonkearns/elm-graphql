@@ -20,6 +20,8 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The public key string
+-}
 key : FieldDecoder String Github.Object.PublicKey
 key =
     Object.fieldDecoder "key" [] Decode.string

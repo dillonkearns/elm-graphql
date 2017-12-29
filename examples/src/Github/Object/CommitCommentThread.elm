@@ -15,6 +15,14 @@ selection constructor =
     Object.object constructor
 
 
+{-| The comments that exist in this thread.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+
+-}
 comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Github.Object.CommitCommentConnection -> FieldDecoder comments Github.Object.CommitCommentThread
 comments fillInOptionals object =
     let
@@ -28,6 +36,8 @@ comments fillInOptionals object =
     Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
+{-| The commit the comments were made on.
+-}
 commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.CommitCommentThread
 commit object =
     Object.selectionFieldDecoder "commit" [] object identity
@@ -38,16 +48,22 @@ id =
     Object.fieldDecoder "id" [] Decode.string
 
 
+{-| The file the comments were made on.
+-}
 path : FieldDecoder (Maybe String) Github.Object.CommitCommentThread
 path =
     Object.fieldDecoder "path" [] (Decode.string |> Decode.maybe)
 
 
+{-| The position in the diff for the commit that the comment was made on.
+-}
 position : FieldDecoder (Maybe Int) Github.Object.CommitCommentThread
 position =
     Object.fieldDecoder "position" [] (Decode.int |> Decode.maybe)
 
 
+{-| The repository associated with this node.
+-}
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.CommitCommentThread
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity

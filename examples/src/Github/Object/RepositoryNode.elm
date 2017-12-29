@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| The repository associated with this node.
+-}
 repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.RepositoryNode
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity

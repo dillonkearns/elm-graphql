@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| Check if the current viewer can delete this object.
+-}
 viewerCanDelete : FieldDecoder Bool Github.Object.Deletable
 viewerCanDelete =
     Object.fieldDecoder "viewerCanDelete" [] Decode.bool

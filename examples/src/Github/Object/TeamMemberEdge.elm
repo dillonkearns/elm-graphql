@@ -21,11 +21,15 @@ cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
+{-| The HTTP path to the organization's member access page.
+-}
 memberAccessResourcePath : FieldDecoder String Github.Object.TeamMemberEdge
 memberAccessResourcePath =
     Object.fieldDecoder "memberAccessResourcePath" [] Decode.string
 
 
+{-| The HTTP URL to the organization's member access page.
+-}
 memberAccessUrl : FieldDecoder String Github.Object.TeamMemberEdge
 memberAccessUrl =
     Object.fieldDecoder "memberAccessUrl" [] Decode.string
@@ -36,6 +40,8 @@ node object =
     Object.selectionFieldDecoder "node" [] object identity
 
 
+{-| The role the member has on the team.
+-}
 role : FieldDecoder Github.Enum.TeamMemberRole.TeamMemberRole Github.Object.TeamMemberEdge
 role =
     Object.fieldDecoder "role" [] Github.Enum.TeamMemberRole.decoder

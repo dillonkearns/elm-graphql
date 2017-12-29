@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.CreateProjectPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The new project.
+-}
 project : SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.CreateProjectPayload
 project object =
     Object.selectionFieldDecoder "project" [] object identity

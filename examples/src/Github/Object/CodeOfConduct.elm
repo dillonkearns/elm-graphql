@@ -15,21 +15,29 @@ selection constructor =
     Object.object constructor
 
 
+{-| The body of the CoC
+-}
 body : FieldDecoder (Maybe String) Github.Object.CodeOfConduct
 body =
     Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
 
 
+{-| The key for the CoC
+-}
 key : FieldDecoder String Github.Object.CodeOfConduct
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
+{-| The formal name of the CoC
+-}
 name : FieldDecoder String Github.Object.CodeOfConduct
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
+{-| The path to the CoC
+-}
 url : FieldDecoder (Maybe String) Github.Object.CodeOfConduct
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.maybe)

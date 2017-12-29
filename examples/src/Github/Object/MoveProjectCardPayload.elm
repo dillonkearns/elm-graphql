@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| The new edge of the moved card.
+-}
 cardEdge : SelectionSet cardEdge Github.Object.ProjectCardEdge -> FieldDecoder cardEdge Github.Object.MoveProjectCardPayload
 cardEdge object =
     Object.selectionFieldDecoder "cardEdge" [] object identity
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.MoveProjectCardPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)

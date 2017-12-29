@@ -15,16 +15,22 @@ selection constructor =
     Object.object constructor
 
 
+{-| Identifies the actor who performed the event.
+-}
 actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.ConvertedNoteToIssueEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the date and time when the object was created.
+-}
 createdAt : FieldDecoder String Github.Object.ConvertedNoteToIssueEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
+{-| Identifies the primary key from the database.
+-}
 databaseId : FieldDecoder (Maybe Int) Github.Object.ConvertedNoteToIssueEvent
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)

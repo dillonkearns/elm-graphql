@@ -15,6 +15,8 @@ selection constructor =
     Object.object constructor
 
 
+{-| `true` if the object is locked
+-}
 locked : FieldDecoder Bool Github.Object.Lockable
 locked =
     Object.fieldDecoder "locked" [] Decode.bool

@@ -15,11 +15,15 @@ selection constructor =
     Object.object constructor
 
 
+{-| A unique identifier for the client performing the mutation.
+-}
 clientMutationId : FieldDecoder (Maybe String) Github.Object.DeleteProjectPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
+{-| The repository or organization the project was removed from.
+-}
 owner : SelectionSet owner Github.Object.ProjectOwner -> FieldDecoder owner Github.Object.DeleteProjectPayload
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
