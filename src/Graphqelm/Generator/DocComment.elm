@@ -24,9 +24,9 @@ argsDoc args =
             ""
 
         _ ->
-            interpolate "\n\n{0}\n" [ "  - id - The human's id." ]
+            interpolate "\n\n{0}\n" [ List.map argDoc args |> String.join "\n" ]
 
 
 argDoc : Type.Arg -> String
 argDoc { description } =
-    ""
+    "  - id - The human's id."
