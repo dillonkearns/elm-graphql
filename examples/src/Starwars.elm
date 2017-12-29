@@ -17,9 +17,9 @@ import Swapi.Query as Query
 
 
 type alias Response =
-    { tarkin : Human
-    , vader : Human
-    , hero : Hero
+    { tarkin : Maybe Human
+    , vader : Maybe Human
+    , hero : Maybe Hero
     }
 
 

@@ -17,12 +17,12 @@ selection constructor =
     Object.object constructor
 
 
-droid : { id : String } -> SelectionSet droid Swapi.Object.Droid -> FieldDecoder droid RootQuery
+droid : { id : String } -> SelectionSet droid Swapi.Object.Droid -> FieldDecoder (Maybe droid) RootQuery
 droid requiredArgs object =
-    Object.selectionFieldDecoder "droid" [ Argument.string "id" requiredArgs.id ] object identity
+    Object.selectionFieldDecoder "droid" [ Argument.string "id" requiredArgs.id ] object (identity >> Decode.maybe)
 
 
-hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Object.Character -> FieldDecoder hero RootQuery
+hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Object.Character -> FieldDecoder (Maybe hero) RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -32,9 +32,9 @@ hero fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "hero" optionalArgs object identity
+    Object.selectionFieldDecoder "hero" optionalArgs object (identity >> Decode.maybe)
 
 
-human : { id : String } -> SelectionSet human Swapi.Object.Human -> FieldDecoder human RootQuery
+human : { id : String } -> SelectionSet human Swapi.Object.Human -> FieldDecoder (Maybe human) RootQuery
 human requiredArgs object =
-    Object.selectionFieldDecoder "human" [ Argument.string "id" requiredArgs.id ] object identity
+    Object.selectionFieldDecoder "human" [ Argument.string "id" requiredArgs.id ] object (identity >> Decode.maybe)
