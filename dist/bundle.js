@@ -8299,20 +8299,78 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 			}());
 	});
 
-var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate = function (maybeDescription) {
-	var _p0 = maybeDescription;
-	if (_p0.ctor === 'Just') {
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argDoc = function (_p0) {
+	var _p1 = _p0;
+	return A2(
+		_elm_lang$core$Maybe$map,
+		function (aDescription) {
+			return A2(
+				_dillonkearns$graphqelm$Interpolate$interpolate,
+				'  - {0} - {1}',
+				{
+					ctor: '::',
+					_0: _p1.name,
+					_1: {
+						ctor: '::',
+						_0: aDescription,
+						_1: {ctor: '[]'}
+					}
+				});
+		},
+		_p1.description);
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argsDoc = function (args) {
+	var _p2 = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argDoc, args);
+	if (_p2.ctor === '[]') {
+		return '';
+	} else {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'{-| {0}\n-}\n',
+			'\n\n{0}\n',
 			{
 				ctor: '::',
-				_0: _p0._0,
+				_0: A2(_elm_lang$core$String$join, '\n', _p2),
 				_1: {ctor: '[]'}
 			});
-	} else {
-		return '';
 	}
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs = function (_p3) {
+	var _p4 = _p3;
+	var _p5 = _p4.description;
+	if (_p5.ctor === 'Just') {
+		return true;
+	} else {
+		return !_elm_lang$core$List$isEmpty(
+			A2(
+				_elm_lang$core$List$filterMap,
+				function (_) {
+					return _.description;
+				},
+				_p4.args));
+	}
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate = function (_p6) {
+	var _p7 = _p6;
+	return _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs(_p7) ? A2(
+		_dillonkearns$graphqelm$Interpolate$interpolate,
+		'{-|{0}{1}\n-}\n',
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$core$Maybe$withDefault,
+				'',
+				A2(
+					_elm_lang$core$Maybe$map,
+					function (description) {
+						return A2(_elm_lang$core$Basics_ops['++'], ' ', description);
+					},
+					_p7.description)),
+			_1: {
+				ctor: '::',
+				_0: _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argsDoc(_p7.args),
+				_1: {ctor: '[]'}
+			}
+		}) : '';
 };
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_SpecialObjectNames$SpecialObjectNames = F2(
@@ -8844,7 +8902,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString = function 
 		' ');
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F3(
-	function (returnAnnotation, description, field) {
+	function (returnAnnotation, field, fieldGenerator) {
 		var something = A2(
 			_elm_lang$core$String$join,
 			' -> ',
@@ -8855,7 +8913,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F
 					function (_) {
 						return _.annotation;
 					},
-					field.annotatedArgs),
+					fieldGenerator.annotatedArgs),
 				{
 					ctor: '::',
 					_0: returnAnnotation,
@@ -8866,34 +8924,34 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F
 			'{9}{6} : {3}\n{6} {4}={7}\n      {5} \"{0}\" {1} ({2}){8}\n',
 			{
 				ctor: '::',
-				_0: field.fieldName,
+				_0: fieldGenerator.fieldName,
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldArgsString(field),
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldArgsString(fieldGenerator),
 					_1: {
 						ctor: '::',
-						_0: field.decoder,
+						_0: fieldGenerator.decoder,
 						_1: {
 							ctor: '::',
 							_0: something,
 							_1: {
 								ctor: '::',
-								_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString(field),
+								_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString(fieldGenerator),
 								_1: {
 									ctor: '::',
-									_0: A2(_elm_lang$core$Basics_ops['++'], 'Object', field.otherThing),
+									_0: A2(_elm_lang$core$Basics_ops['++'], 'Object', fieldGenerator.otherThing),
 									_1: {
 										ctor: '::',
-										_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(field.fieldName),
+										_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(fieldGenerator.fieldName),
 										_1: {
 											ctor: '::',
-											_0: _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate(field.letBindings),
+											_0: _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate(fieldGenerator.letBindings),
 											_1: {
 												ctor: '::',
-												_0: A2(_elm_lang$core$Maybe$withDefault, '', field.objectDecoderChain),
+												_0: A2(_elm_lang$core$Maybe$withDefault, '', fieldGenerator.objectDecoderChain),
 												_1: {
 													ctor: '::',
-													_0: _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate(description),
+													_0: _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate(field),
 													_1: {ctor: '[]'}
 												}
 											}
@@ -8907,7 +8965,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F
 			});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_ = F5(
-	function (apiSubmodule, specialObjectNames, thisObjectName, description, field) {
+	function (apiSubmodule, specialObjectNames, thisObjectName, field, fieldGenerator) {
 		var thisObjectString = A2(
 			_elm_lang$core$String$join,
 			'.',
@@ -8919,15 +8977,15 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_ = F5(
 				'FieldDecoder {0} {1}',
 				{
 					ctor: '::',
-					_0: field.decoderAnnotation,
+					_0: fieldGenerator.decoderAnnotation,
 					_1: {
 						ctor: '::',
 						_0: thisObjectString,
 						_1: {ctor: '[]'}
 					}
 				}),
-			description,
-			field);
+			field,
+			fieldGenerator);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$FieldGenerator = F8(
 	function (a, b, c, d, e, f, g, h) {
@@ -9009,7 +9067,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$generate = F4(
 			apiSubmodule,
 			specialObjectNames,
 			thisObjectName,
-			field.description,
+			field,
 			A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator, apiSubmodule, specialObjectNames, field));
 	});
 

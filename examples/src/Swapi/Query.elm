@@ -17,11 +17,21 @@ selection constructor =
     Object.object constructor
 
 
+{-|
+
+  - id - ID of the droid.
+
+-}
 droid : { id : String } -> SelectionSet droid Swapi.Object.Droid -> FieldDecoder (Maybe droid) RootQuery
 droid requiredArgs object =
     Object.selectionFieldDecoder "droid" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
 
 
+{-|
+
+  - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
+
+-}
 hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Object.Character -> FieldDecoder (Maybe hero) RootQuery
 hero fillInOptionals object =
     let
@@ -35,6 +45,11 @@ hero fillInOptionals object =
     Object.selectionFieldDecoder "hero" optionalArgs object (identity >> Decode.maybe)
 
 
+{-|
+
+  - id - ID of the human.
+
+-}
 human : { id : String } -> SelectionSet human Swapi.Object.Human -> FieldDecoder (Maybe human) RootQuery
 human requiredArgs object =
     Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
