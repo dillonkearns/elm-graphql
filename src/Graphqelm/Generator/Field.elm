@@ -1,6 +1,7 @@
 module Graphqelm.Generator.Field exposing (generate)
 
 import Graphqelm.Generator.Decoder
+import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.Normalize as Normalize
@@ -44,19 +45,6 @@ forObject_ apiSubmodule specialObjectNames thisObjectName description field =
     fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ field.decoderAnnotation, thisObjectString ]) description field
 
 
-generateDescription : Maybe String -> String
-generateDescription maybeDescription =
-    case maybeDescription of
-        Just description ->
-            interpolate """{-| {0}
--}
-"""
-                [ description ]
-
-        Nothing ->
-            ""
-
-
 fieldGeneratorToString : String -> Maybe String -> FieldGenerator -> String
 fieldGeneratorToString returnAnnotation description field =
     let
@@ -80,7 +68,7 @@ fieldGeneratorToString returnAnnotation description field =
         , Normalize.fieldName field.fieldName
         , Let.generate field.letBindings
         , field.objectDecoderChain |> Maybe.withDefault ""
-        , generateDescription description
+        , DocComment.generate description
         ]
 
 
