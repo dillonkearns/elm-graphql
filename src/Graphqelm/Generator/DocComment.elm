@@ -19,14 +19,18 @@ generate { description, args } =
 
 argsDoc : List Type.Arg -> String
 argsDoc args =
-    case args of
+    case List.filterMap argDoc args of
         [] ->
             ""
 
-        _ ->
-            interpolate "\n\n{0}\n" [ List.map argDoc args |> String.join "\n" ]
+        argDocs ->
+            interpolate "\n\n{0}\n" [ argDocs |> String.join "\n" ]
 
 
-argDoc : Type.Arg -> String
-argDoc { description } =
-    "  - id - The human's id."
+argDoc : Type.Arg -> Maybe String
+argDoc { name, description } =
+    Maybe.map
+        (\aDescription ->
+            interpolate "  - {0} - {1}" [ name, aDescription ]
+        )
+        description

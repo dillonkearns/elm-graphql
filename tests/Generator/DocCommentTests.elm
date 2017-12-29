@@ -40,4 +40,20 @@ all =
 
 -}
 """
+        , test "field with arg with no description" <|
+            \() ->
+                { name = "human"
+                , description = Just "A human in the star wars universe."
+                , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
+                , args =
+                    [ { name = "id"
+                      , description = Nothing
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    ]
+                }
+                    |> DocComment.generate
+                    |> Expect.equal """{-| A human in the star wars universe.
+-}
+"""
         ]
