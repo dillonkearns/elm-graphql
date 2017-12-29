@@ -7717,8 +7717,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString = function (maybe
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Graphqelm.Parser.Type',
 			{
-				start: {line: 170, column: 5},
-				end: {line: 175, column: 58}
+				start: {line: 173, column: 5},
+				end: {line: 178, column: 58}
 			},
 			_p0)('Expected string but got Nothing');
 	}
@@ -7727,13 +7727,13 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$Arg = F2(
 	function (a, b) {
 		return {name: a, typeRef: b};
 	});
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$Field = F3(
-	function (a, b, c) {
-		return {name: a, typeRef: b, args: c};
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$Field = F4(
+	function (a, b, c, d) {
+		return {name: a, description: b, typeRef: c, args: d};
 	});
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$RawField = F3(
-	function (a, b, c) {
-		return {name: a, ofType: b, args: c};
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$RawField = F4(
+	function (a, b, c, d) {
+		return {name: a, description: b, ofType: c, args: d};
 	});
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$RawArg = F2(
 	function (a, b) {
@@ -7834,8 +7834,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 182, column: 13},
-						end: {line: 187, column: 73}
+						start: {line: 185, column: 13},
+						end: {line: 190, column: 73}
 					},
 					_p5)('Missing nested type for List reference');
 			}
@@ -7851,8 +7851,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 190, column: 13},
-						end: {line: 197, column: 82}
+						start: {line: 193, column: 13},
+						end: {line: 200, column: 82}
 					},
 					_p7)('Should not get null names for scalar references');
 			}
@@ -7867,8 +7867,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 200, column: 13},
-						end: {line: 205, column: 85}
+						start: {line: 203, column: 13},
+						end: {line: 208, column: 85}
 					},
 					_p9)('Should not get null names for interface references');
 			}
@@ -7883,8 +7883,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 208, column: 13},
-						end: {line: 213, column: 82}
+						start: {line: 211, column: 13},
+						end: {line: 216, column: 82}
 					},
 					_p11)('Should not get null names for object references');
 			}
@@ -7925,8 +7925,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 							return _elm_lang$core$Native_Utils.crashCase(
 								'Graphqelm.Parser.Type',
 								{
-									start: {line: 231, column: 29},
-									end: {line: 236, column: 51}
+									start: {line: 234, column: 29},
+									end: {line: 239, column: 51}
 								},
 								_p15)('');
 						}
@@ -7934,8 +7934,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Graphqelm.Parser.Type',
 							{
-								start: {line: 218, column: 21},
-								end: {line: 248, column: 103}
+								start: {line: 221, column: 21},
+								end: {line: 251, column: 103}
 							},
 							_p14)('Can\'t have nested non-null types');
 					case 'Ignore':
@@ -7969,8 +7969,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 257, column: 13},
-						end: {line: 262, column: 80}
+						start: {line: 260, column: 13},
+						end: {line: 265, column: 80}
 					},
 					_p19)('Should not get null names for enum references');
 			}
@@ -7985,8 +7985,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 265, column: 13},
-						end: {line: 270, column: 88}
+						start: {line: 268, column: 13},
+						end: {line: 273, column: 88}
 					},
 					_p21)('Should not get null names for input object references');
 			}
@@ -7996,6 +7996,7 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField = function (_p24) {
 	var _p25 = _p24;
 	return {
 		name: _p25.name,
+		description: _p25.description,
 		typeRef: _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p25.ofType),
 		args: A2(
 			_elm_lang$core$List$map,
@@ -8035,10 +8036,14 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$argDecoder = A3(
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$RawArg,
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'type', _dillonkearns$graphqelm$Graphqelm_Parser_Type$typeRefDecoder));
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$fieldDecoder = A4(
-	_elm_lang$core$Json_Decode$map3,
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$fieldDecoder = A5(
+	_elm_lang$core$Json_Decode$map4,
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$RawField,
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'description',
+		_elm_lang$core$Json_Decode$maybe(_elm_lang$core$Json_Decode$string)),
 	A2(_elm_lang$core$Json_Decode$field, 'type', _dillonkearns$graphqelm$Graphqelm_Parser_Type$typeRefDecoder),
 	A2(
 		_elm_lang$core$Json_Decode$field,

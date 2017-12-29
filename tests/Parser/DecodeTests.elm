@@ -127,14 +127,17 @@ all =
                             (TypeDefinition "MenuItem"
                                 (ObjectType
                                     [ { name = "description"
+                                      , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
                                     , { name = "id"
+                                      , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
                                     , { name = "name"
+                                      , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
@@ -177,6 +180,7 @@ all =
                             (TypeDefinition "MenuItem"
                                 (ObjectType
                                     [ { name = "stargazers"
+                                      , description = Just "A list of users who have starred this starrable."
                                       , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
                                       , args = []
                                       }
@@ -227,6 +231,7 @@ all =
                             (TypeDefinition "Character"
                                 (InterfaceType
                                     [ { name = "friends"
+                                      , description = Nothing
                                       , typeRef =
                                             TypeReference
                                                 (List (TypeReference (InterfaceRef "Character") NonNullable))
@@ -290,6 +295,7 @@ all =
                             (TypeDefinition "Query"
                                 (ObjectType
                                     [ { name = "menuItems"
+                                      , description = Nothing
                                       , typeRef = TypeReference (List (TypeReference (ObjectRef "MenuItem") Nullable)) Nullable
                                       , args = [ { name = "filterOptions", typeRef = TypeReference (InputObjectRef "FilterOptions") Nullable } ]
                                       }
@@ -388,18 +394,22 @@ all =
                             (TypeDefinition "Character"
                                 (InterfaceType
                                     [ { name = "id"
+                                      , description = Just "The id of the character."
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
                                     , { name = "name"
+                                      , description = Just "The name of the character."
                                       , typeRef = TypeReference (Scalar Scalar.String) Nullable
                                       , args = []
                                       }
                                     , { name = "friends"
+                                      , description = Just "The friends of the character, or an empty list if they have none."
                                       , typeRef = TypeReference (List (TypeReference (InterfaceRef "Character") Nullable)) Nullable
                                       , args = []
                                       }
                                     , { name = "appearsIn"
+                                      , description = Just "Which movies they appear in."
                                       , typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable
                                       , args = []
                                       }

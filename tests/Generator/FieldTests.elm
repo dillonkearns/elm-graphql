@@ -31,6 +31,7 @@ me =
         , test "simple object with no args" <|
             \() ->
                 { name = "droid"
+                , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
                 , args = []
                 }
@@ -43,6 +44,7 @@ droid object =
         , test "simple object with no args for object" <|
             \() ->
                 { name = "droid"
+                , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
                 , args = []
                 }
@@ -55,6 +57,7 @@ droid object =
         , test "list of objects with no args" <|
             \() ->
                 { name = "droid"
+                , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable)) Type.NonNullable
                 , args = []
                 }
@@ -67,6 +70,7 @@ droid object =
         , test "with required args" <|
             \() ->
                 { name = "human"
+                , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args = [ { name = "id", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
                 }
@@ -79,6 +83,7 @@ human requiredArgs object =
         , test "with optional args" <|
             \() ->
                 { name = "menuItems"
+                , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable)) Type.NonNullable
                 , args = [ { name = "contains", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable } ]
                 }
@@ -99,6 +104,7 @@ menuItems fillInOptionals object =
         , test "normalizes reserved names" <|
             \() ->
                 { name = "type"
+                , description = Nothing
                 , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                 , args = []
                 }
@@ -114,6 +120,7 @@ type_ =
 captainsField : Type.Field
 captainsField =
     { name = "captains"
+    , description = Nothing
     , typeRef =
         Type.TypeReference
             (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
@@ -125,6 +132,7 @@ captainsField =
 menuItemsField : Type.Field
 menuItemsField =
     { name = "menuItems"
+    , description = Nothing
     , typeRef =
         Type.TypeReference
             (Type.List
@@ -141,6 +149,7 @@ menuItemsField =
 menuItemField : Type.Field
 menuItemField =
     { name = "menuItem"
+    , description = Nothing
     , typeRef = Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable
     , args = []
     }
@@ -149,6 +158,7 @@ menuItemField =
 meField : Type.Field
 meField =
     { name = "me"
+    , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     , args = []
     }
