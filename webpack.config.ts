@@ -4,6 +4,9 @@ const path = require('path')
 module.exports = {
   entry: './src/graphqelm.ts',
   target: 'node',
+  node: {
+    __dirname: false
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
