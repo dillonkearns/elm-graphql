@@ -19,6 +19,7 @@ export const writeWithElmFormat = (path: string, value: string): void => {
   elmFormat.on('close', code => {
     if (code !== 0) {
       console.log(`elm-format process exited with code ${code}`)
+      process.exit(code)
     }
   })
 }

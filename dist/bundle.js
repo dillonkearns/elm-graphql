@@ -16322,6 +16322,7 @@ exports.writeWithElmFormat = function (path, value) {
     elmFormat.on('close', function (code) {
         if (code !== 0) {
             console.log("elm-format process exited with code " + code);
+            process.exit(code);
         }
     });
 };
