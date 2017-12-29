@@ -14,6 +14,11 @@ See end-to-end example code in the
 [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
 folder.
 
+## Contributors
+
+Thank you Mario Martinez ([martimatix](https://github.com/martimatix)) for
+all your feedback and for the elm-format PR!
+
 ## Roadmap
 
 The following are planned but not yet supported:
