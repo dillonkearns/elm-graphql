@@ -94,13 +94,13 @@ fieldArgsString { fieldArgs } =
 toFieldGenerator : List String -> SpecialObjectNames -> Type.Field -> FieldGenerator
 toFieldGenerator apiSubmodule specialObjectNames field =
     init apiSubmodule specialObjectNames field.name field.typeRef
-        |> addRequiredArgs field.args
+        |> addRequiredArgs apiSubmodule field.args
         |> addOptionalArgs apiSubmodule field.args
 
 
-addRequiredArgs : List Type.Arg -> FieldGenerator -> FieldGenerator
-addRequiredArgs args fieldGenerator =
-    case Graphqelm.Generator.RequiredArgs.generate args of
+addRequiredArgs : List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
+addRequiredArgs apiSubmodule args fieldGenerator =
+    case Graphqelm.Generator.RequiredArgs.generate apiSubmodule args of
         Just { annotation, list } ->
             { fieldGenerator | fieldArgs = [ list ] }
                 |> prependArg

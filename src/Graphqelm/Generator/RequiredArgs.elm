@@ -12,10 +12,10 @@ type alias Result =
     }
 
 
-generate : List Type.Arg -> Maybe Result
-generate args =
+generate : List String -> List Type.Arg -> Maybe Result
+generate apiSubmodule args =
     Maybe.map2 Result
-        (requiredArgsAnnotation args)
+        (requiredArgsAnnotation apiSubmodule args)
         (requiredArgsString args)
 
 
@@ -47,11 +47,11 @@ requiredArgString { name, typeRef } =
             Nothing
 
 
-requiredArgsAnnotation : List Type.Arg -> Maybe String
-requiredArgsAnnotation args =
+requiredArgsAnnotation : List String -> List Type.Arg -> Maybe String
+requiredArgsAnnotation apiSubmodule args =
     let
         stuff =
-            List.filterMap requiredArgAnnotation args
+            List.filterMap (requiredArgAnnotation apiSubmodule) args
     in
     if stuff == [] then
         Nothing
@@ -59,8 +59,8 @@ requiredArgsAnnotation args =
         Just ("{ " ++ (stuff |> String.join ", ") ++ " }")
 
 
-requiredArgAnnotation : Type.Arg -> Maybe String
-requiredArgAnnotation { name, typeRef } =
+requiredArgAnnotation : List String -> Type.Arg -> Maybe String
+requiredArgAnnotation apiSubmodule { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             let
@@ -70,7 +70,7 @@ requiredArgAnnotation { name, typeRef } =
             interpolate
                 "{0} : {1}"
                 [ fieldName
-                , Graphqelm.Generator.Decoder.generateType [] fieldName typeRef -- TODO apiSubmodule
+                , Graphqelm.Generator.Decoder.generateType apiSubmodule fieldName typeRef
                 ]
                 |> Just
 

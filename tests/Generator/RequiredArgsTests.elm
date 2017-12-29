@@ -13,7 +13,7 @@ all =
         [ test "no arguments" <|
             \() ->
                 []
-                    |> RequiredArgs.generate
+                    |> RequiredArgs.generate []
                     |> Expect.equal Nothing
         , test "all nullable arguments" <|
             \() ->
@@ -21,12 +21,12 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
-                    |> RequiredArgs.generate
+                    |> RequiredArgs.generate []
                     |> Expect.equal Nothing
         , test "single primitive" <|
             \() ->
                 [ idArg ]
-                    |> RequiredArgs.generate
+                    |> RequiredArgs.generate []
                     |> Expect.equal
                         (Just
                             { annotation = """{ id : String }"""
@@ -36,7 +36,7 @@ all =
         , test "composite" <|
             \() ->
                 [ numbersArg ]
-                    |> RequiredArgs.generate
+                    |> RequiredArgs.generate []
                     |> Expect.equal
                         (Just
                             { annotation = """{ numbers : (List Int) }"""
@@ -46,7 +46,7 @@ all =
         , test "multiple primitives" <|
             \() ->
                 [ idArg, nameArg ]
-                    |> RequiredArgs.generate
+                    |> RequiredArgs.generate []
                     |> Expect.equal
                         (Just
                             { annotation = "{ id : String, name : String }"
@@ -56,7 +56,7 @@ all =
         , test "normalizes arguments" <|
             \() ->
                 [ { name = "type", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
-                    |> RequiredArgs.generate
+                    |> RequiredArgs.generate []
                     |> Expect.equal
                         (Just
                             { annotation = "{ type_ : String }"
