@@ -18,6 +18,7 @@ all =
         , test "all nullable arguments" <|
             \() ->
                 [ { name = "id"
+                  , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
@@ -55,7 +56,11 @@ all =
                         )
         , test "normalizes arguments" <|
             \() ->
-                [ { name = "type", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
+                [ { name = "type"
+                  , description = Nothing
+                  , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                  }
+                ]
                     |> RequiredArgs.generate []
                     |> Expect.equal
                         (Just
@@ -69,6 +74,7 @@ all =
 nameArg : Type.Arg
 nameArg =
     { name = "name"
+    , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
 
@@ -76,6 +82,7 @@ nameArg =
 idArg : Type.Arg
 idArg =
     { name = "id"
+    , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
 
@@ -83,5 +90,6 @@ idArg =
 numbersArg : Type.Arg
 numbersArg =
     { name = "numbers"
+    , description = Nothing
     , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.Int) Type.NonNullable)) Type.NonNullable
     }

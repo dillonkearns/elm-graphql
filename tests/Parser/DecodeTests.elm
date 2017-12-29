@@ -297,7 +297,12 @@ all =
                                     [ { name = "menuItems"
                                       , description = Nothing
                                       , typeRef = TypeReference (List (TypeReference (ObjectRef "MenuItem") Nullable)) Nullable
-                                      , args = [ { name = "filterOptions", typeRef = TypeReference (InputObjectRef "FilterOptions") Nullable } ]
+                                      , args =
+                                            [ { name = "filterOptions"
+                                              , description = Nothing
+                                              , typeRef = TypeReference (InputObjectRef "FilterOptions") Nullable
+                                              }
+                                            ]
                                       }
                                     ]
                                 )

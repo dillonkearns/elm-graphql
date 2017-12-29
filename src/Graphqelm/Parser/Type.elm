@@ -56,7 +56,15 @@ parseField { name, ofType, args, description } =
     { name = name
     , description = description
     , typeRef = parseRef ofType
-    , args = List.map (\arg -> { name = arg.name, typeRef = parseRef arg.ofType }) args
+    , args =
+        List.map
+            (\arg ->
+                { name = arg.name
+                , description = arg.description
+                , typeRef = parseRef arg.ofType
+                }
+            )
+            args
     }
 
 
@@ -120,8 +128,9 @@ fieldDecoder =
 
 argDecoder : Decoder RawArg
 argDecoder =
-    Decode.map2 RawArg
+    Decode.map3 RawArg
         (Decode.field "name" Decode.string)
+        (Decode.field "description" (Decode.maybe Decode.string))
         (Decode.field "type" typeRefDecoder)
 
 
@@ -132,6 +141,7 @@ createRawTypeRef stringMaybe typeKind rawTypeRefMaybe =
 
 type alias Arg =
     { name : String
+    , description : Maybe String
     , typeRef : TypeReference
     }
 
@@ -300,4 +310,4 @@ type alias RawField =
 
 
 type alias RawArg =
-    { name : String, ofType : RawTypeRef }
+    { name : String, description : Maybe String, ofType : RawTypeRef }

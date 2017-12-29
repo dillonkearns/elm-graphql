@@ -18,6 +18,7 @@ all =
         , test "no optional args, only required" <|
             \() ->
                 [ { name = "id"
+                  , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
                 ]
@@ -26,6 +27,7 @@ all =
         , test "with an optional string arg" <|
             \() ->
                 [ { name = "contains"
+                  , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
@@ -46,9 +48,11 @@ all =
         , test "with multiple optional string args" <|
             \() ->
                 [ { name = "id"
+                  , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 , { name = "contains"
+                  , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
@@ -69,6 +73,7 @@ all =
         , test "with an optional int arg" <|
             \() ->
                 [ { name = "first"
+                  , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.Int) Type.Nullable
                   }
                 ]
@@ -89,6 +94,7 @@ all =
         , test "with an optional enum arg" <|
             \() ->
                 [ { name = "episode"
+                  , description = Nothing
                   , typeRef = Type.TypeReference (Type.EnumRef "Episode") Type.Nullable
                   }
                 ]

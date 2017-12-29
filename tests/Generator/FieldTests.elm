@@ -72,7 +72,12 @@ droid object =
                 { name = "human"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
-                , args = [ { name = "id", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable } ]
+                , args =
+                    [ { name = "id"
+                      , description = Nothing
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                      }
+                    ]
                 }
                     |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "RootQuery"
                     |> Expect.equal
@@ -85,7 +90,12 @@ human requiredArgs object =
                 { name = "menuItems"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable)) Type.NonNullable
-                , args = [ { name = "contains", typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable } ]
+                , args =
+                    [ { name = "contains"
+                      , description = Nothing
+                      , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
+                      }
+                    ]
                 }
                     |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "RootQuery"
                     |> Expect.equal
