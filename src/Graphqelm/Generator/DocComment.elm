@@ -1,16 +1,17 @@
 module Graphqelm.Generator.DocComment exposing (generate)
 
+import Graphqelm.Parser.Type as Type exposing (Field, ReferrableType, TypeReference)
 import Interpolate exposing (interpolate)
 
 
-generate : Maybe String -> String
-generate maybeDescription =
-    case maybeDescription of
-        Just description ->
+generate : Field -> String
+generate { description } =
+    case description of
+        Just actualDescription ->
             interpolate """{-| {0}
 -}
 """
-                [ description ]
+                [ actualDescription ]
 
         Nothing ->
             ""

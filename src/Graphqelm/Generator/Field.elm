@@ -33,20 +33,20 @@ type alias AnnotatedArg =
 generate : List String -> SpecialObjectNames -> String -> Type.Field -> String
 generate apiSubmodule specialObjectNames thisObjectName field =
     toFieldGenerator apiSubmodule specialObjectNames field
-        |> forObject_ apiSubmodule specialObjectNames thisObjectName field.description
+        |> forObject_ apiSubmodule specialObjectNames thisObjectName field
 
 
-forObject_ : List String -> SpecialObjectNames -> String -> Maybe String -> FieldGenerator -> String
-forObject_ apiSubmodule specialObjectNames thisObjectName description fieldGenerator =
+forObject_ : List String -> SpecialObjectNames -> String -> Type.Field -> FieldGenerator -> String
+forObject_ apiSubmodule specialObjectNames thisObjectName field fieldGenerator =
     let
         thisObjectString =
             Imports.object apiSubmodule specialObjectNames thisObjectName |> String.join "."
     in
-    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectString ]) description fieldGenerator
+    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectString ]) field fieldGenerator
 
 
-fieldGeneratorToString : String -> Maybe String -> FieldGenerator -> String
-fieldGeneratorToString returnAnnotation description fieldGenerator =
+fieldGeneratorToString : String -> Type.Field -> FieldGenerator -> String
+fieldGeneratorToString returnAnnotation field fieldGenerator =
     let
         something =
             ((fieldGenerator.annotatedArgs |> List.map .annotation)
@@ -68,7 +68,7 @@ fieldGeneratorToString returnAnnotation description fieldGenerator =
         , Normalize.fieldName fieldGenerator.fieldName
         , Let.generate fieldGenerator.letBindings
         , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
-        , DocComment.generate description
+        , DocComment.generate field
         ]
 
 
