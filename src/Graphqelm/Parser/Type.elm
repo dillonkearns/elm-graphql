@@ -222,10 +222,10 @@ parseRef (RawTypeRef rawTypeRef) =
                                 NonNullable
 
                         ( TypeKind.Object, objectName ) ->
-                            TypeReference (objectName |> expectString |> ObjectRef) Nullable
+                            TypeReference (objectName |> expectString |> ObjectRef) NonNullable
 
                         ( TypeKind.Interface, interfaceName ) ->
-                            TypeReference (interfaceName |> expectString |> InterfaceRef) Nullable
+                            TypeReference (interfaceName |> expectString |> InterfaceRef) NonNullable
 
                         ( TypeKind.List, _ ) ->
                             case actualOfType.ofType of

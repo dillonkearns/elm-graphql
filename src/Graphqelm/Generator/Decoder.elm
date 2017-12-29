@@ -7,7 +7,7 @@ import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 generateDecoder : List String -> TypeReference -> List String
 generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
-    case referrableType of
+    (case referrableType of
         Type.Scalar scalar ->
             case scalar of
                 Scalar.String ->
@@ -40,27 +40,44 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
 
         Type.InputObjectRef _ ->
             Debug.crash "Input objects are only for input not responses, shouldn't need decoder."
+    )
+        ++ (case isNullable of
+                Type.Nullable ->
+                    [ "Decode.maybe" ]
+
+                Type.NonNullable ->
+                    []
+           )
 
 
 generateEncoder : TypeReference -> String
 generateEncoder (Type.TypeReference referrableType isNullable) =
+    let
+        isNullableString =
+            case isNullable of
+                Type.Nullable ->
+                    " |> Encode.maybe"
+
+                Type.NonNullable ->
+                    ""
+    in
     case referrableType of
         Type.Scalar scalar ->
             case scalar of
                 Scalar.String ->
-                    "Encode.string"
+                    "Encode.string" ++ isNullableString
 
                 Scalar.Boolean ->
-                    "Encode.bool"
+                    "Encode.bool" ++ isNullableString
 
                 Scalar.Int ->
-                    "Encode.int"
+                    "Encode.int" ++ isNullableString
 
                 Scalar.Float ->
-                    "Encode.float"
+                    "Encode.float" ++ isNullableString
 
         Type.List typeRef ->
-            generateEncoder typeRef ++ " |> Encode.list"
+            generateEncoder typeRef ++ isNullableString ++ " |> Encode.list"
 
         Type.ObjectRef objectName ->
             Debug.crash "I don't expect to see object references as argument types."
@@ -69,15 +86,15 @@ generateEncoder (Type.TypeReference referrableType isNullable) =
             Debug.crash "I don't expect to see object references as argument types."
 
         Type.EnumRef enumName ->
-            "(Encode.enum toString)"
+            "(Encode.enum toString)" ++ isNullableString
 
         Type.InputObjectRef inputObjectName ->
-            "identity"
+            "identity" ++ isNullableString
 
 
 generateType : List String -> String -> TypeReference -> String
 generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullable) =
-    case referrableType of
+    (case referrableType of
         Type.Scalar scalar ->
             case scalar of
                 Scalar.String ->
@@ -108,3 +125,12 @@ generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullabl
 
         Type.InputObjectRef _ ->
             "Value"
+    )
+        |> (\typeString ->
+                case isNullable of
+                    Type.Nullable ->
+                        "(Maybe " ++ typeString ++ ")"
+
+                    Type.NonNullable ->
+                        typeString
+           )

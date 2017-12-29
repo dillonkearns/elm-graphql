@@ -4,7 +4,7 @@ import Expect
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (..)
 import Json.Decode as Decode exposing (Decoder)
-import Test exposing (Test, describe, test)
+import Test exposing (Test, describe, only, test)
 
 
 all : Test
@@ -142,6 +142,48 @@ all =
                                 )
                             )
                         )
+        , test "decodes non-nullable object" <|
+            \() ->
+                """
+
+                              {
+                "possibleTypes": null,
+                "name": "MenuItem",
+                "kind": "OBJECT",
+                "interfaces": [],
+                "inputFields": null,
+                "fields": [
+                {
+                              "name": "stargazers",
+                              "description": "A list of users who have starred this starrable.",
+                              "args": [],
+                              "type": {
+                                "kind": "NON_NULL",
+                                "name": null,
+                                "ofType": {
+                                  "kind": "OBJECT",
+                                  "name": "StargazerConnection",
+                                  "ofType": null
+                                }
+                              },
+                              "isDeprecated": false,
+                              "deprecationReason": null
+                            }
+                            ]}
+                                        """
+                    |> Decode.decodeString Type.decoder
+                    |> Expect.equal
+                        (Ok
+                            (TypeDefinition "MenuItem"
+                                (ObjectType
+                                    [ { name = "stargazers"
+                                      , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
+                                      , args = []
+                                      }
+                                    ]
+                                )
+                            )
+                        )
         , test "field with interface ref" <|
             \() ->
                 """
@@ -187,7 +229,7 @@ all =
                                     [ { name = "friends"
                                       , typeRef =
                                             TypeReference
-                                                (List (TypeReference (InterfaceRef "Character") Nullable))
+                                                (List (TypeReference (InterfaceRef "Character") NonNullable))
                                                 NonNullable
                                       , args = []
                                       }
