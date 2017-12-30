@@ -30,30 +30,25 @@ type alias WithName =
     }
 
 
-withName : ( String, Maybe String ) -> WithName
-withName ( a, b ) =
-    WithName a b
-
-
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.human { id = "1004" } human)
         |> with (Query.human { id = "1001" } human)
         -- |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
-        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) withName withName humanWithName droidWithName)
+        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) humanWithName droidWithName)
 
 
-humanWithName : SelectionSet ( String, Maybe String ) Swapi.Object.Human
+humanWithName : SelectionSet WithName Swapi.Object.Human
 humanWithName =
-    Human.selection (,)
+    Human.selection WithName
         |> with Human.name
         |> with Human.homePlanet
 
 
-droidWithName : SelectionSet ( String, Maybe String ) Swapi.Object.Droid
+droidWithName : SelectionSet WithName Swapi.Object.Droid
 droidWithName =
-    Droid.selection (,)
+    Droid.selection WithName
         |> with Droid.name
         |> with Droid.primaryFunction
 

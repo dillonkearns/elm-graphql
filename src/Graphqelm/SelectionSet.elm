@@ -15,12 +15,10 @@ import List.Extra
 {-| TODO
 -}
 combine :
-    ( String, SelectionSet a typeLockA )
-    -> ( String, SelectionSet b typeLockB )
-    -> (a -> union)
-    -> (b -> union)
+    ( String, SelectionSet union typeLockA )
+    -> ( String, SelectionSet union typeLockB )
     -> PolymorphicSelectionSet union typelock
-combine ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) ( fragmentOnTypeB, SelectionSet fieldsB decoderB ) toA toB =
+combine ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) ( fragmentOnTypeB, SelectionSet fieldsB decoderB ) =
     PolymorphicSelectionSet
         [ { fragmentOnType = fragmentOnTypeA, selection = fieldsA }
         , { fragmentOnType = fragmentOnTypeB, selection = fieldsB }
@@ -29,9 +27,9 @@ combine ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) ( fragmentOnTypeB, Se
             |> Decode.andThen
                 (\typename ->
                     if typename == fragmentOnTypeA then
-                        decoderA |> Decode.map toA
+                        decoderA
                     else
-                        decoderB |> Decode.map toB
+                        decoderB
                 )
         )
 

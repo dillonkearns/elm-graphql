@@ -34,12 +34,10 @@ droid requiredArgs object =
 -}
 hero :
     ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode })
-    -> (human -> union)
-    -> (droid -> union)
-    -> SelectionSet human Swapi.Object.Human
-    -> SelectionSet droid Swapi.Object.Droid
+    -> SelectionSet union Swapi.Object.Human
+    -> SelectionSet union Swapi.Object.Droid
     -> FieldDecoder union RootQuery
-hero fillInOptionals toHuman toDroid humanSelectionSet droidSelectionSet =
+hero fillInOptionals humanSelectionSet droidSelectionSet =
     let
         filledInOptionals =
             fillInOptionals { episode = Absent }
@@ -50,7 +48,7 @@ hero fillInOptionals toHuman toDroid humanSelectionSet droidSelectionSet =
     in
     Object.polymorphicSelectionDecoder "hero"
         optionalArgs
-        (Graphqelm.SelectionSet.combine ( "Human", humanSelectionSet ) ( "Droid", droidSelectionSet ) toHuman toDroid)
+        (Graphqelm.SelectionSet.combine ( "Human", humanSelectionSet ) ( "Droid", droidSelectionSet ))
         identity
 
 
