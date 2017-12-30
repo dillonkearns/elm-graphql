@@ -44,6 +44,7 @@ serialize alias indentationLevel field =
                 Composite fieldName args children ->
                     if children == [] then
                         ""
+                        -- TODO don't include prefix when empty
                     else
                         (fieldName
                             ++ Argument.serialize args
