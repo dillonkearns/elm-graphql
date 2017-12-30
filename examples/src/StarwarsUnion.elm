@@ -35,7 +35,7 @@ query =
         |> with (Query.human { id = "1004" } human)
         |> with (Query.human { id = "1001" } human)
         -- |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
-        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) humanWithName (SelectionSet.empty Ignored))
+        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) humanWithName (SelectionSet.ignore Ignored))
 
 
 humanWithName : SelectionSet HumanOrDroid Swapi.Object.Human
