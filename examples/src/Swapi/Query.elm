@@ -48,7 +48,7 @@ hero fillInOptionals humanSelectionSet droidSelectionSet =
     in
     Object.polymorphicSelectionDecoder "hero"
         optionalArgs
-        (Graphqelm.SelectionSet.combine ( "Human", humanSelectionSet ) ( "Droid", droidSelectionSet ))
+        (Graphqelm.SelectionSet.singleton ( "Human", humanSelectionSet ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelectionSet ))
         identity
 
 

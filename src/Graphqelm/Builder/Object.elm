@@ -35,7 +35,7 @@ selectionFieldDecoder fieldName args (SelectionSet fields decoder) decoderTransf
 polymorphicSelectionDecoder :
     String
     -> List Argument
-    -> PolymorphicSelectionSet a objectTypeLock
+    -> PolymorphicSelectionSet a
     -> (Decoder a -> Decoder b)
     -> FieldDecoder b lockedTo
 polymorphicSelectionDecoder fieldName args (PolymorphicSelectionSet fragments decoder) decoderTransform =
