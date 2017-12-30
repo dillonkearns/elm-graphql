@@ -5,7 +5,7 @@ import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
-import Graphqelm.SelectionSet exposing (SelectionSet, with)
+import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -24,15 +24,9 @@ type alias Response =
     }
 
 
-type alias WithName =
-    { name : String
-    , thing : Maybe String
-    }
-
-
 type HumanOrDroid
     = HumanType String (Maybe String)
-    | DroidType String
+    | Ignored
 
 
 query : SelectionSet Response RootQuery
@@ -41,7 +35,7 @@ query =
         |> with (Query.human { id = "1004" } human)
         |> with (Query.human { id = "1001" } human)
         -- |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
-        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) humanWithName droidWithName)
+        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) humanWithName (SelectionSet.empty Ignored))
 
 
 humanWithName : SelectionSet HumanOrDroid Swapi.Object.Human
@@ -49,12 +43,6 @@ humanWithName =
     Human.selection HumanType
         |> with Human.name
         |> with Human.homePlanet
-
-
-droidWithName : SelectionSet HumanOrDroid Swapi.Object.Droid
-droidWithName =
-    Droid.selection DroidType
-        |> with Droid.name
 
 
 

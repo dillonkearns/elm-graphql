@@ -1,9 +1,9 @@
-module Graphqelm.SelectionSet exposing (PolymorphicSelectionSet(PolymorphicSelectionSet), SelectionSet(SelectionSet), add, combine, singleton, with)
+module Graphqelm.SelectionSet exposing (PolymorphicSelectionSet(PolymorphicSelectionSet), SelectionSet(SelectionSet), add, combine, empty, singleton, with)
 
 {-| The auto-generated code from the `graphqelm` CLI will provide `selection`
 functions for Objects in your GraphQL schema. These functions take a `Graphqelm.SelectionSet`
 which describes which fields to retrieve on that SelectionSet.
-@docs SelectionSet, with, combine, PolymorphicSelectionSet, singleton, add
+@docs SelectionSet, with, combine, PolymorphicSelectionSet, singleton, add, empty
 -}
 
 import Graphqelm.Field as Field exposing (Field)
@@ -79,6 +79,13 @@ singleton ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) =
 -}
 type SelectionSet decodesTo typeLock
     = SelectionSet (List Field) (Decoder decodesTo)
+
+
+{-| A SelectionSet that has no fields and always decodes to the hardcoded value provided.
+-}
+empty : value -> SelectionSet value typeLock
+empty value =
+    SelectionSet [] (Decode.succeed value)
 
 
 {-| PolymorphicSelectionSet type

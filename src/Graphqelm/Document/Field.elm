@@ -42,14 +42,17 @@ serialize alias indentationLevel field =
         ++ prefix
         ++ (case field of
                 Composite fieldName args children ->
-                    (fieldName
-                        ++ Argument.serialize args
-                        ++ " {\n"
-                        ++ serializeChildren indentationLevel children
-                    )
-                        ++ "\n"
-                        ++ Indent.generate indentationLevel
-                        ++ "}"
+                    if children == [] then
+                        ""
+                    else
+                        (fieldName
+                            ++ Argument.serialize args
+                            ++ " {\n"
+                            ++ serializeChildren indentationLevel children
+                        )
+                            ++ "\n"
+                            ++ Indent.generate indentationLevel
+                            ++ "}"
 
                 Leaf fieldName args ->
                     fieldName
