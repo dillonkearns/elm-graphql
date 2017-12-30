@@ -2,7 +2,6 @@ module Main exposing (main)
 
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
-import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
@@ -18,84 +17,26 @@ import Swapi.Query as Query
 
 
 type alias Response =
-    { tarkin : Maybe Human
-    , vader : Maybe Human
-    , hero : HumanOrDroid
+    { hero : HumanOrDroid
     }
 
 
 type HumanOrDroid
-    = HumanType String (Maybe String)
+    = Human String (Maybe String)
     | Ignored
 
 
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.human { id = "1004" } human)
-        |> with (Query.human { id = "1001" } human)
-        -- |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
         |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) humanWithName (SelectionSet.ignore Ignored))
 
 
 humanWithName : SelectionSet HumanOrDroid Swapi.Object.Human
 humanWithName =
-    Human.selection HumanType
-        |> with Human.name
-        |> with Human.homePlanet
-
-
-
--- |> with Droid.primaryFunction
-
-
-type alias Hero =
-    { name : String
-    , id : String
-    , friends : List String
-    , appearsIn : List Episode
-    }
-
-
-hero : SelectionSet Hero Swapi.Object.Character
-hero =
-    Character.selection Hero
-        |> with Character.name
-        |> with Character.id
-        |> with (Character.friends heroWithName)
-        |> with Character.appearsIn
-
-
-heroWithName : SelectionSet String Swapi.Object.Character
-heroWithName =
-    Character.selection identity
-        |> with Character.name
-
-
-type alias Human =
-    { name : String
-    , yearsActive : List Int
-    }
-
-
-human : SelectionSet Human Swapi.Object.Human
-human =
     Human.selection Human
         |> with Human.name
-        |> with (Human.appearsIn |> FieldDecoder.map (List.map episodeYear))
-
-
-episodeYear : Episode -> Int
-episodeYear episode =
-    case episode of
-        Episode.NEWHOPE ->
-            1977
-
-        Episode.EMPIRE ->
-            1980
-
-        Episode.JEDI ->
-            1983
+        |> with Human.homePlanet
 
 
 makeRequest : Cmd Msg
