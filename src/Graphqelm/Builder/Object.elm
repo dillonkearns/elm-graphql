@@ -1,13 +1,13 @@
-module Graphqelm.Builder.Object exposing (fieldDecoder, object, selectionFieldDecoder)
+module Graphqelm.Builder.Object exposing (fieldDecoder, object, polymorphicSelectionDecoder, selectionFieldDecoder)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs fieldDecoder, object, selectionFieldDecoder
+@docs fieldDecoder, object, selectionFieldDecoder, polymorphicSelectionDecoder
 -}
 
 import Graphqelm.Builder.Argument exposing (Argument)
 import Graphqelm.Field exposing (Field)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecoder))
-import Graphqelm.SelectionSet exposing (SelectionSet(..))
+import Graphqelm.SelectionSet exposing (PolymorphicSelectionSet(PolymorphicSelectionSet), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -28,6 +28,27 @@ selectionFieldDecoder :
     -> FieldDecoder b lockedTo
 selectionFieldDecoder fieldName args (SelectionSet fields decoder) decoderTransform =
     FieldDecoder (composite fieldName args fields) (decoderTransform decoder)
+
+
+{-| Refer to a polymorphic object in auto-generated code.
+-}
+polymorphicSelectionDecoder :
+    String
+    -> List Argument
+    -> PolymorphicSelectionSet a objectTypeLock
+    -> (Decoder a -> Decoder b)
+    -> FieldDecoder b lockedTo
+polymorphicSelectionDecoder fieldName args (PolymorphicSelectionSet fragments decoder) decoderTransform =
+    let
+        fields =
+            List.map (\{ fragmentOnType, selection } -> composite ("...on " ++ fragmentOnType) [] selection) fragments
+    in
+    FieldDecoder (composite fieldName args (typename :: fields)) (decoderTransform decoder)
+
+
+typename : Field
+typename =
+    leaf "__typename" []
 
 
 composite : String -> List Argument -> List Field -> Field

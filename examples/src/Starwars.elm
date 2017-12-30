@@ -12,6 +12,7 @@ import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Object
 import Swapi.Object.Character as Character
+import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
 
@@ -19,8 +20,19 @@ import Swapi.Query as Query
 type alias Response =
     { tarkin : Maybe Human
     , vader : Maybe Human
-    , hero : Maybe Hero
+    , hero : WithName
     }
+
+
+type alias WithName =
+    { name : String
+    , thing : Maybe String
+    }
+
+
+withName : ( String, Maybe String ) -> WithName
+withName ( a, b ) =
+    WithName a b
 
 
 query : SelectionSet Response RootQuery
@@ -28,7 +40,22 @@ query =
     Query.selection Response
         |> with (Query.human { id = "1004" } human)
         |> with (Query.human { id = "1001" } human)
-        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
+        -- |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
+        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) withName withName humanWithName droidWithName)
+
+
+humanWithName : SelectionSet ( String, Maybe String ) Swapi.Object.Human
+humanWithName =
+    Human.selection (,)
+        |> with Human.name
+        |> with Human.homePlanet
+
+
+droidWithName : SelectionSet ( String, Maybe String ) Swapi.Object.Droid
+droidWithName =
+    Droid.selection (,)
+        |> with Droid.name
+        |> with Droid.primaryFunction
 
 
 type alias Hero =
