@@ -32,7 +32,7 @@ me =
             \() ->
                 { name = "droid"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
+                , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
                 }
                     |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "RootQuery"
@@ -45,7 +45,7 @@ droid object =
             \() ->
                 { name = "droid"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
+                , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
                 }
                     |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "Foo"
@@ -58,7 +58,7 @@ droid object =
             \() ->
                 { name = "droid"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable)) Type.NonNullable
+                , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable)) Type.NonNullable
                 , args = []
                 }
                     |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "Foo"
@@ -71,7 +71,7 @@ droid object =
             \() ->
                 { name = "human"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
+                , typeRef = Type.TypeReference (Type.ObjectRef "Human") Type.NonNullable
                 , args =
                     [ { name = "id"
                       , description = Nothing
