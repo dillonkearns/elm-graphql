@@ -4,7 +4,7 @@ import Expect
 import Graphqelm
 import Graphqelm.Document
 import Graphqelm.Field exposing (Field(Composite, Leaf))
-import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
+import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(SelectionSet))
 import Json.Decode as Decode
 import Test exposing (Test, describe, test)
 
@@ -57,6 +57,20 @@ all =
   topLevel {
     viewer
     viewer2: viewer
+  }
+}"""
+        , test "ignored fields are omitted" <|
+            \() ->
+                document
+                    [ Composite "topLevel"
+                        []
+                        [ Composite "...on Droid" [] []
+                        ]
+                    ]
+                    |> Graphqelm.Document.serializeQuery
+                    |> Expect.equal """query {
+  topLevel {
+
   }
 }"""
         ]
