@@ -6,13 +6,19 @@ import * as minimist from 'minimist'
 import * as request from 'request'
 import { writeFile } from './formatted-write'
 import { introspectionQuery } from './introspection-query'
+const version = require('../package.json').version
 
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
   graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
+  graphqelm --version # print the current graphqelm version
   graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`
 
 const args = minimist(process.argv.slice(2))
+if (args.version) {
+  console.log(version)
+  process.exit(0)
+}
 const baseModuleArg: undefined | string = args.base
 const headerArg: undefined | string | [string] = args.header
 const addHeader = (object: any, header: string) => {

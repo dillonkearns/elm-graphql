@@ -1600,8 +1600,13 @@ var graphql_request_1 = __webpack_require__(55);
 var minimist = __webpack_require__(86);
 var formatted_write_1 = __webpack_require__(87);
 var introspection_query_1 = __webpack_require__(89);
-var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
+var version = __webpack_require__(90).version;
+var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm --version # print the current graphqelm version\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 var args = minimist(process.argv.slice(2));
+if (args.version) {
+    console.log(version);
+    process.exit(0);
+}
 var baseModuleArg = args.base;
 var headerArg = args.header;
 var addHeader = function (object, header) {
@@ -16463,6 +16468,12 @@ module.exports = require("child_process");
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.introspectionQuery = "{\n    __schema {\n      queryType {\n        name\n      }\n      mutationType {\n        name\n      }\n      types {\n        ...FullType\n      }\n    }\n  }\n\n  fragment FullType on __Type {\n    kind\n    name\n    description\n    fields(includeDeprecated: true) {\n      name\n      description\n      args {\n        ...InputValue\n      }\n      type {\n        ...TypeRef\n      }\n      isDeprecated\n      deprecationReason\n    }\n    inputFields {\n      ...InputValue\n    }\n    interfaces {\n      ...TypeRef\n    }\n    enumValues(includeDeprecated: true) {\n      name\n      description\n      isDeprecated\n      deprecationReason\n    }\n    possibleTypes {\n      ...TypeRef\n    }\n  }\n\n  fragment InputValue on __InputValue {\n    name\n    description\n    type { ...TypeRef }\n    defaultValue\n  }\n\n  fragment TypeRef on __Type {\n    kind\n    name\n    ofType {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }";
 
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports) {
+
+module.exports = {"name":"graphqelm","version":"0.0.8","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","test":"elm-test","gen:starwars":"npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd -","gen:github":"npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -","approve":"npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0","elm-format":"^0.7.0-exp"},"bin":{"graphqelm":"bin/graphqelm"}}
 
 /***/ })
 /******/ ]);
