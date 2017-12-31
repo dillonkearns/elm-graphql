@@ -1,8 +1,20 @@
 import { spawn } from 'child_process'
+import * as fs from 'fs-extra'
 
-const elmFormatPath = `${__dirname}/../node_modules/.bin/elm-format`
+const globalInstallPath = `${__dirname}/../node_modules/.bin/elm-format`
+const localInstallPath = `${__dirname}/../../.bin/elm-format`
 
-export const writeWithElmFormat = (path: string, value: string): void => {
+export const writeFile = (path: string, value: string): void => {
+  const elmFormatPath = findElmFormatPath()
+
+  if (elmFormatPath) {
+    writeWithElmFormat(path, value, elmFormatPath)
+  } else {
+    writeWithoutFormatting(path, value)
+  }
+}
+
+const writeWithElmFormat = (path: string, value: string, elmFormatPath: string): void => {
   const elmFormat = spawn(elmFormatPath, ['--stdin', '--output', path])
 
   elmFormat.stdin.write(value)
@@ -22,4 +34,18 @@ export const writeWithElmFormat = (path: string, value: string): void => {
       process.exit(code)
     }
   })
+}
+
+const writeWithoutFormatting = (path: string, value: string) => {
+  fs.writeFileSync(path, value)
+}
+
+const findElmFormatPath = (): string | null => {
+  if (fs.existsSync(globalInstallPath)) {
+    return globalInstallPath
+  } else if (fs.existsSync(localInstallPath)) {
+    return localInstallPath
+  } else {
+    return null
+  }
 }
