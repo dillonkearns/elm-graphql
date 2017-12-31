@@ -16,7 +16,7 @@ import Swapi.Query as Query
 
 
 type alias Response =
-    { hero : ( String, HumanOrDroid )
+    { hero : ( Character, HumanOrDroid )
     }
 
 
@@ -25,16 +25,23 @@ type HumanOrDroid
     | Ignored
 
 
+type alias Character =
+    { name : String
+    , id : String
+    }
+
+
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) characterWithName human (SelectionSet.ignore Ignored))
 
 
-characterWithName : SelectionSet String Swapi.Object.Character
+characterWithName : SelectionSet Character Swapi.Object.Character
 characterWithName =
-    Character.selection identity
+    Character.selection Character
         |> with Character.name
+        |> with Character.id
 
 
 human : SelectionSet HumanOrDroid Swapi.Object.Human
