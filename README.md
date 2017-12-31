@@ -12,9 +12,42 @@ See an [example in action on Ellie](https://rebrand.ly/graphqelm).
 
 **Warning** This project is currently in alpha and may see rapid change.
 
-See end-to-end example code in the
+See more end-to-end example code in the
 [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
 folder.
+
+## Usage
+
+`graphqelm` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `graphqelm`.
+
+1. Add [the `Graphqelm` elm package](package.elm-lang.org/packages/dillonkearns/graphqelm/latest)
+   as a dependency in your `elm-package.json`.
+   ```shell
+   elm package install dillonkearns/graphqelm
+   ```
+2. Install the `graphqelm` command line tool through npm. This is what you will use to generate Elm code for your API.
+   It is recommended that you save the `graphqelm` command line tool as a dev
+   dependency so that everyone on your project is using the same version.
+
+   ```shell
+   npm install --save-dev graphqelm
+   # you can now run it locally with the ./node_modules/.bin/graphqelm binary,
+   # or by calling it through an npm script as in this projects package.json
+   ```
+
+3. Run the `graphqelm` command line tool installed above to generate your code. If you used the `--save-dev` method above, you can simply create a script in your package.json like the following:
+
+   ```json
+   {
+     "name": "star-wars-graphqelm-project",
+     "version": "1.0.0",
+     "scripts": {
+       "api": "graphqelm https://graphqelm.herokuapp.com/api --base StarWars"
+     },
+     ...
+   ```
+
+4. With the above in your `package.json`, running `npm run api` will generate Graphqelm code for you to call in `./src/StarWars/`. You can now use the generated code as in this [Ellie example](https://rebrand.ly/graphqelm) or in the [`examples`](https://github.com/dillonkearns/graphqelm/tree/master/examples) folder.
 
 ## Contributors
 
@@ -34,17 +67,6 @@ The following are planned but not yet supported:
 
 See [the full roadmap on Trello](https://trello.com/b/BCIWtZeL/graphqelm).
 
-## Usage
-
-Install the command-line tool. It is recommended that you save this as a dev
-dependency so that everyone on your project is using the same version.
-
-```shell
-npm install --save-dev graphqelm
-# you can now run it locally with the ./node_modules/.bin/graphqelm binary,
-# or by calling it through an npm script as in this projects package.json
 ```
 
-When you call the `graphqelm` binary, you just pass in your GraphQL endpoint and
-it will introspect the schema and generate Elm code so you can create queries in
-elm without writing any decoders yourself.
+```
