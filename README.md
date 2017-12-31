@@ -21,6 +21,9 @@ folder.
 Thank you Mario Martinez ([martimatix](https://github.com/martimatix)) for
 all your feedback and for the elm-format PR!
 
+Thank you Mike Stock ([mikeastock](https://github.com/mikeastock/)) for
+setting up Travis CI!
+
 ## Roadmap
 
 The following are planned but not yet supported:
