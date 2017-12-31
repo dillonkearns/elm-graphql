@@ -38,7 +38,7 @@ hero :
     -> SelectionSet union Swapi.Object.Human
     -> SelectionSet union Swapi.Object.Droid
     -> FieldDecoder ( base, union ) RootQuery
-hero fillInOptionals characterSelectionSet humanSelectionSet droidSelectionSet =
+hero fillInOptionals characterSelection humanSelection droidSelection =
     let
         filledInOptionals =
             fillInOptionals { episode = Absent }
@@ -49,9 +49,9 @@ hero fillInOptionals characterSelectionSet humanSelectionSet droidSelectionSet =
     in
     Object.polymorphicSelectionDecoder "hero"
         optionalArgs
-        (Graphqelm.SelectionSet.singleton ( "Human", humanSelectionSet )
-            |> Graphqelm.SelectionSet.add ( "Droid", droidSelectionSet )
-            |> Graphqelm.SelectionSet.withBase characterSelectionSet
+        (Graphqelm.SelectionSet.singleton ( "Human", humanSelection )
+            |> Graphqelm.SelectionSet.add ( "Droid", droidSelection )
+            |> Graphqelm.SelectionSet.withBase characterSelection
         )
         identity
 
