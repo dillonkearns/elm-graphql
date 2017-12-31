@@ -38,12 +38,12 @@ polymorphicSelectionDecoder :
     -> PolymorphicSelectionSet a
     -> (Decoder a -> Decoder b)
     -> FieldDecoder b lockedTo
-polymorphicSelectionDecoder fieldName args (PolymorphicSelectionSet fragments decoder) decoderTransform =
+polymorphicSelectionDecoder fieldName args (PolymorphicSelectionSet base fragments decoder) decoderTransform =
     let
         fields =
             List.map (\{ fragmentOnType, selection } -> composite ("...on " ++ fragmentOnType) [] selection) fragments
     in
-    FieldDecoder (composite fieldName args (typename :: fields)) (decoderTransform decoder)
+    FieldDecoder (composite fieldName args ((typename :: fields) ++ base.baseFields)) (decoderTransform decoder)
 
 
 typename : Field

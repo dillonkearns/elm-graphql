@@ -1,9 +1,9 @@
-module Graphqelm.SelectionSet exposing (PolymorphicSelectionSet(PolymorphicSelectionSet), SelectionSet(SelectionSet), add, combine, ignore, singleton, with)
+module Graphqelm.SelectionSet exposing (PolymorphicSelectionSet(PolymorphicSelectionSet), SelectionSet(SelectionSet), add, ignore, singleton, with, withBase)
 
 {-| The auto-generated code from the `graphqelm` CLI will provide `selection`
 functions for Objects in your GraphQL schema. These functions take a `Graphqelm.SelectionSet`
 which describes which fields to retrieve on that SelectionSet.
-@docs SelectionSet, with, combine, PolymorphicSelectionSet, singleton, add, ignore
+@docs SelectionSet, with, PolymorphicSelectionSet, singleton, add, ignore, withBase
 -}
 
 import Graphqelm.Field as Field exposing (Field)
@@ -14,34 +14,13 @@ import List.Extra
 
 {-| TODO
 -}
-combine :
-    ( String, SelectionSet union typeLock )
-    -> ( String, SelectionSet union typeLockB )
-    -> PolymorphicSelectionSet union
-combine ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) ( fragmentOnTypeB, SelectionSet fieldsB decoderB ) =
-    PolymorphicSelectionSet
-        [ { fragmentOnType = fragmentOnTypeA, selection = fieldsA }
-        , { fragmentOnType = fragmentOnTypeB, selection = fieldsB }
-        ]
-        (Decode.field "__typename" Decode.string
-            |> Decode.andThen
-                (\typename ->
-                    if typename == fragmentOnTypeA then
-                        decoderA
-                    else
-                        decoderB
-                )
-        )
-
-
-{-| TODO
--}
 add :
     ( String, SelectionSet union typeLockA )
     -> PolymorphicSelectionSet union
     -> PolymorphicSelectionSet union
-add ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) (PolymorphicSelectionSet list decoder) =
+add ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) (PolymorphicSelectionSet base list decoder) =
     PolymorphicSelectionSet
+        base
         ({ fragmentOnType = fragmentOnTypeA, selection = fieldsA }
             :: list
         )
@@ -58,11 +37,25 @@ add ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) (PolymorphicSelectionSet 
 
 {-| TODO
 -}
+withBase :
+    SelectionSet base typeLockA
+    -> PolymorphicSelectionSet union
+    -> PolymorphicSelectionSet ( base, union )
+withBase (SelectionSet fieldsBase decoderBase) (PolymorphicSelectionSet base list decoder) =
+    PolymorphicSelectionSet
+        { baseFields = fieldsBase }
+        list
+        (Decode.map2 (,) decoderBase decoder)
+
+
+{-| TODO
+-}
 singleton :
     ( String, SelectionSet union typeLockA )
     -> PolymorphicSelectionSet union
 singleton ( fragmentOnTypeA, SelectionSet fieldsA decoderA ) =
     PolymorphicSelectionSet
+        { baseFields = [] }
         [ { fragmentOnType = fragmentOnTypeA, selection = fieldsA } ]
         (Decode.field "__typename" Decode.string
             |> Decode.andThen
@@ -91,7 +84,7 @@ ignore value =
 {-| PolymorphicSelectionSet type
 -}
 type PolymorphicSelectionSet decodesTo
-    = PolymorphicSelectionSet (List { fragmentOnType : String, selection : List Field }) (Decoder decodesTo)
+    = PolymorphicSelectionSet { baseFields : List Field } (List { fragmentOnType : String, selection : List Field }) (Decoder decodesTo)
 
 
 {-| Used to pick out fields on an object.

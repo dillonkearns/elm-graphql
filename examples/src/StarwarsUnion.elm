@@ -11,13 +11,12 @@ import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Object
 import Swapi.Object.Character as Character
-import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
 
 
 type alias Response =
-    { hero : HumanOrDroid
+    { hero : ( String, HumanOrDroid )
     }
 
 
@@ -29,13 +28,19 @@ type HumanOrDroid
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) humanWithName (SelectionSet.ignore Ignored))
+        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) characterWithName human (SelectionSet.ignore Ignored))
 
 
-humanWithName : SelectionSet HumanOrDroid Swapi.Object.Human
-humanWithName =
+characterWithName : SelectionSet String Swapi.Object.Character
+characterWithName =
+    Character.selection identity
+        |> with Character.name
+
+
+human : SelectionSet HumanOrDroid Swapi.Object.Human
+human =
     Human.selection Human
-        |> with Human.name
+        |> with Human.id
         |> with Human.homePlanet
 
 
