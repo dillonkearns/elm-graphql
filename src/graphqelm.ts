@@ -4,7 +4,7 @@ import { GraphQLClient } from 'graphql-request'
 import * as http from 'http'
 import * as minimist from 'minimist'
 import * as request from 'request'
-import { writeWithElmFormat } from './formatted-write'
+import { writeFile } from './formatted-write'
 import { introspectionQuery } from './introspection-query'
 
 const usage = `Usage:
@@ -45,7 +45,7 @@ const onDataAvailable = (data: {}) => {
     for (let key in generatedFile) {
       let path = './src/' + key
       let value = generatedFile[key]
-      writeWithElmFormat(path, value)
+      writeFile(path, value)
     }
   })
 }

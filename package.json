@@ -25,7 +25,6 @@
     "@types/webpack": "^3.8.1",
     "elm": "^0.18.0",
     "elm-analyse": "^0.13.3",
-    "elm-format": "^0.7.0-exp",
     "elm-hot-loader": "0.5.4",
     "elm-test": "^0.18.12",
     "elm-webpack-loader": "^4.3.1",
@@ -37,7 +36,8 @@
   "dependencies": {
     "graphql-request": "^1.4.0",
     "minimist": "^1.2.0",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "elm-format": "^0.7.0-exp"
   },
   "bin": {
     "graphqelm": "bin/graphqelm"
