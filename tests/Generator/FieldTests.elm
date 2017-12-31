@@ -41,6 +41,19 @@ me =
 droid object =
       Object.selectionFieldDecoder "droid" [] (object) (identity)
 """
+        , test "simple interface with no args" <|
+            \() ->
+                { name = "droid"
+                , description = Nothing
+                , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
+                , args = []
+                }
+                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "RootQuery"
+                    |> Expect.equal
+                        """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid RootQuery
+droid object =
+      Object.selectionFieldDecoder "droid" [] (object) (identity)
+"""
         , test "simple object with no args for object" <|
             \() ->
                 { name = "droid"
