@@ -32,7 +32,7 @@ type alias AnnotatedArg =
 
 generate : List String -> Context -> String -> Type.Field -> String
 generate apiSubmodule context thisObjectName field =
-    toFieldGenerator apiSubmodule context field
+    toFieldGenerator context field
         |> forObject_ apiSubmodule context thisObjectName field
 
 
@@ -93,9 +93,9 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
-toFieldGenerator : List String -> Context -> Type.Field -> FieldGenerator
-toFieldGenerator apiSubmodule specialObjectNames field =
-    init apiSubmodule specialObjectNames field.name field.typeRef
+toFieldGenerator : Context -> Type.Field -> FieldGenerator
+toFieldGenerator ({ apiSubmodule } as context) field =
+    init apiSubmodule context field.name field.typeRef
         |> addRequiredArgs apiSubmodule field.args
         |> addOptionalArgs apiSubmodule field.args
 
