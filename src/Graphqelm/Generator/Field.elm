@@ -1,5 +1,6 @@
 module Graphqelm.Generator.Field exposing (generate)
 
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Generator.Imports as Imports
@@ -7,7 +8,6 @@ import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
-import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
 import Graphqelm.Parser.Type as Type exposing (ReferrableType, TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -30,13 +30,13 @@ type alias AnnotatedArg =
     }
 
 
-generate : List String -> SpecialObjectNames -> String -> Type.Field -> String
+generate : List String -> Context -> String -> Type.Field -> String
 generate apiSubmodule specialObjectNames thisObjectName field =
     toFieldGenerator apiSubmodule specialObjectNames field
         |> forObject_ apiSubmodule specialObjectNames thisObjectName field
 
 
-forObject_ : List String -> SpecialObjectNames -> String -> Type.Field -> FieldGenerator -> String
+forObject_ : List String -> Context -> String -> Type.Field -> FieldGenerator -> String
 forObject_ apiSubmodule specialObjectNames thisObjectName field fieldGenerator =
     let
         thisObjectString =
@@ -93,7 +93,7 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
-toFieldGenerator : List String -> SpecialObjectNames -> Type.Field -> FieldGenerator
+toFieldGenerator : List String -> Context -> Type.Field -> FieldGenerator
 toFieldGenerator apiSubmodule specialObjectNames field =
     init apiSubmodule specialObjectNames field.name field.typeRef
         |> addRequiredArgs apiSubmodule field.args
@@ -128,7 +128,7 @@ addOptionalArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-objectThing : List String -> SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
+objectThing : List String -> Context -> String -> TypeReference -> String -> FieldGenerator
 objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
     let
         objectArgAnnotation =
@@ -191,7 +191,7 @@ leafType (Type.TypeReference referrableType isNullable) =
             Debug.crash "Unexpected type"
 
 
-init : List String -> SpecialObjectNames -> String -> TypeReference -> FieldGenerator
+init : List String -> Context -> String -> TypeReference -> FieldGenerator
 init apiSubmodule specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->

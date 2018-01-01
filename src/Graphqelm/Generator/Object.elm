@@ -2,12 +2,12 @@ module Graphqelm.Generator.Object exposing (..)
 
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
 
-generate : List String -> SpecialObjectNames -> String -> List Type.Field -> ( List String, String )
+generate : List String -> Context -> String -> List Type.Field -> ( List String, String )
 generate apiSubmodule specialObjectNames name fields =
     ( Imports.object apiSubmodule specialObjectNames name
     , prepend apiSubmodule (Imports.object apiSubmodule specialObjectNames name) fields
