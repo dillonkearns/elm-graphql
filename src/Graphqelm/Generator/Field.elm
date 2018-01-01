@@ -40,7 +40,7 @@ forObject_ : List String -> Context -> String -> Type.Field -> FieldGenerator ->
 forObject_ apiSubmodule specialObjectNames thisObjectName field fieldGenerator =
     let
         thisObjectString =
-            Imports.object apiSubmodule specialObjectNames thisObjectName |> String.join "."
+            Imports.object specialObjectNames thisObjectName |> String.join "."
     in
     fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectString ]) field fieldGenerator
 
@@ -134,7 +134,7 @@ objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
         objectArgAnnotation =
             interpolate
                 "SelectionSet {0} {1}"
-                [ fieldName, Imports.object apiSubmodule specialObjectNames refName |> String.join "." ]
+                [ fieldName, Imports.object specialObjectNames refName |> String.join "." ]
     in
     { annotatedArgs = []
     , fieldArgs = []

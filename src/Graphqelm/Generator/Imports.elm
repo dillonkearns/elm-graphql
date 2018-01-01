@@ -1,7 +1,7 @@
 module Graphqelm.Generator.Imports exposing (..)
 
-import Graphqelm.Generator.Enum
 import Graphqelm.Generator.Context exposing (Context)
+import Graphqelm.Generator.Enum
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 
 
@@ -65,8 +65,8 @@ imports apiSubmodule (Type.TypeReference referrableType isNullable) =
             Nothing
 
 
-object : List String -> Context -> String -> List String
-object apiSubmodule { query, mutation } name =
+object : Context -> String -> List String
+object { query, mutation, apiSubmodule } name =
     if name == query then
         [ "RootQuery" ]
     else if Just name == mutation then

@@ -36,7 +36,7 @@ all =
                     |> Expect.equal []
         , test "use RootQuery module name" <|
             \() ->
-                Imports.object [ "Api" ] { query = "RootQueryType", mutation = Nothing, apiSubmodule = [ "Api" ] } "RootQueryType"
+                Imports.object { query = "RootQueryType", mutation = Nothing, apiSubmodule = [ "Api" ] } "RootQueryType"
                     |> Expect.equal [ "RootQuery" ]
         ]
 

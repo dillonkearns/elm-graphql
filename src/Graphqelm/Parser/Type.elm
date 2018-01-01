@@ -44,6 +44,7 @@ interfaceDecoder : Decoder TypeDefinition
 interfaceDecoder =
     Decode.map2 createInterface
         (Decode.field "name" Decode.string)
+        -- (Decode.field "possibleTypes" (Decode.string |> Decode.field "name" |> Decode.list))
         (fieldDecoder
             |> Decode.map parseField
             |> Decode.list
