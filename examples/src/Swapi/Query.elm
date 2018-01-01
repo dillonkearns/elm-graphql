@@ -47,13 +47,7 @@ hero fillInOptionals characterSelection humanSelection droidSelection =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
                 |> List.filterMap identity
     in
-    Object.polymorphicSelectionDecoder "hero"
-        optionalArgs
-        (Graphqelm.SelectionSet.singleton ( "Human", humanSelection )
-            |> Graphqelm.SelectionSet.add ( "Droid", droidSelection )
-            |> Graphqelm.SelectionSet.withBase characterSelection
-        )
-        identity
+    Object.polymorphicSelectionDecoder "hero" optionalArgs (Graphqelm.SelectionSet.singleton ( "Human", humanSelection ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection) identity
 
 
 {-|
