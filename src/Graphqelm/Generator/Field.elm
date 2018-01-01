@@ -157,9 +157,50 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
             }
 
 
+interfaceThing : Context -> String -> TypeReference -> String -> FieldGenerator
+interfaceThing ({ apiSubmodule } as context) fieldName typeRef refName =
+    let
+        objectArgAnnotation =
+            interpolate
+                "SelectionSet base {0}"
+                [ Imports.object context refName |> String.join "." ]
+    in
+    { annotatedArgs = []
+    , fieldArgs = []
+    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule "( base, union )" typeRef
+    , decoder = "Graphqelm.SelectionSet.singleton ( \"Human\", humanSelection ) |> Graphqelm.SelectionSet.add ( \"Droid\", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection"
+    , fieldName = fieldName
+    , otherThing = ".polymorphicSelectionDecoder"
+    , letBindings = []
+    , objectDecoderChain =
+        " ("
+            ++ (Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
+                    |> String.join " >> "
+               )
+            ++ ")"
+            |> Just
+    }
+        |> prependArgs
+            [ { annotation = objectArgAnnotation
+              , arg = "characterSelection"
+              }
+            , { annotation = "SelectionSet union Swapi.Object.Human"
+              , arg = "humanSelection"
+              }
+            , { annotation = "SelectionSet union Swapi.Object.Droid"
+              , arg = "droidSelection"
+              }
+            ]
+
+
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
 prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
+
+
+prependArgs : List AnnotatedArg -> FieldGenerator -> FieldGenerator
+prependArgs args fieldGenerator =
+    List.foldr prependArg fieldGenerator args
 
 
 type LeafRef
@@ -198,7 +239,7 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
             objectThing context fieldName typeRef refName
 
         InterfaceLeaf refName ->
-            objectThing context fieldName typeRef refName
+            interfaceThing context fieldName typeRef refName
 
         EnumLeaf ->
             initScalarField apiSubmodule fieldName typeRef

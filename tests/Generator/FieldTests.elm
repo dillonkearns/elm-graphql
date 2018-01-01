@@ -49,11 +49,20 @@ droid object =
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Character") Type.NonNullable
                 , args = []
                 }
-                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ] } "RootQuery"
+                    |> Field.generate
+                        { query = "RootQuery"
+                        , mutation = Nothing
+                        , apiSubmodule = [ "Swapi" ]
+                        , interfaces =
+                            Dict.fromList
+                                [ ( "Character", [ "Human", "Droid" ] )
+                                ]
+                        }
+                        "RootQuery"
                     |> Expect.equal
-                        """hero : SelectionSet hero Api.Object.Character -> FieldDecoder hero RootQuery
-hero object =
-      Object.selectionFieldDecoder "hero" [] (object) (identity)
+                        """hero : SelectionSet base Swapi.Object.Character -> SelectionSet union Swapi.Object.Human -> SelectionSet union Swapi.Object.Droid -> FieldDecoder ( base, union ) RootQuery
+hero characterSelection humanSelection droidSelection =
+      Object.polymorphicSelectionDecoder "hero" [] (Graphqelm.SelectionSet.singleton ( "Human", humanSelection ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection) (identity)
 """
         , test "simple object with no args for object" <|
             \() ->
