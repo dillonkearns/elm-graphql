@@ -128,8 +128,8 @@ addOptionalArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-objectThing : List String -> Context -> String -> TypeReference -> String -> FieldGenerator
-objectThing apiSubmodule context fieldName typeRef refName =
+objectThing : Context -> String -> TypeReference -> String -> FieldGenerator
+objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
@@ -195,10 +195,10 @@ init : Context -> String -> TypeReference -> FieldGenerator
 init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
-            objectThing apiSubmodule context fieldName typeRef refName
+            objectThing context fieldName typeRef refName
 
         InterfaceLeaf refName ->
-            objectThing apiSubmodule context fieldName typeRef refName
+            objectThing context fieldName typeRef refName
 
         EnumLeaf ->
             initScalarField apiSubmodule fieldName typeRef
