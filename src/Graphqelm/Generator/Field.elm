@@ -37,10 +37,10 @@ generate apiSubmodule context thisObjectName field =
 
 
 forObject_ : List String -> Context -> String -> Type.Field -> FieldGenerator -> String
-forObject_ apiSubmodule specialObjectNames thisObjectName field fieldGenerator =
+forObject_ apiSubmodule context thisObjectName field fieldGenerator =
     let
         thisObjectString =
-            Imports.object specialObjectNames thisObjectName |> String.join "."
+            Imports.object context thisObjectName |> String.join "."
     in
     fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectString ]) field fieldGenerator
 
@@ -129,12 +129,12 @@ addOptionalArgs apiSubmodule args fieldGenerator =
 
 
 objectThing : List String -> Context -> String -> TypeReference -> String -> FieldGenerator
-objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
+objectThing apiSubmodule context fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
                 "SelectionSet {0} {1}"
-                [ fieldName, Imports.object specialObjectNames refName |> String.join "." ]
+                [ fieldName, Imports.object context refName |> String.join "." ]
     in
     { annotatedArgs = []
     , fieldArgs = []
@@ -192,13 +192,13 @@ leafType (Type.TypeReference referrableType isNullable) =
 
 
 init : Context -> String -> TypeReference -> FieldGenerator
-init ({ apiSubmodule } as specialObjectNames) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
-            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
+            objectThing apiSubmodule context fieldName typeRef refName
 
         InterfaceLeaf refName ->
-            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
+            objectThing apiSubmodule context fieldName typeRef refName
 
         EnumLeaf ->
             initScalarField apiSubmodule fieldName typeRef
