@@ -79,13 +79,13 @@ toPair apiSubmodule queryObjectName mutationObjectName ((Type.TypeDefinition nam
     case definableType of
         Type.ObjectType fields ->
             if name == queryObjectName then
-                Graphqelm.Generator.Query.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } fields
+                Graphqelm.Generator.Query.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName, apiSubmodule = apiSubmodule } fields
                     |> Just
             else if Just name == mutationObjectName then
-                Graphqelm.Generator.Mutation.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } fields
+                Graphqelm.Generator.Mutation.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName, apiSubmodule = apiSubmodule } fields
                     |> Just
             else
-                Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } name fields
+                Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName, apiSubmodule = apiSubmodule } name fields
                     |> Just
 
         Type.ScalarType ->
@@ -96,5 +96,5 @@ toPair apiSubmodule queryObjectName mutationObjectName ((Type.TypeDefinition nam
                 |> Just
 
         Type.InterfaceType fields ->
-            Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } name fields
+            Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName, apiSubmodule = apiSubmodule } name fields
                 |> Just
