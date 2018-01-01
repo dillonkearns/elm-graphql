@@ -30,14 +30,14 @@ type alias AnnotatedArg =
     }
 
 
-generate : List String -> Context -> String -> Type.Field -> String
-generate apiSubmodule context thisObjectName field =
+generate : Context -> String -> Type.Field -> String
+generate context thisObjectName field =
     toFieldGenerator context field
-        |> forObject_ apiSubmodule context thisObjectName field
+        |> forObject_ context thisObjectName field
 
 
-forObject_ : List String -> Context -> String -> Type.Field -> FieldGenerator -> String
-forObject_ apiSubmodule context thisObjectName field fieldGenerator =
+forObject_ : Context -> String -> Type.Field -> FieldGenerator -> String
+forObject_ context thisObjectName field fieldGenerator =
     let
         thisObjectString =
             Imports.object context thisObjectName |> String.join "."

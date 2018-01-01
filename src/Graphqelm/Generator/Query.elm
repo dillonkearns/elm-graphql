@@ -1,8 +1,8 @@
 module Graphqelm.Generator.Query exposing (..)
 
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Parser.Type as Type exposing (Field)
 import Interpolate exposing (interpolate)
 
@@ -11,7 +11,7 @@ generate : List String -> Context -> List Field -> ( List String, String )
 generate apiSubmodule specialObjectNames fields =
     ( moduleName apiSubmodule
     , prepend apiSubmodule (moduleName apiSubmodule) fields
-        ++ (List.map (FieldGenerator.generate apiSubmodule specialObjectNames specialObjectNames.query) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generate specialObjectNames specialObjectNames.query) fields |> String.join "\n\n")
     )
 
 

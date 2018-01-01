@@ -11,7 +11,7 @@ generate : List String -> Context -> String -> List Type.Field -> ( List String,
 generate apiSubmodule context name fields =
     ( Imports.object context name
     , prepend context (Imports.object context name) fields
-        ++ (List.map (FieldGenerator.generate apiSubmodule context name) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generate context name) fields |> String.join "\n\n")
     )
 
 
