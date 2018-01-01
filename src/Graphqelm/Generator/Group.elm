@@ -32,7 +32,14 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
     in
     typeDefinitions
         |> excludeBuiltIns
-        |> List.filterMap (toPair { query = queryObjectName, mutation = mutationObjectName, apiSubmodule = apiSubmodule })
+        |> List.filterMap
+            (toPair
+                { query = queryObjectName
+                , mutation = mutationObjectName
+                , apiSubmodule = apiSubmodule
+                , interfaces = Dict.empty
+                }
+            )
         |> List.append [ objectTypes ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
