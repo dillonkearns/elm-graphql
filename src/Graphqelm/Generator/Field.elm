@@ -95,7 +95,7 @@ fieldArgsString { fieldArgs } =
 
 toFieldGenerator : Context -> Type.Field -> FieldGenerator
 toFieldGenerator ({ apiSubmodule } as context) field =
-    init apiSubmodule context field.name field.typeRef
+    init context field.name field.typeRef
         |> addRequiredArgs apiSubmodule field.args
         |> addOptionalArgs apiSubmodule field.args
 
@@ -191,8 +191,8 @@ leafType (Type.TypeReference referrableType isNullable) =
             Debug.crash "Unexpected type"
 
 
-init : List String -> Context -> String -> TypeReference -> FieldGenerator
-init apiSubmodule specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init : Context -> String -> TypeReference -> FieldGenerator
+init ({ apiSubmodule } as specialObjectNames) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
             objectThing apiSubmodule specialObjectNames fieldName typeRef refName
