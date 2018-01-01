@@ -7,8 +7,8 @@ import Graphqelm.Parser.Type as Type exposing (Field)
 import Interpolate exposing (interpolate)
 
 
-generate : List String -> Context -> List Field -> ( List String, String )
-generate apiSubmodule context fields =
+generate : Context -> List Field -> ( List String, String )
+generate ({ apiSubmodule } as context) fields =
     ( moduleName apiSubmodule
     , prepend apiSubmodule (moduleName apiSubmodule) fields
         ++ (List.map (FieldGenerator.generate context context.query) fields |> String.join "\n\n")
