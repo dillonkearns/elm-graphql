@@ -31,9 +31,9 @@ type alias AnnotatedArg =
 
 
 generate : List String -> Context -> String -> Type.Field -> String
-generate apiSubmodule specialObjectNames thisObjectName field =
-    toFieldGenerator apiSubmodule specialObjectNames field
-        |> forObject_ apiSubmodule specialObjectNames thisObjectName field
+generate apiSubmodule context thisObjectName field =
+    toFieldGenerator apiSubmodule context field
+        |> forObject_ apiSubmodule context thisObjectName field
 
 
 forObject_ : List String -> Context -> String -> Type.Field -> FieldGenerator -> String

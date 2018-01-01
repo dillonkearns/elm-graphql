@@ -10,13 +10,13 @@ import Interpolate exposing (interpolate)
 generate : List String -> Context -> String -> List Type.Field -> ( List String, String )
 generate apiSubmodule context name fields =
     ( Imports.object context name
-    , prepend apiSubmodule (Imports.object context name) fields
+    , prepend context (Imports.object context name) fields
         ++ (List.map (FieldGenerator.generate apiSubmodule context name) fields |> String.join "\n\n")
     )
 
 
-prepend : List String -> List String -> List Type.Field -> String
-prepend apiSubmodule moduleName fields =
+prepend : Context -> List String -> List Type.Field -> String
+prepend { apiSubmodule } moduleName fields =
     interpolate """module {0} exposing (..)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
