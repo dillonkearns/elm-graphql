@@ -10,6 +10,7 @@ import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.Type as Type exposing (ReferrableType, TypeReference)
 import Interpolate exposing (interpolate)
+import String.Extra
 
 
 type alias FieldGenerator =
@@ -182,7 +183,7 @@ interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refNa
     }
         |> prependArgs
             [ { annotation = objectArgAnnotation
-              , arg = "characterSelection"
+              , arg = String.Extra.decapitalize refName ++ "Selection"
               }
             , { annotation = "SelectionSet union Swapi.Object.Human"
               , arg = "humanSelection"
