@@ -31,7 +31,7 @@ import {2}.Object
 import Graphqelm.Builder.Object as Object
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
-import Graphqelm exposing (RootQuery)
+import Graphqelm.Operation exposing (RootQuery)
 import Json.Decode as Decode exposing (Decoder)
 import Graphqelm.Encode as Encode exposing (Value)
 {1}

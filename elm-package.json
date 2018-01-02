@@ -7,7 +7,7 @@
         "src"
     ],
     "exposed-modules": [
-        "Graphqelm",
+        "Graphqelm.Operation",
         "Graphqelm.Http",
         "Graphqelm.SelectionSet",
         "Graphqelm.Encode",

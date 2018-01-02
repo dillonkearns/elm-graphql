@@ -1,6 +1,6 @@
 module Starwars exposing (main)
 
-import Graphqelm exposing (RootQuery)
+import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http

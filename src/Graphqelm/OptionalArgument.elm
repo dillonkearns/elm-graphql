@@ -11,7 +11,7 @@ module Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 
       import Api.Enum.Episode as Episode exposing (Episode)
       import Api.Query as Query
-      import Graphqelm exposing (RootQuery)
+      import Graphqelm.Operation exposing (RootQuery)
       import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
       import Graphqelm.SelectionSet exposing (SelectionSet, with)
 

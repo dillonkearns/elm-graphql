@@ -8,7 +8,7 @@ are helpful for debugging and demo purposes.
 
 -}
 
-import Graphqelm exposing (RootMutation, RootQuery)
+import Graphqelm.Operation exposing (RootMutation, RootQuery)
 import Graphqelm.Document.Field as Field
 import Graphqelm.Field exposing (Field)
 import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))

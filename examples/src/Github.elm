@@ -7,7 +7,7 @@ import Github.Object.Repository as Repository
 import Github.Object.StargazerConnection
 import Github.Object.Topic
 import Github.Query as Query
-import Graphqelm exposing (RootQuery)
+import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder
 import Graphqelm.Http

@@ -11,7 +11,7 @@ The builder syntax is inspired by Luke Westby's
 
 -}
 
-import Graphqelm exposing (RootMutation, RootQuery)
+import Graphqelm.Operation exposing (RootMutation, RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.Document.LowLevel as Document
 import Graphqelm.Http.GraphqlError as GraphqlError
