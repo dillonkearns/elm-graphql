@@ -37,7 +37,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                 { query = queryObjectName
                 , mutation = mutationObjectName
                 , apiSubmodule = apiSubmodule
-                , interfaces = Dict.empty
+                , interfaces = Dict.fromList [ ( "Character", [ "Human", "Droid" ] ) ]
                 }
             )
         |> List.append [ objectTypes ]

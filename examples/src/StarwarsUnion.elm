@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
@@ -16,7 +17,7 @@ import Swapi.Query as Query
 
 
 type alias Response =
-    { hero : ( Character, HumanOrDroid )
+    { hero : Maybe ( Character, HumanOrDroid )
     }
 
 
@@ -28,6 +29,7 @@ type HumanOrDroid
 type alias Character =
     { name : String
     , id : String
+    , friends : List String
     }
 
 
@@ -42,6 +44,15 @@ characterWithName =
     Character.selection Character
         |> with Character.name
         |> with Character.id
+        |> with friends
+
+
+friends : FieldDecoder (List String) Swapi.Object.Character
+friends =
+    Character.friends (Character.selection identity |> with Character.name)
+        (SelectionSet.ignore ())
+        (SelectionSet.ignore ())
+        |> FieldDecoder.map (List.map Tuple.first)
 
 
 human : SelectionSet HumanOrDroid Swapi.Object.Human
