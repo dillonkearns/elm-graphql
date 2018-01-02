@@ -338,4 +338,7 @@ type alias RawField =
 
 
 type alias RawArg =
-    { name : String, description : Maybe String, ofType : RawTypeRef }
+    { name : String
+    , description : Maybe String
+    , ofType : RawTypeRef
+    }
