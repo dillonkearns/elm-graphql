@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Starwars exposing (main)
 
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
