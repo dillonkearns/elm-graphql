@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Enum exposing (..)
+module Graphqelm.Generator.Enum exposing (enumType, generate, moduleNameFor)
 
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Parser.Type exposing (EnumValue)

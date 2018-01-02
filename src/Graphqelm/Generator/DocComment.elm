@@ -1,6 +1,6 @@
 module Graphqelm.Generator.DocComment exposing (generate, generateForEnum)
 
-import Graphqelm.Parser.Type as Type exposing (EnumValue, Field, ReferrableType, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (EnumValue, Field)
 import Interpolate exposing (interpolate)
 
 
