@@ -169,7 +169,10 @@ interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refNa
     in
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule "( character, union )" typeRef
+    , decoderAnnotation =
+        Graphqelm.Generator.Decoder.generateType apiSubmodule
+            ("( " ++ String.Extra.decapitalize refName ++ ", union )")
+            typeRef
     , decoder = "Graphqelm.SelectionSet.singleton ( \"Human\", humanSelection ) |> Graphqelm.SelectionSet.add ( \"Droid\", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection"
     , fieldName = fieldName
     , otherThing = ".polymorphicSelectionDecoder"
