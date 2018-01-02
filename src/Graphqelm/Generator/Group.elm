@@ -3,6 +3,7 @@ module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles)
 import Dict exposing (Dict)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum
+import Graphqelm.Generator.Interface
 import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
 import Graphqelm.Generator.ObjectTypes as ObjectTypes
@@ -119,5 +120,5 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
                 |> Just
 
         Type.InterfaceType fields possibleTypes ->
-            Graphqelm.Generator.Object.generate context name fields
+            Graphqelm.Generator.Interface.generate context name fields
                 |> Just
