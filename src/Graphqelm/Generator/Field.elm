@@ -1,6 +1,5 @@
 module Graphqelm.Generator.Field exposing (generate)
 
-import Dict
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.DocComment as DocComment
@@ -11,7 +10,6 @@ import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.Type as Type exposing (ReferrableType, TypeReference)
 import Interpolate exposing (interpolate)
-import String.Extra
 
 
 type alias FieldGenerator =
@@ -159,67 +157,6 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
             }
 
 
-interfaceThing : Context -> String -> TypeReference -> String -> FieldGenerator
-interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refName =
-    let
-        implementors =
-            interfaces
-                |> Dict.get refName
-                |> Maybe.withDefault []
-
-        interfaceSelectionAnnotation typeVariableName name =
-            interpolate
-                "SelectionSet {0} {1}"
-                [ typeVariableName, Imports.object context name |> String.join "." ]
-    in
-    { annotatedArgs = []
-    , fieldArgs = []
-    , decoderAnnotation =
-        Graphqelm.Generator.Decoder.generateType apiSubmodule
-            ("( " ++ String.Extra.decapitalize refName ++ ", union )")
-            typeRef
-    , decoder =
-        (implementors
-            |> List.indexedMap
-                (\index name ->
-                    interpolate "Graphqelm.SelectionSet.{0} ( \"{1}\", {2} )"
-                        [ if index == 0 then
-                            "singleton"
-                          else
-                            "add"
-                        , name
-                        , String.Extra.decapitalize name ++ "Selection"
-                        ]
-                )
-        )
-            ++ [ "Graphqelm.SelectionSet.withBase " ++ String.Extra.decapitalize refName ++ "Selection" ]
-            |> String.join " |> "
-    , fieldName = fieldName
-    , otherThing = ".polymorphicSelectionDecoder"
-    , letBindings = []
-    , objectDecoderChain =
-        " ("
-            ++ (Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
-                    |> String.join " >> "
-               )
-            ++ ")"
-            |> Just
-    }
-        |> prependArgs
-            ({ annotation = interfaceSelectionAnnotation (String.Extra.decapitalize refName) refName
-             , arg = String.Extra.decapitalize refName ++ "Selection"
-             }
-                :: (implementors
-                        |> List.map
-                            (\interfaceImplementorName ->
-                                { annotation = interfaceSelectionAnnotation "union" interfaceImplementorName
-                                , arg = String.Extra.decapitalize interfaceImplementorName ++ "Selection"
-                                }
-                            )
-                   )
-            )
-
-
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
 prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
     { fieldGenerator | annotatedArgs = annotatedArg :: fieldGenerator.annotatedArgs }
@@ -266,7 +203,7 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
             objectThing context fieldName typeRef refName
 
         InterfaceLeaf refName ->
-            interfaceThing context fieldName typeRef refName
+            objectThing context fieldName typeRef refName
 
         EnumLeaf ->
             initScalarField apiSubmodule fieldName typeRef

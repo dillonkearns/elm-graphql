@@ -8844,862 +8844,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$generate = F2(
 			_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsString(args));
 	});
 
-var _elm_lang$core$Native_Bitwise = function() {
-
-return {
-	and: F2(function and(a, b) { return a & b; }),
-	or: F2(function or(a, b) { return a | b; }),
-	xor: F2(function xor(a, b) { return a ^ b; }),
-	complement: function complement(a) { return ~a; },
-	shiftLeftBy: F2(function(offset, a) { return a << offset; }),
-	shiftRightBy: F2(function(offset, a) { return a >> offset; }),
-	shiftRightZfBy: F2(function(offset, a) { return a >>> offset; })
-};
-
-}();
-
-var _elm_lang$core$Bitwise$shiftRightZfBy = _elm_lang$core$Native_Bitwise.shiftRightZfBy;
-var _elm_lang$core$Bitwise$shiftRightBy = _elm_lang$core$Native_Bitwise.shiftRightBy;
-var _elm_lang$core$Bitwise$shiftLeftBy = _elm_lang$core$Native_Bitwise.shiftLeftBy;
-var _elm_lang$core$Bitwise$complement = _elm_lang$core$Native_Bitwise.complement;
-var _elm_lang$core$Bitwise$xor = _elm_lang$core$Native_Bitwise.xor;
-var _elm_lang$core$Bitwise$or = _elm_lang$core$Native_Bitwise.or;
-var _elm_lang$core$Bitwise$and = _elm_lang$core$Native_Bitwise.and;
-
-var _elm_community$string_extra$String_Extra$accentRegex = function () {
-	var matches = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: '[à-æ]', _1: 'a'},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: '[À-Æ]', _1: 'A'},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'ç', _1: 'c'},
-				_1: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'Ç', _1: 'C'},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: '[è-ë]', _1: 'e'},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: '[È-Ë]', _1: 'E'},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: '[ì-ï]', _1: 'i'},
-								_1: {
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: '[Ì-Ï]', _1: 'I'},
-									_1: {
-										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'ñ', _1: 'n'},
-										_1: {
-											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'Ñ', _1: 'N'},
-											_1: {
-												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: '[ò-ö]', _1: 'o'},
-												_1: {
-													ctor: '::',
-													_0: {ctor: '_Tuple2', _0: '[Ò-Ö]', _1: 'O'},
-													_1: {
-														ctor: '::',
-														_0: {ctor: '_Tuple2', _0: '[ù-ü]', _1: 'u'},
-														_1: {
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: '[Ù-Ü]', _1: 'U'},
-															_1: {
-																ctor: '::',
-																_0: {ctor: '_Tuple2', _0: 'ý', _1: 'y'},
-																_1: {
-																	ctor: '::',
-																	_0: {ctor: '_Tuple2', _0: 'ÿ', _1: 'y'},
-																	_1: {
-																		ctor: '::',
-																		_0: {ctor: '_Tuple2', _0: 'Ý', _1: 'Y'},
-																		_1: {ctor: '[]'}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	};
-	return A2(
-		_elm_lang$core$List$map,
-		function (_p0) {
-			var _p1 = _p0;
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Regex$regex(_p1._0),
-				_1: _p1._1
-			};
-		},
-		matches);
-}();
-var _elm_community$string_extra$String_Extra$removeAccents = function (string) {
-	if (_elm_lang$core$String$isEmpty(string)) {
-		return string;
-	} else {
-		var do_regex_to_remove_acents = function (_p2) {
-			var _p3 = _p2;
-			return A3(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_p3._0,
-				function (_p4) {
-					return _p3._1;
-				});
-		};
-		return A3(_elm_lang$core$List$foldl, do_regex_to_remove_acents, string, _elm_community$string_extra$String_Extra$accentRegex);
-	}
-};
-var _elm_community$string_extra$String_Extra$nonEmpty = function (string) {
-	return _elm_lang$core$String$isEmpty(string) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(string);
-};
-var _elm_community$string_extra$String_Extra$replacementCodePoint = 65533;
-var _elm_community$string_extra$String_Extra$toCodePoints = function (string) {
-	var allCodeUnits = A2(
-		_elm_lang$core$List$map,
-		_elm_lang$core$Char$toCode,
-		_elm_lang$core$String$toList(string));
-	var combineAndReverse = F2(
-		function (codeUnits, accumulated) {
-			combineAndReverse:
-			while (true) {
-				var _p5 = codeUnits;
-				if (_p5.ctor === '[]') {
-					return accumulated;
-				} else {
-					var _p9 = _p5._0;
-					var _p8 = _p5._1;
-					if ((_elm_lang$core$Native_Utils.cmp(_p9, 0) > -1) && (_elm_lang$core$Native_Utils.cmp(_p9, 55295) < 1)) {
-						var _v3 = _p8,
-							_v4 = {ctor: '::', _0: _p9, _1: accumulated};
-						codeUnits = _v3;
-						accumulated = _v4;
-						continue combineAndReverse;
-					} else {
-						if ((_elm_lang$core$Native_Utils.cmp(_p9, 55296) > -1) && (_elm_lang$core$Native_Utils.cmp(_p9, 56319) < 1)) {
-							var _p6 = _p8;
-							if (_p6.ctor === '[]') {
-								return {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-							} else {
-								var _p7 = _p6._0;
-								if ((_elm_lang$core$Native_Utils.cmp(_p7, 56320) > -1) && (_elm_lang$core$Native_Utils.cmp(_p7, 57343) < 1)) {
-									var codePoint = (65536 + ((_p9 - 55296) * 1024)) + (_p7 - 56320);
-									var _v6 = _p6._1,
-										_v7 = {ctor: '::', _0: codePoint, _1: accumulated};
-									codeUnits = _v6;
-									accumulated = _v7;
-									continue combineAndReverse;
-								} else {
-									var _v8 = _p8,
-										_v9 = {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-									codeUnits = _v8;
-									accumulated = _v9;
-									continue combineAndReverse;
-								}
-							}
-						} else {
-							if ((_elm_lang$core$Native_Utils.cmp(_p9, 57344) > -1) && (_elm_lang$core$Native_Utils.cmp(_p9, 65535) < 1)) {
-								var _v10 = _p8,
-									_v11 = {ctor: '::', _0: _p9, _1: accumulated};
-								codeUnits = _v10;
-								accumulated = _v11;
-								continue combineAndReverse;
-							} else {
-								var _v12 = _p8,
-									_v13 = {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-								codeUnits = _v12;
-								accumulated = _v13;
-								continue combineAndReverse;
-							}
-						}
-					}
-				}
-			}
-		});
-	return _elm_lang$core$List$reverse(
-		A2(
-			combineAndReverse,
-			allCodeUnits,
-			{ctor: '[]'}));
-};
-var _elm_community$string_extra$String_Extra$fromCodePoints = function (allCodePoints) {
-	var splitAndReverse = F2(
-		function (codePoints, accumulated) {
-			splitAndReverse:
-			while (true) {
-				var _p10 = codePoints;
-				if (_p10.ctor === '[]') {
-					return accumulated;
-				} else {
-					var _p12 = _p10._1;
-					var _p11 = _p10._0;
-					if ((_elm_lang$core$Native_Utils.cmp(_p11, 0) > -1) && (_elm_lang$core$Native_Utils.cmp(_p11, 55295) < 1)) {
-						var _v15 = _p12,
-							_v16 = {ctor: '::', _0: _p11, _1: accumulated};
-						codePoints = _v15;
-						accumulated = _v16;
-						continue splitAndReverse;
-					} else {
-						if ((_elm_lang$core$Native_Utils.cmp(_p11, 65536) > -1) && (_elm_lang$core$Native_Utils.cmp(_p11, 1114111) < 1)) {
-							var subtracted = _p11 - 65536;
-							var leading = (subtracted >> 10) + 55296;
-							var trailing = (subtracted & 1023) + 56320;
-							var _v17 = _p12,
-								_v18 = {
-								ctor: '::',
-								_0: trailing,
-								_1: {ctor: '::', _0: leading, _1: accumulated}
-							};
-							codePoints = _v17;
-							accumulated = _v18;
-							continue splitAndReverse;
-						} else {
-							if ((_elm_lang$core$Native_Utils.cmp(_p11, 57344) > -1) && (_elm_lang$core$Native_Utils.cmp(_p11, 65535) < 1)) {
-								var _v19 = _p12,
-									_v20 = {ctor: '::', _0: _p11, _1: accumulated};
-								codePoints = _v19;
-								accumulated = _v20;
-								continue splitAndReverse;
-							} else {
-								var _v21 = _p12,
-									_v22 = {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-								codePoints = _v21;
-								accumulated = _v22;
-								continue splitAndReverse;
-							}
-						}
-					}
-				}
-			}
-		});
-	var allCodeUnits = _elm_lang$core$List$reverse(
-		A2(
-			splitAndReverse,
-			allCodePoints,
-			{ctor: '[]'}));
-	return _elm_lang$core$String$fromList(
-		A2(_elm_lang$core$List$map, _elm_lang$core$Char$fromCode, allCodeUnits));
-};
-var _elm_community$string_extra$String_Extra$fromFloat = _elm_lang$core$Basics$toString;
-var _elm_community$string_extra$String_Extra$fromInt = _elm_lang$core$Basics$toString;
-var _elm_community$string_extra$String_Extra$leftOfBack = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(
-				_elm_lang$core$Maybe$map,
-				A2(_elm_lang$core$Basics$flip, _elm_lang$core$String$left, string),
-				_elm_lang$core$List$head(
-					_elm_lang$core$List$reverse(
-						A2(_elm_lang$core$String$indexes, pattern, string)))));
-	});
-var _elm_community$string_extra$String_Extra$rightOfBack = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(
-				_elm_lang$core$Maybe$map,
-				function (_p13) {
-					return A3(
-						_elm_lang$core$Basics$flip,
-						_elm_lang$core$String$dropLeft,
-						string,
-						A2(
-							F2(
-								function (x, y) {
-									return x + y;
-								}),
-							_elm_lang$core$String$length(pattern),
-							_p13));
-				},
-				_elm_lang$core$List$head(
-					_elm_lang$core$List$reverse(
-						A2(_elm_lang$core$String$indexes, pattern, string)))));
-	});
-var _elm_community$string_extra$String_Extra$firstResultHelp = F2(
-	function ($default, list) {
-		firstResultHelp:
-		while (true) {
-			var _p14 = list;
-			if (_p14.ctor === '[]') {
-				return $default;
-			} else {
-				if (_p14._0.ctor === 'Just') {
-					return _p14._0._0;
-				} else {
-					var _v24 = $default,
-						_v25 = _p14._1;
-					$default = _v24;
-					list = _v25;
-					continue firstResultHelp;
-				}
-			}
-		}
-	});
-var _elm_community$string_extra$String_Extra$firstResult = function (list) {
-	return A2(_elm_community$string_extra$String_Extra$firstResultHelp, '', list);
-};
-var _elm_community$string_extra$String_Extra$leftOf = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			'',
-			A2(
-				_elm_lang$core$List$map,
-				function (_p15) {
-					return _elm_community$string_extra$String_Extra$firstResult(
-						function (_) {
-							return _.submatches;
-						}(_p15));
-				},
-				A3(
-					_elm_lang$core$Regex$find,
-					_elm_lang$core$Regex$AtMost(1),
-					_elm_lang$core$Regex$regex(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'^(.*?)',
-							_elm_lang$core$Regex$escape(pattern))),
-					string)));
-	});
-var _elm_community$string_extra$String_Extra$rightOf = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			'',
-			A2(
-				_elm_lang$core$List$map,
-				function (_p16) {
-					return _elm_community$string_extra$String_Extra$firstResult(
-						function (_) {
-							return _.submatches;
-						}(_p16));
-				},
-				A3(
-					_elm_lang$core$Regex$find,
-					_elm_lang$core$Regex$AtMost(1),
-					_elm_lang$core$Regex$regex(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Regex$escape(pattern),
-							'(.*)$')),
-					string)));
-	});
-var _elm_community$string_extra$String_Extra$pluralize = F3(
-	function (singular, plural, count) {
-		return _elm_lang$core$Native_Utils.eq(count, 1) ? A2(_elm_lang$core$Basics_ops['++'], '1 ', singular) : A2(
-			_elm_lang$core$Basics_ops['++'],
-			_elm_lang$core$Basics$toString(count),
-			A2(_elm_lang$core$Basics_ops['++'], ' ', plural));
-	});
-var _elm_community$string_extra$String_Extra$stripTags = function (string) {
-	return A4(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('<\\/?[^>]+>'),
-		_elm_lang$core$Basics$always(''),
-		string);
-};
-var _elm_community$string_extra$String_Extra$toSentenceHelper = F3(
-	function (lastPart, sentence, list) {
-		toSentenceHelper:
-		while (true) {
-			var _p17 = list;
-			if (_p17.ctor === '[]') {
-				return sentence;
-			} else {
-				if (_p17._1.ctor === '[]') {
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						sentence,
-						A2(_elm_lang$core$Basics_ops['++'], lastPart, _p17._0));
-				} else {
-					var _v27 = lastPart,
-						_v28 = A2(
-						_elm_lang$core$Basics_ops['++'],
-						sentence,
-						A2(_elm_lang$core$Basics_ops['++'], ', ', _p17._0)),
-						_v29 = _p17._1;
-					lastPart = _v27;
-					sentence = _v28;
-					list = _v29;
-					continue toSentenceHelper;
-				}
-			}
-		}
-	});
-var _elm_community$string_extra$String_Extra$toSentenceBaseCase = function (list) {
-	var _p18 = list;
-	_v30_2:
-	do {
-		if (_p18.ctor === '::') {
-			if (_p18._1.ctor === '[]') {
-				return _p18._0;
-			} else {
-				if (_p18._1._1.ctor === '[]') {
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						_p18._0,
-						A2(_elm_lang$core$Basics_ops['++'], ' and ', _p18._1._0));
-				} else {
-					break _v30_2;
-				}
-			}
-		} else {
-			break _v30_2;
-		}
-	} while(false);
-	return '';
-};
-var _elm_community$string_extra$String_Extra$toSentenceOxford = function (list) {
-	var _p19 = list;
-	if (((_p19.ctor === '::') && (_p19._1.ctor === '::')) && (_p19._1._1.ctor === '::')) {
-		return A3(
-			_elm_community$string_extra$String_Extra$toSentenceHelper,
-			', and ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_p19._0,
-				A2(_elm_lang$core$Basics_ops['++'], ', ', _p19._1._0)),
-			{ctor: '::', _0: _p19._1._1._0, _1: _p19._1._1._1});
-	} else {
-		return _elm_community$string_extra$String_Extra$toSentenceBaseCase(list);
-	}
-};
-var _elm_community$string_extra$String_Extra$toSentence = function (list) {
-	var _p20 = list;
-	if (((_p20.ctor === '::') && (_p20._1.ctor === '::')) && (_p20._1._1.ctor === '::')) {
-		return A3(
-			_elm_community$string_extra$String_Extra$toSentenceHelper,
-			' and ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_p20._0,
-				A2(_elm_lang$core$Basics_ops['++'], ', ', _p20._1._0)),
-			{ctor: '::', _0: _p20._1._1._0, _1: _p20._1._1._1});
-	} else {
-		return _elm_community$string_extra$String_Extra$toSentenceBaseCase(list);
-	}
-};
-var _elm_community$string_extra$String_Extra$ellipsisWith = F3(
-	function (howLong, append, string) {
-		return (_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$String$length(string),
-			howLong) < 1) ? string : A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_elm_lang$core$String$left,
-				howLong - _elm_lang$core$String$length(append),
-				string),
-			append);
-	});
-var _elm_community$string_extra$String_Extra$ellipsis = F2(
-	function (howLong, string) {
-		return A3(_elm_community$string_extra$String_Extra$ellipsisWith, howLong, '...', string);
-	});
-var _elm_community$string_extra$String_Extra$countOccurrences = F2(
-	function (needle, haystack) {
-		return (_elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$String$length(needle),
-			0) || _elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$String$length(haystack),
-			0)) ? 0 : _elm_lang$core$List$length(
-			A2(_elm_lang$core$String$indexes, needle, haystack));
-	});
-var _elm_community$string_extra$String_Extra$unindent = function (multilineSting) {
-	var isNotWhitespace = function ($char) {
-		return (!_elm_lang$core$Native_Utils.eq(
-			$char,
-			_elm_lang$core$Native_Utils.chr(' '))) && (!_elm_lang$core$Native_Utils.eq(
-			$char,
-			_elm_lang$core$Native_Utils.chr('\t')));
-	};
-	var countLeadingWhitespace = F2(
-		function (count, line) {
-			countLeadingWhitespace:
-			while (true) {
-				var _p21 = _elm_lang$core$String$uncons(line);
-				if (_p21.ctor === 'Nothing') {
-					return count;
-				} else {
-					var _p23 = _p21._0._1;
-					var _p22 = _p21._0._0;
-					switch (_p22.valueOf()) {
-						case ' ':
-							var _v35 = count + 1,
-								_v36 = _p23;
-							count = _v35;
-							line = _v36;
-							continue countLeadingWhitespace;
-						case '\t':
-							var _v37 = count + 1,
-								_v38 = _p23;
-							count = _v37;
-							line = _v38;
-							continue countLeadingWhitespace;
-						default:
-							return count;
-					}
-				}
-			}
-		});
-	var lines = _elm_lang$core$String$lines(multilineSting);
-	var minLead = A2(
-		_elm_lang$core$Maybe$withDefault,
-		0,
-		_elm_lang$core$List$minimum(
-			A2(
-				_elm_lang$core$List$map,
-				countLeadingWhitespace(0),
-				A2(
-					_elm_lang$core$List$filter,
-					_elm_lang$core$String$any(isNotWhitespace),
-					lines))));
-	return A2(
-		_elm_lang$core$String$join,
-		'\n',
-		A2(
-			_elm_lang$core$List$map,
-			_elm_lang$core$String$dropLeft(minLead),
-			lines));
-};
-var _elm_community$string_extra$String_Extra$dasherize = function (string) {
-	return _elm_lang$core$String$toLower(
-		A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex('[_-\\s]+'),
-			_elm_lang$core$Basics$always('-'),
-			A4(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('([A-Z])'),
-				function (_p24) {
-					return A2(
-						_elm_lang$core$String$append,
-						'-',
-						function (_) {
-							return _.match;
-						}(_p24));
-				},
-				_elm_lang$core$String$trim(string))));
-};
-var _elm_community$string_extra$String_Extra$underscored = function (string) {
-	return _elm_lang$core$String$toLower(
-		A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex('[_-\\s]+'),
-			_elm_lang$core$Basics$always('_'),
-			A4(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('([a-z\\d])([A-Z]+)'),
-				function (_p25) {
-					return A2(
-						_elm_lang$core$String$join,
-						'_',
-						A2(
-							_elm_lang$core$List$filterMap,
-							_elm_lang$core$Basics$identity,
-							function (_) {
-								return _.submatches;
-							}(_p25)));
-				},
-				_elm_lang$core$String$trim(string))));
-};
-var _elm_community$string_extra$String_Extra$unsurround = F2(
-	function (wrap, string) {
-		if (A2(_elm_lang$core$String$startsWith, wrap, string) && A2(_elm_lang$core$String$endsWith, wrap, string)) {
-			var length = _elm_lang$core$String$length(wrap);
-			return A2(
-				_elm_lang$core$String$dropRight,
-				length,
-				A2(_elm_lang$core$String$dropLeft, length, string));
-		} else {
-			return string;
-		}
-	});
-var _elm_community$string_extra$String_Extra$unquote = function (string) {
-	return A2(_elm_community$string_extra$String_Extra$unsurround, '\"', string);
-};
-var _elm_community$string_extra$String_Extra$surround = F2(
-	function (wrap, string) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			wrap,
-			A2(_elm_lang$core$Basics_ops['++'], string, wrap));
-	});
-var _elm_community$string_extra$String_Extra$quote = function (string) {
-	return A2(_elm_community$string_extra$String_Extra$surround, '\"', string);
-};
-var _elm_community$string_extra$String_Extra$camelize = function (string) {
-	return A4(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('[-_\\s]+(.)?'),
-		function (_p26) {
-			var _p27 = _p26;
-			var _p28 = _p27.submatches;
-			if ((_p28.ctor === '::') && (_p28._0.ctor === 'Just')) {
-				return _elm_lang$core$String$toUpper(_p28._0._0);
-			} else {
-				return '';
-			}
-		},
-		_elm_lang$core$String$trim(string));
-};
-var _elm_community$string_extra$String_Extra$isBlank = function (string) {
-	return A2(
-		_elm_lang$core$Regex$contains,
-		_elm_lang$core$Regex$regex('^\\s*$'),
-		string);
-};
-var _elm_community$string_extra$String_Extra$clean = function (string) {
-	return _elm_lang$core$String$trim(
-		A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex('\\s\\s+'),
-			_elm_lang$core$Basics$always(' '),
-			string));
-};
-var _elm_community$string_extra$String_Extra$softBreakRegexp = function (width) {
-	return _elm_lang$core$Regex$regex(
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			'.{1,',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_elm_lang$core$Basics$toString(width),
-				'}(\\s+|$)|\\S+?(\\s+|$)')));
-};
-var _elm_community$string_extra$String_Extra$softEllipsis = F2(
-	function (howLong, string) {
-		return (_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$String$length(string),
-			howLong) < 1) ? string : A3(
-			_elm_lang$core$Basics$flip,
-			_elm_lang$core$String$append,
-			'...',
-			A4(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('([\\.,;:\\s])+$'),
-				_elm_lang$core$Basics$always(''),
-				A2(
-					_elm_lang$core$String$join,
-					'',
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.match;
-						},
-						A3(
-							_elm_lang$core$Regex$find,
-							_elm_lang$core$Regex$AtMost(1),
-							_elm_community$string_extra$String_Extra$softBreakRegexp(howLong),
-							string)))));
-	});
-var _elm_community$string_extra$String_Extra$softBreak = F2(
-	function (width, string) {
-		return (_elm_lang$core$Native_Utils.cmp(width, 0) < 1) ? {ctor: '[]'} : A2(
-			_elm_lang$core$List$map,
-			function (_) {
-				return _.match;
-			},
-			A3(
-				_elm_lang$core$Regex$find,
-				_elm_lang$core$Regex$All,
-				_elm_community$string_extra$String_Extra$softBreakRegexp(width),
-				string));
-	});
-var _elm_community$string_extra$String_Extra$softWrapWith = F3(
-	function (width, separator, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			separator,
-			A2(_elm_community$string_extra$String_Extra$softBreak, width, string));
-	});
-var _elm_community$string_extra$String_Extra$softWrap = F2(
-	function (width, string) {
-		return A3(_elm_community$string_extra$String_Extra$softWrapWith, width, '\n', string);
-	});
-var _elm_community$string_extra$String_Extra$breaker = F3(
-	function (width, string, acc) {
-		breaker:
-		while (true) {
-			var _p29 = string;
-			if (_p29 === '') {
-				return _elm_lang$core$List$reverse(acc);
-			} else {
-				var _v42 = width,
-					_v43 = A2(_elm_lang$core$String$dropLeft, width, string),
-					_v44 = {
-					ctor: '::',
-					_0: A3(_elm_lang$core$String$slice, 0, width, string),
-					_1: acc
-				};
-				width = _v42;
-				string = _v43;
-				acc = _v44;
-				continue breaker;
-			}
-		}
-	});
-var _elm_community$string_extra$String_Extra$break = F2(
-	function (width, string) {
-		return (_elm_lang$core$Native_Utils.eq(width, 0) || _elm_lang$core$Native_Utils.eq(string, '')) ? {
-			ctor: '::',
-			_0: string,
-			_1: {ctor: '[]'}
-		} : A3(
-			_elm_community$string_extra$String_Extra$breaker,
-			width,
-			string,
-			{ctor: '[]'});
-	});
-var _elm_community$string_extra$String_Extra$wrapWith = F3(
-	function (width, separator, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			separator,
-			A2(_elm_community$string_extra$String_Extra$break, width, string));
-	});
-var _elm_community$string_extra$String_Extra$wrap = F2(
-	function (width, string) {
-		return A3(_elm_community$string_extra$String_Extra$wrapWith, width, '\n', string);
-	});
-var _elm_community$string_extra$String_Extra$replaceSlice = F4(
-	function (substitution, start, end, string) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(_elm_lang$core$String$slice, 0, start, string),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				substitution,
-				A3(
-					_elm_lang$core$String$slice,
-					end,
-					_elm_lang$core$String$length(string),
-					string)));
-	});
-var _elm_community$string_extra$String_Extra$insertAt = F3(
-	function (insert, pos, string) {
-		return A4(_elm_community$string_extra$String_Extra$replaceSlice, insert, pos, pos, string);
-	});
-var _elm_community$string_extra$String_Extra$replace = F3(
-	function (search, substitution, string) {
-		return A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex(
-				_elm_lang$core$Regex$escape(search)),
-			function (_p30) {
-				return substitution;
-			},
-			string);
-	});
-var _elm_community$string_extra$String_Extra$changeCase = F2(
-	function (mutator, word) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(
-				_elm_lang$core$Maybe$map,
-				function (_p31) {
-					var _p32 = _p31;
-					return A2(
-						_elm_lang$core$String$cons,
-						mutator(_p32._0),
-						_p32._1);
-				},
-				_elm_lang$core$String$uncons(word)));
-	});
-var _elm_community$string_extra$String_Extra$toSentenceCase = function (word) {
-	return A2(_elm_community$string_extra$String_Extra$changeCase, _elm_lang$core$Char$toUpper, word);
-};
-var _elm_community$string_extra$String_Extra$toTitleCase = function (ws) {
-	var uppercaseMatch = A3(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('\\w+'),
-		function (_p33) {
-			return _elm_community$string_extra$String_Extra$toSentenceCase(
-				function (_) {
-					return _.match;
-				}(_p33));
-		});
-	return A4(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('^([a-z])|\\s+([a-z])'),
-		function (_p34) {
-			return uppercaseMatch(
-				function (_) {
-					return _.match;
-				}(_p34));
-		},
-		ws);
-};
-var _elm_community$string_extra$String_Extra$classify = function (string) {
-	return _elm_community$string_extra$String_Extra$toSentenceCase(
-		A3(
-			_elm_community$string_extra$String_Extra$replace,
-			' ',
-			'',
-			_elm_community$string_extra$String_Extra$camelize(
-				A4(
-					_elm_lang$core$Regex$replace,
-					_elm_lang$core$Regex$All,
-					_elm_lang$core$Regex$regex('[\\W_]'),
-					_elm_lang$core$Basics$always(' '),
-					string))));
-};
-var _elm_community$string_extra$String_Extra$humanize = function (string) {
-	return _elm_community$string_extra$String_Extra$toSentenceCase(
-		_elm_lang$core$String$toLower(
-			_elm_lang$core$String$trim(
-				A4(
-					_elm_lang$core$Regex$replace,
-					_elm_lang$core$Regex$All,
-					_elm_lang$core$Regex$regex('_id$|[-_\\s]+'),
-					_elm_lang$core$Basics$always(' '),
-					A4(
-						_elm_lang$core$Regex$replace,
-						_elm_lang$core$Regex$All,
-						_elm_lang$core$Regex$regex('[A-Z]'),
-						function (_p35) {
-							return A2(
-								_elm_lang$core$String$append,
-								'-',
-								function (_) {
-									return _.match;
-								}(_p35));
-						},
-						string)))));
-};
-var _elm_community$string_extra$String_Extra$decapitalize = function (word) {
-	return A2(_elm_community$string_extra$String_Extra$changeCase, _elm_lang$core$Char$toLower, word);
-};
-
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$initScalarField = F3(
 	function (apiSubmodule, fieldName, typeRef) {
 		return {
@@ -9729,116 +8873,35 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArgs = F2(
 	function (args, fieldGenerator) {
 		return A3(_elm_lang$core$List$foldr, _dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg, fieldGenerator, args);
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$interfaceThing = F4(
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 	function (_p2, fieldName, typeRef, refName) {
 		var _p3 = _p2;
 		var _p4 = _p3.apiSubmodule;
-		var interfaceSelectionAnnotation = F2(
-			function (typeVariableName, name) {
-				return A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
-					'SelectionSet {0} {1}',
-					{
-						ctor: '::',
-						_0: typeVariableName,
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$String$join,
-								'.',
-								A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$object, _p3, name)),
-							_1: {ctor: '[]'}
-						}
-					});
-			});
-		var implementors = A2(
-			_elm_lang$core$Maybe$withDefault,
-			{ctor: '[]'},
-			A2(_elm_lang$core$Dict$get, refName, _p3.interfaces));
-		return A2(
-			_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArgs,
+		var objectArgAnnotation = A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'SelectionSet {0} {1}',
 			{
 				ctor: '::',
-				_0: {
-					annotation: A2(
-						interfaceSelectionAnnotation,
-						_elm_community$string_extra$String_Extra$decapitalize(refName),
-						refName),
-					arg: A2(
-						_elm_lang$core$Basics_ops['++'],
-						_elm_community$string_extra$String_Extra$decapitalize(refName),
-						'Selection')
-				},
-				_1: A2(
-					_elm_lang$core$List$map,
-					function (interfaceImplementorName) {
-						return {
-							annotation: A2(interfaceSelectionAnnotation, 'union', interfaceImplementorName),
-							arg: A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_community$string_extra$String_Extra$decapitalize(interfaceImplementorName),
-								'Selection')
-						};
-					},
-					implementors)
-			},
+				_0: fieldName,
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$String$join,
+						'.',
+						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$object, _p3, refName)),
+					_1: {ctor: '[]'}
+				}
+			});
+		return A2(
+			_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg,
+			{annotation: objectArgAnnotation, arg: 'object'},
 			{
 				annotatedArgs: {ctor: '[]'},
 				fieldArgs: {ctor: '[]'},
-				decoderAnnotation: A3(
-					_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType,
-					_p4,
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'( ',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_community$string_extra$String_Extra$decapitalize(refName),
-							', union )')),
-					typeRef),
-				decoder: A2(
-					_elm_lang$core$String$join,
-					' |> ',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						A2(
-							_elm_lang$core$List$indexedMap,
-							F2(
-								function (index, name) {
-									return A2(
-										_dillonkearns$graphqelm$Interpolate$interpolate,
-										'Graphqelm.SelectionSet.{0} ( \"{1}\", {2} )',
-										{
-											ctor: '::',
-											_0: _elm_lang$core$Native_Utils.eq(index, 0) ? 'singleton' : 'add',
-											_1: {
-												ctor: '::',
-												_0: name,
-												_1: {
-													ctor: '::',
-													_0: A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_community$string_extra$String_Extra$decapitalize(name),
-														'Selection'),
-													_1: {ctor: '[]'}
-												}
-											}
-										});
-								}),
-							implementors),
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$Basics_ops['++'],
-								'Graphqelm.SelectionSet.withBase ',
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									_elm_community$string_extra$String_Extra$decapitalize(refName),
-									'Selection')),
-							_1: {ctor: '[]'}
-						})),
+				decoderAnnotation: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, _p4, fieldName, typeRef),
+				decoder: 'object',
 				fieldName: fieldName,
-				otherThing: '.polymorphicSelectionDecoder',
+				otherThing: '.selectionFieldDecoder',
 				letBindings: {ctor: '[]'},
 				objectDecoderChain: _elm_lang$core$Maybe$Just(
 					A2(
@@ -9853,61 +8916,18 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$interfaceThing = F4(
 							')')))
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
-	function (_p5, fieldName, typeRef, refName) {
-		var _p6 = _p5;
-		var _p7 = _p6.apiSubmodule;
-		var objectArgAnnotation = A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'SelectionSet {0} {1}',
-			{
-				ctor: '::',
-				_0: fieldName,
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						'.',
-						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$object, _p6, refName)),
-					_1: {ctor: '[]'}
-				}
-			});
-		return A2(
-			_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg,
-			{annotation: objectArgAnnotation, arg: 'object'},
-			{
-				annotatedArgs: {ctor: '[]'},
-				fieldArgs: {ctor: '[]'},
-				decoderAnnotation: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, _p7, fieldName, typeRef),
-				decoder: 'object',
-				fieldName: fieldName,
-				otherThing: '.selectionFieldDecoder',
-				letBindings: {ctor: '[]'},
-				objectDecoderChain: _elm_lang$core$Maybe$Just(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						' (',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							A2(
-								_elm_lang$core$String$join,
-								' >> ',
-								A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder, _p7, typeRef)),
-							')')))
-			});
-	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addOptionalArgs = F3(
 	function (apiSubmodule, args, fieldGenerator) {
-		var _p8 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$generate, apiSubmodule, args);
-		if (_p8.ctor === 'Just') {
+		var _p5 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$generate, apiSubmodule, args);
+		if (_p5.ctor === 'Just') {
 			return A2(
 				_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg,
-				_p8._0.annotatedArg,
+				_p5._0.annotatedArg,
 				_elm_lang$core$Native_Utils.update(
 					fieldGenerator,
 					{
 						fieldArgs: {ctor: '::', _0: 'optionalArgs', _1: fieldGenerator.fieldArgs},
-						letBindings: A2(_elm_lang$core$Basics_ops['++'], fieldGenerator.letBindings, _p8._0.letBindings)
+						letBindings: A2(_elm_lang$core$Basics_ops['++'], fieldGenerator.letBindings, _p5._0.letBindings)
 					}));
 		} else {
 			return fieldGenerator;
@@ -9915,17 +8935,17 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addOptionalArgs = F3(
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addRequiredArgs = F3(
 	function (apiSubmodule, args, fieldGenerator) {
-		var _p9 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$generate, apiSubmodule, args);
-		if (_p9.ctor === 'Just') {
+		var _p6 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$generate, apiSubmodule, args);
+		if (_p6.ctor === 'Just') {
 			return A2(
 				_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg,
-				{annotation: _p9._0.annotation, arg: 'requiredArgs'},
+				{annotation: _p6._0.annotation, arg: 'requiredArgs'},
 				_elm_lang$core$Native_Utils.update(
 					fieldGenerator,
 					{
 						fieldArgs: {
 							ctor: '::',
-							_0: _p9._0.list,
+							_0: _p6._0.list,
 							_1: {ctor: '[]'}
 						}
 					}));
@@ -9933,31 +8953,31 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addRequiredArgs = F3(
 			return fieldGenerator;
 		}
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldArgsString = function (_p10) {
-	var _p11 = _p10;
-	var _p13 = _p11.fieldArgs;
-	var _p12 = _p13;
-	if (_p12.ctor === '[]') {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldArgsString = function (_p7) {
+	var _p8 = _p7;
+	var _p10 = _p8.fieldArgs;
+	var _p9 = _p10;
+	if (_p9.ctor === '[]') {
 		return '[]';
 	} else {
-		if (_p12._1.ctor === '[]') {
-			return _p12._0;
+		if (_p9._1.ctor === '[]') {
+			return _p9._0;
 		} else {
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				'(',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$String$join, ' ++ ', _p13),
+					A2(_elm_lang$core$String$join, ' ++ ', _p10),
 					')'));
 		}
 	}
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString = function (_p14) {
-	var _p15 = _p14;
-	var _p16 = _p15.annotatedArgs;
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString = function (_p11) {
+	var _p12 = _p11;
+	var _p13 = _p12.annotatedArgs;
 	return _elm_lang$core$Native_Utils.eq(
-		_p16,
+		_p13,
 		{ctor: '[]'}) ? '' : A2(
 		_elm_lang$core$Basics_ops['++'],
 		A2(
@@ -9968,7 +8988,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString = function 
 				function (_) {
 					return _.arg;
 				},
-				_p16)),
+				_p13)),
 		' ');
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F3(
@@ -10073,21 +9093,21 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$InterfaceLeaf = function (
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$ObjectLeaf = function (a) {
 	return {ctor: 'ObjectLeaf', _0: a};
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType = function (_p17) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType = function (_p14) {
 	leafType:
 	while (true) {
-		var _p18 = _p17;
-		var _p19 = _p18._0;
-		switch (_p19.ctor) {
+		var _p15 = _p14;
+		var _p16 = _p15._0;
+		switch (_p16.ctor) {
 			case 'ObjectRef':
-				return _dillonkearns$graphqelm$Graphqelm_Generator_Field$ObjectLeaf(_p19._0);
+				return _dillonkearns$graphqelm$Graphqelm_Generator_Field$ObjectLeaf(_p16._0);
 			case 'InterfaceRef':
-				return _dillonkearns$graphqelm$Graphqelm_Generator_Field$InterfaceLeaf(_p19._0);
+				return _dillonkearns$graphqelm$Graphqelm_Generator_Field$InterfaceLeaf(_p16._0);
 			case 'Scalar':
 				return _dillonkearns$graphqelm$Graphqelm_Generator_Field$ScalarLeaf;
 			case 'List':
-				var _v10 = _p19._0;
-				_p17 = _v10;
+				var _v9 = _p16._0;
+				_p14 = _v9;
 				continue leafType;
 			case 'EnumRef':
 				return _dillonkearns$graphqelm$Graphqelm_Generator_Field$EnumLeaf;
@@ -10095,45 +9115,45 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType = function (_p17)
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Field',
 					{
-						start: {line: 242, column: 5},
-						end: {line: 259, column: 42}
+						start: {line: 179, column: 5},
+						end: {line: 196, column: 42}
 					},
-					_p19)('Unexpected type');
+					_p16)('Unexpected type');
 		}
 	}
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$init = F3(
-	function (_p22, fieldName, _p21) {
-		var _p23 = _p22;
-		var _p28 = _p23;
-		var _p27 = _p23.apiSubmodule;
-		var _p24 = _p21;
-		var _p26 = _p24;
-		var _p25 = _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType(_p26);
-		switch (_p25.ctor) {
+	function (_p19, fieldName, _p18) {
+		var _p20 = _p19;
+		var _p25 = _p20;
+		var _p24 = _p20.apiSubmodule;
+		var _p21 = _p18;
+		var _p23 = _p21;
+		var _p22 = _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType(_p23);
+		switch (_p22.ctor) {
 			case 'ObjectLeaf':
-				return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing, _p28, fieldName, _p26, _p25._0);
+				return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing, _p25, fieldName, _p23, _p22._0);
 			case 'InterfaceLeaf':
-				return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Field$interfaceThing, _p28, fieldName, _p26, _p25._0);
+				return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing, _p25, fieldName, _p23, _p22._0);
 			case 'EnumLeaf':
-				return A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$initScalarField, _p27, fieldName, _p26);
+				return A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$initScalarField, _p24, fieldName, _p23);
 			default:
-				return A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$initScalarField, _p27, fieldName, _p26);
+				return A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$initScalarField, _p24, fieldName, _p23);
 		}
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator = F2(
-	function (_p29, field) {
-		var _p30 = _p29;
-		var _p31 = _p30.apiSubmodule;
+	function (_p26, field) {
+		var _p27 = _p26;
+		var _p28 = _p27.apiSubmodule;
 		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Generator_Field$addOptionalArgs,
-			_p31,
+			_p28,
 			field.args,
 			A3(
 				_dillonkearns$graphqelm$Graphqelm_Generator_Field$addRequiredArgs,
-				_p31,
+				_p28,
 				field.args,
-				A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$init, _p30, field.name, field.typeRef)));
+				A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$init, _p27, field.name, field.typeRef)));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$generate = F3(
 	function (context, thisObjectName, field) {

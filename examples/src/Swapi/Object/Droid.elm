@@ -25,9 +25,9 @@ appearsIn =
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet character Swapi.Object.Character -> SelectionSet union Swapi.Object.Human -> SelectionSet union Swapi.Object.Droid -> FieldDecoder (List ( character, union )) Swapi.Object.Droid
-friends characterSelection humanSelection droidSelection =
-    Object.polymorphicSelectionDecoder "friends" [] (Graphqelm.SelectionSet.singleton ( "Human", humanSelection ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection) (identity >> Decode.list)
+friends : SelectionSet friends Swapi.Object.Character -> FieldDecoder (List friends) Swapi.Object.Droid
+friends object =
+    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
 
 
 {-| The ID of the droid.

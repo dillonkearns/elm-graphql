@@ -37,9 +37,9 @@ appearsIn =
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet character Swapi.Object.Character -> FieldDecoder (List character) Swapi.Object.Character
-friends selection =
-    Object.selectionFieldDecoder "friends" [] selection (identity >> Decode.list)
+friends : SelectionSet friends Swapi.Object.Character -> FieldDecoder (List friends) Swapi.Object.Character
+friends object =
+    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
 
 
 {-| The ID of the character.
