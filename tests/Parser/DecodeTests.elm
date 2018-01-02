@@ -201,17 +201,28 @@ all =
             \() ->
                 """
                       {
-                        "possibleTypes": null,
-                        "name": "Character",
-                        "kind": "INTERFACE",
-                        "interfaces": [],
-                        "inputFields": null,
-                        "fields": [
-                                    {
-                                      "type": {
-                                        "ofType": {
+                        "possibleTypes": [
+                          {
+                            "ofType": null,
+                            "name": "Human",
+                            "kind": "OBJECT"
+                          },
+                          {
+                            "ofType": null,
+                            "name": "Droid",
+                            "kind": "OBJECT"
+                          }
+                          ],
+                          "name": "Character",
+                          "kind": "INTERFACE",
+                          "interfaces": [],
+                          "inputFields": null,
+                          "fields": [
+                                      {
+                                        "type": {
                                           "ofType": {
                                             "ofType": {
+                                              "ofType": {
                                               "name": "Character",
                                               "kind": "INTERFACE"
                                             },
@@ -248,6 +259,7 @@ all =
                                       , args = []
                                       }
                                     ]
+                                    [ "Human", "Droid" ]
                                 )
                                 Nothing
                             )
@@ -430,6 +442,7 @@ all =
                                       , args = []
                                       }
                                     ]
+                                    [ "Human", "Droid" ]
                                 )
                                 Nothing
                             )

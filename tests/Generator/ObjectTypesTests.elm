@@ -39,7 +39,7 @@ placeholder =
                     (Type.ObjectType [])
                     Nothing
                 , Type.TypeDefinition "MyInterface"
-                    (Type.InterfaceType [])
+                    (Type.InterfaceType [] [])
                     Nothing
                 ]
                     |> ObjectTypes.generate [ "Api" ]

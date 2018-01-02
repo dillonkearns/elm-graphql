@@ -7,7 +7,7 @@ import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
 import Graphqelm.Generator.ObjectTypes as ObjectTypes
 import Graphqelm.Generator.Query
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
 type alias IntrospectionData =
@@ -15,6 +15,21 @@ type alias IntrospectionData =
     , queryObjectName : String
     , mutationObjectName : Maybe String
     }
+
+
+interfacePossibleTypesDict : List TypeDefinition -> Dict String (List String)
+interfacePossibleTypesDict typeDefs =
+    typeDefs
+        |> List.filterMap
+            (\(TypeDefinition typeName definableType description) ->
+                case definableType of
+                    Type.InterfaceType fields possibleTypes ->
+                        Just ( typeName, possibleTypes )
+
+                    _ ->
+                        Nothing
+            )
+        |> Dict.fromList
 
 
 generateFiles : List String -> IntrospectionData -> Dict String String
@@ -37,7 +52,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                 { query = queryObjectName
                 , mutation = mutationObjectName
                 , apiSubmodule = apiSubmodule
-                , interfaces = Dict.fromList [ ( "Character", [ "Human", "Droid" ] ) ]
+                , interfaces = interfacePossibleTypesDict typeDefinitions
                 }
             )
         |> List.append [ objectTypes ]
@@ -103,6 +118,6 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
             Graphqelm.Generator.Enum.generate context.apiSubmodule name enumValues description
                 |> Just
 
-        Type.InterfaceType fields ->
+        Type.InterfaceType fields possibleTypes ->
             Graphqelm.Generator.Object.generate context name fields
                 |> Just

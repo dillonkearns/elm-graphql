@@ -7546,15 +7546,16 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$enumDecoder = A4(
 		_elm_lang$core$Json_Decode$field,
 		'enumValues',
 		_elm_lang$core$Json_Decode$list(_dillonkearns$graphqelm$Graphqelm_Parser_Type$enumValueDecoder)));
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceType = function (a) {
-	return {ctor: 'InterfaceType', _0: a};
-};
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$createInterface = F2(
-	function (interfaceName, fields) {
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceType = F2(
+	function (a, b) {
+		return {ctor: 'InterfaceType', _0: a, _1: b};
+	});
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$createInterface = F3(
+	function (interfaceName, fields, possibleTypes) {
 		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeDefinition,
 			interfaceName,
-			_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceType(fields),
+			A2(_dillonkearns$graphqelm$Graphqelm_Parser_Type$InterfaceType, fields, possibleTypes),
 			_elm_lang$core$Maybe$Nothing);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$ObjectType = function (a) {
@@ -7840,15 +7841,20 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$fieldDecoder = A5(
 		_elm_lang$core$Json_Decode$field,
 		'args',
 		_elm_lang$core$Json_Decode$list(_dillonkearns$graphqelm$Graphqelm_Parser_Type$argDecoder)));
-var _dillonkearns$graphqelm$Graphqelm_Parser_Type$interfaceDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
+var _dillonkearns$graphqelm$Graphqelm_Parser_Type$interfaceDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$createInterface,
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'fields',
 		_elm_lang$core$Json_Decode$list(
-			A2(_elm_lang$core$Json_Decode$map, _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField, _dillonkearns$graphqelm$Graphqelm_Parser_Type$fieldDecoder))));
+			A2(_elm_lang$core$Json_Decode$map, _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField, _dillonkearns$graphqelm$Graphqelm_Parser_Type$fieldDecoder))),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'possibleTypes',
+		_elm_lang$core$Json_Decode$list(
+			A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string))));
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$objectDecoder = A3(
 	_elm_lang$core$Json_Decode$map2,
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$createObject,
@@ -10406,12 +10412,28 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery = F2(
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns = function (typeDefinitions) {
 	return A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_Group$isBuiltIn, typeDefinitions);
 };
+var _dillonkearns$graphqelm$Graphqelm_Generator_Group$interfacePossibleTypesDict = function (typeDefs) {
+	return _elm_lang$core$Dict$fromList(
+		A2(
+			_elm_lang$core$List$filterMap,
+			function (_p12) {
+				var _p13 = _p12;
+				var _p14 = _p13._1;
+				if (_p14.ctor === 'InterfaceType') {
+					return _elm_lang$core$Maybe$Just(
+						{ctor: '_Tuple2', _0: _p13._0, _1: _p14._1});
+				} else {
+					return _elm_lang$core$Maybe$Nothing;
+				}
+			},
+			typeDefs));
+};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles = F2(
-	function (apiSubmodule, _p12) {
-		var _p13 = _p12;
-		var _p16 = _p13.typeDefinitions;
-		var _p15 = _p13.queryObjectName;
-		var _p14 = _p13.mutationObjectName;
+	function (apiSubmodule, _p15) {
+		var _p16 = _p15;
+		var _p19 = _p16.typeDefinitions;
+		var _p18 = _p16.queryObjectName;
+		var _p17 = _p16.mutationObjectName;
 		var objectTypes = {
 			ctor: '_Tuple2',
 			_0: A2(
@@ -10427,11 +10449,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles = F2(
 				apiSubmodule,
 				A2(
 					_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
-					_p14,
+					_p17,
 					A2(
 						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery,
-						_p15,
-						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p16))))
+						_p18,
+						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p19))))
 		};
 		return _elm_lang$core$Dict$fromList(
 			A2(
@@ -10448,29 +10470,12 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles = F2(
 						_elm_lang$core$List$filterMap,
 						_dillonkearns$graphqelm$Graphqelm_Generator_Group$toPair(
 							{
-								query: _p15,
-								mutation: _p14,
+								query: _p18,
+								mutation: _p17,
 								apiSubmodule: apiSubmodule,
-								interfaces: _elm_lang$core$Dict$fromList(
-									{
-										ctor: '::',
-										_0: {
-											ctor: '_Tuple2',
-											_0: 'Character',
-											_1: {
-												ctor: '::',
-												_0: 'Human',
-												_1: {
-													ctor: '::',
-													_0: 'Droid',
-													_1: {ctor: '[]'}
-												}
-											}
-										},
-										_1: {ctor: '[]'}
-									})
+								interfaces: _dillonkearns$graphqelm$Graphqelm_Generator_Group$interfacePossibleTypesDict(_p19)
 							}),
-						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p16)))));
+						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p19)))));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$IntrospectionData = F3(
 	function (a, b, c) {
