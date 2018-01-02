@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Mutation exposing (..)
+module Graphqelm.Generator.Mutation exposing (generate, moduleName)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator

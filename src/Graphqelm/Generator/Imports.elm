@@ -2,7 +2,7 @@ module Graphqelm.Generator.Imports exposing (imports, importsString, importsWith
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
 allRefs : List Type.Field -> List TypeReference

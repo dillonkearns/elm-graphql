@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Interface exposing (..)
+module Graphqelm.Generator.Interface exposing (generate)
 
 import Dict
 import Graphqelm.Generator.Context exposing (Context)
