@@ -162,6 +162,11 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
 interfaceThing : Context -> String -> TypeReference -> String -> FieldGenerator
 interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refName =
     let
+        implementors =
+            interfaces
+                |> Dict.get refName
+                |> Maybe.withDefault []
+
         interfaceSelectionAnnotation typeVariableName name =
             interpolate
                 "SelectionSet {0} {1}"
@@ -174,11 +179,20 @@ interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refNa
             ("( " ++ String.Extra.decapitalize refName ++ ", union )")
             typeRef
     , decoder =
-        ([ "Graphqelm.SelectionSet.singleton ( \"Human\", humanSelection )"
-         , "Graphqelm.SelectionSet.add ( \"Droid\", droidSelection )"
-         ]
-            ++ [ "Graphqelm.SelectionSet.withBase " ++ String.Extra.decapitalize refName ++ "Selection" ]
+        (implementors
+            |> List.indexedMap
+                (\index name ->
+                    interpolate "Graphqelm.SelectionSet.{0} ( \"{1}\", {2} )"
+                        [ if index == 0 then
+                            "singleton"
+                          else
+                            "add"
+                        , name
+                        , String.Extra.decapitalize name ++ "Selection"
+                        ]
+                )
         )
+            ++ [ "Graphqelm.SelectionSet.withBase " ++ String.Extra.decapitalize refName ++ "Selection" ]
             |> String.join " |> "
     , fieldName = fieldName
     , otherThing = ".polymorphicSelectionDecoder"
@@ -195,9 +209,7 @@ interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refNa
             ({ annotation = interfaceSelectionAnnotation (String.Extra.decapitalize refName) refName
              , arg = String.Extra.decapitalize refName ++ "Selection"
              }
-                :: (interfaces
-                        |> Dict.get refName
-                        |> Maybe.withDefault []
+                :: (implementors
                         |> List.map
                             (\interfaceImplementorName ->
                                 { annotation = interfaceSelectionAnnotation "union" interfaceImplementorName
