@@ -7,13 +7,33 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.GitSignature
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.GitSignature
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.GitSignature) -> SelectionSet (a -> constructor) Github.Object.GitSignature
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onGpgSignature : SelectionSet selection Github.Object.GpgSignature -> FragmentSelectionSet selection Github.Object.GitSignature
+onGpgSignature (SelectionSet fields decoder) =
+    FragmentSelectionSet "GpgSignature" fields decoder
+
+
+onSmimeSignature : SelectionSet selection Github.Object.SmimeSignature -> FragmentSelectionSet selection Github.Object.GitSignature
+onSmimeSignature (SelectionSet fields decoder) =
+    FragmentSelectionSet "SmimeSignature" fields decoder
+
+
+onUnknownSignature : SelectionSet selection Github.Object.UnknownSignature -> FragmentSelectionSet selection Github.Object.GitSignature
+onUnknownSignature (SelectionSet fields decoder) =
+    FragmentSelectionSet "UnknownSignature" fields decoder
 
 
 {-| Email used to sign this object.

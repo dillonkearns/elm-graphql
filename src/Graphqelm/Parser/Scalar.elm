@@ -1,4 +1,4 @@
-module Graphqelm.Parser.Scalar exposing (..)
+module Graphqelm.Parser.Scalar exposing (Scalar(..), parse)
 
 
 type Scalar

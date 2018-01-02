@@ -1,4 +1,18 @@
-module Graphqelm.Parser.Type exposing (..)
+module Graphqelm.Parser.Type
+    exposing
+        ( Arg
+        , DefinableType(..)
+        , EnumValue
+        , Field
+        , IsNullable(..)
+        , RawTypeRef(RawTypeRef)
+        , ReferrableType(..)
+        , TypeDefinition(TypeDefinition)
+        , TypeReference(TypeReference)
+        , decoder
+        , parseRef
+        , typeRefDecoder
+        )
 
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind)
@@ -42,13 +56,14 @@ scalarDecoder =
 
 interfaceDecoder : Decoder TypeDefinition
 interfaceDecoder =
-    Decode.map2 createInterface
+    Decode.map3 createInterface
         (Decode.field "name" Decode.string)
         (fieldDecoder
             |> Decode.map parseField
             |> Decode.list
             |> Decode.field "fields"
         )
+        (Decode.field "possibleTypes" (Decode.string |> Decode.field "name" |> Decode.list))
 
 
 parseField : RawField -> Field
@@ -113,9 +128,9 @@ createObject objectName fields =
     TypeDefinition objectName (ObjectType fields) Nothing
 
 
-createInterface : String -> List Field -> TypeDefinition
-createInterface interfaceName fields =
-    TypeDefinition interfaceName (InterfaceType fields) Nothing
+createInterface : String -> List Field -> List String -> TypeDefinition
+createInterface interfaceName fields possibleTypes =
+    TypeDefinition interfaceName (InterfaceType fields possibleTypes) Nothing
 
 
 typeRefDecoder : Decoder RawTypeRef
@@ -174,7 +189,7 @@ type TypeDefinition
 type DefinableType
     = ScalarType
     | ObjectType (List Field)
-    | InterfaceType (List Field)
+    | InterfaceType (List Field) (List String)
     | EnumType (List EnumValue)
 
 
@@ -323,4 +338,7 @@ type alias RawField =
 
 
 type alias RawArg =
-    { name : String, description : Maybe String, ofType : RawTypeRef }
+    { name : String
+    , description : Maybe String
+    , ofType : RawTypeRef
+    }

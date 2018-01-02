@@ -27,7 +27,7 @@ alias fieldIndex fields field =
         Just (fieldName ++ toString (List.length indices + 1))
 
 
-serialize : Maybe String -> Int -> Field -> String
+serialize : Maybe String -> Int -> Field -> Maybe String
 serialize alias indentationLevel field =
     let
         prefix =
@@ -38,26 +38,30 @@ serialize alias indentationLevel field =
                 Nothing ->
                     ""
     in
-    Indent.generate indentationLevel
-        ++ prefix
-        ++ (case field of
-                Composite fieldName args children ->
-                    if children == [] then
-                        ""
-                        -- TODO don't include prefix when empty
-                    else
-                        (fieldName
-                            ++ Argument.serialize args
-                            ++ " {\n"
-                            ++ serializeChildren indentationLevel children
-                        )
-                            ++ "\n"
-                            ++ Indent.generate indentationLevel
-                            ++ "}"
+    (case field of
+        Composite fieldName args children ->
+            if children == [] then
+                Nothing
+            else
+                (fieldName
+                    ++ Argument.serialize args
+                    ++ " {\n"
+                    ++ serializeChildren indentationLevel children
+                )
+                    ++ "\n"
+                    ++ Indent.generate indentationLevel
+                    ++ "}"
+                    |> Just
 
-                Leaf fieldName args ->
-                    fieldName
-           )
+        Leaf fieldName args ->
+            Just fieldName
+    )
+        |> Maybe.map
+            (\string ->
+                Indent.generate indentationLevel
+                    ++ prefix
+                    ++ string
+            )
 
 
 serializeChildren : Int -> List Field -> String
@@ -67,4 +71,5 @@ serializeChildren indentationLevel children =
             (\index selection ->
                 serialize (alias index children selection) (indentationLevel + 1) selection
             )
+        |> List.filterMap identity
         |> String.join "\n"

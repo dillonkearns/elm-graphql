@@ -8,13 +8,28 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryOwner
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryOwner
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.RepositoryOwner) -> SelectionSet (a -> constructor) Github.Object.RepositoryOwner
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Object.RepositoryOwner
+onOrganization (SelectionSet fields decoder) =
+    FragmentSelectionSet "Organization" fields decoder
+
+
+onUser : SelectionSet selection Github.Object.User -> FragmentSelectionSet selection Github.Object.RepositoryOwner
+onUser (SelectionSet fields decoder) =
+    FragmentSelectionSet "User" fields decoder
 
 
 {-| A URL pointing to the owner's public avatar.

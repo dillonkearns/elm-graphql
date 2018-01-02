@@ -1,8 +1,8 @@
-module Graphqelm.Generator.Imports exposing (..)
+module Graphqelm.Generator.Imports exposing (imports, importsString, importsWithoutSelf, object)
 
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum
-import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
 allRefs : List Type.Field -> List TypeReference
@@ -65,8 +65,8 @@ imports apiSubmodule (Type.TypeReference referrableType isNullable) =
             Nothing
 
 
-object : List String -> SpecialObjectNames -> String -> List String
-object apiSubmodule { query, mutation } name =
+object : Context -> String -> List String
+object { query, mutation, apiSubmodule } name =
     if name == query then
         [ "RootQuery" ]
     else if Just name == mutation then

@@ -1,5 +1,6 @@
 module Generator.FieldTests exposing (..)
 
+import Dict
 import Expect
 import Graphqelm.Generator.Field as Field
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
@@ -13,7 +14,7 @@ all =
         [ test "simple scalar converts for query" <|
             \() ->
                 meField
-                    |> Field.generate [ "Api" ] { query = "RootQueryObject", mutation = Nothing } "RootQueryObject"
+                    |> Field.generate { query = "RootQueryObject", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQueryObject"
                     |> Expect.equal
                         """me : FieldDecoder String RootQuery
 me =
@@ -22,7 +23,7 @@ me =
         , test "converts for object" <|
             \() ->
                 meField
-                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "Foo"
+                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "Foo"
                     |> Expect.equal
                         """me : FieldDecoder String Api.Object.Foo
 me =
@@ -32,23 +33,45 @@ me =
             \() ->
                 { name = "droid"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
+                , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
                 }
-                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "RootQuery"
+                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQuery"
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid RootQuery
 droid object =
       Object.selectionFieldDecoder "droid" [] (object) (identity)
 """
+        , test "simple interface with no args" <|
+            \() ->
+                { name = "hero"
+                , description = Nothing
+                , typeRef = Type.TypeReference (Type.InterfaceRef "Character") Type.NonNullable
+                , args = []
+                }
+                    |> Field.generate
+                        { query = "RootQuery"
+                        , mutation = Nothing
+                        , apiSubmodule = [ "Swapi" ]
+                        , interfaces =
+                            Dict.fromList
+                                [ ( "Character", [ "Human", "Droid" ] )
+                                ]
+                        }
+                        "RootQuery"
+                    |> Expect.equal
+                        """hero : SelectionSet hero Swapi.Object.Character -> FieldDecoder hero RootQuery
+hero object =
+      Object.selectionFieldDecoder "hero" [] (object) (identity)
+"""
         , test "simple object with no args for object" <|
             \() ->
                 { name = "droid"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable
+                , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
                 }
-                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "Foo"
+                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "Foo"
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
 droid object =
@@ -58,10 +81,10 @@ droid object =
             \() ->
                 { name = "droid"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.InterfaceRef "Droid") Type.NonNullable)) Type.NonNullable
+                , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable)) Type.NonNullable
                 , args = []
                 }
-                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "Foo"
+                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "Foo"
                     |> Expect.equal
                         """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
 droid object =
@@ -71,7 +94,7 @@ droid object =
             \() ->
                 { name = "human"
                 , description = Nothing
-                , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
+                , typeRef = Type.TypeReference (Type.ObjectRef "Human") Type.NonNullable
                 , args =
                     [ { name = "id"
                       , description = Nothing
@@ -79,7 +102,7 @@ droid object =
                       }
                     ]
                 }
-                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "RootQuery"
+                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQuery"
                     |> Expect.equal
                         """human : { id : String } -> SelectionSet human Api.Object.Human -> FieldDecoder human RootQuery
 human requiredArgs object =
@@ -97,7 +120,7 @@ human requiredArgs object =
                       }
                     ]
                 }
-                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "RootQuery"
+                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQuery"
                     |> Expect.equal
                         """menuItems : ({ contains : OptionalArgument String } -> { contains : OptionalArgument String }) -> SelectionSet menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
 menuItems fillInOptionals object =
@@ -118,7 +141,7 @@ menuItems fillInOptionals object =
                 , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                 , args = []
                 }
-                    |> Field.generate [ "Api" ] { query = "RootQuery", mutation = Nothing } "TreeEntry"
+                    |> Field.generate { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "TreeEntry"
                     |> Expect.equal
                         """type_ : FieldDecoder String Api.Object.TreeEntry
 type_ =

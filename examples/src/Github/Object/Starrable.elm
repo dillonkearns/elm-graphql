@@ -6,13 +6,28 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Starrable
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Starrable
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.Starrable) -> SelectionSet (a -> constructor) Github.Object.Starrable
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onGist : SelectionSet selection Github.Object.Gist -> FragmentSelectionSet selection Github.Object.Starrable
+onGist (SelectionSet fields decoder) =
+    FragmentSelectionSet "Gist" fields decoder
+
+
+onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Object.Starrable
+onRepository (SelectionSet fields decoder) =
+    FragmentSelectionSet "Repository" fields decoder
 
 
 id : FieldDecoder String Github.Object.Starrable

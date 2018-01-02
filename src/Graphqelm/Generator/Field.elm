@@ -1,5 +1,6 @@
 module Graphqelm.Generator.Field exposing (generate)
 
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Generator.Imports as Imports
@@ -7,8 +8,7 @@ import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
-import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
-import Graphqelm.Parser.Type as Type exposing (ReferrableType, TypeReference)
+import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
 
 
@@ -30,17 +30,17 @@ type alias AnnotatedArg =
     }
 
 
-generate : List String -> SpecialObjectNames -> String -> Type.Field -> String
-generate apiSubmodule specialObjectNames thisObjectName field =
-    toFieldGenerator apiSubmodule specialObjectNames field
-        |> forObject_ apiSubmodule specialObjectNames thisObjectName field
+generate : Context -> String -> Type.Field -> String
+generate context thisObjectName field =
+    toFieldGenerator context field
+        |> forObject_ context thisObjectName field
 
 
-forObject_ : List String -> SpecialObjectNames -> String -> Type.Field -> FieldGenerator -> String
-forObject_ apiSubmodule specialObjectNames thisObjectName field fieldGenerator =
+forObject_ : Context -> String -> Type.Field -> FieldGenerator -> String
+forObject_ context thisObjectName field fieldGenerator =
     let
         thisObjectString =
-            Imports.object apiSubmodule specialObjectNames thisObjectName |> String.join "."
+            Imports.object context thisObjectName |> String.join "."
     in
     fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectString ]) field fieldGenerator
 
@@ -93,9 +93,9 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
-toFieldGenerator : List String -> SpecialObjectNames -> Type.Field -> FieldGenerator
-toFieldGenerator apiSubmodule specialObjectNames field =
-    init apiSubmodule specialObjectNames field.name field.typeRef
+toFieldGenerator : Context -> Type.Field -> FieldGenerator
+toFieldGenerator ({ apiSubmodule } as context) field =
+    init context field.name field.typeRef
         |> addRequiredArgs apiSubmodule field.args
         |> addOptionalArgs apiSubmodule field.args
 
@@ -128,13 +128,13 @@ addOptionalArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-objectThing : List String -> SpecialObjectNames -> String -> TypeReference -> String -> FieldGenerator
-objectThing apiSubmodule specialObjectNames fieldName typeRef refName =
+objectThing : Context -> String -> TypeReference -> String -> FieldGenerator
+objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
     let
         objectArgAnnotation =
             interpolate
                 "SelectionSet {0} {1}"
-                [ fieldName, Imports.object apiSubmodule specialObjectNames refName |> String.join "." ]
+                [ fieldName, Imports.object context refName |> String.join "." ]
     in
     { annotatedArgs = []
     , fieldArgs = []
@@ -191,14 +191,14 @@ leafType (Type.TypeReference referrableType isNullable) =
             Debug.crash "Unexpected type"
 
 
-init : List String -> SpecialObjectNames -> String -> TypeReference -> FieldGenerator
-init apiSubmodule specialObjectNames fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
+init : Context -> String -> TypeReference -> FieldGenerator
+init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
-            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
+            objectThing context fieldName typeRef refName
 
         InterfaceLeaf refName ->
-            objectThing apiSubmodule specialObjectNames fieldName typeRef refName
+            objectThing context fieldName typeRef refName
 
         EnumLeaf ->
             initScalarField apiSubmodule fieldName typeRef

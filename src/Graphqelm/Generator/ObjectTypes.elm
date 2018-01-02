@@ -48,7 +48,7 @@ nameIfDefinitionNeeded (TypeDefinition name definableType description) =
         Type.ObjectType _ ->
             Just name
 
-        Type.InterfaceType _ ->
+        Type.InterfaceType _ _ ->
             Just name
 
         Type.ScalarType ->

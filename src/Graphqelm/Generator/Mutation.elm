@@ -1,17 +1,17 @@
-module Graphqelm.Generator.Mutation exposing (..)
+module Graphqelm.Generator.Mutation exposing (generate, moduleName)
 
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Generator.SpecialObjectNames exposing (SpecialObjectNames)
 import Graphqelm.Parser.Type as Type exposing (Field)
 import Interpolate exposing (interpolate)
 
 
-generate : List String -> SpecialObjectNames -> List Field -> ( List String, String )
+generate : List String -> Context -> List Field -> ( List String, String )
 generate apiSubmodule specialObjectNames fields =
     ( moduleName apiSubmodule
     , prepend apiSubmodule (moduleName apiSubmodule) fields
-        ++ (List.map (FieldGenerator.generate apiSubmodule specialObjectNames (specialObjectNames.mutation |> Maybe.withDefault "")) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generate specialObjectNames (specialObjectNames.mutation |> Maybe.withDefault "")) fields |> String.join "\n\n")
     )
 
 

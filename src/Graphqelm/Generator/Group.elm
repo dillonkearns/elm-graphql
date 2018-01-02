@@ -1,12 +1,14 @@
 module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles)
 
 import Dict exposing (Dict)
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum
+import Graphqelm.Generator.Interface
 import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
 import Graphqelm.Generator.ObjectTypes as ObjectTypes
 import Graphqelm.Generator.Query
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
 type alias IntrospectionData =
@@ -14,6 +16,21 @@ type alias IntrospectionData =
     , queryObjectName : String
     , mutationObjectName : Maybe String
     }
+
+
+interfacePossibleTypesDict : List TypeDefinition -> Dict String (List String)
+interfacePossibleTypesDict typeDefs =
+    typeDefs
+        |> List.filterMap
+            (\(TypeDefinition typeName definableType description) ->
+                case definableType of
+                    Type.InterfaceType fields possibleTypes ->
+                        Just ( typeName, possibleTypes )
+
+                    _ ->
+                        Nothing
+            )
+        |> Dict.fromList
 
 
 generateFiles : List String -> IntrospectionData -> Dict String String
@@ -31,7 +48,14 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
     in
     typeDefinitions
         |> excludeBuiltIns
-        |> List.filterMap (toPair apiSubmodule queryObjectName mutationObjectName)
+        |> List.filterMap
+            (toPair
+                { query = queryObjectName
+                , mutation = mutationObjectName
+                , apiSubmodule = apiSubmodule
+                , interfaces = interfacePossibleTypesDict typeDefinitions
+                }
+            )
         |> List.append [ objectTypes ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
@@ -74,27 +98,27 @@ moduleToFileName modulePath =
         ++ ".elm"
 
 
-toPair : List String -> String -> Maybe String -> TypeDefinition -> Maybe ( List String, String )
-toPair apiSubmodule queryObjectName mutationObjectName ((Type.TypeDefinition name definableType description) as definition) =
+toPair : Context -> TypeDefinition -> Maybe ( List String, String )
+toPair context ((Type.TypeDefinition name definableType description) as definition) =
     case definableType of
         Type.ObjectType fields ->
-            if name == queryObjectName then
-                Graphqelm.Generator.Query.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } fields
+            if name == context.query then
+                Graphqelm.Generator.Query.generate context fields
                     |> Just
-            else if Just name == mutationObjectName then
-                Graphqelm.Generator.Mutation.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } fields
+            else if Just name == context.mutation then
+                Graphqelm.Generator.Mutation.generate context.apiSubmodule context fields
                     |> Just
             else
-                Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } name fields
+                Graphqelm.Generator.Object.generate context name fields
                     |> Just
 
         Type.ScalarType ->
             Nothing
 
         Type.EnumType enumValues ->
-            Graphqelm.Generator.Enum.generate apiSubmodule name enumValues description
+            Graphqelm.Generator.Enum.generate context.apiSubmodule name enumValues description
                 |> Just
 
-        Type.InterfaceType fields ->
-            Graphqelm.Generator.Object.generate apiSubmodule { query = queryObjectName, mutation = mutationObjectName } name fields
+        Type.InterfaceType fields possibleTypes ->
+            Graphqelm.Generator.Interface.generate context name fields
                 |> Just

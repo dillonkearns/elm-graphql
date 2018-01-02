@@ -6,13 +6,28 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Labelable
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Labelable
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.Labelable) -> SelectionSet (a -> constructor) Github.Object.Labelable
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Object.Labelable
+onIssue (SelectionSet fields decoder) =
+    FragmentSelectionSet "Issue" fields decoder
+
+
+onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Object.Labelable
+onPullRequest (SelectionSet fields decoder) =
+    FragmentSelectionSet "PullRequest" fields decoder
 
 
 {-| A list of labels associated with the object.

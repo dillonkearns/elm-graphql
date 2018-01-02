@@ -7,13 +7,43 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Reactable
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Reactable
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.Reactable) -> SelectionSet (a -> constructor) Github.Object.Reactable
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Object.Reactable
+onCommitComment (SelectionSet fields decoder) =
+    FragmentSelectionSet "CommitComment" fields decoder
+
+
+onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Object.Reactable
+onIssue (SelectionSet fields decoder) =
+    FragmentSelectionSet "Issue" fields decoder
+
+
+onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Object.Reactable
+onIssueComment (SelectionSet fields decoder) =
+    FragmentSelectionSet "IssueComment" fields decoder
+
+
+onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Object.Reactable
+onPullRequest (SelectionSet fields decoder) =
+    FragmentSelectionSet "PullRequest" fields decoder
+
+
+onPullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FragmentSelectionSet selection Github.Object.Reactable
+onPullRequestReviewComment (SelectionSet fields decoder) =
+    FragmentSelectionSet "PullRequestReviewComment" fields decoder
 
 
 {-| Identifies the primary key from the database.
