@@ -21,14 +21,14 @@ selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onDroid : SelectionSet selection Swapi.Object.Droid -> FragmentSelectionSet selection Swapi.Object.Character
-onDroid (SelectionSet fields decoder) =
-    FragmentSelectionSet "Droid" fields decoder
-
-
 onHuman : SelectionSet selection Swapi.Object.Human -> FragmentSelectionSet selection Swapi.Object.Character
 onHuman (SelectionSet fields decoder) =
     FragmentSelectionSet "Human" fields decoder
+
+
+onDroid : SelectionSet selection Swapi.Object.Droid -> FragmentSelectionSet selection Swapi.Object.Character
+onDroid (SelectionSet fields decoder) =
+    FragmentSelectionSet "Droid" fields decoder
 
 
 {-| Which movies they appear in.

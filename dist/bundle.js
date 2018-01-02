@@ -9186,6 +9186,38 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$prepend = F3(
 				}
 			});
 	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragment = F3(
+	function (context, moduleName, interfaceImplementor) {
+		return A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'on{0} : SelectionSet selection {1} -> FragmentSelectionSet selection {2}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{0}\" fields decoder\n',
+			{
+				ctor: '::',
+				_0: interfaceImplementor,
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$String$join,
+						'.',
+						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$object, context, interfaceImplementor)),
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$core$String$join, '.', moduleName),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragments = F3(
+	function (context, implementors, moduleName) {
+		return A2(
+			_elm_lang$core$String$join,
+			'\n\n',
+			A2(
+				_elm_lang$core$List$map,
+				A2(_dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragment, context, moduleName),
+				implementors));
+	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$generate = F3(
 	function (context, name, fields) {
 		return {
@@ -9199,12 +9231,22 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$generate = F3(
 					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$object, context, name),
 					fields),
 				A2(
-					_elm_lang$core$String$join,
-					'\n\n',
+					_elm_lang$core$Basics_ops['++'],
+					A3(
+						_dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragments,
+						context,
+						A2(
+							_elm_lang$core$Maybe$withDefault,
+							{ctor: '[]'},
+							A2(_elm_lang$core$Dict$get, name, context.interfaces)),
+						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$object, context, name)),
 					A2(
-						_elm_lang$core$List$map,
-						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generate, context, name),
-						fields)))
+						_elm_lang$core$String$join,
+						'\n\n',
+						A2(
+							_elm_lang$core$List$map,
+							A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generate, context, name),
+							fields))))
 		};
 	});
 
