@@ -1,4 +1,18 @@
-module Graphqelm.Parser.Type exposing (..)
+module Graphqelm.Parser.Type
+    exposing
+        ( Arg
+        , DefinableType(..)
+        , EnumValue
+        , Field
+        , IsNullable(..)
+        , RawTypeRef(RawTypeRef)
+        , ReferrableType(..)
+        , TypeDefinition(TypeDefinition)
+        , TypeReference(TypeReference)
+        , decoder
+        , parseRef
+        , typeRefDecoder
+        )
 
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind)

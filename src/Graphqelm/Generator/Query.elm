@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Query exposing (..)
+module Graphqelm.Generator.Query exposing (generate, moduleName)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator

@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Object exposing (..)
+module Graphqelm.Generator.Object exposing (generate)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator
