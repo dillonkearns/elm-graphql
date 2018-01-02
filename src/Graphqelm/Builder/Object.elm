@@ -4,7 +4,7 @@ module Graphqelm.Builder.Object exposing (fieldDecoder, object, polymorphicObjec
 @docs fieldDecoder, object, selectionFieldDecoder, polymorphicSelectionDecoder, polymorphicObject
 -}
 
-import Dict exposing (Dict)
+import Dict
 import Graphqelm.Builder.Argument exposing (Argument)
 import Graphqelm.Field exposing (Field)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecoder))
@@ -77,7 +77,7 @@ polymorphicObject typeSpecificSelections constructor =
         typeNameDecoder =
             \typeName ->
                 typeSpecificSelections
-                    |> List.map (\(FragmentSelectionSet typeName fields decoder) -> ( typeName, decoder ))
+                    |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
                     |> Dict.fromList
                     |> Dict.get typeName
                     |> Maybe.map (Decode.map Just)

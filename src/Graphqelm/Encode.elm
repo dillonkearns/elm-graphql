@@ -93,8 +93,8 @@ maybe encoder =
 serialize : Value -> String
 serialize value =
     case value of
-        EnumValue value ->
-            value
+        EnumValue enumValue ->
+            enumValue
 
         Json json ->
             Json.Encode.encode 0 json
@@ -106,7 +106,7 @@ serialize value =
 
         Object keyValuePairs ->
             "{"
-                ++ (List.map (\( key, value ) -> key ++ ": " ++ serialize value)
+                ++ (List.map (\( key, objectValue ) -> key ++ ": " ++ serialize objectValue)
                         keyValuePairs
                         |> String.join ", "
                    )
