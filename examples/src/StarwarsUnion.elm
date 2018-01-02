@@ -30,6 +30,7 @@ type alias Character =
     { details : Maybe HumanOrDroid
     , name : String
     , id : String
+    , friends : List String
     }
 
 
@@ -41,6 +42,7 @@ hero =
         ]
         |> with Character.name
         |> with Character.id
+        |> with (Character.friends (Character.baseSelection identity |> with Character.name))
 
 
 query : SelectionSet Response RootQuery

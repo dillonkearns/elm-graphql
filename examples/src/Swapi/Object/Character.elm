@@ -8,6 +8,11 @@ import Swapi.Enum.Episode
 import Swapi.Object
 
 
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Object.Character
+baseSelection constructor =
+    Object.object constructor
+
+
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Swapi.Object.Character) -> SelectionSet (a -> constructor) Swapi.Object.Character
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
@@ -32,9 +37,9 @@ appearsIn =
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet character Swapi.Object.Character -> SelectionSet union Swapi.Object.Human -> SelectionSet union Swapi.Object.Droid -> FieldDecoder (List ( character, union )) Swapi.Object.Character
-friends characterSelection humanSelection droidSelection =
-    Object.polymorphicSelectionDecoder "friends" [] (Graphqelm.SelectionSet.singleton ( "Human", humanSelection ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection) (identity >> Decode.list)
+friends : SelectionSet character Swapi.Object.Character -> FieldDecoder (List character) Swapi.Object.Character
+friends selection =
+    Object.selectionFieldDecoder "friends" [] selection (identity >> Decode.list)
 
 
 {-| The ID of the character.
