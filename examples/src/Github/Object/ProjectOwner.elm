@@ -7,13 +7,28 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ProjectOwner
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ProjectOwner
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.ProjectOwner) -> SelectionSet (a -> constructor) Github.Object.ProjectOwner
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Object.ProjectOwner
+onOrganization (SelectionSet fields decoder) =
+    FragmentSelectionSet "Organization" fields decoder
+
+
+onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Object.ProjectOwner
+onRepository (SelectionSet fields decoder) =
+    FragmentSelectionSet "Repository" fields decoder
 
 
 id : FieldDecoder String Github.Object.ProjectOwner

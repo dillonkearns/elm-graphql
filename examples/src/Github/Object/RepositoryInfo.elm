@@ -7,13 +7,28 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryInfo
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryInfo
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.RepositoryInfo) -> SelectionSet (a -> constructor) Github.Object.RepositoryInfo
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Object.RepositoryInfo
+onRepository (SelectionSet fields decoder) =
+    FragmentSelectionSet "Repository" fields decoder
+
+
+onRepositoryInvitationRepository : SelectionSet selection Github.Object.RepositoryInvitationRepository -> FragmentSelectionSet selection Github.Object.RepositoryInfo
+onRepositoryInvitationRepository (SelectionSet fields decoder) =
+    FragmentSelectionSet "RepositoryInvitationRepository" fields decoder
 
 
 {-| Identifies the date and time when the object was created.

@@ -6,13 +6,38 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 
 
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.GitObject
-selection constructor =
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.GitObject
+baseSelection constructor =
     Object.object constructor
+
+
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.GitObject) -> SelectionSet (a -> constructor) Github.Object.GitObject
+selection constructor typeSpecificDecoders =
+    Object.polymorphicObject typeSpecificDecoders constructor
+
+
+onBlob : SelectionSet selection Github.Object.Blob -> FragmentSelectionSet selection Github.Object.GitObject
+onBlob (SelectionSet fields decoder) =
+    FragmentSelectionSet "Blob" fields decoder
+
+
+onCommit : SelectionSet selection Github.Object.Commit -> FragmentSelectionSet selection Github.Object.GitObject
+onCommit (SelectionSet fields decoder) =
+    FragmentSelectionSet "Commit" fields decoder
+
+
+onTag : SelectionSet selection Github.Object.Tag -> FragmentSelectionSet selection Github.Object.GitObject
+onTag (SelectionSet fields decoder) =
+    FragmentSelectionSet "Tag" fields decoder
+
+
+onTree : SelectionSet selection Github.Object.Tree -> FragmentSelectionSet selection Github.Object.GitObject
+onTree (SelectionSet fields decoder) =
+    FragmentSelectionSet "Tree" fields decoder
 
 
 {-| An abbreviated version of the Git object ID
