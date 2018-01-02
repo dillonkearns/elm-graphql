@@ -1,8 +1,7 @@
-port module Main exposing (..)
+port module Main exposing (main)
 
 import Graphqelm.Parser
-import Http
-import Json.Decode exposing (..)
+import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
 
@@ -13,7 +12,7 @@ import Json.Encode.Extra
 
 workaround : Decoder String
 workaround =
-    Json.Decode.string
+    Decode.string
 
 
 type alias Model =
@@ -21,16 +20,14 @@ type alias Model =
 
 
 type alias Flags =
-    { data : Json.Decode.Value, baseModule : List String }
+    { data : Value
+    , baseModule : List String
+    }
 
 
-type Msg
-    = GotSchema (Result.Result Http.Error String)
-
-
-init : Flags -> ( Model, Cmd Msg )
+init : Flags -> ( Model, Cmd Never )
 init flags =
-    case Json.Decode.decodeValue (Graphqelm.Parser.decoder flags.baseModule) flags.data of
+    case Decode.decodeValue (Graphqelm.Parser.decoder flags.baseModule) flags.data of
         Ok fields ->
             ( ()
             , fields
@@ -42,27 +39,13 @@ init flags =
             Debug.crash ("Got error " ++ toString error)
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        GotSchema response ->
-            let
-                _ =
-                    Debug.log "response" response
-            in
-            ( model, Cmd.none )
-
-
-main : Program Flags Model Msg
+main : Program Flags Model Never
 main =
     Platform.programWithFlags
         { init = init
-        , update = update
+        , update = \msg model -> ( model, Cmd.none )
         , subscriptions = \_ -> Sub.none
         }
 
 
 port generatedFiles : Json.Encode.Value -> Cmd msg
-
-
-port parsingError : String -> Cmd msg
