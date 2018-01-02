@@ -60,9 +60,9 @@ droid object =
                         }
                         "RootQuery"
                     |> Expect.equal
-                        """hero : SelectionSet character Swapi.Object.Character -> SelectionSet union Swapi.Object.Human -> SelectionSet union Swapi.Object.Droid -> FieldDecoder ( character, union ) RootQuery
-hero characterSelection humanSelection droidSelection =
-      Object.polymorphicSelectionDecoder "hero" [] (Graphqelm.SelectionSet.singleton ( "Human", humanSelection ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection) (identity)
+                        """hero : SelectionSet hero Swapi.Object.Character -> FieldDecoder hero RootQuery
+hero object =
+      Object.selectionFieldDecoder "hero" [] (object) (identity)
 """
         , test "simple object with no args for object" <|
             \() ->
