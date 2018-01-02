@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Imports exposing (..)
+module Graphqelm.Generator.Imports exposing (imports, importsString, importsWithoutSelf, object)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum

@@ -8869,10 +8869,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg = F2(
 				annotatedArgs: {ctor: '::', _0: _p1, _1: fieldGenerator.annotatedArgs}
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArgs = F2(
-	function (args, fieldGenerator) {
-		return A3(_elm_lang$core$List$foldr, _dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg, fieldGenerator, args);
-	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 	function (_p2, fieldName, typeRef, refName) {
 		var _p3 = _p2;
@@ -9115,8 +9111,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType = function (_p14)
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Field',
 					{
-						start: {line: 179, column: 5},
-						end: {line: 196, column: 42}
+						start: {line: 174, column: 5},
+						end: {line: 191, column: 42}
 					},
 					_p16)('Unexpected type');
 		}
