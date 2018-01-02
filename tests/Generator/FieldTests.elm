@@ -60,7 +60,7 @@ droid object =
                         }
                         "RootQuery"
                     |> Expect.equal
-                        """hero : SelectionSet base Swapi.Object.Character -> SelectionSet union Swapi.Object.Human -> SelectionSet union Swapi.Object.Droid -> FieldDecoder ( base, union ) RootQuery
+                        """hero : SelectionSet character Swapi.Object.Character -> SelectionSet union Swapi.Object.Human -> SelectionSet union Swapi.Object.Droid -> FieldDecoder ( character, union ) RootQuery
 hero characterSelection humanSelection droidSelection =
       Object.polymorphicSelectionDecoder "hero" [] (Graphqelm.SelectionSet.singleton ( "Human", humanSelection ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection) (identity)
 """
