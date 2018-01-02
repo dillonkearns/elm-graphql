@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
+import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
@@ -17,7 +18,9 @@ import Swapi.Query as Query
 
 
 type alias Response =
-    { hero : Maybe Character
+    { vader : Maybe HumanLookup
+    , tarkin : Maybe HumanLookup
+    , hero : Maybe Character
     }
 
 
@@ -48,8 +51,36 @@ hero =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
+        |> with (Query.human { id = "1001" } human)
+        |> with (Query.human { id = "1004" } human)
         |> with
             (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
+
+
+type alias HumanLookup =
+    { name : String
+    , yearsActive : List Int
+    }
+
+
+human : SelectionSet HumanLookup Swapi.Object.Human
+human =
+    Human.selection HumanLookup
+        |> with Human.name
+        |> with (Human.appearsIn |> FieldDecoder.map (List.map episodeYear))
+
+
+episodeYear : Episode -> Int
+episodeYear episode =
+    case episode of
+        Episode.NEWHOPE ->
+            1977
+
+        Episode.EMPIRE ->
+            1980
+
+        Episode.JEDI ->
+            1983
 
 
 makeRequest : Cmd Msg
