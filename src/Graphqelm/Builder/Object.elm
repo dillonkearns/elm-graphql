@@ -1,13 +1,14 @@
-module Graphqelm.Builder.Object exposing (fieldDecoder, object, polymorphicSelectionDecoder, selectionFieldDecoder)
+module Graphqelm.Builder.Object exposing (fieldDecoder, object, polymorphicObject, polymorphicSelectionDecoder, selectionFieldDecoder)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs fieldDecoder, object, selectionFieldDecoder, polymorphicSelectionDecoder
+@docs fieldDecoder, object, selectionFieldDecoder, polymorphicSelectionDecoder, polymorphicObject
 -}
 
+import Dict exposing (Dict)
 import Graphqelm.Builder.Argument exposing (Argument)
 import Graphqelm.Field exposing (Field)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecoder))
-import Graphqelm.SelectionSet exposing (PolymorphicSelectionSet(PolymorphicSelectionSet), SelectionSet(..))
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), PolymorphicSelectionSet(PolymorphicSelectionSet), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -66,3 +67,42 @@ leaf fieldName args =
 object : (a -> constructor) -> SelectionSet (a -> constructor) typeLock
 object constructor =
     SelectionSet [] (Decode.succeed constructor)
+
+
+{-| Used to create the `selection` functions in auto-generated code for interfaces and unions.
+-}
+polymorphicObject : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a -> b) -> SelectionSet (a -> b) typeLock
+polymorphicObject typeSpecificSelections constructor =
+    let
+        typeNameDecoder =
+            \typeName ->
+                typeSpecificSelections
+                    |> List.map (\(FragmentSelectionSet typeName fields decoder) -> ( typeName, decoder ))
+                    |> Dict.fromList
+                    |> Dict.get typeName
+                    |> Maybe.map (Decode.map Just)
+                    |> Maybe.withDefault (Decode.succeed Nothing)
+
+        selections =
+            typeSpecificSelections
+                |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
+    in
+    SelectionSet (leaf "__typename" [] :: selections)
+        (Decode.map2 (|>)
+            (Decode.string
+                |> Decode.field "__typename"
+                |> Decode.andThen typeNameDecoder
+            )
+            (Decode.succeed constructor)
+        )
+
+
+
+{-
+           let
+       fields =
+           List.map (\{ fragmentOnType, selection } -> composite ("...on " ++ fragmentOnType) [] selection) fragments
+   in
+   FieldDecoder (composite fieldName args ((typename :: fields) ++ base.baseFields)) (decoderTransform decoder)
+
+-}

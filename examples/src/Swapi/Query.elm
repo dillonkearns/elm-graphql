@@ -32,8 +32,13 @@ droid requiredArgs object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet character Swapi.Object.Character -> SelectionSet union Swapi.Object.Human -> SelectionSet union Swapi.Object.Droid -> FieldDecoder (Maybe ( character, union )) RootQuery
-hero fillInOptionals characterSelection humanSelection droidSelection =
+hero :
+    ({ episode : OptionalArgument Swapi.Enum.Episode.Episode }
+     -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }
+    )
+    -> SelectionSet character Swapi.Object.Character
+    -> FieldDecoder (Maybe character) RootQuery
+hero fillInOptionals characterSelection =
     let
         filledInOptionals =
             fillInOptionals { episode = Absent }
@@ -42,7 +47,7 @@ hero fillInOptionals characterSelection humanSelection droidSelection =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
                 |> List.filterMap identity
     in
-    Object.polymorphicSelectionDecoder "hero" optionalArgs (Graphqelm.SelectionSet.singleton ( "Human", humanSelection ) |> Graphqelm.SelectionSet.add ( "Droid", droidSelection ) |> Graphqelm.SelectionSet.withBase characterSelection) (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "hero" optionalArgs characterSelection (identity >> Decode.maybe)
 
 
 {-|

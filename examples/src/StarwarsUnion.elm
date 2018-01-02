@@ -2,7 +2,6 @@ module Main exposing (main)
 
 import Graphqelm exposing (RootQuery)
 import Graphqelm.Document as Document
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Http
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
@@ -12,54 +11,43 @@ import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Object
 import Swapi.Object.Character as Character
+import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
 
 
 type alias Response =
-    { hero : Maybe ( Character, HumanOrDroid )
+    { hero : Maybe Character
     }
 
 
 type HumanOrDroid
-    = Human String (Maybe String)
-    | Ignored
+    = Human (Maybe String)
+    | Droid (Maybe String)
 
 
 type alias Character =
-    { name : String
+    { details : Maybe HumanOrDroid
+    , name : String
     , id : String
-    , friends : List String
     }
+
+
+hero : SelectionSet Character Swapi.Object.Character
+hero =
+    Character.selection Character
+        [ Character.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
+        , Character.onHuman (Human.selection Human |> with Human.homePlanet)
+        ]
+        |> with Character.name
+        |> with Character.id
 
 
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.hero (\optionals -> { optionals | episode = Present Episode.JEDI }) characterWithName human (SelectionSet.ignore Ignored))
-
-
-characterWithName : SelectionSet Character Swapi.Object.Character
-characterWithName =
-    Character.selection Character
-        |> with Character.name
-        |> with Character.id
-        |> with friends
-
-
-friends : FieldDecoder (List String) Swapi.Object.Character
-friends =
-    Character.friends (Character.selection identity |> with Character.name)
-        (SelectionSet.ignore ())
-        (SelectionSet.ignore ())
-        |> FieldDecoder.map (List.map Tuple.first)
-
-
-human : SelectionSet HumanOrDroid Swapi.Object.Human
-human =
-    Human.selection Human
-        |> with Human.id
-        |> with Human.homePlanet
+        |> with
+            (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
 
 
 makeRequest : Cmd Msg
