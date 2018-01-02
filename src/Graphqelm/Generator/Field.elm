@@ -1,5 +1,6 @@
 module Graphqelm.Generator.Field exposing (generate)
 
+import Dict
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.DocComment as DocComment
@@ -161,10 +162,10 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
 interfaceThing : Context -> String -> TypeReference -> String -> FieldGenerator
 interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refName =
     let
-        interfaceSelectionAnnotation name =
+        interfaceSelectionAnnotation typeVariableName name =
             interpolate
                 "SelectionSet {0} {1}"
-                [ String.Extra.decapitalize name, Imports.object context name |> String.join "." ]
+                [ typeVariableName, Imports.object context name |> String.join "." ]
     in
     { annotatedArgs = []
     , fieldArgs = []
@@ -182,16 +183,20 @@ interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refNa
             |> Just
     }
         |> prependArgs
-            [ { annotation = interfaceSelectionAnnotation refName
-              , arg = String.Extra.decapitalize refName ++ "Selection"
-              }
-            , { annotation = "SelectionSet union Swapi.Object.Human"
-              , arg = "humanSelection"
-              }
-            , { annotation = "SelectionSet union Swapi.Object.Droid"
-              , arg = "droidSelection"
-              }
-            ]
+            ({ annotation = interfaceSelectionAnnotation (String.Extra.decapitalize refName) refName
+             , arg = String.Extra.decapitalize refName ++ "Selection"
+             }
+                :: (interfaces
+                        |> Dict.get refName
+                        |> Maybe.withDefault []
+                        |> List.map
+                            (\interfaceImplementorName ->
+                                { annotation = interfaceSelectionAnnotation "union" interfaceImplementorName
+                                , arg = String.Extra.decapitalize interfaceImplementorName ++ "Selection"
+                                }
+                            )
+                   )
+            )
 
 
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
