@@ -161,10 +161,10 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
 interfaceThing : Context -> String -> TypeReference -> String -> FieldGenerator
 interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refName =
     let
-        objectArgAnnotation =
+        interfaceSelectionAnnotation name =
             interpolate
-                "SelectionSet character {0}"
-                [ Imports.object context refName |> String.join "." ]
+                "SelectionSet {0} {1}"
+                [ String.Extra.decapitalize name, Imports.object context name |> String.join "." ]
     in
     { annotatedArgs = []
     , fieldArgs = []
@@ -182,7 +182,7 @@ interfaceThing ({ apiSubmodule, interfaces } as context) fieldName typeRef refNa
             |> Just
     }
         |> prependArgs
-            [ { annotation = objectArgAnnotation
+            [ { annotation = interfaceSelectionAnnotation refName
               , arg = String.Extra.decapitalize refName ++ "Selection"
               }
             , { annotation = "SelectionSet union Swapi.Object.Human"
