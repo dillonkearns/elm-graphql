@@ -6,11 +6,6 @@ import Graphqelm.Parser.Type as Type exposing (..)
 import Test exposing (..)
 
 
-definitions : List a
-definitions =
-    []
-
-
 all : Test
 all =
     describe "object types generator"
