@@ -11,7 +11,7 @@ generate : List String -> Context -> List Field -> ( List String, String )
 generate apiSubmodule specialObjectNames fields =
     ( moduleName apiSubmodule
     , prepend apiSubmodule (moduleName apiSubmodule) fields
-        ++ (List.map (FieldGenerator.generate specialObjectNames (specialObjectNames.mutation |> Maybe.withDefault "")) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generateForObject specialObjectNames (specialObjectNames.mutation |> Maybe.withDefault "")) fields |> String.join "\n\n")
     )
 
 

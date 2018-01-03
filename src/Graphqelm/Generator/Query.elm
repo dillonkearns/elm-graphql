@@ -11,7 +11,7 @@ generate : Context -> List Field -> ( List String, String )
 generate ({ apiSubmodule } as context) fields =
     ( moduleName apiSubmodule
     , prepend apiSubmodule (moduleName apiSubmodule) fields
-        ++ (List.map (FieldGenerator.generate context context.query) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generateForObject context context.query) fields |> String.join "\n\n")
     )
 
 

@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Field exposing (generate, generateForInterface)
+module Graphqelm.Generator.Field exposing (generateForInterface, generateForObject)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder
@@ -30,8 +30,8 @@ type alias AnnotatedArg =
     }
 
 
-generate : Context -> String -> Type.Field -> String
-generate context thisObjectName field =
+generateForObject : Context -> String -> Type.Field -> String
+generateForObject context thisObjectName field =
     toFieldGenerator context field
         |> forObject_ context (Imports.object context thisObjectName) field
 

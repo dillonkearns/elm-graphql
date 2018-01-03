@@ -11,7 +11,7 @@ generate : Context -> String -> List Type.Field -> ( List String, String )
 generate context name fields =
     ( Imports.object context name
     , prepend context (Imports.object context name) fields
-        ++ (List.map (FieldGenerator.generate context name) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generateForObject context name) fields |> String.join "\n\n")
     )
 
 
