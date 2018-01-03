@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Field exposing (generate)
+module Graphqelm.Generator.Field exposing (generate, generateForInterface)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder
@@ -33,16 +33,18 @@ type alias AnnotatedArg =
 generate : Context -> String -> Type.Field -> String
 generate context thisObjectName field =
     toFieldGenerator context field
-        |> forObject_ context thisObjectName field
+        |> forObject_ context (Imports.object context thisObjectName) field
 
 
-forObject_ : Context -> String -> Type.Field -> FieldGenerator -> String
+generateForInterface : Context -> String -> Type.Field -> String
+generateForInterface context thisObjectName field =
+    toFieldGenerator context field
+        |> forObject_ context (Imports.interface context thisObjectName) field
+
+
+forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> String
 forObject_ context thisObjectName field fieldGenerator =
-    let
-        thisObjectString =
-            Imports.object context thisObjectName |> String.join "."
-    in
-    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectString ]) field fieldGenerator
+    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectName |> String.join "." ]) field fieldGenerator
 
 
 fieldGeneratorToString : String -> Type.Field -> FieldGenerator -> String
@@ -128,13 +130,26 @@ addOptionalArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-objectThing : Context -> String -> TypeReference -> String -> FieldGenerator
-objectThing ({ apiSubmodule } as context) fieldName typeRef refName =
+type ObjectOrInterface
+    = Object
+    | Interface
+
+
+objectThing : Context -> String -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
+objectThing ({ apiSubmodule } as context) fieldName typeRef refName objectOrInterface =
     let
+        typeLock =
+            case objectOrInterface of
+                Object ->
+                    Imports.object context refName |> String.join "."
+
+                Interface ->
+                    Imports.interface context refName |> String.join "."
+
         objectArgAnnotation =
             interpolate
                 "SelectionSet {0} {1}"
-                [ fieldName, Imports.object context refName |> String.join "." ]
+                [ fieldName, typeLock ]
     in
     { annotatedArgs = []
     , fieldArgs = []
@@ -195,10 +210,10 @@ init : Context -> String -> TypeReference -> FieldGenerator
 init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
-            objectThing context fieldName typeRef refName
+            objectThing context fieldName typeRef refName Object
 
         InterfaceLeaf refName ->
-            objectThing context fieldName typeRef refName
+            objectThing context fieldName typeRef refName Interface
 
         EnumLeaf ->
             initScalarField apiSubmodule fieldName typeRef

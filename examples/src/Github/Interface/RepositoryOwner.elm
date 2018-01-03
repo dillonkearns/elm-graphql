@@ -1,7 +1,8 @@
-module Github.Object.RepositoryOwner exposing (..)
+module Github.Interface.RepositoryOwner exposing (..)
 
 import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryPrivacy
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -12,22 +13,22 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryOwner
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryOwner
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.RepositoryOwner) -> SelectionSet (a -> constructor) Github.Object.RepositoryOwner
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.RepositoryOwner) -> SelectionSet (a -> constructor) Github.Interface.RepositoryOwner
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Object.RepositoryOwner
+onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Interface.RepositoryOwner
 onOrganization (SelectionSet fields decoder) =
     FragmentSelectionSet "Organization" fields decoder
 
 
-onUser : SelectionSet selection Github.Object.User -> FragmentSelectionSet selection Github.Object.RepositoryOwner
+onUser : SelectionSet selection Github.Object.User -> FragmentSelectionSet selection Github.Interface.RepositoryOwner
 onUser (SelectionSet fields decoder) =
     FragmentSelectionSet "User" fields decoder
 
@@ -37,7 +38,7 @@ onUser (SelectionSet fields decoder) =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Object.RepositoryOwner
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Interface.RepositoryOwner
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -50,14 +51,14 @@ avatarUrl fillInOptionals =
     Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
 
 
-id : FieldDecoder String Github.Object.RepositoryOwner
+id : FieldDecoder String Github.Interface.RepositoryOwner
 id =
     Object.fieldDecoder "id" [] Decode.string
 
 
 {-| The username used to login.
 -}
-login : FieldDecoder String Github.Object.RepositoryOwner
+login : FieldDecoder String Github.Interface.RepositoryOwner
 login =
     Object.fieldDecoder "login" [] Decode.string
 
@@ -74,7 +75,7 @@ login =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-pinnedRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet pinnedRepositories Github.Object.RepositoryConnection -> FieldDecoder pinnedRepositories Github.Object.RepositoryOwner
+pinnedRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet pinnedRepositories Github.Object.RepositoryConnection -> FieldDecoder pinnedRepositories Github.Interface.RepositoryOwner
 pinnedRepositories fillInOptionals object =
     let
         filledInOptionals =
@@ -100,7 +101,7 @@ pinnedRepositories fillInOptionals object =
   - isFork - If non-null, filters repositories according to whether they are forks of another repository
 
 -}
-repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }) -> SelectionSet repositories Github.Object.RepositoryConnection -> FieldDecoder repositories Github.Object.RepositoryOwner
+repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }) -> SelectionSet repositories Github.Object.RepositoryConnection -> FieldDecoder repositories Github.Interface.RepositoryOwner
 repositories fillInOptionals object =
     let
         filledInOptionals =
@@ -118,20 +119,20 @@ repositories fillInOptionals object =
   - name - Name of Repository to find.
 
 -}
-repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder (Maybe repository) Github.Object.RepositoryOwner
+repository : { name : String } -> SelectionSet repository Github.Object.Repository -> FieldDecoder (Maybe repository) Github.Interface.RepositoryOwner
 repository requiredArgs object =
     Object.selectionFieldDecoder "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
 
 {-| The HTTP URL for the owner.
 -}
-resourcePath : FieldDecoder String Github.Object.RepositoryOwner
+resourcePath : FieldDecoder String Github.Interface.RepositoryOwner
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
 
 {-| The HTTP URL for the owner.
 -}
-url : FieldDecoder String Github.Object.RepositoryOwner
+url : FieldDecoder String Github.Interface.RepositoryOwner
 url =
     Object.fieldDecoder "url" [] Decode.string

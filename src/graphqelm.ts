@@ -47,6 +47,7 @@ const onDataAvailable = (data: {}) => {
   let app = Elm.Main.worker({ data, baseModule })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Object`)
+    fs.mkdirpSync(`./src/${baseModule.join('/')}/Interface`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Enum`)
     for (let key in generatedFile) {
       let path = './src/' + key

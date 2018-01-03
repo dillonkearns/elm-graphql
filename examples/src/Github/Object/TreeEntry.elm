@@ -1,5 +1,6 @@
 module Github.Object.TreeEntry exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -31,7 +32,7 @@ name =
 
 {-| Entry file object.
 -}
-object : SelectionSet object Github.Object.GitObject -> FieldDecoder (Maybe object) Github.Object.TreeEntry
+object : SelectionSet object Github.Interface.GitObject -> FieldDecoder (Maybe object) Github.Object.TreeEntry
 object object =
     Object.selectionFieldDecoder "object" [] object (identity >> Decode.maybe)
 

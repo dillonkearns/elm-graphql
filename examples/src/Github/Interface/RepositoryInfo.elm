@@ -1,6 +1,7 @@
-module Github.Object.RepositoryInfo exposing (..)
+module Github.Interface.RepositoryInfo exposing (..)
 
 import Github.Enum.RepositoryLockReason
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -11,169 +12,169 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryInfo
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryInfo
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.RepositoryInfo) -> SelectionSet (a -> constructor) Github.Object.RepositoryInfo
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.RepositoryInfo) -> SelectionSet (a -> constructor) Github.Interface.RepositoryInfo
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Object.RepositoryInfo
+onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.RepositoryInfo
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-onRepositoryInvitationRepository : SelectionSet selection Github.Object.RepositoryInvitationRepository -> FragmentSelectionSet selection Github.Object.RepositoryInfo
+onRepositoryInvitationRepository : SelectionSet selection Github.Object.RepositoryInvitationRepository -> FragmentSelectionSet selection Github.Interface.RepositoryInfo
 onRepositoryInvitationRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "RepositoryInvitationRepository" fields decoder
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.RepositoryInfo
+createdAt : FieldDecoder String Github.Interface.RepositoryInfo
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
 {-| The description of the repository.
 -}
-description : FieldDecoder (Maybe String) Github.Object.RepositoryInfo
+description : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : FieldDecoder String Github.Object.RepositoryInfo
+descriptionHTML : FieldDecoder String Github.Interface.RepositoryInfo
 descriptionHTML =
     Object.fieldDecoder "descriptionHTML" [] Decode.string
 
 
 {-| Returns how many forks there are of this repository in the whole network.
 -}
-forkCount : FieldDecoder Int Github.Object.RepositoryInfo
+forkCount : FieldDecoder Int Github.Interface.RepositoryInfo
 forkCount =
     Object.fieldDecoder "forkCount" [] Decode.int
 
 
 {-| Indicates if the repository has issues feature enabled.
 -}
-hasIssuesEnabled : FieldDecoder Bool Github.Object.RepositoryInfo
+hasIssuesEnabled : FieldDecoder Bool Github.Interface.RepositoryInfo
 hasIssuesEnabled =
     Object.fieldDecoder "hasIssuesEnabled" [] Decode.bool
 
 
 {-| Indicates if the repository has wiki feature enabled.
 -}
-hasWikiEnabled : FieldDecoder Bool Github.Object.RepositoryInfo
+hasWikiEnabled : FieldDecoder Bool Github.Interface.RepositoryInfo
 hasWikiEnabled =
     Object.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
 {-| The repository's URL.
 -}
-homepageUrl : FieldDecoder (Maybe String) Github.Object.RepositoryInfo
+homepageUrl : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
 homepageUrl =
     Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.maybe)
 
 
 {-| Indicates if the repository is unmaintained.
 -}
-isArchived : FieldDecoder Bool Github.Object.RepositoryInfo
+isArchived : FieldDecoder Bool Github.Interface.RepositoryInfo
 isArchived =
     Object.fieldDecoder "isArchived" [] Decode.bool
 
 
 {-| Identifies if the repository is a fork.
 -}
-isFork : FieldDecoder Bool Github.Object.RepositoryInfo
+isFork : FieldDecoder Bool Github.Interface.RepositoryInfo
 isFork =
     Object.fieldDecoder "isFork" [] Decode.bool
 
 
 {-| Indicates if the repository has been locked or not.
 -}
-isLocked : FieldDecoder Bool Github.Object.RepositoryInfo
+isLocked : FieldDecoder Bool Github.Interface.RepositoryInfo
 isLocked =
     Object.fieldDecoder "isLocked" [] Decode.bool
 
 
 {-| Identifies if the repository is a mirror.
 -}
-isMirror : FieldDecoder Bool Github.Object.RepositoryInfo
+isMirror : FieldDecoder Bool Github.Interface.RepositoryInfo
 isMirror =
     Object.fieldDecoder "isMirror" [] Decode.bool
 
 
 {-| Identifies if the repository is private.
 -}
-isPrivate : FieldDecoder Bool Github.Object.RepositoryInfo
+isPrivate : FieldDecoder Bool Github.Interface.RepositoryInfo
 isPrivate =
     Object.fieldDecoder "isPrivate" [] Decode.bool
 
 
 {-| The license associated with the repository
 -}
-license : FieldDecoder (Maybe String) Github.Object.RepositoryInfo
+license : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
 license =
     Object.fieldDecoder "license" [] (Decode.string |> Decode.maybe)
 
 
 {-| The license associated with the repository
 -}
-licenseInfo : SelectionSet licenseInfo Github.Object.License -> FieldDecoder (Maybe licenseInfo) Github.Object.RepositoryInfo
+licenseInfo : SelectionSet licenseInfo Github.Object.License -> FieldDecoder (Maybe licenseInfo) Github.Interface.RepositoryInfo
 licenseInfo object =
     Object.selectionFieldDecoder "licenseInfo" [] object (identity >> Decode.maybe)
 
 
 {-| The reason the repository has been locked.
 -}
-lockReason : FieldDecoder (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Object.RepositoryInfo
+lockReason : FieldDecoder (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Interface.RepositoryInfo
 lockReason =
     Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.maybe)
 
 
 {-| The repository's original mirror URL.
 -}
-mirrorUrl : FieldDecoder (Maybe String) Github.Object.RepositoryInfo
+mirrorUrl : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
 mirrorUrl =
     Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.maybe)
 
 
 {-| The name of the repository.
 -}
-name : FieldDecoder String Github.Object.RepositoryInfo
+name : FieldDecoder String Github.Interface.RepositoryInfo
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The repository's name with owner.
 -}
-nameWithOwner : FieldDecoder String Github.Object.RepositoryInfo
+nameWithOwner : FieldDecoder String Github.Interface.RepositoryInfo
 nameWithOwner =
     Object.fieldDecoder "nameWithOwner" [] Decode.string
 
 
 {-| The User owner of the repository.
 -}
-owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder owner Github.Object.RepositoryInfo
+owner : SelectionSet owner Github.Interface.RepositoryOwner -> FieldDecoder owner Github.Interface.RepositoryInfo
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 
 
 {-| Identifies when the repository was last pushed to.
 -}
-pushedAt : FieldDecoder (Maybe String) Github.Object.RepositoryInfo
+pushedAt : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
 pushedAt =
     Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.maybe)
 
 
 {-| The HTTP path for this repository
 -}
-resourcePath : FieldDecoder String Github.Object.RepositoryInfo
+resourcePath : FieldDecoder String Github.Interface.RepositoryInfo
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
 
@@ -183,7 +184,7 @@ resourcePath =
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder String Github.Object.RepositoryInfo
+shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder String Github.Interface.RepositoryInfo
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
@@ -198,13 +199,13 @@ shortDescriptionHTML fillInOptionals =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : FieldDecoder String Github.Object.RepositoryInfo
+updatedAt : FieldDecoder String Github.Interface.RepositoryInfo
 updatedAt =
     Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 {-| The HTTP URL for this repository
 -}
-url : FieldDecoder String Github.Object.RepositoryInfo
+url : FieldDecoder String Github.Interface.RepositoryInfo
 url =
     Object.fieldDecoder "url" [] Decode.string

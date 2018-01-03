@@ -2,6 +2,7 @@ module Github.Object.Milestone exposing (..)
 
 import Github.Enum.IssueState
 import Github.Enum.MilestoneState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -40,7 +41,7 @@ createdAt =
 
 {-| Identifies the actor who created the milestone.
 -}
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.Milestone
+creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.Milestone
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 

@@ -1,6 +1,7 @@
 module Github.Object.Project exposing (..)
 
 import Github.Enum.ProjectState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -74,7 +75,7 @@ createdAt =
 
 {-| The actor who originally created the project.
 -}
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.Project
+creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.Project
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
@@ -107,7 +108,7 @@ number =
 
 {-| The project's owner. Currently limited to repositories and organizations.
 -}
-owner : SelectionSet owner Github.Object.ProjectOwner -> FieldDecoder owner Github.Object.Project
+owner : SelectionSet owner Github.Interface.ProjectOwner -> FieldDecoder owner Github.Object.Project
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 

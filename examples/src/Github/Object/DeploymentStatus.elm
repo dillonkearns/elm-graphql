@@ -1,6 +1,7 @@
 module Github.Object.DeploymentStatus exposing (..)
 
 import Github.Enum.DeploymentStatusState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -25,7 +26,7 @@ createdAt =
 
 {-| Identifies the actor who triggered the deployment.
 -}
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.DeploymentStatus
+creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.DeploymentStatus
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 

@@ -1,5 +1,6 @@
 module Github.Object.LockedEvent exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,7 +18,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.LockedEvent
+actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.LockedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -36,6 +37,6 @@ id =
 
 {-| Object that was locked.
 -}
-lockable : SelectionSet lockable Github.Object.Lockable -> FieldDecoder lockable Github.Object.LockedEvent
+lockable : SelectionSet lockable Github.Interface.Lockable -> FieldDecoder lockable Github.Object.LockedEvent
 lockable object =
     Object.selectionFieldDecoder "lockable" [] object identity

@@ -1,5 +1,6 @@
 module Github.Object.AddStarPayload exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,6 +25,6 @@ clientMutationId =
 
 {-| The starrable.
 -}
-starrable : SelectionSet starrable Github.Object.Starrable -> FieldDecoder starrable Github.Object.AddStarPayload
+starrable : SelectionSet starrable Github.Interface.Starrable -> FieldDecoder starrable Github.Object.AddStarPayload
 starrable object =
     Object.selectionFieldDecoder "starrable" [] object identity

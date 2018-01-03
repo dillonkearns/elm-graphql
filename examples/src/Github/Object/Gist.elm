@@ -1,5 +1,6 @@
 module Github.Object.Gist exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -71,7 +72,7 @@ name =
 
 {-| The gist owner.
 -}
-owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder (Maybe owner) Github.Object.Gist
+owner : SelectionSet owner Github.Interface.RepositoryOwner -> FieldDecoder (Maybe owner) Github.Object.Gist
 owner object =
     Object.selectionFieldDecoder "owner" [] object (identity >> Decode.maybe)
 

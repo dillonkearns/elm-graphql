@@ -1,6 +1,7 @@
 module Github.Object.Reaction exposing (..)
 
 import Github.Enum.ReactionContent
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -44,7 +45,7 @@ id =
 
 {-| The reactable piece of content
 -}
-reactable : SelectionSet reactable Github.Object.Reactable -> FieldDecoder reactable Github.Object.Reaction
+reactable : SelectionSet reactable Github.Interface.Reactable -> FieldDecoder reactable Github.Object.Reaction
 reactable object =
     Object.selectionFieldDecoder "reactable" [] object identity
 

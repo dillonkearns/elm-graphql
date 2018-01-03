@@ -1,5 +1,6 @@
 module Github.Object.UpdateSubscriptionPayload exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,6 +25,6 @@ clientMutationId =
 
 {-| The input subscribable entity.
 -}
-subscribable : SelectionSet subscribable Github.Object.Subscribable -> FieldDecoder subscribable Github.Object.UpdateSubscriptionPayload
+subscribable : SelectionSet subscribable Github.Interface.Subscribable -> FieldDecoder subscribable Github.Object.UpdateSubscriptionPayload
 subscribable object =
     Object.selectionFieldDecoder "subscribable" [] object identity

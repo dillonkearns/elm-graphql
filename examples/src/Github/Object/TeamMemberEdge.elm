@@ -1,6 +1,7 @@
 module Github.Object.TeamMemberEdge exposing (..)
 
 import Github.Enum.TeamMemberRole
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object

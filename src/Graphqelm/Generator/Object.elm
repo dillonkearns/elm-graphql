@@ -25,6 +25,7 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import {2}.Object
+import {2}.Interface
 import Json.Decode as Decode
 import Graphqelm.Encode as Encode exposing (Value)
 {1}

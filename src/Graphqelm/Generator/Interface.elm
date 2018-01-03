@@ -10,10 +10,10 @@ import Interpolate exposing (interpolate)
 
 generate : Context -> String -> List Type.Field -> ( List String, String )
 generate context name fields =
-    ( Imports.object context name
-    , prepend context (Imports.object context name) fields
-        ++ fragments context (context.interfaces |> Dict.get name |> Maybe.withDefault []) (Imports.object context name)
-        ++ (List.map (FieldGenerator.generate context name) fields |> String.join "\n\n")
+    ( Imports.interface context name
+    , prepend context (Imports.interface context name) fields
+        ++ fragments context (context.interfaces |> Dict.get name |> Maybe.withDefault []) (Imports.interface context name)
+        ++ (List.map (FieldGenerator.generateForInterface context name) fields |> String.join "\n\n")
     )
 
 
@@ -44,6 +44,7 @@ import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import {2}.Object
+import {2}.Interface
 import Json.Decode as Decode
 import Graphqelm.Encode as Encode exposing (Value)
 {1}

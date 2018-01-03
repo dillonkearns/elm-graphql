@@ -1,5 +1,6 @@
 module Github.Object.RemoveReactionPayload exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -31,6 +32,6 @@ reaction object =
 
 {-| The reactable subject.
 -}
-subject : SelectionSet subject Github.Object.Reactable -> FieldDecoder subject Github.Object.RemoveReactionPayload
+subject : SelectionSet subject Github.Interface.Reactable -> FieldDecoder subject Github.Object.RemoveReactionPayload
 subject object =
     Object.selectionFieldDecoder "subject" [] object identity

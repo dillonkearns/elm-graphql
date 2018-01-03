@@ -7,10 +7,10 @@ import Github.Object.Repository as Repository
 import Github.Object.StargazerConnection
 import Github.Object.Topic
 import Github.Query as Query
-import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder
 import Graphqelm.Http
+import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)

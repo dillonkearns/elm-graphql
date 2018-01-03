@@ -1,5 +1,6 @@
 module Github.Object.Tag exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -78,6 +79,6 @@ tagger object =
 
 {-| The Git object the tag points to.
 -}
-target : SelectionSet target Github.Object.GitObject -> FieldDecoder target Github.Object.Tag
+target : SelectionSet target Github.Interface.GitObject -> FieldDecoder target Github.Object.Tag
 target object =
     Object.selectionFieldDecoder "target" [] object identity

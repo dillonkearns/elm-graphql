@@ -1,5 +1,6 @@
 module Github.Object.DeleteProjectPayload exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,6 +25,6 @@ clientMutationId =
 
 {-| The repository or organization the project was removed from.
 -}
-owner : SelectionSet owner Github.Object.ProjectOwner -> FieldDecoder owner Github.Object.DeleteProjectPayload
+owner : SelectionSet owner Github.Interface.ProjectOwner -> FieldDecoder owner Github.Object.DeleteProjectPayload
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity

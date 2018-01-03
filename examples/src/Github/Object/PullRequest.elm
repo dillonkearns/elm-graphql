@@ -7,6 +7,7 @@ import Github.Enum.PullRequestReviewState
 import Github.Enum.PullRequestState
 import Github.Enum.ReactionContent
 import Github.Enum.SubscriptionState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -52,7 +53,7 @@ assignees fillInOptionals object =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequest
+author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequest
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -192,7 +193,7 @@ deletions =
 
 {-| The actor who edited this pull request's body.
 -}
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequest
+editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequest
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
@@ -220,7 +221,7 @@ headRepository object =
 
 {-| The owner of the repository associated with this pull request's head Ref.
 -}
-headRepositoryOwner : SelectionSet headRepositoryOwner Github.Object.RepositoryOwner -> FieldDecoder (Maybe headRepositoryOwner) Github.Object.PullRequest
+headRepositoryOwner : SelectionSet headRepositoryOwner Github.Interface.RepositoryOwner -> FieldDecoder (Maybe headRepositoryOwner) Github.Object.PullRequest
 headRepositoryOwner object =
     Object.selectionFieldDecoder "headRepositoryOwner" [] object (identity >> Decode.maybe)
 

@@ -1,5 +1,6 @@
 module Github.Object.ClosedEvent exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,14 +18,14 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.ClosedEvent
+actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.ClosedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Object that was closed.
 -}
-closable : SelectionSet closable Github.Object.Closable -> FieldDecoder closable Github.Object.ClosedEvent
+closable : SelectionSet closable Github.Interface.Closable -> FieldDecoder closable Github.Object.ClosedEvent
 closable object =
     Object.selectionFieldDecoder "closable" [] object identity
 

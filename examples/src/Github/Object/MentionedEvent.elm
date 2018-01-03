@@ -1,5 +1,6 @@
 module Github.Object.MentionedEvent exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,7 +18,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.MentionedEvent
+actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.MentionedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 

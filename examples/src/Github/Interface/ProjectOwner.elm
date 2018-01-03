@@ -1,6 +1,7 @@
-module Github.Object.ProjectOwner exposing (..)
+module Github.Interface.ProjectOwner exposing (..)
 
 import Github.Enum.ProjectState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -11,27 +12,27 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ProjectOwner
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.ProjectOwner) -> SelectionSet (a -> constructor) Github.Object.ProjectOwner
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.ProjectOwner) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Object.ProjectOwner
+onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Interface.ProjectOwner
 onOrganization (SelectionSet fields decoder) =
     FragmentSelectionSet "Organization" fields decoder
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Object.ProjectOwner
+onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.ProjectOwner
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-id : FieldDecoder String Github.Object.ProjectOwner
+id : FieldDecoder String Github.Interface.ProjectOwner
 id =
     Object.fieldDecoder "id" [] Decode.string
 
@@ -41,7 +42,7 @@ id =
   - number - The project number to find.
 
 -}
-project : { number : Int } -> SelectionSet project Github.Object.Project -> FieldDecoder (Maybe project) Github.Object.ProjectOwner
+project : { number : Int } -> SelectionSet project Github.Object.Project -> FieldDecoder (Maybe project) Github.Interface.ProjectOwner
 project requiredArgs object =
     Object.selectionFieldDecoder "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.maybe)
 
@@ -57,7 +58,7 @@ project requiredArgs object =
   - states - A list of states to filter the projects by.
 
 -}
-projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Object.ProjectOwner
+projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet projects Github.Object.ProjectConnection -> FieldDecoder projects Github.Interface.ProjectOwner
 projects fillInOptionals object =
     let
         filledInOptionals =
@@ -72,20 +73,20 @@ projects fillInOptionals object =
 
 {-| The HTTP path listing owners projects
 -}
-projectsResourcePath : FieldDecoder String Github.Object.ProjectOwner
+projectsResourcePath : FieldDecoder String Github.Interface.ProjectOwner
 projectsResourcePath =
     Object.fieldDecoder "projectsResourcePath" [] Decode.string
 
 
 {-| The HTTP URL listing owners projects
 -}
-projectsUrl : FieldDecoder String Github.Object.ProjectOwner
+projectsUrl : FieldDecoder String Github.Interface.ProjectOwner
 projectsUrl =
     Object.fieldDecoder "projectsUrl" [] Decode.string
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
-viewerCanCreateProjects : FieldDecoder Bool Github.Object.ProjectOwner
+viewerCanCreateProjects : FieldDecoder Bool Github.Interface.ProjectOwner
 viewerCanCreateProjects =
     Object.fieldDecoder "viewerCanCreateProjects" [] Decode.bool

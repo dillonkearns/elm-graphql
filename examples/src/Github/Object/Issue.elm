@@ -5,6 +5,7 @@ import Github.Enum.CommentCannotUpdateReason
 import Github.Enum.IssueState
 import Github.Enum.ReactionContent
 import Github.Enum.SubscriptionState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -43,7 +44,7 @@ assignees fillInOptionals object =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.Issue
+author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Object.Issue
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -134,7 +135,7 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.Issue
+editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.Issue
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 

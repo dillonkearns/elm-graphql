@@ -1,5 +1,6 @@
 module Github.Object.AddCommentPayload exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -31,7 +32,7 @@ commentEdge object =
 
 {-| The subject
 -}
-subject : SelectionSet subject Github.Object.Node -> FieldDecoder subject Github.Object.AddCommentPayload
+subject : SelectionSet subject Github.Interface.Node -> FieldDecoder subject Github.Object.AddCommentPayload
 subject object =
     Object.selectionFieldDecoder "subject" [] object identity
 

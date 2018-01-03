@@ -1,5 +1,6 @@
-module Github.Object.Labelable exposing (..)
+module Github.Interface.Labelable exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -10,22 +11,22 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Labelable
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Labelable
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.Labelable) -> SelectionSet (a -> constructor) Github.Object.Labelable
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Labelable) -> SelectionSet (a -> constructor) Github.Interface.Labelable
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Object.Labelable
+onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.Labelable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Object.Labelable
+onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.Labelable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
@@ -38,7 +39,7 @@ onPullRequest (SelectionSet fields decoder) =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder (Maybe labels) Github.Object.Labelable
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder (Maybe labels) Github.Interface.Labelable
 labels fillInOptionals object =
     let
         filledInOptionals =

@@ -1,5 +1,6 @@
 module Github.Object.UnsubscribedEvent exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,7 +18,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.UnsubscribedEvent
+actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.UnsubscribedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -36,6 +37,6 @@ id =
 
 {-| Object referenced by event.
 -}
-subscribable : SelectionSet subscribable Github.Object.Subscribable -> FieldDecoder subscribable Github.Object.UnsubscribedEvent
+subscribable : SelectionSet subscribable Github.Interface.Subscribable -> FieldDecoder subscribable Github.Object.UnsubscribedEvent
 subscribable object =
     Object.selectionFieldDecoder "subscribable" [] object identity

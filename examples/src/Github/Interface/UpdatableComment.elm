@@ -1,6 +1,7 @@
-module Github.Object.UpdatableComment exposing (..)
+module Github.Interface.UpdatableComment exposing (..)
 
 import Github.Enum.CommentCannotUpdateReason
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -11,53 +12,53 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.UpdatableComment
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.UpdatableComment
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.UpdatableComment) -> SelectionSet (a -> constructor) Github.Object.UpdatableComment
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.UpdatableComment) -> SelectionSet (a -> constructor) Github.Interface.UpdatableComment
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Object.UpdatableComment
+onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
 onCommitComment (SelectionSet fields decoder) =
     FragmentSelectionSet "CommitComment" fields decoder
 
 
-onGistComment : SelectionSet selection Github.Object.GistComment -> FragmentSelectionSet selection Github.Object.UpdatableComment
+onGistComment : SelectionSet selection Github.Object.GistComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
 onGistComment (SelectionSet fields decoder) =
     FragmentSelectionSet "GistComment" fields decoder
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Object.UpdatableComment
+onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.UpdatableComment
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Object.UpdatableComment
+onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
 onIssueComment (SelectionSet fields decoder) =
     FragmentSelectionSet "IssueComment" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Object.UpdatableComment
+onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.UpdatableComment
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
 
-onPullRequestReview : SelectionSet selection Github.Object.PullRequestReview -> FragmentSelectionSet selection Github.Object.UpdatableComment
+onPullRequestReview : SelectionSet selection Github.Object.PullRequestReview -> FragmentSelectionSet selection Github.Interface.UpdatableComment
 onPullRequestReview (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReview" fields decoder
 
 
-onPullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FragmentSelectionSet selection Github.Object.UpdatableComment
+onPullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
 onPullRequestReviewComment (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReviewComment" fields decoder
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : FieldDecoder (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.UpdatableComment
+viewerCannotUpdateReasons : FieldDecoder (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Interface.UpdatableComment
 viewerCannotUpdateReasons =
     Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)

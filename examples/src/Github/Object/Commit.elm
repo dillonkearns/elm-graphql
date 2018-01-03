@@ -1,6 +1,7 @@
 module Github.Object.Commit exposing (..)
 
 import Github.Enum.SubscriptionState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -247,7 +248,7 @@ resourcePath =
 
 {-| Commit signing information, if present.
 -}
-signature : SelectionSet signature Github.Object.GitSignature -> FieldDecoder (Maybe signature) Github.Object.Commit
+signature : SelectionSet signature Github.Interface.GitSignature -> FieldDecoder (Maybe signature) Github.Object.Commit
 signature object =
     Object.selectionFieldDecoder "signature" [] object (identity >> Decode.maybe)
 

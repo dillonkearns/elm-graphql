@@ -28,6 +28,7 @@ prepend apiSubmodule moduleName fields =
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import {2}.Object
+import {2}.Interface
 import Graphqelm.Builder.Object as Object
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)

@@ -2,6 +2,7 @@ module Github.Object.GistComment exposing (..)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -19,7 +20,7 @@ selection constructor =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.GistComment
+author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Object.GistComment
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -61,7 +62,7 @@ createdViaEmail =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.GistComment
+editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.GistComment
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 

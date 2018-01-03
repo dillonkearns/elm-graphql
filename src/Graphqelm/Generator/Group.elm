@@ -50,12 +50,19 @@ generateFiles : List String -> IntrospectionData -> Dict String String
 generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName } =
     let
         objectTypes =
-            TypeLockDefinitions.generate apiSubmodule
+            [ TypeLockDefinitions.generateObjects apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery queryObjectName
                     |> excludeMutation mutationObjectName
                 )
+            , TypeLockDefinitions.generateInterfaces apiSubmodule
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery queryObjectName
+                    |> excludeMutation mutationObjectName
+                )
+            ]
     in
     typeDefinitions
         |> excludeBuiltIns
@@ -67,7 +74,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                 , interfaces = interfacePossibleTypesDict typeDefinitions
                 }
             )
-        |> List.append [ objectTypes ]
+        |> List.append objectTypes
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 

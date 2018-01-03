@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Imports exposing (imports, importsString, importsWithoutSelf, object)
+module Graphqelm.Generator.Imports exposing (imports, importsString, importsWithoutSelf, interface, object)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum
@@ -73,3 +73,8 @@ object { query, mutation, apiSubmodule } name =
         [ "RootMutation" ]
     else
         apiSubmodule ++ [ "Object", name ]
+
+
+interface : Context -> String -> List String
+interface { apiSubmodule } name =
+    apiSubmodule ++ [ "Interface", name ]

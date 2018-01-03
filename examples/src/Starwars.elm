@@ -1,17 +1,18 @@
 module Starwars exposing (main)
 
-import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
+import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
+import Swapi.Interface
+import Swapi.Interface.Character as Character
 import Swapi.Object
-import Swapi.Object.Character as Character
 import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
@@ -37,7 +38,7 @@ type alias Character =
     }
 
 
-hero : SelectionSet Character Swapi.Object.Character
+hero : SelectionSet Character Swapi.Interface.Character
 hero =
     Character.selection Character
         [ Character.onDroid (Droid.selection Droid |> with Droid.primaryFunction)

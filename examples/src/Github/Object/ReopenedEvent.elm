@@ -1,5 +1,6 @@
 module Github.Object.ReopenedEvent exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,14 +18,14 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.ReopenedEvent
+actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.ReopenedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Object that was reopened.
 -}
-closable : SelectionSet closable Github.Object.Closable -> FieldDecoder closable Github.Object.ReopenedEvent
+closable : SelectionSet closable Github.Interface.Closable -> FieldDecoder closable Github.Object.ReopenedEvent
 closable object =
     Object.selectionFieldDecoder "closable" [] object identity
 

@@ -1,6 +1,7 @@
 module Github.Object.ReactionGroup exposing (..)
 
 import Github.Enum.ReactionContent
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -32,7 +33,7 @@ createdAt =
 
 {-| The subject that was reacted to.
 -}
-subject : SelectionSet subject Github.Object.Reactable -> FieldDecoder subject Github.Object.ReactionGroup
+subject : SelectionSet subject Github.Interface.Reactable -> FieldDecoder subject Github.Object.ReactionGroup
 subject object =
     Object.selectionFieldDecoder "subject" [] object identity
 

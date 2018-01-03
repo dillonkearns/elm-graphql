@@ -3,6 +3,7 @@ module Github.Object.PullRequestReview exposing (..)
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
 import Github.Enum.PullRequestReviewState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -20,7 +21,7 @@ selection constructor =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Object.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequestReview
+author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequestReview
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -104,7 +105,7 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequestReview
+editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequestReview
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 

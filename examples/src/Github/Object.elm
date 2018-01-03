@@ -5,10 +5,6 @@ type AcceptTopicSuggestionPayload
     = AcceptTopicSuggestionPayload
 
 
-type Actor
-    = Actor
-
-
 type AddCommentPayload
     = AddCommentPayload
 
@@ -41,10 +37,6 @@ type AddedToProjectEvent
     = AddedToProjectEvent
 
 
-type Assignable
-    = Assignable
-
-
 type AssignedEvent
     = AssignedEvent
 
@@ -73,20 +65,12 @@ type Bot
     = Bot
 
 
-type Closable
-    = Closable
-
-
 type ClosedEvent
     = ClosedEvent
 
 
 type CodeOfConduct
     = CodeOfConduct
-
-
-type Comment
-    = Comment
 
 
 type CommentDeletedEvent
@@ -139,10 +123,6 @@ type CrossReferencedEvent
 
 type DeclineTopicSuggestionPayload
     = DeclineTopicSuggestionPayload
-
-
-type Deletable
-    = Deletable
 
 
 type DeleteProjectCardPayload
@@ -269,14 +249,6 @@ type GitHubMetadata
     = GitHubMetadata
 
 
-type GitObject
-    = GitObject
-
-
-type GitSignature
-    = GitSignature
-
-
 type GpgSignature
     = GpgSignature
 
@@ -337,10 +309,6 @@ type LabelEdge
     = LabelEdge
 
 
-type Labelable
-    = Labelable
-
-
 type LabeledEvent
     = LabeledEvent
 
@@ -363,10 +331,6 @@ type License
 
 type LicenseRule
     = LicenseRule
-
-
-type Lockable
-    = Lockable
 
 
 type LockedEvent
@@ -423,10 +387,6 @@ type MoveProjectColumnPayload
 
 type MovedColumnsInProjectEvent
     = MovedColumnsInProjectEvent
-
-
-type Node
-    = Node
 
 
 type Organization
@@ -495,10 +455,6 @@ type ProjectConnection
 
 type ProjectEdge
     = ProjectEdge
-
-
-type ProjectOwner
-    = ProjectOwner
 
 
 type ProtectedBranch
@@ -599,10 +555,6 @@ type PushAllowanceEdge
 
 type RateLimit
     = RateLimit
-
-
-type Reactable
-    = Reactable
 
 
 type ReactingUserConnection
@@ -713,24 +665,12 @@ type RepositoryEdge
     = RepositoryEdge
 
 
-type RepositoryInfo
-    = RepositoryInfo
-
-
 type RepositoryInvitation
     = RepositoryInvitation
 
 
 type RepositoryInvitationRepository
     = RepositoryInvitationRepository
-
-
-type RepositoryNode
-    = RepositoryNode
-
-
-type RepositoryOwner
-    = RepositoryOwner
 
 
 type RepositoryTopic
@@ -805,10 +745,6 @@ type StargazerEdge
     = StargazerEdge
 
 
-type Starrable
-    = Starrable
-
-
 type StarredRepositoryConnection
     = StarredRepositoryConnection
 
@@ -827,10 +763,6 @@ type StatusContext
 
 type SubmitPullRequestReviewPayload
     = SubmitPullRequestReviewPayload
-
-
-type Subscribable
-    = Subscribable
 
 
 type SubscribedEvent
@@ -897,10 +829,6 @@ type UnassignedEvent
     = UnassignedEvent
 
 
-type UniformResourceLocatable
-    = UniformResourceLocatable
-
-
 type UnknownSignature
     = UnknownSignature
 
@@ -915,14 +843,6 @@ type UnlockedEvent
 
 type UnsubscribedEvent
     = UnsubscribedEvent
-
-
-type Updatable
-    = Updatable
-
-
-type UpdatableComment
-    = UpdatableComment
 
 
 type UpdateProjectCardPayload

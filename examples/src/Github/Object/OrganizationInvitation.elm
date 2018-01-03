@@ -2,6 +2,7 @@ module Github.Object.OrganizationInvitation exposing (..)
 
 import Github.Enum.OrganizationInvitationRole
 import Github.Enum.OrganizationInvitationType
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object

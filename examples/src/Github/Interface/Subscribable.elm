@@ -1,6 +1,7 @@
-module Github.Object.Subscribable exposing (..)
+module Github.Interface.Subscribable exposing (..)
 
 import Github.Enum.SubscriptionState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -11,55 +12,55 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Subscribable
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Subscribable
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.Subscribable) -> SelectionSet (a -> constructor) Github.Object.Subscribable
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Subscribable) -> SelectionSet (a -> constructor) Github.Interface.Subscribable
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onCommit : SelectionSet selection Github.Object.Commit -> FragmentSelectionSet selection Github.Object.Subscribable
+onCommit : SelectionSet selection Github.Object.Commit -> FragmentSelectionSet selection Github.Interface.Subscribable
 onCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "Commit" fields decoder
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Object.Subscribable
+onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.Subscribable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Object.Subscribable
+onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.Subscribable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Object.Subscribable
+onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.Subscribable
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-onTeam : SelectionSet selection Github.Object.Team -> FragmentSelectionSet selection Github.Object.Subscribable
+onTeam : SelectionSet selection Github.Object.Team -> FragmentSelectionSet selection Github.Interface.Subscribable
 onTeam (SelectionSet fields decoder) =
     FragmentSelectionSet "Team" fields decoder
 
 
-id : FieldDecoder String Github.Object.Subscribable
+id : FieldDecoder String Github.Interface.Subscribable
 id =
     Object.fieldDecoder "id" [] Decode.string
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : FieldDecoder Bool Github.Object.Subscribable
+viewerCanSubscribe : FieldDecoder Bool Github.Interface.Subscribable
 viewerCanSubscribe =
     Object.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : FieldDecoder Github.Enum.SubscriptionState.SubscriptionState Github.Object.Subscribable
+viewerSubscription : FieldDecoder Github.Enum.SubscriptionState.SubscriptionState Github.Interface.Subscribable
 viewerSubscription =
     Object.fieldDecoder "viewerSubscription" [] Github.Enum.SubscriptionState.decoder

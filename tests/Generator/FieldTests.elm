@@ -60,7 +60,7 @@ droid object =
                         }
                         "RootQuery"
                     |> Expect.equal
-                        """hero : SelectionSet hero Swapi.Object.Character -> FieldDecoder hero RootQuery
+                        """hero : SelectionSet hero Swapi.Interface.Character -> FieldDecoder hero RootQuery
 hero object =
       Object.selectionFieldDecoder "hero" [] (object) (identity)
 """

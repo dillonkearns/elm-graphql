@@ -1,6 +1,7 @@
 module Github.Query exposing (..)
 
 import Github.Enum.SearchType
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -143,7 +144,7 @@ meta object =
   - id - ID of the object.
 
 -}
-node : { id : String } -> SelectionSet node Github.Object.Node -> FieldDecoder (Maybe node) RootQuery
+node : { id : String } -> SelectionSet node Github.Interface.Node -> FieldDecoder (Maybe node) RootQuery
 node requiredArgs object =
     Object.selectionFieldDecoder "node" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
 
@@ -153,7 +154,7 @@ node requiredArgs object =
   - ids - The list of node IDs.
 
 -}
-nodes : { ids : List String } -> SelectionSet nodes Github.Object.Node -> FieldDecoder (List (Maybe nodes)) RootQuery
+nodes : { ids : List String } -> SelectionSet nodes Github.Interface.Node -> FieldDecoder (List (Maybe nodes)) RootQuery
 nodes requiredArgs object =
     Object.selectionFieldDecoder "nodes" [ Argument.required "ids" requiredArgs.ids (Encode.string |> Encode.list) ] object (identity >> Decode.maybe >> Decode.list)
 
@@ -209,7 +210,7 @@ repository requiredArgs object =
   - login - The username to lookup the owner by.
 
 -}
-repositoryOwner : { login : String } -> SelectionSet repositoryOwner Github.Object.RepositoryOwner -> FieldDecoder (Maybe repositoryOwner) RootQuery
+repositoryOwner : { login : String } -> SelectionSet repositoryOwner Github.Interface.RepositoryOwner -> FieldDecoder (Maybe repositoryOwner) RootQuery
 repositoryOwner requiredArgs object =
     Object.selectionFieldDecoder "repositoryOwner" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.maybe)
 
@@ -219,7 +220,7 @@ repositoryOwner requiredArgs object =
   - url - The URL.
 
 -}
-resource : { url : String } -> SelectionSet resource Github.Object.UniformResourceLocatable -> FieldDecoder (Maybe resource) RootQuery
+resource : { url : String } -> SelectionSet resource Github.Interface.UniformResourceLocatable -> FieldDecoder (Maybe resource) RootQuery
 resource requiredArgs object =
     Object.selectionFieldDecoder "resource" [ Argument.required "url" requiredArgs.url Encode.string ] object (identity >> Decode.maybe)
 

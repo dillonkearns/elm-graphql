@@ -1,5 +1,6 @@
 module Github.Object.UnassignedEvent exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,14 +18,14 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.UnassignedEvent
+actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.UnassignedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the assignable associated with the event.
 -}
-assignable : SelectionSet assignable Github.Object.Assignable -> FieldDecoder assignable Github.Object.UnassignedEvent
+assignable : SelectionSet assignable Github.Interface.Assignable -> FieldDecoder assignable Github.Object.UnassignedEvent
 assignable object =
     Object.selectionFieldDecoder "assignable" [] object identity
 

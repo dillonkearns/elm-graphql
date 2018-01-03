@@ -1,5 +1,6 @@
 module Github.Object.UserContentEdit exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,7 +25,7 @@ createdAt =
 
 {-| The actor who edited this content,
 -}
-editor : SelectionSet editor Github.Object.Actor -> FieldDecoder (Maybe editor) Github.Object.UserContentEdit
+editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.UserContentEdit
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 

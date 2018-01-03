@@ -1,5 +1,6 @@
 module Github.Object.UnlockedEvent exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,7 +18,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Object.Actor -> FieldDecoder (Maybe actor) Github.Object.UnlockedEvent
+actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.UnlockedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -36,6 +37,6 @@ id =
 
 {-| Object that was unlocked.
 -}
-lockable : SelectionSet lockable Github.Object.Lockable -> FieldDecoder lockable Github.Object.UnlockedEvent
+lockable : SelectionSet lockable Github.Interface.Lockable -> FieldDecoder lockable Github.Object.UnlockedEvent
 lockable object =
     Object.selectionFieldDecoder "lockable" [] object identity

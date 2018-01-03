@@ -5,6 +5,7 @@ import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryPrivacy
 import Github.Enum.TeamPrivacy
 import Github.Enum.TeamRole
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object

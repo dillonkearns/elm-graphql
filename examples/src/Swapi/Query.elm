@@ -9,6 +9,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 import Swapi.Enum.Episode
+import Swapi.Interface
 import Swapi.Object
 
 
@@ -32,7 +33,7 @@ droid requiredArgs object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Object.Character -> FieldDecoder (Maybe hero) RootQuery
+hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Interface.Character -> FieldDecoder (Maybe hero) RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =

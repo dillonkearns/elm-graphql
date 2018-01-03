@@ -1,6 +1,7 @@
 module Github.Object.StatusContext exposing (..)
 
 import Github.Enum.StatusState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -39,7 +40,7 @@ createdAt =
 
 {-| The actor who created this status context.
 -}
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.StatusContext
+creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.StatusContext
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 

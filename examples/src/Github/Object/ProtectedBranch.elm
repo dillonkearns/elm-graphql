@@ -1,5 +1,6 @@
 module Github.Object.ProtectedBranch exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -17,7 +18,7 @@ selection constructor =
 
 {-| The actor who created this protected branch.
 -}
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.ProtectedBranch
+creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.ProtectedBranch
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 

@@ -1,6 +1,7 @@
-module Github.Object.GitSignature exposing (..)
+module Github.Interface.GitSignature exposing (..)
 
 import Github.Enum.GitSignatureState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -11,68 +12,68 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.GitSignature
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.GitSignature
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.GitSignature) -> SelectionSet (a -> constructor) Github.Object.GitSignature
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.GitSignature) -> SelectionSet (a -> constructor) Github.Interface.GitSignature
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onGpgSignature : SelectionSet selection Github.Object.GpgSignature -> FragmentSelectionSet selection Github.Object.GitSignature
+onGpgSignature : SelectionSet selection Github.Object.GpgSignature -> FragmentSelectionSet selection Github.Interface.GitSignature
 onGpgSignature (SelectionSet fields decoder) =
     FragmentSelectionSet "GpgSignature" fields decoder
 
 
-onSmimeSignature : SelectionSet selection Github.Object.SmimeSignature -> FragmentSelectionSet selection Github.Object.GitSignature
+onSmimeSignature : SelectionSet selection Github.Object.SmimeSignature -> FragmentSelectionSet selection Github.Interface.GitSignature
 onSmimeSignature (SelectionSet fields decoder) =
     FragmentSelectionSet "SmimeSignature" fields decoder
 
 
-onUnknownSignature : SelectionSet selection Github.Object.UnknownSignature -> FragmentSelectionSet selection Github.Object.GitSignature
+onUnknownSignature : SelectionSet selection Github.Object.UnknownSignature -> FragmentSelectionSet selection Github.Interface.GitSignature
 onUnknownSignature (SelectionSet fields decoder) =
     FragmentSelectionSet "UnknownSignature" fields decoder
 
 
 {-| Email used to sign this object.
 -}
-email : FieldDecoder String Github.Object.GitSignature
+email : FieldDecoder String Github.Interface.GitSignature
 email =
     Object.fieldDecoder "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
-isValid : FieldDecoder Bool Github.Object.GitSignature
+isValid : FieldDecoder Bool Github.Interface.GitSignature
 isValid =
     Object.fieldDecoder "isValid" [] Decode.bool
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
-payload : FieldDecoder String Github.Object.GitSignature
+payload : FieldDecoder String Github.Interface.GitSignature
 payload =
     Object.fieldDecoder "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
-signature : FieldDecoder String Github.Object.GitSignature
+signature : FieldDecoder String Github.Interface.GitSignature
 signature =
     Object.fieldDecoder "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
 -}
-signer : SelectionSet signer Github.Object.User -> FieldDecoder (Maybe signer) Github.Object.GitSignature
+signer : SelectionSet signer Github.Object.User -> FieldDecoder (Maybe signer) Github.Interface.GitSignature
 signer object =
     Object.selectionFieldDecoder "signer" [] object (identity >> Decode.maybe)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.
 -}
-state : FieldDecoder Github.Enum.GitSignatureState.GitSignatureState Github.Object.GitSignature
+state : FieldDecoder Github.Enum.GitSignatureState.GitSignatureState Github.Interface.GitSignature
 state =
     Object.fieldDecoder "state" [] Github.Enum.GitSignatureState.decoder

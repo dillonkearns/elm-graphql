@@ -9,6 +9,7 @@ import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryLockReason
 import Github.Enum.RepositoryPrivacy
 import Github.Enum.SubscriptionState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -470,7 +471,7 @@ nameWithOwner =
   - expression - A Git revision expression suitable for rev-parse
 
 -}
-object : ({ oid : OptionalArgument String, expression : OptionalArgument String } -> { oid : OptionalArgument String, expression : OptionalArgument String }) -> SelectionSet object Github.Object.GitObject -> FieldDecoder (Maybe object) Github.Object.Repository
+object : ({ oid : OptionalArgument String, expression : OptionalArgument String } -> { oid : OptionalArgument String, expression : OptionalArgument String }) -> SelectionSet object Github.Interface.GitObject -> FieldDecoder (Maybe object) Github.Object.Repository
 object fillInOptionals object =
     let
         filledInOptionals =
@@ -485,7 +486,7 @@ object fillInOptionals object =
 
 {-| The User owner of the repository.
 -}
-owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder owner Github.Object.Repository
+owner : SelectionSet owner Github.Interface.RepositoryOwner -> FieldDecoder owner Github.Object.Repository
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 

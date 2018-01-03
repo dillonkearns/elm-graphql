@@ -1,5 +1,6 @@
-module Github.Object.Starrable exposing (..)
+module Github.Interface.Starrable exposing (..)
 
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -10,27 +11,27 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Starrable
+baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Starrable
 baseSelection constructor =
     Object.object constructor
 
 
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Object.Starrable) -> SelectionSet (a -> constructor) Github.Object.Starrable
+selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Starrable) -> SelectionSet (a -> constructor) Github.Interface.Starrable
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
 
 
-onGist : SelectionSet selection Github.Object.Gist -> FragmentSelectionSet selection Github.Object.Starrable
+onGist : SelectionSet selection Github.Object.Gist -> FragmentSelectionSet selection Github.Interface.Starrable
 onGist (SelectionSet fields decoder) =
     FragmentSelectionSet "Gist" fields decoder
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Object.Starrable
+onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.Starrable
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-id : FieldDecoder String Github.Object.Starrable
+id : FieldDecoder String Github.Interface.Starrable
 id =
     Object.fieldDecoder "id" [] Decode.string
 
@@ -44,7 +45,7 @@ id =
   - orderBy - Order for connection
 
 -}
-stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet stargazers Github.Object.StargazerConnection -> FieldDecoder stargazers Github.Object.Starrable
+stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet stargazers Github.Object.StargazerConnection -> FieldDecoder stargazers Github.Interface.Starrable
 stargazers fillInOptionals object =
     let
         filledInOptionals =
@@ -59,6 +60,6 @@ stargazers fillInOptionals object =
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
-viewerHasStarred : FieldDecoder Bool Github.Object.Starrable
+viewerHasStarred : FieldDecoder Bool Github.Interface.Starrable
 viewerHasStarred =
     Object.fieldDecoder "viewerHasStarred" [] Decode.bool

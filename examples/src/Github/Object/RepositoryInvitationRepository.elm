@@ -1,6 +1,7 @@
 module Github.Object.RepositoryInvitationRepository exposing (..)
 
 import Github.Enum.RepositoryLockReason
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -144,7 +145,7 @@ nameWithOwner =
 
 {-| The owner of the repository associated with this invitation repository.
 -}
-owner : SelectionSet owner Github.Object.RepositoryOwner -> FieldDecoder owner Github.Object.RepositoryInvitationRepository
+owner : SelectionSet owner Github.Interface.RepositoryOwner -> FieldDecoder owner Github.Object.RepositoryInvitationRepository
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 

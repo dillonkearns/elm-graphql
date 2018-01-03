@@ -4,6 +4,7 @@ import Github.Enum.SubscriptionState
 import Github.Enum.TeamMemberRole
 import Github.Enum.TeamMembershipType
 import Github.Enum.TeamPrivacy
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object

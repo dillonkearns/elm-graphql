@@ -1,6 +1,7 @@
 module Github.Object.Ref exposing (..)
 
 import Github.Enum.PullRequestState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -70,6 +71,6 @@ repository object =
 
 {-| The object the ref points to.
 -}
-target : SelectionSet target Github.Object.GitObject -> FieldDecoder target Github.Object.Ref
+target : SelectionSet target Github.Interface.GitObject -> FieldDecoder target Github.Object.Ref
 target object =
     Object.selectionFieldDecoder "target" [] object identity

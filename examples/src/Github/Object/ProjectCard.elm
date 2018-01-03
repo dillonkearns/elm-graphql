@@ -1,6 +1,7 @@
 module Github.Object.ProjectCard exposing (..)
 
 import Github.Enum.ProjectCardState
+import Github.Interface
 import Github.Object
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -42,7 +43,7 @@ createdAt =
 
 {-| The actor who created this card
 -}
-creator : SelectionSet creator Github.Object.Actor -> FieldDecoder (Maybe creator) Github.Object.ProjectCard
+creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.ProjectCard
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
