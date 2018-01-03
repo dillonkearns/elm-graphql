@@ -21,13 +21,15 @@ all =
                 ]
                     |> TypeLockDefinitions.generateObjects [ "Api" ]
                     |> Expect.equal
-                        """module Api.Object exposing (..)
+                        ( [ "Api", "Object" ]
+                        , """module Api.Object exposing (..)
 
 
 placeholder : String
 placeholder =
     ""
 """
+                        )
         , test "generates imports for objects" <|
             \() ->
                 [ Type.TypeDefinition "MyObject"
@@ -38,12 +40,15 @@ placeholder =
                     Nothing
                 ]
                     |> TypeLockDefinitions.generateObjects [ "Api" ]
-                    |> Expect.equal """module Api.Object exposing (..)
+                    |> Expect.equal
+                        ( [ "Api", "Object" ]
+                        , """module Api.Object exposing (..)
 
 
 type MyObject
     = MyObject
 """
+                        )
         , test "generates imports for interfaces" <|
             \() ->
                 [ Type.TypeDefinition "MyObject"
@@ -54,10 +59,13 @@ type MyObject
                     Nothing
                 ]
                     |> TypeLockDefinitions.generateInterfaces [ "Api" ]
-                    |> Expect.equal """module Api.Interface exposing (..)
+                    |> Expect.equal
+                        ( [ "Api", "Interface" ]
+                        , """module Api.Interface exposing (..)
 
 
 type MyInterface
     = MyInterface
 """
+                        )
         ]

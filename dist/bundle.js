@@ -9457,66 +9457,71 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon = F4(
 	function (typeName, nameOrNothing, apiSubmodule, typeDefinitions) {
-		var typesToGenerate = A2(_elm_lang$core$List$filterMap, nameOrNothing, typeDefinitions);
-		return _elm_lang$core$Native_Utils.eq(
-			typesToGenerate,
-			{ctor: '[]'}) ? A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
-			{
-				ctor: '::',
+		return function (fileContents) {
+			return {
+				ctor: '_Tuple2',
 				_0: A2(
-					_elm_lang$core$String$join,
-					'.',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						apiSubmodule,
-						{
+					_elm_lang$core$Basics_ops['++'],
+					apiSubmodule,
+					{
+						ctor: '::',
+						_0: typeName,
+						_1: {ctor: '[]'}
+					}),
+				_1: fileContents
+			};
+		}(
+			function () {
+				var typesToGenerate = A2(_elm_lang$core$List$filterMap, nameOrNothing, typeDefinitions);
+				return _elm_lang$core$Native_Utils.eq(
+					typesToGenerate,
+					{ctor: '[]'}) ? A2(
+					_dillonkearns$graphqelm$Interpolate$interpolate,
+					'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$core$String$join,
+							'.',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								apiSubmodule,
+								{
+									ctor: '::',
+									_0: typeName,
+									_1: {ctor: '[]'}
+								})),
+						_1: {ctor: '[]'}
+					}) : A2(
+					_dillonkearns$graphqelm$Interpolate$interpolate,
+					'module {0} exposing (..)\n\n\n{1}\n',
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$core$String$join,
+							'.',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								apiSubmodule,
+								{
+									ctor: '::',
+									_0: typeName,
+									_1: {ctor: '[]'}
+								})),
+						_1: {
 							ctor: '::',
-							_0: typeName,
+							_0: A2(
+								_elm_lang$core$String$join,
+								'\n\n\n',
+								A2(_elm_lang$core$List$map, _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType, typesToGenerate)),
 							_1: {ctor: '[]'}
-						})),
-				_1: {ctor: '[]'}
-			}) : A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\n\n{1}\n',
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$String$join,
-					'.',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						apiSubmodule,
-						{
-							ctor: '::',
-							_0: typeName,
-							_1: {ctor: '[]'}
-						})),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						'\n\n\n',
-						A2(_elm_lang$core$List$map, _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType, typesToGenerate)),
-					_1: {ctor: '[]'}
-				}
-			});
+						}
+					});
+			}());
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generate = F2(
 	function (apiSubmodule, typeDefinitions) {
-		return {
-			ctor: '_Tuple2',
-			_0: A2(
-				_elm_lang$core$Basics_ops['++'],
-				apiSubmodule,
-				{
-					ctor: '::',
-					_0: 'Object',
-					_1: {ctor: '[]'}
-				}),
-			_1: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectOrInterfaceName, apiSubmodule, typeDefinitions)
-		};
+		return A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectOrInterfaceName, apiSubmodule, typeDefinitions);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateInterfaces = A2(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Interface', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$interfaceName);
 var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateObjects = A2(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectName);

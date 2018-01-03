@@ -4,28 +4,28 @@ import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)
 
 
-generateObjects : List String -> List TypeDefinition -> String
+generateObjects : List String -> List TypeDefinition -> ( List String, String )
 generateObjects =
     generateCommon "Object" objectName
 
 
-generateInterfaces : List String -> List TypeDefinition -> String
+generateInterfaces : List String -> List TypeDefinition -> ( List String, String )
 generateInterfaces =
     generateCommon "Interface" interfaceName
 
 
 generate : List String -> List TypeDefinition -> ( List String, String )
 generate apiSubmodule typeDefinitions =
-    ( apiSubmodule ++ [ "Object" ], generateCommon "Object" objectOrInterfaceName apiSubmodule typeDefinitions )
+    generateCommon "Object" objectOrInterfaceName apiSubmodule typeDefinitions
 
 
-generateCommon : String -> (TypeDefinition -> Maybe String) -> List String -> List TypeDefinition -> String
+generateCommon : String -> (TypeDefinition -> Maybe String) -> List String -> List TypeDefinition -> ( List String, String )
 generateCommon typeName nameOrNothing apiSubmodule typeDefinitions =
-    let
+    (let
         typesToGenerate =
             List.filterMap nameOrNothing typeDefinitions
-    in
-    if typesToGenerate == [] then
+     in
+     if typesToGenerate == [] then
         interpolate
             """module {0} exposing (..)
 
@@ -35,7 +35,7 @@ placeholder =
     ""
 """
             [ apiSubmodule ++ [ typeName ] |> String.join "." ]
-    else
+     else
         interpolate
             """module {0} exposing (..)
 
@@ -47,6 +47,8 @@ placeholder =
                 |> List.map generateType
                 |> String.join "\n\n\n"
             ]
+    )
+        |> (\fileContents -> ( apiSubmodule ++ [ typeName ], fileContents ))
 
 
 generateType : String -> String
