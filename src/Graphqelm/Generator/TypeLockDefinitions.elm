@@ -14,9 +14,9 @@ generateInterfaces =
     generateCommon "Interface" interfaceName
 
 
-generate : List String -> List TypeDefinition -> String
-generate =
-    generateCommon "Object" objectOrInterfaceName
+generate : List String -> List TypeDefinition -> ( List String, String )
+generate apiSubmodule typeDefinitions =
+    ( apiSubmodule ++ [ "Object" ], generateCommon "Object" objectOrInterfaceName apiSubmodule typeDefinitions )
 
 
 generateCommon : String -> (TypeDefinition -> Maybe String) -> List String -> List TypeDefinition -> String

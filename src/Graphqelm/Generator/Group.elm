@@ -50,14 +50,12 @@ generateFiles : List String -> IntrospectionData -> Dict String String
 generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName } =
     let
         objectTypes =
-            ( apiSubmodule ++ [ "Object" ]
-            , TypeLockDefinitions.generate apiSubmodule
+            TypeLockDefinitions.generate apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery queryObjectName
                     |> excludeMutation mutationObjectName
                 )
-            )
     in
     typeDefinitions
         |> excludeBuiltIns

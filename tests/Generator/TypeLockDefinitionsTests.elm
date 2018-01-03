@@ -19,7 +19,7 @@ all =
                     )
                     Nothing
                 ]
-                    |> TypeLockDefinitions.generate [ "Api" ]
+                    |> TypeLockDefinitions.generateObjects [ "Api" ]
                     |> Expect.equal
                         """module Api.Object exposing (..)
 
