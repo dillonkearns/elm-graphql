@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles)
+module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles, sortedIntrospectionData)
 
 import Dict exposing (Dict)
 import Graphqelm.Generator.Context exposing (Context)
@@ -6,8 +6,8 @@ import Graphqelm.Generator.Enum
 import Graphqelm.Generator.Interface
 import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
-import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Generator.Query
+import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
@@ -16,6 +16,19 @@ type alias IntrospectionData =
     , queryObjectName : String
     , mutationObjectName : Maybe String
     }
+
+
+sortedIntrospectionData : List TypeDefinition -> String -> Maybe String -> IntrospectionData
+sortedIntrospectionData typeDefinitions queryObjectName mutationObjectName =
+    { typeDefinitions = typeDefinitions |> List.sortBy typeDefName
+    , queryObjectName = queryObjectName
+    , mutationObjectName = mutationObjectName
+    }
+
+
+typeDefName : TypeDefinition -> String
+typeDefName (TypeDefinition name definableType description) =
+    name
 
 
 interfacePossibleTypesDict : List TypeDefinition -> Dict String (List String)
