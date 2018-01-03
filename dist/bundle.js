@@ -9348,7 +9348,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Object$generate = F3(
 		};
 	});
 
-var _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$nameIfDefinitionNeeded = function (_p0) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$nameIfDefinitionNeeded = function (_p0) {
 	var _p1 = _p0;
 	var _p3 = _p1._0;
 	var _p2 = _p1._1;
@@ -9363,7 +9363,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$nameIfDefinitionNeed
 			return _elm_lang$core$Maybe$Nothing;
 	}
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$generateType = function (name) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType = function (name) {
 	return A2(
 		_dillonkearns$graphqelm$Interpolate$interpolate,
 		'type {0}\n    = {0}',
@@ -9373,9 +9373,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$generateType = funct
 			_1: {ctor: '[]'}
 		});
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$generate = F2(
+var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generate = F2(
 	function (apiSubmodule, typeDefinitions) {
-		var typesToGenerate = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$nameIfDefinitionNeeded, typeDefinitions);
+		var typesToGenerate = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$nameIfDefinitionNeeded, typeDefinitions);
 		return _elm_lang$core$Native_Utils.eq(
 			typesToGenerate,
 			{ctor: '[]'}) ? A2(
@@ -9396,7 +9396,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$generate = F2(
 					_0: A2(
 						_elm_lang$core$String$join,
 						'\n\n\n',
-						A2(_elm_lang$core$List$map, _dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$generateType, typesToGenerate)),
+						A2(_elm_lang$core$List$map, _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType, typesToGenerate)),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -9551,7 +9551,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles = F2(
 					_1: {ctor: '[]'}
 				}),
 			_1: A2(
-				_dillonkearns$graphqelm$Graphqelm_Generator_ObjectTypes$generate,
+				_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generate,
 				apiSubmodule,
 				A2(
 					_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,

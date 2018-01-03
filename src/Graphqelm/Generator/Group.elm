@@ -6,7 +6,7 @@ import Graphqelm.Generator.Enum
 import Graphqelm.Generator.Interface
 import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
-import Graphqelm.Generator.ObjectTypes as ObjectTypes
+import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Generator.Query
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
@@ -38,7 +38,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
     let
         objectTypes =
             ( apiSubmodule ++ [ "Object" ]
-            , ObjectTypes.generate apiSubmodule
+            , TypeLockDefinitions.generate apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery queryObjectName

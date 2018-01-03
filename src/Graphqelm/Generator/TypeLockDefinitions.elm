@@ -1,4 +1,4 @@
-module Graphqelm.Generator.ObjectTypes exposing (generate)
+module Graphqelm.Generator.TypeLockDefinitions exposing (generate)
 
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)

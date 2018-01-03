@@ -1,7 +1,7 @@
-module Generator.ObjectTypesTests exposing (all)
+module Generator.TypeLockDefinitionsTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.ObjectTypes as ObjectTypes
+import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Parser.Type as Type exposing (..)
 import Test exposing (..)
 
@@ -24,7 +24,7 @@ all =
                     )
                     Nothing
                 ]
-                    |> ObjectTypes.generate [ "Api" ]
+                    |> TypeLockDefinitions.generate [ "Api" ]
                     |> Expect.equal
                         """module Api.Object exposing (..)
 
@@ -42,7 +42,7 @@ placeholder =
                     (Type.InterfaceType [] [])
                     Nothing
                 ]
-                    |> ObjectTypes.generate [ "Api" ]
+                    |> TypeLockDefinitions.generate [ "Api" ]
                     |> Expect.equal """module Api.Object exposing (..)
 
 
