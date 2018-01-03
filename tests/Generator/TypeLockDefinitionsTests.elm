@@ -28,7 +28,7 @@ placeholder : String
 placeholder =
     ""
 """
-        , test "generates imports for objects and interfaces" <|
+        , test "generates imports for objects" <|
             \() ->
                 [ Type.TypeDefinition "MyObject"
                     (Type.ObjectType [])
@@ -37,12 +37,24 @@ placeholder =
                     (Type.InterfaceType [] [])
                     Nothing
                 ]
-                    |> TypeLockDefinitions.generate [ "Api" ]
+                    |> TypeLockDefinitions.generateObjects [ "Api" ]
                     |> Expect.equal """module Api.Object exposing (..)
 
 
 type MyObject
     = MyObject
+"""
+        , test "generates imports for interfaces" <|
+            \() ->
+                [ Type.TypeDefinition "MyObject"
+                    (Type.ObjectType [])
+                    Nothing
+                , Type.TypeDefinition "MyInterface"
+                    (Type.InterfaceType [] [])
+                    Nothing
+                ]
+                    |> TypeLockDefinitions.generateInterfaces [ "Api" ]
+                    |> Expect.equal """module Api.Interface exposing (..)
 
 
 type MyInterface

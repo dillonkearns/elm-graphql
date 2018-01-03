@@ -305,6 +305,10 @@ type PullRequestReviewComment
     = PullRequestReviewComment
 
 
+type PullRequestReviewThread
+    = PullRequestReviewThread
+
+
 type TeamConnection
     = TeamConnection
 
@@ -443,10 +447,6 @@ type GistCommentEdge
 
 type GistComment
     = GistComment
-
-
-type PullRequestReviewThread
-    = PullRequestReviewThread
 
 
 type PullRequestCommitConnection

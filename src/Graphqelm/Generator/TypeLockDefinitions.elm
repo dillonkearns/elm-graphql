@@ -1,33 +1,48 @@
-module Graphqelm.Generator.TypeLockDefinitions exposing (generate)
+module Graphqelm.Generator.TypeLockDefinitions exposing (generate, generateInterfaces, generateObjects)
 
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)
 
 
+generateObjects : List String -> List TypeDefinition -> String
+generateObjects =
+    generateCommon "Object" objectName
+
+
+generateInterfaces : List String -> List TypeDefinition -> String
+generateInterfaces =
+    generateCommon "Interface" interfaceName
+
+
 generate : List String -> List TypeDefinition -> String
-generate apiSubmodule typeDefinitions =
+generate =
+    generateCommon "Object" objectOrInterfaceName
+
+
+generateCommon : String -> (TypeDefinition -> Maybe String) -> List String -> List TypeDefinition -> String
+generateCommon typeName nameOrNothing apiSubmodule typeDefinitions =
     let
         typesToGenerate =
-            List.filterMap nameIfDefinitionNeeded typeDefinitions
+            List.filterMap nameOrNothing typeDefinitions
     in
     if typesToGenerate == [] then
         interpolate
-            """module {0}.Object exposing (..)
+            """module {0} exposing (..)
 
 
 placeholder : String
 placeholder =
     ""
 """
-            [ apiSubmodule |> String.join "." ]
+            [ apiSubmodule ++ [ typeName ] |> String.join "." ]
     else
         interpolate
-            """module {0}.Object exposing (..)
+            """module {0} exposing (..)
 
 
 {1}
 """
-            [ apiSubmodule |> String.join "."
+            [ apiSubmodule ++ [ typeName ] |> String.join "."
             , typesToGenerate
                 |> List.map generateType
                 |> String.join "\n\n\n"
@@ -42,8 +57,40 @@ generateType name =
         [ name ]
 
 
-nameIfDefinitionNeeded : TypeDefinition -> Maybe String
-nameIfDefinitionNeeded (TypeDefinition name definableType description) =
+objectName : TypeDefinition -> Maybe String
+objectName (TypeDefinition name definableType description) =
+    case definableType of
+        Type.ObjectType _ ->
+            Just name
+
+        Type.InterfaceType _ _ ->
+            Nothing
+
+        Type.ScalarType ->
+            Nothing
+
+        Type.EnumType _ ->
+            Nothing
+
+
+interfaceName : TypeDefinition -> Maybe String
+interfaceName (TypeDefinition name definableType description) =
+    case definableType of
+        Type.ObjectType _ ->
+            Nothing
+
+        Type.InterfaceType _ _ ->
+            Just name
+
+        Type.ScalarType ->
+            Nothing
+
+        Type.EnumType _ ->
+            Nothing
+
+
+objectOrInterfaceName : TypeDefinition -> Maybe String
+objectOrInterfaceName (TypeDefinition name definableType description) =
     case definableType of
         Type.ObjectType _ ->
             Just name
