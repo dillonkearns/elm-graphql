@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid Episode type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : Episode -> String
+toString enum =
+    case enum of
+        EMPIRE ->
+            "EMPIRE"
+
+        JEDI ->
+            "JEDI"
+
+        NEWHOPE ->
+            "NEWHOPE"

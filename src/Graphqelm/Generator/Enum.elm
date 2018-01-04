@@ -27,12 +27,35 @@ import Json.Decode as Decode exposing (Decoder)
         ++ docComment
         ++ enumType enumName enumValues
         ++ enumDecoder enumName enumValues
+        ++ "\n\n"
+        ++ enumToString enumName enumValues
 
 
 enumType : String -> List EnumValue -> String
 enumType enumName enumValues =
     "type " ++ enumName ++ """
     = """ ++ (enumValues |> List.map .name |> String.join "\n    | ") ++ "\n"
+
+
+enumToString : String -> List EnumValue -> String
+enumToString enumName enumValues =
+    interpolate
+        """toString : {0} -> String
+toString enum =
+    case enum of
+{1}"""
+        [ enumName
+        , List.map toStringCase enumValues |> String.join "\n\n"
+        ]
+
+
+toStringCase : EnumValue -> String
+toStringCase enumValue =
+    interpolate
+        """        {0} ->
+                "{0}"
+"""
+        [ enumValue.name ]
 
 
 enumDecoder : String -> List EnumValue -> String

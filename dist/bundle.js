@@ -8566,6 +8566,34 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 					'\n\n                    _ ->\n                        Decode.fail (\"Invalid ',
 					A2(_elm_lang$core$Basics_ops['++'], enumName, ' type, \" ++ string ++ \" try re-running the graphqelm CLI \")\n        )\n        '))));
 	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$toStringCase = function (enumValue) {
+	return A2(
+		_dillonkearns$graphqelm$Interpolate$interpolate,
+		'        {0} ->\n                \"{0}\"\n',
+		{
+			ctor: '::',
+			_0: enumValue.name,
+			_1: {ctor: '[]'}
+		});
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumToString = F2(
+	function (enumName, enumValues) {
+		return A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'toString : {0} -> String\ntoString enum =\n    case enum of\n{1}',
+			{
+				ctor: '::',
+				_0: enumName,
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$String$join,
+						'\n\n',
+						A2(_elm_lang$core$List$map, _dillonkearns$graphqelm$Graphqelm_Generator_Enum$toStringCase, enumValues)),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumType = F2(
 	function (enumName, enumValues) {
 		return A2(
@@ -8608,7 +8636,13 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend = F4(
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumType, enumName, enumValues),
-					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder, enumName, enumValues))));
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder, enumName, enumValues),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'\n\n',
+							A2(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumToString, enumName, enumValues))))));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDocs = F2(
 	function (enumDescription, enumValues) {
