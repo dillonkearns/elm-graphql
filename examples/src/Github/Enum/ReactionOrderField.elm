@@ -24,3 +24,10 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid ReactionOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : ReactionOrderField -> String
+toString enum =
+    case enum of
+        CREATED_AT ->
+            "CREATED_AT"

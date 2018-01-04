@@ -44,3 +44,22 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid RepositoryContributionType type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : RepositoryContributionType -> String
+toString enum =
+    case enum of
+        COMMIT ->
+            "COMMIT"
+
+        ISSUE ->
+            "ISSUE"
+
+        PULL_REQUEST ->
+            "PULL_REQUEST"
+
+        REPOSITORY ->
+            "REPOSITORY"
+
+        PULL_REQUEST_REVIEW ->
+            "PULL_REQUEST_REVIEW"

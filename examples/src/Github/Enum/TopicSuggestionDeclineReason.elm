@@ -39,3 +39,19 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid TopicSuggestionDeclineReason type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : TopicSuggestionDeclineReason -> String
+toString enum =
+    case enum of
+        NOT_RELEVANT ->
+            "NOT_RELEVANT"
+
+        TOO_SPECIFIC ->
+            "TOO_SPECIFIC"
+
+        PERSONAL_PREFERENCE ->
+            "PERSONAL_PREFERENCE"
+
+        TOO_GENERAL ->
+            "TOO_GENERAL"

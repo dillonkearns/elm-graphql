@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid SearchType type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : SearchType -> String
+toString enum =
+    case enum of
+        ISSUE ->
+            "ISSUE"
+
+        REPOSITORY ->
+            "REPOSITORY"
+
+        USER ->
+            "USER"

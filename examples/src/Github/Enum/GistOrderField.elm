@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid GistOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : GistOrderField -> String
+toString enum =
+    case enum of
+        CREATED_AT ->
+            "CREATED_AT"
+
+        UPDATED_AT ->
+            "UPDATED_AT"
+
+        PUSHED_AT ->
+            "PUSHED_AT"

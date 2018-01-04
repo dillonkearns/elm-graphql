@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid MergeableState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : MergeableState -> String
+toString enum =
+    case enum of
+        MERGEABLE ->
+            "MERGEABLE"
+
+        CONFLICTING ->
+            "CONFLICTING"
+
+        UNKNOWN ->
+            "UNKNOWN"

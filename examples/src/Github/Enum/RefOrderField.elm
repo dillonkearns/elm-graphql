@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid RefOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : RefOrderField -> String
+toString enum =
+    case enum of
+        TAG_COMMIT_DATE ->
+            "TAG_COMMIT_DATE"
+
+        ALPHABETICAL ->
+            "ALPHABETICAL"

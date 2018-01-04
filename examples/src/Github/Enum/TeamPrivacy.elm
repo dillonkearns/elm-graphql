@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid TeamPrivacy type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : TeamPrivacy -> String
+toString enum =
+    case enum of
+        SECRET ->
+            "SECRET"
+
+        VISIBLE ->
+            "VISIBLE"

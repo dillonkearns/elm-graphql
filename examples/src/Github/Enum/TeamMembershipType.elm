@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid TeamMembershipType type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : TeamMembershipType -> String
+toString enum =
+    case enum of
+        IMMEDIATE ->
+            "IMMEDIATE"
+
+        CHILD_TEAM ->
+            "CHILD_TEAM"
+
+        ALL ->
+            "ALL"

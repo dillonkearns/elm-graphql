@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid OrganizationInvitationType type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : OrganizationInvitationType -> String
+toString enum =
+    case enum of
+        USER ->
+            "USER"
+
+        EMAIL ->
+            "EMAIL"

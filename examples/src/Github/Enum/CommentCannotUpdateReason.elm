@@ -44,3 +44,22 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid CommentCannotUpdateReason type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : CommentCannotUpdateReason -> String
+toString enum =
+    case enum of
+        INSUFFICIENT_ACCESS ->
+            "INSUFFICIENT_ACCESS"
+
+        LOCKED ->
+            "LOCKED"
+
+        LOGIN_REQUIRED ->
+            "LOGIN_REQUIRED"
+
+        MAINTENANCE ->
+            "MAINTENANCE"
+
+        VERIFIED_EMAIL_REQUIRED ->
+            "VERIFIED_EMAIL_REQUIRED"

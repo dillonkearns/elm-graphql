@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid OrderDirection type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : OrderDirection -> String
+toString enum =
+    case enum of
+        ASC ->
+            "ASC"
+
+        DESC ->
+            "DESC"

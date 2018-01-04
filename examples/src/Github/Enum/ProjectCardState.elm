@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid ProjectCardState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : ProjectCardState -> String
+toString enum =
+    case enum of
+        CONTENT_ONLY ->
+            "CONTENT_ONLY"
+
+        NOTE_ONLY ->
+            "NOTE_ONLY"
+
+        REDACTED ->
+            "REDACTED"

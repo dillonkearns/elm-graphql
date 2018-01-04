@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid TeamMemberRole type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : TeamMemberRole -> String
+toString enum =
+    case enum of
+        MAINTAINER ->
+            "MAINTAINER"
+
+        MEMBER ->
+            "MEMBER"

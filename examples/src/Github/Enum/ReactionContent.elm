@@ -49,3 +49,25 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid ReactionContent type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : ReactionContent -> String
+toString enum =
+    case enum of
+        THUMBS_UP ->
+            "THUMBS_UP"
+
+        THUMBS_DOWN ->
+            "THUMBS_DOWN"
+
+        LAUGH ->
+            "LAUGH"
+
+        HOORAY ->
+            "HOORAY"
+
+        CONFUSED ->
+            "CONFUSED"
+
+        HEART ->
+            "HEART"

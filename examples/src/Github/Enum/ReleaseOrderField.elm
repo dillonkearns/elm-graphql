@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid ReleaseOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : ReleaseOrderField -> String
+toString enum =
+    case enum of
+        CREATED_AT ->
+            "CREATED_AT"
+
+        NAME ->
+            "NAME"

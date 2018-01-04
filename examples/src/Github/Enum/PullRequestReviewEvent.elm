@@ -39,3 +39,19 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid PullRequestReviewEvent type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : PullRequestReviewEvent -> String
+toString enum =
+    case enum of
+        COMMENT ->
+            "COMMENT"
+
+        APPROVE ->
+            "APPROVE"
+
+        REQUEST_CHANGES ->
+            "REQUEST_CHANGES"
+
+        DISMISS ->
+            "DISMISS"

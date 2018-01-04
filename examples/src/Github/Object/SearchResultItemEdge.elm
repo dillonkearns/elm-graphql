@@ -29,3 +29,10 @@ cursor =
 node : SelectionSet node Github.Union.SearchResultItem -> FieldDecoder (Maybe node) Github.Object.SearchResultItemEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)
+
+
+{-| Text matches on the result found.
+-}
+textMatches : SelectionSet textMatches Github.Object.TextMatch -> FieldDecoder (Maybe (List (Maybe textMatches))) Github.Object.SearchResultItemEdge
+textMatches object =
+    Object.selectionFieldDecoder "textMatches" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)

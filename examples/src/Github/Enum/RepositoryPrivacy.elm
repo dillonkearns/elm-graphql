@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid RepositoryPrivacy type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : RepositoryPrivacy -> String
+toString enum =
+    case enum of
+        PUBLIC ->
+            "PUBLIC"
+
+        PRIVATE ->
+            "PRIVATE"

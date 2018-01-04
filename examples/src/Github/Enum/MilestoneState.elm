@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid MilestoneState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : MilestoneState -> String
+toString enum =
+    case enum of
+        OPEN ->
+            "OPEN"
+
+        CLOSED ->
+            "CLOSED"

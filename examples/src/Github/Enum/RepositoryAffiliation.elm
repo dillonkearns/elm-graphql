@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid RepositoryAffiliation type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : RepositoryAffiliation -> String
+toString enum =
+    case enum of
+        OWNER ->
+            "OWNER"
+
+        COLLABORATOR ->
+            "COLLABORATOR"
+
+        ORGANIZATION_MEMBER ->
+            "ORGANIZATION_MEMBER"

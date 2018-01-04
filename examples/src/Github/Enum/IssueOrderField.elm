@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid IssueOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : IssueOrderField -> String
+toString enum =
+    case enum of
+        CREATED_AT ->
+            "CREATED_AT"
+
+        UPDATED_AT ->
+            "UPDATED_AT"
+
+        COMMENTS ->
+            "COMMENTS"

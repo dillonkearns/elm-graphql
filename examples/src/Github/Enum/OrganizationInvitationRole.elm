@@ -39,3 +39,19 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid OrganizationInvitationRole type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : OrganizationInvitationRole -> String
+toString enum =
+    case enum of
+        DIRECT_MEMBER ->
+            "DIRECT_MEMBER"
+
+        ADMIN ->
+            "ADMIN"
+
+        BILLING_MANAGER ->
+            "BILLING_MANAGER"
+
+        REINSTATE ->
+            "REINSTATE"

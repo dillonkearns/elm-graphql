@@ -24,3 +24,10 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid StarOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : StarOrderField -> String
+toString enum =
+    case enum of
+        STARRED_AT ->
+            "STARRED_AT"

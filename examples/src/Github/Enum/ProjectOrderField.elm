@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid ProjectOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : ProjectOrderField -> String
+toString enum =
+    case enum of
+        CREATED_AT ->
+            "CREATED_AT"
+
+        UPDATED_AT ->
+            "UPDATED_AT"
+
+        NAME ->
+            "NAME"

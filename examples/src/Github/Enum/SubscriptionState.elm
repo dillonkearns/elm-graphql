@@ -39,3 +39,19 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid SubscriptionState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : SubscriptionState -> String
+toString enum =
+    case enum of
+        UNSUBSCRIBED ->
+            "UNSUBSCRIBED"
+
+        SUBSCRIBED ->
+            "SUBSCRIBED"
+
+        IGNORED ->
+            "IGNORED"
+
+        UNAVAILABLE ->
+            "UNAVAILABLE"

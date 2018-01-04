@@ -805,6 +805,14 @@ type TeamRepositoryEdge
     = TeamRepositoryEdge
 
 
+type TextMatch
+    = TextMatch
+
+
+type TextMatchHighlight
+    = TextMatchHighlight
+
+
 type Topic
     = Topic
 

@@ -54,3 +54,28 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid DeploymentState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : DeploymentState -> String
+toString enum =
+    case enum of
+        ABANDONED ->
+            "ABANDONED"
+
+        ACTIVE ->
+            "ACTIVE"
+
+        DESTROYED ->
+            "DESTROYED"
+
+        ERROR ->
+            "ERROR"
+
+        FAILURE ->
+            "FAILURE"
+
+        INACTIVE ->
+            "INACTIVE"
+
+        PENDING ->
+            "PENDING"

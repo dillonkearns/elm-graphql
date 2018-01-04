@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid RepositoryCollaboratorAffiliation type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : RepositoryCollaboratorAffiliation -> String
+toString enum =
+    case enum of
+        ALL ->
+            "ALL"
+
+        OUTSIDE ->
+            "OUTSIDE"

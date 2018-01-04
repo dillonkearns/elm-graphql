@@ -54,3 +54,28 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid CommentAuthorAssociation type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : CommentAuthorAssociation -> String
+toString enum =
+    case enum of
+        MEMBER ->
+            "MEMBER"
+
+        OWNER ->
+            "OWNER"
+
+        COLLABORATOR ->
+            "COLLABORATOR"
+
+        CONTRIBUTOR ->
+            "CONTRIBUTOR"
+
+        FIRST_TIME_CONTRIBUTOR ->
+            "FIRST_TIME_CONTRIBUTOR"
+
+        FIRST_TIMER ->
+            "FIRST_TIMER"
+
+        NONE ->
+            "NONE"

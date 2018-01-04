@@ -39,3 +39,19 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid RepositoryLockReason type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : RepositoryLockReason -> String
+toString enum =
+    case enum of
+        MOVING ->
+            "MOVING"
+
+        BILLING ->
+            "BILLING"
+
+        RENAME ->
+            "RENAME"
+
+        MIGRATING ->
+            "MIGRATING"

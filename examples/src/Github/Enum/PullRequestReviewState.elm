@@ -44,3 +44,22 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid PullRequestReviewState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : PullRequestReviewState -> String
+toString enum =
+    case enum of
+        PENDING ->
+            "PENDING"
+
+        COMMENTED ->
+            "COMMENTED"
+
+        APPROVED ->
+            "APPROVED"
+
+        CHANGES_REQUESTED ->
+            "CHANGES_REQUESTED"
+
+        DISMISSED ->
+            "DISMISSED"

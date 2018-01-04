@@ -44,3 +44,22 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid StatusState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : StatusState -> String
+toString enum =
+    case enum of
+        EXPECTED ->
+            "EXPECTED"
+
+        ERROR ->
+            "ERROR"
+
+        FAILURE ->
+            "FAILURE"
+
+        PENDING ->
+            "PENDING"
+
+        SUCCESS ->
+            "SUCCESS"

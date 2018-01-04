@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid RepositoryPermission type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : RepositoryPermission -> String
+toString enum =
+    case enum of
+        ADMIN ->
+            "ADMIN"
+
+        WRITE ->
+            "WRITE"
+
+        READ ->
+            "READ"

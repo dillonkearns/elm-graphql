@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid PullRequestState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : PullRequestState -> String
+toString enum =
+    case enum of
+        OPEN ->
+            "OPEN"
+
+        CLOSED ->
+            "CLOSED"
+
+        MERGED ->
+            "MERGED"

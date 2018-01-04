@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid ProjectState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : ProjectState -> String
+toString enum =
+    case enum of
+        OPEN ->
+            "OPEN"
+
+        CLOSED ->
+            "CLOSED"

@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid IssuePubSubTopic type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : IssuePubSubTopic -> String
+toString enum =
+    case enum of
+        UPDATED ->
+            "UPDATED"
+
+        MARKASREAD ->
+            "MARKASREAD"

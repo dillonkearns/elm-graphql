@@ -24,3 +24,10 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid TeamOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : TeamOrderField -> String
+toString enum =
+    case enum of
+        NAME ->
+            "NAME"

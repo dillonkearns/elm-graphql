@@ -49,3 +49,25 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid TeamRepositoryOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : TeamRepositoryOrderField -> String
+toString enum =
+    case enum of
+        CREATED_AT ->
+            "CREATED_AT"
+
+        UPDATED_AT ->
+            "UPDATED_AT"
+
+        PUSHED_AT ->
+            "PUSHED_AT"
+
+        NAME ->
+            "NAME"
+
+        PERMISSION ->
+            "PERMISSION"
+
+        STARGAZERS ->
+            "STARGAZERS"

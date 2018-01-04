@@ -24,3 +24,10 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid LanguageOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : LanguageOrderField -> String
+toString enum =
+    case enum of
+        SIZE ->
+            "SIZE"

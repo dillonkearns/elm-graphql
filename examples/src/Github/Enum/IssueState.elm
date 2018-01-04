@@ -29,3 +29,13 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid IssueState type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : IssueState -> String
+toString enum =
+    case enum of
+        OPEN ->
+            "OPEN"
+
+        CLOSED ->
+            "CLOSED"

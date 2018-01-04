@@ -34,3 +34,16 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid GistPrivacy type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
+
+
+toString : GistPrivacy -> String
+toString enum =
+    case enum of
+        PUBLIC ->
+            "PUBLIC"
+
+        SECRET ->
+            "SECRET"
+
+        ALL ->
+            "ALL"
