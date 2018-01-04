@@ -27,5 +27,6 @@ capitalized name =
         name
             |> String.dropLeft 1
             |> (\nameWithoutLeading_ -> nameWithoutLeading_ ++ "_")
+            |> capitalized
     else
         name |> String.Extra.toSentenceCase

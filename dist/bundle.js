@@ -6750,10 +6750,19 @@ var _elm_community$string_extra$String_Extra$decapitalize = function (word) {
 };
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized = function (name) {
-	return A2(_elm_lang$core$String$startsWith, '_', name) ? function (nameWithoutLeading_) {
-		return A2(_elm_lang$core$Basics_ops['++'], nameWithoutLeading_, '_');
-	}(
-		A2(_elm_lang$core$String$dropLeft, 1, name)) : _elm_community$string_extra$String_Extra$toSentenceCase(name);
+	capitalized:
+	while (true) {
+		if (A2(_elm_lang$core$String$startsWith, '_', name)) {
+			var _v0 = function (nameWithoutLeading_) {
+				return A2(_elm_lang$core$Basics_ops['++'], nameWithoutLeading_, '_');
+			}(
+				A2(_elm_lang$core$String$dropLeft, 1, name));
+			name = _v0;
+			continue capitalized;
+		} else {
+			return _elm_community$string_extra$String_Extra$toSentenceCase(name);
+		}
+	}
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName = function (name) {
 	return A2(_elm_lang$core$String$startsWith, '_', name) ? function (nameWithoutLeading_) {
