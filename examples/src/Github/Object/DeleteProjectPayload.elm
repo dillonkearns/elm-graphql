@@ -26,6 +26,6 @@ clientMutationId =
 
 {-| The repository or organization the project was removed from.
 -}
-owner : SelectionSet owner Github.Interface.ProjectOwner -> FieldDecoder owner Github.Object.DeleteProjectPayload
+owner : SelectionSet selection Github.Interface.ProjectOwner -> FieldDecoder selection Github.Object.DeleteProjectPayload
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity

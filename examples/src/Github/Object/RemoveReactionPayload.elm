@@ -26,13 +26,13 @@ clientMutationId =
 
 {-| The reaction object.
 -}
-reaction : SelectionSet reaction Github.Object.Reaction -> FieldDecoder reaction Github.Object.RemoveReactionPayload
+reaction : SelectionSet selection Github.Object.Reaction -> FieldDecoder selection Github.Object.RemoveReactionPayload
 reaction object =
     Object.selectionFieldDecoder "reaction" [] object identity
 
 
 {-| The reactable subject.
 -}
-subject : SelectionSet subject Github.Interface.Reactable -> FieldDecoder subject Github.Object.RemoveReactionPayload
+subject : SelectionSet selection Github.Interface.Reactable -> FieldDecoder selection Github.Object.RemoveReactionPayload
 subject object =
     Object.selectionFieldDecoder "subject" [] object identity

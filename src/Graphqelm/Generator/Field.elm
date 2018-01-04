@@ -158,12 +158,12 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName objectOrInte
 
         objectArgAnnotation =
             interpolate
-                "SelectionSet {0} {1}"
-                [ fieldName, typeLock ]
+                "SelectionSet selection {0}"
+                [ typeLock ]
     in
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule fieldName typeRef
+    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder = "object"
     , fieldName = fieldName
     , otherThing = ".selectionFieldDecoder"
@@ -243,7 +243,7 @@ initScalarField : List String -> String -> TypeReference -> FieldGenerator
 initScalarField apiSubmodule fieldName typeRef =
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule fieldName typeRef
+    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder =
         Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
             |> String.join " |> "

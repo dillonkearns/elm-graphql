@@ -19,7 +19,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.ReviewRequestRemovedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestRemovedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -38,20 +38,20 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.ReviewRequestRemovedEvent
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.ReviewRequestRemovedEvent
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 {-| Identifies the reviewer whose review request was removed.
 -}
-requestedReviewer : SelectionSet requestedReviewer Github.Union.RequestedReviewer -> FieldDecoder (Maybe requestedReviewer) Github.Object.ReviewRequestRemovedEvent
+requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestRemovedEvent
 requestedReviewer object =
     Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the user whose review request was removed.
 -}
-subject : SelectionSet subject Github.Object.User -> FieldDecoder (Maybe subject) Github.Object.ReviewRequestRemovedEvent
+subject : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestRemovedEvent
 subject object =
     Object.selectionFieldDecoder "subject" [] object (identity >> Decode.maybe)

@@ -19,21 +19,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet edges Github.Object.OrganizationEdge -> FieldDecoder (Maybe (List (Maybe edges))) Github.Object.OrganizationConnection
+edges : SelectionSet selection Github.Object.OrganizationEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.OrganizationConnection
 edges object =
     Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet nodes Github.Object.Organization -> FieldDecoder (Maybe (List (Maybe nodes))) Github.Object.OrganizationConnection
+nodes : SelectionSet selection Github.Object.Organization -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.OrganizationConnection
 nodes object =
     Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.OrganizationConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.OrganizationConnection
 pageInfo object =
     Object.selectionFieldDecoder "pageInfo" [] object identity
 

@@ -25,7 +25,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Github.Object.PullRequestReviewCommentConnection -> FieldDecoder comments Github.Object.PullRequestReviewThread
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestReviewCommentConnection -> FieldDecoder selection Github.Object.PullRequestReviewThread
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -45,13 +45,13 @@ id =
 
 {-| Identifies the pull request associated with this thread.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestReviewThread
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.PullRequestReviewThread
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 {-| Identifies the repository associated with this thread.
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.PullRequestReviewThread
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.PullRequestReviewThread
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity

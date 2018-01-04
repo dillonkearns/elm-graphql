@@ -26,13 +26,13 @@ clientMutationId =
 
 {-| The newly created comment.
 -}
-comment : SelectionSet comment Github.Object.PullRequestReviewComment -> FieldDecoder comment Github.Object.AddPullRequestReviewCommentPayload
+comment : SelectionSet selection Github.Object.PullRequestReviewComment -> FieldDecoder selection Github.Object.AddPullRequestReviewCommentPayload
 comment object =
     Object.selectionFieldDecoder "comment" [] object identity
 
 
 {-| The edge from the review's comment connection.
 -}
-commentEdge : SelectionSet commentEdge Github.Object.PullRequestReviewCommentEdge -> FieldDecoder commentEdge Github.Object.AddPullRequestReviewCommentPayload
+commentEdge : SelectionSet selection Github.Object.PullRequestReviewCommentEdge -> FieldDecoder selection Github.Object.AddPullRequestReviewCommentPayload
 commentEdge object =
     Object.selectionFieldDecoder "commentEdge" [] object identity

@@ -54,7 +54,7 @@ closedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-columns : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet columns Github.Object.ProjectColumnConnection -> FieldDecoder columns Github.Object.Project
+columns : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectColumnConnection -> FieldDecoder selection Github.Object.Project
 columns fillInOptionals object =
     let
         filledInOptionals =
@@ -76,7 +76,7 @@ createdAt =
 
 {-| The actor who originally created the project.
 -}
-creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.Project
+creator : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.Project
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
@@ -109,7 +109,7 @@ number =
 
 {-| The project's owner. Currently limited to repositories and organizations.
 -}
-owner : SelectionSet owner Github.Interface.ProjectOwner -> FieldDecoder owner Github.Object.Project
+owner : SelectionSet selection Github.Interface.ProjectOwner -> FieldDecoder selection Github.Object.Project
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 
@@ -122,7 +122,7 @@ owner object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pendingCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet pendingCards Github.Object.ProjectCardConnection -> FieldDecoder pendingCards Github.Object.Project
+pendingCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> FieldDecoder selection Github.Object.Project
 pendingCards fillInOptionals object =
     let
         filledInOptionals =

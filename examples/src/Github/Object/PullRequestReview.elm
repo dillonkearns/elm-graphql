@@ -22,7 +22,7 @@ selection constructor =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Object.PullRequestReview
+author : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.PullRequestReview
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -63,7 +63,7 @@ bodyText =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Github.Object.PullRequestReviewCommentConnection -> FieldDecoder comments Github.Object.PullRequestReview
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestReviewCommentConnection -> FieldDecoder selection Github.Object.PullRequestReview
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -78,7 +78,7 @@ comments fillInOptionals object =
 
 {-| Identifies the commit associated with this pull request review.
 -}
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.PullRequestReview
+commit : SelectionSet selection Github.Object.Commit -> FieldDecoder (Maybe selection) Github.Object.PullRequestReview
 commit object =
     Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
@@ -106,7 +106,7 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.PullRequestReview
+editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.PullRequestReview
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
@@ -132,14 +132,14 @@ publishedAt =
 
 {-| Identifies the pull request associated with this pull request review.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestReview
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.PullRequestReview
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.PullRequestReview
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.PullRequestReview
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 

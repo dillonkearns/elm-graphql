@@ -26,7 +26,7 @@ createdAt =
 
 {-| The actor who edited this content,
 -}
-editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.UserContentEdit
+editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.UserContentEdit
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 

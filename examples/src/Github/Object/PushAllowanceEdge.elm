@@ -26,6 +26,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet node Github.Object.PushAllowance -> FieldDecoder (Maybe node) Github.Object.PushAllowanceEdge
+node : SelectionSet selection Github.Object.PushAllowance -> FieldDecoder (Maybe selection) Github.Object.PushAllowanceEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

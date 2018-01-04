@@ -19,14 +19,14 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.MergedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.MergedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the commit associated with the `merge` event.
 -}
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.MergedEvent
+commit : SelectionSet selection Github.Object.Commit -> FieldDecoder (Maybe selection) Github.Object.MergedEvent
 commit object =
     Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
@@ -45,7 +45,7 @@ id =
 
 {-| Identifies the Ref associated with the `merge` event.
 -}
-mergeRef : SelectionSet mergeRef Github.Object.Ref -> FieldDecoder (Maybe mergeRef) Github.Object.MergedEvent
+mergeRef : SelectionSet selection Github.Object.Ref -> FieldDecoder (Maybe selection) Github.Object.MergedEvent
 mergeRef object =
     Object.selectionFieldDecoder "mergeRef" [] object (identity >> Decode.maybe)
 
@@ -59,7 +59,7 @@ mergeRefName =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.MergedEvent
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.MergedEvent
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 

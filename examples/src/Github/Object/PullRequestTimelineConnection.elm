@@ -19,21 +19,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet edges Github.Object.PullRequestTimelineItemEdge -> FieldDecoder (Maybe (List (Maybe edges))) Github.Object.PullRequestTimelineConnection
+edges : SelectionSet selection Github.Object.PullRequestTimelineItemEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.PullRequestTimelineConnection
 edges object =
     Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet nodes Github.Union.PullRequestTimelineItem -> FieldDecoder (Maybe (List (Maybe nodes))) Github.Object.PullRequestTimelineConnection
+nodes : SelectionSet selection Github.Union.PullRequestTimelineItem -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.PullRequestTimelineConnection
 nodes object =
     Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet pageInfo Github.Object.PageInfo -> FieldDecoder pageInfo Github.Object.PullRequestTimelineConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.PullRequestTimelineConnection
 pageInfo object =
     Object.selectionFieldDecoder "pageInfo" [] object identity
 

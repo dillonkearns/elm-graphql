@@ -20,7 +20,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.ReviewDismissedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ReviewDismissedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -67,14 +67,14 @@ previousReviewState =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.ReviewDismissedEvent
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.ReviewDismissedEvent
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 {-| Identifies the commit which caused the review to become stale.
 -}
-pullRequestCommit : SelectionSet pullRequestCommit Github.Object.PullRequestCommit -> FieldDecoder (Maybe pullRequestCommit) Github.Object.ReviewDismissedEvent
+pullRequestCommit : SelectionSet selection Github.Object.PullRequestCommit -> FieldDecoder (Maybe selection) Github.Object.ReviewDismissedEvent
 pullRequestCommit object =
     Object.selectionFieldDecoder "pullRequestCommit" [] object (identity >> Decode.maybe)
 
@@ -88,7 +88,7 @@ resourcePath =
 
 {-| Identifies the review associated with the 'review_dismissed' event.
 -}
-review : SelectionSet review Github.Object.PullRequestReview -> FieldDecoder (Maybe review) Github.Object.ReviewDismissedEvent
+review : SelectionSet selection Github.Object.PullRequestReview -> FieldDecoder (Maybe selection) Github.Object.ReviewDismissedEvent
 review object =
     Object.selectionFieldDecoder "review" [] object (identity >> Decode.maybe)
 

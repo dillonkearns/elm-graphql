@@ -26,13 +26,13 @@ clientMutationId =
 
 {-| The edge from the project's column connection.
 -}
-columnEdge : SelectionSet columnEdge Github.Object.ProjectColumnEdge -> FieldDecoder columnEdge Github.Object.AddProjectColumnPayload
+columnEdge : SelectionSet selection Github.Object.ProjectColumnEdge -> FieldDecoder selection Github.Object.AddProjectColumnPayload
 columnEdge object =
     Object.selectionFieldDecoder "columnEdge" [] object identity
 
 
 {-| The project
 -}
-project : SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.AddProjectColumnPayload
+project : SelectionSet selection Github.Object.Project -> FieldDecoder selection Github.Object.AddProjectColumnPayload
 project object =
     Object.selectionFieldDecoder "project" [] object identity

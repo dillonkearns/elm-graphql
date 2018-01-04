@@ -19,7 +19,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.HeadRefRestoredEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.HeadRefRestoredEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -38,6 +38,6 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.HeadRefRestoredEvent
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.HeadRefRestoredEvent
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity

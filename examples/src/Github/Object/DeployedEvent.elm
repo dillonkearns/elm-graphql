@@ -19,7 +19,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.DeployedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.DeployedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -40,7 +40,7 @@ databaseId =
 
 {-| The deployment associated with the 'deployed' event.
 -}
-deployment : SelectionSet deployment Github.Object.Deployment -> FieldDecoder deployment Github.Object.DeployedEvent
+deployment : SelectionSet selection Github.Object.Deployment -> FieldDecoder selection Github.Object.DeployedEvent
 deployment object =
     Object.selectionFieldDecoder "deployment" [] object identity
 
@@ -52,13 +52,13 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.DeployedEvent
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.DeployedEvent
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 {-| The ref associated with the 'deployed' event.
 -}
-ref : SelectionSet ref Github.Object.Ref -> FieldDecoder (Maybe ref) Github.Object.DeployedEvent
+ref : SelectionSet selection Github.Object.Ref -> FieldDecoder (Maybe selection) Github.Object.DeployedEvent
 ref object =
     Object.selectionFieldDecoder "ref" [] object (identity >> Decode.maybe)

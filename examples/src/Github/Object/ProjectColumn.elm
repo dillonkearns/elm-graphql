@@ -25,7 +25,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-cards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet cards Github.Object.ProjectCardConnection -> FieldDecoder cards Github.Object.ProjectColumn
+cards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> FieldDecoder selection Github.Object.ProjectColumn
 cards fillInOptionals object =
     let
         filledInOptionals =
@@ -66,7 +66,7 @@ name =
 
 {-| The project that contains this column.
 -}
-project : SelectionSet project Github.Object.Project -> FieldDecoder project Github.Object.ProjectColumn
+project : SelectionSet selection Github.Object.Project -> FieldDecoder selection Github.Object.ProjectColumn
 project object =
     Object.selectionFieldDecoder "project" [] object identity
 

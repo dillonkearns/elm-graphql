@@ -70,7 +70,7 @@ requiredArgAnnotation apiSubmodule { name, typeRef } =
             interpolate
                 "{0} : {1}"
                 [ fieldName
-                , Graphqelm.Generator.Decoder.generateType apiSubmodule fieldName typeRef
+                , Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
                 ]
                 |> Just
 

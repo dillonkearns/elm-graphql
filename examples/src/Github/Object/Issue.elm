@@ -30,7 +30,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet assignees Github.Object.UserConnection -> FieldDecoder assignees Github.Object.Issue
+assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> FieldDecoder selection Github.Object.Issue
 assignees fillInOptionals object =
     let
         filledInOptionals =
@@ -45,7 +45,7 @@ assignees fillInOptionals object =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Object.Issue
+author : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.Issue
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -100,7 +100,7 @@ closedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Github.Object.IssueCommentConnection -> FieldDecoder comments Github.Object.Issue
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.IssueCommentConnection -> FieldDecoder selection Github.Object.Issue
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -136,7 +136,7 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.Issue
+editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.Issue
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
@@ -154,7 +154,7 @@ id =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet labels Github.Object.LabelConnection -> FieldDecoder (Maybe labels) Github.Object.Issue
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.LabelConnection -> FieldDecoder (Maybe selection) Github.Object.Issue
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -183,7 +183,7 @@ locked =
 
 {-| Identifies the milestone associated with the issue.
 -}
-milestone : SelectionSet milestone Github.Object.Milestone -> FieldDecoder (Maybe milestone) Github.Object.Issue
+milestone : SelectionSet selection Github.Object.Milestone -> FieldDecoder (Maybe selection) Github.Object.Issue
 milestone object =
     Object.selectionFieldDecoder "milestone" [] object (identity >> Decode.maybe)
 
@@ -203,7 +203,7 @@ number =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet participants Github.Object.UserConnection -> FieldDecoder participants Github.Object.Issue
+participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> FieldDecoder selection Github.Object.Issue
 participants fillInOptionals object =
     let
         filledInOptionals =
@@ -224,7 +224,7 @@ participants fillInOptionals object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet projectCards Github.Object.ProjectCardConnection -> FieldDecoder projectCards Github.Object.Issue
+projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> FieldDecoder selection Github.Object.Issue
 projectCards fillInOptionals object =
     let
         filledInOptionals =
@@ -246,7 +246,7 @@ publishedAt =
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (Maybe (List reactionGroups)) Github.Object.Issue
+reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> FieldDecoder (Maybe (List selection)) Github.Object.Issue
 reactionGroups object =
     Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
@@ -261,7 +261,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.Issue
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet selection Github.Object.ReactionConnection -> FieldDecoder selection Github.Object.Issue
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -276,7 +276,7 @@ reactions fillInOptionals object =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Issue
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.Issue
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
@@ -304,7 +304,7 @@ state =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String }) -> SelectionSet timeline Github.Object.IssueTimelineConnection -> FieldDecoder timeline Github.Object.Issue
+timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String }) -> SelectionSet selection Github.Object.IssueTimelineConnection -> FieldDecoder selection Github.Object.Issue
 timeline fillInOptionals object =
     let
         filledInOptionals =

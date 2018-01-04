@@ -26,6 +26,6 @@ clientMutationId =
 
 {-| The accepted topic.
 -}
-topic : SelectionSet topic Github.Object.Topic -> FieldDecoder topic Github.Object.AcceptTopicSuggestionPayload
+topic : SelectionSet selection Github.Object.Topic -> FieldDecoder selection Github.Object.AcceptTopicSuggestionPayload
 topic object =
     Object.selectionFieldDecoder "topic" [] object identity

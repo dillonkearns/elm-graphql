@@ -22,7 +22,7 @@ selection constructor =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Object.CommitComment
+author : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.CommitComment
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -50,7 +50,7 @@ bodyHTML =
 
 {-| Identifies the commit associated with the comment, if the commit exists.
 -}
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.CommitComment
+commit : SelectionSet selection Github.Object.Commit -> FieldDecoder (Maybe selection) Github.Object.CommitComment
 commit object =
     Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
@@ -78,7 +78,7 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Object.CommitComment
+editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.CommitComment
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
@@ -118,7 +118,7 @@ publishedAt =
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet reactionGroups Github.Object.ReactionGroup -> FieldDecoder (Maybe (List reactionGroups)) Github.Object.CommitComment
+reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> FieldDecoder (Maybe (List selection)) Github.Object.CommitComment
 reactionGroups object =
     Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
@@ -133,7 +133,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet reactions Github.Object.ReactionConnection -> FieldDecoder reactions Github.Object.CommitComment
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Value }) -> SelectionSet selection Github.Object.ReactionConnection -> FieldDecoder selection Github.Object.CommitComment
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -148,7 +148,7 @@ reactions fillInOptionals object =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.CommitComment
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.CommitComment
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 

@@ -26,7 +26,7 @@ body =
 
 {-| The conditions set by the license
 -}
-conditions : SelectionSet conditions Github.Object.LicenseRule -> FieldDecoder (List (Maybe conditions)) Github.Object.License
+conditions : SelectionSet selection Github.Object.LicenseRule -> FieldDecoder (List (Maybe selection)) Github.Object.License
 conditions object =
     Object.selectionFieldDecoder "conditions" [] object (identity >> Decode.maybe >> Decode.list)
 
@@ -73,7 +73,7 @@ key =
 
 {-| The limitations set by the license
 -}
-limitations : SelectionSet limitations Github.Object.LicenseRule -> FieldDecoder (List (Maybe limitations)) Github.Object.License
+limitations : SelectionSet selection Github.Object.LicenseRule -> FieldDecoder (List (Maybe selection)) Github.Object.License
 limitations object =
     Object.selectionFieldDecoder "limitations" [] object (identity >> Decode.maybe >> Decode.list)
 
@@ -94,7 +94,7 @@ nickname =
 
 {-| The permissions set by the license
 -}
-permissions : SelectionSet permissions Github.Object.LicenseRule -> FieldDecoder (List (Maybe permissions)) Github.Object.License
+permissions : SelectionSet selection Github.Object.LicenseRule -> FieldDecoder (List (Maybe selection)) Github.Object.License
 permissions object =
     Object.selectionFieldDecoder "permissions" [] object (identity >> Decode.maybe >> Decode.list)
 

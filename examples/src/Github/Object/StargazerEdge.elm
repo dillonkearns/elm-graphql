@@ -22,7 +22,7 @@ cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet node Github.Object.User -> FieldDecoder node Github.Object.StargazerEdge
+node : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.StargazerEdge
 node object =
     Object.selectionFieldDecoder "node" [] object identity
 

@@ -9133,8 +9133,8 @@ var _dillonkearns$graphqelm$Interpolate$interpolate = F2(
 			string);
 	});
 
-var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType = F3(
-	function (apiSubmodule, fieldName, _p0) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType = F2(
+	function (apiSubmodule, _p0) {
 		var _p1 = _p0;
 		return function (typeString) {
 			var _p2 = _p1._1;
@@ -9168,14 +9168,14 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType = F3(
 							'(List ',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, fieldName, _p3._0),
+								A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p3._0),
 								')'));
 					case 'ObjectRef':
-						return fieldName;
+						return 'selection';
 					case 'InterfaceRef':
-						return fieldName;
+						return 'selection';
 					case 'UnionRef':
-						return fieldName;
+						return 'selection';
 					case 'EnumRef':
 						return A2(
 							_elm_lang$core$String$join,
@@ -9670,10 +9670,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$annotation = F2(
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							' : OptionalArgument ',
-							A3(
+							A2(
 								_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType,
 								apiSubmodule,
-								'',
 								A2(_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference, _p4.typeOf, _dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable))));
 				},
 				optionalArgs));
@@ -9847,7 +9846,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgAnnotati
 						_0: fieldName,
 						_1: {
 							ctor: '::',
-							_0: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, fieldName, _p3),
+							_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p3),
 							_1: {ctor: '[]'}
 						}
 					}));
@@ -9935,7 +9934,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$initScalarField = F3(
 		return {
 			annotatedArgs: {ctor: '[]'},
 			fieldArgs: {ctor: '[]'},
-			decoderAnnotation: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, fieldName, typeRef),
+			decoderAnnotation: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, typeRef),
 			decoder: A2(
 				_elm_lang$core$String$join,
 				' |> ',
@@ -9998,15 +9997,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F5(
 		}();
 		var objectArgAnnotation = A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'SelectionSet {0} {1}',
+			'SelectionSet selection {0}',
 			{
 				ctor: '::',
-				_0: fieldName,
-				_1: {
-					ctor: '::',
-					_0: typeLock,
-					_1: {ctor: '[]'}
-				}
+				_0: typeLock,
+				_1: {ctor: '[]'}
 			});
 		return A2(
 			_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg,
@@ -10014,7 +10009,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F5(
 			{
 				annotatedArgs: {ctor: '[]'},
 				fieldArgs: {ctor: '[]'},
-				decoderAnnotation: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, _p7, fieldName, typeRef),
+				decoderAnnotation: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, _p7, typeRef),
 				decoder: 'object',
 				fieldName: fieldName,
 				otherThing: '.selectionFieldDecoder',

@@ -19,6 +19,6 @@ selection constructor =
 
 {-| The list of ranges from a Git blame.
 -}
-ranges : SelectionSet ranges Github.Object.BlameRange -> FieldDecoder (List ranges) Github.Object.Blame
+ranges : SelectionSet selection Github.Object.BlameRange -> FieldDecoder (List selection) Github.Object.Blame
 ranges object =
     Object.selectionFieldDecoder "ranges" [] object (identity >> Decode.list)

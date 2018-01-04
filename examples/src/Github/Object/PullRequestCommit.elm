@@ -19,7 +19,7 @@ selection constructor =
 
 {-| The Git commit object
 -}
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.PullRequestCommit
+commit : SelectionSet selection Github.Object.Commit -> FieldDecoder selection Github.Object.PullRequestCommit
 commit object =
     Object.selectionFieldDecoder "commit" [] object identity
 
@@ -31,7 +31,7 @@ id =
 
 {-| The pull request this commit belongs to
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.PullRequestCommit
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.PullRequestCommit
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 

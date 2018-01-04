@@ -26,7 +26,7 @@ clientMutationId =
 
 {-| The column the deleted card was in.
 -}
-column : SelectionSet column Github.Object.ProjectColumn -> FieldDecoder column Github.Object.DeleteProjectCardPayload
+column : SelectionSet selection Github.Object.ProjectColumn -> FieldDecoder selection Github.Object.DeleteProjectCardPayload
 column object =
     Object.selectionFieldDecoder "column" [] object identity
 

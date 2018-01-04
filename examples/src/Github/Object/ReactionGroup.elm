@@ -34,7 +34,7 @@ createdAt =
 
 {-| The subject that was reacted to.
 -}
-subject : SelectionSet subject Github.Interface.Reactable -> FieldDecoder subject Github.Object.ReactionGroup
+subject : SelectionSet selection Github.Interface.Reactable -> FieldDecoder selection Github.Object.ReactionGroup
 subject object =
     Object.selectionFieldDecoder "subject" [] object identity
 
@@ -47,7 +47,7 @@ subject object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-users : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet users Github.Object.ReactingUserConnection -> FieldDecoder users Github.Object.ReactionGroup
+users : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ReactingUserConnection -> FieldDecoder selection Github.Object.ReactionGroup
 users fillInOptionals object =
     let
         filledInOptionals =

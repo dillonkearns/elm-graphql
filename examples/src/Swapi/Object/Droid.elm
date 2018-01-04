@@ -27,7 +27,7 @@ appearsIn =
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet friends Swapi.Interface.Character -> FieldDecoder (List friends) Swapi.Object.Droid
+friends : SelectionSet selection Swapi.Interface.Character -> FieldDecoder (List selection) Swapi.Object.Droid
 friends object =
     Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
 

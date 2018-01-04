@@ -26,6 +26,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet node Github.Union.IssueTimelineItem -> FieldDecoder (Maybe node) Github.Object.IssueTimelineItemEdge
+node : SelectionSet selection Github.Union.IssueTimelineItem -> FieldDecoder (Maybe selection) Github.Object.IssueTimelineItemEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

@@ -59,6 +59,6 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Interface.RepositoryNode
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Interface.RepositoryNode
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity

@@ -80,7 +80,7 @@ annotation : List String -> List OptionalArg -> String
 annotation apiSubmodule optionalArgs =
     let
         insideRecord =
-            List.map (\{ name, typeOf } -> name ++ " : OptionalArgument " ++ Graphqelm.Generator.Decoder.generateType apiSubmodule "" (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
+            List.map (\{ name, typeOf } -> name ++ " : OptionalArgument " ++ Graphqelm.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
                 |> String.join ", "
     in
     interpolate """({ {0} } -> { {0} })"""

@@ -26,6 +26,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet node Github.Object.CommitComment -> FieldDecoder (Maybe node) Github.Object.CommitCommentEdge
+node : SelectionSet selection Github.Object.CommitComment -> FieldDecoder (Maybe selection) Github.Object.CommitCommentEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

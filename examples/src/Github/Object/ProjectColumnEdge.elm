@@ -26,6 +26,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet node Github.Object.ProjectColumn -> FieldDecoder (Maybe node) Github.Object.ProjectColumnEdge
+node : SelectionSet selection Github.Object.ProjectColumn -> FieldDecoder (Maybe selection) Github.Object.ProjectColumnEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

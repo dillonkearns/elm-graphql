@@ -20,7 +20,7 @@ selection constructor =
 
 {-| This commit this status context is attached to.
 -}
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder (Maybe commit) Github.Object.StatusContext
+commit : SelectionSet selection Github.Object.Commit -> FieldDecoder (Maybe selection) Github.Object.StatusContext
 commit object =
     Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
 
@@ -41,7 +41,7 @@ createdAt =
 
 {-| The actor who created this status context.
 -}
-creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.StatusContext
+creator : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.StatusContext
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 

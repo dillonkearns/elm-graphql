@@ -26,6 +26,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet node Github.Object.UserContentEdit -> FieldDecoder (Maybe node) Github.Object.UserContentEditEdge
+node : SelectionSet selection Github.Object.UserContentEdit -> FieldDecoder (Maybe selection) Github.Object.UserContentEditEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

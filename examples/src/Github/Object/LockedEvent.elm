@@ -19,7 +19,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.LockedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.LockedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -38,6 +38,6 @@ id =
 
 {-| Object that was locked.
 -}
-lockable : SelectionSet lockable Github.Interface.Lockable -> FieldDecoder lockable Github.Object.LockedEvent
+lockable : SelectionSet selection Github.Interface.Lockable -> FieldDecoder selection Github.Object.LockedEvent
 lockable object =
     Object.selectionFieldDecoder "lockable" [] object identity

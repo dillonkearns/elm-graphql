@@ -19,7 +19,7 @@ selection constructor =
 
 {-| The author of the release
 -}
-author : SelectionSet author Github.Object.User -> FieldDecoder (Maybe author) Github.Object.Release
+author : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.Release
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -80,7 +80,7 @@ publishedAt =
   - name - A list of names to filter the assets by.
 
 -}
-releaseAssets : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }) -> SelectionSet releaseAssets Github.Object.ReleaseAssetConnection -> FieldDecoder releaseAssets Github.Object.Release
+releaseAssets : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }) -> SelectionSet selection Github.Object.ReleaseAssetConnection -> FieldDecoder selection Github.Object.Release
 releaseAssets fillInOptionals object =
     let
         filledInOptionals =
@@ -102,7 +102,7 @@ resourcePath =
 
 {-| The Git tag the release points to
 -}
-tag : SelectionSet tag Github.Object.Ref -> FieldDecoder (Maybe tag) Github.Object.Release
+tag : SelectionSet selection Github.Object.Ref -> FieldDecoder (Maybe selection) Github.Object.Release
 tag object =
     Object.selectionFieldDecoder "tag" [] object (identity >> Decode.maybe)
 

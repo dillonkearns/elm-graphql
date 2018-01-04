@@ -73,7 +73,7 @@ oid =
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Blob
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.Blob
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 

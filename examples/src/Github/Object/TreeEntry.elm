@@ -33,7 +33,7 @@ name =
 
 {-| Entry file object.
 -}
-object : SelectionSet object Github.Interface.GitObject -> FieldDecoder (Maybe object) Github.Object.TreeEntry
+object : SelectionSet selection Github.Interface.GitObject -> FieldDecoder (Maybe selection) Github.Object.TreeEntry
 object object =
     Object.selectionFieldDecoder "object" [] object (identity >> Decode.maybe)
 
@@ -47,7 +47,7 @@ oid =
 
 {-| The Repository the tree entry belongs to
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.TreeEntry
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.TreeEntry
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 

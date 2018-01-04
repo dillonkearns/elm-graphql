@@ -111,7 +111,7 @@ license =
 
 {-| The license associated with the repository
 -}
-licenseInfo : SelectionSet licenseInfo Github.Object.License -> FieldDecoder (Maybe licenseInfo) Github.Object.RepositoryInvitationRepository
+licenseInfo : SelectionSet selection Github.Object.License -> FieldDecoder (Maybe selection) Github.Object.RepositoryInvitationRepository
 licenseInfo object =
     Object.selectionFieldDecoder "licenseInfo" [] object (identity >> Decode.maybe)
 
@@ -146,7 +146,7 @@ nameWithOwner =
 
 {-| The owner of the repository associated with this invitation repository.
 -}
-owner : SelectionSet owner Github.Interface.RepositoryOwner -> FieldDecoder owner Github.Object.RepositoryInvitationRepository
+owner : SelectionSet selection Github.Interface.RepositoryOwner -> FieldDecoder selection Github.Object.RepositoryInvitationRepository
 owner object =
     Object.selectionFieldDecoder "owner" [] object identity
 

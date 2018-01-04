@@ -29,7 +29,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-ancestors : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet ancestors Github.Object.TeamConnection -> FieldDecoder ancestors Github.Object.Team
+ancestors : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.TeamConnection -> FieldDecoder selection Github.Object.Team
 ancestors fillInOptionals object =
     let
         filledInOptionals =
@@ -53,7 +53,7 @@ ancestors fillInOptionals object =
   - immediateOnly - Whether to list immediate child teams or all descendant child teams.
 
 -}
-childTeams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool }) -> SelectionSet childTeams Github.Object.TeamConnection -> FieldDecoder childTeams Github.Object.Team
+childTeams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Value, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool }) -> SelectionSet selection Github.Object.TeamConnection -> FieldDecoder selection Github.Object.Team
 childTeams fillInOptionals object =
     let
         filledInOptionals =
@@ -114,7 +114,7 @@ id =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-invitations : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet invitations Github.Object.OrganizationInvitationConnection -> FieldDecoder (Maybe invitations) Github.Object.Team
+invitations : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.OrganizationInvitationConnection -> FieldDecoder (Maybe selection) Github.Object.Team
 invitations fillInOptionals object =
     let
         filledInOptionals =
@@ -138,7 +138,7 @@ invitations fillInOptionals object =
   - role - Filter by team member role
 
 -}
-members : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType, role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType, role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole }) -> SelectionSet members Github.Object.TeamMemberConnection -> FieldDecoder members Github.Object.Team
+members : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType, role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType, role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole }) -> SelectionSet selection Github.Object.TeamMemberConnection -> FieldDecoder selection Github.Object.Team
 members fillInOptionals object =
     let
         filledInOptionals =
@@ -188,14 +188,14 @@ newTeamUrl =
 
 {-| The organization that owns this team.
 -}
-organization : SelectionSet organization Github.Object.Organization -> FieldDecoder organization Github.Object.Team
+organization : SelectionSet selection Github.Object.Organization -> FieldDecoder selection Github.Object.Team
 organization object =
     Object.selectionFieldDecoder "organization" [] object identity
 
 
 {-| The parent team of the team.
 -}
-parentTeam : SelectionSet parentTeam Github.Object.Team -> FieldDecoder (Maybe parentTeam) Github.Object.Team
+parentTeam : SelectionSet selection Github.Object.Team -> FieldDecoder (Maybe selection) Github.Object.Team
 parentTeam object =
     Object.selectionFieldDecoder "parentTeam" [] object (identity >> Decode.maybe)
 
@@ -217,7 +217,7 @@ privacy =
   - orderBy - Order for the connection.
 
 -}
-repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet repositories Github.Object.TeamRepositoryConnection -> FieldDecoder repositories Github.Object.Team
+repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Value } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Value }) -> SelectionSet selection Github.Object.TeamRepositoryConnection -> FieldDecoder selection Github.Object.Team
 repositories fillInOptionals object =
     let
         filledInOptionals =

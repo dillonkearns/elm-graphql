@@ -103,8 +103,8 @@ generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
             "identity" ++ isNullableString
 
 
-generateType : List String -> String -> TypeReference -> String
-generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullable) =
+generateType : List String -> TypeReference -> String
+generateType apiSubmodule (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
             case scalar of
@@ -121,16 +121,16 @@ generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullabl
                     "Float"
 
         Type.List typeRef ->
-            "(List " ++ generateType apiSubmodule fieldName typeRef ++ ")"
+            "(List " ++ generateType apiSubmodule typeRef ++ ")"
 
         Type.ObjectRef objectName ->
-            fieldName
+            "selection"
 
         Type.InterfaceRef interfaceName ->
-            fieldName
+            "selection"
 
         Type.UnionRef unionName ->
-            fieldName
+            "selection"
 
         Type.EnumRef enumName ->
             ModuleName.enumTypeName { apiSubmodule = apiSubmodule } enumName

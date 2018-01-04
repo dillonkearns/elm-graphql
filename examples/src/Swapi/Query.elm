@@ -24,7 +24,7 @@ selection constructor =
   - id - ID of the droid.
 
 -}
-droid : { id : String } -> SelectionSet droid Swapi.Object.Droid -> FieldDecoder (Maybe droid) RootQuery
+droid : { id : String } -> SelectionSet selection Swapi.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
 droid requiredArgs object =
     Object.selectionFieldDecoder "droid" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
 
@@ -34,7 +34,7 @@ droid requiredArgs object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Interface.Character -> FieldDecoder (Maybe hero) RootQuery
+hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet selection Swapi.Interface.Character -> FieldDecoder (Maybe selection) RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -52,7 +52,7 @@ hero fillInOptionals object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet heroUnion Swapi.Union.CharacterUnion -> FieldDecoder (Maybe heroUnion) RootQuery
+heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet selection Swapi.Union.CharacterUnion -> FieldDecoder (Maybe selection) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =
@@ -70,6 +70,6 @@ heroUnion fillInOptionals object =
   - id - ID of the human.
 
 -}
-human : { id : String } -> SelectionSet human Swapi.Object.Human -> FieldDecoder (Maybe human) RootQuery
+human : { id : String } -> SelectionSet selection Swapi.Object.Human -> FieldDecoder (Maybe selection) RootQuery
 human requiredArgs object =
     Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)

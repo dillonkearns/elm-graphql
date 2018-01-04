@@ -27,14 +27,14 @@ createdAt =
 
 {-| Identifies the actor who triggered the deployment.
 -}
-creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.DeploymentStatus
+creator : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.DeploymentStatus
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the deployment associated with status.
 -}
-deployment : SelectionSet deployment Github.Object.Deployment -> FieldDecoder deployment Github.Object.DeploymentStatus
+deployment : SelectionSet selection Github.Object.Deployment -> FieldDecoder selection Github.Object.DeploymentStatus
 deployment object =
     Object.selectionFieldDecoder "deployment" [] object identity
 

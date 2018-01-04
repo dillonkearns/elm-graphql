@@ -31,27 +31,27 @@ id =
 
 {-| Organization invitation for this SCIM-provisioned external identity
 -}
-organizationInvitation : SelectionSet organizationInvitation Github.Object.OrganizationInvitation -> FieldDecoder (Maybe organizationInvitation) Github.Object.ExternalIdentity
+organizationInvitation : SelectionSet selection Github.Object.OrganizationInvitation -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
 organizationInvitation object =
     Object.selectionFieldDecoder "organizationInvitation" [] object (identity >> Decode.maybe)
 
 
 {-| SAML Identity attributes
 -}
-samlIdentity : SelectionSet samlIdentity Github.Object.ExternalIdentitySamlAttributes -> FieldDecoder (Maybe samlIdentity) Github.Object.ExternalIdentity
+samlIdentity : SelectionSet selection Github.Object.ExternalIdentitySamlAttributes -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
 samlIdentity object =
     Object.selectionFieldDecoder "samlIdentity" [] object (identity >> Decode.maybe)
 
 
 {-| SCIM Identity attributes
 -}
-scimIdentity : SelectionSet scimIdentity Github.Object.ExternalIdentityScimAttributes -> FieldDecoder (Maybe scimIdentity) Github.Object.ExternalIdentity
+scimIdentity : SelectionSet selection Github.Object.ExternalIdentityScimAttributes -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
 scimIdentity object =
     Object.selectionFieldDecoder "scimIdentity" [] object (identity >> Decode.maybe)
 
 
 {-| User linked to this external identity
 -}
-user : SelectionSet user Github.Object.User -> FieldDecoder (Maybe user) Github.Object.ExternalIdentity
+user : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
 user object =
     Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)

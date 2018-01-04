@@ -26,7 +26,7 @@ age =
 
 {-| Identifies the line author
 -}
-commit : SelectionSet commit Github.Object.Commit -> FieldDecoder commit Github.Object.BlameRange
+commit : SelectionSet selection Github.Object.Commit -> FieldDecoder selection Github.Object.BlameRange
 commit object =
     Object.selectionFieldDecoder "commit" [] object identity
 

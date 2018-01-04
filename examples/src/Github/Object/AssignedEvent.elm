@@ -19,14 +19,14 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.AssignedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.AssignedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the assignable associated with the event.
 -}
-assignable : SelectionSet assignable Github.Interface.Assignable -> FieldDecoder assignable Github.Object.AssignedEvent
+assignable : SelectionSet selection Github.Interface.Assignable -> FieldDecoder selection Github.Object.AssignedEvent
 assignable object =
     Object.selectionFieldDecoder "assignable" [] object identity
 
@@ -45,6 +45,6 @@ id =
 
 {-| Identifies the user who was assigned.
 -}
-user : SelectionSet user Github.Object.User -> FieldDecoder (Maybe user) Github.Object.AssignedEvent
+user : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.AssignedEvent
 user object =
     Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)

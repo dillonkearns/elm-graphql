@@ -60,7 +60,7 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet author Github.Interface.Actor -> FieldDecoder (Maybe author) Github.Interface.Comment
+author : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Interface.Comment
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -102,7 +102,7 @@ createdViaEmail =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet editor Github.Interface.Actor -> FieldDecoder (Maybe editor) Github.Interface.Comment
+editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Interface.Comment
 editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 

@@ -58,6 +58,6 @@ name =
 
 {-| The GitHub user corresponding to the email field. Null if no such user exists.
 -}
-user : SelectionSet user Github.Object.User -> FieldDecoder (Maybe user) Github.Object.GitActor
+user : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.GitActor
 user object =
     Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)

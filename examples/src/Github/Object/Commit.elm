@@ -34,7 +34,7 @@ additions =
 
 {-| Authorship details of the commit.
 -}
-author : SelectionSet author Github.Object.GitActor -> FieldDecoder (Maybe author) Github.Object.Commit
+author : SelectionSet selection Github.Object.GitActor -> FieldDecoder (Maybe selection) Github.Object.Commit
 author object =
     Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
 
@@ -58,7 +58,7 @@ authoredDate =
   - path - The file whose Git blame information you want.
 
 -}
-blame : { path : String } -> SelectionSet blame Github.Object.Blame -> FieldDecoder blame Github.Object.Commit
+blame : { path : String } -> SelectionSet selection Github.Object.Blame -> FieldDecoder selection Github.Object.Commit
 blame requiredArgs object =
     Object.selectionFieldDecoder "blame" [ Argument.required "path" requiredArgs.path Encode.string ] object identity
 
@@ -78,7 +78,7 @@ changedFiles =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet comments Github.Object.CommitCommentConnection -> FieldDecoder comments Github.Object.Commit
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.CommitCommentConnection -> FieldDecoder selection Github.Object.Commit
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -121,7 +121,7 @@ committedViaWeb =
 
 {-| Committership details of the commit.
 -}
-committer : SelectionSet committer Github.Object.GitActor -> FieldDecoder (Maybe committer) Github.Object.Commit
+committer : SelectionSet selection Github.Object.GitActor -> FieldDecoder (Maybe selection) Github.Object.Commit
 committer object =
     Object.selectionFieldDecoder "committer" [] object (identity >> Decode.maybe)
 
@@ -145,7 +145,7 @@ deletions =
   - until - Allows specifying an ending time or date for fetching commits.
 
 -}
-history : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Value, since : OptionalArgument String, until : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Value, since : OptionalArgument String, until : OptionalArgument String }) -> SelectionSet history Github.Object.CommitHistoryConnection -> FieldDecoder history Github.Object.Commit
+history : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Value, since : OptionalArgument String, until : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Value, since : OptionalArgument String, until : OptionalArgument String }) -> SelectionSet selection Github.Object.CommitHistoryConnection -> FieldDecoder selection Github.Object.Commit
 history fillInOptionals object =
     let
         filledInOptionals =
@@ -213,7 +213,7 @@ oid =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-parents : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet parents Github.Object.CommitConnection -> FieldDecoder parents Github.Object.Commit
+parents : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.CommitConnection -> FieldDecoder selection Github.Object.Commit
 parents fillInOptionals object =
     let
         filledInOptionals =
@@ -235,7 +235,7 @@ pushedDate =
 
 {-| The Repository this commit belongs to
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.Commit
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.Commit
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
@@ -249,14 +249,14 @@ resourcePath =
 
 {-| Commit signing information, if present.
 -}
-signature : SelectionSet signature Github.Interface.GitSignature -> FieldDecoder (Maybe signature) Github.Object.Commit
+signature : SelectionSet selection Github.Interface.GitSignature -> FieldDecoder (Maybe selection) Github.Object.Commit
 signature object =
     Object.selectionFieldDecoder "signature" [] object (identity >> Decode.maybe)
 
 
 {-| Status information for this commit
 -}
-status : SelectionSet status Github.Object.Status -> FieldDecoder (Maybe status) Github.Object.Commit
+status : SelectionSet selection Github.Object.Status -> FieldDecoder (Maybe selection) Github.Object.Commit
 status object =
     Object.selectionFieldDecoder "status" [] object (identity >> Decode.maybe)
 
@@ -270,7 +270,7 @@ tarballUrl =
 
 {-| Commit's root Tree
 -}
-tree : SelectionSet tree Github.Object.Tree -> FieldDecoder tree Github.Object.Commit
+tree : SelectionSet selection Github.Object.Tree -> FieldDecoder selection Github.Object.Commit
 tree object =
     Object.selectionFieldDecoder "tree" [] object identity
 

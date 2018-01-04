@@ -19,7 +19,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.ReviewRequestedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
@@ -38,20 +38,20 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet pullRequest Github.Object.PullRequest -> FieldDecoder pullRequest Github.Object.ReviewRequestedEvent
+pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.ReviewRequestedEvent
 pullRequest object =
     Object.selectionFieldDecoder "pullRequest" [] object identity
 
 
 {-| Identifies the reviewer whose review was requested.
 -}
-requestedReviewer : SelectionSet requestedReviewer Github.Union.RequestedReviewer -> FieldDecoder (Maybe requestedReviewer) Github.Object.ReviewRequestedEvent
+requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestedEvent
 requestedReviewer object =
     Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the user whose review was requested.
 -}
-subject : SelectionSet subject Github.Object.User -> FieldDecoder (Maybe subject) Github.Object.ReviewRequestedEvent
+subject : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestedEvent
 subject object =
     Object.selectionFieldDecoder "subject" [] object (identity >> Decode.maybe)

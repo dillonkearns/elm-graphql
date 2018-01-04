@@ -19,7 +19,7 @@ selection constructor =
 
 {-| The actor who created this protected branch.
 -}
-creator : SelectionSet creator Github.Interface.Actor -> FieldDecoder (Maybe creator) Github.Object.ProtectedBranch
+creator : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ProtectedBranch
 creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
@@ -93,7 +93,7 @@ name =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pushAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet pushAllowances Github.Object.PushAllowanceConnection -> FieldDecoder pushAllowances Github.Object.ProtectedBranch
+pushAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PushAllowanceConnection -> FieldDecoder selection Github.Object.ProtectedBranch
 pushAllowances fillInOptionals object =
     let
         filledInOptionals =
@@ -108,7 +108,7 @@ pushAllowances fillInOptionals object =
 
 {-| The repository associated with this protected branch.
 -}
-repository : SelectionSet repository Github.Object.Repository -> FieldDecoder repository Github.Object.ProtectedBranch
+repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.ProtectedBranch
 repository object =
     Object.selectionFieldDecoder "repository" [] object identity
 
@@ -128,7 +128,7 @@ requiredStatusCheckContexts =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-reviewDismissalAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet reviewDismissalAllowances Github.Object.ReviewDismissalAllowanceConnection -> FieldDecoder reviewDismissalAllowances Github.Object.ProtectedBranch
+reviewDismissalAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ReviewDismissalAllowanceConnection -> FieldDecoder selection Github.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals object =
     let
         filledInOptionals =

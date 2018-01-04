@@ -37,7 +37,7 @@ memberAccessUrl =
     Object.fieldDecoder "memberAccessUrl" [] Decode.string
 
 
-node : SelectionSet node Github.Object.User -> FieldDecoder node Github.Object.TeamMemberEdge
+node : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.TeamMemberEdge
 node object =
     Object.selectionFieldDecoder "node" [] object identity
 

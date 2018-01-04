@@ -32,7 +32,7 @@ digestMethod =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-externalIdentities : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet externalIdentities Github.Object.ExternalIdentityConnection -> FieldDecoder externalIdentities Github.Object.OrganizationIdentityProvider
+externalIdentities : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ExternalIdentityConnection -> FieldDecoder selection Github.Object.OrganizationIdentityProvider
 externalIdentities fillInOptionals object =
     let
         filledInOptionals =
@@ -66,7 +66,7 @@ issuer =
 
 {-| Organization this Identity Provider belongs to
 -}
-organization : SelectionSet organization Github.Object.Organization -> FieldDecoder (Maybe organization) Github.Object.OrganizationIdentityProvider
+organization : SelectionSet selection Github.Object.Organization -> FieldDecoder (Maybe selection) Github.Object.OrganizationIdentityProvider
 organization object =
     Object.selectionFieldDecoder "organization" [] object (identity >> Decode.maybe)
 

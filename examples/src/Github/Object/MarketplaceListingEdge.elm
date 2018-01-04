@@ -26,6 +26,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet node Github.Object.MarketplaceListing -> FieldDecoder (Maybe node) Github.Object.MarketplaceListingEdge
+node : SelectionSet selection Github.Object.MarketplaceListing -> FieldDecoder (Maybe selection) Github.Object.MarketplaceListingEdge
 node object =
     Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

@@ -32,6 +32,6 @@ name =
 {-| A list of related topics, including aliases of this topic, sorted with the most relevant
 first.
 -}
-relatedTopics : SelectionSet relatedTopics Github.Object.Topic -> FieldDecoder (List relatedTopics) Github.Object.Topic
+relatedTopics : SelectionSet selection Github.Object.Topic -> FieldDecoder (List selection) Github.Object.Topic
 relatedTopics object =
     Object.selectionFieldDecoder "relatedTopics" [] object (identity >> Decode.list)

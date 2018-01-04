@@ -19,14 +19,14 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet actor Github.Interface.Actor -> FieldDecoder (Maybe actor) Github.Object.ReopenedEvent
+actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ReopenedEvent
 actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Object that was reopened.
 -}
-closable : SelectionSet closable Github.Interface.Closable -> FieldDecoder closable Github.Object.ReopenedEvent
+closable : SelectionSet selection Github.Interface.Closable -> FieldDecoder selection Github.Object.ReopenedEvent
 closable object =
     Object.selectionFieldDecoder "closable" [] object identity
 

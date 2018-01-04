@@ -31,7 +31,7 @@ resourcePath =
 
 {-| The topic.
 -}
-topic : SelectionSet topic Github.Object.Topic -> FieldDecoder topic Github.Object.RepositoryTopic
+topic : SelectionSet selection Github.Object.Topic -> FieldDecoder selection Github.Object.RepositoryTopic
 topic object =
     Object.selectionFieldDecoder "topic" [] object identity
 
