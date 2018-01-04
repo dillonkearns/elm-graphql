@@ -133,8 +133,7 @@ generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullabl
             fieldName
 
         Type.EnumRef enumName ->
-            ModuleName.enum { apiSubmodule = apiSubmodule } enumName
-                ++ [ enumName ]
+            ModuleName.enumTypeName { apiSubmodule = apiSubmodule } enumName
                 |> String.join "."
 
         Type.InputObjectRef _ ->

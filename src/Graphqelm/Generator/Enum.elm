@@ -1,6 +1,7 @@
 module Graphqelm.Generator.Enum exposing (enumType, generate)
 
 import Graphqelm.Generator.DocComment as DocComment
+import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
@@ -33,7 +34,7 @@ import Json.Decode as Decode exposing (Decoder)
 
 enumType : String -> List EnumValue -> String
 enumType enumName enumValues =
-    "type " ++ enumName ++ """
+    "type " ++ Normalize.moduleName enumName ++ """
     = """ ++ (enumValues |> List.map .name |> String.join "\n    | ") ++ "\n"
 
 
@@ -44,7 +45,7 @@ enumToString enumName enumValues =
 toString enum =
     case enum of
 {1}"""
-        [ enumName
+        [ Normalize.moduleName enumName
         , List.map toStringCase enumValues |> String.join "\n\n"
         ]
 
@@ -68,13 +69,13 @@ decoder =
             (\\string ->
                 case string of
 """
-        [ enumName ]
+        [ Normalize.moduleName enumName ]
         ++ (enumValues |> List.map .name |> List.map (\enumValue -> "                    \"" ++ enumValue ++ "\" ->\n                        Decode.succeed " ++ enumValue) |> String.join "\n\n")
         ++ """
 
                     _ ->
                         Decode.fail ("Invalid """
-        ++ enumName
+        ++ Normalize.moduleName enumName
         ++ """ type, " ++ string ++ " try re-running the graphqelm CLI ")
         )
         """
