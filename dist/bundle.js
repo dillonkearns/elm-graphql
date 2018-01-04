@@ -9255,36 +9255,28 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragments = F3(
 				A2(_dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragment, context, moduleName),
 				implementors));
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$generate = F3(
-	function (context, name, fields) {
-		return {
-			ctor: '_Tuple2',
-			_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$interface, context, name),
-			_1: A2(
+var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$generate = F4(
+	function (context, name, moduleName, fields) {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			A3(_dillonkearns$graphqelm$Graphqelm_Generator_Interface$prepend, context, moduleName, fields),
+			A2(
 				_elm_lang$core$Basics_ops['++'],
 				A3(
-					_dillonkearns$graphqelm$Graphqelm_Generator_Interface$prepend,
+					_dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragments,
 					context,
-					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$interface, context, name),
-					fields),
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					A3(
-						_dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragments,
-						context,
-						A2(
-							_elm_lang$core$Maybe$withDefault,
-							{ctor: '[]'},
-							A2(_elm_lang$core$Dict$get, name, context.interfaces)),
-						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$interface, context, name)),
 					A2(
-						_elm_lang$core$String$join,
-						'\n\n',
-						A2(
-							_elm_lang$core$List$map,
-							A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generateForInterface, context, name),
-							fields))))
-		};
+						_elm_lang$core$Maybe$withDefault,
+						{ctor: '[]'},
+						A2(_elm_lang$core$Dict$get, name, context.interfaces)),
+					moduleName),
+				A2(
+					_elm_lang$core$String$join,
+					'\n\n',
+					A2(
+						_elm_lang$core$List$map,
+						A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generateForInterface, context, name),
+						fields))));
 	});
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$prepend = F3(
@@ -9583,7 +9575,16 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$toPair = F2(
 					A4(_dillonkearns$graphqelm$Graphqelm_Generator_Enum$generate, context.apiSubmodule, _p4, _p2._0, _p1._2));
 			default:
 				return _elm_lang$core$Maybe$Just(
-					A3(_dillonkearns$graphqelm$Graphqelm_Generator_Interface$generate, context, _p4, _p2._0));
+					{
+						ctor: '_Tuple2',
+						_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$interface, context, _p4),
+						_1: A4(
+							_dillonkearns$graphqelm$Graphqelm_Generator_Interface$generate,
+							context,
+							_p4,
+							A2(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$interface, context, _p4),
+							_p2._0)
+					});
 		}
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$moduleToFileName = function (modulePath) {

@@ -8,13 +8,11 @@ import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
 
-generate : Context -> String -> List Type.Field -> ( List String, String )
-generate context name fields =
-    ( Imports.interface context name
-    , prepend context (Imports.interface context name) fields
-        ++ fragments context (context.interfaces |> Dict.get name |> Maybe.withDefault []) (Imports.interface context name)
+generate : Context -> String -> List String -> List Type.Field -> String
+generate context name moduleName fields =
+    prepend context moduleName fields
+        ++ fragments context (context.interfaces |> Dict.get name |> Maybe.withDefault []) moduleName
         ++ (List.map (FieldGenerator.generateForInterface context name) fields |> String.join "\n\n")
-    )
 
 
 fragments : Context -> List String -> List String -> String
