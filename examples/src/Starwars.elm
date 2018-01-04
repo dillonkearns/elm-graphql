@@ -16,12 +16,15 @@ import Swapi.Object
 import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
+import Swapi.Union
+import Swapi.Union.CharacterUnion as CharacterUnion
 
 
 type alias Response =
     { vader : Maybe HumanLookup
     , tarkin : Maybe HumanLookup
     , hero : Maybe Character
+    , union : Maybe CharacterUnion
     }
 
 
@@ -49,6 +52,19 @@ hero =
         |> with (Character.friends (Character.baseSelection identity |> with Character.name))
 
 
+type alias CharacterUnion =
+    { details : Maybe HumanOrDroid
+    }
+
+
+heroUnion : SelectionSet CharacterUnion Swapi.Union.CharacterUnion
+heroUnion =
+    CharacterUnion.selection CharacterUnion
+        [ CharacterUnion.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
+        , CharacterUnion.onHuman (Human.selection Human |> with Human.homePlanet)
+        ]
+
+
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
@@ -56,6 +72,8 @@ query =
         |> with (Query.human { id = "1004" } human)
         |> with
             (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
+        |> with
+            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.EMPIRE }) heroUnion)
 
 
 type alias HumanLookup =

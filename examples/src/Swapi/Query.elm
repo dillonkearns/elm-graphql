@@ -11,6 +11,7 @@ import Json.Decode as Decode exposing (Decoder)
 import Swapi.Enum.Episode
 import Swapi.Interface
 import Swapi.Object
+import Swapi.Union
 
 
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
@@ -35,6 +36,24 @@ droid requiredArgs object =
 -}
 hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Interface.Character -> FieldDecoder (Maybe hero) RootQuery
 hero fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { episode = Absent }
+
+        optionalArgs =
+            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
+                |> List.filterMap identity
+    in
+    Object.selectionFieldDecoder "hero" optionalArgs object (identity >> Decode.maybe)
+
+
+{-|
+
+  - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
+
+-}
+heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Union.CharacterUnion -> FieldDecoder (Maybe hero) RootQuery
+heroUnion fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { episode = Absent }

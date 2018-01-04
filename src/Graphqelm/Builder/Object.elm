@@ -1,7 +1,7 @@
-module Graphqelm.Builder.Object exposing (fieldDecoder, object, polymorphicObject, selectionFieldDecoder)
+module Graphqelm.Builder.Object exposing (fieldDecoder, object, polymorphicObject, selectionFieldDecoder, unionSelection)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs fieldDecoder, object, selectionFieldDecoder, polymorphicObject
+@docs fieldDecoder, object, selectionFieldDecoder, polymorphicObject, unionSelection
 -}
 
 import Dict
@@ -48,10 +48,38 @@ object constructor =
     SelectionSet [] (Decode.succeed constructor)
 
 
-{-| Used to create the `selection` functions in auto-generated code for interfaces and unions.
+{-| Used to create the `selection` functions in auto-generated code for interfaces.
 -}
 polymorphicObject : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a -> b) -> SelectionSet (a -> b) typeLock
 polymorphicObject typeSpecificSelections constructor =
+    let
+        typeNameDecoder =
+            \typeName ->
+                typeSpecificSelections
+                    |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
+                    |> Dict.fromList
+                    |> Dict.get typeName
+                    |> Maybe.map (Decode.map Just)
+                    |> Maybe.withDefault (Decode.succeed Nothing)
+
+        selections =
+            typeSpecificSelections
+                |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
+    in
+    SelectionSet (leaf "__typename" [] :: selections)
+        (Decode.map2 (|>)
+            (Decode.string
+                |> Decode.field "__typename"
+                |> Decode.andThen typeNameDecoder
+            )
+            (Decode.succeed constructor)
+        )
+
+
+{-| Used to create the `selection` functions in auto-generated code for unions.
+-}
+unionSelection : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a) -> SelectionSet a typeLock
+unionSelection typeSpecificSelections constructor =
     let
         typeNameDecoder =
             \typeName ->
