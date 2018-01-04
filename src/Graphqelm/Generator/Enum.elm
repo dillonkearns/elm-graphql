@@ -1,15 +1,13 @@
-module Graphqelm.Generator.Enum exposing (enumType, generate, moduleNameFor)
+module Graphqelm.Generator.Enum exposing (enumType, generate)
 
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
 
-generate : List String -> String -> List EnumValue -> Maybe String -> ( List String, String )
-generate apiSubmodule enumName enumValues description =
-    ( moduleNameFor apiSubmodule enumName
-    , prepend apiSubmodule enumName enumValues (enumDocs description enumValues)
-    )
+generate : String -> List String -> List EnumValue -> Maybe String -> String
+generate enumName moduleName enumValues description =
+    prepend moduleName enumName enumValues (enumDocs description enumValues)
 
 
 enumDocs : Maybe String -> List EnumValue -> String
@@ -17,20 +15,15 @@ enumDocs enumDescription enumValues =
     DocComment.generateForEnum enumDescription enumValues
 
 
-moduleNameFor : List String -> String -> List String
-moduleNameFor apiSubmodule name =
-    apiSubmodule ++ [ "Enum", name ]
-
-
 prepend : List String -> String -> List EnumValue -> String -> String
-prepend apiSubmodule enumName enumValues docComment =
+prepend moduleName enumName enumValues docComment =
     interpolate """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 
 
 """
-        [ moduleNameFor apiSubmodule enumName |> String.join "." ]
+        [ moduleName |> String.join "." ]
         ++ docComment
         ++ enumType enumName enumValues
         ++ enumDecoder enumName enumValues

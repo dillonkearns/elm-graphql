@@ -135,7 +135,9 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
             Nothing
 
         Type.EnumType enumValues ->
-            Graphqelm.Generator.Enum.generate context.apiSubmodule name enumValues description
+            ( Imports.enum context name
+            , Graphqelm.Generator.Enum.generate name (Imports.enum context name) enumValues description
+            )
                 |> Just
 
         Type.InterfaceType fields possibleTypes ->
