@@ -59,11 +59,8 @@ setting up Travis CI!
 
 ## Roadmap
 
-The following are planned but not yet supported:
-
-* GraphQL Unions (GraphQL Enums are already fully supported)
-* Select from concrete types in interface query
-* Type-safe Input Objects
+Type-safe Input Objects are planned but not yet supported. Otherwise all core
+functionality exists. I would also like to investigate supporting subscriptions.
 
 See [the full roadmap on Trello](https://trello.com/b/BCIWtZeL/graphqelm).
 
