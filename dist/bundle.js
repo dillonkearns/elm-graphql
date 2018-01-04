@@ -6749,8 +6749,8 @@ var _elm_community$string_extra$String_Extra$decapitalize = function (word) {
 	return A2(_elm_community$string_extra$String_Extra$changeCase, _elm_lang$core$Char$toLower, word);
 };
 
-var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized = function (name) {
-	decapitalized:
+var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized = function (name) {
+	capitalized:
 	while (true) {
 		if (A2(_elm_lang$core$String$startsWith, '_', name)) {
 			var _v0 = function (nameWithoutLeading_) {
@@ -6758,21 +6758,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized = functi
 			}(
 				A2(_elm_lang$core$String$dropLeft, 1, name));
 			name = _v0;
-			continue decapitalized;
-		} else {
-			return _elm_community$string_extra$String_Extra$decapitalize(name);
-		}
-	}
-};
-var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized = function (name) {
-	capitalized:
-	while (true) {
-		if (A2(_elm_lang$core$String$startsWith, '_', name)) {
-			var _v1 = function (nameWithoutLeading_) {
-				return A2(_elm_lang$core$Basics_ops['++'], nameWithoutLeading_, '_');
-			}(
-				A2(_elm_lang$core$String$dropLeft, 1, name));
-			name = _v1;
 			continue capitalized;
 		} else {
 			return _elm_community$string_extra$String_Extra$toSentenceCase(name);
@@ -6784,6 +6769,25 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName = function 
 		return A2(_elm_lang$core$Basics_ops['++'], nameWithoutLeading_, '_');
 	}(
 		A2(_elm_lang$core$String$dropLeft, 1, name)) : name;
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$normalizeIfElmReserved = function (name) {
+	return _elm_lang$core$Native_Utils.eq(name, 'type') ? 'type_' : name;
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized = function (name) {
+	decapitalized:
+	while (true) {
+		if (A2(_elm_lang$core$String$startsWith, '_', name)) {
+			var _v1 = function (nameWithoutLeading_) {
+				return A2(_elm_lang$core$Basics_ops['++'], nameWithoutLeading_, '_');
+			}(
+				A2(_elm_lang$core$String$dropLeft, 1, name));
+			name = _v1;
+			continue decapitalized;
+		} else {
+			return _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$normalizeIfElmReserved(
+				_elm_community$string_extra$String_Extra$decapitalize(name));
+		}
+	}
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName = function (name) {
 	return _elm_lang$core$Native_Utils.eq(name, 'type') ? 'type_' : name;

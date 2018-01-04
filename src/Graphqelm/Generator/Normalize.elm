@@ -11,6 +11,14 @@ fieldName name =
         name
 
 
+normalizeIfElmReserved : String -> String
+normalizeIfElmReserved name =
+    if name == "type" then
+        "type_"
+    else
+        name
+
+
 moduleName : String -> String
 moduleName name =
     if name |> String.startsWith "_" then
@@ -40,4 +48,4 @@ decapitalized name =
             |> (\nameWithoutLeading_ -> nameWithoutLeading_ ++ "_")
             |> decapitalized
     else
-        name |> String.Extra.decapitalize
+        name |> String.Extra.decapitalize |> normalizeIfElmReserved
