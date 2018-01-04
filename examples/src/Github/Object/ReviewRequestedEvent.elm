@@ -2,6 +2,7 @@ module Github.Object.ReviewRequestedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -44,9 +45,9 @@ pullRequest object =
 
 {-| Identifies the reviewer whose review was requested.
 -}
-requestedReviewer : FieldDecoder (Maybe String) Github.Object.ReviewRequestedEvent
-requestedReviewer =
-    Object.fieldDecoder "requestedReviewer" [] (Decode.string |> Decode.maybe)
+requestedReviewer : SelectionSet requestedReviewer Github.Union.RequestedReviewer -> FieldDecoder (Maybe requestedReviewer) Github.Object.ReviewRequestedEvent
+requestedReviewer object =
+    Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the user whose review was requested.

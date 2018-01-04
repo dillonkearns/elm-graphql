@@ -2,6 +2,7 @@ module Github.Object.MilestonedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -44,6 +45,6 @@ milestoneTitle =
 
 {-| Object referenced by event.
 -}
-subject : FieldDecoder (Maybe String) Github.Object.MilestonedEvent
-subject =
-    Object.fieldDecoder "subject" [] (Decode.string |> Decode.maybe)
+subject : SelectionSet subject Github.Union.MilestoneItem -> FieldDecoder subject Github.Object.MilestonedEvent
+subject object =
+    Object.selectionFieldDecoder "subject" [] object identity

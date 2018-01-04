@@ -2,6 +2,7 @@ module Github.Object.CrossReferencedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -58,16 +59,16 @@ resourcePath =
 
 {-| Issue or pull request that made the reference.
 -}
-source : FieldDecoder (Maybe String) Github.Object.CrossReferencedEvent
-source =
-    Object.fieldDecoder "source" [] (Decode.string |> Decode.maybe)
+source : SelectionSet source Github.Union.ReferencedSubject -> FieldDecoder source Github.Object.CrossReferencedEvent
+source object =
+    Object.selectionFieldDecoder "source" [] object identity
 
 
 {-| Issue or pull request to which the reference was made.
 -}
-target : FieldDecoder (Maybe String) Github.Object.CrossReferencedEvent
-target =
-    Object.fieldDecoder "target" [] (Decode.string |> Decode.maybe)
+target : SelectionSet target Github.Union.ReferencedSubject -> FieldDecoder target Github.Object.CrossReferencedEvent
+target object =
+    Object.selectionFieldDecoder "target" [] object identity
 
 
 {-| The HTTP URL for this pull request.

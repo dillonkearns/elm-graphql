@@ -2,6 +2,7 @@ module Github.Object.PullRequestTimelineConnection exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -25,9 +26,9 @@ edges object =
 
 {-| A list of nodes.
 -}
-nodes : FieldDecoder (Maybe (List (Maybe String))) Github.Object.PullRequestTimelineConnection
-nodes =
-    Object.fieldDecoder "nodes" [] (Decode.string |> Decode.maybe |> Decode.list |> Decode.maybe)
+nodes : SelectionSet nodes Github.Union.PullRequestTimelineItem -> FieldDecoder (Maybe (List (Maybe nodes))) Github.Object.PullRequestTimelineConnection
+nodes object =
+    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.

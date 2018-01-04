@@ -2,6 +2,7 @@ module Github.Object.ReferencedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -72,6 +73,6 @@ isDirectReference =
 
 {-| Object referenced by event.
 -}
-subject : FieldDecoder (Maybe String) Github.Object.ReferencedEvent
-subject =
-    Object.fieldDecoder "subject" [] (Decode.string |> Decode.maybe)
+subject : SelectionSet subject Github.Union.ReferencedSubject -> FieldDecoder subject Github.Object.ReferencedEvent
+subject object =
+    Object.selectionFieldDecoder "subject" [] object identity

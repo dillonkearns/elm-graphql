@@ -11,6 +11,7 @@ import Github.Enum.RepositoryPrivacy
 import Github.Enum.SubscriptionState
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -289,9 +290,9 @@ issue requiredArgs object =
   - number - The number for the issue to be returned.
 
 -}
-issueOrPullRequest : { number : Int } -> FieldDecoder (Maybe String) Github.Object.Repository
-issueOrPullRequest requiredArgs =
-    Object.fieldDecoder "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] (Decode.string |> Decode.maybe)
+issueOrPullRequest : { number : Int } -> SelectionSet issueOrPullRequest Github.Union.IssueOrPullRequest -> FieldDecoder (Maybe issueOrPullRequest) Github.Object.Repository
+issueOrPullRequest requiredArgs object =
+    Object.selectionFieldDecoder "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.maybe)
 
 
 {-| A list of issues that have been opened in the repository.

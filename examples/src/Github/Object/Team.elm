@@ -6,6 +6,7 @@ import Github.Enum.TeamMembershipType
 import Github.Enum.TeamPrivacy
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)

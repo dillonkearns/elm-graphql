@@ -2,6 +2,7 @@ module Github.Object.PushAllowance exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -18,9 +19,9 @@ selection constructor =
 
 {-| The actor that can push.
 -}
-actor : FieldDecoder (Maybe String) Github.Object.PushAllowance
-actor =
-    Object.fieldDecoder "actor" [] (Decode.string |> Decode.maybe)
+actor : SelectionSet actor Github.Union.PushAllowanceActor -> FieldDecoder (Maybe actor) Github.Object.PushAllowance
+actor object =
+    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
 id : FieldDecoder String Github.Object.PushAllowance

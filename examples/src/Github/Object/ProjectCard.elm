@@ -3,6 +3,7 @@ module Github.Object.ProjectCard exposing (..)
 import Github.Enum.ProjectCardState
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -29,9 +30,9 @@ column object =
 
 {-| The card content item
 -}
-content : FieldDecoder (Maybe String) Github.Object.ProjectCard
-content =
-    Object.fieldDecoder "content" [] (Decode.string |> Decode.maybe)
+content : SelectionSet content Github.Union.ProjectCardItem -> FieldDecoder (Maybe content) Github.Object.ProjectCard
+content object =
+    Object.selectionFieldDecoder "content" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.

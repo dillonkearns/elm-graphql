@@ -2,6 +2,7 @@ module Github.Object.ReviewRequestRemovedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -44,9 +45,9 @@ pullRequest object =
 
 {-| Identifies the reviewer whose review request was removed.
 -}
-requestedReviewer : FieldDecoder (Maybe String) Github.Object.ReviewRequestRemovedEvent
-requestedReviewer =
-    Object.fieldDecoder "requestedReviewer" [] (Decode.string |> Decode.maybe)
+requestedReviewer : SelectionSet requestedReviewer Github.Union.RequestedReviewer -> FieldDecoder (Maybe requestedReviewer) Github.Object.ReviewRequestRemovedEvent
+requestedReviewer object =
+    Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the user whose review request was removed.

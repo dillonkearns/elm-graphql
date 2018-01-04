@@ -2,6 +2,7 @@ module Github.Object.ReviewRequest exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -37,9 +38,9 @@ pullRequest object =
 
 {-| The reviewer that is requested.
 -}
-requestedReviewer : FieldDecoder (Maybe String) Github.Object.ReviewRequest
-requestedReviewer =
-    Object.fieldDecoder "requestedReviewer" [] (Decode.string |> Decode.maybe)
+requestedReviewer : SelectionSet requestedReviewer Github.Union.RequestedReviewer -> FieldDecoder (Maybe requestedReviewer) Github.Object.ReviewRequest
+requestedReviewer object =
+    Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the author associated with this review request.

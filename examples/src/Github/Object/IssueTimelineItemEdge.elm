@@ -2,6 +2,7 @@ module Github.Object.IssueTimelineItemEdge exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -25,6 +26,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : FieldDecoder (Maybe String) Github.Object.IssueTimelineItemEdge
-node =
-    Object.fieldDecoder "node" [] (Decode.string |> Decode.maybe)
+node : SelectionSet node Github.Union.IssueTimelineItem -> FieldDecoder (Maybe node) Github.Object.IssueTimelineItemEdge
+node object =
+    Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)

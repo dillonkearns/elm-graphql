@@ -2,6 +2,7 @@ module Github.Object.RenamedTitleEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.Encode as Encode exposing (Value)
@@ -51,6 +52,6 @@ previousTitle =
 
 {-| Subject that was renamed.
 -}
-subject : FieldDecoder (Maybe String) Github.Object.RenamedTitleEvent
-subject =
-    Object.fieldDecoder "subject" [] (Decode.string |> Decode.maybe)
+subject : SelectionSet subject Github.Union.RenamedTitleSubject -> FieldDecoder subject Github.Object.RenamedTitleEvent
+subject object =
+    Object.selectionFieldDecoder "subject" [] object identity
