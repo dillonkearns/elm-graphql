@@ -63,9 +63,11 @@ toStringCase : EnumValue -> String
 toStringCase enumValue =
     interpolate
         """        {0} ->
-                "{0}"
+                "{1}"
 """
-        [ enumValue.name |> EnumName.normalized ]
+        [ enumValue.name |> EnumName.normalized
+        , enumValue.name |> EnumName.raw
+        ]
 
 
 enumDecoder : String -> List EnumValue -> String

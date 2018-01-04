@@ -1,5 +1,7 @@
 module Graphqelm.Parser.EnumName exposing (EnumName, enumName, normalized, raw)
 
+import Graphqelm.Generator.Normalize as Normalize
+
 
 enumName : String -> EnumName
 enumName =
@@ -17,4 +19,4 @@ raw (EnumName name) =
 
 normalized : EnumName -> String
 normalized (EnumName name) =
-    name
+    name |> Normalize.capitalized
