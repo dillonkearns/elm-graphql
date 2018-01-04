@@ -3,17 +3,14 @@ module Graphqelm.Generator.Object exposing (generate)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
 
-generate : Context -> String -> List Type.Field -> ( List String, String )
-generate context name fields =
-    ( ModuleName.object context name
-    , prepend context (ModuleName.object context name) fields
+generate : Context -> String -> List String -> List Type.Field -> String
+generate context name moduleName fields =
+    prepend context moduleName fields
         ++ (List.map (FieldGenerator.generateForObject context name) fields |> String.join "\n\n")
-    )
 
 
 prepend : Context -> List String -> List Type.Field -> String

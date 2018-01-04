@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Query exposing (generate, moduleName)
+module Graphqelm.Generator.Query exposing (generate)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator
@@ -7,17 +7,10 @@ import Graphqelm.Parser.Type as Type exposing (Field)
 import Interpolate exposing (interpolate)
 
 
-generate : Context -> List Field -> ( List String, String )
-generate ({ apiSubmodule } as context) fields =
-    ( moduleName apiSubmodule
-    , prepend apiSubmodule (moduleName apiSubmodule) fields
+generate : Context -> List String -> List Field -> String
+generate ({ apiSubmodule } as context) moduleName fields =
+    prepend apiSubmodule moduleName fields
         ++ (List.map (FieldGenerator.generateForObject context context.query) fields |> String.join "\n\n")
-    )
-
-
-moduleName : List String -> List String
-moduleName apiSubmodule =
-    apiSubmodule ++ [ "Query" ]
 
 
 prepend : List String -> List String -> List Field -> String

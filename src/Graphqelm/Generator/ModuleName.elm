@@ -1,4 +1,4 @@
-module Graphqelm.Generator.ModuleName exposing (enum, interface, object)
+module Graphqelm.Generator.ModuleName exposing (enum, interface, mutation, object, query)
 
 import Graphqelm.Generator.Context exposing (Context)
 
@@ -21,3 +21,13 @@ interface { apiSubmodule } name =
 enum : { context | apiSubmodule : List String } -> String -> List String
 enum { apiSubmodule } name =
     apiSubmodule ++ [ "Enum", name ]
+
+
+query : { context | apiSubmodule : List String } -> List String
+query { apiSubmodule } =
+    apiSubmodule ++ [ "Query" ]
+
+
+mutation : { context | apiSubmodule : List String } -> List String
+mutation { apiSubmodule } =
+    apiSubmodule ++ [ "Query" ]

@@ -122,13 +122,19 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
     case definableType of
         Type.ObjectType fields ->
             if name == context.query then
-                Graphqelm.Generator.Query.generate context fields
+                ( ModuleName.query context
+                , Graphqelm.Generator.Query.generate context (ModuleName.query context) fields
+                )
                     |> Just
             else if Just name == context.mutation then
-                Graphqelm.Generator.Mutation.generate context.apiSubmodule context fields
+                ( ModuleName.mutation context
+                , Graphqelm.Generator.Mutation.generate context (ModuleName.mutation context) fields
+                )
                     |> Just
             else
-                Graphqelm.Generator.Object.generate context name fields
+                ( ModuleName.object context name
+                , Graphqelm.Generator.Object.generate context name (ModuleName.object context name) fields
+                )
                     |> Just
 
         Type.ScalarType ->
