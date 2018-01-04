@@ -31,6 +31,9 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
         Type.InterfaceRef interfaceName ->
             [ "identity" ]
 
+        Type.UnionRef unionName ->
+            [ "identity" ]
+
         Type.EnumRef enumName ->
             [ (ModuleName.enum { apiSubmodule = apiSubmodule } enumName
                 ++ [ "decoder" ]
@@ -83,7 +86,10 @@ generateEncoder (Type.TypeReference referrableType isNullable) =
             Debug.crash "I don't expect to see object references as argument types."
 
         Type.InterfaceRef interfaceName ->
-            Debug.crash "I don't expect to see object references as argument types."
+            Debug.crash "Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces"
+
+        Type.UnionRef _ ->
+            Debug.crash "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
 
         Type.EnumRef enumName ->
             "(Encode.enum toString)" ++ isNullableString
@@ -116,6 +122,9 @@ generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullabl
             fieldName
 
         Type.InterfaceRef interfaceName ->
+            fieldName
+
+        Type.UnionRef unionName ->
             fieldName
 
         Type.EnumRef enumName ->

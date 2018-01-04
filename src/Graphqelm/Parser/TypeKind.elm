@@ -12,10 +12,7 @@ type TypeKind
     | Enum
     | Interface
     | InputObject
-
-
-
--- | Union
+    | Union
 
 
 decoder : Decoder TypeKind
@@ -46,7 +43,7 @@ decoder =
                         Decode.succeed InputObject
 
                     "UNION" ->
-                        Decode.succeed Ignore
+                        Decode.succeed Union
 
                     _ ->
                         Decode.fail ("Invalid TypeKind" ++ string)

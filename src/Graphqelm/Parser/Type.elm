@@ -40,6 +40,9 @@ decodeKind kind =
         "INTERFACE" ->
             interfaceDecoder
 
+        "UNION" ->
+            unionDecoder
+
         _ ->
             scalarDecoder
 
@@ -63,6 +66,13 @@ interfaceDecoder =
             |> Decode.list
             |> Decode.field "fields"
         )
+        (Decode.field "possibleTypes" (Decode.string |> Decode.field "name" |> Decode.list))
+
+
+unionDecoder : Decoder TypeDefinition
+unionDecoder =
+    Decode.map2 createUnion
+        (Decode.field "name" Decode.string)
         (Decode.field "possibleTypes" (Decode.string |> Decode.field "name" |> Decode.list))
 
 
@@ -133,6 +143,11 @@ createInterface interfaceName fields possibleTypes =
     TypeDefinition interfaceName (InterfaceType fields possibleTypes) Nothing
 
 
+createUnion : String -> List String -> TypeDefinition
+createUnion interfaceName possibleTypes =
+    TypeDefinition interfaceName (UnionType possibleTypes) Nothing
+
+
 typeRefDecoder : Decoder RawTypeRef
 typeRefDecoder =
     Decode.map3 createRawTypeRef
@@ -190,6 +205,7 @@ type DefinableType
     = ScalarType
     | ObjectType (List Field)
     | InterfaceType (List Field) (List String)
+    | UnionType (List String)
     | EnumType (List EnumValue)
 
 
@@ -203,6 +219,7 @@ type ReferrableType
     | EnumRef String
     | ObjectRef String
     | InputObjectRef String
+    | UnionRef String
     | InterfaceRef String
 
 
@@ -286,7 +303,10 @@ parseRef (RawTypeRef rawTypeRef) =
                             TypeReference (enumName |> expectString |> EnumRef) NonNullable
 
                         ( TypeKind.InputObject, inputObjectName ) ->
-                            TypeReference (inputObjectName |> expectString |> InputObjectRef) Nullable
+                            TypeReference (inputObjectName |> expectString |> InputObjectRef) NonNullable
+
+                        ( TypeKind.Union, _ ) ->
+                            TypeReference (actualOfType.name |> expectString |> UnionRef) NonNullable
 
                 Nothing ->
                     ignoreRef
@@ -309,6 +329,9 @@ parseRef (RawTypeRef rawTypeRef) =
 
                 Nothing ->
                     Debug.crash "Should not get null names for input object references"
+
+        TypeKind.Union ->
+            TypeReference (UnionRef (expectString rawTypeRef.name)) Nullable
 
 
 ignoreRef : TypeReference

@@ -48,6 +48,7 @@ const onDataAvailable = (data: {}) => {
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Object`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Interface`)
+    fs.mkdirpSync(`./src/${baseModule.join('/')}/Union`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Enum`)
     for (let key in generatedFile) {
       let path = './src/' + key

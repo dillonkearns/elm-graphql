@@ -1,19 +1,14 @@
-module Graphqelm.Generator.Interface exposing (generate)
+module Graphqelm.Generator.Union exposing (generate)
 
-import Dict
 import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Generator.Field as FieldGenerator
-import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
 
-generate : Context -> String -> List String -> List Type.Field -> String
-generate context name moduleName fields =
-    prepend context moduleName fields
-        ++ fragments context (context.interfaces |> Dict.get name |> Maybe.withDefault []) moduleName
-        ++ (List.map (FieldGenerator.generateForInterface context name) fields |> String.join "\n\n")
+generate : Context -> String -> List String -> List String -> String
+generate context name moduleName possibleTypes =
+    prepend context moduleName
+        ++ fragments context possibleTypes moduleName
 
 
 fragments : Context -> List String -> List String -> String
@@ -33,8 +28,8 @@ on{0} (SelectionSet fields decoder) =
         [ interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
 
 
-prepend : Context -> List String -> List Type.Field -> String
-prepend { apiSubmodule } moduleName fields =
+prepend : Context -> List String -> String
+prepend { apiSubmodule } moduleName =
     interpolate """module {0} exposing (..)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
@@ -42,24 +37,17 @@ import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import {2}.Object
-import {2}.Interface
-import {2}.Union
+import {1}.Object
+import {1}.Interface
+import {1}.Union
 import Json.Decode as Decode
 import Graphqelm.Encode as Encode exposing (Value)
-{1}
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
-baseSelection constructor =
-    Object.object constructor
-
-
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}
+selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.unionSelection typeSpecificDecoders constructor
 """
         [ moduleName |> String.join "."
-        , Imports.importsString apiSubmodule moduleName fields
         , apiSubmodule |> String.join "."
         ]

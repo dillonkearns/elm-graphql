@@ -22,6 +22,7 @@ import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import {2}.Object
 import {2}.Interface
+import {2}.Union
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)

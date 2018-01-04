@@ -52,7 +52,7 @@ hero fillInOptionals object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet hero Swapi.Union.CharacterUnion -> FieldDecoder (Maybe hero) RootQuery
+heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet heroUnion Swapi.Union.CharacterUnion -> FieldDecoder (Maybe heroUnion) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =
@@ -62,7 +62,7 @@ heroUnion fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "hero" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "heroUnion" optionalArgs object (identity >> Decode.maybe)
 
 
 {-|

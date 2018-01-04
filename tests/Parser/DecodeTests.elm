@@ -322,7 +322,7 @@ all =
                                       , args =
                                             [ { name = "filterOptions"
                                               , description = Nothing
-                                              , typeRef = TypeReference (InputObjectRef "FilterOptions") Nullable
+                                              , typeRef = TypeReference (InputObjectRef "FilterOptions") NonNullable
                                               }
                                             ]
                                       }

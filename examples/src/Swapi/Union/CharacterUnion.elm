@@ -1,7 +1,13 @@
 module Swapi.Union.CharacterUnion exposing (..)
 
+import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
+import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
+import Json.Decode as Decode
+import Swapi.Interface
 import Swapi.Object
 import Swapi.Union
 

@@ -34,7 +34,9 @@ const writeWithElmFormat = (
 
   elmFormat.on('close', code => {
     if (code !== 0) {
-      console.log(`elm-format process exited with code ${code}`)
+      console.log(`elm-format process exited with code ${code}.
+Was attempting to write to path ${path} with contents:
+${value}`)
       process.exit(code)
     }
   })

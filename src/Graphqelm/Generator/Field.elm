@@ -7,6 +7,7 @@ import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
+import Graphqelm.Generator.ReferenceLeaf as ReferenceLeaf
 import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
@@ -139,12 +140,21 @@ objectThing : Context -> String -> TypeReference -> String -> ObjectOrInterface 
 objectThing ({ apiSubmodule } as context) fieldName typeRef refName objectOrInterface =
     let
         typeLock =
-            case objectOrInterface of
-                Object ->
+            case ReferenceLeaf.get typeRef of
+                ReferenceLeaf.Object ->
                     ModuleName.object context refName |> String.join "."
 
-                Interface ->
+                ReferenceLeaf.Interface ->
                     ModuleName.interface context refName |> String.join "."
+
+                ReferenceLeaf.Enum ->
+                    Debug.crash "TODO"
+
+                ReferenceLeaf.Union ->
+                    ModuleName.union context refName |> String.join "."
+
+                ReferenceLeaf.Scalar ->
+                    Debug.crash "TODO"
 
         objectArgAnnotation =
             interpolate
@@ -180,6 +190,7 @@ prependArg ({ annotation, arg } as annotatedArg) fieldGenerator =
 type LeafRef
     = ObjectLeaf String
     | InterfaceLeaf String
+    | UnionLeaf String
     | EnumLeaf
     | ScalarLeaf
 
@@ -192,6 +203,9 @@ leafType (Type.TypeReference referrableType isNullable) =
 
         Type.InterfaceRef refName ->
             InterfaceLeaf refName
+
+        Type.UnionRef refName ->
+            UnionLeaf refName
 
         Type.Scalar _ ->
             ScalarLeaf
@@ -213,6 +227,9 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
             objectThing context fieldName typeRef refName Object
 
         InterfaceLeaf refName ->
+            objectThing context fieldName typeRef refName Interface
+
+        UnionLeaf refName ->
             objectThing context fieldName typeRef refName Interface
 
         EnumLeaf ->

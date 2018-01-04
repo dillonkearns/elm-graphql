@@ -9,6 +9,7 @@ import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
 import Graphqelm.Generator.Query
 import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
+import Graphqelm.Generator.Union
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
@@ -58,6 +59,12 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                     |> excludeMutation mutationObjectName
                 )
             , TypeLockDefinitions.generateInterfaces apiSubmodule
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery queryObjectName
+                    |> excludeMutation mutationObjectName
+                )
+            , TypeLockDefinitions.generateUnions apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery queryObjectName
@@ -144,6 +151,10 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
 
         Type.InterfaceType fields possibleTypes ->
             Graphqelm.Generator.Interface.generate context name moduleName fields
+                |> Just
+
+        Type.UnionType possibleTypes ->
+            Graphqelm.Generator.Union.generate context name moduleName possibleTypes
                 |> Just
     )
         |> Maybe.map (\fileContents -> ( moduleName, fileContents ))

@@ -1,4 +1,4 @@
-module Graphqelm.Generator.ModuleName exposing (enum, generate, interface, mutation, object, query)
+module Graphqelm.Generator.ModuleName exposing (enum, generate, interface, mutation, object, query, union)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
@@ -24,6 +24,9 @@ generate context (Type.TypeDefinition name definableType description) =
         Type.InterfaceType fields possibleTypes ->
             interface context name
 
+        Type.UnionType possibleTypes ->
+            union context name
+
 
 object : Context -> String -> List String
 object { query, mutation, apiSubmodule } name =
@@ -38,6 +41,11 @@ object { query, mutation, apiSubmodule } name =
 interface : Context -> String -> List String
 interface { apiSubmodule } name =
     apiSubmodule ++ [ "Interface", name ]
+
+
+union : Context -> String -> List String
+union { apiSubmodule } name =
+    apiSubmodule ++ [ "Union", name ]
 
 
 enum : { context | apiSubmodule : List String } -> String -> List String

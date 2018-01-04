@@ -10,6 +10,7 @@ import Json.Decode as Decode
 import Swapi.Enum.Episode
 import Swapi.Interface
 import Swapi.Object
+import Swapi.Union
 
 
 baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character

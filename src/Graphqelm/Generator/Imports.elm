@@ -62,3 +62,6 @@ imports apiSubmodule (Type.TypeReference referrableType isNullable) =
 
         Type.InputObjectRef _ ->
             Nothing
+
+        Type.UnionRef unionName ->
+            Nothing

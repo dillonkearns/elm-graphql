@@ -1,7 +1,12 @@
-module Graphqelm.Generator.TypeLockDefinitions exposing (generate, generateInterfaces, generateObjects)
+module Graphqelm.Generator.TypeLockDefinitions exposing (generateInterfaces, generateObjects, generateUnions)
 
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)
+
+
+generateUnions : List String -> List TypeDefinition -> ( List String, String )
+generateUnions =
+    generateCommon "Union" unionName
 
 
 generateObjects : List String -> List TypeDefinition -> ( List String, String )
@@ -12,11 +17,6 @@ generateObjects =
 generateInterfaces : List String -> List TypeDefinition -> ( List String, String )
 generateInterfaces =
     generateCommon "Interface" interfaceName
-
-
-generate : List String -> List TypeDefinition -> ( List String, String )
-generate apiSubmodule typeDefinitions =
-    generateCommon "Object" objectOrInterfaceName apiSubmodule typeDefinitions
 
 
 generateCommon : String -> (TypeDefinition -> Maybe String) -> List String -> List TypeDefinition -> ( List String, String )
@@ -74,6 +74,28 @@ objectName (TypeDefinition name definableType description) =
         Type.EnumType _ ->
             Nothing
 
+        Type.UnionType _ ->
+            Nothing
+
+
+unionName : TypeDefinition -> Maybe String
+unionName (TypeDefinition name definableType description) =
+    case definableType of
+        Type.ObjectType _ ->
+            Nothing
+
+        Type.InterfaceType _ _ ->
+            Nothing
+
+        Type.ScalarType ->
+            Nothing
+
+        Type.EnumType _ ->
+            Nothing
+
+        Type.UnionType _ ->
+            Just name
+
 
 interfaceName : TypeDefinition -> Maybe String
 interfaceName (TypeDefinition name definableType description) =
@@ -90,18 +112,5 @@ interfaceName (TypeDefinition name definableType description) =
         Type.EnumType _ ->
             Nothing
 
-
-objectOrInterfaceName : TypeDefinition -> Maybe String
-objectOrInterfaceName (TypeDefinition name definableType description) =
-    case definableType of
-        Type.ObjectType _ ->
-            Just name
-
-        Type.InterfaceType _ _ ->
-            Just name
-
-        Type.ScalarType ->
-            Nothing
-
-        Type.EnumType _ ->
+        Type.UnionType _ ->
             Nothing
