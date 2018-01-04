@@ -42,7 +42,7 @@ appearsIn =
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet friends Normalize.Interface.Character -> FieldDecoder (List friends) Normalize.Interface.Character
+friends : SelectionSet selection Normalize.Interface.Character -> FieldDecoder (List selection) Normalize.Interface.Character
 friends object =
     Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
 

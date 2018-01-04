@@ -5,10 +5,10 @@ import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Generator.Let as Let exposing (LetBinding)
 import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.ReferenceLeaf as ReferenceLeaf
 import Graphqelm.Generator.RequiredArgs
+import Graphqelm.Parser.FieldName as FieldName exposing (FieldName)
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -18,7 +18,6 @@ type alias FieldGenerator =
     , decoderAnnotation : String
     , decoder : String
     , fieldArgs : List String
-    , fieldName : String
     , otherThing : String
     , letBindings : List LetBinding
     , objectDecoderChain : Maybe String
@@ -62,13 +61,13 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
 {6} {4}={7}
       {5} "{0}" {1} ({2}){8}
 """
-        [ fieldGenerator.fieldName
+        [ field.name |> FieldName.raw
         , fieldGenerator |> fieldArgsString
         , fieldGenerator.decoder
         , something
         , argsListString fieldGenerator
         , "Object" ++ fieldGenerator.otherThing
-        , Normalize.fieldName fieldGenerator.fieldName
+        , field.name |> FieldName.normalized
         , Let.generate fieldGenerator.letBindings
         , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
         , DocComment.generate field
@@ -136,8 +135,8 @@ type ObjectOrInterface
     | Interface
 
 
-objectThing : Context -> String -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
-objectThing ({ apiSubmodule } as context) fieldName typeRef refName objectOrInterface =
+objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
+objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
     let
         typeLock =
             case ReferenceLeaf.get typeRef of
@@ -165,7 +164,6 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName objectOrInte
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder = "object"
-    , fieldName = fieldName
     , otherThing = ".selectionFieldDecoder"
     , letBindings = []
     , objectDecoderChain =
@@ -220,34 +218,44 @@ leafType (Type.TypeReference referrableType isNullable) =
             Debug.crash "Unexpected type"
 
 
-init : Context -> String -> TypeReference -> FieldGenerator
+init : Context -> FieldName -> TypeReference -> FieldGenerator
 init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
-            objectThing context fieldName typeRef refName Object
+            objectThing context typeRef refName Object
 
         InterfaceLeaf refName ->
-            objectThing context fieldName typeRef refName Interface
+            objectThing context typeRef refName Interface
 
         UnionLeaf refName ->
-            objectThing context fieldName typeRef refName Interface
+            objectThing context typeRef refName Interface
 
         EnumLeaf ->
-            initScalarField apiSubmodule fieldName typeRef
+            initScalarField apiSubmodule typeRef
 
         ScalarLeaf ->
-            initScalarField apiSubmodule fieldName typeRef
+            initScalarField apiSubmodule typeRef
 
 
-initScalarField : List String -> String -> TypeReference -> FieldGenerator
-initScalarField apiSubmodule fieldName typeRef =
+initScalarField :
+    List String
+    -> TypeReference
+    ->
+        { annotatedArgs : List b
+        , decoder : String
+        , decoderAnnotation : String
+        , fieldArgs : List c
+        , letBindings : List d
+        , objectDecoderChain : Maybe a
+        , otherThing : String
+        }
+initScalarField apiSubmodule typeRef =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder =
         Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
             |> String.join " |> "
-    , fieldName = fieldName
     , otherThing = ".fieldDecoder"
     , letBindings = []
     , objectDecoderChain = Nothing

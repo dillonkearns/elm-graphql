@@ -15,6 +15,7 @@ module Graphqelm.Parser.Type
         )
 
 import Graphqelm.Parser.EnumName as EnumName exposing (EnumName)
+import Graphqelm.Parser.FieldName as FieldName exposing (FieldName)
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
@@ -79,7 +80,7 @@ unionDecoder =
 
 parseField : RawField -> Field
 parseField { name, ofType, args, description } =
-    { name = name
+    { name = FieldName.fieldName name
     , description = description
     , typeRef = parseRef ofType
     , args =
@@ -191,7 +192,7 @@ type alias Arg =
 
 
 type alias Field =
-    { name : String
+    { name : FieldName
     , description : Maybe String
     , typeRef : TypeReference
     , args : List Arg

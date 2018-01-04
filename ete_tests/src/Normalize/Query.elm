@@ -24,9 +24,9 @@ selection constructor =
   - id - ID of the droid.
 
 -}
-droid : { id : String } -> SelectionSet droid Normalize.Object.Droid -> FieldDecoder (Maybe droid) RootQuery
-droid requiredArgs object =
-    Object.selectionFieldDecoder "droid" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
+droid_ : { id : String } -> SelectionSet selection Normalize.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
+droid_ requiredArgs object =
+    Object.selectionFieldDecoder "_droid" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
 
 
 {-|
@@ -34,7 +34,7 @@ droid requiredArgs object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet hero Normalize.Interface.Character -> FieldDecoder (Maybe hero) RootQuery
+hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Interface.Character -> FieldDecoder (Maybe selection) RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -52,7 +52,7 @@ hero fillInOptionals object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet heroUnion Normalize.Union.CharacterUnion -> FieldDecoder (Maybe heroUnion) RootQuery
+heroUnion : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Union.CharacterUnion -> FieldDecoder (Maybe selection) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =
@@ -70,6 +70,6 @@ heroUnion fillInOptionals object =
   - id - ID of the human.
 
 -}
-human : { id : String } -> SelectionSet human Normalize.Object.Human -> FieldDecoder (Maybe human) RootQuery
-human requiredArgs object =
-    Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
+hUMAN : { id : String } -> SelectionSet selection Normalize.Object.Human -> FieldDecoder (Maybe selection) RootQuery
+hUMAN requiredArgs object =
+    Object.selectionFieldDecoder "HUMAN" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
