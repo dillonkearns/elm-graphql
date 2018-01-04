@@ -2,6 +2,7 @@ module Graphqelm.Generator.Enum exposing (enumType, generate)
 
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Generator.Normalize as Normalize
+import Graphqelm.Parser.EnumName as EnumName
 import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
@@ -34,8 +35,16 @@ import Json.Decode as Decode exposing (Decoder)
 
 enumType : String -> List EnumValue -> String
 enumType enumName enumValues =
-    "type " ++ Normalize.moduleName enumName ++ """
-    = """ ++ (enumValues |> List.map .name |> String.join "\n    | ") ++ "\n"
+    "type "
+        ++ Normalize.moduleName enumName
+        ++ """
+    = """
+        ++ (enumValues
+                |> List.map .name
+                |> List.map EnumName.normalized
+                |> String.join "\n    | "
+           )
+        ++ "\n"
 
 
 enumToString : String -> List EnumValue -> String
@@ -56,7 +65,7 @@ toStringCase enumValue =
         """        {0} ->
                 "{0}"
 """
-        [ enumValue.name ]
+        [ enumValue.name |> EnumName.normalized ]
 
 
 enumDecoder : String -> List EnumValue -> String
@@ -70,7 +79,17 @@ decoder =
                 case string of
 """
         [ Normalize.moduleName enumName ]
-        ++ (enumValues |> List.map .name |> List.map (\enumValue -> "                    \"" ++ enumValue ++ "\" ->\n                        Decode.succeed " ++ enumValue) |> String.join "\n\n")
+        ++ (enumValues
+                |> List.map .name
+                |> List.map
+                    (\enumValue ->
+                        "                    \""
+                            ++ EnumName.raw enumValue
+                            ++ "\" ->\n                        Decode.succeed "
+                            ++ EnumName.normalized enumValue
+                    )
+                |> String.join "\n\n"
+           )
         ++ """
 
                     _ ->

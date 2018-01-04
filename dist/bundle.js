@@ -5766,6 +5766,19 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName = function (
 	return _elm_lang$core$Native_Utils.eq(name, 'type') ? 'type_' : name;
 };
 
+var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0;
+};
+var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$raw = function (_p2) {
+	var _p3 = _p2;
+	return _p3._0;
+};
+var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$EnumName = function (a) {
+	return {ctor: 'EnumName', _0: a};
+};
+var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$enumName = _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$EnumName;
+
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Float = {ctor: 'Float'};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Int = {ctor: 'Int'};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$String = {ctor: 'String'};
@@ -7505,8 +7518,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString = function (maybe
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Graphqelm.Parser.Type',
 			{
-				start: {line: 228, column: 5},
-				end: {line: 233, column: 58}
+				start: {line: 229, column: 5},
+				end: {line: 234, column: 58}
 			},
 			_p0)('Expected string but got Nothing');
 	}
@@ -7518,7 +7531,10 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumValue = F2(
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$enumValueDecoder = A3(
 	_elm_lang$core$Json_Decode$map2,
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumValue,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$map,
+		_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$enumName,
+		A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string)),
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'description',
@@ -7662,8 +7678,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 240, column: 13},
-						end: {line: 245, column: 73}
+						start: {line: 241, column: 13},
+						end: {line: 246, column: 73}
 					},
 					_p5)('Missing nested type for List reference');
 			}
@@ -7679,8 +7695,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 248, column: 13},
-						end: {line: 255, column: 82}
+						start: {line: 249, column: 13},
+						end: {line: 256, column: 82}
 					},
 					_p7)('Should not get null names for scalar references');
 			}
@@ -7695,8 +7711,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 258, column: 13},
-						end: {line: 263, column: 85}
+						start: {line: 259, column: 13},
+						end: {line: 264, column: 85}
 					},
 					_p9)('Should not get null names for interface references');
 			}
@@ -7711,8 +7727,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 266, column: 13},
-						end: {line: 271, column: 82}
+						start: {line: 267, column: 13},
+						end: {line: 272, column: 82}
 					},
 					_p11)('Should not get null names for object references');
 			}
@@ -7753,8 +7769,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 							return _elm_lang$core$Native_Utils.crashCase(
 								'Graphqelm.Parser.Type',
 								{
-									start: {line: 289, column: 29},
-									end: {line: 294, column: 51}
+									start: {line: 290, column: 29},
+									end: {line: 295, column: 51}
 								},
 								_p15)('');
 						}
@@ -7762,8 +7778,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Graphqelm.Parser.Type',
 							{
-								start: {line: 276, column: 21},
-								end: {line: 309, column: 102}
+								start: {line: 277, column: 21},
+								end: {line: 310, column: 102}
 							},
 							_p14)('Can\'t have nested non-null types');
 					case 'Ignore':
@@ -7803,8 +7819,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 318, column: 13},
-						end: {line: 323, column: 80}
+						start: {line: 319, column: 13},
+						end: {line: 324, column: 80}
 					},
 					_p19)('Should not get null names for enum references');
 			}
@@ -7819,8 +7835,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Parser.Type',
 					{
-						start: {line: 326, column: 13},
-						end: {line: 331, column: 88}
+						start: {line: 327, column: 13},
+						end: {line: 332, column: 88}
 					},
 					_p21)('Should not get null names for input object references');
 			}
@@ -8567,7 +8583,19 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate = function (
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generateForEnum = F2(
 	function (description, enumValues) {
-		return A2(_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_, description, enumValues);
+		return A2(
+			_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_,
+			description,
+			A2(
+				_elm_lang$core$List$map,
+				function (enumValue) {
+					return _elm_lang$core$Native_Utils.update(
+						enumValue,
+						{
+							name: _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized(enumValue.name)
+						});
+				},
+				enumValues));
 	});
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
@@ -8595,8 +8623,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 								'                    \"',
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									enumValue,
-									A2(_elm_lang$core$Basics_ops['++'], '\" ->\n                        Decode.succeed ', enumValue)));
+									_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$raw(enumValue),
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										'\" ->\n                        Decode.succeed ',
+										_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized(enumValue))));
 						},
 						A2(
 							_elm_lang$core$List$map,
@@ -8618,7 +8649,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$toStringCase = function (en
 		'        {0} ->\n                \"{0}\"\n',
 		{
 			ctor: '::',
-			_0: enumValue.name,
+			_0: _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized(enumValue.name),
 			_1: {ctor: '[]'}
 		});
 };
@@ -8658,10 +8689,13 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumType = F2(
 							'\n    | ',
 							A2(
 								_elm_lang$core$List$map,
-								function (_) {
-									return _.name;
-								},
-								enumValues)),
+								_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized,
+								A2(
+									_elm_lang$core$List$map,
+									function (_) {
+										return _.name;
+									},
+									enumValues))),
 						'\n'))));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend = F4(
@@ -16218,7 +16252,7 @@ exports.introspectionQuery = "{\n    __schema {\n      queryType {\n        name
 /* 90 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"graphqelm","version":"0.0.9","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","test":"elm-test","gen:starwars":"npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd -","gen:github":"npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -","approve":"npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0","elm-format":"^0.7.0-exp"},"bin":{"graphqelm":"bin/graphqelm"}}
+module.exports = {"name":"graphqelm","version":"0.0.9","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","test":"elm-test","gen:starwars":"npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd -","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -","approve":"npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0","elm-format":"^0.7.0-exp"},"bin":{"graphqelm":"bin/graphqelm"}}
 
 /***/ })
 /******/ ]);

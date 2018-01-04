@@ -14,6 +14,7 @@ module Graphqelm.Parser.Type
         , typeRefDecoder
         )
 
+import Graphqelm.Parser.EnumName as EnumName exposing (EnumName)
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
@@ -118,12 +119,12 @@ enumDecoder =
 enumValueDecoder : Decoder EnumValue
 enumValueDecoder =
     Decode.map2 EnumValue
-        (Decode.field "name" Decode.string)
+        (Decode.field "name" Decode.string |> Decode.map EnumName.enumName)
         (Decode.field "description" (Decode.maybe Decode.string))
 
 
 type alias EnumValue =
-    { name : String
+    { name : EnumName
     , description : Maybe String
     }
 
