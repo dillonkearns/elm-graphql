@@ -41,7 +41,7 @@ hero fillInOptionals object =
             fillInOptionals { episode = Absent }
 
         optionalArgs =
-            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
+            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "hero" optionalArgs object (identity >> Decode.maybe)
@@ -59,7 +59,7 @@ heroUnion fillInOptionals object =
             fillInOptionals { episode = Absent }
 
         optionalArgs =
-            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum toString) ]
+            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "heroUnion" optionalArgs object (identity >> Decode.maybe)

@@ -41,29 +41,29 @@ generate apiSubmodule allArgs =
                 , letBindings =
                     [ "filledInOptionals" => ("fillInOptionals " ++ emptyRecord optionalArgs)
                     , "optionalArgs"
-                        => (argValues optionalArgs
+                        => (argValues apiSubmodule optionalArgs
                                 ++ "\n                |> List.filterMap identity"
                            )
                     ]
                 }
 
 
-argValues : List OptionalArg -> String
-argValues optionalArgs =
+argValues : List String -> List OptionalArg -> String
+argValues apiSubmodule optionalArgs =
     let
         values =
             optionalArgs
-                |> List.map argValue
+                |> List.map (argValue apiSubmodule)
                 |> String.join ", "
     in
     interpolate "[ {0} ]" [ values ]
 
 
-argValue : OptionalArg -> String
-argValue { name, typeOf } =
+argValue : List String -> OptionalArg -> String
+argValue apiSubmodule { name, typeOf } =
     interpolate
         """Argument.optional "{0}" filledInOptionals.{0} ({1})"""
-        [ name, Graphqelm.Generator.Decoder.generateEncoder (Type.TypeReference typeOf Type.NonNullable) ]
+        [ name, Graphqelm.Generator.Decoder.generateEncoder apiSubmodule (Type.TypeReference typeOf Type.NonNullable) ]
 
 
 emptyRecord : List OptionalArg -> String

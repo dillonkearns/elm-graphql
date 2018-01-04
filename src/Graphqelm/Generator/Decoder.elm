@@ -3,6 +3,7 @@ module Graphqelm.Generator.Decoder exposing (generateDecoder, generateEncoder, g
 import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
+import Interpolate exposing (interpolate)
 
 
 generateDecoder : List String -> TypeReference -> List String
@@ -53,8 +54,8 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
            )
 
 
-generateEncoder : TypeReference -> String
-generateEncoder (Type.TypeReference referrableType isNullable) =
+generateEncoder : List String -> TypeReference -> String
+generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
     let
         isNullableString =
             case isNullable of
@@ -80,7 +81,7 @@ generateEncoder (Type.TypeReference referrableType isNullable) =
                     "Encode.float" ++ isNullableString
 
         Type.List typeRef ->
-            generateEncoder typeRef ++ isNullableString ++ " |> Encode.list"
+            generateEncoder apiSubmodule typeRef ++ isNullableString ++ " |> Encode.list"
 
         Type.ObjectRef objectName ->
             Debug.crash "I don't expect to see object references as argument types."
@@ -92,7 +93,11 @@ generateEncoder (Type.TypeReference referrableType isNullable) =
             Debug.crash "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
 
         Type.EnumRef enumName ->
-            "(Encode.enum toString)" ++ isNullableString
+            interpolate ("(Encode.enum {0})" ++ isNullableString)
+                [ ModuleName.enum { apiSubmodule = apiSubmodule } enumName
+                    ++ [ "toString" ]
+                    |> String.join "."
+                ]
 
         Type.InputObjectRef inputObjectName ->
             "identity" ++ isNullableString

@@ -16,14 +16,14 @@ generate : List String -> List Type.Arg -> Maybe Result
 generate apiSubmodule args =
     Maybe.map2 Result
         (requiredArgsAnnotation apiSubmodule args)
-        (requiredArgsString args)
+        (requiredArgsString apiSubmodule args)
 
 
-requiredArgsString : List Type.Arg -> Maybe String
-requiredArgsString args =
+requiredArgsString : List String -> List Type.Arg -> Maybe String
+requiredArgsString apiSubmodule args =
     let
         stuff =
-            List.filterMap requiredArgString args
+            List.filterMap (requiredArgString apiSubmodule) args
     in
     if stuff == [] then
         Nothing
@@ -31,15 +31,15 @@ requiredArgsString args =
         Just ("[ " ++ (stuff |> String.join ", ") ++ " ]")
 
 
-requiredArgString : Type.Arg -> Maybe String
-requiredArgString { name, typeRef } =
+requiredArgString : List String -> Type.Arg -> Maybe String
+requiredArgString apiSubmodule { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
                 "Argument.required \"{0}\" requiredArgs.{1} ({2})"
                 [ name
                 , Normalize.fieldName name
-                , Graphqelm.Generator.Decoder.generateEncoder typeRef
+                , Graphqelm.Generator.Decoder.generateEncoder apiSubmodule typeRef
                 ]
                 |> Just
 
