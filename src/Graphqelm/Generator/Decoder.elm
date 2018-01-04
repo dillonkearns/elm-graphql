@@ -1,6 +1,6 @@
 module Graphqelm.Generator.Decoder exposing (generateDecoder, generateEncoder, generateType)
 
-import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
@@ -32,7 +32,7 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
             [ "identity" ]
 
         Type.EnumRef enumName ->
-            [ (Imports.enum { apiSubmodule = apiSubmodule } enumName
+            [ (ModuleName.enum { apiSubmodule = apiSubmodule } enumName
                 ++ [ "decoder" ]
               )
                 |> String.join "."
@@ -119,7 +119,7 @@ generateType apiSubmodule fieldName (Type.TypeReference referrableType isNullabl
             fieldName
 
         Type.EnumRef enumName ->
-            Imports.enum { apiSubmodule = apiSubmodule } enumName
+            ModuleName.enum { apiSubmodule = apiSubmodule } enumName
                 ++ [ enumName ]
                 |> String.join "."
 

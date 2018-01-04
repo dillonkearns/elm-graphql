@@ -1,6 +1,5 @@
 module Generator.ImportsTests exposing (all)
 
-import Dict
 import Expect
 import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
@@ -35,10 +34,6 @@ all =
             \() ->
                 Imports.importsWithoutSelf [ "Api" ] [ "Api", "Object", "Foo" ] [ listOfObjectRef ]
                     |> Expect.equal []
-        , test "use RootQuery module name" <|
-            \() ->
-                Imports.object { query = "RootQueryType", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQueryType"
-                    |> Expect.equal [ "RootQuery" ]
         ]
 
 

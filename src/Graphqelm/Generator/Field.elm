@@ -3,8 +3,8 @@ module Graphqelm.Generator.Field exposing (generateForInterface, generateForObje
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.DocComment as DocComment
-import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Generator.Let as Let exposing (LetBinding)
+import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.RequiredArgs
@@ -33,13 +33,13 @@ type alias AnnotatedArg =
 generateForObject : Context -> String -> Type.Field -> String
 generateForObject context thisObjectName field =
     toFieldGenerator context field
-        |> forObject_ context (Imports.object context thisObjectName) field
+        |> forObject_ context (ModuleName.object context thisObjectName) field
 
 
 generateForInterface : Context -> String -> Type.Field -> String
 generateForInterface context thisObjectName field =
     toFieldGenerator context field
-        |> forObject_ context (Imports.interface context thisObjectName) field
+        |> forObject_ context (ModuleName.interface context thisObjectName) field
 
 
 forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> String
@@ -141,10 +141,10 @@ objectThing ({ apiSubmodule } as context) fieldName typeRef refName objectOrInte
         typeLock =
             case objectOrInterface of
                 Object ->
-                    Imports.object context refName |> String.join "."
+                    ModuleName.object context refName |> String.join "."
 
                 Interface ->
-                    Imports.interface context refName |> String.join "."
+                    ModuleName.interface context refName |> String.join "."
 
         objectArgAnnotation =
             interpolate

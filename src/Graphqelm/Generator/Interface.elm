@@ -4,6 +4,7 @@ import Dict
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
@@ -29,7 +30,7 @@ fragment context moduleName interfaceImplementor =
 on{0} (SelectionSet fields decoder) =
     FragmentSelectionSet "{0}" fields decoder
 """
-        [ interfaceImplementor, Imports.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
+        [ interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
 
 
 prepend : Context -> List String -> List Type.Field -> String

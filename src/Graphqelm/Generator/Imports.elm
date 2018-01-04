@@ -1,6 +1,6 @@
-module Graphqelm.Generator.Imports exposing (enum, imports, importsString, importsWithoutSelf, interface, object)
+module Graphqelm.Generator.Imports exposing (imports, importsString, importsWithoutSelf)
 
-import Graphqelm.Generator.Context exposing (Context)
+import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
@@ -58,27 +58,7 @@ imports apiSubmodule (Type.TypeReference referrableType isNullable) =
             Nothing
 
         Type.EnumRef enumName ->
-            Just (enum { apiSubmodule = apiSubmodule } enumName)
+            Just (ModuleName.enum { apiSubmodule = apiSubmodule } enumName)
 
         Type.InputObjectRef _ ->
             Nothing
-
-
-object : Context -> String -> List String
-object { query, mutation, apiSubmodule } name =
-    if name == query then
-        [ "RootQuery" ]
-    else if Just name == mutation then
-        [ "RootMutation" ]
-    else
-        apiSubmodule ++ [ "Object", name ]
-
-
-interface : Context -> String -> List String
-interface { apiSubmodule } name =
-    apiSubmodule ++ [ "Interface", name ]
-
-
-enum : { context | apiSubmodule : List String } -> String -> List String
-enum { apiSubmodule } name =
-    apiSubmodule ++ [ "Enum", name ]
