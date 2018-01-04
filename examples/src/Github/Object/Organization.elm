@@ -338,7 +338,7 @@ viewerCanCreateTeams =
     Object.fieldDecoder "viewerCanCreateTeams" [] Decode.bool
 
 
-{-| Viewer is a member of this organization.
+{-| Viewer is an active member of this organization.
 -}
 viewerIsAMember : FieldDecoder Bool Github.Object.Organization
 viewerIsAMember =
