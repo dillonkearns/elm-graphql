@@ -107,7 +107,7 @@ all =
                                 }
                             , letBindings =
                                 [ "filledInOptionals" => "fillInOptionals { episode = Absent }"
-                                , "optionalArgs" => """[ Argument.optional "episode" filledInOptionals.episode ((Encode.enum toString)) ]
+                                , "optionalArgs" => """[ Argument.optional "episode" filledInOptionals.episode ((Encode.enum Api.Enum.Episode.toString)) ]
                 |> List.filterMap identity"""
                                 ]
                             }
