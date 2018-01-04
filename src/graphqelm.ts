@@ -65,6 +65,6 @@ new GraphQLClient(graphqlUrl, {
     onDataAvailable(data)
   })
   .catch(err => {
-    console.log(err.response)
+    console.log(err.response || err)
     process.exit(1)
   })

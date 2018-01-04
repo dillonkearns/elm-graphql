@@ -1,6 +1,28 @@
-module Graphqelm.Generator.ModuleName exposing (enum, interface, mutation, object, query)
+module Graphqelm.Generator.ModuleName exposing (enum, generate, interface, mutation, object, query)
 
 import Graphqelm.Generator.Context exposing (Context)
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+
+
+generate : Context -> TypeDefinition -> List String
+generate context (Type.TypeDefinition name definableType description) =
+    case definableType of
+        Type.ObjectType fields ->
+            if name == context.query then
+                query context
+            else if Just name == context.mutation then
+                mutation context
+            else
+                object context name
+
+        Type.ScalarType ->
+            []
+
+        Type.EnumType enumValues ->
+            enum context name
+
+        Type.InterfaceType fields possibleTypes ->
+            interface context name
 
 
 object : Context -> String -> List String

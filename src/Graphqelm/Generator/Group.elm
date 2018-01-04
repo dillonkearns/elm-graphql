@@ -119,35 +119,31 @@ moduleToFileName modulePath =
 
 toPair : Context -> TypeDefinition -> Maybe ( List String, String )
 toPair context ((Type.TypeDefinition name definableType description) as definition) =
-    case definableType of
+    let
+        moduleName =
+            ModuleName.generate context definition
+    in
+    (case definableType of
         Type.ObjectType fields ->
             if name == context.query then
-                ( ModuleName.query context
-                , Graphqelm.Generator.Query.generate context (ModuleName.query context) fields
-                )
+                Graphqelm.Generator.Query.generate context moduleName fields
                     |> Just
             else if Just name == context.mutation then
-                ( ModuleName.mutation context
-                , Graphqelm.Generator.Mutation.generate context (ModuleName.mutation context) fields
-                )
+                Graphqelm.Generator.Mutation.generate context moduleName fields
                     |> Just
             else
-                ( ModuleName.object context name
-                , Graphqelm.Generator.Object.generate context name (ModuleName.object context name) fields
-                )
+                Graphqelm.Generator.Object.generate context name moduleName fields
                     |> Just
 
         Type.ScalarType ->
             Nothing
 
         Type.EnumType enumValues ->
-            ( ModuleName.enum context name
-            , Graphqelm.Generator.Enum.generate name (ModuleName.enum context name) enumValues description
-            )
+            Graphqelm.Generator.Enum.generate name moduleName enumValues description
                 |> Just
 
         Type.InterfaceType fields possibleTypes ->
-            ( ModuleName.interface context name
-            , Graphqelm.Generator.Interface.generate context name (ModuleName.interface context name) fields
-            )
+            Graphqelm.Generator.Interface.generate context name moduleName fields
                 |> Just
+    )
+        |> Maybe.map (\fileContents -> ( moduleName, fileContents ))
