@@ -6,6 +6,7 @@
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "test": "elm-test",
     "gen:starwars": "npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd -",
+    "gen:normalize_test": "npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -",
     "gen:github": "npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -",
     "approve": "npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'",
     "elm-analyse": "elm-analyse --serve"
