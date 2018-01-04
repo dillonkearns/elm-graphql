@@ -1,6 +1,7 @@
 module Graphqelm.Generator.ModuleName exposing (enum, generate, interface, mutation, object, query, union)
 
 import Graphqelm.Generator.Context exposing (Context)
+import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
@@ -35,22 +36,22 @@ object { query, mutation, apiSubmodule } name =
     else if Just name == mutation then
         [ "RootMutation" ]
     else
-        apiSubmodule ++ [ "Object", name ]
+        apiSubmodule ++ [ "Object", Normalize.moduleName name ]
 
 
 interface : Context -> String -> List String
 interface { apiSubmodule } name =
-    apiSubmodule ++ [ "Interface", name ]
+    apiSubmodule ++ [ "Interface", Normalize.moduleName name ]
 
 
 union : Context -> String -> List String
 union { apiSubmodule } name =
-    apiSubmodule ++ [ "Union", name ]
+    apiSubmodule ++ [ "Union", Normalize.moduleName name ]
 
 
 enum : { context | apiSubmodule : List String } -> String -> List String
 enum { apiSubmodule } name =
-    apiSubmodule ++ [ "Enum", name ]
+    apiSubmodule ++ [ "Enum", Normalize.moduleName name ]
 
 
 query : { context | apiSubmodule : List String } -> List String
