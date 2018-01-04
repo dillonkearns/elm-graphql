@@ -7936,7 +7936,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$mutation = function (
 		_p1.apiSubmodule,
 		{
 			ctor: '::',
-			_0: 'Query',
+			_0: 'Mutation',
 			_1: {ctor: '[]'}
 		});
 };

@@ -60,4 +60,4 @@ query { apiSubmodule } =
 
 mutation : { context | apiSubmodule : List String } -> List String
 mutation { apiSubmodule } =
-    apiSubmodule ++ [ "Query" ]
+    apiSubmodule ++ [ "Mutation" ]
