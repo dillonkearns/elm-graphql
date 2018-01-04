@@ -14,7 +14,11 @@ export const writeFile = (path: string, value: string): void => {
   }
 }
 
-const writeWithElmFormat = (path: string, value: string, elmFormatPath: string): void => {
+const writeWithElmFormat = (
+  path: string,
+  value: string,
+  elmFormatPath: string
+): void => {
   const elmFormat = spawn(elmFormatPath, ['--stdin', '--output', path])
 
   elmFormat.stdin.write(value)
