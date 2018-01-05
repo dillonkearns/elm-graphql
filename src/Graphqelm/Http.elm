@@ -98,9 +98,6 @@ convertResult httpResult =
 You can use it on its own, or with a library like
 [RemoteData](http://package.elm-lang.org/packages/krisajenkins/remotedata/latest/).
 
-
-## With RemoteData
-
     import Graphqelm.Http
     import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
     import RemoteData exposing (RemoteData)
@@ -115,7 +112,7 @@ You can use it on its own, or with a library like
             |> Graphqelm.Http.withHeader "authorization" "Bearer abcdefgh12345678"
             -- If you're not using remote data, it's just
             -- |> Graphqelm.Http.send GotResponse
-            -- Otherwise, it's as below
+            -- With remote data, it's as below
             |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 
 -}
@@ -141,6 +138,14 @@ decoderOrError decoder =
 
 
 {-| Add a header.
+
+    makeRequest : Cmd Msg
+    makeRequest =
+        query
+            |> Graphqelm.Http.buildQueryRequest "https://api.github.com/graphql"
+            |> Graphqelm.Http.withHeader "authorization" "Bearer <my token>"
+            |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+
 -}
 withHeader : String -> String -> Request decodesTo -> Request decodesTo
 withHeader key value (Request request) =
