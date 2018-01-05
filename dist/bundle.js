@@ -6789,9 +6789,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized = functi
 		}
 	}
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName = function (name) {
-	return _elm_lang$core$Native_Utils.eq(name, 'type') ? 'type_' : name;
-};
 
 var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized = function (_p0) {
 	var _p1 = _p0;

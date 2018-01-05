@@ -233,7 +233,7 @@ resource requiredArgs object =
   - last - Returns the last _n_ elements from the list.
   - before - Returns the elements in the list that come before the specified global ID.
   - query - The search string to look for.
-  - type - The types of search items to search within.
+  - type_ - The types of search items to search within.
 
 -}
 search : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> { query : String, type_ : Github.Enum.SearchType.SearchType } -> SelectionSet selection Github.Object.SearchResultItemConnection -> FieldDecoder selection RootQuery
