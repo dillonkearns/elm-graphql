@@ -37,7 +37,7 @@ droid_ requiredArgs object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Interface.Character -> FieldDecoder (Maybe selection) RootQuery
+hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Interface.Character -> FieldDecoder selection RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -47,7 +47,7 @@ hero fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "hero" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "hero" optionalArgs object identity
 
 
 {-|
