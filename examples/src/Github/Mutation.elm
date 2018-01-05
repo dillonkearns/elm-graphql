@@ -13,6 +13,9 @@ import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
 
+{-| Select fields to build up a top-level mutation. The request can be sent with
+functions from `Graphqelm.Http`.
+-}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
     Object.object constructor

@@ -49,12 +49,15 @@ import Json.Decode as Decode
 import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
-
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
-baseSelection constructor =
+{-| Select only common fields from the interface.
+-}
+commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
+commonSelection constructor =
     Object.object constructor
 
 
+{-| Select both common and type-specific fields from the interface.
+-}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor

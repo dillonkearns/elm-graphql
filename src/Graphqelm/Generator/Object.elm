@@ -30,6 +30,8 @@ import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
 
+{-| Select fields to build up a SelectionSet for this object.
+-}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
 selection constructor =
     Object.object constructor

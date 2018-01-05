@@ -13,11 +13,15 @@ import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSe
 import Json.Decode as Decode
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
-baseSelection constructor =
+{-| Select only common fields from the interface.
+-}
+commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
+commonSelection constructor =
     Object.object constructor
 
 
+{-| Select both common and type-specific fields from the interface.
+-}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.ProjectOwner) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor

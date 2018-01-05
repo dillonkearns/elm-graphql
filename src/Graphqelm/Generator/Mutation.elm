@@ -32,6 +32,9 @@ import Graphqelm.Encode as Encode exposing (Value)
 {1}
 
 
+{-| Select fields to build up a top-level mutation. The request can be sent with
+functions from `Graphqelm.Http`.
+-}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
     Object.object constructor

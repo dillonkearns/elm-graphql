@@ -17,6 +17,8 @@ import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
+{-| Select fields to build up a SelectionSet for this object.
+-}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Issue
 selection constructor =
     Object.object constructor

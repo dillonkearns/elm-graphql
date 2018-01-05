@@ -13,6 +13,8 @@ import Swapi.Object
 import Swapi.Union
 
 
+{-| Select fields to build up a SelectionSet for this object.
+-}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Object.Droid
 selection constructor =
     Object.object constructor

@@ -13,11 +13,15 @@ import Swapi.Object
 import Swapi.Union
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character
-baseSelection constructor =
+{-| Select only common fields from the interface.
+-}
+commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character
+commonSelection constructor =
     Object.object constructor
 
 
+{-| Select both common and type-specific fields from the interface.
+-}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Swapi.Interface.Character) -> SelectionSet (a -> constructor) Swapi.Interface.Character
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor

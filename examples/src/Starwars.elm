@@ -49,7 +49,7 @@ hero =
         ]
         |> with Character.name
         |> with Character.id
-        |> with (Character.friends (Character.baseSelection identity |> with Character.name))
+        |> with (Character.friends (Character.commonSelection identity |> with Character.name))
 
 
 type alias CharacterUnion =
