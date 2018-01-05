@@ -72,10 +72,3 @@ logUrl =
 state : FieldDecoder Github.Enum.DeploymentStatusState.DeploymentStatusState Github.Object.DeploymentStatus
 state =
     Object.fieldDecoder "state" [] Github.Enum.DeploymentStatusState.decoder
-
-
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.DeploymentStatus
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string

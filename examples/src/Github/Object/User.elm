@@ -92,43 +92,11 @@ companyHTML =
     Object.fieldDecoder "companyHTML" [] Decode.string
 
 
-{-| A list of repositories that the user recently contributed to.
-
-  - first - Returns the first _n_ elements from the list.
-  - after - Returns the elements in the list that come after the specified global ID.
-  - last - Returns the last _n_ elements from the list.
-  - before - Returns the elements in the list that come before the specified global ID.
-  - privacy - If non-null, filters repositories according to privacy
-  - orderBy - Ordering options for repositories returned from the connection
-  - affiliations - Affiliation options for repositories returned from the connection
-  - isLocked - If non-null, filters repositories according to whether they have been locked
-
--}
-contributedRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Value, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet selection Github.Object.RepositoryConnection -> FieldDecoder selection Github.Object.User
-contributedRepositories fillInOptionals object =
-    let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
-
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy identity, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
-                |> List.filterMap identity
-    in
-    Object.selectionFieldDecoder "contributedRepositories" optionalArgs object identity
-
-
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : FieldDecoder String Github.Object.User
 createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
-
-
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.User
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
 
 
 {-| The user's publicly visible profile email.
@@ -547,13 +515,6 @@ starredRepositories fillInOptionals object =
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "starredRepositories" optionalArgs object identity
-
-
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.User
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 {-| The HTTP URL for this user

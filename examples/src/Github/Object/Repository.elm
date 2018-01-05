@@ -106,13 +106,6 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.Repository
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
-
-
 {-| The Ref associated with the repository's default branch.
 -}
 defaultBranchRef : SelectionSet selection Github.Object.Ref -> FieldDecoder (Maybe selection) Github.Object.Repository
@@ -372,13 +365,6 @@ languages fillInOptionals object =
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "languages" optionalArgs object (identity >> Decode.maybe)
-
-
-{-| The license associated with the repository
--}
-license : FieldDecoder (Maybe String) Github.Object.Repository
-license =
-    Object.fieldDecoder "license" [] (Decode.string |> Decode.maybe)
 
 
 {-| The license associated with the repository
@@ -759,13 +745,6 @@ stargazers fillInOptionals object =
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "stargazers" optionalArgs object identity
-
-
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.Repository
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 {-| The HTTP URL for this repository

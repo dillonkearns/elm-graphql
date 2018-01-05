@@ -71,13 +71,6 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.IssueComment
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
-
-
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.IssueComment
@@ -161,13 +154,6 @@ repository object =
 resourcePath : FieldDecoder String Github.Object.IssueComment
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
-
-
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.IssueComment
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 {-| The HTTP URL for this issue comment

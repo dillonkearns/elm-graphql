@@ -33,13 +33,6 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.CommentDeletedEvent
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
-
-
 id : FieldDecoder String Github.Object.CommentDeletedEvent
 id =
     Object.fieldDecoder "id" [] Decode.string

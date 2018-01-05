@@ -109,13 +109,6 @@ stargazers fillInOptionals object =
     Object.selectionFieldDecoder "stargazers" optionalArgs object identity
 
 
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.Gist
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
-
-
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
 viewerHasStarred : FieldDecoder Bool Github.Object.Gist

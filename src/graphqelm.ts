@@ -61,7 +61,7 @@ new GraphQLClient(graphqlUrl, {
   mode: 'cors',
   headers: headers
 })
-  .request(introspectionQuery)
+  .request(introspectionQuery, { includeDeprecated: false })
   .then(data => {
     onDataAvailable(data)
   })

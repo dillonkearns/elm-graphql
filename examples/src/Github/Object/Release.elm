@@ -109,13 +109,6 @@ tag object =
     Object.selectionFieldDecoder "tag" [] object (identity >> Decode.maybe)
 
 
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.Release
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
-
-
 {-| The HTTP URL for this issue
 -}
 url : FieldDecoder String Github.Object.Release

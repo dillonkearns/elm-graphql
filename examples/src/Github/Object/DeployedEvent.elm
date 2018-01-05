@@ -33,13 +33,6 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.DeployedEvent
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
-
-
 {-| The deployment associated with the 'deployed' event.
 -}
 deployment : SelectionSet selection Github.Object.Deployment -> FieldDecoder selection Github.Object.DeployedEvent

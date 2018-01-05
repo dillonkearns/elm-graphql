@@ -96,13 +96,6 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
 
 
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.GistComment
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
-
-
 {-| Check if the current viewer can delete this object.
 -}
 viewerCanDelete : FieldDecoder Bool Github.Object.GistComment

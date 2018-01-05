@@ -44,13 +44,6 @@ createdAt =
     Object.fieldDecoder "createdAt" [] Decode.string
 
 
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.Bot
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
-
-
 id : FieldDecoder String Github.Object.Bot
 id =
     Object.fieldDecoder "id" [] Decode.string
@@ -68,13 +61,6 @@ login =
 resourcePath : FieldDecoder String Github.Object.Bot
 resourcePath =
     Object.fieldDecoder "resourcePath" [] Decode.string
-
-
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.Bot
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 {-| The HTTP URL for this bot

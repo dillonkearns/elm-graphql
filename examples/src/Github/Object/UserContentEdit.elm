@@ -36,10 +36,3 @@ editor object =
 id : FieldDecoder String Github.Object.UserContentEdit
 id =
     Object.fieldDecoder "id" [] Decode.string
-
-
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.UserContentEdit
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string

@@ -127,13 +127,6 @@ title =
     Object.fieldDecoder "title" [] Decode.string
 
 
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.Milestone
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
-
-
 {-| The HTTP URL for this milestone
 -}
 url : FieldDecoder String Github.Object.Milestone

@@ -83,13 +83,6 @@ creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.Project
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
-
-
 id : FieldDecoder String Github.Object.Project
 id =
     Object.fieldDecoder "id" [] Decode.string
@@ -149,13 +142,6 @@ resourcePath =
 state : FieldDecoder Github.Enum.ProjectState.ProjectState Github.Object.Project
 state =
     Object.fieldDecoder "state" [] Github.Enum.ProjectState.decoder
-
-
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.Project
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
 
 
 {-| The HTTP URL for this project

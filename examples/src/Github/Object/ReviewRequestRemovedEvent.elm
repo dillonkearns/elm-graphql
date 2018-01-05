@@ -50,10 +50,3 @@ pullRequest object =
 requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestRemovedEvent
 requestedReviewer object =
     Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
-
-
-{-| Identifies the user whose review request was removed.
--}
-subject : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.ReviewRequestRemovedEvent
-subject object =
-    Object.selectionFieldDecoder "subject" [] object (identity >> Decode.maybe)

@@ -54,13 +54,6 @@ id =
 
 {-| Reference originated in a different repository.
 -}
-isCrossReference : FieldDecoder Bool Github.Object.ReferencedEvent
-isCrossReference =
-    Object.fieldDecoder "isCrossReference" [] Decode.bool
-
-
-{-| Reference originated in a different repository.
--}
 isCrossRepository : FieldDecoder Bool Github.Object.ReferencedEvent
 isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool

@@ -274,13 +274,6 @@ teamsUrl =
     Object.fieldDecoder "teamsUrl" [] Decode.string
 
 
-{-| Identifies the date and time when the object was last updated.
--}
-updatedAt : FieldDecoder String Github.Object.Team
-updatedAt =
-    Object.fieldDecoder "updatedAt" [] Decode.string
-
-
 {-| The HTTP URL for this team
 -}
 url : FieldDecoder String Github.Object.Team

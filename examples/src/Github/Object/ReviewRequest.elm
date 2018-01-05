@@ -19,13 +19,6 @@ selection constructor =
     Object.selection constructor
 
 
-{-| Identifies the primary key from the database.
--}
-databaseId : FieldDecoder (Maybe Int) Github.Object.ReviewRequest
-databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
-
-
 id : FieldDecoder String Github.Object.ReviewRequest
 id =
     Object.fieldDecoder "id" [] Decode.string
@@ -43,10 +36,3 @@ pullRequest object =
 requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> FieldDecoder (Maybe selection) Github.Object.ReviewRequest
 requestedReviewer object =
     Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
-
-
-{-| Identifies the author associated with this review request.
--}
-reviewer : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.ReviewRequest
-reviewer object =
-    Object.selectionFieldDecoder "reviewer" [] object (identity >> Decode.maybe)

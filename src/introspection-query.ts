@@ -1,4 +1,4 @@
-export const introspectionQuery = `{
+export const introspectionQuery = `query IntrospectionQuery($includeDeprecated: Boolean!) {
     __schema {
       queryType {
         name
@@ -16,7 +16,7 @@ export const introspectionQuery = `{
     kind
     name
     description
-    fields(includeDeprecated: true) {
+    fields(includeDeprecated: $includeDeprecated) {
       name
       description
       args {
@@ -34,7 +34,7 @@ export const introspectionQuery = `{
     interfaces {
       ...TypeRef
     }
-    enumValues(includeDeprecated: true) {
+    enumValues(includeDeprecated: $includeDeprecated) {
       name
       description
       isDeprecated
