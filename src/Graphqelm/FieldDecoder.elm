@@ -15,7 +15,7 @@ type FieldDecoder decodesTo typeLock
 
 
 {-| Maps the data coming back from the GraphQL endpoint. In this example,
-`User.name` is a module that the `graphqelm` CLI tool created which tells us
+`User.name` is a function that the `graphqelm` CLI tool created which tells us
 that the `name` field on a `User` object is a String according to your GraphQL
 schema.
 
