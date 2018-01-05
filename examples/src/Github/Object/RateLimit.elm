@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RateLimit
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The point cost for the current query counting against the rate limit.

@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.TextMatchHighlight
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The indice in the fragment where the matched text begins.

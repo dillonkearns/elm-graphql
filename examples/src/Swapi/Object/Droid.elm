@@ -17,7 +17,7 @@ import Swapi.Union
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Object.Droid
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Which movies they appear in.

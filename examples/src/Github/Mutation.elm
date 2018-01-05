@@ -18,7 +18,7 @@ functions from `Graphqelm.Http`.
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Applies a suggested topic to the repository.

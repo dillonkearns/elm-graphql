@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PullRequestReviewThread
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| A list of pull request comments associated with the thread.

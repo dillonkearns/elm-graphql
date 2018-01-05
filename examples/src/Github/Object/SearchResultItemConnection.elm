@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.SearchResultItemConnection
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The number of pieces of code that matched the search query.

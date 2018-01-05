@@ -17,7 +17,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.StatusContext
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| This commit this status context is attached to.

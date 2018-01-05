@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.SuggestedReviewer
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Is this suggestion based on past commits?

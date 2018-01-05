@@ -17,7 +17,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ProjectCard
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The project column this card is associated under. A card may only belong to one

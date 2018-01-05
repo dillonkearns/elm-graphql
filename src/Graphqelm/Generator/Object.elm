@@ -34,7 +34,7 @@ import Graphqelm.Encode as Encode exposing (Value)
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

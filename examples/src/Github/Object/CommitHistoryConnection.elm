@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.CommitHistoryConnection
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 edges : SelectionSet selection Github.Object.CommitEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.CommitHistoryConnection

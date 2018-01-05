@@ -37,7 +37,7 @@ functions from `Graphqelm.Http`.
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

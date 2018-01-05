@@ -17,7 +17,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.SmimeSignature
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Email used to sign this object.

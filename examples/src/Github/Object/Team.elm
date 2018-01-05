@@ -20,7 +20,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Team
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| A list of teams that are ancestors of this team.

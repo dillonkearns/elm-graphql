@@ -17,7 +17,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Deployment
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Identifies the commit sha of the deployment.

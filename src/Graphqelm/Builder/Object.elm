@@ -1,7 +1,7 @@
-module Graphqelm.Builder.Object exposing (fieldDecoder, object, interfaceSelection, selectionFieldDecoder, unionSelection)
+module Graphqelm.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionFieldDecoder, unionSelection)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs fieldDecoder, object, selectionFieldDecoder, interfaceSelection, unionSelection
+@docs fieldDecoder, selection, selectionFieldDecoder, interfaceSelection, unionSelection
 -}
 
 import Dict
@@ -43,8 +43,8 @@ leaf fieldName args =
 
 {-| Used to create the `selection` functions in auto-generated code.
 -}
-object : (a -> constructor) -> SelectionSet (a -> constructor) typeLock
-object constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) typeLock
+selection constructor =
     SelectionSet [] (Decode.succeed constructor)
 
 

@@ -17,7 +17,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Ref
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| A list of pull requests with this ref as the head ref.

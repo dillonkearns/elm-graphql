@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Tree
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| An abbreviated version of the Git object ID

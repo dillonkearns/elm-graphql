@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.MarketplaceListing
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| URL to the listing owner's company site.

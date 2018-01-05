@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ExternalIdentity
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The GUID for this identity

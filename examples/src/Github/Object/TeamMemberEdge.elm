@@ -17,7 +17,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.TeamMemberEdge
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 cursor : FieldDecoder String Github.Object.TeamMemberEdge

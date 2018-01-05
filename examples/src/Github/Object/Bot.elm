@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Bot
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| A URL pointing to the GitHub App's public avatar.

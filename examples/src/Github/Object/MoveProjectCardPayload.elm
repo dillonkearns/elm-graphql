@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.MoveProjectCardPayload
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The new edge of the moved card.

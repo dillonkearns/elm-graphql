@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PullRequestCommit
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The Git commit object

@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.UniformResourceLocatable
 commonSelection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Select both common and type-specific fields from the interface.

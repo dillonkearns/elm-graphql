@@ -17,7 +17,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryInvitationRepository
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Identifies the date and time when the object was created.

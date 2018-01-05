@@ -18,7 +18,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Label
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Identifies the label color.

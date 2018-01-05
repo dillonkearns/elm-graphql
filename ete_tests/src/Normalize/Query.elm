@@ -19,7 +19,7 @@ functions from `Graphqelm.Http`.
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-|

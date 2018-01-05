@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.OrganizationIdentityProvider
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The digest algorithm used to sign SAML requests for the Identity Provider.

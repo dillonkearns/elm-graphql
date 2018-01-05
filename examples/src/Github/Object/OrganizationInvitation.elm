@@ -18,7 +18,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.OrganizationInvitation
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The email address of the user invited to the organization.

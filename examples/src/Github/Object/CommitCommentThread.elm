@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.CommitCommentThread
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The comments that exist in this thread.

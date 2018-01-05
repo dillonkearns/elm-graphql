@@ -17,7 +17,7 @@ import Normalize.Union
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Object.Droid
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Which movies they appear in.

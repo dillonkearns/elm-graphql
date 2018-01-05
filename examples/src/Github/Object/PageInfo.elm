@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PageInfo
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| When paginating forwards, the cursor to continue.

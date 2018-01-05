@@ -17,7 +17,7 @@ import Swapi.Union
 -}
 commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character
 commonSelection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Select both common and type-specific fields from the interface.

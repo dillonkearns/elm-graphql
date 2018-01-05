@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.GitHubMetadata
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Returns a String that's a SHA of `github-services`

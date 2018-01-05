@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ReviewRequest
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Identifies the primary key from the database.

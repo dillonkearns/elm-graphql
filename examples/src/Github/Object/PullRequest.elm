@@ -23,7 +23,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PullRequest
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| The number of additions in this pull request.

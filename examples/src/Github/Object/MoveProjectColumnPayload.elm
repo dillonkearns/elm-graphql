@@ -16,7 +16,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.MoveProjectColumnPayload
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| A unique identifier for the client performing the mutation.

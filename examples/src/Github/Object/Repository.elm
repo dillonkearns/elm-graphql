@@ -25,7 +25,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Repository
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| A list of users that can be assigned to issues in this repository.

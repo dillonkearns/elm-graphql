@@ -53,7 +53,7 @@ import Graphqelm.Encode as Encode exposing (Value)
 -}
 commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
 commonSelection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| Select both common and type-specific fields from the interface.

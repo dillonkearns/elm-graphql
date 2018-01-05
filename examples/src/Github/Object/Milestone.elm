@@ -18,7 +18,7 @@ import Json.Decode as Decode
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Milestone
 selection constructor =
-    Object.object constructor
+    Object.selection constructor
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
