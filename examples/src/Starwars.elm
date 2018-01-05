@@ -23,7 +23,7 @@ import Swapi.Union.CharacterUnion as CharacterUnion
 type alias Response =
     { vader : Maybe HumanLookup
     , tarkin : Maybe HumanLookup
-    , hero : Maybe Character
+    , hero : Character
     , union : Maybe CharacterUnion
     }
 
