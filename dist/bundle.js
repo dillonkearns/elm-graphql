@@ -9577,7 +9577,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumToString = F2(
 	function (enumName, enumValues) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'toString : {0} -> String\ntoString enum =\n    case enum of\n{1}',
+			'{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.\n-}\ntoString : {0} -> String\ntoString enum =\n    case enum of\n{1}',
 			{
 				ctor: '::',
 				_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(enumName),

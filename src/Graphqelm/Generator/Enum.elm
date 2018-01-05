@@ -50,7 +50,9 @@ enumType enumName enumValues =
 enumToString : String -> List EnumValue -> String
 enumToString enumName enumValues =
     interpolate
-        """toString : {0} -> String
+        """{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+toString : {0} -> String
 toString enum =
     case enum of
 {1}"""

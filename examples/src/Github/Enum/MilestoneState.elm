@@ -31,6 +31,8 @@ decoder =
             )
 
 
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
 toString : MilestoneState -> String
 toString enum =
     case enum of

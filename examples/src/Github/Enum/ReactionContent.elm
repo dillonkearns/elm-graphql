@@ -51,6 +51,8 @@ decoder =
             )
 
 
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
 toString : ReactionContent -> String
 toString enum =
     case enum of
