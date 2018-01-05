@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The access level to a repository
 
-  - ADMIN - Can read, clone, push, and add collaborators
-  - WRITE - Can read, clone and push
-  - READ - Can read and clone
+  - Admin - Can read, clone, push, and add collaborators
+  - Write - Can read, clone and push
+  - Read - Can read and clone
 
 -}
 type RepositoryPermission
-    = ADMIN
-    | WRITE
-    | READ
+    = Admin
+    | Write
+    | Read
 
 
 decoder : Decoder RepositoryPermission
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "ADMIN" ->
-                        Decode.succeed ADMIN
+                        Decode.succeed Admin
 
                     "WRITE" ->
-                        Decode.succeed WRITE
+                        Decode.succeed Write
 
                     "READ" ->
-                        Decode.succeed READ
+                        Decode.succeed Read
 
                     _ ->
                         Decode.fail ("Invalid RepositoryPermission type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : RepositoryPermission -> String
 toString enum =
     case enum of
-        ADMIN ->
+        Admin ->
             "ADMIN"
 
-        WRITE ->
+        Write ->
             "WRITE"
 
-        READ ->
+        Read ->
             "READ"

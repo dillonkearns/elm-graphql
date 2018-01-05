@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible states of a pull request.
 
-  - OPEN - A pull request that is still open.
-  - CLOSED - A pull request that has been closed without being merged.
-  - MERGED - A pull request that has been closed by being merged.
+  - Open - A pull request that is still open.
+  - Closed - A pull request that has been closed without being merged.
+  - Merged - A pull request that has been closed by being merged.
 
 -}
 type PullRequestState
-    = OPEN
-    | CLOSED
-    | MERGED
+    = Open
+    | Closed
+    | Merged
 
 
 decoder : Decoder PullRequestState
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "OPEN" ->
-                        Decode.succeed OPEN
+                        Decode.succeed Open
 
                     "CLOSED" ->
-                        Decode.succeed CLOSED
+                        Decode.succeed Closed
 
                     "MERGED" ->
-                        Decode.succeed MERGED
+                        Decode.succeed Merged
 
                     _ ->
                         Decode.fail ("Invalid PullRequestState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : PullRequestState -> String
 toString enum =
     case enum of
-        OPEN ->
+        Open ->
             "OPEN"
 
-        CLOSED ->
+        Closed ->
             "CLOSED"
 
-        MERGED ->
+        Merged ->
             "MERGED"

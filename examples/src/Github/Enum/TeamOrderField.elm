@@ -5,11 +5,11 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which team connections can be ordered.
 
-  - NAME - Allows ordering a list of teams by name.
+  - Name - Allows ordering a list of teams by name.
 
 -}
 type TeamOrderField
-    = NAME
+    = Name
 
 
 decoder : Decoder TeamOrderField
@@ -19,7 +19,7 @@ decoder =
             (\string ->
                 case string of
                     "NAME" ->
-                        Decode.succeed NAME
+                        Decode.succeed Name
 
                     _ ->
                         Decode.fail ("Invalid TeamOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -29,5 +29,5 @@ decoder =
 toString : TeamOrderField -> String
 toString enum =
     case enum of
-        NAME ->
+        Name ->
             "NAME"

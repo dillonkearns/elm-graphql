@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Whether or not a PullRequest can be merged.
 
-  - MERGEABLE - The pull request can be merged.
-  - CONFLICTING - The pull request cannot be merged due to merge conflicts.
-  - UNKNOWN - The mergeability of the pull request is still being calculated.
+  - Mergeable - The pull request can be merged.
+  - Conflicting - The pull request cannot be merged due to merge conflicts.
+  - Unknown - The mergeability of the pull request is still being calculated.
 
 -}
 type MergeableState
-    = MERGEABLE
-    | CONFLICTING
-    | UNKNOWN
+    = Mergeable
+    | Conflicting
+    | Unknown
 
 
 decoder : Decoder MergeableState
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "MERGEABLE" ->
-                        Decode.succeed MERGEABLE
+                        Decode.succeed Mergeable
 
                     "CONFLICTING" ->
-                        Decode.succeed CONFLICTING
+                        Decode.succeed Conflicting
 
                     "UNKNOWN" ->
-                        Decode.succeed UNKNOWN
+                        Decode.succeed Unknown
 
                     _ ->
                         Decode.fail ("Invalid MergeableState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : MergeableState -> String
 toString enum =
     case enum of
-        MERGEABLE ->
+        Mergeable ->
             "MERGEABLE"
 
-        CONFLICTING ->
+        Conflicting ->
             "CONFLICTING"
 
-        UNKNOWN ->
+        Unknown ->
             "UNKNOWN"

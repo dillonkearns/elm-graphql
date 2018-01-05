@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| State of the project; either 'open' or 'closed'
 
-  - OPEN - The project is open.
-  - CLOSED - The project is closed.
+  - Open - The project is open.
+  - Closed - The project is closed.
 
 -}
 type ProjectState
-    = OPEN
-    | CLOSED
+    = Open
+    | Closed
 
 
 decoder : Decoder ProjectState
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "OPEN" ->
-                        Decode.succeed OPEN
+                        Decode.succeed Open
 
                     "CLOSED" ->
-                        Decode.succeed CLOSED
+                        Decode.succeed Closed
 
                     _ ->
                         Decode.fail ("Invalid ProjectState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : ProjectState -> String
 toString enum =
     case enum of
-        OPEN ->
+        Open ->
             "OPEN"
 
-        CLOSED ->
+        Closed ->
             "CLOSED"

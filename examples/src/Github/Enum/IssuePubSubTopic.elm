@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible PubSub channels for an issue.
 
-  - UPDATED - The channel ID for observing issue updates.
-  - MARKASREAD - The channel ID for marking an issue as read.
+  - Updated - The channel ID for observing issue updates.
+  - Markasread - The channel ID for marking an issue as read.
 
 -}
 type IssuePubSubTopic
-    = UPDATED
-    | MARKASREAD
+    = Updated
+    | Markasread
 
 
 decoder : Decoder IssuePubSubTopic
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "UPDATED" ->
-                        Decode.succeed UPDATED
+                        Decode.succeed Updated
 
                     "MARKASREAD" ->
-                        Decode.succeed MARKASREAD
+                        Decode.succeed Markasread
 
                     _ ->
                         Decode.fail ("Invalid IssuePubSubTopic type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : IssuePubSubTopic -> String
 toString enum =
     case enum of
-        UPDATED ->
+        Updated ->
             "UPDATED"
 
-        MARKASREAD ->
+        Markasread ->
             "MARKASREAD"

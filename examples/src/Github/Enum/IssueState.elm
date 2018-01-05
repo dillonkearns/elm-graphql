@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible states of an issue.
 
-  - OPEN - An issue that is still open
-  - CLOSED - An issue that has been closed
+  - Open - An issue that is still open
+  - Closed - An issue that has been closed
 
 -}
 type IssueState
-    = OPEN
-    | CLOSED
+    = Open
+    | Closed
 
 
 decoder : Decoder IssueState
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "OPEN" ->
-                        Decode.succeed OPEN
+                        Decode.succeed Open
 
                     "CLOSED" ->
-                        Decode.succeed CLOSED
+                        Decode.succeed Closed
 
                     _ ->
                         Decode.fail ("Invalid IssueState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : IssueState -> String
 toString enum =
     case enum of
-        OPEN ->
+        Open ->
             "OPEN"
 
-        CLOSED ->
+        Closed ->
             "CLOSED"

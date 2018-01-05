@@ -5,11 +5,11 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which language connections can be ordered.
 
-  - SIZE - Order languages by the size of all files containing the language
+  - Size - Order languages by the size of all files containing the language
 
 -}
 type LanguageOrderField
-    = SIZE
+    = Size
 
 
 decoder : Decoder LanguageOrderField
@@ -19,7 +19,7 @@ decoder =
             (\string ->
                 case string of
                     "SIZE" ->
-                        Decode.succeed SIZE
+                        Decode.succeed Size
 
                     _ ->
                         Decode.fail ("Invalid LanguageOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -29,5 +29,5 @@ decoder =
 toString : LanguageOrderField -> String
 toString enum =
     case enum of
-        SIZE ->
+        Size ->
             "SIZE"

@@ -5,23 +5,23 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible states in which a deployment can be.
 
-  - ABANDONED - The pending deployment was not updated after 30 minutes.
-  - ACTIVE - The deployment is currently active.
-  - DESTROYED - An inactive transient deployment.
-  - ERROR - The deployment experienced an error.
-  - FAILURE - The deployment has failed.
-  - INACTIVE - The deployment is inactive.
-  - PENDING - The deployment is pending.
+  - Abandoned - The pending deployment was not updated after 30 minutes.
+  - Active - The deployment is currently active.
+  - Destroyed - An inactive transient deployment.
+  - Error - The deployment experienced an error.
+  - Failure - The deployment has failed.
+  - Inactive - The deployment is inactive.
+  - Pending - The deployment is pending.
 
 -}
 type DeploymentState
-    = ABANDONED
-    | ACTIVE
-    | DESTROYED
-    | ERROR
-    | FAILURE
-    | INACTIVE
-    | PENDING
+    = Abandoned
+    | Active
+    | Destroyed
+    | Error
+    | Failure
+    | Inactive
+    | Pending
 
 
 decoder : Decoder DeploymentState
@@ -31,25 +31,25 @@ decoder =
             (\string ->
                 case string of
                     "ABANDONED" ->
-                        Decode.succeed ABANDONED
+                        Decode.succeed Abandoned
 
                     "ACTIVE" ->
-                        Decode.succeed ACTIVE
+                        Decode.succeed Active
 
                     "DESTROYED" ->
-                        Decode.succeed DESTROYED
+                        Decode.succeed Destroyed
 
                     "ERROR" ->
-                        Decode.succeed ERROR
+                        Decode.succeed Error
 
                     "FAILURE" ->
-                        Decode.succeed FAILURE
+                        Decode.succeed Failure
 
                     "INACTIVE" ->
-                        Decode.succeed INACTIVE
+                        Decode.succeed Inactive
 
                     "PENDING" ->
-                        Decode.succeed PENDING
+                        Decode.succeed Pending
 
                     _ ->
                         Decode.fail ("Invalid DeploymentState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -59,23 +59,23 @@ decoder =
 toString : DeploymentState -> String
 toString enum =
     case enum of
-        ABANDONED ->
+        Abandoned ->
             "ABANDONED"
 
-        ACTIVE ->
+        Active ->
             "ACTIVE"
 
-        DESTROYED ->
+        Destroyed ->
             "DESTROYED"
 
-        ERROR ->
+        Error ->
             "ERROR"
 
-        FAILURE ->
+        Failure ->
             "FAILURE"
 
-        INACTIVE ->
+        Inactive ->
             "INACTIVE"
 
-        PENDING ->
+        Pending ->
             "PENDING"

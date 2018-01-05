@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Various content states of a ProjectCard
 
-  - CONTENT_ONLY - The card has content only.
-  - NOTE_ONLY - The card has a note only.
-  - REDACTED - The card is redacted.
+  - ContentOnly - The card has content only.
+  - NoteOnly - The card has a note only.
+  - Redacted - The card is redacted.
 
 -}
 type ProjectCardState
-    = CONTENT_ONLY
-    | NOTE_ONLY
-    | REDACTED
+    = ContentOnly
+    | NoteOnly
+    | Redacted
 
 
 decoder : Decoder ProjectCardState
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "CONTENT_ONLY" ->
-                        Decode.succeed CONTENT_ONLY
+                        Decode.succeed ContentOnly
 
                     "NOTE_ONLY" ->
-                        Decode.succeed NOTE_ONLY
+                        Decode.succeed NoteOnly
 
                     "REDACTED" ->
-                        Decode.succeed REDACTED
+                        Decode.succeed Redacted
 
                     _ ->
                         Decode.fail ("Invalid ProjectCardState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : ProjectCardState -> String
 toString enum =
     case enum of
-        CONTENT_ONLY ->
+        ContentOnly ->
             "CONTENT_ONLY"
 
-        NOTE_ONLY ->
+        NoteOnly ->
             "NOTE_ONLY"
 
-        REDACTED ->
+        Redacted ->
             "REDACTED"

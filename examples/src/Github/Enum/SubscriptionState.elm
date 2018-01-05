@@ -5,17 +5,17 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible states of a subscription.
 
-  - UNSUBSCRIBED - The User is only notified when particpating or @mentioned.
-  - SUBSCRIBED - The User is notified of all conversations.
-  - IGNORED - The User is never notified.
-  - UNAVAILABLE - Subscriptions are currently unavailable
+  - Unsubscribed - The User is only notified when particpating or @mentioned.
+  - Subscribed - The User is notified of all conversations.
+  - Ignored - The User is never notified.
+  - Unavailable - Subscriptions are currently unavailable
 
 -}
 type SubscriptionState
-    = UNSUBSCRIBED
-    | SUBSCRIBED
-    | IGNORED
-    | UNAVAILABLE
+    = Unsubscribed
+    | Subscribed
+    | Ignored
+    | Unavailable
 
 
 decoder : Decoder SubscriptionState
@@ -25,16 +25,16 @@ decoder =
             (\string ->
                 case string of
                     "UNSUBSCRIBED" ->
-                        Decode.succeed UNSUBSCRIBED
+                        Decode.succeed Unsubscribed
 
                     "SUBSCRIBED" ->
-                        Decode.succeed SUBSCRIBED
+                        Decode.succeed Subscribed
 
                     "IGNORED" ->
-                        Decode.succeed IGNORED
+                        Decode.succeed Ignored
 
                     "UNAVAILABLE" ->
-                        Decode.succeed UNAVAILABLE
+                        Decode.succeed Unavailable
 
                     _ ->
                         Decode.fail ("Invalid SubscriptionState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -44,14 +44,14 @@ decoder =
 toString : SubscriptionState -> String
 toString enum =
     case enum of
-        UNSUBSCRIBED ->
+        Unsubscribed ->
             "UNSUBSCRIBED"
 
-        SUBSCRIBED ->
+        Subscribed ->
             "SUBSCRIBED"
 
-        IGNORED ->
+        Ignored ->
             "IGNORED"
 
-        UNAVAILABLE ->
+        Unavailable ->
             "UNAVAILABLE"

@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible team member roles; either 'maintainer' or 'member'.
 
-  - MAINTAINER - A team maintainer has permission to add and remove team members.
-  - MEMBER - A team member has no administrative permissions on the team.
+  - Maintainer - A team maintainer has permission to add and remove team members.
+  - Member - A team member has no administrative permissions on the team.
 
 -}
 type TeamMemberRole
-    = MAINTAINER
-    | MEMBER
+    = Maintainer
+    | Member
 
 
 decoder : Decoder TeamMemberRole
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "MAINTAINER" ->
-                        Decode.succeed MAINTAINER
+                        Decode.succeed Maintainer
 
                     "MEMBER" ->
-                        Decode.succeed MEMBER
+                        Decode.succeed Member
 
                     _ ->
                         Decode.fail ("Invalid TeamMemberRole type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : TeamMemberRole -> String
 toString enum =
     case enum of
-        MAINTAINER ->
+        Maintainer ->
             "MAINTAINER"
 
-        MEMBER ->
+        Member ->
             "MEMBER"

@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible team privacy values.
 
-  - SECRET - A secret team can only be seen by its members.
-  - VISIBLE - A visible team can be seen and @mentioned by every member of the organization.
+  - Secret - A secret team can only be seen by its members.
+  - Visible - A visible team can be seen and @mentioned by every member of the organization.
 
 -}
 type TeamPrivacy
-    = SECRET
-    | VISIBLE
+    = Secret
+    | Visible
 
 
 decoder : Decoder TeamPrivacy
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "SECRET" ->
-                        Decode.succeed SECRET
+                        Decode.succeed Secret
 
                     "VISIBLE" ->
-                        Decode.succeed VISIBLE
+                        Decode.succeed Visible
 
                     _ ->
                         Decode.fail ("Invalid TeamPrivacy type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : TeamPrivacy -> String
 toString enum =
     case enum of
-        SECRET ->
+        Secret ->
             "SECRET"
 
-        VISIBLE ->
+        Visible ->
             "VISIBLE"

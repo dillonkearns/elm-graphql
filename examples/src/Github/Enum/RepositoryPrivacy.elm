@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The privacy of a repository
 
-  - PUBLIC - Public
-  - PRIVATE - Private
+  - Public - Public
+  - Private - Private
 
 -}
 type RepositoryPrivacy
-    = PUBLIC
-    | PRIVATE
+    = Public
+    | Private
 
 
 decoder : Decoder RepositoryPrivacy
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "PUBLIC" ->
-                        Decode.succeed PUBLIC
+                        Decode.succeed Public
 
                     "PRIVATE" ->
-                        Decode.succeed PRIVATE
+                        Decode.succeed Private
 
                     _ ->
                         Decode.fail ("Invalid RepositoryPrivacy type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : RepositoryPrivacy -> String
 toString enum =
     case enum of
-        PUBLIC ->
+        Public ->
             "PUBLIC"
 
-        PRIVATE ->
+        Private ->
             "PRIVATE"

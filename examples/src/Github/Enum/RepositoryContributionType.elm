@@ -5,19 +5,19 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The reason a repository is listed as 'contributed'.
 
-  - COMMIT - Created a commit
-  - ISSUE - Created an issue
-  - PULL_REQUEST - Created a pull request
-  - REPOSITORY - Created the repository
-  - PULL_REQUEST_REVIEW - Reviewed a pull request
+  - Commit - Created a commit
+  - Issue - Created an issue
+  - PullRequest - Created a pull request
+  - Repository - Created the repository
+  - PullRequestReview - Reviewed a pull request
 
 -}
 type RepositoryContributionType
-    = COMMIT
-    | ISSUE
-    | PULL_REQUEST
-    | REPOSITORY
-    | PULL_REQUEST_REVIEW
+    = Commit
+    | Issue
+    | PullRequest
+    | Repository
+    | PullRequestReview
 
 
 decoder : Decoder RepositoryContributionType
@@ -27,19 +27,19 @@ decoder =
             (\string ->
                 case string of
                     "COMMIT" ->
-                        Decode.succeed COMMIT
+                        Decode.succeed Commit
 
                     "ISSUE" ->
-                        Decode.succeed ISSUE
+                        Decode.succeed Issue
 
                     "PULL_REQUEST" ->
-                        Decode.succeed PULL_REQUEST
+                        Decode.succeed PullRequest
 
                     "REPOSITORY" ->
-                        Decode.succeed REPOSITORY
+                        Decode.succeed Repository
 
                     "PULL_REQUEST_REVIEW" ->
-                        Decode.succeed PULL_REQUEST_REVIEW
+                        Decode.succeed PullRequestReview
 
                     _ ->
                         Decode.fail ("Invalid RepositoryContributionType type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -49,17 +49,17 @@ decoder =
 toString : RepositoryContributionType -> String
 toString enum =
     case enum of
-        COMMIT ->
+        Commit ->
             "COMMIT"
 
-        ISSUE ->
+        Issue ->
             "ISSUE"
 
-        PULL_REQUEST ->
+        PullRequest ->
             "PULL_REQUEST"
 
-        REPOSITORY ->
+        Repository ->
             "REPOSITORY"
 
-        PULL_REQUEST_REVIEW ->
+        PullRequestReview ->
             "PULL_REQUEST_REVIEW"

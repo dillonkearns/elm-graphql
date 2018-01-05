@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which gist connections can be ordered.
 
-  - CREATED_AT - Order gists by creation time
-  - UPDATED_AT - Order gists by update time
-  - PUSHED_AT - Order gists by push time
+  - CreatedAt - Order gists by creation time
+  - UpdatedAt - Order gists by update time
+  - PushedAt - Order gists by push time
 
 -}
 type GistOrderField
-    = CREATED_AT
-    | UPDATED_AT
-    | PUSHED_AT
+    = CreatedAt
+    | UpdatedAt
+    | PushedAt
 
 
 decoder : Decoder GistOrderField
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "CREATED_AT" ->
-                        Decode.succeed CREATED_AT
+                        Decode.succeed CreatedAt
 
                     "UPDATED_AT" ->
-                        Decode.succeed UPDATED_AT
+                        Decode.succeed UpdatedAt
 
                     "PUSHED_AT" ->
-                        Decode.succeed PUSHED_AT
+                        Decode.succeed PushedAt
 
                     _ ->
                         Decode.fail ("Invalid GistOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : GistOrderField -> String
 toString enum =
     case enum of
-        CREATED_AT ->
+        CreatedAt ->
             "CREATED_AT"
 
-        UPDATED_AT ->
+        UpdatedAt ->
             "UPDATED_AT"
 
-        PUSHED_AT ->
+        PushedAt ->
             "PUSHED_AT"

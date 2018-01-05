@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible organization invitation types.
 
-  - USER - The invitation was to an existing user.
-  - EMAIL - The invitation was to an email address.
+  - User - The invitation was to an existing user.
+  - Email - The invitation was to an email address.
 
 -}
 type OrganizationInvitationType
-    = USER
-    | EMAIL
+    = User
+    | Email
 
 
 decoder : Decoder OrganizationInvitationType
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "USER" ->
-                        Decode.succeed USER
+                        Decode.succeed User
 
                     "EMAIL" ->
-                        Decode.succeed EMAIL
+                        Decode.succeed Email
 
                     _ ->
                         Decode.fail ("Invalid OrganizationInvitationType type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : OrganizationInvitationType -> String
 toString enum =
     case enum of
-        USER ->
+        User ->
             "USER"
 
-        EMAIL ->
+        Email ->
             "EMAIL"

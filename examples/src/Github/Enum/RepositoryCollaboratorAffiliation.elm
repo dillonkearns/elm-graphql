@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The affiliation type between collaborator and repository.
 
-  - ALL - All collaborators of the repository.
-  - OUTSIDE - All outside collaborators of an organization-owned repository.
+  - All - All collaborators of the repository.
+  - Outside - All outside collaborators of an organization-owned repository.
 
 -}
 type RepositoryCollaboratorAffiliation
-    = ALL
-    | OUTSIDE
+    = All
+    | Outside
 
 
 decoder : Decoder RepositoryCollaboratorAffiliation
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "ALL" ->
-                        Decode.succeed ALL
+                        Decode.succeed All
 
                     "OUTSIDE" ->
-                        Decode.succeed OUTSIDE
+                        Decode.succeed Outside
 
                     _ ->
                         Decode.fail ("Invalid RepositoryCollaboratorAffiliation type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : RepositoryCollaboratorAffiliation -> String
 toString enum =
     case enum of
-        ALL ->
+        All ->
             "ALL"
 
-        OUTSIDE ->
+        Outside ->
             "OUTSIDE"

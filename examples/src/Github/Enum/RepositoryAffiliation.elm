@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The affiliation of a user to a repository
 
-  - OWNER - Repositories that are owned by the authenticated user.
-  - COLLABORATOR - Repositories that the user has been added to as a collaborator.
-  - ORGANIZATION_MEMBER - Repositories that the user has access to through being a member of an organization. This includes every repository on every team that the user is on.
+  - Owner - Repositories that are owned by the authenticated user.
+  - Collaborator - Repositories that the user has been added to as a collaborator.
+  - OrganizationMember - Repositories that the user has access to through being a member of an organization. This includes every repository on every team that the user is on.
 
 -}
 type RepositoryAffiliation
-    = OWNER
-    | COLLABORATOR
-    | ORGANIZATION_MEMBER
+    = Owner
+    | Collaborator
+    | OrganizationMember
 
 
 decoder : Decoder RepositoryAffiliation
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "OWNER" ->
-                        Decode.succeed OWNER
+                        Decode.succeed Owner
 
                     "COLLABORATOR" ->
-                        Decode.succeed COLLABORATOR
+                        Decode.succeed Collaborator
 
                     "ORGANIZATION_MEMBER" ->
-                        Decode.succeed ORGANIZATION_MEMBER
+                        Decode.succeed OrganizationMember
 
                     _ ->
                         Decode.fail ("Invalid RepositoryAffiliation type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : RepositoryAffiliation -> String
 toString enum =
     case enum of
-        OWNER ->
+        Owner ->
             "OWNER"
 
-        COLLABORATOR ->
+        Collaborator ->
             "COLLABORATOR"
 
-        ORGANIZATION_MEMBER ->
+        OrganizationMember ->
             "ORGANIZATION_MEMBER"

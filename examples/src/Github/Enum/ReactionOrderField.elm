@@ -5,11 +5,11 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| A list of fields that reactions can be ordered by.
 
-  - CREATED_AT - Allows ordering a list of reactions by when they were created.
+  - CreatedAt - Allows ordering a list of reactions by when they were created.
 
 -}
 type ReactionOrderField
-    = CREATED_AT
+    = CreatedAt
 
 
 decoder : Decoder ReactionOrderField
@@ -19,7 +19,7 @@ decoder =
             (\string ->
                 case string of
                     "CREATED_AT" ->
-                        Decode.succeed CREATED_AT
+                        Decode.succeed CreatedAt
 
                     _ ->
                         Decode.fail ("Invalid ReactionOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -29,5 +29,5 @@ decoder =
 toString : ReactionOrderField -> String
 toString enum =
     case enum of
-        CREATED_AT ->
+        CreatedAt ->
             "CREATED_AT"

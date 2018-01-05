@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible default permissions for organization-owned repositories.
 
-  - READ - Members have read access to org repos by default
-  - WRITE - Members have read and write access to org repos by default
-  - ADMIN - Members have read, write, and admin access to org repos by default
+  - Read - Members have read access to org repos by default
+  - Write - Members have read and write access to org repos by default
+  - Admin - Members have read, write, and admin access to org repos by default
 
 -}
 type DefaultRepositoryPermissionField
-    = READ
-    | WRITE
-    | ADMIN
+    = Read
+    | Write
+    | Admin
 
 
 decoder : Decoder DefaultRepositoryPermissionField
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "READ" ->
-                        Decode.succeed READ
+                        Decode.succeed Read
 
                     "WRITE" ->
-                        Decode.succeed WRITE
+                        Decode.succeed Write
 
                     "ADMIN" ->
-                        Decode.succeed ADMIN
+                        Decode.succeed Admin
 
                     _ ->
                         Decode.fail ("Invalid DefaultRepositoryPermissionField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : DefaultRepositoryPermissionField -> String
 toString enum =
     case enum of
-        READ ->
+        Read ->
             "READ"
 
-        WRITE ->
+        Write ->
             "WRITE"
 
-        ADMIN ->
+        Admin ->
             "ADMIN"

@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The role of a user on a team.
 
-  - ADMIN - User has admin rights on the team.
-  - MEMBER - User is a member of the team.
+  - Admin - User has admin rights on the team.
+  - Member - User is a member of the team.
 
 -}
 type TeamRole
-    = ADMIN
-    | MEMBER
+    = Admin
+    | Member
 
 
 decoder : Decoder TeamRole
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "ADMIN" ->
-                        Decode.succeed ADMIN
+                        Decode.succeed Admin
 
                     "MEMBER" ->
-                        Decode.succeed MEMBER
+                        Decode.succeed Member
 
                     _ ->
                         Decode.fail ("Invalid TeamRole type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : TeamRole -> String
 toString enum =
     case enum of
-        ADMIN ->
+        Admin ->
             "ADMIN"
 
-        MEMBER ->
+        Member ->
             "MEMBER"

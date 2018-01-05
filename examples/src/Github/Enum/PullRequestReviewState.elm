@@ -5,19 +5,19 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible states of a pull request review.
 
-  - PENDING - A review that has not yet been submitted.
-  - COMMENTED - An informational review.
-  - APPROVED - A review allowing the pull request to merge.
-  - CHANGES_REQUESTED - A review blocking the pull request from merging.
-  - DISMISSED - A review that has been dismissed.
+  - Pending - A review that has not yet been submitted.
+  - Commented - An informational review.
+  - Approved - A review allowing the pull request to merge.
+  - ChangesRequested - A review blocking the pull request from merging.
+  - Dismissed - A review that has been dismissed.
 
 -}
 type PullRequestReviewState
-    = PENDING
-    | COMMENTED
-    | APPROVED
-    | CHANGES_REQUESTED
-    | DISMISSED
+    = Pending
+    | Commented
+    | Approved
+    | ChangesRequested
+    | Dismissed
 
 
 decoder : Decoder PullRequestReviewState
@@ -27,19 +27,19 @@ decoder =
             (\string ->
                 case string of
                     "PENDING" ->
-                        Decode.succeed PENDING
+                        Decode.succeed Pending
 
                     "COMMENTED" ->
-                        Decode.succeed COMMENTED
+                        Decode.succeed Commented
 
                     "APPROVED" ->
-                        Decode.succeed APPROVED
+                        Decode.succeed Approved
 
                     "CHANGES_REQUESTED" ->
-                        Decode.succeed CHANGES_REQUESTED
+                        Decode.succeed ChangesRequested
 
                     "DISMISSED" ->
-                        Decode.succeed DISMISSED
+                        Decode.succeed Dismissed
 
                     _ ->
                         Decode.fail ("Invalid PullRequestReviewState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -49,17 +49,17 @@ decoder =
 toString : PullRequestReviewState -> String
 toString enum =
     case enum of
-        PENDING ->
+        Pending ->
             "PENDING"
 
-        COMMENTED ->
+        Commented ->
             "COMMENTED"
 
-        APPROVED ->
+        Approved ->
             "APPROVED"
 
-        CHANGES_REQUESTED ->
+        ChangesRequested ->
             "CHANGES_REQUESTED"
 
-        DISMISSED ->
+        Dismissed ->
             "DISMISSED"

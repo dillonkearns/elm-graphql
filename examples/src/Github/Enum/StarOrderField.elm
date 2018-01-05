@@ -5,11 +5,11 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which star connections can be ordered.
 
-  - STARRED_AT - Allows ordering a list of stars by when they were created.
+  - StarredAt - Allows ordering a list of stars by when they were created.
 
 -}
 type StarOrderField
-    = STARRED_AT
+    = StarredAt
 
 
 decoder : Decoder StarOrderField
@@ -19,7 +19,7 @@ decoder =
             (\string ->
                 case string of
                     "STARRED_AT" ->
-                        Decode.succeed STARRED_AT
+                        Decode.succeed StarredAt
 
                     _ ->
                         Decode.fail ("Invalid StarOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -29,5 +29,5 @@ decoder =
 toString : StarOrderField -> String
 toString enum =
     case enum of
-        STARRED_AT ->
+        StarredAt ->
             "STARRED_AT"

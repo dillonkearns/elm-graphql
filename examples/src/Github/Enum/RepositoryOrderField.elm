@@ -5,19 +5,19 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which repository connections can be ordered.
 
-  - CREATED_AT - Order repositories by creation time
-  - UPDATED_AT - Order repositories by update time
-  - PUSHED_AT - Order repositories by push time
-  - NAME - Order repositories by name
-  - STARGAZERS - Order repositories by number of stargazers
+  - CreatedAt - Order repositories by creation time
+  - UpdatedAt - Order repositories by update time
+  - PushedAt - Order repositories by push time
+  - Name - Order repositories by name
+  - Stargazers - Order repositories by number of stargazers
 
 -}
 type RepositoryOrderField
-    = CREATED_AT
-    | UPDATED_AT
-    | PUSHED_AT
-    | NAME
-    | STARGAZERS
+    = CreatedAt
+    | UpdatedAt
+    | PushedAt
+    | Name
+    | Stargazers
 
 
 decoder : Decoder RepositoryOrderField
@@ -27,19 +27,19 @@ decoder =
             (\string ->
                 case string of
                     "CREATED_AT" ->
-                        Decode.succeed CREATED_AT
+                        Decode.succeed CreatedAt
 
                     "UPDATED_AT" ->
-                        Decode.succeed UPDATED_AT
+                        Decode.succeed UpdatedAt
 
                     "PUSHED_AT" ->
-                        Decode.succeed PUSHED_AT
+                        Decode.succeed PushedAt
 
                     "NAME" ->
-                        Decode.succeed NAME
+                        Decode.succeed Name
 
                     "STARGAZERS" ->
-                        Decode.succeed STARGAZERS
+                        Decode.succeed Stargazers
 
                     _ ->
                         Decode.fail ("Invalid RepositoryOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -49,17 +49,17 @@ decoder =
 toString : RepositoryOrderField -> String
 toString enum =
     case enum of
-        CREATED_AT ->
+        CreatedAt ->
             "CREATED_AT"
 
-        UPDATED_AT ->
+        UpdatedAt ->
             "UPDATED_AT"
 
-        PUSHED_AT ->
+        PushedAt ->
             "PUSHED_AT"
 
-        NAME ->
+        Name ->
             "NAME"
 
-        STARGAZERS ->
+        Stargazers ->
             "STARGAZERS"

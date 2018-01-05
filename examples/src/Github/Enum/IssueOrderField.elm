@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which issue connections can be ordered.
 
-  - CREATED_AT - Order issues by creation time
-  - UPDATED_AT - Order issues by update time
-  - COMMENTS - Order issues by comment count
+  - CreatedAt - Order issues by creation time
+  - UpdatedAt - Order issues by update time
+  - Comments - Order issues by comment count
 
 -}
 type IssueOrderField
-    = CREATED_AT
-    | UPDATED_AT
-    | COMMENTS
+    = CreatedAt
+    | UpdatedAt
+    | Comments
 
 
 decoder : Decoder IssueOrderField
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "CREATED_AT" ->
-                        Decode.succeed CREATED_AT
+                        Decode.succeed CreatedAt
 
                     "UPDATED_AT" ->
-                        Decode.succeed UPDATED_AT
+                        Decode.succeed UpdatedAt
 
                     "COMMENTS" ->
-                        Decode.succeed COMMENTS
+                        Decode.succeed Comments
 
                     _ ->
                         Decode.fail ("Invalid IssueOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : IssueOrderField -> String
 toString enum =
     case enum of
-        CREATED_AT ->
+        CreatedAt ->
             "CREATED_AT"
 
-        UPDATED_AT ->
+        UpdatedAt ->
             "UPDATED_AT"
 
-        COMMENTS ->
+        Comments ->
             "COMMENTS"

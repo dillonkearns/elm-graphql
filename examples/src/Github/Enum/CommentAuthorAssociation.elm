@@ -5,23 +5,23 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| A comment author association with repository.
 
-  - MEMBER - Author is a member of the organization that owns the repository.
-  - OWNER - Author is the owner of the repository.
-  - COLLABORATOR - Author has been invited to collaborate on the repository.
-  - CONTRIBUTOR - Author has previously committed to the repository.
-  - FIRST_TIME_CONTRIBUTOR - Author has not previously committed to the repository.
-  - FIRST_TIMER - Author has not previously committed to GitHub.
-  - NONE - Author has no association with the repository.
+  - Member - Author is a member of the organization that owns the repository.
+  - Owner - Author is the owner of the repository.
+  - Collaborator - Author has been invited to collaborate on the repository.
+  - Contributor - Author has previously committed to the repository.
+  - FirstTimeContributor - Author has not previously committed to the repository.
+  - FirstTimer - Author has not previously committed to GitHub.
+  - None - Author has no association with the repository.
 
 -}
 type CommentAuthorAssociation
-    = MEMBER
-    | OWNER
-    | COLLABORATOR
-    | CONTRIBUTOR
-    | FIRST_TIME_CONTRIBUTOR
-    | FIRST_TIMER
-    | NONE
+    = Member
+    | Owner
+    | Collaborator
+    | Contributor
+    | FirstTimeContributor
+    | FirstTimer
+    | None
 
 
 decoder : Decoder CommentAuthorAssociation
@@ -31,25 +31,25 @@ decoder =
             (\string ->
                 case string of
                     "MEMBER" ->
-                        Decode.succeed MEMBER
+                        Decode.succeed Member
 
                     "OWNER" ->
-                        Decode.succeed OWNER
+                        Decode.succeed Owner
 
                     "COLLABORATOR" ->
-                        Decode.succeed COLLABORATOR
+                        Decode.succeed Collaborator
 
                     "CONTRIBUTOR" ->
-                        Decode.succeed CONTRIBUTOR
+                        Decode.succeed Contributor
 
                     "FIRST_TIME_CONTRIBUTOR" ->
-                        Decode.succeed FIRST_TIME_CONTRIBUTOR
+                        Decode.succeed FirstTimeContributor
 
                     "FIRST_TIMER" ->
-                        Decode.succeed FIRST_TIMER
+                        Decode.succeed FirstTimer
 
                     "NONE" ->
-                        Decode.succeed NONE
+                        Decode.succeed None
 
                     _ ->
                         Decode.fail ("Invalid CommentAuthorAssociation type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -59,23 +59,23 @@ decoder =
 toString : CommentAuthorAssociation -> String
 toString enum =
     case enum of
-        MEMBER ->
+        Member ->
             "MEMBER"
 
-        OWNER ->
+        Owner ->
             "OWNER"
 
-        COLLABORATOR ->
+        Collaborator ->
             "COLLABORATOR"
 
-        CONTRIBUTOR ->
+        Contributor ->
             "CONTRIBUTOR"
 
-        FIRST_TIME_CONTRIBUTOR ->
+        FirstTimeContributor ->
             "FIRST_TIME_CONTRIBUTOR"
 
-        FIRST_TIMER ->
+        FirstTimer ->
             "FIRST_TIMER"
 
-        NONE ->
+        None ->
             "NONE"

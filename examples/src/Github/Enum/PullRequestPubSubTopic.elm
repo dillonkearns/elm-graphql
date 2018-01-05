@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible PubSub channels for a pull request.
 
-  - UPDATED - The channel ID for observing pull request updates.
-  - MARKASREAD - The channel ID for marking an pull request as read.
-  - HEAD_REF - The channel ID for observing head ref updates.
+  - Updated - The channel ID for observing pull request updates.
+  - Markasread - The channel ID for marking an pull request as read.
+  - HeadRef - The channel ID for observing head ref updates.
 
 -}
 type PullRequestPubSubTopic
-    = UPDATED
-    | MARKASREAD
-    | HEAD_REF
+    = Updated
+    | Markasread
+    | HeadRef
 
 
 decoder : Decoder PullRequestPubSubTopic
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "UPDATED" ->
-                        Decode.succeed UPDATED
+                        Decode.succeed Updated
 
                     "MARKASREAD" ->
-                        Decode.succeed MARKASREAD
+                        Decode.succeed Markasread
 
                     "HEAD_REF" ->
-                        Decode.succeed HEAD_REF
+                        Decode.succeed HeadRef
 
                     _ ->
                         Decode.fail ("Invalid PullRequestPubSubTopic type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : PullRequestPubSubTopic -> String
 toString enum =
     case enum of
-        UPDATED ->
+        Updated ->
             "UPDATED"
 
-        MARKASREAD ->
+        Markasread ->
             "MARKASREAD"
 
-        HEAD_REF ->
+        HeadRef ->
             "HEAD_REF"

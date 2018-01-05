@@ -5,35 +5,35 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The state of a Git signature.
 
-  - VALID - Valid signature and verified by GitHub.
-  - INVALID - Invalid signature.
-  - MALFORMED_SIG - Malformed signature.
-  - UNKNOWN_KEY - Key used for signing not known to GitHub.
-  - BAD_EMAIL - Invalid email used for signing.
-  - UNVERIFIED_EMAIL - Email used for signing unverified on GitHub.
-  - NO_USER - Email used for signing not known to GitHub.
-  - UNKNOWN_SIG_TYPE - Unknown signature type.
-  - UNSIGNED - Unsigned.
-  - GPGVERIFY_UNAVAILABLE - Internal error - the GPG verification service is unavailable at the moment.
-  - GPGVERIFY_ERROR - Internal error - the GPG verification service misbehaved.
-  - NOT_SIGNING_KEY - The usage flags for the key that signed this don't allow signing.
-  - EXPIRED_KEY - Signing key expired.
+  - Valid - Valid signature and verified by GitHub.
+  - Invalid - Invalid signature.
+  - MalformedSig - Malformed signature.
+  - UnknownKey - Key used for signing not known to GitHub.
+  - BadEmail - Invalid email used for signing.
+  - UnverifiedEmail - Email used for signing unverified on GitHub.
+  - NoUser - Email used for signing not known to GitHub.
+  - UnknownSigType - Unknown signature type.
+  - Unsigned - Unsigned.
+  - GpgverifyUnavailable - Internal error - the GPG verification service is unavailable at the moment.
+  - GpgverifyError - Internal error - the GPG verification service misbehaved.
+  - NotSigningKey - The usage flags for the key that signed this don't allow signing.
+  - ExpiredKey - Signing key expired.
 
 -}
 type GitSignatureState
-    = VALID
-    | INVALID
-    | MALFORMED_SIG
-    | UNKNOWN_KEY
-    | BAD_EMAIL
-    | UNVERIFIED_EMAIL
-    | NO_USER
-    | UNKNOWN_SIG_TYPE
-    | UNSIGNED
-    | GPGVERIFY_UNAVAILABLE
-    | GPGVERIFY_ERROR
-    | NOT_SIGNING_KEY
-    | EXPIRED_KEY
+    = Valid
+    | Invalid
+    | MalformedSig
+    | UnknownKey
+    | BadEmail
+    | UnverifiedEmail
+    | NoUser
+    | UnknownSigType
+    | Unsigned
+    | GpgverifyUnavailable
+    | GpgverifyError
+    | NotSigningKey
+    | ExpiredKey
 
 
 decoder : Decoder GitSignatureState
@@ -43,43 +43,43 @@ decoder =
             (\string ->
                 case string of
                     "VALID" ->
-                        Decode.succeed VALID
+                        Decode.succeed Valid
 
                     "INVALID" ->
-                        Decode.succeed INVALID
+                        Decode.succeed Invalid
 
                     "MALFORMED_SIG" ->
-                        Decode.succeed MALFORMED_SIG
+                        Decode.succeed MalformedSig
 
                     "UNKNOWN_KEY" ->
-                        Decode.succeed UNKNOWN_KEY
+                        Decode.succeed UnknownKey
 
                     "BAD_EMAIL" ->
-                        Decode.succeed BAD_EMAIL
+                        Decode.succeed BadEmail
 
                     "UNVERIFIED_EMAIL" ->
-                        Decode.succeed UNVERIFIED_EMAIL
+                        Decode.succeed UnverifiedEmail
 
                     "NO_USER" ->
-                        Decode.succeed NO_USER
+                        Decode.succeed NoUser
 
                     "UNKNOWN_SIG_TYPE" ->
-                        Decode.succeed UNKNOWN_SIG_TYPE
+                        Decode.succeed UnknownSigType
 
                     "UNSIGNED" ->
-                        Decode.succeed UNSIGNED
+                        Decode.succeed Unsigned
 
                     "GPGVERIFY_UNAVAILABLE" ->
-                        Decode.succeed GPGVERIFY_UNAVAILABLE
+                        Decode.succeed GpgverifyUnavailable
 
                     "GPGVERIFY_ERROR" ->
-                        Decode.succeed GPGVERIFY_ERROR
+                        Decode.succeed GpgverifyError
 
                     "NOT_SIGNING_KEY" ->
-                        Decode.succeed NOT_SIGNING_KEY
+                        Decode.succeed NotSigningKey
 
                     "EXPIRED_KEY" ->
-                        Decode.succeed EXPIRED_KEY
+                        Decode.succeed ExpiredKey
 
                     _ ->
                         Decode.fail ("Invalid GitSignatureState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -89,41 +89,41 @@ decoder =
 toString : GitSignatureState -> String
 toString enum =
     case enum of
-        VALID ->
+        Valid ->
             "VALID"
 
-        INVALID ->
+        Invalid ->
             "INVALID"
 
-        MALFORMED_SIG ->
+        MalformedSig ->
             "MALFORMED_SIG"
 
-        UNKNOWN_KEY ->
+        UnknownKey ->
             "UNKNOWN_KEY"
 
-        BAD_EMAIL ->
+        BadEmail ->
             "BAD_EMAIL"
 
-        UNVERIFIED_EMAIL ->
+        UnverifiedEmail ->
             "UNVERIFIED_EMAIL"
 
-        NO_USER ->
+        NoUser ->
             "NO_USER"
 
-        UNKNOWN_SIG_TYPE ->
+        UnknownSigType ->
             "UNKNOWN_SIG_TYPE"
 
-        UNSIGNED ->
+        Unsigned ->
             "UNSIGNED"
 
-        GPGVERIFY_UNAVAILABLE ->
+        GpgverifyUnavailable ->
             "GPGVERIFY_UNAVAILABLE"
 
-        GPGVERIFY_ERROR ->
+        GpgverifyError ->
             "GPGVERIFY_ERROR"
 
-        NOT_SIGNING_KEY ->
+        NotSigningKey ->
             "NOT_SIGNING_KEY"
 
-        EXPIRED_KEY ->
+        ExpiredKey ->
             "EXPIRED_KEY"

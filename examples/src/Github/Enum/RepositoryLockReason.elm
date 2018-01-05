@@ -5,17 +5,17 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible reasons a given repository could be in a locked state.
 
-  - MOVING - The repository is locked due to a move.
-  - BILLING - The repository is locked due to a billing related reason.
-  - RENAME - The repository is locked due to a rename.
-  - MIGRATING - The repository is locked due to a migration.
+  - Moving - The repository is locked due to a move.
+  - Billing - The repository is locked due to a billing related reason.
+  - Rename - The repository is locked due to a rename.
+  - Migrating - The repository is locked due to a migration.
 
 -}
 type RepositoryLockReason
-    = MOVING
-    | BILLING
-    | RENAME
-    | MIGRATING
+    = Moving
+    | Billing
+    | Rename
+    | Migrating
 
 
 decoder : Decoder RepositoryLockReason
@@ -25,16 +25,16 @@ decoder =
             (\string ->
                 case string of
                     "MOVING" ->
-                        Decode.succeed MOVING
+                        Decode.succeed Moving
 
                     "BILLING" ->
-                        Decode.succeed BILLING
+                        Decode.succeed Billing
 
                     "RENAME" ->
-                        Decode.succeed RENAME
+                        Decode.succeed Rename
 
                     "MIGRATING" ->
-                        Decode.succeed MIGRATING
+                        Decode.succeed Migrating
 
                     _ ->
                         Decode.fail ("Invalid RepositoryLockReason type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -44,14 +44,14 @@ decoder =
 toString : RepositoryLockReason -> String
 toString enum =
     case enum of
-        MOVING ->
+        Moving ->
             "MOVING"
 
-        BILLING ->
+        Billing ->
             "BILLING"
 
-        RENAME ->
+        Rename ->
             "RENAME"
 
-        MIGRATING ->
+        Migrating ->
             "MIGRATING"

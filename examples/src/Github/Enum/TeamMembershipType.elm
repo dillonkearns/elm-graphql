@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Defines which types of team members are included in the returned list. Can be one of IMMEDIATE, CHILD_TEAM or ALL.
 
-  - IMMEDIATE - Includes only immediate members of the team.
-  - CHILD_TEAM - Includes only child team members for the team.
-  - ALL - Includes immediate and child team members for the team.
+  - Immediate - Includes only immediate members of the team.
+  - ChildTeam - Includes only child team members for the team.
+  - All - Includes immediate and child team members for the team.
 
 -}
 type TeamMembershipType
-    = IMMEDIATE
-    | CHILD_TEAM
-    | ALL
+    = Immediate
+    | ChildTeam
+    | All
 
 
 decoder : Decoder TeamMembershipType
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "IMMEDIATE" ->
-                        Decode.succeed IMMEDIATE
+                        Decode.succeed Immediate
 
                     "CHILD_TEAM" ->
-                        Decode.succeed CHILD_TEAM
+                        Decode.succeed ChildTeam
 
                     "ALL" ->
-                        Decode.succeed ALL
+                        Decode.succeed All
 
                     _ ->
                         Decode.fail ("Invalid TeamMembershipType type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : TeamMembershipType -> String
 toString enum =
     case enum of
-        IMMEDIATE ->
+        Immediate ->
             "IMMEDIATE"
 
-        CHILD_TEAM ->
+        ChildTeam ->
             "CHILD_TEAM"
 
-        ALL ->
+        All ->
             "ALL"

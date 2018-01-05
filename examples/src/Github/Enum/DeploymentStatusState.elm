@@ -5,19 +5,19 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible states for a deployment status.
 
-  - PENDING - The deployment is pending.
-  - SUCCESS - The deployment was successful.
-  - FAILURE - The deployment has failed.
-  - INACTIVE - The deployment is inactive.
-  - ERROR - The deployment experienced an error.
+  - Pending - The deployment is pending.
+  - Success - The deployment was successful.
+  - Failure - The deployment has failed.
+  - Inactive - The deployment is inactive.
+  - Error - The deployment experienced an error.
 
 -}
 type DeploymentStatusState
-    = PENDING
-    | SUCCESS
-    | FAILURE
-    | INACTIVE
-    | ERROR
+    = Pending
+    | Success
+    | Failure
+    | Inactive
+    | Error
 
 
 decoder : Decoder DeploymentStatusState
@@ -27,19 +27,19 @@ decoder =
             (\string ->
                 case string of
                     "PENDING" ->
-                        Decode.succeed PENDING
+                        Decode.succeed Pending
 
                     "SUCCESS" ->
-                        Decode.succeed SUCCESS
+                        Decode.succeed Success
 
                     "FAILURE" ->
-                        Decode.succeed FAILURE
+                        Decode.succeed Failure
 
                     "INACTIVE" ->
-                        Decode.succeed INACTIVE
+                        Decode.succeed Inactive
 
                     "ERROR" ->
-                        Decode.succeed ERROR
+                        Decode.succeed Error
 
                     _ ->
                         Decode.fail ("Invalid DeploymentStatusState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -49,17 +49,17 @@ decoder =
 toString : DeploymentStatusState -> String
 toString enum =
     case enum of
-        PENDING ->
+        Pending ->
             "PENDING"
 
-        SUCCESS ->
+        Success ->
             "SUCCESS"
 
-        FAILURE ->
+        Failure ->
             "FAILURE"
 
-        INACTIVE ->
+        Inactive ->
             "INACTIVE"
 
-        ERROR ->
+        Error ->
             "ERROR"

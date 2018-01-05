@@ -5,17 +5,17 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Reason that the suggested topic is declined.
 
-  - NOT_RELEVANT - The suggested topic is not relevant to the repository.
-  - TOO_SPECIFIC - The suggested topic is too specific for the repository (e.g. #ruby-on-rails-version-4-2-1).
-  - PERSONAL_PREFERENCE - The viewer does not like the suggested topic.
-  - TOO_GENERAL - The suggested topic is too general for the repository.
+  - NotRelevant - The suggested topic is not relevant to the repository.
+  - TooSpecific - The suggested topic is too specific for the repository (e.g. #ruby-on-rails-version-4-2-1).
+  - PersonalPreference - The viewer does not like the suggested topic.
+  - TooGeneral - The suggested topic is too general for the repository.
 
 -}
 type TopicSuggestionDeclineReason
-    = NOT_RELEVANT
-    | TOO_SPECIFIC
-    | PERSONAL_PREFERENCE
-    | TOO_GENERAL
+    = NotRelevant
+    | TooSpecific
+    | PersonalPreference
+    | TooGeneral
 
 
 decoder : Decoder TopicSuggestionDeclineReason
@@ -25,16 +25,16 @@ decoder =
             (\string ->
                 case string of
                     "NOT_RELEVANT" ->
-                        Decode.succeed NOT_RELEVANT
+                        Decode.succeed NotRelevant
 
                     "TOO_SPECIFIC" ->
-                        Decode.succeed TOO_SPECIFIC
+                        Decode.succeed TooSpecific
 
                     "PERSONAL_PREFERENCE" ->
-                        Decode.succeed PERSONAL_PREFERENCE
+                        Decode.succeed PersonalPreference
 
                     "TOO_GENERAL" ->
-                        Decode.succeed TOO_GENERAL
+                        Decode.succeed TooGeneral
 
                     _ ->
                         Decode.fail ("Invalid TopicSuggestionDeclineReason type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -44,14 +44,14 @@ decoder =
 toString : TopicSuggestionDeclineReason -> String
 toString enum =
     case enum of
-        NOT_RELEVANT ->
+        NotRelevant ->
             "NOT_RELEVANT"
 
-        TOO_SPECIFIC ->
+        TooSpecific ->
             "TOO_SPECIFIC"
 
-        PERSONAL_PREFERENCE ->
+        PersonalPreference ->
             "PERSONAL_PREFERENCE"
 
-        TOO_GENERAL ->
+        TooGeneral ->
             "TOO_GENERAL"

@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which release connections can be ordered.
 
-  - CREATED_AT - Order releases by creation time
-  - NAME - Order releases alphabetically by name
+  - CreatedAt - Order releases by creation time
+  - Name - Order releases alphabetically by name
 
 -}
 type ReleaseOrderField
-    = CREATED_AT
-    | NAME
+    = CreatedAt
+    | Name
 
 
 decoder : Decoder ReleaseOrderField
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "CREATED_AT" ->
-                        Decode.succeed CREATED_AT
+                        Decode.succeed CreatedAt
 
                     "NAME" ->
-                        Decode.succeed NAME
+                        Decode.succeed Name
 
                     _ ->
                         Decode.fail ("Invalid ReleaseOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : ReleaseOrderField -> String
 toString enum =
     case enum of
-        CREATED_AT ->
+        CreatedAt ->
             "CREATED_AT"
 
-        NAME ->
+        Name ->
             "NAME"

@@ -5,19 +5,19 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible commit status states.
 
-  - EXPECTED - Status is expected.
-  - ERROR - Status is errored.
-  - FAILURE - Status is failing.
-  - PENDING - Status is pending.
-  - SUCCESS - Status is successful.
+  - Expected - Status is expected.
+  - Error - Status is errored.
+  - Failure - Status is failing.
+  - Pending - Status is pending.
+  - Success - Status is successful.
 
 -}
 type StatusState
-    = EXPECTED
-    | ERROR
-    | FAILURE
-    | PENDING
-    | SUCCESS
+    = Expected
+    | Error
+    | Failure
+    | Pending
+    | Success
 
 
 decoder : Decoder StatusState
@@ -27,19 +27,19 @@ decoder =
             (\string ->
                 case string of
                     "EXPECTED" ->
-                        Decode.succeed EXPECTED
+                        Decode.succeed Expected
 
                     "ERROR" ->
-                        Decode.succeed ERROR
+                        Decode.succeed Error
 
                     "FAILURE" ->
-                        Decode.succeed FAILURE
+                        Decode.succeed Failure
 
                     "PENDING" ->
-                        Decode.succeed PENDING
+                        Decode.succeed Pending
 
                     "SUCCESS" ->
-                        Decode.succeed SUCCESS
+                        Decode.succeed Success
 
                     _ ->
                         Decode.fail ("Invalid StatusState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -49,17 +49,17 @@ decoder =
 toString : StatusState -> String
 toString enum =
     case enum of
-        EXPECTED ->
+        Expected ->
             "EXPECTED"
 
-        ERROR ->
+        Error ->
             "ERROR"
 
-        FAILURE ->
+        Failure ->
             "FAILURE"
 
-        PENDING ->
+        Pending ->
             "PENDING"
 
-        SUCCESS ->
+        Success ->
             "SUCCESS"

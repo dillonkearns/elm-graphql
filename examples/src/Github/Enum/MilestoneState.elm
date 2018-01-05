@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible states of a milestone.
 
-  - OPEN - A milestone that is still open.
-  - CLOSED - A milestone that has been closed.
+  - Open - A milestone that is still open.
+  - Closed - A milestone that has been closed.
 
 -}
 type MilestoneState
-    = OPEN
-    | CLOSED
+    = Open
+    | Closed
 
 
 decoder : Decoder MilestoneState
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "OPEN" ->
-                        Decode.succeed OPEN
+                        Decode.succeed Open
 
                     "CLOSED" ->
-                        Decode.succeed CLOSED
+                        Decode.succeed Closed
 
                     _ ->
                         Decode.fail ("Invalid MilestoneState type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : MilestoneState -> String
 toString enum =
     case enum of
-        OPEN ->
+        Open ->
             "OPEN"
 
-        CLOSED ->
+        Closed ->
             "CLOSED"

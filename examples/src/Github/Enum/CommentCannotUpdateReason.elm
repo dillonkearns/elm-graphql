@@ -5,19 +5,19 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| The possible errors that will prevent a user from updating a comment.
 
-  - INSUFFICIENT_ACCESS - You must be the author or have write access to this repository to update this comment.
-  - LOCKED - Unable to create comment because issue is locked.
-  - LOGIN_REQUIRED - You must be logged in to update this comment.
-  - MAINTENANCE - Repository is under maintenance.
-  - VERIFIED_EMAIL_REQUIRED - At least one email address must be verified to update this comment.
+  - InsufficientAccess - You must be the author or have write access to this repository to update this comment.
+  - Locked - Unable to create comment because issue is locked.
+  - LoginRequired - You must be logged in to update this comment.
+  - Maintenance - Repository is under maintenance.
+  - VerifiedEmailRequired - At least one email address must be verified to update this comment.
 
 -}
 type CommentCannotUpdateReason
-    = INSUFFICIENT_ACCESS
-    | LOCKED
-    | LOGIN_REQUIRED
-    | MAINTENANCE
-    | VERIFIED_EMAIL_REQUIRED
+    = InsufficientAccess
+    | Locked
+    | LoginRequired
+    | Maintenance
+    | VerifiedEmailRequired
 
 
 decoder : Decoder CommentCannotUpdateReason
@@ -27,19 +27,19 @@ decoder =
             (\string ->
                 case string of
                     "INSUFFICIENT_ACCESS" ->
-                        Decode.succeed INSUFFICIENT_ACCESS
+                        Decode.succeed InsufficientAccess
 
                     "LOCKED" ->
-                        Decode.succeed LOCKED
+                        Decode.succeed Locked
 
                     "LOGIN_REQUIRED" ->
-                        Decode.succeed LOGIN_REQUIRED
+                        Decode.succeed LoginRequired
 
                     "MAINTENANCE" ->
-                        Decode.succeed MAINTENANCE
+                        Decode.succeed Maintenance
 
                     "VERIFIED_EMAIL_REQUIRED" ->
-                        Decode.succeed VERIFIED_EMAIL_REQUIRED
+                        Decode.succeed VerifiedEmailRequired
 
                     _ ->
                         Decode.fail ("Invalid CommentCannotUpdateReason type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -49,17 +49,17 @@ decoder =
 toString : CommentCannotUpdateReason -> String
 toString enum =
     case enum of
-        INSUFFICIENT_ACCESS ->
+        InsufficientAccess ->
             "INSUFFICIENT_ACCESS"
 
-        LOCKED ->
+        Locked ->
             "LOCKED"
 
-        LOGIN_REQUIRED ->
+        LoginRequired ->
             "LOGIN_REQUIRED"
 
-        MAINTENANCE ->
+        Maintenance ->
             "MAINTENANCE"
 
-        VERIFIED_EMAIL_REQUIRED ->
+        VerifiedEmailRequired ->
             "VERIFIED_EMAIL_REQUIRED"

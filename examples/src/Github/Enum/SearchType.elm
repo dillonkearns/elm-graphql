@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Represents the individual results of a search.
 
-  - ISSUE - Returns results matching issues in repositories.
-  - REPOSITORY - Returns results matching repositories.
-  - USER - Returns results matching users and organizations on GitHub.
+  - Issue - Returns results matching issues in repositories.
+  - Repository - Returns results matching repositories.
+  - User - Returns results matching users and organizations on GitHub.
 
 -}
 type SearchType
-    = ISSUE
-    | REPOSITORY
-    | USER
+    = Issue
+    | Repository
+    | User
 
 
 decoder : Decoder SearchType
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "ISSUE" ->
-                        Decode.succeed ISSUE
+                        Decode.succeed Issue
 
                     "REPOSITORY" ->
-                        Decode.succeed REPOSITORY
+                        Decode.succeed Repository
 
                     "USER" ->
-                        Decode.succeed USER
+                        Decode.succeed User
 
                     _ ->
                         Decode.fail ("Invalid SearchType type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : SearchType -> String
 toString enum =
     case enum of
-        ISSUE ->
+        Issue ->
             "ISSUE"
 
-        REPOSITORY ->
+        Repository ->
             "REPOSITORY"
 
-        USER ->
+        User ->
             "USER"

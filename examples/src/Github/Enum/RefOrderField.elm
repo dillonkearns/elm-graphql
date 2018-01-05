@@ -5,13 +5,13 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which ref connections can be ordered.
 
-  - TAG_COMMIT_DATE - Order refs by underlying commit date if the ref prefix is refs/tags/
-  - ALPHABETICAL - Order refs by their alphanumeric name
+  - TagCommitDate - Order refs by underlying commit date if the ref prefix is refs/tags/
+  - Alphabetical - Order refs by their alphanumeric name
 
 -}
 type RefOrderField
-    = TAG_COMMIT_DATE
-    | ALPHABETICAL
+    = TagCommitDate
+    | Alphabetical
 
 
 decoder : Decoder RefOrderField
@@ -21,10 +21,10 @@ decoder =
             (\string ->
                 case string of
                     "TAG_COMMIT_DATE" ->
-                        Decode.succeed TAG_COMMIT_DATE
+                        Decode.succeed TagCommitDate
 
                     "ALPHABETICAL" ->
-                        Decode.succeed ALPHABETICAL
+                        Decode.succeed Alphabetical
 
                     _ ->
                         Decode.fail ("Invalid RefOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -34,8 +34,8 @@ decoder =
 toString : RefOrderField -> String
 toString enum =
     case enum of
-        TAG_COMMIT_DATE ->
+        TagCommitDate ->
             "TAG_COMMIT_DATE"
 
-        ALPHABETICAL ->
+        Alphabetical ->
             "ALPHABETICAL"

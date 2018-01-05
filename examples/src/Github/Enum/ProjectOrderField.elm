@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Properties by which project connections can be ordered.
 
-  - CREATED_AT - Order projects by creation time
-  - UPDATED_AT - Order projects by update time
-  - NAME - Order projects by name
+  - CreatedAt - Order projects by creation time
+  - UpdatedAt - Order projects by update time
+  - Name - Order projects by name
 
 -}
 type ProjectOrderField
-    = CREATED_AT
-    | UPDATED_AT
-    | NAME
+    = CreatedAt
+    | UpdatedAt
+    | Name
 
 
 decoder : Decoder ProjectOrderField
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "CREATED_AT" ->
-                        Decode.succeed CREATED_AT
+                        Decode.succeed CreatedAt
 
                     "UPDATED_AT" ->
-                        Decode.succeed UPDATED_AT
+                        Decode.succeed UpdatedAt
 
                     "NAME" ->
-                        Decode.succeed NAME
+                        Decode.succeed Name
 
                     _ ->
                         Decode.fail ("Invalid ProjectOrderField type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : ProjectOrderField -> String
 toString enum =
     case enum of
-        CREATED_AT ->
+        CreatedAt ->
             "CREATED_AT"
 
-        UPDATED_AT ->
+        UpdatedAt ->
             "UPDATED_AT"
 
-        NAME ->
+        Name ->
             "NAME"

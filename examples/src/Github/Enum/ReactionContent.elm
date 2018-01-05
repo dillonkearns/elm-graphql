@@ -5,21 +5,21 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Emojis that can be attached to Issues, Pull Requests and Comments.
 
-  - THUMBS_UP - Represents the 👍 emoji.
-  - THUMBS_DOWN - Represents the 👎 emoji.
-  - LAUGH - Represents the 😄 emoji.
-  - HOORAY - Represents the 🎉 emoji.
-  - CONFUSED - Represents the 😕 emoji.
-  - HEART - Represents the ❤️ emoji.
+  - ThumbsUp - Represents the 👍 emoji.
+  - ThumbsDown - Represents the 👎 emoji.
+  - Laugh - Represents the 😄 emoji.
+  - Hooray - Represents the 🎉 emoji.
+  - Confused - Represents the 😕 emoji.
+  - Heart - Represents the ❤️ emoji.
 
 -}
 type ReactionContent
-    = THUMBS_UP
-    | THUMBS_DOWN
-    | LAUGH
-    | HOORAY
-    | CONFUSED
-    | HEART
+    = ThumbsUp
+    | ThumbsDown
+    | Laugh
+    | Hooray
+    | Confused
+    | Heart
 
 
 decoder : Decoder ReactionContent
@@ -29,22 +29,22 @@ decoder =
             (\string ->
                 case string of
                     "THUMBS_UP" ->
-                        Decode.succeed THUMBS_UP
+                        Decode.succeed ThumbsUp
 
                     "THUMBS_DOWN" ->
-                        Decode.succeed THUMBS_DOWN
+                        Decode.succeed ThumbsDown
 
                     "LAUGH" ->
-                        Decode.succeed LAUGH
+                        Decode.succeed Laugh
 
                     "HOORAY" ->
-                        Decode.succeed HOORAY
+                        Decode.succeed Hooray
 
                     "CONFUSED" ->
-                        Decode.succeed CONFUSED
+                        Decode.succeed Confused
 
                     "HEART" ->
-                        Decode.succeed HEART
+                        Decode.succeed Heart
 
                     _ ->
                         Decode.fail ("Invalid ReactionContent type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -54,20 +54,20 @@ decoder =
 toString : ReactionContent -> String
 toString enum =
     case enum of
-        THUMBS_UP ->
+        ThumbsUp ->
             "THUMBS_UP"
 
-        THUMBS_DOWN ->
+        ThumbsDown ->
             "THUMBS_DOWN"
 
-        LAUGH ->
+        Laugh ->
             "LAUGH"
 
-        HOORAY ->
+        Hooray ->
             "HOORAY"
 
-        CONFUSED ->
+        Confused ->
             "CONFUSED"
 
-        HEART ->
+        Heart ->
             "HEART"
