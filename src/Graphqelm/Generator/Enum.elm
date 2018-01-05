@@ -36,7 +36,7 @@ import Json.Decode as Decode exposing (Decoder)
 enumType : String -> List EnumValue -> String
 enumType enumName enumValues =
     "type "
-        ++ Normalize.moduleName enumName
+        ++ Normalize.capitalized enumName
         ++ """
     = """
         ++ (enumValues
@@ -54,7 +54,7 @@ enumToString enumName enumValues =
 toString enum =
     case enum of
 {1}"""
-        [ Normalize.moduleName enumName
+        [ Normalize.capitalized enumName
         , List.map toStringCase enumValues |> String.join "\n\n"
         ]
 
@@ -80,7 +80,7 @@ decoder =
             (\\string ->
                 case string of
 """
-        [ Normalize.moduleName enumName ]
+        [ Normalize.capitalized enumName ]
         ++ (enumValues
                 |> List.map .name
                 |> List.map
@@ -96,7 +96,7 @@ decoder =
 
                     _ ->
                         Decode.fail ("Invalid """
-        ++ Normalize.moduleName enumName
+        ++ Normalize.capitalized enumName
         ++ """ type, " ++ string ++ " try re-running the graphqelm CLI ")
         )
         """

@@ -18,10 +18,10 @@ all =
                     |> Expect.equal "type_"
         , test "already normalized module name" <|
             \() ->
-                Normalize.moduleName "MyInterface"
+                Normalize.capitalized "MyInterface"
                     |> Expect.equal "MyInterface"
         , test "module name with leading underscore" <|
             \() ->
-                Normalize.moduleName "_ModelMutationType"
+                Normalize.capitalized "_ModelMutationType"
                     |> Expect.equal "ModelMutationType_"
         ]

@@ -36,27 +36,27 @@ object { query, mutation, apiSubmodule } name =
     else if Just name == mutation then
         [ "RootMutation" ]
     else
-        apiSubmodule ++ [ "Object", Normalize.moduleName name ]
+        apiSubmodule ++ [ "Object", Normalize.capitalized name ]
 
 
 interface : Context -> String -> List String
 interface { apiSubmodule } name =
-    apiSubmodule ++ [ "Interface", Normalize.moduleName name ]
+    apiSubmodule ++ [ "Interface", Normalize.capitalized name ]
 
 
 union : Context -> String -> List String
 union { apiSubmodule } name =
-    apiSubmodule ++ [ "Union", Normalize.moduleName name ]
+    apiSubmodule ++ [ "Union", Normalize.capitalized name ]
 
 
 enum : { context | apiSubmodule : List String } -> String -> List String
 enum { apiSubmodule } name =
-    apiSubmodule ++ [ "Enum", Normalize.moduleName name ]
+    apiSubmodule ++ [ "Enum", Normalize.capitalized name ]
 
 
 enumTypeName : { context | apiSubmodule : List String } -> String -> List String
 enumTypeName { apiSubmodule } name =
-    apiSubmodule ++ [ "Enum", Normalize.moduleName name, Normalize.moduleName name ]
+    apiSubmodule ++ [ "Enum", Normalize.capitalized name, Normalize.capitalized name ]
 
 
 query : { context | apiSubmodule : List String } -> List String

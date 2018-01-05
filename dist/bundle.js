@@ -6764,12 +6764,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized = function
 		}
 	}
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName = function (name) {
-	return A2(_elm_lang$core$String$startsWith, '_', name) ? function (nameWithoutLeading_) {
-		return A2(_elm_lang$core$Basics_ops['++'], nameWithoutLeading_, '_');
-	}(
-		A2(_elm_lang$core$String$dropLeft, 1, name)) : name;
-};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$normalizeIfElmReserved = function (name) {
 	return _elm_lang$core$Native_Utils.eq(name, 'type') ? 'type_' : name;
 };
@@ -9025,10 +9019,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$enumTypeName = F2(
 				_0: 'Enum',
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(name),
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
 					_1: {
 						ctor: '::',
-						_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(name),
+						_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
 						_1: {ctor: '[]'}
 					}
 				}
@@ -9045,7 +9039,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$enum = F2(
 				_0: 'Enum',
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(name),
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -9061,7 +9055,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$union = F2(
 				_0: 'Union',
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(name),
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -9077,7 +9071,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$interface = F2(
 				_0: 'Interface',
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(name),
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -9103,7 +9097,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$object = F2(
 				_0: 'Object',
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(name),
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
 					_1: {ctor: '[]'}
 				}
 			}));
@@ -9519,7 +9513,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 				'decoder : Decoder {0}\ndecoder =\n    Decode.string\n        |> Decode.andThen\n            (\\string ->\n                case string of\n',
 				{
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(enumName),
+					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(enumName),
 					_1: {ctor: '[]'}
 				}),
 			A2(
@@ -9552,7 +9546,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 					'\n\n                    _ ->\n                        Decode.fail (\"Invalid ',
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(enumName),
+						_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(enumName),
 						' type, \" ++ string ++ \" try re-running the graphqelm CLI \")\n        )\n        '))));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$toStringCase = function (enumValue) {
@@ -9576,7 +9570,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumToString = F2(
 			'toString : {0} -> String\ntoString enum =\n    case enum of\n{1}',
 			{
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(enumName),
+				_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(enumName),
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -9594,7 +9588,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumType = F2(
 			'type ',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$moduleName(enumName),
+				_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(enumName),
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					'\n    = ',
