@@ -55,10 +55,7 @@ capitalized name =
 
 decapitalized : String -> String
 decapitalized name =
-    if name |> String.startsWith "_" then
-        name
-            |> String.dropLeft 1
-            |> (\nameWithoutLeading_ -> nameWithoutLeading_ ++ "_")
-            |> decapitalized
-    else
-        name |> String.Extra.decapitalize |> normalizeIfElmReserved
+    name
+        |> capitalized
+        |> String.Extra.decapitalize
+        |> normalizeIfElmReserved

@@ -16,6 +16,10 @@ all =
             \() ->
                 Normalize.decapitalized "type"
                     |> Expect.equal "type_"
+        , test "camel field name" <|
+            \() ->
+                Normalize.decapitalized "firstName"
+                    |> Expect.equal "firstName"
         , test "already normalized module name" <|
             \() ->
                 Normalize.capitalized "MyInterface"
