@@ -2,7 +2,7 @@ module Generator.NormalizeTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.Normalize as Normalize
-import Test exposing (Test, describe, test)
+import Test exposing (Test, describe, only, test)
 
 
 all : Test
@@ -24,4 +24,20 @@ all =
             \() ->
                 Normalize.capitalized "_ModelMutationType"
                     |> Expect.equal "ModelMutationType_"
+        , test "capitalized & underscorized with leading underscore" <|
+            \() ->
+                Normalize.capitalized "ENUMERATION"
+                    |> Expect.equal "Enumeration"
+        , test "uppercase with leading underscore" <|
+            \() ->
+                Normalize.capitalized "_My_Module_Name"
+                    |> Expect.equal "MyModuleName_"
+        , test "All uppercase underscore-seperated" <|
+            \() ->
+                Normalize.capitalized "MOBILE_WEB"
+                    |> Expect.equal "MobileWeb"
+        , test "all lowercase" <|
+            \() ->
+                Normalize.capitalized "hello"
+                    |> Expect.equal "Hello"
         ]

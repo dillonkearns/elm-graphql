@@ -71,9 +71,9 @@ query =
         |> with (Query.human { id = "1001" } human)
         |> with (Query.human { id = "1004" } human)
         |> with
-            (Query.hero (\optionals -> { optionals | episode = Present Episode.EMPIRE }) hero)
+            (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
         |> with
-            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.EMPIRE }) heroUnion)
+            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
 
 
 type alias HumanLookup =
@@ -92,13 +92,13 @@ human =
 episodeYear : Episode -> Int
 episodeYear episode =
     case episode of
-        Episode.NEWHOPE ->
+        Episode.Newhope ->
             1977
 
-        Episode.EMPIRE ->
+        Episode.Empire ->
             1980
 
-        Episode.JEDI ->
+        Episode.Jedi ->
             1983
 
 

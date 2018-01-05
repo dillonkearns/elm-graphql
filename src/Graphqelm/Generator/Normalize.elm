@@ -1,5 +1,7 @@
 module Graphqelm.Generator.Normalize exposing (capitalized, decapitalized)
 
+import Char
+import Regex
 import String.Extra
 
 
@@ -11,15 +13,44 @@ normalizeIfElmReserved name =
         name
 
 
+underscores : String -> { leading : String, trailing : String, remaining : String }
+underscores string =
+    case Regex.find Regex.All (Regex.regex "^(_*)([^_].*[^_])(_*)$") string |> List.head |> Maybe.map .submatches of
+        Just [ Just leading, Just remaining, Just trailing ] ->
+            { leading = leading
+            , trailing = trailing
+            , remaining = remaining
+            }
+
+        _ ->
+            Debug.crash "Unexpected"
+
+
+isAllUpper : String -> Bool
+isAllUpper string =
+    String.all Char.isUpper string
+
+
 capitalized : String -> String
 capitalized name =
-    if name |> String.startsWith "_" then
-        name
-            |> String.dropLeft 1
-            |> (\nameWithoutLeading_ -> nameWithoutLeading_ ++ "_")
-            |> capitalized
-    else
-        name |> String.Extra.toSentenceCase
+    let
+        group =
+            underscores name
+    in
+    (if String.contains "_" group.remaining then
+        group.remaining
+            |> String.toLower
+            |> String.Extra.classify
+     else if isAllUpper group.remaining then
+        group.remaining
+            |> String.toLower
+            |> String.Extra.classify
+     else
+        group.remaining
+            |> String.Extra.classify
+    )
+        ++ group.leading
+        ++ group.trailing
 
 
 decapitalized : String -> String

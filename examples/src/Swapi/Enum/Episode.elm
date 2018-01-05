@@ -5,15 +5,15 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| One of the films in the Star Wars Trilogy
 
-  - EMPIRE - Released in 1980.
-  - JEDI - Released in 1983.
-  - NEWHOPE - Released in 1977.
+  - Empire - Released in 1980.
+  - Jedi - Released in 1983.
+  - Newhope - Released in 1977.
 
 -}
 type Episode
-    = EMPIRE
-    | JEDI
-    | NEWHOPE
+    = Empire
+    | Jedi
+    | Newhope
 
 
 decoder : Decoder Episode
@@ -23,13 +23,13 @@ decoder =
             (\string ->
                 case string of
                     "EMPIRE" ->
-                        Decode.succeed EMPIRE
+                        Decode.succeed Empire
 
                     "JEDI" ->
-                        Decode.succeed JEDI
+                        Decode.succeed Jedi
 
                     "NEWHOPE" ->
-                        Decode.succeed NEWHOPE
+                        Decode.succeed Newhope
 
                     _ ->
                         Decode.fail ("Invalid Episode type, " ++ string ++ " try re-running the graphqelm CLI ")
@@ -39,11 +39,11 @@ decoder =
 toString : Episode -> String
 toString enum =
     case enum of
-        EMPIRE ->
+        Empire ->
             "EMPIRE"
 
-        JEDI ->
+        Jedi ->
             "JEDI"
 
-        NEWHOPE ->
+        Newhope ->
             "NEWHOPE"
