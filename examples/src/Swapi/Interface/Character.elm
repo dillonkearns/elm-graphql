@@ -24,7 +24,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Swapi.Interface.Character) -> SelectionSet (a -> constructor) Swapi.Interface.Character
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onHuman : SelectionSet selection Swapi.Object.Human -> FragmentSelectionSet selection Swapi.Interface.Character

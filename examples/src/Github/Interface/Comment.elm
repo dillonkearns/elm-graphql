@@ -24,7 +24,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Comment) -> SelectionSet (a -> constructor) Github.Interface.Comment
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Interface.Comment

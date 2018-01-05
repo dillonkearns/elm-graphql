@@ -60,7 +60,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

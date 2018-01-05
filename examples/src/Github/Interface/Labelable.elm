@@ -23,7 +23,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Labelable) -> SelectionSet (a -> constructor) Github.Interface.Labelable
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.Labelable

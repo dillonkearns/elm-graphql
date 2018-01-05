@@ -25,7 +25,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.RepositoryOwner) -> SelectionSet (a -> constructor) Github.Interface.RepositoryOwner
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Interface.RepositoryOwner

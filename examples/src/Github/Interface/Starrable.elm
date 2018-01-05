@@ -23,7 +23,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Starrable) -> SelectionSet (a -> constructor) Github.Interface.Starrable
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onGist : SelectionSet selection Github.Object.Gist -> FragmentSelectionSet selection Github.Interface.Starrable

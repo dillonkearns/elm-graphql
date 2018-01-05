@@ -24,7 +24,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Normalize.Interface.Character) -> SelectionSet (a -> constructor) Normalize.Interface.Character
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onHuman : SelectionSet selection Normalize.Object.Human -> FragmentSelectionSet selection Normalize.Interface.Character

@@ -1,7 +1,7 @@
-module Graphqelm.Builder.Object exposing (fieldDecoder, object, polymorphicObject, selectionFieldDecoder, unionSelection)
+module Graphqelm.Builder.Object exposing (fieldDecoder, object, interfaceSelection, selectionFieldDecoder, unionSelection)
 
 {-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs fieldDecoder, object, selectionFieldDecoder, polymorphicObject, unionSelection
+@docs fieldDecoder, object, selectionFieldDecoder, interfaceSelection, unionSelection
 -}
 
 import Dict
@@ -50,8 +50,8 @@ object constructor =
 
 {-| Used to create the `selection` functions in auto-generated code for interfaces.
 -}
-polymorphicObject : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a -> b) -> SelectionSet (a -> b) typeLock
-polymorphicObject typeSpecificSelections constructor =
+interfaceSelection : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a -> b) -> SelectionSet (a -> b) typeLock
+interfaceSelection typeSpecificSelections constructor =
     let
         typeNameDecoder =
             \typeName ->

@@ -24,7 +24,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.GitSignature) -> SelectionSet (a -> constructor) Github.Interface.GitSignature
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onGpgSignature : SelectionSet selection Github.Object.GpgSignature -> FragmentSelectionSet selection Github.Interface.GitSignature

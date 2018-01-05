@@ -23,7 +23,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Actor) -> SelectionSet (a -> constructor) Github.Interface.Actor
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onBot : SelectionSet selection Github.Object.Bot -> FragmentSelectionSet selection Github.Interface.Actor

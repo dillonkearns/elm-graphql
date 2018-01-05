@@ -23,7 +23,7 @@ commonSelection constructor =
 -}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.GitObject) -> SelectionSet (a -> constructor) Github.Interface.GitObject
 selection constructor typeSpecificDecoders =
-    Object.polymorphicObject typeSpecificDecoders constructor
+    Object.interfaceSelection typeSpecificDecoders constructor
 
 
 onBlob : SelectionSet selection Github.Object.Blob -> FragmentSelectionSet selection Github.Interface.GitObject
