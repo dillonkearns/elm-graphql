@@ -47,6 +47,10 @@ folder.
 
 4. With the above in your `package.json`, running `npm run api` will generate Graphqelm code for you to call in `./src/StarWars/`. You can now use the generated code as in this [Ellie example](https://rebrand.ly/graphqelm) or in the [`examples`](https://github.com/dillonkearns/graphqelm/tree/master/examples) folder.
 
+By default, deprecated Fields and Enums are not included in the generated
+GraphqElm code. Use the `--includeDeprecated` flag when running the `graphqelm`
+commandline tool if you would like to include them.
+
 ## Contributors
 
 Thank you Mario Martinez ([martimatix](https://github.com/martimatix)) for
