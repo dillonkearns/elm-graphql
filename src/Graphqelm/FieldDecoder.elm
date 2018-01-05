@@ -32,6 +32,10 @@ schema.
                     |> FieldDecoder.map String.toUpper
                 )
 
+You can also map to values of a different type (`String -> Int`, for example), see
+[`examples/StarWars.elm`](https://github.com/dillonkearns/graphqelm/blob/master/examples/src/Starwars.elm)
+for more advanced example.
+
 -}
 map : (decodesTo -> mapsTo) -> FieldDecoder decodesTo typeLock -> FieldDecoder mapsTo typeLock
 map mapFunction (FieldDecoder field decoder) =
