@@ -11,6 +11,8 @@ const version = require('../package.json').version
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
   graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
+  graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)
+
   graphqelm --version # print the current graphqelm version
   graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`
 
@@ -20,6 +22,7 @@ if (args.version) {
   process.exit(0)
 }
 const baseModuleArg: undefined | string = args.base
+const includeDeprecated: boolean = !!args.includeDeprecated
 const headerArg: undefined | string | [string] = args.header
 const addHeader = (object: any, header: string) => {
   const [headerKey, headerValue] = header.split(':')
@@ -61,7 +64,7 @@ new GraphQLClient(graphqlUrl, {
   mode: 'cors',
   headers: headers
 })
-  .request(introspectionQuery, { includeDeprecated: false })
+  .request(introspectionQuery, { includeDeprecated: includeDeprecated })
   .then(data => {
     onDataAvailable(data)
   })

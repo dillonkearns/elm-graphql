@@ -1601,13 +1601,14 @@ var minimist = __webpack_require__(86);
 var formatted_write_1 = __webpack_require__(87);
 var introspection_query_1 = __webpack_require__(89);
 var version = __webpack_require__(90).version;
-var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm --version # print the current graphqelm version\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
+var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)\n\n  graphqelm --version # print the current graphqelm version\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 var args = minimist(process.argv.slice(2));
 if (args.version) {
     console.log(version);
     process.exit(0);
 }
 var baseModuleArg = args.base;
+var includeDeprecated = !!args.includeDeprecated;
 var headerArg = args.header;
 var addHeader = function (object, header) {
     var _a = header.split(':'), headerKey = _a[0], headerValue = _a[1];
@@ -1650,7 +1651,7 @@ new graphql_request_1.GraphQLClient(graphqlUrl, {
     mode: 'cors',
     headers: headers
 })
-    .request(introspection_query_1.introspectionQuery, { includeDeprecated: false })
+    .request(introspection_query_1.introspectionQuery, { includeDeprecated: includeDeprecated })
     .then(function (data) {
     onDataAvailable(data);
 })
