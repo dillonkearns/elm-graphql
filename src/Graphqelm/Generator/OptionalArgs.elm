@@ -2,6 +2,7 @@ module Graphqelm.Generator.OptionalArgs exposing (Result, generate)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Let exposing (LetBinding)
+import Graphqelm.Parser.FieldName as FieldName exposing (FieldName)
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
@@ -16,7 +17,7 @@ type alias Result =
 
 
 type alias OptionalArg =
-    { name : String
+    { name : FieldName
     , typeOf : Type.ReferrableType
     }
 
@@ -62,15 +63,18 @@ argValues apiSubmodule optionalArgs =
 argValue : List String -> OptionalArg -> String
 argValue apiSubmodule { name, typeOf } =
     interpolate
-        """Argument.optional "{0}" filledInOptionals.{0} ({1})"""
-        [ name, Graphqelm.Generator.Decoder.generateEncoder apiSubmodule (Type.TypeReference typeOf Type.NonNullable) ]
+        """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
+        [ FieldName.raw name
+        , FieldName.normalized name
+        , Graphqelm.Generator.Decoder.generateEncoder apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+        ]
 
 
 emptyRecord : List OptionalArg -> String
 emptyRecord optionalArgs =
     let
         recordEntries =
-            List.map (\{ name } -> name ++ " = Absent") optionalArgs
+            List.map (\{ name } -> FieldName.normalized name ++ " = Absent") optionalArgs
                 |> String.join ", "
     in
     interpolate "{ {0} }" [ recordEntries ]
@@ -80,7 +84,13 @@ annotation : List String -> List OptionalArg -> String
 annotation apiSubmodule optionalArgs =
     let
         insideRecord =
-            List.map (\{ name, typeOf } -> name ++ " : OptionalArgument " ++ Graphqelm.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)) optionalArgs
+            List.map
+                (\{ name, typeOf } ->
+                    FieldName.normalized name
+                        ++ " : OptionalArgument "
+                        ++ Graphqelm.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+                )
+                optionalArgs
                 |> String.join ", "
     in
     interpolate """({ {0} } -> { {0} })"""

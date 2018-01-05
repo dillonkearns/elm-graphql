@@ -21,12 +21,12 @@ selection constructor =
 
 {-|
 
-  - id - ID of the droid.
+  - iD_ - ID of the droid.
 
 -}
-droid_ : { id : String } -> SelectionSet selection Normalize.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
+droid_ : { iD_ : String } -> SelectionSet selection Normalize.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
 droid_ requiredArgs object =
-    Object.selectionFieldDecoder "_droid" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "_droid" [ Argument.required "_iD" requiredArgs.iD_ Encode.string ] object (identity >> Decode.maybe)
 
 
 {-|

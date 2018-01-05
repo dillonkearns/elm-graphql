@@ -1,14 +1,6 @@
-module Graphqelm.Generator.Normalize exposing (capitalized, decapitalized, fieldName, moduleName)
+module Graphqelm.Generator.Normalize exposing (capitalized, decapitalized, moduleName)
 
 import String.Extra
-
-
-fieldName : String -> String
-fieldName name =
-    if name == "type" then
-        "type_"
-    else
-        name
 
 
 normalizeIfElmReserved : String -> String

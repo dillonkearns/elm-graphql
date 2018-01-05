@@ -86,7 +86,7 @@ parseField { name, ofType, args, description } =
     , args =
         List.map
             (\arg ->
-                { name = arg.name
+                { name = FieldName.fieldName arg.name
                 , description = arg.description
                 , typeRef = parseRef arg.ofType
                 }
@@ -185,7 +185,7 @@ createRawTypeRef stringMaybe typeKind rawTypeRefMaybe =
 
 
 type alias Arg =
-    { name : String
+    { name : FieldName
     , description : Maybe String
     , typeRef : TypeReference
     }

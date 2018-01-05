@@ -1,6 +1,7 @@
 module Graphqelm.Generator.DocComment exposing (generate, generateForEnum)
 
 import Graphqelm.Parser.EnumName as EnumName
+import Graphqelm.Parser.FieldName as FieldName
 import Graphqelm.Parser.Type as Type exposing (EnumValue, Field)
 import Interpolate exposing (interpolate)
 
@@ -19,7 +20,7 @@ hasDocs mainDescription itemDescriptions =
 
 generate : Field -> String
 generate { description, args } =
-    generate_ description args
+    generate_ description (args |> List.map (\arg -> { arg | name = arg.name |> FieldName.normalized }))
 
 
 generate_ : Maybe String -> List { item | name : String, description : Maybe String } -> String

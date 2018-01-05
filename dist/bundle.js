@@ -8898,7 +8898,7 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField = function (_p24) {
 			_elm_lang$core$List$map,
 			function (arg) {
 				return {
-					name: arg.name,
+					name: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$fieldName(arg.name),
 					description: arg.description,
 					typeRef: _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(arg.ofType)
 				};
@@ -9482,7 +9482,19 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_ = F2(
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate = function (_p4) {
 	var _p5 = _p4;
-	return A2(_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_, _p5.description, _p5.args);
+	return A2(
+		_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_,
+		_p5.description,
+		A2(
+			_elm_lang$core$List$map,
+			function (arg) {
+				return _elm_lang$core$Native_Utils.update(
+					arg,
+					{
+						name: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(arg.name)
+					});
+			},
+			_p5.args));
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generateForEnum = F2(
 	function (description, enumValues) {
@@ -9698,7 +9710,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$annotation = F2(
 					var _p4 = _p3;
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
-						_p4.name,
+						_dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p4.name),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							' : OptionalArgument ',
@@ -9725,7 +9737,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$emptyRecord = funct
 			_elm_lang$core$List$map,
 			function (_p5) {
 				var _p6 = _p5;
-				return A2(_elm_lang$core$Basics_ops['++'], _p6.name, ' = Absent');
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					_dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p6.name),
+					' = Absent');
 			},
 			optionalArgs));
 	return A2(
@@ -9740,19 +9755,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$emptyRecord = funct
 var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValue = F2(
 	function (apiSubmodule, _p7) {
 		var _p8 = _p7;
+		var _p9 = _p8.name;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'Argument.optional \"{0}\" filledInOptionals.{0} ({1})',
+			'Argument.optional \"{0}\" filledInOptionals.{1} ({2})',
 			{
 				ctor: '::',
-				_0: _p8.name,
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$raw(_p9),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder,
-						apiSubmodule,
-						A2(_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference, _p8.typeOf, _dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable)),
-					_1: {ctor: '[]'}
+					_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p9),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder,
+							apiSubmodule,
+							A2(_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference, _p8.typeOf, _dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable)),
+						_1: {ctor: '[]'}
+					}
 				}
 			});
 	});
@@ -9781,15 +9801,15 @@ _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs_ops['=>'] = F2(
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$generate = F2(
 	function (apiSubmodule, allArgs) {
-		var _p9 = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$optionalArgOrNothing, allArgs);
-		if (_p9.ctor === '[]') {
+		var _p10 = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$optionalArgOrNothing, allArgs);
+		if (_p10.ctor === '[]') {
 			return _elm_lang$core$Maybe$Nothing;
 		} else {
-			var _p10 = _p9;
+			var _p11 = _p10;
 			return _elm_lang$core$Maybe$Just(
 				{
 					annotatedArg: {
-						annotation: A2(_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$annotation, apiSubmodule, _p10),
+						annotation: A2(_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$annotation, apiSubmodule, _p11),
 						arg: 'fillInOptionals'
 					},
 					letBindings: {
@@ -9800,7 +9820,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$generate = F2(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								'fillInOptionals ',
-								_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$emptyRecord(_p10))),
+								_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$emptyRecord(_p11))),
 						_1: {
 							ctor: '::',
 							_0: A2(
@@ -9808,7 +9828,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$generate = F2(
 								'optionalArgs',
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									A2(_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValues, apiSubmodule, _p10),
+									A2(_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValues, apiSubmodule, _p11),
 									'\n                |> List.filterMap identity')),
 							_1: {ctor: '[]'}
 						}
@@ -9868,14 +9888,13 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgAnnotati
 		var _p3 = _p1.typeRef;
 		var _p2 = _p3;
 		if (_p2._1.ctor === 'NonNullable') {
-			var fieldName = _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(_p1.name);
 			return _elm_lang$core$Maybe$Just(
 				A2(
 					_dillonkearns$graphqelm$Interpolate$interpolate,
 					'{0} : {1}',
 					{
 						ctor: '::',
-						_0: fieldName,
+						_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p1.name),
 						_1: {
 							ctor: '::',
 							_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p3),
@@ -9916,10 +9935,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString =
 					'Argument.required \"{0}\" requiredArgs.{1} ({2})',
 					{
 						ctor: '::',
-						_0: _p7,
+						_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$raw(_p7),
 						_1: {
 							ctor: '::',
-							_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$fieldName(_p7),
+							_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p7),
 							_1: {
 								ctor: '::',
 								_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder, apiSubmodule, _p8),
