@@ -10,11 +10,11 @@ all =
     describe "normalize"
         [ test "leaves valid names untouched" <|
             \() ->
-                Normalize.fieldName "validFieldName"
+                Normalize.decapitalized "validFieldName"
                     |> Expect.equal "validFieldName"
         , test "type field name" <|
             \() ->
-                Normalize.fieldName "type"
+                Normalize.decapitalized "type"
                     |> Expect.equal "type_"
         , test "already normalized module name" <|
             \() ->

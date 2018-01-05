@@ -2,6 +2,7 @@ module Generator.OptionalArgsTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.OptionalArgs as OptionalArgs
+import Graphqelm.Parser.FieldName exposing (fieldName)
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type
 import Test exposing (Test, describe, test)
@@ -17,7 +18,7 @@ all =
                     |> Expect.equal Nothing
         , test "no optional args, only required" <|
             \() ->
-                [ { name = "id"
+                [ { name = fieldName "id"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
@@ -26,7 +27,7 @@ all =
                     |> Expect.equal Nothing
         , test "with an optional string arg" <|
             \() ->
-                [ { name = "contains"
+                [ { name = fieldName "contains"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
@@ -47,11 +48,11 @@ all =
                         )
         , test "with multiple optional string args" <|
             \() ->
-                [ { name = "id"
+                [ { name = fieldName "id"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
-                , { name = "contains"
+                , { name = fieldName "contains"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
@@ -72,7 +73,7 @@ all =
                         )
         , test "with an optional int arg" <|
             \() ->
-                [ { name = "first"
+                [ { name = fieldName "first"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.Int) Type.Nullable
                   }
@@ -93,7 +94,7 @@ all =
                         )
         , test "with an optional enum arg" <|
             \() ->
-                [ { name = "episode"
+                [ { name = fieldName "episode"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.EnumRef "Episode") Type.Nullable
                   }

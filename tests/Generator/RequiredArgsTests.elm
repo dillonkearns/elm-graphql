@@ -2,6 +2,7 @@ module Generator.RequiredArgsTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.RequiredArgs as RequiredArgs
+import Graphqelm.Parser.FieldName exposing (fieldName)
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type
 import Test exposing (Test, describe, test)
@@ -17,7 +18,7 @@ all =
                     |> Expect.equal Nothing
         , test "all nullable arguments" <|
             \() ->
-                [ { name = "id"
+                [ { name = fieldName "id"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
@@ -56,7 +57,7 @@ all =
                         )
         , test "normalizes arguments" <|
             \() ->
-                [ { name = "type"
+                [ { name = fieldName "type"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
@@ -73,7 +74,7 @@ all =
 
 nameArg : Type.Arg
 nameArg =
-    { name = "name"
+    { name = fieldName "name"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
@@ -81,7 +82,7 @@ nameArg =
 
 idArg : Type.Arg
 idArg =
-    { name = "id"
+    { name = fieldName "id"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
@@ -89,7 +90,7 @@ idArg =
 
 numbersArg : Type.Arg
 numbersArg =
-    { name = "numbers"
+    { name = fieldName "numbers"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.Int) Type.NonNullable)) Type.NonNullable
     }

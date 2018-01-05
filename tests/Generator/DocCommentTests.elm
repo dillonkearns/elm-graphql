@@ -28,7 +28,7 @@ all =
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
-                    [ { name = "id"
+                    [ { name = fieldName "id"
                       , description = Just "The human's id."
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
@@ -47,7 +47,7 @@ all =
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
-                    [ { name = "id"
+                    [ { name = fieldName "id"
                       , description = Nothing
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
@@ -63,7 +63,7 @@ all =
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
-                    [ { name = "id"
+                    [ { name = fieldName "id"
                       , description = Just "The human's id."
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }

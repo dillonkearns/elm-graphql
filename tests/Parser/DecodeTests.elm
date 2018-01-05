@@ -322,7 +322,7 @@ all =
                                       , description = Nothing
                                       , typeRef = TypeReference (List (TypeReference (ObjectRef "MenuItem") Nullable)) Nullable
                                       , args =
-                                            [ { name = "filterOptions"
+                                            [ { name = FieldName.fieldName "filterOptions"
                                               , description = Nothing
                                               , typeRef = TypeReference (InputObjectRef "FilterOptions") NonNullable
                                               }

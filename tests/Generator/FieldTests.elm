@@ -4,7 +4,7 @@ import Dict
 import Expect
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as Field
-import Graphqelm.Parser.FieldName as FieldName
+import Graphqelm.Parser.FieldName as FieldName exposing (fieldName)
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
@@ -103,7 +103,7 @@ droid object =
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.ObjectRef "Human") Type.NonNullable
                 , args =
-                    [ { name = "id"
+                    [ { name = fieldName "id"
                       , description = Nothing
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
@@ -121,7 +121,7 @@ human requiredArgs object =
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable)) Type.NonNullable
                 , args =
-                    [ { name = "contains"
+                    [ { name = fieldName "contains"
                       , description = Nothing
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                       }
