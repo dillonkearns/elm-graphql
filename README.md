@@ -30,7 +30,7 @@ folder.
    ```shell
    npm install --save-dev graphqelm
    # you can now run it locally with the ./node_modules/.bin/graphqelm binary,
-   # or by calling it through an npm script as in this projects package.json
+   # or by calling it through an npm script as in this project's package.json
    ```
 
 3. Run the `graphqelm` command line tool installed above to generate your code. If you used the `--save-dev` method above, you can simply create a script in your package.json like the following:
