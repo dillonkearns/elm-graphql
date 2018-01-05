@@ -2,10 +2,17 @@ module Generator.FieldTests exposing (..)
 
 import Dict
 import Expect
+import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as Field
+import Graphqelm.Parser.FieldName as FieldName
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
+
+
+context : String -> Context
+context queryName =
+    { query = "RootQueryObject", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }
 
 
 all : Test
@@ -31,20 +38,20 @@ me =
 """
         , test "simple object with no args" <|
             \() ->
-                { name = "droid"
+                { name = FieldName.fieldName "droid"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
                 }
                     |> Field.generateForObject { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQuery"
                     |> Expect.equal
-                        """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid RootQuery
+                        """droid : SelectionSet selection Api.Object.Droid -> FieldDecoder selection RootQuery
 droid object =
       Object.selectionFieldDecoder "droid" [] (object) (identity)
 """
         , test "simple interface with no args" <|
             \() ->
-                { name = "hero"
+                { name = FieldName.fieldName "hero"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Character") Type.NonNullable
                 , args = []
@@ -60,39 +67,39 @@ droid object =
                         }
                         "RootQuery"
                     |> Expect.equal
-                        """hero : SelectionSet hero Swapi.Interface.Character -> FieldDecoder hero RootQuery
+                        """hero : SelectionSet selection Swapi.Interface.Character -> FieldDecoder selection RootQuery
 hero object =
       Object.selectionFieldDecoder "hero" [] (object) (identity)
 """
         , test "simple object with no args for object" <|
             \() ->
-                { name = "droid"
+                { name = FieldName.fieldName "droid"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
                 }
                     |> Field.generateForObject { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "Foo"
                     |> Expect.equal
-                        """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder droid Api.Object.Foo
+                        """droid : SelectionSet selection Api.Object.Droid -> FieldDecoder selection Api.Object.Foo
 droid object =
       Object.selectionFieldDecoder "droid" [] (object) (identity)
 """
         , test "list of objects with no args" <|
             \() ->
-                { name = "droid"
+                { name = FieldName.fieldName "droid"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable)) Type.NonNullable
                 , args = []
                 }
                     |> Field.generateForObject { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "Foo"
                     |> Expect.equal
-                        """droid : SelectionSet droid Api.Object.Droid -> FieldDecoder (List droid) Api.Object.Foo
+                        """droid : SelectionSet selection Api.Object.Droid -> FieldDecoder (List selection) Api.Object.Foo
 droid object =
       Object.selectionFieldDecoder "droid" [] (object) (identity >> Decode.list)
 """
         , test "with required args" <|
             \() ->
-                { name = "human"
+                { name = FieldName.fieldName "human"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.ObjectRef "Human") Type.NonNullable
                 , args =
@@ -104,13 +111,13 @@ droid object =
                 }
                     |> Field.generateForObject { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQuery"
                     |> Expect.equal
-                        """human : { id : String } -> SelectionSet human Api.Object.Human -> FieldDecoder human RootQuery
+                        """human : { id : String } -> SelectionSet selection Api.Object.Human -> FieldDecoder selection RootQuery
 human requiredArgs object =
       Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object) (identity)
 """
         , test "with optional args" <|
             \() ->
-                { name = "menuItems"
+                { name = FieldName.fieldName "menuItems"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable)) Type.NonNullable
                 , args =
@@ -122,7 +129,7 @@ human requiredArgs object =
                 }
                     |> Field.generateForObject { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty } "RootQuery"
                     |> Expect.equal
-                        """menuItems : ({ contains : OptionalArgument String } -> { contains : OptionalArgument String }) -> SelectionSet menuItems Api.Object.MenuItem -> FieldDecoder (List menuItems) RootQuery
+                        """menuItems : ({ contains : OptionalArgument String } -> { contains : OptionalArgument String }) -> SelectionSet selection Api.Object.MenuItem -> FieldDecoder (List selection) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =
@@ -136,7 +143,7 @@ menuItems fillInOptionals object =
 """
         , test "normalizes reserved names" <|
             \() ->
-                { name = "type"
+                { name = FieldName.fieldName "type"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                 , args = []
@@ -152,7 +159,7 @@ type_ =
 
 captainsField : Type.Field
 captainsField =
-    { name = "captains"
+    { name = FieldName.fieldName "captains"
     , description = Nothing
     , typeRef =
         Type.TypeReference
@@ -164,7 +171,7 @@ captainsField =
 
 menuItemsField : Type.Field
 menuItemsField =
-    { name = "menuItems"
+    { name = FieldName.fieldName "menuItems"
     , description = Nothing
     , typeRef =
         Type.TypeReference
@@ -181,7 +188,7 @@ menuItemsField =
 
 menuItemField : Type.Field
 menuItemField =
-    { name = "menuItem"
+    { name = FieldName.fieldName "menuItem"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable
     , args = []
@@ -190,7 +197,7 @@ menuItemField =
 
 meField : Type.Field
 meField =
-    { name = "me"
+    { name = FieldName.fieldName "me"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     , args = []

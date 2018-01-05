@@ -2,6 +2,7 @@ module Generator.DocCommentTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.DocComment as DocComment
+import Graphqelm.Parser.FieldName exposing (fieldName)
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (Test, describe, test)
@@ -12,7 +13,7 @@ all =
     describe "doc comment generator"
         [ test "field with no args" <|
             \() ->
-                { name = "human"
+                { name = fieldName "human"
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args = []
@@ -23,7 +24,7 @@ all =
 """
         , test "field with arg" <|
             \() ->
-                { name = "human"
+                { name = fieldName "human"
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
@@ -42,7 +43,7 @@ all =
 """
         , test "field with arg with no description" <|
             \() ->
-                { name = "human"
+                { name = fieldName "human"
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
@@ -58,7 +59,7 @@ all =
 """
         , test "field with no field description but with arg description" <|
             \() ->
-                { name = "human"
+                { name = fieldName "human"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =

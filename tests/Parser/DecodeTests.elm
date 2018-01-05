@@ -1,6 +1,8 @@
 module Parser.DecodeTests exposing (all)
 
 import Expect
+import Graphqelm.Parser.EnumName as EnumName
+import Graphqelm.Parser.FieldName as FieldName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (..)
 import Json.Decode as Decode exposing (Decoder)
@@ -41,8 +43,8 @@ all =
                         (Ok
                             (Type.TypeDefinition "Weather"
                                 (Type.EnumType
-                                    [ { name = "CLOUDY", description = Nothing }
-                                    , { name = "SUNNY", description = Nothing }
+                                    [ { name = EnumName.enumName "CLOUDY", description = Nothing }
+                                    , { name = EnumName.enumName "SUNNY", description = Nothing }
                                     ]
                                 )
                                 Nothing
@@ -133,17 +135,17 @@ all =
                         (Ok
                             (TypeDefinition "MenuItem"
                                 (ObjectType
-                                    [ { name = "description"
+                                    [ { name = FieldName.fieldName "description"
                                       , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
-                                    , { name = "id"
+                                    , { name = FieldName.fieldName "id"
                                       , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
-                                    , { name = "name"
+                                    , { name = FieldName.fieldName "name"
                                       , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
@@ -187,7 +189,7 @@ all =
                         (Ok
                             (TypeDefinition "MenuItem"
                                 (ObjectType
-                                    [ { name = "stargazers"
+                                    [ { name = FieldName.fieldName "stargazers"
                                       , description = Just "A list of users who have starred this starrable."
                                       , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
                                       , args = []
@@ -250,7 +252,7 @@ all =
                         (Ok
                             (TypeDefinition "Character"
                                 (InterfaceType
-                                    [ { name = "friends"
+                                    [ { name = FieldName.fieldName "friends"
                                       , description = Nothing
                                       , typeRef =
                                             TypeReference
@@ -316,7 +318,7 @@ all =
                         (Ok
                             (TypeDefinition "Query"
                                 (ObjectType
-                                    [ { name = "menuItems"
+                                    [ { name = FieldName.fieldName "menuItems"
                                       , description = Nothing
                                       , typeRef = TypeReference (List (TypeReference (ObjectRef "MenuItem") Nullable)) Nullable
                                       , args =
@@ -421,22 +423,22 @@ all =
                         (Ok
                             (TypeDefinition "Character"
                                 (InterfaceType
-                                    [ { name = "id"
+                                    [ { name = FieldName.fieldName "id"
                                       , description = Just "The id of the character."
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
-                                    , { name = "name"
+                                    , { name = FieldName.fieldName "name"
                                       , description = Just "The name of the character."
                                       , typeRef = TypeReference (Scalar Scalar.String) Nullable
                                       , args = []
                                       }
-                                    , { name = "friends"
+                                    , { name = FieldName.fieldName "friends"
                                       , description = Just "The friends of the character, or an empty list if they have none."
                                       , typeRef = TypeReference (List (TypeReference (InterfaceRef "Character") Nullable)) Nullable
                                       , args = []
                                       }
-                                    , { name = "appearsIn"
+                                    , { name = FieldName.fieldName "appearsIn"
                                       , description = Just "Which movies they appear in."
                                       , typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable
                                       , args = []
