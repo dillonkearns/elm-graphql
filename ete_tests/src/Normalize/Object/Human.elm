@@ -13,6 +13,8 @@ import Normalize.Object
 import Normalize.Union
 
 
+{-| Select fields to build up a SelectionSet for this object.
+-}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Object.Human
 selection constructor =
     Object.object constructor

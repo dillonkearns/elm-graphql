@@ -13,11 +13,15 @@ import Normalize.Object
 import Normalize.Union
 
 
-baseSelection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Interface.Character
-baseSelection constructor =
+{-| Select only common fields from the interface.
+-}
+commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Interface.Character
+commonSelection constructor =
     Object.object constructor
 
 
+{-| Select both common and type-specific fields from the interface.
+-}
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Normalize.Interface.Character) -> SelectionSet (a -> constructor) Normalize.Interface.Character
 selection constructor typeSpecificDecoders =
     Object.polymorphicObject typeSpecificDecoders constructor
