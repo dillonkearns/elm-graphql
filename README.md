@@ -10,8 +10,6 @@ I built this package because I wanted to have something that:
 
 See an [example in action on Ellie](https://rebrand.ly/graphqelm).
 
-**Warning** This project is currently in alpha and may see rapid change.
-
 See more end-to-end example code in the
 [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
 folder.
