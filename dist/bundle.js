@@ -1607,7 +1607,7 @@ if (args.version) {
     console.log(version);
     process.exit(0);
 }
-var baseArgRegex = /^[A-Z][a-z]*(\.[A-Z][a-z]*)*$/;
+var baseArgRegex = /^[A-Z][A-Za-z_]*(\.[A-Z][A-Za-z_]*)*$/;
 var baseModuleArg = args.base;
 function isValidBaseArg(baseArg) {
     return !!baseArg.match(baseArgRegex);
