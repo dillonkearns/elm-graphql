@@ -21,7 +21,17 @@ if (args.version) {
   console.log(version)
   process.exit(0)
 }
+const baseArgRegex = /^[A-Z][A-Za-z_]*(\.[A-Z][A-Za-z_]*)*$/
 const baseModuleArg: undefined | string = args.base
+function isValidBaseArg(baseArg: string): boolean {
+  return !!baseArg.match(baseArgRegex)
+}
+if (baseModuleArg && !isValidBaseArg(baseModuleArg)) {
+  console.log(
+    `--base was '${baseModuleArg}' but must be in format ${baseArgRegex}`
+  )
+  process.exit(1)
+}
 const includeDeprecated: boolean = !!args.includeDeprecated
 const headerArg: undefined | string | [string] = args.header
 const addHeader = (object: any, header: string) => {
