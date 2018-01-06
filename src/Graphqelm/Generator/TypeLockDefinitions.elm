@@ -1,5 +1,6 @@
 module Graphqelm.Generator.TypeLockDefinitions exposing (generateInterfaces, generateObjects, generateUnions)
 
+import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)
 
@@ -56,7 +57,7 @@ generateType name =
     interpolate
         """type {0}
     = {0}"""
-        [ name ]
+        [ Normalize.capitalized name ]
 
 
 objectName : TypeDefinition -> Maybe String

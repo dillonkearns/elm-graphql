@@ -50,6 +50,22 @@ type MyObject
     = MyObject
 """
                         )
+        , test "normalizes object names" <|
+            \() ->
+                [ Type.TypeDefinition "_MyObject"
+                    (Type.ObjectType [])
+                    Nothing
+                ]
+                    |> TypeLockDefinitions.generateObjects [ "Api" ]
+                    |> Expect.equal
+                        ( [ "Api", "Object" ]
+                        , """module Api.Object exposing (..)
+
+
+type MyObject_
+    = MyObject_
+"""
+                        )
         , test "generates imports for interfaces" <|
             \() ->
                 [ Type.TypeDefinition "MyObject"

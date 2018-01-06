@@ -10669,7 +10669,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType
 		'type {0}\n    = {0}',
 		{
 			ctor: '::',
-			_0: name,
+			_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
 			_1: {ctor: '[]'}
 		});
 };

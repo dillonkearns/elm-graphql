@@ -5,5 +5,5 @@ type Droid
     = Droid
 
 
-type Human
-    = Human
+type Human_
+    = Human_
