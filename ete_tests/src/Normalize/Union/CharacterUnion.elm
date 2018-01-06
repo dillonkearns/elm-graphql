@@ -17,8 +17,8 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
-on_human : SelectionSet selection Normalize.Object.Human_ -> FragmentSelectionSet selection Normalize.Union.CharacterUnion
-on_human (SelectionSet fields decoder) =
+onHuman_ : SelectionSet selection Normalize.Object.Human_ -> FragmentSelectionSet selection Normalize.Union.CharacterUnion
+onHuman_ (SelectionSet fields decoder) =
     FragmentSelectionSet "_human" fields decoder
 
 

@@ -10455,20 +10455,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragment = F3(
 	function (context, moduleName, interfaceImplementor) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'on{0} : SelectionSet selection {1} -> FragmentSelectionSet selection {2}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{0}\" fields decoder\n',
+			'on{0} : SelectionSet selection {2} -> FragmentSelectionSet selection {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
 			{
 				ctor: '::',
-				_0: interfaceImplementor,
+				_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(interfaceImplementor),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						'.',
-						A2(_dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$object, context, interfaceImplementor)),
+					_0: interfaceImplementor,
 					_1: {
 						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, '.', moduleName),
-						_1: {ctor: '[]'}
+						_0: A2(
+							_elm_lang$core$String$join,
+							'.',
+							A2(_dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$object, context, interfaceImplementor)),
+						_1: {
+							ctor: '::',
+							_0: A2(_elm_lang$core$String$join, '.', moduleName),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			});
@@ -10761,20 +10765,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Union$fragment = F3(
 	function (context, moduleName, interfaceImplementor) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'on{0} : SelectionSet selection {1} -> FragmentSelectionSet selection {2}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{0}\" fields decoder\n',
+			'on{0} : SelectionSet selection {2} -> FragmentSelectionSet selection {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
 			{
 				ctor: '::',
-				_0: interfaceImplementor,
+				_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(interfaceImplementor),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						'.',
-						A2(_dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$object, context, interfaceImplementor)),
+					_0: interfaceImplementor,
 					_1: {
 						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, '.', moduleName),
-						_1: {ctor: '[]'}
+						_0: A2(
+							_elm_lang$core$String$join,
+							'.',
+							A2(_dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$object, context, interfaceImplementor)),
+						_1: {
+							ctor: '::',
+							_0: A2(_elm_lang$core$String$join, '.', moduleName),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			});
@@ -17173,7 +17181,7 @@ exports.introspectionQuery = "query IntrospectionQuery($includeDeprecated: Boole
 /* 90 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"graphqelm","version":"0.0.10","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","test":"elm-test","gen:starwars":"npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com --base Swapi && cd -","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -","approve":"npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0","elm-format":"^0.7.0-exp"},"bin":{"graphqelm":"bin/graphqelm"}}
+module.exports = {"name":"graphqelm","version":"0.0.11","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","test":"elm-test","gen:starwars":"npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com --base Swapi && cd -","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -","approve":"npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0","elm-format":"^0.7.0-exp"},"bin":{"graphqelm":"bin/graphqelm"}}
 
 /***/ })
 /******/ ]);

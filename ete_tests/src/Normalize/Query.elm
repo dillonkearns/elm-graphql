@@ -75,4 +75,4 @@ heroUnion fillInOptionals object =
 -}
 human : { id : String } -> SelectionSet selection Normalize.Object.Human_ -> FieldDecoder (Maybe selection) RootQuery
 human requiredArgs object =
-    Object.selectionFieldDecoder "HUMAN" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)

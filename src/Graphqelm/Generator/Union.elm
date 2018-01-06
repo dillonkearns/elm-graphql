@@ -2,6 +2,7 @@ module Graphqelm.Generator.Union exposing (generate)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.ModuleName as ModuleName
+import Graphqelm.Generator.Normalize as Normalize
 import Interpolate exposing (interpolate)
 
 
@@ -21,11 +22,11 @@ fragments context implementors moduleName =
 fragment : Context -> List String -> String -> String
 fragment context moduleName interfaceImplementor =
     interpolate
-        """on{0} : SelectionSet selection {1} -> FragmentSelectionSet selection {2}
+        """on{0} : SelectionSet selection {2} -> FragmentSelectionSet selection {3}
 on{0} (SelectionSet fields decoder) =
-    FragmentSelectionSet "{0}" fields decoder
+    FragmentSelectionSet "{1}" fields decoder
 """
-        [ interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
+        [ Normalize.capitalized interfaceImplementor, interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
 
 
 prepend : Context -> List String -> String

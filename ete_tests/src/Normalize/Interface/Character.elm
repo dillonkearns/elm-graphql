@@ -27,8 +27,8 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-on_human : SelectionSet selection Normalize.Object.Human_ -> FragmentSelectionSet selection Normalize.Interface.Character
-on_human (SelectionSet fields decoder) =
+onHuman_ : SelectionSet selection Normalize.Object.Human_ -> FragmentSelectionSet selection Normalize.Interface.Character
+onHuman_ (SelectionSet fields decoder) =
     FragmentSelectionSet "_human" fields decoder
 
 
