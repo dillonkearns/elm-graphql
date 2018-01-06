@@ -1,7 +1,6 @@
 module Graphqelm.Generator.ModuleName exposing (enum, enumTypeName, generate, interface, mutation, object, query, union)
 
 import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
@@ -55,9 +54,9 @@ enum { apiSubmodule } name =
     apiSubmodule ++ [ "Enum", ClassCaseName.normalized name ]
 
 
-enumTypeName : { context | apiSubmodule : List String } -> String -> List String
+enumTypeName : { context | apiSubmodule : List String } -> ClassCaseName -> List String
 enumTypeName { apiSubmodule } name =
-    apiSubmodule ++ [ "Enum", Normalize.capitalized name, Normalize.capitalized name ]
+    apiSubmodule ++ [ "Enum", ClassCaseName.normalized name, ClassCaseName.normalized name ]
 
 
 query : { context | apiSubmodule : List String } -> List String

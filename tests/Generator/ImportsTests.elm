@@ -2,6 +2,7 @@ module Generator.ImportsTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
@@ -28,7 +29,7 @@ all =
                     |> Expect.equal Nothing
         , test "enum ref needs import" <|
             \() ->
-                Imports.imports [ "Api" ] (Type.TypeReference (Type.EnumRef "Foo") Type.NonNullable)
+                Imports.imports [ "Api" ] (Type.TypeReference ("Foo" |> ClassCaseName.build |> Type.EnumRef) Type.NonNullable)
                     |> Expect.equal (Just [ "Api", "Enum", "Foo" ])
         , test "filters out its own module name" <|
             \() ->

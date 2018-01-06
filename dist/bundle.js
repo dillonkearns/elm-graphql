@@ -1602,7 +1602,7 @@ var formatted_write_1 = __webpack_require__(87);
 var introspection_query_1 = __webpack_require__(89);
 var npmVersion = __webpack_require__(90).version;
 var elmPackageVersion = __webpack_require__(91).version;
-var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)\n\n  graphqelm --version # print the current graphqelm version\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
+var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)\n\n  graphqelm --version # print the current graphqelm version and target elm package version\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 var args = minimist(process.argv.slice(2));
 if (args.version) {
     console.log('npm version ', npmVersion);
@@ -8865,7 +8865,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 						return A2(
 							_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
 							_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumRef(
-								_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1)),
+								_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build(
+									_dillonkearns$graphqelm$Graphqelm_Parser_Type$expectString(_p14._1))),
 							_dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
 					case 'InputObject':
 						return A2(
@@ -8890,7 +8891,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 			if (_p19.ctor === 'Just') {
 				return A2(
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$TypeReference,
-					_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumRef(_p19._0),
+					_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumRef(
+						_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build(_p19._0)),
 					_dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
 			} else {
 				return _elm_lang$core$Native_Utils.crashCase(
@@ -9065,10 +9067,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$enumTypeName = F2(
 				_0: 'Enum',
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
+					_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(name),
 					_1: {
 						ctor: '::',
-						_0: _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name),
+						_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(name),
 						_1: {ctor: '[]'}
 					}
 				}
@@ -9292,24 +9294,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = F2(
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Decoder',
 					{
-						start: {line: 69, column: 5},
-						end: {line: 104, column: 43}
+						start: {line: 68, column: 5},
+						end: {line: 103, column: 43}
 					},
 					_p8)('I don\'t expect to see object references as argument types.');
 			case 'InterfaceRef':
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Decoder',
 					{
-						start: {line: 69, column: 5},
-						end: {line: 104, column: 43}
+						start: {line: 68, column: 5},
+						end: {line: 103, column: 43}
 					},
 					_p8)('Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces');
 			case 'UnionRef':
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Decoder',
 					{
-						start: {line: 69, column: 5},
-						end: {line: 104, column: 43}
+						start: {line: 68, column: 5},
+						end: {line: 103, column: 43}
 					},
 					_p8)('Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions');
 			case 'EnumRef':
@@ -9326,7 +9328,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = F2(
 								A2(
 									_dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$enum,
 									{apiSubmodule: apiSubmodule},
-									_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build(_p8._0)),
+									_p8._0),
 								{
 									ctor: '::',
 									_0: 'toString',
@@ -9412,7 +9414,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 									A2(
 										_dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$enum,
 										{apiSubmodule: apiSubmodule},
-										_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build(_p15._0)),
+										_p15._0),
 									{
 										ctor: '::',
 										_0: 'decoder',
@@ -9424,8 +9426,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Graphqelm.Generator.Decoder',
 							{
-								start: {line: 12, column: 6},
-								end: {line: 47, column: 98}
+								start: {line: 11, column: 6},
+								end: {line: 46, column: 98}
 							},
 							_p15)('Input objects are only for input not responses, shouldn\'t need decoder.');
 				}
@@ -10412,7 +10414,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Imports$imports = F2(
 						A2(
 							_dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$enum,
 							{apiSubmodule: apiSubmodule},
-							_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build(_p2._0)));
+							_p2._0));
 				case 'InputObjectRef':
 					return _elm_lang$core$Maybe$Nothing;
 				default:

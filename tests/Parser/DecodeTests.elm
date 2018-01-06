@@ -440,7 +440,7 @@ all =
                                       }
                                     , { name = CamelCaseName.build "appearsIn"
                                       , description = Just "Which movies they appear in."
-                                      , typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable
+                                      , typeRef = TypeReference (List (TypeReference ("Episode" |> ClassCaseName.build |> EnumRef) Nullable)) Nullable
                                       , args = []
                                       }
                                     ]

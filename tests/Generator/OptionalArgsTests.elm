@@ -3,6 +3,7 @@ module Generator.OptionalArgsTests exposing (all)
 import Expect
 import Graphqelm.Generator.OptionalArgs as OptionalArgs
 import Graphqelm.Parser.CamelCaseName as CamelCaseName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type
 import Test exposing (Test, describe, test)
@@ -96,7 +97,7 @@ all =
             \() ->
                 [ { name = CamelCaseName.build "episode"
                   , description = Nothing
-                  , typeRef = Type.TypeReference (Type.EnumRef "Episode") Type.Nullable
+                  , typeRef = Type.TypeReference ("Episode" |> ClassCaseName.build |> Type.EnumRef) Type.Nullable
                   }
                 ]
                     |> OptionalArgs.generate [ "Api" ]

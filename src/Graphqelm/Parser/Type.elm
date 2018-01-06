@@ -224,7 +224,7 @@ type TypeReference
 type ReferrableType
     = Scalar Scalar.Scalar
     | List TypeReference
-    | EnumRef String
+    | EnumRef ClassCaseName
     | ObjectRef String
     | InputObjectRef String
     | UnionRef String
@@ -308,7 +308,7 @@ parseRef (RawTypeRef rawTypeRef) =
                             ignoreRef
 
                         ( TypeKind.Enum, enumName ) ->
-                            TypeReference (enumName |> expectString |> EnumRef) NonNullable
+                            TypeReference (enumName |> expectString |> ClassCaseName.build |> EnumRef) NonNullable
 
                         ( TypeKind.InputObject, inputObjectName ) ->
                             TypeReference (inputObjectName |> expectString |> InputObjectRef) NonNullable
@@ -325,7 +325,7 @@ parseRef (RawTypeRef rawTypeRef) =
         TypeKind.Enum ->
             case rawTypeRef.name of
                 Just objectName ->
-                    TypeReference (EnumRef objectName) Nullable
+                    TypeReference (objectName |> ClassCaseName.build |> EnumRef) Nullable
 
                 Nothing ->
                     Debug.crash "Should not get null names for enum references"

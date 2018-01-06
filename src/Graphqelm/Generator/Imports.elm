@@ -1,7 +1,6 @@
 module Graphqelm.Generator.Imports exposing (imports, importsString, importsWithoutSelf)
 
 import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 
 
@@ -59,7 +58,7 @@ imports apiSubmodule (Type.TypeReference referrableType isNullable) =
             Nothing
 
         Type.EnumRef enumName ->
-            Just (ModuleName.enum { apiSubmodule = apiSubmodule } (ClassCaseName.build enumName))
+            Just (ModuleName.enum { apiSubmodule = apiSubmodule } enumName)
 
         Type.InputObjectRef _ ->
             Nothing
