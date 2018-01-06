@@ -6790,13 +6790,17 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized = functi
 			_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name)));
 };
 
-var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized = function (_p0) {
+var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$isBuiltIn = function (_p0) {
 	var _p1 = _p0;
-	return _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(_p1._0);
+	return A2(_elm_lang$core$String$startsWith, '__', _p1._0) ? true : false;
 };
-var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$raw = function (_p2) {
+var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized = function (_p2) {
 	var _p3 = _p2;
-	return _p3._0;
+	return _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(_p3._0);
+};
+var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$raw = function (_p4) {
+	var _p5 = _p4;
+	return _p5._0;
 };
 var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$ClassCaseName = function (a) {
 	return {ctor: 'ClassCaseName', _0: a};
@@ -10893,23 +10897,16 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$moduleToFileName = functio
 		A2(_elm_lang$core$String$join, '/', modulePath),
 		'.elm');
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_Group$isBuiltIn = function (_p5) {
-	var _p6 = _p5;
-	return A2(
-		_elm_lang$core$String$startsWith,
-		'__',
-		_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$raw(_p6._0)) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p6);
-};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation = F2(
-	function (_p7, typeDefinitions) {
-		var _p8 = _p7;
-		var _p9 = _p8.mutation;
-		if (_p9.ctor === 'Just') {
+	function (_p5, typeDefinitions) {
+		var _p6 = _p5;
+		var _p7 = _p6.mutation;
+		if (_p7.ctor === 'Just') {
 			return A2(
 				_elm_lang$core$List$filter,
-				function (_p10) {
-					var _p11 = _p10;
-					return !_elm_lang$core$Native_Utils.eq(_p11._0, _p9._0);
+				function (_p8) {
+					var _p9 = _p8;
+					return !_elm_lang$core$Native_Utils.eq(_p9._0, _p7._0);
 				},
 				typeDefinitions);
 		} else {
@@ -10917,18 +10914,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation = F2(
 		}
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery = F2(
-	function (_p12, typeDefinitions) {
-		var _p13 = _p12;
+	function (_p10, typeDefinitions) {
+		var _p11 = _p10;
 		return A2(
 			_elm_lang$core$List$filter,
-			function (_p14) {
-				var _p15 = _p14;
-				return !_elm_lang$core$Native_Utils.eq(_p15._0, _p13.query);
+			function (_p12) {
+				var _p13 = _p12;
+				return !_elm_lang$core$Native_Utils.eq(_p13._0, _p11.query);
 			},
 			typeDefinitions);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns = function (typeDefinitions) {
-	return A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_Group$isBuiltIn, typeDefinitions);
+	return A2(
+		_elm_lang$core$List$filter,
+		function (_p14) {
+			var _p15 = _p14;
+			return !_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$isBuiltIn(_p15._0);
+		},
+		typeDefinitions);
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$interfacePossibleTypesDict = function (typeDefs) {
 	return _elm_lang$core$Dict$fromList(

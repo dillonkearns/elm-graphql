@@ -1,4 +1,4 @@
-module Graphqelm.Parser.ClassCaseName exposing (ClassCaseName, build, normalized, raw)
+module Graphqelm.Parser.ClassCaseName exposing (ClassCaseName, build, isBuiltIn, normalized, raw)
 
 import Graphqelm.Generator.Normalize as Normalize
 
@@ -13,10 +13,18 @@ type ClassCaseName
 
 
 raw : ClassCaseName -> String
-raw (ClassCaseName name) =
-    name
+raw (ClassCaseName rawName) =
+    rawName
 
 
 normalized : ClassCaseName -> String
-normalized (ClassCaseName name) =
-    name |> Normalize.capitalized
+normalized (ClassCaseName rawName) =
+    rawName |> Normalize.capitalized
+
+
+isBuiltIn : ClassCaseName -> Bool
+isBuiltIn (ClassCaseName rawName) =
+    if String.startsWith "__" rawName then
+        True
+    else
+        False

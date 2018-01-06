@@ -93,7 +93,10 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
 excludeBuiltIns : List TypeDefinition -> List TypeDefinition
 excludeBuiltIns typeDefinitions =
     typeDefinitions
-        |> List.filterMap isBuiltIn
+        |> List.filter
+            (\(Type.TypeDefinition name definableType description) ->
+                not (ClassCaseName.isBuiltIn name)
+            )
 
 
 excludeQuery : Context -> List TypeDefinition -> List TypeDefinition
@@ -111,14 +114,6 @@ excludeMutation { mutation } typeDefinitions =
 
         Nothing ->
             typeDefinitions
-
-
-isBuiltIn : TypeDefinition -> Maybe TypeDefinition
-isBuiltIn ((Type.TypeDefinition name definableType description) as definition) =
-    if String.startsWith "__" (ClassCaseName.raw name) then
-        Nothing
-    else
-        Just definition
 
 
 moduleToFileName : List String -> String

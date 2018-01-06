@@ -1,7 +1,6 @@
 module Graphqelm.Generator.Enum exposing (enumType, generate)
 
 import Graphqelm.Generator.DocComment as DocComment
-import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
