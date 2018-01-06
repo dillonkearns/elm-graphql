@@ -6,7 +6,8 @@ import * as minimist from 'minimist'
 import * as request from 'request'
 import { writeFile } from './formatted-write'
 import { introspectionQuery } from './introspection-query'
-const version = require('../package.json').version
+const npmVersion = require('../package.json').version
+const elmPackageVersion = require('../elm-package.json').version
 
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
@@ -18,7 +19,10 @@ const usage = `Usage:
 
 const args = minimist(process.argv.slice(2))
 if (args.version) {
-  console.log(version)
+  console.log('npm version ', npmVersion)
+  console.log(
+    `Targeting elm package dillonkearns/graphqelm@${elmPackageVersion}`
+  )
   process.exit(0)
 }
 const baseArgRegex = /^[A-Z][A-Za-z_]*(\.[A-Z][A-Za-z_]*)*$/
