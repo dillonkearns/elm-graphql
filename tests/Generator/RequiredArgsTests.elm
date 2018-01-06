@@ -2,7 +2,7 @@ module Generator.RequiredArgsTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.RequiredArgs as RequiredArgs
-import Graphqelm.Parser.FieldName exposing (fieldName)
+import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type
 import Test exposing (Test, describe, test)
@@ -18,7 +18,7 @@ all =
                     |> Expect.equal Nothing
         , test "all nullable arguments" <|
             \() ->
-                [ { name = fieldName "id"
+                [ { name = CamelCaseName.build "id"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
@@ -57,7 +57,7 @@ all =
                         )
         , test "normalizes arguments" <|
             \() ->
-                [ { name = fieldName "type"
+                [ { name = CamelCaseName.build "type"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
@@ -74,7 +74,7 @@ all =
 
 nameArg : Type.Arg
 nameArg =
-    { name = fieldName "name"
+    { name = CamelCaseName.build "name"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
@@ -82,7 +82,7 @@ nameArg =
 
 idArg : Type.Arg
 idArg =
-    { name = fieldName "id"
+    { name = CamelCaseName.build "id"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     }
@@ -90,7 +90,7 @@ idArg =
 
 numbersArg : Type.Arg
 numbersArg =
-    { name = fieldName "numbers"
+    { name = CamelCaseName.build "numbers"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.Int) Type.NonNullable)) Type.NonNullable
     }

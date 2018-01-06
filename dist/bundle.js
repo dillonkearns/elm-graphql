@@ -6795,31 +6795,31 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized = functi
 			_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(name)));
 };
 
-var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized = function (_p0) {
-	var _p1 = _p0;
-	return _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(_p1._0);
-};
-var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$raw = function (_p2) {
-	var _p3 = _p2;
-	return _p3._0;
-};
-var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$EnumName = function (a) {
-	return {ctor: 'EnumName', _0: a};
-};
-var _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$enumName = _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$EnumName;
-
-var _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized = function (_p0) {
+var _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized = function (_p0) {
 	var _p1 = _p0;
 	return _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized(_p1._0);
 };
-var _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$raw = function (_p2) {
+var _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw = function (_p2) {
 	var _p3 = _p2;
 	return _p3._0;
 };
-var _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$FieldName = function (a) {
-	return {ctor: 'FieldName', _0: a};
+var _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$CamelCaseName = function (a) {
+	return {ctor: 'CamelCaseName', _0: a};
 };
-var _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$fieldName = _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$FieldName;
+var _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$build = _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$CamelCaseName;
+
+var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized = function (_p0) {
+	var _p1 = _p0;
+	return _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized(_p1._0);
+};
+var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$raw = function (_p2) {
+	var _p3 = _p2;
+	return _p3._0;
+};
+var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$ClassCaseName = function (a) {
+	return {ctor: 'ClassCaseName', _0: a};
+};
+var _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build = _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$ClassCaseName;
 
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Float = {ctor: 'Float'};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Int = {ctor: 'Int'};
@@ -8575,7 +8575,7 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$enumValueDecoder = A3(
 	_dillonkearns$graphqelm$Graphqelm_Parser_Type$EnumValue,
 	A2(
 		_elm_lang$core$Json_Decode$map,
-		_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$enumName,
+		_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build,
 		A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string)),
 	A2(
 		_elm_lang$core$Json_Decode$field,
@@ -8893,14 +8893,14 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef = function (_p2) {
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseField = function (_p24) {
 	var _p25 = _p24;
 	return {
-		name: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$fieldName(_p25.name),
+		name: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$build(_p25.name),
 		description: _p25.description,
 		typeRef: _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(_p25.ofType),
 		args: A2(
 			_elm_lang$core$List$map,
 			function (arg) {
 				return {
-					name: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$fieldName(arg.name),
+					name: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$build(arg.name),
 					description: arg.description,
 					typeRef: _dillonkearns$graphqelm$Graphqelm_Parser_Type$parseRef(arg.ofType)
 				};
@@ -9493,7 +9493,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate = function (
 				return _elm_lang$core$Native_Utils.update(
 					arg,
 					{
-						name: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(arg.name)
+						name: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(arg.name)
 					});
 			},
 			_p5.args));
@@ -9509,7 +9509,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generateForEnum = F2(
 					return _elm_lang$core$Native_Utils.update(
 						enumValue,
 						{
-							name: _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized(enumValue.name)
+							name: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(enumValue.name)
 						});
 				},
 				enumValues));
@@ -9540,11 +9540,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 								'                    \"',
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$raw(enumValue),
+									_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$raw(enumValue),
 									A2(
 										_elm_lang$core$Basics_ops['++'],
 										'\" ->\n                        Decode.succeed ',
-										_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized(enumValue))));
+										_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(enumValue))));
 						},
 						A2(
 							_elm_lang$core$List$map,
@@ -9566,10 +9566,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$toStringCase = function (en
 		'        {0} ->\n                \"{1}\"\n',
 		{
 			ctor: '::',
-			_0: _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized(enumValue.name),
+			_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(enumValue.name),
 			_1: {
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_EnumName$raw(enumValue.name),
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$raw(enumValue.name),
 				_1: {ctor: '[]'}
 			}
 		});
@@ -9610,7 +9610,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumType = F2(
 							'\n    | ',
 							A2(
 								_elm_lang$core$List$map,
-								_dillonkearns$graphqelm$Graphqelm_Parser_EnumName$normalized,
+								_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized,
 								A2(
 									_elm_lang$core$List$map,
 									function (_) {
@@ -9712,7 +9712,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$annotation = F2(
 					var _p4 = _p3;
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
-						_dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p4.name),
+						_dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p4.name),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							' : OptionalArgument ',
@@ -9741,7 +9741,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$emptyRecord = funct
 				var _p6 = _p5;
 				return A2(
 					_elm_lang$core$Basics_ops['++'],
-					_dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p6.name),
+					_dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p6.name),
 					' = Absent');
 			},
 			optionalArgs));
@@ -9763,10 +9763,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValue = F2(
 			'Argument.optional \"{0}\" filledInOptionals.{1} ({2})',
 			{
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$raw(_p9),
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(_p9),
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p9),
+					_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p9),
 					_1: {
 						ctor: '::',
 						_0: A2(
@@ -9896,7 +9896,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgAnnotati
 					'{0} : {1}',
 					{
 						ctor: '::',
-						_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p1.name),
+						_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p1.name),
 						_1: {
 							ctor: '::',
 							_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p3),
@@ -9937,10 +9937,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString =
 					'Argument.required \"{0}\" requiredArgs.{1} ({2})',
 					{
 						ctor: '::',
-						_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$raw(_p7),
+						_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(_p7),
 						_1: {
 							ctor: '::',
-							_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(_p7),
+							_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p7),
 							_1: {
 								ctor: '::',
 								_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder, apiSubmodule, _p8),
@@ -10176,7 +10176,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F
 			'{9}{6} : {3}\n{6} {4}={7}\n      {5} \"{0}\" {1} ({2}){8}\n',
 			{
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$raw(field.name),
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name),
 				_1: {
 					ctor: '::',
 					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldArgsString(fieldGenerator),
@@ -10194,7 +10194,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F
 									_0: A2(_elm_lang$core$Basics_ops['++'], 'Object', fieldGenerator.otherThing),
 									_1: {
 										ctor: '::',
-										_0: _dillonkearns$graphqelm$Graphqelm_Parser_FieldName$normalized(field.name),
+										_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(field.name),
 										_1: {
 											ctor: '::',
 											_0: _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate(fieldGenerator.letBindings),

@@ -8,7 +8,7 @@ import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.ReferenceLeaf as ReferenceLeaf
 import Graphqelm.Generator.RequiredArgs
-import Graphqelm.Parser.FieldName as FieldName exposing (FieldName)
+import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -61,13 +61,13 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
 {6} {4}={7}
       {5} "{0}" {1} ({2}){8}
 """
-        [ field.name |> FieldName.raw
+        [ field.name |> CamelCaseName.raw
         , fieldGenerator |> fieldArgsString
         , fieldGenerator.decoder
         , something
         , argsListString fieldGenerator
         , "Object" ++ fieldGenerator.otherThing
-        , field.name |> FieldName.normalized
+        , field.name |> CamelCaseName.normalized
         , Let.generate fieldGenerator.letBindings
         , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
         , DocComment.generate field
@@ -218,7 +218,7 @@ leafType (Type.TypeReference referrableType isNullable) =
             Debug.crash "Unexpected type"
 
 
-init : Context -> FieldName -> TypeReference -> FieldGenerator
+init : Context -> CamelCaseName -> TypeReference -> FieldGenerator
 init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->

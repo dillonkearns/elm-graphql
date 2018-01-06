@@ -14,8 +14,8 @@ module Graphqelm.Parser.Type
         , typeRefDecoder
         )
 
-import Graphqelm.Parser.EnumName as EnumName exposing (EnumName)
-import Graphqelm.Parser.FieldName as FieldName exposing (FieldName)
+import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
@@ -80,13 +80,13 @@ unionDecoder =
 
 parseField : RawField -> Field
 parseField { name, ofType, args, description } =
-    { name = FieldName.fieldName name
+    { name = CamelCaseName.build name
     , description = description
     , typeRef = parseRef ofType
     , args =
         List.map
             (\arg ->
-                { name = FieldName.fieldName arg.name
+                { name = CamelCaseName.build arg.name
                 , description = arg.description
                 , typeRef = parseRef arg.ofType
                 }
@@ -120,12 +120,12 @@ enumDecoder =
 enumValueDecoder : Decoder EnumValue
 enumValueDecoder =
     Decode.map2 EnumValue
-        (Decode.field "name" Decode.string |> Decode.map EnumName.enumName)
+        (Decode.field "name" Decode.string |> Decode.map ClassCaseName.build)
         (Decode.field "description" (Decode.maybe Decode.string))
 
 
 type alias EnumValue =
-    { name : EnumName
+    { name : ClassCaseName
     , description : Maybe String
     }
 
@@ -185,14 +185,14 @@ createRawTypeRef stringMaybe typeKind rawTypeRefMaybe =
 
 
 type alias Arg =
-    { name : FieldName
+    { name : CamelCaseName
     , description : Maybe String
     , typeRef : TypeReference
     }
 
 
 type alias Field =
-    { name : FieldName
+    { name : CamelCaseName
     , description : Maybe String
     , typeRef : TypeReference
     , args : List Arg

@@ -1,8 +1,8 @@
 module Parser.DecodeTests exposing (all)
 
 import Expect
-import Graphqelm.Parser.EnumName as EnumName
-import Graphqelm.Parser.FieldName as FieldName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
+import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (..)
 import Json.Decode as Decode exposing (Decoder)
@@ -43,8 +43,8 @@ all =
                         (Ok
                             (Type.TypeDefinition "Weather"
                                 (Type.EnumType
-                                    [ { name = EnumName.enumName "CLOUDY", description = Nothing }
-                                    , { name = EnumName.enumName "SUNNY", description = Nothing }
+                                    [ { name = ClassCaseName.build "CLOUDY", description = Nothing }
+                                    , { name = ClassCaseName.build "SUNNY", description = Nothing }
                                     ]
                                 )
                                 Nothing
@@ -135,17 +135,17 @@ all =
                         (Ok
                             (TypeDefinition "MenuItem"
                                 (ObjectType
-                                    [ { name = FieldName.fieldName "description"
+                                    [ { name = CamelCaseName.build "description"
                                       , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
-                                    , { name = FieldName.fieldName "id"
+                                    , { name = CamelCaseName.build "id"
                                       , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
-                                    , { name = FieldName.fieldName "name"
+                                    , { name = CamelCaseName.build "name"
                                       , description = Nothing
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
@@ -189,7 +189,7 @@ all =
                         (Ok
                             (TypeDefinition "MenuItem"
                                 (ObjectType
-                                    [ { name = FieldName.fieldName "stargazers"
+                                    [ { name = CamelCaseName.build "stargazers"
                                       , description = Just "A list of users who have starred this starrable."
                                       , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
                                       , args = []
@@ -252,7 +252,7 @@ all =
                         (Ok
                             (TypeDefinition "Character"
                                 (InterfaceType
-                                    [ { name = FieldName.fieldName "friends"
+                                    [ { name = CamelCaseName.build "friends"
                                       , description = Nothing
                                       , typeRef =
                                             TypeReference
@@ -318,11 +318,11 @@ all =
                         (Ok
                             (TypeDefinition "Query"
                                 (ObjectType
-                                    [ { name = FieldName.fieldName "menuItems"
+                                    [ { name = CamelCaseName.build "menuItems"
                                       , description = Nothing
                                       , typeRef = TypeReference (List (TypeReference (ObjectRef "MenuItem") Nullable)) Nullable
                                       , args =
-                                            [ { name = FieldName.fieldName "filterOptions"
+                                            [ { name = CamelCaseName.build "filterOptions"
                                               , description = Nothing
                                               , typeRef = TypeReference (InputObjectRef "FilterOptions") NonNullable
                                               }
@@ -423,22 +423,22 @@ all =
                         (Ok
                             (TypeDefinition "Character"
                                 (InterfaceType
-                                    [ { name = FieldName.fieldName "id"
+                                    [ { name = CamelCaseName.build "id"
                                       , description = Just "The id of the character."
                                       , typeRef = TypeReference (Scalar Scalar.String) NonNullable
                                       , args = []
                                       }
-                                    , { name = FieldName.fieldName "name"
+                                    , { name = CamelCaseName.build "name"
                                       , description = Just "The name of the character."
                                       , typeRef = TypeReference (Scalar Scalar.String) Nullable
                                       , args = []
                                       }
-                                    , { name = FieldName.fieldName "friends"
+                                    , { name = CamelCaseName.build "friends"
                                       , description = Just "The friends of the character, or an empty list if they have none."
                                       , typeRef = TypeReference (List (TypeReference (InterfaceRef "Character") Nullable)) Nullable
                                       , args = []
                                       }
-                                    , { name = FieldName.fieldName "appearsIn"
+                                    , { name = CamelCaseName.build "appearsIn"
                                       , description = Just "Which movies they appear in."
                                       , typeRef = TypeReference (List (TypeReference (EnumRef "Episode") Nullable)) Nullable
                                       , args = []

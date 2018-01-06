@@ -1,7 +1,7 @@
 module Graphqelm.Generator.DocComment exposing (generate, generateForEnum)
 
-import Graphqelm.Parser.EnumName as EnumName
-import Graphqelm.Parser.FieldName as FieldName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
+import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.Type as Type exposing (EnumValue, Field)
 import Interpolate exposing (interpolate)
 
@@ -20,7 +20,7 @@ hasDocs mainDescription itemDescriptions =
 
 generate : Field -> String
 generate { description, args } =
-    generate_ description (args |> List.map (\arg -> { arg | name = arg.name |> FieldName.normalized }))
+    generate_ description (args |> List.map (\arg -> { arg | name = arg.name |> CamelCaseName.normalized }))
 
 
 generate_ : Maybe String -> List { item | name : String, description : Maybe String } -> String
@@ -36,7 +36,7 @@ generate_ mainDescription itemDescriptions =
 
 generateForEnum : Maybe String -> List EnumValue -> String
 generateForEnum description enumValues =
-    generate_ description (enumValues |> List.map (\enumValue -> { enumValue | name = enumValue.name |> EnumName.normalized }))
+    generate_ description (enumValues |> List.map (\enumValue -> { enumValue | name = enumValue.name |> ClassCaseName.normalized }))
 
 
 argsDoc : List { item | name : String, description : Maybe String } -> String

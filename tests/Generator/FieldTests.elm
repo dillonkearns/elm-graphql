@@ -4,7 +4,7 @@ import Dict
 import Expect
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as Field
-import Graphqelm.Parser.FieldName as FieldName exposing (fieldName)
+import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
@@ -38,7 +38,7 @@ me =
 """
         , test "simple object with no args" <|
             \() ->
-                { name = FieldName.fieldName "droid"
+                { name = CamelCaseName.build "droid"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
@@ -51,7 +51,7 @@ droid object =
 """
         , test "simple interface with no args" <|
             \() ->
-                { name = FieldName.fieldName "hero"
+                { name = CamelCaseName.build "hero"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Character") Type.NonNullable
                 , args = []
@@ -73,7 +73,7 @@ hero object =
 """
         , test "simple object with no args for object" <|
             \() ->
-                { name = FieldName.fieldName "droid"
+                { name = CamelCaseName.build "droid"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable
                 , args = []
@@ -86,7 +86,7 @@ droid object =
 """
         , test "list of objects with no args" <|
             \() ->
-                { name = FieldName.fieldName "droid"
+                { name = CamelCaseName.build "droid"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "Droid") Type.NonNullable)) Type.NonNullable
                 , args = []
@@ -99,11 +99,11 @@ droid object =
 """
         , test "with required args" <|
             \() ->
-                { name = FieldName.fieldName "human"
+                { name = CamelCaseName.build "human"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.ObjectRef "Human") Type.NonNullable
                 , args =
-                    [ { name = fieldName "id"
+                    [ { name = CamelCaseName.build "id"
                       , description = Nothing
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
@@ -117,11 +117,11 @@ human requiredArgs object =
 """
         , test "with optional args" <|
             \() ->
-                { name = FieldName.fieldName "menuItems"
+                { name = CamelCaseName.build "menuItems"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.List (Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable)) Type.NonNullable
                 , args =
-                    [ { name = fieldName "contains"
+                    [ { name = CamelCaseName.build "contains"
                       , description = Nothing
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                       }
@@ -143,7 +143,7 @@ menuItems fillInOptionals object =
 """
         , test "normalizes reserved names" <|
             \() ->
-                { name = FieldName.fieldName "type"
+                { name = CamelCaseName.build "type"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                 , args = []
@@ -159,7 +159,7 @@ type_ =
 
 captainsField : Type.Field
 captainsField =
-    { name = FieldName.fieldName "captains"
+    { name = CamelCaseName.build "captains"
     , description = Nothing
     , typeRef =
         Type.TypeReference
@@ -171,7 +171,7 @@ captainsField =
 
 menuItemsField : Type.Field
 menuItemsField =
-    { name = FieldName.fieldName "menuItems"
+    { name = CamelCaseName.build "menuItems"
     , description = Nothing
     , typeRef =
         Type.TypeReference
@@ -188,7 +188,7 @@ menuItemsField =
 
 menuItemField : Type.Field
 menuItemField =
-    { name = FieldName.fieldName "menuItem"
+    { name = CamelCaseName.build "menuItem"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.ObjectRef "MenuItem") Type.NonNullable
     , args = []
@@ -197,7 +197,7 @@ menuItemField =
 
 meField : Type.Field
 meField =
-    { name = FieldName.fieldName "me"
+    { name = CamelCaseName.build "me"
     , description = Nothing
     , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
     , args = []

@@ -2,7 +2,7 @@ module Generator.TypeLockDefinitionsTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
-import Graphqelm.Parser.EnumName exposing (enumName)
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type as Type exposing (..)
 import Test exposing (..)
 
@@ -14,8 +14,8 @@ all =
             \() ->
                 [ Type.TypeDefinition "Weather"
                     (Type.EnumType
-                        [ { name = enumName "CLOUDY", description = Nothing }
-                        , { name = enumName "SUNNY", description = Nothing }
+                        [ { name = ClassCaseName.build "CLOUDY", description = Nothing }
+                        , { name = ClassCaseName.build "SUNNY", description = Nothing }
                         ]
                     )
                     Nothing

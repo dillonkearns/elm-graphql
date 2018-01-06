@@ -10,8 +10,8 @@ all =
     describe "normalize"
         [ test "leaves valid names untouched" <|
             \() ->
-                Normalize.decapitalized "validFieldName"
-                    |> Expect.equal "validFieldName"
+                Normalize.decapitalized "validCamelCaseName"
+                    |> Expect.equal "validCamelCaseName"
         , test "type field name" <|
             \() ->
                 Normalize.decapitalized "type"

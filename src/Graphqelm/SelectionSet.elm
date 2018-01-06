@@ -108,7 +108,7 @@ with (FieldDecoder field fieldDecoder) (SelectionSet objectFields objectDecoder)
         duplicateCount =
             List.Extra.count (\current -> fieldName == Field.name current) objectFields
 
-        decodeFieldName =
+        decodeCamelCaseName =
             if duplicateCount > 0 then
                 fieldName ++ toString (duplicateCount + 1)
             else
@@ -116,6 +116,6 @@ with (FieldDecoder field fieldDecoder) (SelectionSet objectFields objectDecoder)
     in
     SelectionSet (objectFields ++ [ field ])
         (Decode.map2 (|>)
-            (Decode.field decodeFieldName fieldDecoder)
+            (Decode.field decodeCamelCaseName fieldDecoder)
             objectDecoder
         )

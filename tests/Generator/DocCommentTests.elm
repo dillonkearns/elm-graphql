@@ -2,7 +2,7 @@ module Generator.DocCommentTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.DocComment as DocComment
-import Graphqelm.Parser.FieldName exposing (fieldName)
+import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (Test, describe, test)
@@ -13,7 +13,7 @@ all =
     describe "doc comment generator"
         [ test "field with no args" <|
             \() ->
-                { name = fieldName "human"
+                { name = CamelCaseName.build "human"
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args = []
@@ -24,11 +24,11 @@ all =
 """
         , test "field with arg" <|
             \() ->
-                { name = fieldName "human"
+                { name = CamelCaseName.build "human"
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
-                    [ { name = fieldName "id"
+                    [ { name = CamelCaseName.build "id"
                       , description = Just "The human's id."
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
@@ -43,11 +43,11 @@ all =
 """
         , test "field with arg with no description" <|
             \() ->
-                { name = fieldName "human"
+                { name = CamelCaseName.build "human"
                 , description = Just "A human in the star wars universe."
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
-                    [ { name = fieldName "id"
+                    [ { name = CamelCaseName.build "id"
                       , description = Nothing
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }
@@ -59,11 +59,11 @@ all =
 """
         , test "field with no field description but with arg description" <|
             \() ->
-                { name = fieldName "human"
+                { name = CamelCaseName.build "human"
                 , description = Nothing
                 , typeRef = Type.TypeReference (Type.InterfaceRef "Human") Type.NonNullable
                 , args =
-                    [ { name = fieldName "id"
+                    [ { name = CamelCaseName.build "id"
                       , description = Just "The human's id."
                       , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                       }

@@ -2,7 +2,7 @@ module Generator.OptionalArgsTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.OptionalArgs as OptionalArgs
-import Graphqelm.Parser.FieldName exposing (fieldName)
+import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type
 import Test exposing (Test, describe, test)
@@ -18,7 +18,7 @@ all =
                     |> Expect.equal Nothing
         , test "no optional args, only required" <|
             \() ->
-                [ { name = fieldName "id"
+                [ { name = CamelCaseName.build "id"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
@@ -27,7 +27,7 @@ all =
                     |> Expect.equal Nothing
         , test "with an optional string arg" <|
             \() ->
-                [ { name = fieldName "contains"
+                [ { name = CamelCaseName.build "contains"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
@@ -48,11 +48,11 @@ all =
                         )
         , test "with multiple optional string args" <|
             \() ->
-                [ { name = fieldName "id"
+                [ { name = CamelCaseName.build "id"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
-                , { name = fieldName "contains"
+                , { name = CamelCaseName.build "contains"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
@@ -73,7 +73,7 @@ all =
                         )
         , test "with an optional int arg" <|
             \() ->
-                [ { name = fieldName "first"
+                [ { name = CamelCaseName.build "first"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.Int) Type.Nullable
                   }
@@ -94,7 +94,7 @@ all =
                         )
         , test "with an optional enum arg" <|
             \() ->
-                [ { name = fieldName "episode"
+                [ { name = CamelCaseName.build "episode"
                   , description = Nothing
                   , typeRef = Type.TypeReference (Type.EnumRef "Episode") Type.Nullable
                   }

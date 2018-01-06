@@ -2,7 +2,7 @@ module Generator.EnumTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.Enum as Enum
-import Graphqelm.Parser.EnumName as EnumName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Test exposing (Test, describe, test)
 
 
@@ -12,8 +12,8 @@ all =
         [ test "generate enum" <|
             \() ->
                 Enum.enumType "Beverage"
-                    [ { name = EnumName.enumName "Tea", description = Nothing }
-                    , { name = EnumName.enumName "Coffee", description = Nothing }
+                    [ { name = ClassCaseName.build "Tea", description = Nothing }
+                    , { name = ClassCaseName.build "Coffee", description = Nothing }
                     ]
                     |> Expect.equal """type Beverage
     = Tea

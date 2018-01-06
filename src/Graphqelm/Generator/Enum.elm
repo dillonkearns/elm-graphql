@@ -2,7 +2,7 @@ module Graphqelm.Generator.Enum exposing (enumType, generate)
 
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Generator.Normalize as Normalize
-import Graphqelm.Parser.EnumName as EnumName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
@@ -41,7 +41,7 @@ enumType enumName enumValues =
     = """
         ++ (enumValues
                 |> List.map .name
-                |> List.map EnumName.normalized
+                |> List.map ClassCaseName.normalized
                 |> String.join "\n    | "
            )
         ++ "\n"
@@ -67,8 +67,8 @@ toStringCase enumValue =
         """        {0} ->
                 "{1}"
 """
-        [ enumValue.name |> EnumName.normalized
-        , enumValue.name |> EnumName.raw
+        [ enumValue.name |> ClassCaseName.normalized
+        , enumValue.name |> ClassCaseName.raw
         ]
 
 
@@ -88,9 +88,9 @@ decoder =
                 |> List.map
                     (\enumValue ->
                         "                    \""
-                            ++ EnumName.raw enumValue
+                            ++ ClassCaseName.raw enumValue
                             ++ "\" ->\n                        Decode.succeed "
-                            ++ EnumName.normalized enumValue
+                            ++ ClassCaseName.normalized enumValue
                     )
                 |> String.join "\n\n"
            )

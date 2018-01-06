@@ -1,7 +1,7 @@
 module Graphqelm.Generator.RequiredArgs exposing (generate)
 
 import Graphqelm.Generator.Decoder
-import Graphqelm.Parser.FieldName as FieldName
+import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
@@ -37,8 +37,8 @@ requiredArgString apiSubmodule { name, typeRef } =
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
                 "Argument.required \"{0}\" requiredArgs.{1} ({2})"
-                [ name |> FieldName.raw
-                , name |> FieldName.normalized
+                [ name |> CamelCaseName.raw
+                , name |> CamelCaseName.normalized
                 , Graphqelm.Generator.Decoder.generateEncoder apiSubmodule typeRef
                 ]
                 |> Just
@@ -65,7 +65,7 @@ requiredArgAnnotation apiSubmodule { name, typeRef } =
         Type.TypeReference referrableType Type.NonNullable ->
             interpolate
                 "{0} : {1}"
-                [ name |> FieldName.normalized
+                [ name |> CamelCaseName.normalized
                 , Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
                 ]
                 |> Just
