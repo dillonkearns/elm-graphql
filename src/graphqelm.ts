@@ -14,7 +14,7 @@ const usage = `Usage:
   graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
   graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)
 
-  graphqelm --version # print the current graphqelm version
+  graphqelm --version # print the current graphqelm version and target elm package version
   graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`
 
 const args = minimist(process.argv.slice(2))
