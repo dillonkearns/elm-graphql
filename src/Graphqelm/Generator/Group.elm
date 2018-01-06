@@ -10,6 +10,7 @@ import Graphqelm.Generator.Object
 import Graphqelm.Generator.Query
 import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Generator.Union
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
@@ -30,17 +31,17 @@ sortedIntrospectionData typeDefinitions queryObjectName mutationObjectName =
 
 typeDefName : TypeDefinition -> String
 typeDefName (TypeDefinition name definableType description) =
-    name
+    ClassCaseName.normalized name
 
 
-interfacePossibleTypesDict : List TypeDefinition -> Dict String (List String)
+interfacePossibleTypesDict : List TypeDefinition -> Dict String (List ClassCaseName)
 interfacePossibleTypesDict typeDefs =
     typeDefs
         |> List.filterMap
             (\(TypeDefinition typeName definableType description) ->
                 case definableType of
                     Type.InterfaceType fields possibleTypes ->
-                        Just ( typeName, possibleTypes )
+                        Just ( ClassCaseName.raw typeName, possibleTypes )
 
                     _ ->
                         Nothing
@@ -51,37 +52,39 @@ interfacePossibleTypesDict typeDefs =
 generateFiles : List String -> IntrospectionData -> Dict String String
 generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName } =
     let
+        context : Context
+        context =
+            { query = ClassCaseName.build queryObjectName
+            , mutation = mutationObjectName |> Maybe.map ClassCaseName.build
+            , apiSubmodule = apiSubmodule
+            , interfaces = interfacePossibleTypesDict typeDefinitions
+            }
+
         objectTypes =
             [ TypeLockDefinitions.generateObjects apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
-                    |> excludeQuery queryObjectName
-                    |> excludeMutation mutationObjectName
+                    |> excludeQuery context
+                    |> excludeMutation context
                 )
             , TypeLockDefinitions.generateInterfaces apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
-                    |> excludeQuery queryObjectName
-                    |> excludeMutation mutationObjectName
+                    |> excludeQuery context
+                    |> excludeMutation context
                 )
             , TypeLockDefinitions.generateUnions apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
-                    |> excludeQuery queryObjectName
-                    |> excludeMutation mutationObjectName
+                    |> excludeQuery context
+                    |> excludeMutation context
                 )
             ]
     in
     typeDefinitions
         |> excludeBuiltIns
         |> List.filterMap
-            (toPair
-                { query = queryObjectName
-                , mutation = mutationObjectName
-                , apiSubmodule = apiSubmodule
-                , interfaces = interfacePossibleTypesDict typeDefinitions
-                }
-            )
+            (toPair context)
         |> List.append objectTypes
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
@@ -93,15 +96,15 @@ excludeBuiltIns typeDefinitions =
         |> List.filterMap isBuiltIn
 
 
-excludeQuery : String -> List TypeDefinition -> List TypeDefinition
-excludeQuery queryObjectName typeDefinitions =
+excludeQuery : Context -> List TypeDefinition -> List TypeDefinition
+excludeQuery { query } typeDefinitions =
     typeDefinitions
-        |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= queryObjectName)
+        |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= query)
 
 
-excludeMutation : Maybe String -> List TypeDefinition -> List TypeDefinition
-excludeMutation maybeMutationObjectName typeDefinitions =
-    case maybeMutationObjectName of
+excludeMutation : Context -> List TypeDefinition -> List TypeDefinition
+excludeMutation { mutation } typeDefinitions =
+    case mutation of
         Just mutationObjectName ->
             typeDefinitions
                 |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= mutationObjectName)
@@ -112,7 +115,7 @@ excludeMutation maybeMutationObjectName typeDefinitions =
 
 isBuiltIn : TypeDefinition -> Maybe TypeDefinition
 isBuiltIn ((Type.TypeDefinition name definableType description) as definition) =
-    if String.startsWith "__" name then
+    if String.startsWith "__" (ClassCaseName.raw name) then
         Nothing
     else
         Just definition
@@ -150,7 +153,7 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
                 |> Just
 
         Type.InterfaceType fields possibleTypes ->
-            Graphqelm.Generator.Interface.generate context name moduleName fields
+            Graphqelm.Generator.Interface.generate context (ClassCaseName.raw name) moduleName fields
                 |> Just
 
         Type.UnionType possibleTypes ->

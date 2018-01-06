@@ -11,7 +11,7 @@ all =
     describe "enum"
         [ test "generate enum" <|
             \() ->
-                Enum.enumType "Beverage"
+                Enum.enumType (ClassCaseName.build "Beverage")
                     [ { name = ClassCaseName.build "Tea", description = Nothing }
                     , { name = ClassCaseName.build "Coffee", description = Nothing }
                     ]

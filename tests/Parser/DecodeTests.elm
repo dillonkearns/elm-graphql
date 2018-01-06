@@ -1,8 +1,8 @@
 module Parser.DecodeTests exposing (all)
 
 import Expect
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.CamelCaseName as CamelCaseName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (..)
 import Json.Decode as Decode exposing (Decoder)
@@ -41,7 +41,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (Type.TypeDefinition "Weather"
+                            (Type.typeDefinition "Weather"
                                 (Type.EnumType
                                     [ { name = ClassCaseName.build "CLOUDY", description = Nothing }
                                     , { name = ClassCaseName.build "SUNNY", description = Nothing }
@@ -66,7 +66,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (TypeDefinition "Date" ScalarType Nothing)
+                            (Type.typeDefinition "Date" ScalarType Nothing)
                         )
         , test "decodes object" <|
             \() ->
@@ -133,7 +133,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (TypeDefinition "MenuItem"
+                            (Type.typeDefinition "MenuItem"
                                 (ObjectType
                                     [ { name = CamelCaseName.build "description"
                                       , description = Nothing
@@ -187,7 +187,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (TypeDefinition "MenuItem"
+                            (Type.typeDefinition "MenuItem"
                                 (ObjectType
                                     [ { name = CamelCaseName.build "stargazers"
                                       , description = Just "A list of users who have starred this starrable."
@@ -250,7 +250,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (TypeDefinition "Character"
+                            (Type.typeDefinition "Character"
                                 (InterfaceType
                                     [ { name = CamelCaseName.build "friends"
                                       , description = Nothing
@@ -261,7 +261,7 @@ all =
                                       , args = []
                                       }
                                     ]
-                                    [ "Human", "Droid" ]
+                                    [ ClassCaseName.build "Human", ClassCaseName.build "Droid" ]
                                 )
                                 Nothing
                             )
@@ -316,7 +316,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (TypeDefinition "Query"
+                            (Type.typeDefinition "Query"
                                 (ObjectType
                                     [ { name = CamelCaseName.build "menuItems"
                                       , description = Nothing
@@ -421,7 +421,7 @@ all =
                     |> Decode.decodeString Type.decoder
                     |> Expect.equal
                         (Ok
-                            (TypeDefinition "Character"
+                            (Type.typeDefinition "Character"
                                 (InterfaceType
                                     [ { name = CamelCaseName.build "id"
                                       , description = Just "The id of the character."
@@ -444,7 +444,7 @@ all =
                                       , args = []
                                       }
                                     ]
-                                    [ "Human", "Droid" ]
+                                    [ ClassCaseName.build "Human", ClassCaseName.build "Droid" ]
                                 )
                                 Nothing
                             )

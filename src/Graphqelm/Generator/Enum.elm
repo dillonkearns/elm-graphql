@@ -2,12 +2,12 @@ module Graphqelm.Generator.Enum exposing (enumType, generate)
 
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Generator.Normalize as Normalize
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type exposing (EnumValue)
 import Interpolate exposing (interpolate)
 
 
-generate : String -> List String -> List EnumValue -> Maybe String -> String
+generate : ClassCaseName -> List String -> List EnumValue -> Maybe String -> String
 generate enumName moduleName enumValues description =
     prepend moduleName enumName enumValues (enumDocs description enumValues)
 
@@ -17,7 +17,7 @@ enumDocs enumDescription enumValues =
     DocComment.generateForEnum enumDescription enumValues
 
 
-prepend : List String -> String -> List EnumValue -> String -> String
+prepend : List String -> ClassCaseName -> List EnumValue -> String -> String
 prepend moduleName enumName enumValues docComment =
     interpolate """module {0} exposing (..)
 
@@ -33,10 +33,10 @@ import Json.Decode as Decode exposing (Decoder)
         ++ enumToString enumName enumValues
 
 
-enumType : String -> List EnumValue -> String
+enumType : ClassCaseName -> List EnumValue -> String
 enumType enumName enumValues =
     "type "
-        ++ Normalize.capitalized enumName
+        ++ ClassCaseName.normalized enumName
         ++ """
     = """
         ++ (enumValues
@@ -47,7 +47,7 @@ enumType enumName enumValues =
         ++ "\n"
 
 
-enumToString : String -> List EnumValue -> String
+enumToString : ClassCaseName -> List EnumValue -> String
 enumToString enumName enumValues =
     interpolate
         """{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
@@ -56,7 +56,7 @@ toString : {0} -> String
 toString enum =
     case enum of
 {1}"""
-        [ Normalize.capitalized enumName
+        [ ClassCaseName.normalized enumName
         , List.map toStringCase enumValues |> String.join "\n\n"
         ]
 
@@ -72,7 +72,7 @@ toStringCase enumValue =
         ]
 
 
-enumDecoder : String -> List EnumValue -> String
+enumDecoder : ClassCaseName -> List EnumValue -> String
 enumDecoder enumName enumValues =
     interpolate
         """decoder : Decoder {0}
@@ -82,7 +82,7 @@ decoder =
             (\\string ->
                 case string of
 """
-        [ Normalize.capitalized enumName ]
+        [ ClassCaseName.normalized enumName ]
         ++ (enumValues
                 |> List.map .name
                 |> List.map
@@ -98,7 +98,7 @@ decoder =
 
                     _ ->
                         Decode.fail ("Invalid """
-        ++ Normalize.capitalized enumName
+        ++ ClassCaseName.normalized enumName
         ++ """ type, " ++ string ++ " try re-running the graphqelm CLI ")
         )
         """

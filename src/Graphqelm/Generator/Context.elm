@@ -1,15 +1,31 @@
-module Graphqelm.Generator.Context exposing (Context)
+module Graphqelm.Generator.Context exposing (Context, context)
 
 import Dict exposing (Dict)
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+
+
+context :
+    { query : String
+    , mutation : Maybe String
+    , apiSubmodule : List String
+    , interfaces : InterfaceLookup
+    }
+    -> Context
+context { query, mutation, apiSubmodule, interfaces } =
+    { query = ClassCaseName.build query
+    , mutation = mutation |> Maybe.map ClassCaseName.build
+    , apiSubmodule = apiSubmodule
+    , interfaces = interfaces
+    }
 
 
 type alias Context =
-    { query : String
-    , mutation : Maybe String
+    { query : ClassCaseName
+    , mutation : Maybe ClassCaseName
     , apiSubmodule : List String
     , interfaces : InterfaceLookup
     }
 
 
 type alias InterfaceLookup =
-    Dict String (List String)
+    Dict String (List ClassCaseName)

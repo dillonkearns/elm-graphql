@@ -3,6 +3,7 @@ module Graphqelm.Generator.Mutation exposing (generate)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type as Type exposing (Field)
 import Interpolate exposing (interpolate)
 
@@ -10,7 +11,7 @@ import Interpolate exposing (interpolate)
 generate : Context -> List String -> List Field -> String
 generate context moduleName fields =
     prepend context moduleName fields
-        ++ (List.map (FieldGenerator.generateForObject context (context.mutation |> Maybe.withDefault "")) fields |> String.join "\n\n")
+        ++ (List.map (FieldGenerator.generateForObject context (context.mutation |> Maybe.withDefault (ClassCaseName.build ""))) fields |> String.join "\n\n")
 
 
 prepend : Context -> List String -> List Field -> String

@@ -12,7 +12,7 @@ all =
     describe "object types generator"
         [ test "enum has no object definitions" <|
             \() ->
-                [ Type.TypeDefinition "Weather"
+                [ Type.typeDefinition "Weather"
                     (Type.EnumType
                         [ { name = ClassCaseName.build "CLOUDY", description = Nothing }
                         , { name = ClassCaseName.build "SUNNY", description = Nothing }
@@ -33,10 +33,10 @@ placeholder =
                         )
         , test "generates imports for objects" <|
             \() ->
-                [ Type.TypeDefinition "MyObject"
+                [ Type.typeDefinition "MyObject"
                     (Type.ObjectType [])
                     Nothing
-                , Type.TypeDefinition "MyInterface"
+                , Type.typeDefinition "MyInterface"
                     (Type.InterfaceType [] [])
                     Nothing
                 ]
@@ -52,7 +52,7 @@ type MyObject
                         )
         , test "normalizes object names" <|
             \() ->
-                [ Type.TypeDefinition "_MyObject"
+                [ Type.typeDefinition "_MyObject"
                     (Type.ObjectType [])
                     Nothing
                 ]
@@ -68,10 +68,10 @@ type MyObject_
                         )
         , test "generates imports for interfaces" <|
             \() ->
-                [ Type.TypeDefinition "MyObject"
+                [ Type.typeDefinition "MyObject"
                     (Type.ObjectType [])
                     Nothing
-                , Type.TypeDefinition "MyInterface"
+                , Type.typeDefinition "MyInterface"
                     (Type.InterfaceType [] [])
                     Nothing
                 ]

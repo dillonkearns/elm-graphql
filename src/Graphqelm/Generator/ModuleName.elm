@@ -2,6 +2,7 @@ module Graphqelm.Generator.ModuleName exposing (enum, enumTypeName, generate, in
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Normalize as Normalize
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
@@ -29,29 +30,29 @@ generate context (Type.TypeDefinition name definableType description) =
             union context name
 
 
-object : Context -> String -> List String
+object : Context -> ClassCaseName -> List String
 object { query, mutation, apiSubmodule } name =
     if name == query then
         [ "RootQuery" ]
     else if Just name == mutation then
         [ "RootMutation" ]
     else
-        apiSubmodule ++ [ "Object", Normalize.capitalized name ]
+        apiSubmodule ++ [ "Object", ClassCaseName.normalized name ]
 
 
-interface : Context -> String -> List String
+interface : Context -> ClassCaseName -> List String
 interface { apiSubmodule } name =
-    apiSubmodule ++ [ "Interface", Normalize.capitalized name ]
+    apiSubmodule ++ [ "Interface", ClassCaseName.normalized name ]
 
 
-union : Context -> String -> List String
+union : Context -> ClassCaseName -> List String
 union { apiSubmodule } name =
-    apiSubmodule ++ [ "Union", Normalize.capitalized name ]
+    apiSubmodule ++ [ "Union", ClassCaseName.normalized name ]
 
 
-enum : { context | apiSubmodule : List String } -> String -> List String
+enum : { context | apiSubmodule : List String } -> ClassCaseName -> List String
 enum { apiSubmodule } name =
-    apiSubmodule ++ [ "Enum", Normalize.capitalized name ]
+    apiSubmodule ++ [ "Enum", ClassCaseName.normalized name ]
 
 
 enumTypeName : { context | apiSubmodule : List String } -> String -> List String

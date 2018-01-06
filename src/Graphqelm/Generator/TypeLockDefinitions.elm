@@ -1,6 +1,6 @@
 module Graphqelm.Generator.TypeLockDefinitions exposing (generateInterfaces, generateObjects, generateUnions)
 
-import Graphqelm.Generator.Normalize as Normalize
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)
 
@@ -20,11 +20,13 @@ generateInterfaces =
     generateCommon "Interface" interfaceName
 
 
-generateCommon : String -> (TypeDefinition -> Maybe String) -> List String -> List TypeDefinition -> ( List String, String )
-generateCommon typeName nameOrNothing apiSubmodule typeDefinitions =
+generateCommon : String -> (TypeDefinition -> Bool) -> List String -> List TypeDefinition -> ( List String, String )
+generateCommon typeName includeName apiSubmodule typeDefinitions =
     (let
         typesToGenerate =
-            List.filterMap nameOrNothing typeDefinitions
+            typeDefinitions
+                |> List.filter includeName
+                |> List.map (\(TypeDefinition name definableType description) -> name)
      in
      if typesToGenerate == [] then
         interpolate
@@ -52,66 +54,66 @@ placeholder =
         |> (\fileContents -> ( apiSubmodule ++ [ typeName ], fileContents ))
 
 
-generateType : String -> String
+generateType : ClassCaseName -> String
 generateType name =
     interpolate
         """type {0}
     = {0}"""
-        [ Normalize.capitalized name ]
+        [ ClassCaseName.normalized name ]
 
 
-objectName : TypeDefinition -> Maybe String
+objectName : TypeDefinition -> Bool
 objectName (TypeDefinition name definableType description) =
     case definableType of
         Type.ObjectType _ ->
-            Just name
+            True
 
         Type.InterfaceType _ _ ->
-            Nothing
+            False
 
         Type.ScalarType ->
-            Nothing
+            False
 
         Type.EnumType _ ->
-            Nothing
+            False
 
         Type.UnionType _ ->
-            Nothing
+            False
 
 
-unionName : TypeDefinition -> Maybe String
+unionName : TypeDefinition -> Bool
 unionName (TypeDefinition name definableType description) =
     case definableType of
         Type.ObjectType _ ->
-            Nothing
+            False
 
         Type.InterfaceType _ _ ->
-            Nothing
+            False
 
         Type.ScalarType ->
-            Nothing
+            False
 
         Type.EnumType _ ->
-            Nothing
+            False
 
         Type.UnionType _ ->
-            Just name
+            True
 
 
-interfaceName : TypeDefinition -> Maybe String
+interfaceName : TypeDefinition -> Bool
 interfaceName (TypeDefinition name definableType description) =
     case definableType of
         Type.ObjectType _ ->
-            Nothing
+            False
 
         Type.InterfaceType _ _ ->
-            Just name
+            True
 
         Type.ScalarType ->
-            Nothing
+            False
 
         Type.EnumType _ ->
-            Nothing
+            False
 
         Type.UnionType _ ->
-            Nothing
+            False

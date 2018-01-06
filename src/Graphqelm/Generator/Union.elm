@@ -3,30 +3,31 @@ module Graphqelm.Generator.Union exposing (generate)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Generator.Normalize as Normalize
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Interpolate exposing (interpolate)
 
 
-generate : Context -> String -> List String -> List String -> String
+generate : Context -> ClassCaseName -> List String -> List ClassCaseName -> String
 generate context name moduleName possibleTypes =
     prepend context moduleName
         ++ fragments context possibleTypes moduleName
 
 
-fragments : Context -> List String -> List String -> String
+fragments : Context -> List ClassCaseName -> List String -> String
 fragments context implementors moduleName =
     implementors
         |> List.map (fragment context moduleName)
         |> String.join "\n\n"
 
 
-fragment : Context -> List String -> String -> String
+fragment : Context -> List String -> ClassCaseName -> String
 fragment context moduleName interfaceImplementor =
     interpolate
         """on{0} : SelectionSet selection {2} -> FragmentSelectionSet selection {3}
 on{0} (SelectionSet fields decoder) =
     FragmentSelectionSet "{1}" fields decoder
 """
-        [ Normalize.capitalized interfaceImplementor, interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
+        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
 
 
 prepend : Context -> List String -> String

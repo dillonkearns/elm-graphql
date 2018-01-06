@@ -11,6 +11,7 @@ module Graphqelm.Parser.Type
         , TypeReference(TypeReference)
         , decoder
         , parseRef
+        , typeDefinition
         , typeRefDecoder
         )
 
@@ -55,7 +56,7 @@ decodeKind kind =
 
 scalarDecoder : Decoder TypeDefinition
 scalarDecoder =
-    Decode.map (\scalarName -> TypeDefinition scalarName ScalarType Nothing)
+    Decode.map (\scalarName -> typeDefinition scalarName ScalarType Nothing)
         (Decode.field "name" Decode.string)
 
 
@@ -132,22 +133,22 @@ type alias EnumValue =
 
 createEnum : String -> Maybe String -> List EnumValue -> TypeDefinition
 createEnum enumName description enumValues =
-    TypeDefinition enumName (EnumType enumValues) description
+    typeDefinition enumName (EnumType enumValues) description
 
 
 createObject : String -> List Field -> TypeDefinition
 createObject objectName fields =
-    TypeDefinition objectName (ObjectType fields) Nothing
+    typeDefinition objectName (ObjectType fields) Nothing
 
 
 createInterface : String -> List Field -> List String -> TypeDefinition
 createInterface interfaceName fields possibleTypes =
-    TypeDefinition interfaceName (InterfaceType fields possibleTypes) Nothing
+    typeDefinition interfaceName (InterfaceType fields (List.map ClassCaseName.build possibleTypes)) Nothing
 
 
 createUnion : String -> List String -> TypeDefinition
 createUnion interfaceName possibleTypes =
-    TypeDefinition interfaceName (UnionType possibleTypes) Nothing
+    typeDefinition interfaceName (UnionType (List.map ClassCaseName.build possibleTypes)) Nothing
 
 
 typeRefDecoder : Decoder RawTypeRef
@@ -200,14 +201,19 @@ type alias Field =
 
 
 type TypeDefinition
-    = TypeDefinition String DefinableType (Maybe String)
+    = TypeDefinition ClassCaseName DefinableType (Maybe String)
+
+
+typeDefinition : String -> DefinableType -> Maybe String -> TypeDefinition
+typeDefinition name definableType description =
+    TypeDefinition (ClassCaseName.build name) definableType description
 
 
 type DefinableType
     = ScalarType
     | ObjectType (List Field)
-    | InterfaceType (List Field) (List String)
-    | UnionType (List String)
+    | InterfaceType (List Field) (List ClassCaseName)
+    | UnionType (List ClassCaseName)
     | EnumType (List EnumValue)
 
 

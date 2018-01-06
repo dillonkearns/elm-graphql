@@ -9,6 +9,7 @@ import Graphqelm.Generator.OptionalArgs
 import Graphqelm.Generator.ReferenceLeaf as ReferenceLeaf
 import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
 
@@ -30,7 +31,7 @@ type alias AnnotatedArg =
     }
 
 
-generateForObject : Context -> String -> Type.Field -> String
+generateForObject : Context -> ClassCaseName -> Type.Field -> String
 generateForObject context thisObjectName field =
     toFieldGenerator context field
         |> forObject_ context (ModuleName.object context thisObjectName) field
@@ -39,7 +40,7 @@ generateForObject context thisObjectName field =
 generateForInterface : Context -> String -> Type.Field -> String
 generateForInterface context thisObjectName field =
     toFieldGenerator context field
-        |> forObject_ context (ModuleName.interface context thisObjectName) field
+        |> forObject_ context (ModuleName.interface context (ClassCaseName.build thisObjectName)) field
 
 
 forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> String
@@ -141,16 +142,16 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
         typeLock =
             case ReferenceLeaf.get typeRef of
                 ReferenceLeaf.Object ->
-                    ModuleName.object context refName |> String.join "."
+                    ModuleName.object context (ClassCaseName.build refName) |> String.join "."
 
                 ReferenceLeaf.Interface ->
-                    ModuleName.interface context refName |> String.join "."
+                    ModuleName.interface context (ClassCaseName.build refName) |> String.join "."
 
                 ReferenceLeaf.Enum ->
                     Debug.crash "TODO"
 
                 ReferenceLeaf.Union ->
-                    ModuleName.union context refName |> String.join "."
+                    ModuleName.union context (ClassCaseName.build refName) |> String.join "."
 
                 ReferenceLeaf.Scalar ->
                     Debug.crash "TODO"
