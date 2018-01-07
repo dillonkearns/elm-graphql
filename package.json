@@ -20,6 +20,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@types/fs-extra": "^5.0.0",
+    "@types/glob": "^5.0.34",
     "@types/minimist": "^1.2.0",
     "@types/node": "^8.5.2",
     "@types/request": "^2.0.9",
@@ -35,10 +36,11 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "elm-format": "^0.7.0-exp",
+    "glob": "^7.1.2",
     "graphql-request": "^1.4.0",
     "minimist": "^1.2.0",
-    "request": "^2.83.0",
-    "elm-format": "^0.7.0-exp"
+    "request": "^2.83.0"
   },
   "bin": {
     "graphqelm": "bin/graphqelm"
