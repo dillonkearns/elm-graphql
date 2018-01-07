@@ -18,7 +18,7 @@ folder.
 
 `graphqelm` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `graphqelm`.
 
-1. Add [the `Graphqelm` elm package](package.elm-lang.org/packages/dillonkearns/graphqelm/latest)
+1. Add [the `Graphqelm` elm package](http://package.elm-lang.org/packages/dillonkearns/graphqelm/latest)
    as a dependency in your `elm-package.json`.
    ```shell
    elm package install dillonkearns/graphqelm
