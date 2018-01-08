@@ -62,31 +62,12 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
             }
 
         objectTypes =
-            [ TypeLockDefinitions.generateObjects apiSubmodule
+            TypeLockDefinitions.generate apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery context
                     |> excludeMutation context
                 )
-            , TypeLockDefinitions.generateInputObjects apiSubmodule
-                (typeDefinitions
-                    |> excludeBuiltIns
-                    |> excludeQuery context
-                    |> excludeMutation context
-                )
-            , TypeLockDefinitions.generateInterfaces apiSubmodule
-                (typeDefinitions
-                    |> excludeBuiltIns
-                    |> excludeQuery context
-                    |> excludeMutation context
-                )
-            , TypeLockDefinitions.generateUnions apiSubmodule
-                (typeDefinitions
-                    |> excludeBuiltIns
-                    |> excludeQuery context
-                    |> excludeMutation context
-                )
-            ]
     in
     typeDefinitions
         |> excludeBuiltIns

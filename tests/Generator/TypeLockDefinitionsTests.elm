@@ -2,7 +2,6 @@ module Generator.TypeLockDefinitionsTests exposing (all)
 
 import Expect
 import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type as Type exposing (..)
 import Test exposing (..)
 
@@ -10,62 +9,12 @@ import Test exposing (..)
 all : Test
 all =
     describe "object types generator"
-        [ test "enum has no object definitions" <|
+        [ test "generates placeholders for types with no definitions" <|
             \() ->
-                [ Type.typeDefinition "Weather"
-                    (Type.EnumType
-                        [ { name = ClassCaseName.build "CLOUDY", description = Nothing }
-                        , { name = ClassCaseName.build "SUNNY", description = Nothing }
-                        ]
-                    )
-                    Nothing
-                ]
-                    |> TypeLockDefinitions.generateObjects [ "Api" ]
+                []
+                    |> TypeLockDefinitions.generate [ "Api" ]
                     |> Expect.equal
-                        ( [ "Api", "Object" ]
-                        , """module Api.Object exposing (..)
-
-
-placeholder : String
-placeholder =
-    ""
-"""
-                        )
-        , test "generates imports for objects" <|
-            \() ->
-                [ Type.typeDefinition "MyObject"
-                    (Type.ObjectType [])
-                    Nothing
-                , Type.typeDefinition "MyInterface"
-                    (Type.InterfaceType [] [])
-                    Nothing
-                ]
-                    |> TypeLockDefinitions.generateObjects [ "Api" ]
-                    |> Expect.equal
-                        ( [ "Api", "Object" ]
-                        , """module Api.Object exposing (..)
-
-
-type MyObject
-    = MyObject
-"""
-                        )
-        , test "normalizes object names" <|
-            \() ->
-                [ Type.typeDefinition "_MyObject"
-                    (Type.ObjectType [])
-                    Nothing
-                ]
-                    |> TypeLockDefinitions.generateObjects [ "Api" ]
-                    |> Expect.equal
-                        ( [ "Api", "Object" ]
-                        , """module Api.Object exposing (..)
-
-
-type MyObject_
-    = MyObject_
-"""
-                        )
+                        [ ( [ "Api", "Union" ], "module Api.Union exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "InputObject" ], "module Api.InputObject exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Interface" ], "module Api.Interface exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ) ]
         , test "generates imports for interfaces" <|
             \() ->
                 [ Type.typeDefinition "MyObject"
@@ -75,14 +24,7 @@ type MyObject_
                     (Type.InterfaceType [] [])
                     Nothing
                 ]
-                    |> TypeLockDefinitions.generateInterfaces [ "Api" ]
+                    |> TypeLockDefinitions.generate [ "Api" ]
                     |> Expect.equal
-                        ( [ "Api", "Interface" ]
-                        , """module Api.Interface exposing (..)
-
-
-type MyInterface
-    = MyInterface
-"""
-                        )
+                        [ ( [ "Api", "Union" ], "module Api.Union exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "InputObject" ], "module Api.InputObject exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\n\ntype MyObject\n    = MyObject\n" ), ( [ "Api", "Interface" ], "module Api.Interface exposing (..)\n\n\ntype MyInterface\n    = MyInterface\n" ) ]
         ]

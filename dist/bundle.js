@@ -11239,7 +11239,8 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Type$decodeKind = function (kind) {
 		case 'INPUT_OBJECT':
 			return _dillonkearns$graphqelm$Graphqelm_Parser_Type$inputObjectDecoder;
 		default:
-			return _dillonkearns$graphqelm$Graphqelm_Parser_Type$scalarDecoder;
+			return _elm_lang$core$Json_Decode$fail(
+				A2(_elm_lang$core$Basics_ops['++'], 'Unexpected kind ', kind));
 	}
 };
 var _dillonkearns$graphqelm$Graphqelm_Parser_Type$decoder = A2(
@@ -13228,10 +13229,26 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateComm
 					});
 			}());
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateInterfaces = A2(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Interface', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$interfaceName);
-var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateObjects = A2(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectName);
-var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateInputObjects = A2(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'InputObject', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$inputObjectName);
-var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateUnions = A2(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Union', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$unionName);
+var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generate = F2(
+	function (apiSubmodule, typeDefs) {
+		return {
+			ctor: '::',
+			_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Union', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$unionName, apiSubmodule, typeDefs),
+			_1: {
+				ctor: '::',
+				_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'InputObject', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$inputObjectName, apiSubmodule, typeDefs),
+				_1: {
+					ctor: '::',
+					_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectName, apiSubmodule, typeDefs),
+					_1: {
+						ctor: '::',
+						_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Interface', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$interfaceName, apiSubmodule, typeDefs),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		};
+	});
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Union$prepend = F2(
 	function (_p0, moduleName) {
@@ -13408,59 +13425,16 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles = F2(
 			apiSubmodule: apiSubmodule,
 			interfaces: _dillonkearns$graphqelm$Graphqelm_Generator_Group$interfacePossibleTypesDict(_p21)
 		};
-		var objectTypes = {
-			ctor: '::',
-			_0: A2(
-				_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateObjects,
-				apiSubmodule,
+		var objectTypes = A2(
+			_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generate,
+			apiSubmodule,
+			A2(
+				_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
+				context,
 				A2(
-					_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
+					_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery,
 					context,
-					A2(
-						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery,
-						context,
-						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21)))),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateInputObjects,
-					apiSubmodule,
-					A2(
-						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
-						context,
-						A2(
-							_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery,
-							context,
-							_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21)))),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateInterfaces,
-						apiSubmodule,
-						A2(
-							_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
-							context,
-							A2(
-								_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery,
-								context,
-								_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21)))),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateUnions,
-							apiSubmodule,
-							A2(
-								_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
-								context,
-								A2(
-									_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery,
-									context,
-									_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21)))),
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		};
+					_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21))));
 		return _elm_lang$core$Dict$fromList(
 			A2(
 				_elm_lang$core$List$map,
