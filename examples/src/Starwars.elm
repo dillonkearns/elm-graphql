@@ -22,11 +22,11 @@ import Swapi.Union.CharacterUnion as CharacterUnion
 
 
 type alias Response =
-    { --  vader : Maybe HumanLookup
-      -- , tarkin : Maybe HumanLookup
-      -- , hero : Character
-      -- , union : Maybe CharacterUnion,
-      greeting : String
+    { vader : Maybe HumanLookup
+    , tarkin : Maybe HumanLookup
+    , hero : Character
+    , union : Maybe CharacterUnion
+    , greeting : String
     }
 
 
@@ -70,20 +70,18 @@ heroUnion =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        -- |> with (Query.human { id = "1001" } human)
-        -- |> with (Query.human { id = "1004" } human)
-        -- |> with
-        --     (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
-        -- |> with
-        --     (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
+        |> with (Query.human { id = "1001" } human)
+        |> with (Query.human { id = "1004" } human)
+        |> with
+            (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
+        |> with
+            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
         |> with
             (Query.greet
                 { input =
-                    { name = "Dillon"
-
-                    -- , language = Present Language.No
-                    , language = Absent
-                    , options = Present { prefix = Present "👌 " }
+                    { name = "Chewie"
+                    , language = Present Language.Es
+                    , options = Absent
                     }
                 }
             )
@@ -118,7 +116,7 @@ episodeYear episode =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.buildQueryRequest "http://localhost:4000"
+        |> Graphqelm.Http.buildQueryRequest "https://graphqelm.herokuapp.com"
         |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 
 
