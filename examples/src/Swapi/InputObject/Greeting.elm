@@ -9,9 +9,9 @@ import Swapi.InputObject.Options
 encode : Greeting -> Value
 encode input =
     Encode.maybeObject
-        [ ( "name", Just (Encode.string input.name) )
-        , ( "language", Encode.optional (Encode.enum Swapi.Enum.Language.toString) input.language )
-        , ( "options", Encode.optional Swapi.InputObject.Options.encode input.options )
+        [ ( "name", Encode.string input.name |> Just )
+        , ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language )
+        , ( "options", Swapi.InputObject.Options.encode |> Encode.optional input.options )
         ]
 
 

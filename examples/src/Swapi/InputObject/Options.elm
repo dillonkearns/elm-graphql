@@ -7,7 +7,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 encode : Options -> Value
 encode input =
     Encode.maybeObject
-        [ ( "prefix", Encode.optional Encode.string input.prefix )
+        [ ( "prefix", Encode.string |> Encode.optional input.prefix )
         ]
 
 

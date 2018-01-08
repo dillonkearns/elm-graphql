@@ -54,8 +54,8 @@ maybeObject maybeValues =
 
 {-| Encode a list of key-value pairs into an object
 -}
-optional : (a -> Value) -> OptionalArgument a -> Maybe Value
-optional toValue optionalValue =
+optional : OptionalArgument a -> (a -> Value) -> Maybe Value
+optional optionalValue toValue =
     case optionalValue of
         OptionalArgument.Present value ->
             toValue value
