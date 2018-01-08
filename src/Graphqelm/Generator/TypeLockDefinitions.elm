@@ -1,4 +1,4 @@
-module Graphqelm.Generator.TypeLockDefinitions exposing (generateInterfaces, generateObjects, generateUnions)
+module Graphqelm.Generator.TypeLockDefinitions exposing (generateInputObjects, generateInterfaces, generateObjects, generateUnions)
 
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
@@ -8,6 +8,11 @@ import Interpolate exposing (interpolate)
 generateUnions : List String -> List TypeDefinition -> ( List String, String )
 generateUnions =
     generateCommon "Union" unionName
+
+
+generateInputObjects : List String -> List TypeDefinition -> ( List String, String )
+generateInputObjects =
+    generateCommon "InputObject" inputObjectName
 
 
 generateObjects : List String -> List TypeDefinition -> ( List String, String )
@@ -60,6 +65,16 @@ generateType name =
         """type {0}
     = {0}"""
         [ ClassCaseName.normalized name ]
+
+
+inputObjectName : TypeDefinition -> Bool
+inputObjectName (TypeDefinition name definableType description) =
+    case definableType of
+        Type.InputObjectType _ ->
+            True
+
+        _ ->
+            False
 
 
 objectName : TypeDefinition -> Bool

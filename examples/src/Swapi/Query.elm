@@ -15,7 +15,6 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 import Swapi.Enum.Episode
-import Swapi.Enum.Language
 import Swapi.InputObject.Greeting
 import Swapi.Interface
 import Swapi.Object
@@ -42,12 +41,7 @@ droid requiredArgs object =
 
 greet : { input : Swapi.InputObject.Greeting.Greeting } -> FieldDecoder String RootQuery
 greet requiredArgs =
-    Object.fieldDecoder "greet"
-        [ Argument.required "input"
-            requiredArgs.input
-            Swapi.InputObject.Greeting.encode
-        ]
-        Decode.string
+    Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.Greeting.encode ] Decode.string
 
 
 {-|

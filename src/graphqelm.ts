@@ -97,6 +97,7 @@ const onDataAvailable = (data: {}) => {
   let app = Elm.Main.worker({ data, baseModule })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     removeGenerated(`./src/${baseModule.join('/')}`)
+    fs.mkdirpSync(`./src/${baseModule.join('/')}/InputObject`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Object`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Interface`)
     fs.mkdirpSync(`./src/${baseModule.join('/')}/Union`)

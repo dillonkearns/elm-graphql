@@ -1,6 +1,7 @@
-module Graphqelm.Generator.Decoder exposing (generateDecoder, generateEncoder, generateType)
+module Graphqelm.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject)
 
 import Graphqelm.Generator.ModuleName as ModuleName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
@@ -54,6 +55,11 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
            )
 
 
+generateEncoderLowLevel : List String -> Type.ReferrableType -> String
+generateEncoderLowLevel apiSubmodule referrableType =
+    generateEncoder apiSubmodule (Type.TypeReference referrableType Type.NonNullable)
+
+
 generateEncoder : List String -> TypeReference -> String
 generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
     let
@@ -100,11 +106,26 @@ generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                 ]
 
         Type.InputObjectRef inputObjectName ->
-            "identity" ++ isNullableString
+            ((ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
+                ++ [ "encode" ]
+             )
+                |> String.join "."
+            )
+                ++ isNullableString
 
 
 generateType : List String -> TypeReference -> String
-generateType apiSubmodule (Type.TypeReference referrableType isNullable) =
+generateType apiSubmodule typeRef =
+    generateTypeCommon "Maybe" apiSubmodule typeRef
+
+
+generateTypeForInputObject : List String -> TypeReference -> String
+generateTypeForInputObject apiSubmodule typeRef =
+    generateTypeCommon "OptionalArgument" apiSubmodule typeRef
+
+
+generateTypeCommon : String -> List String -> TypeReference -> String
+generateTypeCommon nullableString apiSubmodule (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
             case scalar of
@@ -136,13 +157,16 @@ generateType apiSubmodule (Type.TypeReference referrableType isNullable) =
             ModuleName.enumTypeName { apiSubmodule = apiSubmodule } enumName
                 |> String.join "."
 
-        Type.InputObjectRef _ ->
-            "Value"
+        Type.InputObjectRef inputObjectName ->
+            (ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
+                ++ [ ClassCaseName.normalized inputObjectName ]
+            )
+                |> String.join "."
     )
         |> (\typeString ->
                 case isNullable of
                     Type.Nullable ->
-                        "(Maybe " ++ typeString ++ ")"
+                        interpolate "({0} {1})" [ nullableString, typeString ]
 
                     Type.NonNullable ->
                         typeString

@@ -255,7 +255,7 @@ type ReferrableType
     | List TypeReference
     | EnumRef ClassCaseName
     | ObjectRef String
-    | InputObjectRef String
+    | InputObjectRef ClassCaseName
     | UnionRef String
     | InterfaceRef String
 
@@ -340,7 +340,7 @@ parseRef (RawTypeRef rawTypeRef) =
                             TypeReference (enumName |> expectString |> ClassCaseName.build |> EnumRef) NonNullable
 
                         ( TypeKind.InputObject, inputObjectName ) ->
-                            TypeReference (inputObjectName |> expectString |> InputObjectRef) NonNullable
+                            TypeReference (inputObjectName |> expectString |> ClassCaseName.build |> InputObjectRef) NonNullable
 
                         ( TypeKind.Union, _ ) ->
                             TypeReference (actualOfType.name |> expectString |> UnionRef) NonNullable
@@ -362,7 +362,7 @@ parseRef (RawTypeRef rawTypeRef) =
         TypeKind.InputObject ->
             case rawTypeRef.name of
                 Just inputObjectName ->
-                    TypeReference (InputObjectRef inputObjectName) Nullable
+                    TypeReference (inputObjectName |> ClassCaseName.build |> InputObjectRef) Nullable
 
                 Nothing ->
                     Debug.crash "Should not get null names for input object references"

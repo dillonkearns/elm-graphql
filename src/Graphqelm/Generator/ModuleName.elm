@@ -1,4 +1,4 @@
-module Graphqelm.Generator.ModuleName exposing (enum, enumTypeName, generate, interface, mutation, object, query, union)
+module Graphqelm.Generator.ModuleName exposing (enum, enumTypeName, generate, inputObject, interface, mutation, object, query, union)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -42,7 +42,7 @@ object { query, mutation, apiSubmodule } name =
         apiSubmodule ++ [ "Object", ClassCaseName.normalized name ]
 
 
-inputObject : Context -> ClassCaseName -> List String
+inputObject : { context | apiSubmodule : List String } -> ClassCaseName -> List String
 inputObject { apiSubmodule } name =
     apiSubmodule ++ [ "InputObject", ClassCaseName.normalized name ]
 

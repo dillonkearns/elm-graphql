@@ -68,6 +68,12 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                     |> excludeQuery context
                     |> excludeMutation context
                 )
+            , TypeLockDefinitions.generateInputObjects apiSubmodule
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery context
+                    |> excludeMutation context
+                )
             , TypeLockDefinitions.generateInterfaces apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
@@ -157,8 +163,7 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
                 |> Just
 
         Type.InputObjectType fields ->
-            -- Graphqelm.Generator.InputObject.generate context name moduleName fields
-            --     |> Just
-            Nothing
+            Graphqelm.Generator.InputObject.generate context name moduleName fields
+                |> Just
     )
         |> Maybe.map (\fileContents -> ( moduleName, fileContents ))
