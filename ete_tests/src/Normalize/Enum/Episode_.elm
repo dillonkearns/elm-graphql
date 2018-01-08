@@ -4,7 +4,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Enum.Episode exposing (..)
+module Normalize.Enum.Episode_ exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -12,46 +12,46 @@ import Json.Decode as Decode exposing (Decoder)
 {-| One of the films in the Star Wars Trilogy
 
   - Empire - Released in 1980.
-  - Jedi - Released in 1983.
-  - Newhope - Released in 1977.
+  - Jedi_ - Released in 1983.
+  - Newhope_ - Released in 1977.
 
 -}
-type Episode
+type Episode_
     = Empire
-    | Jedi
-    | Newhope
+    | Jedi_
+    | Newhope_
 
 
-decoder : Decoder Episode
+decoder : Decoder Episode_
 decoder =
     Decode.string
         |> Decode.andThen
             (\string ->
                 case string of
-                    "EMPIRE" ->
+                    "empire" ->
                         Decode.succeed Empire
 
-                    "JEDI" ->
-                        Decode.succeed Jedi
+                    "jedi_" ->
+                        Decode.succeed Jedi_
 
-                    "NEWHOPE" ->
-                        Decode.succeed Newhope
+                    "_newhope" ->
+                        Decode.succeed Newhope_
 
                     _ ->
-                        Decode.fail ("Invalid Episode type, " ++ string ++ " try re-running the graphqelm CLI ")
+                        Decode.fail ("Invalid Episode_ type, " ++ string ++ " try re-running the graphqelm CLI ")
             )
 
 
 {-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
 -}
-toString : Episode -> String
+toString : Episode_ -> String
 toString enum =
     case enum of
         Empire ->
-            "EMPIRE"
+            "empire"
 
-        Jedi ->
-            "JEDI"
+        Jedi_ ->
+            "jedi_"
 
-        Newhope ->
-            "NEWHOPE"
+        Newhope_ ->
+            "_newhope"

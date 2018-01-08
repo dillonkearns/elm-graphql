@@ -4,12 +4,9 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.InputObject exposing (..)
+module Normalize.InputObject exposing (..)
 
 
-type Greeting
-    = Greeting
-
-
-type GreetingOptions
-    = GreetingOptions
+placeholder : String
+placeholder =
+    ""
