@@ -4,12 +4,13 @@ import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
+import Swapi.Enum.Language as Language
 import Swapi.Interface
 import Swapi.Interface.Character as Character
 import Swapi.Object
@@ -21,10 +22,11 @@ import Swapi.Union.CharacterUnion as CharacterUnion
 
 
 type alias Response =
-    { vader : Maybe HumanLookup
-    , tarkin : Maybe HumanLookup
-    , hero : Character
-    , union : Maybe CharacterUnion
+    { --  vader : Maybe HumanLookup
+      -- , tarkin : Maybe HumanLookup
+      -- , hero : Character
+      -- , union : Maybe CharacterUnion,
+      greeting : String
     }
 
 
@@ -68,12 +70,23 @@ heroUnion =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.human { id = "1001" } human)
-        |> with (Query.human { id = "1004" } human)
+        -- |> with (Query.human { id = "1001" } human)
+        -- |> with (Query.human { id = "1004" } human)
+        -- |> with
+        --     (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
+        -- |> with
+        --     (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
         |> with
-            (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
-        |> with
-            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
+            (Query.greet
+                { input =
+                    { name = "Dillon"
+
+                    -- , language = Present Language.No
+                    , language = Absent
+                    , options = Present { prefix = Present "👌 " }
+                    }
+                }
+            )
 
 
 type alias HumanLookup =
@@ -105,7 +118,7 @@ episodeYear episode =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.buildQueryRequest "https://graphqelm.herokuapp.com/api"
+        |> Graphqelm.Http.buildQueryRequest "http://localhost:4000"
         |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 
 
