@@ -54,7 +54,7 @@ serialize alias indentationLevel field =
                     |> Just
 
         Leaf fieldName args ->
-            Just fieldName
+            Just (fieldName ++ Argument.serialize args)
     )
         |> Maybe.map
             (\string ->
