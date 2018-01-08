@@ -46,6 +46,9 @@ decodeKind kind =
         "UNION" ->
             unionDecoder
 
+        "INPUT_OBJECT" ->
+            inputObjectDecoder
+
         _ ->
             scalarDecoder
 
@@ -58,6 +61,17 @@ scalarDecoder : Decoder TypeDefinition
 scalarDecoder =
     Decode.map (\scalarName -> typeDefinition scalarName ScalarType Nothing)
         (Decode.field "name" Decode.string)
+
+
+inputObjectDecoder : Decoder TypeDefinition
+inputObjectDecoder =
+    Decode.map2 createInputObject
+        (Decode.field "name" Decode.string)
+        (inputFieldDecoder
+            |> Decode.map parseField
+            |> Decode.list
+            |> Decode.field "inputFields"
+        )
 
 
 interfaceDecoder : Decoder TypeDefinition
@@ -146,6 +160,11 @@ createInterface interfaceName fields possibleTypes =
     typeDefinition interfaceName (InterfaceType fields (List.map ClassCaseName.build possibleTypes)) Nothing
 
 
+createInputObject : String -> List Field -> TypeDefinition
+createInputObject inputObjectName fields =
+    typeDefinition inputObjectName (InputObjectType fields) Nothing
+
+
 createUnion : String -> List String -> TypeDefinition
 createUnion interfaceName possibleTypes =
     typeDefinition interfaceName (UnionType (List.map ClassCaseName.build possibleTypes)) Nothing
@@ -170,6 +189,15 @@ fieldDecoder =
         (Decode.field "description" (Decode.maybe Decode.string))
         (Decode.field "type" typeRefDecoder)
         (argDecoder |> Decode.list |> Decode.field "args")
+
+
+inputFieldDecoder : Decoder RawField
+inputFieldDecoder =
+    Decode.map4 RawField
+        (Decode.field "name" Decode.string)
+        (Decode.field "description" (Decode.maybe Decode.string))
+        (Decode.field "type" typeRefDecoder)
+        (Decode.succeed [])
 
 
 argDecoder : Decoder RawArg
@@ -215,6 +243,7 @@ type DefinableType
     | InterfaceType (List Field) (List ClassCaseName)
     | UnionType (List ClassCaseName)
     | EnumType (List EnumValue)
+    | InputObjectType (List Field)
 
 
 type TypeReference

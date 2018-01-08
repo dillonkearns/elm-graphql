@@ -28,6 +28,9 @@ generate context (Type.TypeDefinition name definableType description) =
         Type.UnionType possibleTypes ->
             union context name
 
+        Type.InputObjectType _ ->
+            inputObject context name
+
 
 object : Context -> ClassCaseName -> List String
 object { query, mutation, apiSubmodule } name =
@@ -37,6 +40,11 @@ object { query, mutation, apiSubmodule } name =
         [ "RootMutation" ]
     else
         apiSubmodule ++ [ "Object", ClassCaseName.normalized name ]
+
+
+inputObject : Context -> ClassCaseName -> List String
+inputObject { apiSubmodule } name =
+    apiSubmodule ++ [ "InputObject", ClassCaseName.normalized name ]
 
 
 interface : Context -> ClassCaseName -> List String

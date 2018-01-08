@@ -3,6 +3,7 @@ module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles, sor
 import Dict exposing (Dict)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum
+import Graphqelm.Generator.InputObject
 import Graphqelm.Generator.Interface
 import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Generator.Mutation
@@ -154,5 +155,10 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
         Type.UnionType possibleTypes ->
             Graphqelm.Generator.Union.generate context name moduleName possibleTypes
                 |> Just
+
+        Type.InputObjectType fields ->
+            -- Graphqelm.Generator.InputObject.generate context name moduleName fields
+            --     |> Just
+            Nothing
     )
         |> Maybe.map (\fileContents -> ( moduleName, fileContents ))
