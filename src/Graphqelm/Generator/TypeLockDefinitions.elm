@@ -68,52 +68,25 @@ objectName (TypeDefinition name definableType description) =
         Type.ObjectType _ ->
             True
 
-        Type.InterfaceType _ _ ->
-            False
-
-        Type.ScalarType ->
-            False
-
-        Type.EnumType _ ->
-            False
-
-        Type.UnionType _ ->
+        _ ->
             False
 
 
 unionName : TypeDefinition -> Bool
 unionName (TypeDefinition name definableType description) =
     case definableType of
-        Type.ObjectType _ ->
-            False
-
-        Type.InterfaceType _ _ ->
-            False
-
-        Type.ScalarType ->
-            False
-
-        Type.EnumType _ ->
-            False
-
         Type.UnionType _ ->
             True
+
+        _ ->
+            False
 
 
 interfaceName : TypeDefinition -> Bool
 interfaceName (TypeDefinition name definableType description) =
     case definableType of
-        Type.ObjectType _ ->
-            False
-
         Type.InterfaceType _ _ ->
             True
 
-        Type.ScalarType ->
-            False
-
-        Type.EnumType _ ->
-            False
-
-        Type.UnionType _ ->
+        _ ->
             False
