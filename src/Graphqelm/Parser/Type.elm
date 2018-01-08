@@ -50,7 +50,7 @@ decodeKind kind =
             inputObjectDecoder
 
         _ ->
-            scalarDecoder
+            Decode.fail ("Unexpected kind " ++ kind)
 
 
 
