@@ -2,7 +2,6 @@ module Graphqelm.Generator.Union exposing (generate)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Generator.Normalize as Normalize
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Interpolate exposing (interpolate)
 
