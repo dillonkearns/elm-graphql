@@ -49,7 +49,6 @@ maybeObject maybeValues =
                         Nothing
             )
         |> Object
-        |> Debug.log "@@@@@ object"
 
 
 {-| Encode a list of key-value pairs into an object
