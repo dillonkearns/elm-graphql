@@ -4,7 +4,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.InputObject.Options exposing (..)
+module Swapi.InputObject.GreetingOptions exposing (..)
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -19,15 +19,15 @@ import Swapi.Object
 import Swapi.Union
 
 
-{-| Encode a Options into a value that can be used as an argument.
+{-| Encode a GreetingOptions into a value that can be used as an argument.
 -}
-encode : Options -> Value
+encode : GreetingOptions -> Value
 encode input =
     Encode.maybeObject
         [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
 
 
-{-| Type for the Options input object.
+{-| Type for the GreetingOptions input object.
 -}
-type alias Options =
+type alias GreetingOptions =
     { prefix : OptionalArgument String }

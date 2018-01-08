@@ -15,7 +15,7 @@ import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 import Swapi.Enum.Language
 import Swapi.InputObject
-import Swapi.InputObject.Options
+import Swapi.InputObject.GreetingOptions
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Union
@@ -26,10 +26,10 @@ import Swapi.Union
 encode : Greeting -> Value
 encode input =
     Encode.maybeObject
-        [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", Swapi.InputObject.Options.encode |> Encode.optional input.options ) ]
+        [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", Swapi.InputObject.GreetingOptions.encode |> Encode.optional input.options ) ]
 
 
 {-| Type for the Greeting input object.
 -}
 type alias Greeting =
-    { language : OptionalArgument Swapi.Enum.Language.Language, name : String, options : OptionalArgument Swapi.InputObject.Options.Options }
+    { language : OptionalArgument Swapi.Enum.Language.Language, name : String, options : OptionalArgument Swapi.InputObject.GreetingOptions.GreetingOptions }

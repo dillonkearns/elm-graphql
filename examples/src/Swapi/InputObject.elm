@@ -11,5 +11,5 @@ type Greeting
     = Greeting
 
 
-type Options
-    = Options
+type GreetingOptions
+    = GreetingOptions
