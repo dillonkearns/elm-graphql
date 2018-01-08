@@ -324,7 +324,7 @@ all =
                                       , args =
                                             [ { name = CamelCaseName.build "filterOptions"
                                               , description = Nothing
-                                              , typeRef = TypeReference (InputObjectRef "FilterOptions") NonNullable
+                                              , typeRef = TypeReference ("FilterOptions" |> ClassCaseName.build |> InputObjectRef) NonNullable
                                               }
                                             ]
                                       }
