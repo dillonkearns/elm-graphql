@@ -69,8 +69,10 @@ encoderFunction { apiSubmodule } field =
                         Type.Nullable ->
                             interpolate " |> Encode.optional input.{0}" [ CamelCaseName.normalized field.name ]
             in
-            Decoder.generateEncoderLowLevel apiSubmodule referrableType
-                ++ something
+            interpolate "({0}) {1}"
+                [ Decoder.generateEncoderLowLevel apiSubmodule referrableType
+                , something
+                ]
 
 
 prepend : Context -> List String -> List Type.Field -> String

@@ -12815,9 +12815,17 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObject$encoderFunction = F2
 			}
 		}();
 		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoderLowLevel, _p4.apiSubmodule, _p5._0),
-			something);
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'({0}) {1}',
+			{
+				ctor: '::',
+				_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoderLowLevel, _p4.apiSubmodule, _p5._0),
+				_1: {
+					ctor: '::',
+					_0: something,
+					_1: {ctor: '[]'}
+				}
+			});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObject$encoderForField = F2(
 	function (context, field) {
