@@ -37,11 +37,11 @@ query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
-        |> with (Query.topic { name = "" } something)
+        |> with (Query.topic { name = "" } topicId)
 
 
-something : SelectionSet Github.Scalar.Id Github.Object.Topic
-something =
+topicId : SelectionSet Github.Scalar.Id Github.Object.Topic
+topicId =
     Github.Object.Topic.selection identity |> with Github.Object.Topic.id
 
 
