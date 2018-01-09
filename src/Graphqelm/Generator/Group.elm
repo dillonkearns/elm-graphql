@@ -9,6 +9,7 @@ import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
 import Graphqelm.Generator.Query
+import Graphqelm.Generator.Scalar as Scalar
 import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Generator.Union
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -68,11 +69,20 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                     |> excludeQuery context
                     |> excludeMutation context
                 )
+
+        scalarDefinitions =
+            Scalar.generate apiSubmodule
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery context
+                    |> excludeMutation context
+                )
     in
     typeDefinitions
         |> excludeBuiltIns
         |> List.filterMap (toPair context)
         |> List.append typeLockDefinitions
+        |> List.append [ scalarDefinitions ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 

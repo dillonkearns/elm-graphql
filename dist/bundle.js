@@ -13113,6 +13113,116 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Query$generate = F3(
 					fields)));
 	});
 
+var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$generateType = function (name) {
+	return A2(
+		_dillonkearns$graphqelm$Interpolate$interpolate,
+		'type {0}\n    = {0} String',
+		{
+			ctor: '::',
+			_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(name),
+			_1: {ctor: '[]'}
+		});
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$isScalar = function (definableType) {
+	var _p0 = definableType;
+	if (_p0.ctor === 'ScalarType') {
+		return true;
+	} else {
+		return false;
+	}
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$builtInNames = {
+	ctor: '::',
+	_0: 'Boolean',
+	_1: {
+		ctor: '::',
+		_0: 'String',
+		_1: {
+			ctor: '::',
+			_0: 'ID',
+			_1: {
+				ctor: '::',
+				_0: 'Int',
+				_1: {
+					ctor: '::',
+					_0: 'Float',
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	}
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$isBuiltIn = function (name) {
+	return A2(
+		_elm_lang$core$List$member,
+		_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$raw(name),
+		_dillonkearns$graphqelm$Graphqelm_Generator_Scalar$builtInNames);
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$include = function (_p1) {
+	var _p2 = _p1;
+	return _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$isScalar(_p2._1) && (!_dillonkearns$graphqelm$Graphqelm_Generator_Scalar$isBuiltIn(_p2._0));
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$fileContents = F2(
+	function (apiSubmodule, typeDefinitions) {
+		var moduleName = A2(
+			_elm_lang$core$String$join,
+			'.',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				apiSubmodule,
+				{
+					ctor: '::',
+					_0: 'Scalar',
+					_1: {ctor: '[]'}
+				}));
+		var typesToGenerate = A2(
+			_elm_lang$core$List$map,
+			function (_p3) {
+				var _p4 = _p3;
+				return _p4._0;
+			},
+			A2(_elm_lang$core$List$filter, _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$include, typeDefinitions));
+		return _elm_lang$core$Native_Utils.eq(
+			typesToGenerate,
+			{ctor: '[]'}) ? A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
+			{
+				ctor: '::',
+				_0: moduleName,
+				_1: {ctor: '[]'}
+			}) : A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n\n{1}\n',
+			{
+				ctor: '::',
+				_0: moduleName,
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$String$join,
+						'\n\n\n',
+						A2(_elm_lang$core$List$map, _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$generateType, typesToGenerate)),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$generate = F2(
+	function (apiSubmodule, typeDefs) {
+		return {
+			ctor: '_Tuple2',
+			_0: A2(
+				_elm_lang$core$Basics_ops['++'],
+				apiSubmodule,
+				{
+					ctor: '::',
+					_0: 'Scalar',
+					_1: {ctor: '[]'}
+				}),
+			_1: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Scalar$fileContents, apiSubmodule, typeDefs)
+		};
+	});
+
 var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$interfaceName = function (_p0) {
 	var _p1 = _p0;
 	var _p2 = _p1._1;
@@ -13425,8 +13535,18 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles = F2(
 			apiSubmodule: apiSubmodule,
 			interfaces: _dillonkearns$graphqelm$Graphqelm_Generator_Group$interfacePossibleTypesDict(_p21)
 		};
-		var objectTypes = A2(
+		var typeLockDefinitions = A2(
 			_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generate,
+			apiSubmodule,
+			A2(
+				_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
+				context,
+				A2(
+					_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeQuery,
+					context,
+					_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21))));
+		var scalarDefinitions = A2(
+			_dillonkearns$graphqelm$Graphqelm_Generator_Scalar$generate,
 			apiSubmodule,
 			A2(
 				_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeMutation,
@@ -13441,11 +13561,18 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Group$generateFiles = F2(
 				_elm_lang$core$Tuple$mapFirst(_dillonkearns$graphqelm$Graphqelm_Generator_Group$moduleToFileName),
 				A2(
 					_elm_lang$core$List$append,
-					objectTypes,
+					{
+						ctor: '::',
+						_0: scalarDefinitions,
+						_1: {ctor: '[]'}
+					},
 					A2(
-						_elm_lang$core$List$filterMap,
-						_dillonkearns$graphqelm$Graphqelm_Generator_Group$toPair(context),
-						_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21)))));
+						_elm_lang$core$List$append,
+						typeLockDefinitions,
+						A2(
+							_elm_lang$core$List$filterMap,
+							_dillonkearns$graphqelm$Graphqelm_Generator_Group$toPair(context),
+							_dillonkearns$graphqelm$Graphqelm_Generator_Group$excludeBuiltIns(_p21))))));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Group$typeDefName = function (_p22) {
 	var _p23 = _p22;
