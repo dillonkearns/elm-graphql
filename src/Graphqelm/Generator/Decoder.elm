@@ -24,6 +24,18 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                 Scalar.Float ->
                     [ "Decode.float" ]
 
+                Scalar.Custom customScalarName ->
+                    let
+                        constructor =
+                            apiSubmodule
+                                ++ [ "Scalar" ]
+                                ++ [ ClassCaseName.normalized customScalarName ]
+                                |> String.join "."
+                    in
+                    [ "Decode.string"
+                    , interpolate "Decode.map {0}" [ constructor ]
+                    ]
+
         Type.List listTypeRef ->
             generateDecoder apiSubmodule listTypeRef ++ [ "Decode.list" ]
 
@@ -86,6 +98,17 @@ generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                 Scalar.Float ->
                     "Encode.float" ++ isNullableString
 
+                Scalar.Custom customScalarName ->
+                    let
+                        constructor =
+                            apiSubmodule
+                                ++ [ "Scalar" ]
+                                ++ [ ClassCaseName.normalized customScalarName ]
+                                |> String.join "."
+                    in
+                    -- "identity"
+                    interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ]
+
         Type.List typeRef ->
             generateEncoder apiSubmodule typeRef ++ isNullableString ++ " |> Encode.list"
 
@@ -140,6 +163,16 @@ generateTypeCommon nullableString apiSubmodule (Type.TypeReference referrableTyp
 
                 Scalar.Float ->
                     "Float"
+
+                Scalar.Custom customScalarName ->
+                    let
+                        constructor =
+                            apiSubmodule
+                                ++ [ "Scalar" ]
+                                ++ [ ClassCaseName.normalized customScalarName ]
+                                |> String.join "."
+                    in
+                    constructor
 
         Type.List typeRef ->
             "(List " ++ generateType apiSubmodule typeRef ++ ")"

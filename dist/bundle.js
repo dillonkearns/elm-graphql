@@ -9022,6 +9022,9 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$CamelCaseName = funct
 };
 var _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$build = _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$CamelCaseName;
 
+var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Custom = function (a) {
+	return {ctor: 'Custom', _0: a};
+};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Float = {ctor: 'Float'};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Int = {ctor: 'Int'};
 var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$String = {ctor: 'String'};
@@ -9037,10 +9040,9 @@ var _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$parse = function (scalarName
 			return _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Int;
 		case 'Float':
 			return _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Float;
-		case 'ID':
-			return _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$String;
 		default:
-			return _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$String;
+			return _dillonkearns$graphqelm$Graphqelm_Parser_Scalar$Custom(
+				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$build(scalarName));
 	}
 };
 
@@ -11474,8 +11476,28 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon = F3(
 								return 'Bool';
 							case 'Int':
 								return 'Int';
-							default:
+							case 'Float':
 								return 'Float';
+							default:
+								var constructor = A2(
+									_elm_lang$core$String$join,
+									'.',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										apiSubmodule,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											{
+												ctor: '::',
+												_0: 'Scalar',
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p4._0),
+												_1: {ctor: '[]'}
+											})));
+								return constructor;
 						}
 					case 'List':
 						return A2(
@@ -11544,8 +11566,35 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = F2(
 						return A2(_elm_lang$core$Basics_ops['++'], 'Encode.bool', isNullableString);
 					case 'Int':
 						return A2(_elm_lang$core$Basics_ops['++'], 'Encode.int', isNullableString);
-					default:
+					case 'Float':
 						return A2(_elm_lang$core$Basics_ops['++'], 'Encode.float', isNullableString);
+					default:
+						var constructor = A2(
+							_elm_lang$core$String$join,
+							'.',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								apiSubmodule,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									{
+										ctor: '::',
+										_0: 'Scalar',
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p10._0),
+										_1: {ctor: '[]'}
+									})));
+						return A2(
+							_dillonkearns$graphqelm$Interpolate$interpolate,
+							'(\\({0} raw) -> Encode.string raw)',
+							{
+								ctor: '::',
+								_0: constructor,
+								_1: {ctor: '[]'}
+							});
 				}
 			case 'List':
 				return A2(
@@ -11556,24 +11605,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder = F2(
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Decoder',
 					{
-						start: {line: 74, column: 5},
-						end: {line: 114, column: 36}
+						start: {line: 86, column: 5},
+						end: {line: 137, column: 36}
 					},
 					_p9)('I don\'t expect to see object references as argument types.');
 			case 'InterfaceRef':
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Decoder',
 					{
-						start: {line: 74, column: 5},
-						end: {line: 114, column: 36}
+						start: {line: 86, column: 5},
+						end: {line: 137, column: 36}
 					},
 					_p9)('Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces');
 			case 'UnionRef':
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Decoder',
 					{
-						start: {line: 74, column: 5},
-						end: {line: 114, column: 36}
+						start: {line: 86, column: 5},
+						end: {line: 137, column: 36}
 					},
 					_p9)('Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions');
 			case 'EnumRef':
@@ -11654,11 +11703,46 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 									_0: 'Decode.int',
 									_1: {ctor: '[]'}
 								};
-							default:
+							case 'Float':
 								return {
 									ctor: '::',
 									_0: 'Decode.float',
 									_1: {ctor: '[]'}
+								};
+							default:
+								var constructor = A2(
+									_elm_lang$core$String$join,
+									'.',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										apiSubmodule,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											{
+												ctor: '::',
+												_0: 'Scalar',
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p17._0),
+												_1: {ctor: '[]'}
+											})));
+								return {
+									ctor: '::',
+									_0: 'Decode.string',
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_dillonkearns$graphqelm$Interpolate$interpolate,
+											'Decode.map {0}',
+											{
+												ctor: '::',
+												_0: constructor,
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								};
 						}
 					case 'List':
@@ -11712,7 +11796,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 							'Graphqelm.Generator.Decoder',
 							{
 								start: {line: 12, column: 6},
-								end: {line: 47, column: 98}
+								end: {line: 59, column: 98}
 							},
 							_p16)('Input objects are only for input not responses, shouldn\'t need decoder.');
 				}
@@ -12774,7 +12858,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObject$prepend = F3(
 		var _p2 = _p1.apiSubmodule;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.InputObject\nimport {2}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
@@ -12927,7 +13011,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$prepend = F3(
 		var _p2 = _p1.apiSubmodule;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n{-| Select only common fields from the interface.\n-}\ncommonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\ncommonSelection constructor =\n    Object.selection constructor\n\n\n{-| Select both common and type-specific fields from the interface.\n-}\nselection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}\nselection constructor typeSpecificDecoders =\n    Object.interfaceSelection typeSpecificDecoders constructor\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n{-| Select only common fields from the interface.\n-}\ncommonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\ncommonSelection constructor =\n    Object.selection constructor\n\n\n{-| Select both common and type-specific fields from the interface.\n-}\nselection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}\nselection constructor typeSpecificDecoders =\n    Object.interfaceSelection typeSpecificDecoders constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
@@ -13008,7 +13092,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$prepend = F3(
 		var _p2 = _p1.apiSubmodule;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootMutation)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation\nselection constructor =\n    Object.selection constructor\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootMutation)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
@@ -13049,7 +13133,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Object$prepend = F3(
 		var _p2 = _p1.apiSubmodule;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a SelectionSet for this object.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.selection constructor\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a SelectionSet for this object.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
@@ -13082,7 +13166,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Query$prepend = F3(
 	function (apiSubmodule, moduleName, fields) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootQuery)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a top-level query. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.selection constructor\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport Graphqelm.Builder.Object as Object\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootQuery)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a top-level query. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),

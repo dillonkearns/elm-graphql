@@ -1,12 +1,14 @@
 module Graphqelm.Parser.Scalar exposing (Scalar(..), parse)
 
+import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+
 
 type Scalar
     = Boolean
-      -- | ID
     | String
     | Int
     | Float
+    | Custom ClassCaseName
 
 
 parse : String -> Scalar
@@ -24,9 +26,5 @@ parse scalarName =
         "Float" ->
             Float
 
-        "ID" ->
-            -- TODO is it worth the overhead for the user of having a special union type here?
-            String
-
         _ ->
-            String
+            Custom (ClassCaseName.build scalarName)
