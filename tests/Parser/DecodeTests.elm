@@ -142,7 +142,7 @@ all =
                                       }
                                     , { name = CamelCaseName.build "id"
                                       , description = Nothing
-                                      , typeRef = TypeReference (Scalar Scalar.String) NonNullable
+                                      , typeRef = TypeReference (Scalar (Scalar.Custom (ClassCaseName.build "ID"))) NonNullable
                                       , args = []
                                       }
                                     , { name = CamelCaseName.build "name"
