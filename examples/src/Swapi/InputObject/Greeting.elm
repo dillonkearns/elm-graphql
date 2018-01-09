@@ -18,6 +18,7 @@ import Swapi.InputObject
 import Swapi.InputObject.GreetingOptions
 import Swapi.Interface
 import Swapi.Object
+import Swapi.Scalar
 import Swapi.Union
 
 

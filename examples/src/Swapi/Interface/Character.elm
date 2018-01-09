@@ -16,6 +16,7 @@ import Json.Decode as Decode
 import Swapi.Enum.Episode
 import Swapi.Interface
 import Swapi.Object
+import Swapi.Scalar
 import Swapi.Union
 
 
@@ -59,9 +60,9 @@ friends object =
 
 {-| The ID of the character.
 -}
-id : FieldDecoder String Swapi.Interface.Character
+id : FieldDecoder Swapi.Scalar.Id Swapi.Interface.Character
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the character.

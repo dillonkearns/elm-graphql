@@ -16,6 +16,7 @@ import Json.Decode as Decode
 import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
+import Swapi.Scalar
 import Swapi.Union
 
 

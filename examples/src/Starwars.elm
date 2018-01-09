@@ -17,6 +17,7 @@ import Swapi.Object
 import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
+import Swapi.Scalar
 import Swapi.Union
 import Swapi.Union.CharacterUnion as CharacterUnion
 
@@ -38,7 +39,7 @@ type HumanOrDroid
 type alias Character =
     { details : Maybe HumanOrDroid
     , name : String
-    , id : String
+    , id : Swapi.Scalar.Id
     , friends : List String
     }
 
@@ -70,8 +71,8 @@ heroUnion =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.human { id = "1001" } human)
-        |> with (Query.human { id = "1004" } human)
+        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human)
+        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human)
         |> with
             (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
         |> with

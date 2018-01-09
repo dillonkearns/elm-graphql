@@ -18,6 +18,7 @@ import Swapi.Enum.Episode
 import Swapi.InputObject.Greeting
 import Swapi.Interface
 import Swapi.Object
+import Swapi.Scalar
 import Swapi.Union
 
 
@@ -34,9 +35,9 @@ selection constructor =
   - id - ID of the droid.
 
 -}
-droid : { id : String } -> SelectionSet selection Swapi.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
+droid : { id : Swapi.Scalar.Id } -> SelectionSet selection Swapi.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
 droid requiredArgs object =
-    Object.selectionFieldDecoder "droid" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
 
 greet : { input : Swapi.InputObject.Greeting.Greeting } -> FieldDecoder String RootQuery
@@ -85,6 +86,6 @@ heroUnion fillInOptionals object =
   - id - ID of the human.
 
 -}
-human : { id : String } -> SelectionSet selection Swapi.Object.Human -> FieldDecoder (Maybe selection) RootQuery
+human : { id : Swapi.Scalar.Id } -> SelectionSet selection Swapi.Object.Human -> FieldDecoder (Maybe selection) RootQuery
 human requiredArgs object =
-    Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)

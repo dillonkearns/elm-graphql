@@ -16,6 +16,7 @@ import Json.Decode as Decode
 import Swapi.Enum.Episode
 import Swapi.Interface
 import Swapi.Object
+import Swapi.Scalar
 import Swapi.Union
 
 
@@ -49,9 +50,9 @@ homePlanet =
 
 {-| The ID of the human.
 -}
-id : FieldDecoder String Swapi.Object.Human
+id : FieldDecoder Swapi.Scalar.Id Swapi.Object.Human
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the human.
