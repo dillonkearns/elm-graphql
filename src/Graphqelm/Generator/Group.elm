@@ -71,8 +71,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
     in
     typeDefinitions
         |> excludeBuiltIns
-        |> List.filterMap
-            (toPair context)
+        |> List.filterMap (toPair context)
         |> List.append typeLockDefinitions
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
