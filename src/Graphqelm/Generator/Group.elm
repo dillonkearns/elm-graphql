@@ -61,7 +61,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
             , interfaces = interfacePossibleTypesDict typeDefinitions
             }
 
-        objectTypes =
+        typeLockDefinitions =
             TypeLockDefinitions.generate apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
@@ -73,7 +73,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
         |> excludeBuiltIns
         |> List.filterMap
             (toPair context)
-        |> List.append objectTypes
+        |> List.append typeLockDefinitions
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 
