@@ -13139,15 +13139,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$builtInNames = {
 		_0: 'String',
 		_1: {
 			ctor: '::',
-			_0: 'ID',
+			_0: 'Int',
 			_1: {
 				ctor: '::',
-				_0: 'Int',
-				_1: {
-					ctor: '::',
-					_0: 'Float',
-					_1: {ctor: '[]'}
-				}
+				_0: 'Float',
+				_1: {ctor: '[]'}
 			}
 		}
 	}

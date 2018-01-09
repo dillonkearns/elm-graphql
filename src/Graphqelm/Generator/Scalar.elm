@@ -25,7 +25,13 @@ include (TypeDefinition name definableType description) =
 
 builtInNames : List String
 builtInNames =
-    [ "Boolean", "String", "ID", "Int", "Float" ]
+    [ "Boolean"
+    , "String"
+    , "Int"
+    , "Float"
+
+    -- , "ID"
+    ]
 
 
 isBuiltIn : ClassCaseName -> Bool

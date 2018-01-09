@@ -7,6 +7,5 @@
 module Swapi.Scalar exposing (..)
 
 
-placeholder : String
-placeholder =
-    ""
+type Id
+    = Id String
