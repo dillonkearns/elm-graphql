@@ -8,6 +8,7 @@ module Github.Object.BlameRange exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object

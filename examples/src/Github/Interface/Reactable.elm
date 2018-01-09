@@ -10,6 +10,7 @@ import Github.Enum.ReactionContent
 import Github.InputObject.ReactionOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -59,9 +60,9 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReviewComment" fields decoder
 
 
-id : FieldDecoder String Github.Interface.Reactable
+id : FieldDecoder Github.Scalar.Id Github.Interface.Reactable
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of reactions grouped by content left on the subject.

@@ -9,6 +9,7 @@ module Github.Object.TeamMemberEdge exposing (..)
 import Github.Enum.TeamMemberRole
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -33,16 +34,16 @@ cursor =
 
 {-| The HTTP path to the organization's member access page.
 -}
-memberAccessResourcePath : FieldDecoder String Github.Object.TeamMemberEdge
+memberAccessResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessResourcePath =
-    Object.fieldDecoder "memberAccessResourcePath" [] Decode.string
+    Object.fieldDecoder "memberAccessResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL to the organization's member access page.
 -}
-memberAccessUrl : FieldDecoder String Github.Object.TeamMemberEdge
+memberAccessUrl : FieldDecoder Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessUrl =
-    Object.fieldDecoder "memberAccessUrl" [] Decode.string
+    Object.fieldDecoder "memberAccessUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 node : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.TeamMemberEdge

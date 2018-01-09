@@ -8,6 +8,7 @@ module Github.Object.ReactingUserEdge exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -37,6 +38,6 @@ node object =
 
 {-| The moment when the user made the reaction.
 -}
-reactedAt : FieldDecoder String Github.Object.ReactingUserEdge
+reactedAt : FieldDecoder Github.Scalar.DateTime Github.Object.ReactingUserEdge
 reactedAt =
-    Object.fieldDecoder "reactedAt" [] Decode.string
+    Object.fieldDecoder "reactedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)

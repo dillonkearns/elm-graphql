@@ -12,6 +12,7 @@ import Github.Enum.ReactionContent
 import Github.InputObject.ReactionOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -52,9 +53,9 @@ body =
 
 {-| Identifies the comment body rendered to HTML.
 -}
-bodyHTML : FieldDecoder String Github.Object.CommitComment
+bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.CommitComment
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the commit associated with the comment, if the commit exists.
@@ -66,9 +67,9 @@ commit object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.CommitComment
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.CommitComment
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -85,16 +86,16 @@ editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.CommitComment
+id : FieldDecoder Github.Scalar.Id Github.Object.CommitComment
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe String) Github.Object.CommitComment
+lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies the file path associated with the comment.
@@ -113,9 +114,9 @@ position =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe String) Github.Object.CommitComment
+publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -157,16 +158,16 @@ repository object =
 
 {-| The HTTP path permalink for this commit comment.
 -}
-resourcePath : FieldDecoder String Github.Object.CommitComment
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.CommitComment
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL permalink for this commit comment.
 -}
-url : FieldDecoder String Github.Object.CommitComment
+url : FieldDecoder Github.Scalar.Uri Github.Object.CommitComment
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the current viewer can delete this object.

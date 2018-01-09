@@ -9,6 +9,7 @@ module Github.Object.DeploymentStatus exposing (..)
 import Github.Enum.DeploymentStatusState
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -28,9 +29,9 @@ selection constructor =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.DeploymentStatus
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.DeploymentStatus
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -56,21 +57,21 @@ description =
 
 {-| Identifies the environment URL of the deployment.
 -}
-environmentUrl : FieldDecoder (Maybe String) Github.Object.DeploymentStatus
+environmentUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
 environmentUrl =
-    Object.fieldDecoder "environmentUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "environmentUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.DeploymentStatus
+id : FieldDecoder Github.Scalar.Id Github.Object.DeploymentStatus
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the log URL of the deployment.
 -}
-logUrl : FieldDecoder (Maybe String) Github.Object.DeploymentStatus
+logUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
 logUrl =
-    Object.fieldDecoder "logUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "logUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| Identifies the current state of the deployment.

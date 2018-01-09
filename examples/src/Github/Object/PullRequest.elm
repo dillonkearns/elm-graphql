@@ -16,6 +16,7 @@ import Github.Enum.SubscriptionState
 import Github.InputObject.ReactionOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -98,9 +99,9 @@ body =
 
 {-| Identifies the body of the pull request rendered to HTML.
 -}
-bodyHTML : FieldDecoder String Github.Object.PullRequest
+bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.PullRequest
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the body of the pull request rendered to text.
@@ -126,9 +127,9 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
+closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| A list of comments associated with the pull request.
@@ -175,9 +176,9 @@ commits fillInOptionals object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.PullRequest
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.PullRequest
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -229,9 +230,9 @@ headRepositoryOwner object =
     Object.selectionFieldDecoder "headRepositoryOwner" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.PullRequest
+id : FieldDecoder Github.Scalar.Id Github.Object.PullRequest
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The head and base repositories are different.
@@ -264,9 +265,9 @@ labels fillInOptionals object =
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
+lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| `true` if the pull request is locked
@@ -299,9 +300,9 @@ merged =
 
 {-| The date and time that the pull request was merged.
 -}
-mergedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
+mergedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 mergedAt =
-    Object.fieldDecoder "mergedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "mergedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies the milestone associated with the pull request.
@@ -369,9 +370,9 @@ projectCards fillInOptionals object =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe String) Github.Object.PullRequest
+publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -413,23 +414,23 @@ repository object =
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : FieldDecoder String Github.Object.PullRequest
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.PullRequest
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP path for reverting this pull request.
 -}
-revertResourcePath : FieldDecoder String Github.Object.PullRequest
+revertResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.PullRequest
 revertResourcePath =
-    Object.fieldDecoder "revertResourcePath" [] Decode.string
+    Object.fieldDecoder "revertResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for reverting this pull request.
 -}
-revertUrl : FieldDecoder String Github.Object.PullRequest
+revertUrl : FieldDecoder Github.Scalar.Uri Github.Object.PullRequest
 revertUrl =
-    Object.fieldDecoder "revertUrl" [] Decode.string
+    Object.fieldDecoder "revertUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of review requests associated with the pull request.
@@ -499,14 +500,14 @@ suggestedReviewers object =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestTimelineConnection -> FieldDecoder selection Github.Object.PullRequest
+timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }) -> SelectionSet selection Github.Object.PullRequestTimelineConnection -> FieldDecoder selection Github.Object.PullRequest
 timeline fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, since = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since (\(Github.Scalar.DateTime raw) -> Encode.string raw) ]
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "timeline" optionalArgs object identity
@@ -521,9 +522,9 @@ title =
 
 {-| The HTTP URL for this pull request.
 -}
-url : FieldDecoder String Github.Object.PullRequest
+url : FieldDecoder Github.Scalar.Uri Github.Object.PullRequest
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can user react to this subject

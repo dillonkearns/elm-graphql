@@ -8,6 +8,7 @@ module Github.Interface.Node exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -424,6 +425,6 @@ onUser (SelectionSet fields decoder) =
 
 {-| ID of the object.
 -}
-id : FieldDecoder String Github.Interface.Node
+id : FieldDecoder Github.Scalar.Id Github.Interface.Node
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)

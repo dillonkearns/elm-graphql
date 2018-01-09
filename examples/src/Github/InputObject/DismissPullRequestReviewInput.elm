@@ -9,6 +9,7 @@ module Github.InputObject.DismissPullRequestReviewInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : DismissPullRequestReviewInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", Encode.string input.pullRequestReviewId |> Just ), ( "message", Encode.string input.message |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "message", Encode.string input.message |> Just ) ]
 
 
 {-| Type for the DismissPullRequestReviewInput input object.
 -}
 type alias DismissPullRequestReviewInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewId : String, message : String }
+    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, message : String }

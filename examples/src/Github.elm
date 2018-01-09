@@ -7,6 +7,7 @@ import Github.Object.Repository as Repository
 import Github.Object.StargazerConnection
 import Github.Object.Topic
 import Github.Query as Query
+import Github.Scalar
 import Graphqelm.Document as Document
 import Graphqelm.FieldDecoder
 import Graphqelm.Http
@@ -20,12 +21,12 @@ import RemoteData exposing (RemoteData)
 
 type alias Response =
     { repoInfo : Maybe RepositoryInfo
-    , topicId : Maybe String
+    , topicId : Maybe Github.Scalar.Id
     }
 
 
 type alias RepositoryInfo =
-    { createdAt : String
+    { createdAt : Github.Scalar.DateTime
     , earlyReleases : ReleaseInfo
     , lateReleases : ReleaseInfo
     , stargazersCount : Int
@@ -36,7 +37,12 @@ query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
-        |> with (Query.topic { name = "" } (Github.Object.Topic.selection identity |> with Github.Object.Topic.id))
+        |> with (Query.topic { name = "" } something)
+
+
+something : SelectionSet Github.Scalar.Id Github.Object.Topic
+something =
+    Github.Object.Topic.selection identity |> with Github.Object.Topic.id
 
 
 repo : SelectionSet RepositoryInfo Github.Object.Repository
@@ -69,7 +75,7 @@ releases =
 
 type alias Release =
     { name : String
-    , url : String
+    , url : Github.Scalar.Uri
     }
 
 

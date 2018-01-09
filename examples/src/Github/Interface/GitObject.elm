@@ -8,6 +8,7 @@ module Github.Interface.GitObject exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -61,28 +62,28 @@ abbreviatedOid =
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : FieldDecoder String Github.Interface.GitObject
+commitResourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.GitObject
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] Decode.string
+    Object.fieldDecoder "commitResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : FieldDecoder String Github.Interface.GitObject
+commitUrl : FieldDecoder Github.Scalar.Uri Github.Interface.GitObject
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] Decode.string
+    Object.fieldDecoder "commitUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder String Github.Interface.GitObject
+id : FieldDecoder Github.Scalar.Id Github.Interface.GitObject
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
-oid : FieldDecoder String Github.Interface.GitObject
+oid : FieldDecoder Github.Scalar.GitObjectID Github.Interface.GitObject
 oid =
-    Object.fieldDecoder "oid" [] Decode.string
+    Object.fieldDecoder "oid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to

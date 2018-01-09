@@ -8,6 +8,7 @@ module Github.Object.RepositoryTopic exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -25,16 +26,16 @@ selection constructor =
     Object.selection constructor
 
 
-id : FieldDecoder String Github.Object.RepositoryTopic
+id : FieldDecoder Github.Scalar.Id Github.Object.RepositoryTopic
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The HTTP path for this repository-topic.
 -}
-resourcePath : FieldDecoder String Github.Object.RepositoryTopic
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.RepositoryTopic
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The topic.
@@ -46,6 +47,6 @@ topic object =
 
 {-| The HTTP URL for this repository-topic.
 -}
-url : FieldDecoder String Github.Object.RepositoryTopic
+url : FieldDecoder Github.Scalar.Uri Github.Object.RepositoryTopic
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

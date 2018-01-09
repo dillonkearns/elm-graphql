@@ -10,6 +10,7 @@ import Github.Enum.ReactionContent
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -25,10 +26,10 @@ import Json.Decode as Decode
 encode : RemoveReactionInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", Encode.string input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
 {-| Type for the RemoveReactionInput input object.
 -}
 type alias RemoveReactionInput =
-    { clientMutationId : OptionalArgument String, subjectId : String, content : Github.Enum.ReactionContent.ReactionContent }
+    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }

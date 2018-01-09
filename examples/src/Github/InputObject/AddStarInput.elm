@@ -9,6 +9,7 @@ module Github.InputObject.AddStarInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : AddStarInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", Encode.string input.starrableId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.starrableId |> Just ) ]
 
 
 {-| Type for the AddStarInput input object.
 -}
 type alias AddStarInput =
-    { clientMutationId : OptionalArgument String, starrableId : String }
+    { clientMutationId : OptionalArgument String, starrableId : Github.Scalar.Id }

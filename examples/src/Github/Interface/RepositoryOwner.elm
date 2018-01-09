@@ -11,6 +11,7 @@ import Github.Enum.RepositoryPrivacy
 import Github.InputObject.RepositoryOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -50,7 +51,7 @@ onUser (SelectionSet fields decoder) =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Interface.RepositoryOwner
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Uri Github.Interface.RepositoryOwner
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -60,12 +61,12 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
+    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder String Github.Interface.RepositoryOwner
+id : FieldDecoder Github.Scalar.Id Github.Interface.RepositoryOwner
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The username used to login.
@@ -138,13 +139,13 @@ repository requiredArgs object =
 
 {-| The HTTP URL for the owner.
 -}
-resourcePath : FieldDecoder String Github.Interface.RepositoryOwner
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.RepositoryOwner
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for the owner.
 -}
-url : FieldDecoder String Github.Interface.RepositoryOwner
+url : FieldDecoder Github.Scalar.Uri Github.Interface.RepositoryOwner
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

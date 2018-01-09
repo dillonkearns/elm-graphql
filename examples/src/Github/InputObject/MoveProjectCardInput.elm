@@ -9,6 +9,7 @@ module Github.InputObject.MoveProjectCardInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : MoveProjectCardInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", Encode.string input.cardId |> Just ), ( "columnId", Encode.string input.columnId |> Just ), ( "afterCardId", Encode.string |> Encode.optional input.afterCardId ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.cardId |> Just ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ), ( "afterCardId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.afterCardId ) ]
 
 
 {-| Type for the MoveProjectCardInput input object.
 -}
 type alias MoveProjectCardInput =
-    { clientMutationId : OptionalArgument String, cardId : String, columnId : String, afterCardId : OptionalArgument String }
+    { clientMutationId : OptionalArgument String, cardId : Github.Scalar.Id, columnId : Github.Scalar.Id, afterCardId : OptionalArgument Github.Scalar.Id }

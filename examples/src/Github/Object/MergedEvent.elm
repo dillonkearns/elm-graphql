@@ -8,6 +8,7 @@ module Github.Object.MergedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -41,14 +42,14 @@ commit object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.MergedEvent
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.MergedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder String Github.Object.MergedEvent
+id : FieldDecoder Github.Scalar.Id Github.Object.MergedEvent
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the Ref associated with the `merge` event.
@@ -74,13 +75,13 @@ pullRequest object =
 
 {-| The HTTP path for this merged event.
 -}
-resourcePath : FieldDecoder String Github.Object.MergedEvent
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.MergedEvent
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this merged event.
 -}
-url : FieldDecoder String Github.Object.MergedEvent
+url : FieldDecoder Github.Scalar.Uri Github.Object.MergedEvent
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

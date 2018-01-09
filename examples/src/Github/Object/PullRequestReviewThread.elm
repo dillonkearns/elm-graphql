@@ -8,6 +8,7 @@ module Github.Object.PullRequestReviewThread exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -46,9 +47,9 @@ comments fillInOptionals object =
     Object.selectionFieldDecoder "comments" optionalArgs object identity
 
 
-id : FieldDecoder String Github.Object.PullRequestReviewThread
+id : FieldDecoder Github.Scalar.Id Github.Object.PullRequestReviewThread
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this thread.

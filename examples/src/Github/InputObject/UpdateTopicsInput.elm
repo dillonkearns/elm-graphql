@@ -9,6 +9,7 @@ module Github.InputObject.UpdateTopicsInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : UpdateTopicsInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", Encode.string input.repositoryId |> Just ), ( "topicNames", (Encode.string |> Encode.list) input.topicNames |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.repositoryId |> Just ), ( "topicNames", (Encode.string |> Encode.list) input.topicNames |> Just ) ]
 
 
 {-| Type for the UpdateTopicsInput input object.
 -}
 type alias UpdateTopicsInput =
-    { clientMutationId : OptionalArgument String, repositoryId : String, topicNames : List String }
+    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, topicNames : List String }

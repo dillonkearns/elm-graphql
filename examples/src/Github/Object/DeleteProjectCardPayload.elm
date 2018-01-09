@@ -8,6 +8,7 @@ module Github.Object.DeleteProjectCardPayload exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -41,6 +42,6 @@ column object =
 
 {-| The deleted card ID.
 -}
-deletedCardId : FieldDecoder String Github.Object.DeleteProjectCardPayload
+deletedCardId : FieldDecoder Github.Scalar.Id Github.Object.DeleteProjectCardPayload
 deletedCardId =
-    Object.fieldDecoder "deletedCardId" [] Decode.string
+    Object.fieldDecoder "deletedCardId" [] (Decode.string |> Decode.map Github.Scalar.Id)

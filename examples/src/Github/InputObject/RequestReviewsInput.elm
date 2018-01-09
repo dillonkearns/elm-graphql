@@ -9,6 +9,7 @@ module Github.InputObject.RequestReviewsInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : RequestReviewsInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", Encode.string input.pullRequestId |> Just ), ( "userIds", (Encode.string |> Encode.list) |> Encode.optional input.userIds ), ( "teamIds", (Encode.string |> Encode.list) |> Encode.optional input.teamIds ), ( "union", Encode.bool |> Encode.optional input.union ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestId |> Just ), ( "userIds", ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) |> Encode.optional input.userIds ), ( "teamIds", ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) |> Encode.optional input.teamIds ), ( "union", Encode.bool |> Encode.optional input.union ) ]
 
 
 {-| Type for the RequestReviewsInput input object.
 -}
 type alias RequestReviewsInput =
-    { clientMutationId : OptionalArgument String, pullRequestId : String, userIds : OptionalArgument (List String), teamIds : OptionalArgument (List String), union : OptionalArgument Bool }
+    { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, userIds : OptionalArgument (List Github.Scalar.Id), teamIds : OptionalArgument (List Github.Scalar.Id), union : OptionalArgument Bool }

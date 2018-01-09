@@ -14,6 +14,7 @@ import Github.Enum.SubscriptionState
 import Github.InputObject.ReactionOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -75,9 +76,9 @@ body =
 
 {-| Identifies the body of the issue rendered to HTML.
 -}
-bodyHTML : FieldDecoder String Github.Object.Issue
+bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.Issue
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the body of the issue rendered to text.
@@ -96,9 +97,9 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe String) Github.Object.Issue
+closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Issue
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| A list of comments associated with the Issue.
@@ -124,9 +125,9 @@ comments fillInOptionals object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Issue
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Issue
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -143,9 +144,9 @@ editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Issue
+id : FieldDecoder Github.Scalar.Id Github.Object.Issue
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of labels associated with the object.
@@ -171,9 +172,9 @@ labels fillInOptionals object =
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe String) Github.Object.Issue
+lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Issue
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| `true` if the object is locked
@@ -241,9 +242,9 @@ projectCards fillInOptionals object =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe String) Github.Object.Issue
+publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Issue
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -285,9 +286,9 @@ repository object =
 
 {-| The HTTP path for this issue
 -}
-resourcePath : FieldDecoder String Github.Object.Issue
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Issue
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the state of the issue.
@@ -306,14 +307,14 @@ state =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument String }) -> SelectionSet selection Github.Object.IssueTimelineConnection -> FieldDecoder selection Github.Object.Issue
+timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }) -> SelectionSet selection Github.Object.IssueTimelineConnection -> FieldDecoder selection Github.Object.Issue
 timeline fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, since = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since (\(Github.Scalar.DateTime raw) -> Encode.string raw) ]
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "timeline" optionalArgs object identity
@@ -328,9 +329,9 @@ title =
 
 {-| The HTTP URL for this issue
 -}
-url : FieldDecoder String Github.Object.Issue
+url : FieldDecoder Github.Scalar.Uri Github.Object.Issue
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can user react to this subject

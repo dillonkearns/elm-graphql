@@ -9,6 +9,7 @@ module Github.InputObject.CreateProjectInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : CreateProjectInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "ownerId", Encode.string input.ownerId |> Just ), ( "name", Encode.string input.name |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "ownerId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.ownerId |> Just ), ( "name", Encode.string input.name |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
 {-| Type for the CreateProjectInput input object.
 -}
 type alias CreateProjectInput =
-    { clientMutationId : OptionalArgument String, ownerId : String, name : String, body : OptionalArgument String }
+    { clientMutationId : OptionalArgument String, ownerId : Github.Scalar.Id, name : String, body : OptionalArgument String }

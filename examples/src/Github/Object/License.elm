@@ -8,6 +8,7 @@ module Github.Object.License exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -60,9 +61,9 @@ hidden =
     Object.fieldDecoder "hidden" [] Decode.bool
 
 
-id : FieldDecoder String Github.Object.License
+id : FieldDecoder Github.Scalar.Id Github.Object.License
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Instructions on how to implement the license
@@ -116,6 +117,6 @@ spdxId =
 
 {-| URL to the license on <https://choosealicense.com>
 -}
-url : FieldDecoder (Maybe String) Github.Object.License
+url : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.License
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)

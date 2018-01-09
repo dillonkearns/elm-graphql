@@ -9,6 +9,7 @@ module Github.Object.Project exposing (..)
 import Github.Enum.ProjectState
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -35,9 +36,9 @@ body =
 
 {-| The projects description body rendered to HTML.
 -}
-bodyHTML : FieldDecoder String Github.Object.Project
+bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.Project
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
@@ -49,9 +50,9 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe String) Github.Object.Project
+closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Project
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| List of columns in the project
@@ -77,9 +78,9 @@ columns fillInOptionals object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Project
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Project
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who originally created the project.
@@ -89,9 +90,9 @@ creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Project
+id : FieldDecoder Github.Scalar.Id Github.Object.Project
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The project's name.
@@ -138,9 +139,9 @@ pendingCards fillInOptionals object =
 
 {-| The HTTP path for this project
 -}
-resourcePath : FieldDecoder String Github.Object.Project
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Project
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Whether the project is open or closed.
@@ -152,9 +153,9 @@ state =
 
 {-| The HTTP URL for this project
 -}
-url : FieldDecoder String Github.Object.Project
+url : FieldDecoder Github.Scalar.Uri Github.Object.Project
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the current viewer can update this object.

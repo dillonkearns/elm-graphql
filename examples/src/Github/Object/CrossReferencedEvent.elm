@@ -8,6 +8,7 @@ module Github.Object.CrossReferencedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,14 +35,14 @@ actor object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.CrossReferencedEvent
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder String Github.Object.CrossReferencedEvent
+id : FieldDecoder Github.Scalar.Id Github.Object.CrossReferencedEvent
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Reference originated in a different repository.
@@ -53,16 +54,16 @@ isCrossRepository =
 
 {-| Identifies when the reference was made.
 -}
-referencedAt : FieldDecoder String Github.Object.CrossReferencedEvent
+referencedAt : FieldDecoder Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 referencedAt =
-    Object.fieldDecoder "referencedAt" [] Decode.string
+    Object.fieldDecoder "referencedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : FieldDecoder String Github.Object.CrossReferencedEvent
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.CrossReferencedEvent
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Issue or pull request that made the reference.
@@ -81,9 +82,9 @@ target object =
 
 {-| The HTTP URL for this pull request.
 -}
-url : FieldDecoder String Github.Object.CrossReferencedEvent
+url : FieldDecoder Github.Scalar.Uri Github.Object.CrossReferencedEvent
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Checks if the target will be closed when the source is merged.

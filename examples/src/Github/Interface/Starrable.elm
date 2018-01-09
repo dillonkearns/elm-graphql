@@ -9,6 +9,7 @@ module Github.Interface.Starrable exposing (..)
 import Github.InputObject.StarOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -43,9 +44,9 @@ onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-id : FieldDecoder String Github.Interface.Starrable
+id : FieldDecoder Github.Scalar.Id Github.Interface.Starrable
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of users who have starred this starrable.

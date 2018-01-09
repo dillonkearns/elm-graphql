@@ -8,6 +8,7 @@ module Github.Interface.Closable exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -61,6 +62,6 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe String) Github.Interface.Closable
+closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Interface.Closable
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)

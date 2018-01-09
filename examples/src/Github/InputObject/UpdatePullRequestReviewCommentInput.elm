@@ -9,6 +9,7 @@ module Github.InputObject.UpdatePullRequestReviewCommentInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : UpdatePullRequestReviewCommentInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", Encode.string input.pullRequestReviewCommentId |> Just ), ( "body", Encode.string input.body |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewCommentId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 {-| Type for the UpdatePullRequestReviewCommentInput input object.
 -}
 type alias UpdatePullRequestReviewCommentInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewCommentId : String, body : String }
+    { clientMutationId : OptionalArgument String, pullRequestReviewCommentId : Github.Scalar.Id, body : String }

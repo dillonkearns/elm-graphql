@@ -11,6 +11,7 @@ import Github.Enum.MilestoneState
 import Github.InputObject.IssueOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -37,16 +38,16 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe String) Github.Object.Milestone
+closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Milestone
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Milestone
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Milestone
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the actor who created the milestone.
@@ -65,14 +66,14 @@ description =
 
 {-| Identifies the due date of the milestone.
 -}
-dueOn : FieldDecoder (Maybe String) Github.Object.Milestone
+dueOn : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Milestone
 dueOn =
-    Object.fieldDecoder "dueOn" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "dueOn" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Milestone
+id : FieldDecoder Github.Scalar.Id Github.Object.Milestone
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of issues associated with the milestone.
@@ -115,9 +116,9 @@ repository object =
 
 {-| The HTTP path for this milestone
 -}
-resourcePath : FieldDecoder String Github.Object.Milestone
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Milestone
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the state of the milestone.
@@ -136,6 +137,6 @@ title =
 
 {-| The HTTP URL for this milestone
 -}
-url : FieldDecoder String Github.Object.Milestone
+url : FieldDecoder Github.Scalar.Uri Github.Object.Milestone
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

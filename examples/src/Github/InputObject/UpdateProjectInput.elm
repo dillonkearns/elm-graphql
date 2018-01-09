@@ -10,6 +10,7 @@ import Github.Enum.ProjectState
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -25,10 +26,10 @@ import Json.Decode as Decode
 encode : UpdateProjectInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", Encode.string input.projectId |> Just ), ( "name", Encode.string |> Encode.optional input.name ), ( "body", Encode.string |> Encode.optional input.body ), ( "state", Encode.enum Github.Enum.ProjectState.toString |> Encode.optional input.state ), ( "public", Encode.bool |> Encode.optional input.public ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ), ( "name", Encode.string |> Encode.optional input.name ), ( "body", Encode.string |> Encode.optional input.body ), ( "state", Encode.enum Github.Enum.ProjectState.toString |> Encode.optional input.state ), ( "public", Encode.bool |> Encode.optional input.public ) ]
 
 
 {-| Type for the UpdateProjectInput input object.
 -}
 type alias UpdateProjectInput =
-    { clientMutationId : OptionalArgument String, projectId : String, name : OptionalArgument String, body : OptionalArgument String, state : OptionalArgument Github.Enum.ProjectState.ProjectState, public : OptionalArgument Bool }
+    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : OptionalArgument String, body : OptionalArgument String, state : OptionalArgument Github.Enum.ProjectState.ProjectState, public : OptionalArgument Bool }

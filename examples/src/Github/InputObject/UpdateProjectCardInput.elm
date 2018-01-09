@@ -9,6 +9,7 @@ module Github.InputObject.UpdateProjectCardInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : UpdateProjectCardInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectCardId", Encode.string input.projectCardId |> Just ), ( "note", Encode.string input.note |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectCardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectCardId |> Just ), ( "note", Encode.string input.note |> Just ) ]
 
 
 {-| Type for the UpdateProjectCardInput input object.
 -}
 type alias UpdateProjectCardInput =
-    { clientMutationId : OptionalArgument String, projectCardId : String, note : String }
+    { clientMutationId : OptionalArgument String, projectCardId : Github.Scalar.Id, note : String }

@@ -9,6 +9,7 @@ module Github.InputObject.DeleteProjectInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : DeleteProjectInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", Encode.string input.projectId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ) ]
 
 
 {-| Type for the DeleteProjectInput input object.
 -}
 type alias DeleteProjectInput =
-    { clientMutationId : OptionalArgument String, projectId : String }
+    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id }

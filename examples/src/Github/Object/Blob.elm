@@ -8,6 +8,7 @@ module Github.Object.Blob exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -41,21 +42,21 @@ byteSize =
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : FieldDecoder String Github.Object.Blob
+commitResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Blob
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] Decode.string
+    Object.fieldDecoder "commitResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : FieldDecoder String Github.Object.Blob
+commitUrl : FieldDecoder Github.Scalar.Uri Github.Object.Blob
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] Decode.string
+    Object.fieldDecoder "commitUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder String Github.Object.Blob
+id : FieldDecoder Github.Scalar.Id Github.Object.Blob
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates whether the Blob is binary or text
@@ -74,9 +75,9 @@ isTruncated =
 
 {-| The Git object ID
 -}
-oid : FieldDecoder String Github.Object.Blob
+oid : FieldDecoder Github.Scalar.GitObjectID Github.Object.Blob
 oid =
-    Object.fieldDecoder "oid" [] Decode.string
+    Object.fieldDecoder "oid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to

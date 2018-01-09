@@ -31,6 +31,10 @@ type Html
     = Html String
 
 
+type Id
+    = Id String
+
+
 type Uri
     = Uri String
 

@@ -11,6 +11,7 @@ import Github.InputObject
 import Github.InputObject.DraftPullRequestReviewComment
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -26,10 +27,10 @@ import Json.Decode as Decode
 encode : AddPullRequestReviewInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", Encode.string input.pullRequestId |> Just ), ( "commitOID", Encode.string |> Encode.optional input.commitOID ), ( "body", Encode.string |> Encode.optional input.body ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString |> Encode.optional input.event ), ( "comments", (Github.InputObject.DraftPullRequestReviewComment.encode |> Encode.maybe |> Encode.list) |> Encode.optional input.comments ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestId |> Just ), ( "commitOID", (\(Github.Scalar.GitObjectID raw) -> Encode.string raw) |> Encode.optional input.commitOID ), ( "body", Encode.string |> Encode.optional input.body ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString |> Encode.optional input.event ), ( "comments", (Github.InputObject.DraftPullRequestReviewComment.encode |> Encode.maybe |> Encode.list) |> Encode.optional input.comments ) ]
 
 
 {-| Type for the AddPullRequestReviewInput input object.
 -}
 type alias AddPullRequestReviewInput =
-    { clientMutationId : OptionalArgument String, pullRequestId : String, commitOID : OptionalArgument String, body : OptionalArgument String, event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe Github.InputObject.DraftPullRequestReviewComment.DraftPullRequestReviewComment)) }
+    { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : OptionalArgument String, event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe Github.InputObject.DraftPullRequestReviewComment.DraftPullRequestReviewComment)) }

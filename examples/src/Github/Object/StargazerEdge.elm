@@ -8,6 +8,7 @@ module Github.Object.StargazerEdge exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -37,6 +38,6 @@ node object =
 
 {-| Identifies when the item was starred.
 -}
-starredAt : FieldDecoder String Github.Object.StargazerEdge
+starredAt : FieldDecoder Github.Scalar.DateTime Github.Object.StargazerEdge
 starredAt =
-    Object.fieldDecoder "starredAt" [] Decode.string
+    Object.fieldDecoder "starredAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)

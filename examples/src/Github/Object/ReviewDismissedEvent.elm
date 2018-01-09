@@ -9,6 +9,7 @@ module Github.Object.ReviewDismissedEvent exposing (..)
 import Github.Enum.PullRequestReviewState
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -35,14 +36,14 @@ actor object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.ReviewDismissedEvent
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ReviewDismissedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder String Github.Object.ReviewDismissedEvent
+id : FieldDecoder Github.Scalar.Id Github.Object.ReviewDismissedEvent
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the message associated with the 'review_dismissed' event.
@@ -54,9 +55,9 @@ message =
 
 {-| The message associated with the event, rendered to HTML.
 -}
-messageHtml : FieldDecoder String Github.Object.ReviewDismissedEvent
+messageHtml : FieldDecoder Github.Scalar.Html Github.Object.ReviewDismissedEvent
 messageHtml =
-    Object.fieldDecoder "messageHtml" [] Decode.string
+    Object.fieldDecoder "messageHtml" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the previous state of the review with the 'review_dismissed' event.
@@ -82,9 +83,9 @@ pullRequestCommit object =
 
 {-| The HTTP path for this review dismissed event.
 -}
-resourcePath : FieldDecoder String Github.Object.ReviewDismissedEvent
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.ReviewDismissedEvent
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the review associated with the 'review_dismissed' event.
@@ -96,6 +97,6 @@ review object =
 
 {-| The HTTP URL for this review dismissed event.
 -}
-url : FieldDecoder String Github.Object.ReviewDismissedEvent
+url : FieldDecoder Github.Scalar.Uri Github.Object.ReviewDismissedEvent
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

@@ -8,6 +8,7 @@ module Github.Object.HeadRefDeletedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,9 +35,9 @@ actor object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.HeadRefDeletedEvent
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.HeadRefDeletedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the Ref associated with the `head_ref_deleted` event.
@@ -53,9 +54,9 @@ headRefName =
     Object.fieldDecoder "headRefName" [] Decode.string
 
 
-id : FieldDecoder String Github.Object.HeadRefDeletedEvent
+id : FieldDecoder Github.Scalar.Id Github.Object.HeadRefDeletedEvent
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.

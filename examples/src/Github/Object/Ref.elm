@@ -10,6 +10,7 @@ import Github.Enum.PullRequestState
 import Github.InputObject.IssueOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -53,9 +54,9 @@ associatedPullRequests fillInOptionals object =
     Object.selectionFieldDecoder "associatedPullRequests" optionalArgs object identity
 
 
-id : FieldDecoder String Github.Object.Ref
+id : FieldDecoder Github.Scalar.Id Github.Object.Ref
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The ref name.

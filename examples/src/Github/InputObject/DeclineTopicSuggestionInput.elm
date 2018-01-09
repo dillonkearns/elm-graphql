@@ -10,6 +10,7 @@ import Github.Enum.TopicSuggestionDeclineReason
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -25,10 +26,10 @@ import Json.Decode as Decode
 encode : DeclineTopicSuggestionInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", Encode.string input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ), ( "reason", Encode.enum Github.Enum.TopicSuggestionDeclineReason.toString input.reason |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ), ( "reason", Encode.enum Github.Enum.TopicSuggestionDeclineReason.toString input.reason |> Just ) ]
 
 
 {-| Type for the DeclineTopicSuggestionInput input object.
 -}
 type alias DeclineTopicSuggestionInput =
-    { clientMutationId : OptionalArgument String, repositoryId : String, name : String, reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
+    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, name : String, reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }

@@ -8,6 +8,7 @@ module Github.Object.CodeOfConduct exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -48,6 +49,6 @@ name =
 
 {-| The path to the CoC
 -}
-url : FieldDecoder (Maybe String) Github.Object.CodeOfConduct
+url : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)

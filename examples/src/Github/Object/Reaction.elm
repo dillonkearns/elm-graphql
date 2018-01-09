@@ -9,6 +9,7 @@ module Github.Object.Reaction exposing (..)
 import Github.Enum.ReactionContent
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -35,14 +36,14 @@ content =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Reaction
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Reaction
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder String Github.Object.Reaction
+id : FieldDecoder Github.Scalar.Id Github.Object.Reaction
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The reactable piece of content

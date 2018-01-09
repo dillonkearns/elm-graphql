@@ -9,6 +9,7 @@ module Github.Interface.RepositoryInfo exposing (..)
 import Github.Enum.RepositoryLockReason
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -45,9 +46,9 @@ onRepositoryInvitationRepository (SelectionSet fields decoder) =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Interface.RepositoryInfo
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Interface.RepositoryInfo
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The description of the repository.
@@ -59,9 +60,9 @@ description =
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : FieldDecoder String Github.Interface.RepositoryInfo
+descriptionHTML : FieldDecoder Github.Scalar.Html Github.Interface.RepositoryInfo
 descriptionHTML =
-    Object.fieldDecoder "descriptionHTML" [] Decode.string
+    Object.fieldDecoder "descriptionHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Returns how many forks there are of this repository in the whole network.
@@ -87,9 +88,9 @@ hasWikiEnabled =
 
 {-| The repository's URL.
 -}
-homepageUrl : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
+homepageUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -143,9 +144,9 @@ lockReason =
 
 {-| The repository's original mirror URL.
 -}
-mirrorUrl : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
+mirrorUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The name of the repository.
@@ -171,16 +172,16 @@ owner object =
 
 {-| Identifies when the repository was last pushed to.
 -}
-pushedAt : FieldDecoder (Maybe String) Github.Interface.RepositoryInfo
+pushedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Interface.RepositoryInfo
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| The HTTP path for this repository
 -}
-resourcePath : FieldDecoder String Github.Interface.RepositoryInfo
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.RepositoryInfo
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| A description of the repository, rendered to HTML without any links in it.
@@ -188,7 +189,7 @@ resourcePath =
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder String Github.Interface.RepositoryInfo
+shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Html Github.Interface.RepositoryInfo
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
@@ -198,11 +199,11 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "shortDescriptionHTML" optionalArgs Decode.string
+    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| The HTTP URL for this repository
 -}
-url : FieldDecoder String Github.Interface.RepositoryInfo
+url : FieldDecoder Github.Scalar.Uri Github.Interface.RepositoryInfo
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

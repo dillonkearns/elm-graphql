@@ -18,6 +18,7 @@ import Github.InputObject.RepositoryOrder
 import Github.InputObject.StarOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -40,7 +41,7 @@ selection constructor =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Object.User
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Uri Github.Object.User
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -50,7 +51,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
+    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The user's public profile bio.
@@ -62,9 +63,9 @@ bio =
 
 {-| The user's public profile bio as HTML.
 -}
-bioHTML : FieldDecoder String Github.Object.User
+bioHTML : FieldDecoder Github.Scalar.Html Github.Object.User
 bioHTML =
-    Object.fieldDecoder "bioHTML" [] Decode.string
+    Object.fieldDecoder "bioHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| A list of commit comments made by this user.
@@ -97,16 +98,16 @@ company =
 
 {-| The user's public profile company as HTML.
 -}
-companyHTML : FieldDecoder String Github.Object.User
+companyHTML : FieldDecoder Github.Scalar.Html Github.Object.User
 companyHTML =
-    Object.fieldDecoder "companyHTML" [] Decode.string
+    Object.fieldDecoder "companyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.User
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.User
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The user's publicly visible profile email.
@@ -212,9 +213,9 @@ gists fillInOptionals object =
     Object.selectionFieldDecoder "gists" optionalArgs object identity
 
 
-id : FieldDecoder String Github.Object.User
+id : FieldDecoder Github.Scalar.Id Github.Object.User
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether or not this user is a participant in the GitHub Security Bug Bounty.
@@ -499,9 +500,9 @@ repository requiredArgs object =
 
 {-| The HTTP path for this user
 -}
-resourcePath : FieldDecoder String Github.Object.User
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.User
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Repositories the user has starred.
@@ -529,9 +530,9 @@ starredRepositories fillInOptionals object =
 
 {-| The HTTP URL for this user
 -}
-url : FieldDecoder String Github.Object.User
+url : FieldDecoder Github.Scalar.Uri Github.Object.User
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Whether or not the viewer is able to follow the user.
@@ -575,6 +576,6 @@ watching fillInOptionals object =
 
 {-| A URL pointing to the user's public website/blog.
 -}
-websiteUrl : FieldDecoder (Maybe String) Github.Object.User
+websiteUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.User
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)

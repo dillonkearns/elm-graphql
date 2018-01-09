@@ -8,6 +8,7 @@ module Github.Object.DeleteProjectColumnPayload exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,9 +35,9 @@ clientMutationId =
 
 {-| The deleted column ID.
 -}
-deletedColumnId : FieldDecoder String Github.Object.DeleteProjectColumnPayload
+deletedColumnId : FieldDecoder Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
 deletedColumnId =
-    Object.fieldDecoder "deletedColumnId" [] Decode.string
+    Object.fieldDecoder "deletedColumnId" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The project the deleted column was in.

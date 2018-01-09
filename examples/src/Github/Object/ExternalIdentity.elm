@@ -8,6 +8,7 @@ module Github.Object.ExternalIdentity exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -32,9 +33,9 @@ guid =
     Object.fieldDecoder "guid" [] Decode.string
 
 
-id : FieldDecoder String Github.Object.ExternalIdentity
+id : FieldDecoder Github.Scalar.Id Github.Object.ExternalIdentity
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Organization invitation for this SCIM-provisioned external identity

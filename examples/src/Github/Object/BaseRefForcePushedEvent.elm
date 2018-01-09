@@ -8,6 +8,7 @@ module Github.Object.BaseRefForcePushedEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -48,14 +49,14 @@ beforeCommit object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.BaseRefForcePushedEvent
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.BaseRefForcePushedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder String Github.Object.BaseRefForcePushedEvent
+id : FieldDecoder Github.Scalar.Id Github.Object.BaseRefForcePushedEvent
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.

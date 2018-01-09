@@ -9,6 +9,7 @@ module Github.InputObject.MoveProjectColumnInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : MoveProjectColumnInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", Encode.string input.columnId |> Just ), ( "afterColumnId", Encode.string |> Encode.optional input.afterColumnId ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ), ( "afterColumnId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.afterColumnId ) ]
 
 
 {-| Type for the MoveProjectColumnInput input object.
 -}
 type alias MoveProjectColumnInput =
-    { clientMutationId : OptionalArgument String, columnId : String, afterColumnId : OptionalArgument String }
+    { clientMutationId : OptionalArgument String, columnId : Github.Scalar.Id, afterColumnId : OptionalArgument Github.Scalar.Id }

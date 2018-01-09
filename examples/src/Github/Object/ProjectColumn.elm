@@ -8,6 +8,7 @@ module Github.Object.ProjectColumn exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -48,14 +49,14 @@ cards fillInOptionals object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.ProjectColumn
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ProjectColumn
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder String Github.Object.ProjectColumn
+id : FieldDecoder Github.Scalar.Id Github.Object.ProjectColumn
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The project column's name.
@@ -74,13 +75,13 @@ project object =
 
 {-| The HTTP path for this project column
 -}
-resourcePath : FieldDecoder String Github.Object.ProjectColumn
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.ProjectColumn
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this project column
 -}
-url : FieldDecoder String Github.Object.ProjectColumn
+url : FieldDecoder Github.Scalar.Uri Github.Object.ProjectColumn
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

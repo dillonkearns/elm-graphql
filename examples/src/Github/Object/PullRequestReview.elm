@@ -11,6 +11,7 @@ import Github.Enum.CommentCannotUpdateReason
 import Github.Enum.PullRequestReviewState
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -51,9 +52,9 @@ body =
 
 {-| The body of this review rendered to HTML.
 -}
-bodyHTML : FieldDecoder String Github.Object.PullRequestReview
+bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.PullRequestReview
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| The body of this review rendered as plain text.
@@ -93,9 +94,9 @@ commit object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.PullRequestReview
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.PullRequestReview
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -112,23 +113,23 @@ editor object =
     Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.PullRequestReview
+id : FieldDecoder Github.Scalar.Id Github.Object.PullRequestReview
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReview
+lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReview
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReview
+publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReview
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies the pull request associated with this pull request review.
@@ -147,9 +148,9 @@ repository object =
 
 {-| The HTTP path permalink for this PullRequestReview.
 -}
-resourcePath : FieldDecoder String Github.Object.PullRequestReview
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.PullRequestReview
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the current state of the pull request review.
@@ -161,16 +162,16 @@ state =
 
 {-| Identifies when the Pull Request Review was submitted
 -}
-submittedAt : FieldDecoder (Maybe String) Github.Object.PullRequestReview
+submittedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReview
 submittedAt =
-    Object.fieldDecoder "submittedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "submittedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| The HTTP URL permalink for this PullRequestReview.
 -}
-url : FieldDecoder String Github.Object.PullRequestReview
+url : FieldDecoder Github.Scalar.Uri Github.Object.PullRequestReview
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the current viewer can delete this object.

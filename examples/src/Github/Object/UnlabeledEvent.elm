@@ -8,6 +8,7 @@ module Github.Object.UnlabeledEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,14 +35,14 @@ actor object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.UnlabeledEvent
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.UnlabeledEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder String Github.Object.UnlabeledEvent
+id : FieldDecoder Github.Scalar.Id Github.Object.UnlabeledEvent
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the label associated with the 'unlabeled' event.

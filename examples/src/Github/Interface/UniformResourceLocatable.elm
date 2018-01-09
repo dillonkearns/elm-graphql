@@ -8,6 +8,7 @@ module Github.Interface.UniformResourceLocatable exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -99,13 +100,13 @@ onUser (SelectionSet fields decoder) =
 
 {-| The HTML path to this resource.
 -}
-resourcePath : FieldDecoder String Github.Interface.UniformResourceLocatable
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.UniformResourceLocatable
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The URL to this resource.
 -}
-url : FieldDecoder String Github.Interface.UniformResourceLocatable
+url : FieldDecoder Github.Scalar.Uri Github.Interface.UniformResourceLocatable
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

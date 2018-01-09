@@ -24,6 +24,7 @@ import Github.InputObject.RepositoryOrder
 import Github.InputObject.StarOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -114,9 +115,9 @@ commitComments fillInOptionals object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Repository
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Repository
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The Ref associated with the repository's default branch.
@@ -178,9 +179,9 @@ description =
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : FieldDecoder String Github.Object.Repository
+descriptionHTML : FieldDecoder Github.Scalar.Html Github.Object.Repository
 descriptionHTML =
-    Object.fieldDecoder "descriptionHTML" [] Decode.string
+    Object.fieldDecoder "descriptionHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| The number of kilobytes this repository occupies on disk.
@@ -238,14 +239,14 @@ hasWikiEnabled =
 
 {-| The repository's URL.
 -}
-homepageUrl : FieldDecoder (Maybe String) Github.Object.Repository
+homepageUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.Repository
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Repository
+id : FieldDecoder Github.Scalar.Id Github.Object.Repository
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -448,9 +449,9 @@ milestones fillInOptionals object =
 
 {-| The repository's original mirror URL.
 -}
-mirrorUrl : FieldDecoder (Maybe String) Github.Object.Repository
+mirrorUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.Repository
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The name of the repository.
@@ -473,14 +474,14 @@ nameWithOwner =
   - expression - A Git revision expression suitable for rev-parse
 
 -}
-object : ({ oid : OptionalArgument String, expression : OptionalArgument String } -> { oid : OptionalArgument String, expression : OptionalArgument String }) -> SelectionSet selection Github.Interface.GitObject -> FieldDecoder (Maybe selection) Github.Object.Repository
+object : ({ oid : OptionalArgument Github.Scalar.GitObjectID, expression : OptionalArgument String } -> { oid : OptionalArgument Github.Scalar.GitObjectID, expression : OptionalArgument String }) -> SelectionSet selection Github.Interface.GitObject -> FieldDecoder (Maybe selection) Github.Object.Repository
 object fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { oid = Absent, expression = Absent }
 
         optionalArgs =
-            [ Argument.optional "oid" filledInOptionals.oid Encode.string, Argument.optional "expression" filledInOptionals.expression Encode.string ]
+            [ Argument.optional "oid" filledInOptionals.oid (\(Github.Scalar.GitObjectID raw) -> Encode.string raw), Argument.optional "expression" filledInOptionals.expression Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionFieldDecoder "object" optionalArgs object (identity >> Decode.maybe)
@@ -543,16 +544,16 @@ projects fillInOptionals object =
 
 {-| The HTTP path listing repository's projects
 -}
-projectsResourcePath : FieldDecoder String Github.Object.Repository
+projectsResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Repository
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] Decode.string
+    Object.fieldDecoder "projectsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing repository's projects
 -}
-projectsUrl : FieldDecoder String Github.Object.Repository
+projectsUrl : FieldDecoder Github.Scalar.Uri Github.Object.Repository
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] Decode.string
+    Object.fieldDecoder "projectsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of protected branches that are on this repository.
@@ -614,9 +615,9 @@ pullRequests fillInOptionals object =
 
 {-| Identifies when the repository was last pushed to.
 -}
-pushedAt : FieldDecoder (Maybe String) Github.Object.Repository
+pushedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Repository
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Fetch a given ref from the repository
@@ -708,9 +709,9 @@ repositoryTopics fillInOptionals object =
 
 {-| The HTTP path for this repository
 -}
-resourcePath : FieldDecoder String Github.Object.Repository
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Repository
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| A description of the repository, rendered to HTML without any links in it.
@@ -718,7 +719,7 @@ resourcePath =
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder String Github.Object.Repository
+shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Html Github.Object.Repository
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
@@ -728,14 +729,14 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "shortDescriptionHTML" optionalArgs Decode.string
+    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| The SSH URL to clone this repository
 -}
-sshUrl : FieldDecoder String Github.Object.Repository
+sshUrl : FieldDecoder Github.Scalar.GitSSHRemote Github.Object.Repository
 sshUrl =
-    Object.fieldDecoder "sshUrl" [] Decode.string
+    Object.fieldDecoder "sshUrl" [] (Decode.string |> Decode.map Github.Scalar.GitSSHRemote)
 
 
 {-| A list of users who have starred this starrable.
@@ -762,9 +763,9 @@ stargazers fillInOptionals object =
 
 {-| The HTTP URL for this repository
 -}
-url : FieldDecoder String Github.Object.Repository
+url : FieldDecoder Github.Scalar.Uri Github.Object.Repository
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Indicates whether the viewer has admin permissions on this repository.

@@ -10,6 +10,7 @@ import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -50,16 +51,16 @@ body =
 
 {-| The comment body rendered to HTML.
 -}
-bodyHTML : FieldDecoder String Github.Object.GistComment
+bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.GistComment
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] Decode.string
+    Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.GistComment
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.GistComment
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -83,23 +84,23 @@ gist object =
     Object.selectionFieldDecoder "gist" [] object identity
 
 
-id : FieldDecoder String Github.Object.GistComment
+id : FieldDecoder Github.Scalar.Id Github.Object.GistComment
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe String) Github.Object.GistComment
+lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.GistComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe String) Github.Object.GistComment
+publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.GistComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Check if the current viewer can delete this object.

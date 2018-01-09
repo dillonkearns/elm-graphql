@@ -8,6 +8,7 @@ module Github.Object.MarketplaceCategory exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -55,9 +56,9 @@ primaryListingCount =
 
 {-| The HTTP path for this Marketplace category.
 -}
-resourcePath : FieldDecoder String Github.Object.MarketplaceCategory
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceCategory
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| How many Marketplace listings have this as their secondary category.
@@ -76,6 +77,6 @@ slug =
 
 {-| The HTTP URL for this Marketplace category.
 -}
-url : FieldDecoder String Github.Object.MarketplaceCategory
+url : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceCategory
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

@@ -9,6 +9,7 @@ module Github.InputObject.AddProjectColumnInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : AddProjectColumnInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", Encode.string input.projectId |> Just ), ( "name", Encode.string input.name |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
 {-| Type for the AddProjectColumnInput input object.
 -}
 type alias AddProjectColumnInput =
-    { clientMutationId : OptionalArgument String, projectId : String, name : String }
+    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : String }

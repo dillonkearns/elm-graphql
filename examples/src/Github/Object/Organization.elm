@@ -16,6 +16,7 @@ import Github.InputObject.RepositoryOrder
 import Github.InputObject.TeamOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -38,7 +39,7 @@ selection constructor =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Object.Organization
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Uri Github.Object.Organization
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -48,7 +49,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
+    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The organization's public profile description.
@@ -65,9 +66,9 @@ email =
     Object.fieldDecoder "email" [] (Decode.string |> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Organization
+id : FieldDecoder Github.Scalar.Id Github.Object.Organization
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The organization's public profile location.
@@ -114,16 +115,16 @@ name =
 
 {-| The HTTP path creating a new team
 -}
-newTeamResourcePath : FieldDecoder String Github.Object.Organization
+newTeamResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 newTeamResourcePath =
-    Object.fieldDecoder "newTeamResourcePath" [] Decode.string
+    Object.fieldDecoder "newTeamResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL creating a new team
 -}
-newTeamUrl : FieldDecoder String Github.Object.Organization
+newTeamUrl : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 newTeamUrl =
-    Object.fieldDecoder "newTeamUrl" [] Decode.string
+    Object.fieldDecoder "newTeamUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The billing email for the organization.
@@ -194,16 +195,16 @@ projects fillInOptionals object =
 
 {-| The HTTP path listing organization's projects
 -}
-projectsResourcePath : FieldDecoder String Github.Object.Organization
+projectsResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] Decode.string
+    Object.fieldDecoder "projectsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing organization's projects
 -}
-projectsUrl : FieldDecoder String Github.Object.Organization
+projectsUrl : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] Decode.string
+    Object.fieldDecoder "projectsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of repositories that the user owns.
@@ -244,9 +245,9 @@ repository requiredArgs object =
 
 {-| The HTTP path for this user
 -}
-resourcePath : FieldDecoder String Github.Object.Organization
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The Organization's SAML Identity Providers
@@ -296,23 +297,23 @@ teams fillInOptionals object =
 
 {-| The HTTP path listing organization's teams
 -}
-teamsResourcePath : FieldDecoder String Github.Object.Organization
+teamsResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 teamsResourcePath =
-    Object.fieldDecoder "teamsResourcePath" [] Decode.string
+    Object.fieldDecoder "teamsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing organization's teams
 -}
-teamsUrl : FieldDecoder String Github.Object.Organization
+teamsUrl : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 teamsUrl =
-    Object.fieldDecoder "teamsUrl" [] Decode.string
+    Object.fieldDecoder "teamsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this user
 -}
-url : FieldDecoder String Github.Object.Organization
+url : FieldDecoder Github.Scalar.Uri Github.Object.Organization
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Organization is adminable by the viewer.
@@ -352,6 +353,6 @@ viewerIsAMember =
 
 {-| The organization's public profile URL.
 -}
-websiteUrl : FieldDecoder (Maybe String) Github.Object.Organization
+websiteUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.Organization
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)

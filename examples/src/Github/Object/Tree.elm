@@ -8,6 +8,7 @@ module Github.Object.Tree exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,16 +35,16 @@ abbreviatedOid =
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : FieldDecoder String Github.Object.Tree
+commitResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Tree
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] Decode.string
+    Object.fieldDecoder "commitResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : FieldDecoder String Github.Object.Tree
+commitUrl : FieldDecoder Github.Scalar.Uri Github.Object.Tree
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] Decode.string
+    Object.fieldDecoder "commitUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of tree entries.
@@ -53,16 +54,16 @@ entries object =
     Object.selectionFieldDecoder "entries" [] object (identity >> Decode.list >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Tree
+id : FieldDecoder Github.Scalar.Id Github.Object.Tree
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
-oid : FieldDecoder String Github.Object.Tree
+oid : FieldDecoder Github.Scalar.GitObjectID Github.Object.Tree
 oid =
-    Object.fieldDecoder "oid" [] Decode.string
+    Object.fieldDecoder "oid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to

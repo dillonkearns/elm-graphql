@@ -8,6 +8,7 @@ module Github.Object.CommitCommentThread exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -53,9 +54,9 @@ commit object =
     Object.selectionFieldDecoder "commit" [] object identity
 
 
-id : FieldDecoder String Github.Object.CommitCommentThread
+id : FieldDecoder Github.Scalar.Id Github.Object.CommitCommentThread
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The file the comments were made on.

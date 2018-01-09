@@ -8,6 +8,7 @@ module Github.Object.ReviewRequest exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -25,9 +26,9 @@ selection constructor =
     Object.selection constructor
 
 
-id : FieldDecoder String Github.Object.ReviewRequest
+id : FieldDecoder Github.Scalar.Id Github.Object.ReviewRequest
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this review request.

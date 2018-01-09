@@ -10,6 +10,7 @@ import Github.Enum.ProjectState
 import Github.InputObject.ProjectOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -44,9 +45,9 @@ onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-id : FieldDecoder String Github.Interface.ProjectOwner
+id : FieldDecoder Github.Scalar.Id Github.Interface.ProjectOwner
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Find project by number.
@@ -85,16 +86,16 @@ projects fillInOptionals object =
 
 {-| The HTTP path listing owners projects
 -}
-projectsResourcePath : FieldDecoder String Github.Interface.ProjectOwner
+projectsResourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] Decode.string
+    Object.fieldDecoder "projectsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing owners projects
 -}
-projectsUrl : FieldDecoder String Github.Interface.ProjectOwner
+projectsUrl : FieldDecoder Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] Decode.string
+    Object.fieldDecoder "projectsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can the current viewer create new projects on this owner.

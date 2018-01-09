@@ -8,6 +8,7 @@ module Github.Object.ReleaseAsset exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,9 +35,9 @@ contentType =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.ReleaseAsset
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ReleaseAsset
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The number of times this asset was downloaded
@@ -48,14 +49,14 @@ downloadCount =
 
 {-| Identifies the URL where you can download the release asset via the browser.
 -}
-downloadUrl : FieldDecoder String Github.Object.ReleaseAsset
+downloadUrl : FieldDecoder Github.Scalar.Uri Github.Object.ReleaseAsset
 downloadUrl =
-    Object.fieldDecoder "downloadUrl" [] Decode.string
+    Object.fieldDecoder "downloadUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder String Github.Object.ReleaseAsset
+id : FieldDecoder Github.Scalar.Id Github.Object.ReleaseAsset
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the title of the release asset.
@@ -88,6 +89,6 @@ uploadedBy object =
 
 {-| Identifies the URL of the release asset.
 -}
-url : FieldDecoder String Github.Object.ReleaseAsset
+url : FieldDecoder Github.Scalar.Uri Github.Object.ReleaseAsset
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

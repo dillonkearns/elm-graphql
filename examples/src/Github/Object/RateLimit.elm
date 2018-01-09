@@ -8,6 +8,7 @@ module Github.Object.RateLimit exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -55,6 +56,6 @@ remaining =
 
 {-| The time at which the current rate limit window resets in UTC epoch seconds.
 -}
-resetAt : FieldDecoder String Github.Object.RateLimit
+resetAt : FieldDecoder Github.Scalar.DateTime Github.Object.RateLimit
 resetAt =
-    Object.fieldDecoder "resetAt" [] Decode.string
+    Object.fieldDecoder "resetAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)

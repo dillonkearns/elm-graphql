@@ -8,6 +8,7 @@ module Github.Object.Release exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,9 +35,9 @@ author object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Release
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Release
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the description of the release.
@@ -46,9 +47,9 @@ description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Release
+id : FieldDecoder Github.Scalar.Id Github.Object.Release
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether or not the release is a draft
@@ -74,9 +75,9 @@ name =
 
 {-| Identifies the date and time when the release was created.
 -}
-publishedAt : FieldDecoder (Maybe String) Github.Object.Release
+publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Release
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| List of releases assets which are dependent on this release.
@@ -103,9 +104,9 @@ releaseAssets fillInOptionals object =
 
 {-| The HTTP path for this issue
 -}
-resourcePath : FieldDecoder String Github.Object.Release
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Release
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The Git tag the release points to
@@ -117,6 +118,6 @@ tag object =
 
 {-| The HTTP URL for this issue
 -}
-url : FieldDecoder String Github.Object.Release
+url : FieldDecoder Github.Scalar.Uri Github.Object.Release
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

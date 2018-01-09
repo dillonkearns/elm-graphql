@@ -9,6 +9,7 @@ module Github.InputObject.CommitAuthor exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : CommitAuthor -> Value
 encode input =
     Encode.maybeObject
-        [ ( "id", Encode.string |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list) |> Encode.optional input.emails ) ]
+        [ ( "id", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list) |> Encode.optional input.emails ) ]
 
 
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
-    { id : OptionalArgument String, emails : OptionalArgument (List String) }
+    { id : OptionalArgument Github.Scalar.Id, emails : OptionalArgument (List String) }

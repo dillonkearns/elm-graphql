@@ -8,6 +8,7 @@ module Github.Object.RenamedTitleEvent exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -34,9 +35,9 @@ actor object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.RenamedTitleEvent
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.RenamedTitleEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the current title of the issue or pull request.
@@ -46,9 +47,9 @@ currentTitle =
     Object.fieldDecoder "currentTitle" [] Decode.string
 
 
-id : FieldDecoder String Github.Object.RenamedTitleEvent
+id : FieldDecoder Github.Scalar.Id Github.Object.RenamedTitleEvent
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the previous title of the issue or pull request.

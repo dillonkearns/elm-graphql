@@ -14,6 +14,7 @@ import Github.InputObject.TeamOrder
 import Github.InputObject.TeamRepositoryOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -85,9 +86,9 @@ combinedSlug =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Team
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Team
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The description of the team.
@@ -99,21 +100,21 @@ description =
 
 {-| The HTTP path for editing this team
 -}
-editTeamResourcePath : FieldDecoder String Github.Object.Team
+editTeamResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Team
 editTeamResourcePath =
-    Object.fieldDecoder "editTeamResourcePath" [] Decode.string
+    Object.fieldDecoder "editTeamResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for editing this team
 -}
-editTeamUrl : FieldDecoder String Github.Object.Team
+editTeamUrl : FieldDecoder Github.Scalar.Uri Github.Object.Team
 editTeamUrl =
-    Object.fieldDecoder "editTeamUrl" [] Decode.string
+    Object.fieldDecoder "editTeamUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder String Github.Object.Team
+id : FieldDecoder Github.Scalar.Id Github.Object.Team
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of pending invitations for users to this team
@@ -163,16 +164,16 @@ members fillInOptionals object =
 
 {-| The HTTP path for the team' members
 -}
-membersResourcePath : FieldDecoder String Github.Object.Team
+membersResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Team
 membersResourcePath =
-    Object.fieldDecoder "membersResourcePath" [] Decode.string
+    Object.fieldDecoder "membersResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for the team' members
 -}
-membersUrl : FieldDecoder String Github.Object.Team
+membersUrl : FieldDecoder Github.Scalar.Uri Github.Object.Team
 membersUrl =
-    Object.fieldDecoder "membersUrl" [] Decode.string
+    Object.fieldDecoder "membersUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The name of the team.
@@ -184,16 +185,16 @@ name =
 
 {-| The HTTP path creating a new team
 -}
-newTeamResourcePath : FieldDecoder String Github.Object.Team
+newTeamResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Team
 newTeamResourcePath =
-    Object.fieldDecoder "newTeamResourcePath" [] Decode.string
+    Object.fieldDecoder "newTeamResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL creating a new team
 -}
-newTeamUrl : FieldDecoder String Github.Object.Team
+newTeamUrl : FieldDecoder Github.Scalar.Uri Github.Object.Team
 newTeamUrl =
-    Object.fieldDecoder "newTeamUrl" [] Decode.string
+    Object.fieldDecoder "newTeamUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The organization that owns this team.
@@ -242,23 +243,23 @@ repositories fillInOptionals object =
 
 {-| The HTTP path for this team's repositories
 -}
-repositoriesResourcePath : FieldDecoder String Github.Object.Team
+repositoriesResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Team
 repositoriesResourcePath =
-    Object.fieldDecoder "repositoriesResourcePath" [] Decode.string
+    Object.fieldDecoder "repositoriesResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this team's repositories
 -}
-repositoriesUrl : FieldDecoder String Github.Object.Team
+repositoriesUrl : FieldDecoder Github.Scalar.Uri Github.Object.Team
 repositoriesUrl =
-    Object.fieldDecoder "repositoriesUrl" [] Decode.string
+    Object.fieldDecoder "repositoriesUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP path for this team
 -}
-resourcePath : FieldDecoder String Github.Object.Team
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Team
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The slug corresponding to the team.
@@ -270,23 +271,23 @@ slug =
 
 {-| The HTTP path for this team's teams
 -}
-teamsResourcePath : FieldDecoder String Github.Object.Team
+teamsResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Team
 teamsResourcePath =
-    Object.fieldDecoder "teamsResourcePath" [] Decode.string
+    Object.fieldDecoder "teamsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this team's teams
 -}
-teamsUrl : FieldDecoder String Github.Object.Team
+teamsUrl : FieldDecoder Github.Scalar.Uri Github.Object.Team
 teamsUrl =
-    Object.fieldDecoder "teamsUrl" [] Decode.string
+    Object.fieldDecoder "teamsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this team
 -}
-url : FieldDecoder String Github.Object.Team
+url : FieldDecoder Github.Scalar.Uri Github.Object.Team
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Team is adminable by the viewer.

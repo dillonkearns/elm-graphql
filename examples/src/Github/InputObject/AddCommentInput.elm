@@ -9,6 +9,7 @@ module Github.InputObject.AddCommentInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : AddCommentInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", Encode.string input.subjectId |> Just ), ( "body", Encode.string input.body |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 {-| Type for the AddCommentInput input object.
 -}
 type alias AddCommentInput =
-    { clientMutationId : OptionalArgument String, subjectId : String, body : String }
+    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, body : String }

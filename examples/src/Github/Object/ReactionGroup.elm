@@ -9,6 +9,7 @@ module Github.Object.ReactionGroup exposing (..)
 import Github.Enum.ReactionContent
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -35,9 +36,9 @@ content =
 
 {-| Identifies when the reaction was created.
 -}
-createdAt : FieldDecoder (Maybe String) Github.Object.ReactionGroup
+createdAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| The subject that was reacted to.

@@ -8,6 +8,7 @@ module Github.Object.PullRequestCommit exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -32,9 +33,9 @@ commit object =
     Object.selectionFieldDecoder "commit" [] object identity
 
 
-id : FieldDecoder String Github.Object.PullRequestCommit
+id : FieldDecoder Github.Scalar.Id Github.Object.PullRequestCommit
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The pull request this commit belongs to
@@ -46,13 +47,13 @@ pullRequest object =
 
 {-| The HTTP path for this pull request commit
 -}
-resourcePath : FieldDecoder String Github.Object.PullRequestCommit
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.PullRequestCommit
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this pull request commit
 -}
-url : FieldDecoder String Github.Object.PullRequestCommit
+url : FieldDecoder Github.Scalar.Uri Github.Object.PullRequestCommit
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

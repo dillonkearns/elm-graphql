@@ -9,6 +9,7 @@ module Github.InputObject.RemoveOutsideCollaboratorInput exposing (..)
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -24,10 +25,10 @@ import Json.Decode as Decode
 encode : RemoveOutsideCollaboratorInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "userId", Encode.string input.userId |> Just ), ( "organizationId", Encode.string input.organizationId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "userId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.userId |> Just ), ( "organizationId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.organizationId |> Just ) ]
 
 
 {-| Type for the RemoveOutsideCollaboratorInput input object.
 -}
 type alias RemoveOutsideCollaboratorInput =
-    { clientMutationId : OptionalArgument String, userId : String, organizationId : String }
+    { clientMutationId : OptionalArgument String, userId : Github.Scalar.Id, organizationId : Github.Scalar.Id }

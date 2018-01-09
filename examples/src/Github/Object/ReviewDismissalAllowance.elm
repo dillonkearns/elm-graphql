@@ -8,6 +8,7 @@ module Github.Object.ReviewDismissalAllowance exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -32,9 +33,9 @@ actor object =
     Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.ReviewDismissalAllowance
+id : FieldDecoder Github.Scalar.Id Github.Object.ReviewDismissalAllowance
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.

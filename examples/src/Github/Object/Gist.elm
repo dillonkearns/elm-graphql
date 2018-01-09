@@ -9,6 +9,7 @@ module Github.Object.Gist exposing (..)
 import Github.InputObject.StarOrder
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -49,9 +50,9 @@ comments fillInOptionals object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Gist
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Gist
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The gist description.
@@ -61,9 +62,9 @@ description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Gist
+id : FieldDecoder Github.Scalar.Id Github.Object.Gist
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether the gist is public or not.
@@ -89,9 +90,9 @@ owner object =
 
 {-| Identifies when the gist was last pushed to.
 -}
-pushedAt : FieldDecoder (Maybe String) Github.Object.Gist
+pushedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Gist
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| A list of users who have starred this starrable.

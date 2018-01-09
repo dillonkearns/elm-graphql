@@ -10,6 +10,7 @@ import Github.Enum.SubscriptionState
 import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -25,10 +26,10 @@ import Json.Decode as Decode
 encode : UpdateSubscriptionInput -> Value
 encode input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subscribableId", Encode.string input.subscribableId |> Just ), ( "state", Encode.enum Github.Enum.SubscriptionState.toString input.state |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subscribableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subscribableId |> Just ), ( "state", Encode.enum Github.Enum.SubscriptionState.toString input.state |> Just ) ]
 
 
 {-| Type for the UpdateSubscriptionInput input object.
 -}
 type alias UpdateSubscriptionInput =
-    { clientMutationId : OptionalArgument String, subscribableId : String, state : Github.Enum.SubscriptionState.SubscriptionState }
+    { clientMutationId : OptionalArgument String, subscribableId : Github.Scalar.Id, state : Github.Enum.SubscriptionState.SubscriptionState }

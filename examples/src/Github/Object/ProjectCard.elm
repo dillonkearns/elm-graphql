@@ -9,6 +9,7 @@ module Github.Object.ProjectCard exposing (..)
 import Github.Enum.ProjectCardState
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -45,9 +46,9 @@ content object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.ProjectCard
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ProjectCard
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who created this card
@@ -57,9 +58,9 @@ creator object =
     Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.ProjectCard
+id : FieldDecoder Github.Scalar.Id Github.Object.ProjectCard
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The card note
@@ -78,9 +79,9 @@ project object =
 
 {-| The HTTP path for this card
 -}
-resourcePath : FieldDecoder String Github.Object.ProjectCard
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.ProjectCard
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The state of ProjectCard
@@ -92,6 +93,6 @@ state =
 
 {-| The HTTP URL for this card
 -}
-url : FieldDecoder String Github.Object.ProjectCard
+url : FieldDecoder Github.Scalar.Uri Github.Object.ProjectCard
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

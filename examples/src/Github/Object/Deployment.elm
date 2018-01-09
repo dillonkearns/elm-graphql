@@ -9,6 +9,7 @@ module Github.Object.Deployment exposing (..)
 import Github.Enum.DeploymentState
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -35,9 +36,9 @@ commit object =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder String Github.Object.Deployment
+createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Deployment
 createdAt =
-    Object.fieldDecoder "createdAt" [] Decode.string
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -54,9 +55,9 @@ environment =
     Object.fieldDecoder "environment" [] (Decode.string |> Decode.maybe)
 
 
-id : FieldDecoder String Github.Object.Deployment
+id : FieldDecoder Github.Scalar.Id Github.Object.Deployment
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The latest status of this deployment.

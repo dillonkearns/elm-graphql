@@ -8,6 +8,7 @@ module Github.Object.TreeEntry exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -48,9 +49,9 @@ object object =
 
 {-| Entry file Git object ID.
 -}
-oid : FieldDecoder String Github.Object.TreeEntry
+oid : FieldDecoder Github.Scalar.GitObjectID Github.Object.TreeEntry
 oid =
-    Object.fieldDecoder "oid" [] Decode.string
+    Object.fieldDecoder "oid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the tree entry belongs to

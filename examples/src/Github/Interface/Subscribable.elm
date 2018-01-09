@@ -9,6 +9,7 @@ module Github.Interface.Subscribable exposing (..)
 import Github.Enum.SubscriptionState
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -58,9 +59,9 @@ onTeam (SelectionSet fields decoder) =
     FragmentSelectionSet "Team" fields decoder
 
 
-id : FieldDecoder String Github.Interface.Subscribable
+id : FieldDecoder Github.Scalar.Id Github.Interface.Subscribable
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.

@@ -8,6 +8,7 @@ module Github.Object.MarketplaceListing exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -27,30 +28,30 @@ selection constructor =
 
 {-| URL to the listing owner's company site.
 -}
-companyUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
+companyUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 companyUrl =
-    Object.fieldDecoder "companyUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "companyUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The HTTP path for configuring access to the listing's integration or OAuth app
 -}
-configurationResourcePath : FieldDecoder String Github.Object.MarketplaceListing
+configurationResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceListing
 configurationResourcePath =
-    Object.fieldDecoder "configurationResourcePath" [] Decode.string
+    Object.fieldDecoder "configurationResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for configuring access to the listing's integration or OAuth app
 -}
-configurationUrl : FieldDecoder String Github.Object.MarketplaceListing
+configurationUrl : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceListing
 configurationUrl =
-    Object.fieldDecoder "configurationUrl" [] Decode.string
+    Object.fieldDecoder "configurationUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| URL to the listing's documentation.
 -}
-documentationUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
+documentationUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 documentationUrl =
-    Object.fieldDecoder "documentationUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "documentationUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The listing's detailed description.
@@ -62,9 +63,9 @@ extendedDescription =
 
 {-| The listing's detailed description rendered to HTML.
 -}
-extendedDescriptionHTML : FieldDecoder String Github.Object.MarketplaceListing
+extendedDescriptionHTML : FieldDecoder Github.Scalar.Html Github.Object.MarketplaceListing
 extendedDescriptionHTML =
-    Object.fieldDecoder "extendedDescriptionHTML" [] Decode.string
+    Object.fieldDecoder "extendedDescriptionHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| The listing's introductory description.
@@ -76,9 +77,9 @@ fullDescription =
 
 {-| The listing's introductory description rendered to HTML.
 -}
-fullDescriptionHTML : FieldDecoder String Github.Object.MarketplaceListing
+fullDescriptionHTML : FieldDecoder Github.Scalar.Html Github.Object.MarketplaceListing
 fullDescriptionHTML =
-    Object.fieldDecoder "fullDescriptionHTML" [] Decode.string
+    Object.fieldDecoder "fullDescriptionHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Whether this listing has been submitted for review from GitHub for approval to be displayed in the Marketplace.
@@ -111,21 +112,21 @@ howItWorks =
 
 {-| The listing's technical description rendered to HTML.
 -}
-howItWorksHTML : FieldDecoder String Github.Object.MarketplaceListing
+howItWorksHTML : FieldDecoder Github.Scalar.Html Github.Object.MarketplaceListing
 howItWorksHTML =
-    Object.fieldDecoder "howItWorksHTML" [] Decode.string
+    Object.fieldDecoder "howItWorksHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
-id : FieldDecoder String Github.Object.MarketplaceListing
+id : FieldDecoder Github.Scalar.Id Github.Object.MarketplaceListing
 id =
-    Object.fieldDecoder "id" [] Decode.string
+    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| URL to install the product to the viewer's account or organization.
 -}
-installationUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
+installationUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 installationUrl =
-    Object.fieldDecoder "installationUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "installationUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| Whether this listing's app has been installed for the current viewer
@@ -182,7 +183,7 @@ logoBackgroundColor =
   - size - The size in pixels of the resulting square image.
 
 -}
-logoUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder (Maybe String) Github.Object.MarketplaceListing
+logoUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 logoUrl fillInOptionals =
     let
         filledInOptionals =
@@ -192,7 +193,7 @@ logoUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "logoUrl" optionalArgs (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "logoUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The listing's full name.
@@ -211,9 +212,9 @@ normalizedShortDescription =
 
 {-| URL to the listing's detailed pricing.
 -}
-pricingUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
+pricingUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 pricingUrl =
-    Object.fieldDecoder "pricingUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "pricingUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The category that best describes the listing.
@@ -225,16 +226,16 @@ primaryCategory object =
 
 {-| URL to the listing's privacy policy.
 -}
-privacyPolicyUrl : FieldDecoder String Github.Object.MarketplaceListing
+privacyPolicyUrl : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceListing
 privacyPolicyUrl =
-    Object.fieldDecoder "privacyPolicyUrl" [] Decode.string
+    Object.fieldDecoder "privacyPolicyUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP path for the Marketplace listing.
 -}
-resourcePath : FieldDecoder String Github.Object.MarketplaceListing
+resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceListing
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] Decode.string
+    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The URLs for the listing's screenshots.
@@ -267,9 +268,9 @@ slug =
 
 {-| URL to the listing's status page.
 -}
-statusUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
+statusUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 statusUrl =
-    Object.fieldDecoder "statusUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "statusUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| An email address for support for this listing's app.
@@ -281,23 +282,23 @@ supportEmail =
 
 {-| Either a URL or an email address for support for this listing's app.
 -}
-supportUrl : FieldDecoder String Github.Object.MarketplaceListing
+supportUrl : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceListing
 supportUrl =
-    Object.fieldDecoder "supportUrl" [] Decode.string
+    Object.fieldDecoder "supportUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| URL to the listing's terms of service.
 -}
-termsOfServiceUrl : FieldDecoder (Maybe String) Github.Object.MarketplaceListing
+termsOfServiceUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 termsOfServiceUrl =
-    Object.fieldDecoder "termsOfServiceUrl" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "termsOfServiceUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The HTTP URL for the Marketplace listing.
 -}
-url : FieldDecoder String Github.Object.MarketplaceListing
+url : FieldDecoder Github.Scalar.Uri Github.Object.MarketplaceListing
 url =
-    Object.fieldDecoder "url" [] Decode.string
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can the current viewer add plans for this Marketplace listing.

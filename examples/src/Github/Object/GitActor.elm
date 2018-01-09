@@ -8,6 +8,7 @@ module Github.Object.GitActor exposing (..)
 
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Builder.Object as Object
@@ -30,7 +31,7 @@ selection constructor =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder String Github.Object.GitActor
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Uri Github.Object.GitActor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -40,14 +41,14 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs Decode.string
+    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The timestamp of the Git action (authoring or committing).
 -}
-date : FieldDecoder (Maybe String) Github.Object.GitActor
+date : FieldDecoder (Maybe Github.Scalar.GitTimestamp) Github.Object.GitActor
 date =
-    Object.fieldDecoder "date" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "date" [] (Decode.string |> Decode.map Github.Scalar.GitTimestamp |> Decode.maybe)
 
 
 {-| The email in the Git commit.
