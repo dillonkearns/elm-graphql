@@ -55,7 +55,7 @@ commandline tool if you would like to include them.
 ## Contributors
 
 Thank you Mario Martinez ([martimatix](https://github.com/martimatix)) for
-all your feedback and for the elm-format PR!
+all your feedback, the elm-format PR, and for [the incredible logo design](https://github.com/martimatix/logo-graphqelm/)!
 
 Thank you Mike Stock ([mikeastock](https://github.com/mikeastock/)) for
 setting up Travis CI!
