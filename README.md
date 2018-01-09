@@ -1,3 +1,5 @@
+<img src="https://cdn.rawgit.com/martimatix/logo-graphqelm/master/logo.svg" alt="graphqelm logo" width="40%" align="right">
+
 # GraphqElm
 
 [![Build Status](https://travis-ci.org/dillonkearns/graphqelm.svg?branch=master)](https://travis-ci.org/dillonkearns/graphqelm)
