@@ -7,6 +7,10 @@
 module Github.Union exposing (..)
 
 
+type Closer
+    = Closer
+
+
 type IssueOrPullRequest
     = IssueOrPullRequest
 

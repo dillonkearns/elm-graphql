@@ -40,11 +40,11 @@ closable object =
     Object.selectionFieldDecoder "closable" [] object identity
 
 
-{-| Identifies the commit associated with the 'closed' event.
+{-| Object which triggered the creation of this event.
 -}
-commit : SelectionSet selection Github.Object.Commit -> FieldDecoder (Maybe selection) Github.Object.ClosedEvent
-commit object =
-    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
+closer : SelectionSet selection Github.Union.Closer -> FieldDecoder (Maybe selection) Github.Object.ClosedEvent
+closer object =
+    Object.selectionFieldDecoder "closer" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
