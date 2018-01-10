@@ -13,7 +13,7 @@ import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument
 import Json.Encode
 
 
-{-| Values
+{-| Represents an encoded Value
 -}
 type Value
     = EnumValue String
