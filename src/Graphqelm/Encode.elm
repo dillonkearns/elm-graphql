@@ -70,6 +70,14 @@ int value =
         |> Json
 
 
+{-| Encode a float
+-}
+float : Float -> Value
+float value =
+    Json.Encode.float value
+        |> Json
+
+
 {-| Encode null
 -}
 null : Value
