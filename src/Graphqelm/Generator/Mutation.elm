@@ -19,7 +19,7 @@ prepend { apiSubmodule } moduleName fields =
     interpolate
         """module {0} exposing (..)
 
-import Graphqelm.Builder.Argument as Argument exposing (Argument)
+import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import {2}.Object
 import {2}.Interface

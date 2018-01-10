@@ -79,7 +79,7 @@ prepend : Context -> List String -> List Type.Field -> String
 prepend { apiSubmodule } moduleName fields =
     interpolate """module {0} exposing (..)
 
-import Graphqelm.Builder.Argument as Argument exposing (Argument)
+import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)

@@ -13,7 +13,7 @@
         "Graphqelm.Internal.Encode",
         "Graphqelm.Document",
         "Graphqelm.FieldDecoder",
-        "Graphqelm.Builder.Argument",
+        "Graphqelm.Internal.Builder.Argument",
         "Graphqelm.Internal.Builder.Object",
         "Graphqelm.OptionalArgument",
         "Graphqelm.Http.GraphqlError"

@@ -1,6 +1,6 @@
 module Graphqelm.Field exposing (Field(Composite, Leaf), name)
 
-import Graphqelm.Builder.Argument as Argument exposing (Argument)
+import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 
 
 type Field

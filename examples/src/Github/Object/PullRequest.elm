@@ -18,8 +18,8 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))

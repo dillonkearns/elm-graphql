@@ -1,7 +1,11 @@
-module Graphqelm.Builder.Argument exposing (Argument(Argument), optional, required)
+module Graphqelm.Internal.Builder.Argument exposing (Argument(Argument), optional, required)
 
-{-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
+{-| **WARNING** `Graphqelm.Interal` modules are used by the `graphqelm` command line
+code generator tool. They should not be consumed through hand-written code.
+
+Internal functions for use by auto-generated code from the `graphqelm` CLI.
 @docs Argument, optional, required
+
 -}
 
 import Graphqelm.Internal.Encode as Encode exposing (Value)

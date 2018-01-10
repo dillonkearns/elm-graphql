@@ -33,7 +33,7 @@ prepend : Context -> List String -> String
 prepend { apiSubmodule } moduleName =
     interpolate """module {0} exposing (..)
 
-import Graphqelm.Builder.Argument as Argument exposing (Argument)
+import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
