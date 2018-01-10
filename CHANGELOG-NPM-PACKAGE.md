@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.0] - 2018-01-10
+
+### Added
+
+* Generate Scalars module with type definitions/constructors for each custom scalar.
+* Experimental `--introspection-file` flag to allow users to pass in a file with
+  the result of the introspection query. This may change in the future.
+
 ## [1.0.1] - 2018-01-08
 
 ### Added

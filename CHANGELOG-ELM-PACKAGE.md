@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.0] - 2018-01-10
+
+### Fixed
+
+* Add missing `Encode.float` function. Without this, APIs with float arguments
+  would have compilation errors.
+
+### Changed
+
+* Modules that are used only by generated code are now under `Graphqelm.Internal`
+  to make it more clear in the documentation.
+
 ## [4.1.0] - 2018-01-08
 
 ### Added
