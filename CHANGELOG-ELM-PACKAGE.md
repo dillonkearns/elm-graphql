@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.1] - 2018-01-10
+
+### Removed
+
+* Remove unused elm package dependencies.
+
 ## [5.0.0] - 2018-01-10
 
 ### Fixed
