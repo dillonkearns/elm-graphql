@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+* Add `--output` flag to command line to choose a directory
+  other than `./src` for generated output
 * Support intropsection json files with no top-level `data` json key.
 
 ## [2.0.0] - 2018-01-10

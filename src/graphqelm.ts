@@ -7,12 +7,15 @@ import * as request from 'request'
 import { writeFile } from './formatted-write'
 import { introspectionQuery } from './introspection-query'
 import * as glob from 'glob'
+import * as path from 'path'
 const npmVersion = require('../package.json').version
 const elmPackageVersion = require('../elm-package.json').version
 
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
   graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
+  graphqelm url --output path/to/src # generates code within path/to/src/Api
+  graphqelm url --output path/to/src --base My.Api.Submodule # generates code within path/to/src/My/Api/Submodule
   graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)
 
   graphqelm --version # print the current graphqelm version and target elm package version
@@ -59,6 +62,7 @@ if (args.version) {
 }
 const baseArgRegex = /^[A-Z][A-Za-z_]*(\.[A-Z][A-Za-z_]*)*$/
 const baseModuleArg: undefined | string = args.base
+const outputPath: string = args.output || './src'
 function isValidBaseArg(baseArg: string): boolean {
   return !!baseArg.match(baseArgRegex)
 }
@@ -85,28 +89,30 @@ if (typeof headerArg === 'string') {
   })
 }
 const baseModule = baseModuleArg ? baseModuleArg.split('.') : ['Api']
+function prependBasePath(suffixPath: string): string {
+  return path.join(outputPath, baseModule.join('/'), suffixPath)
+}
 const graphqlUrl: undefined | string = args._[0]
 const introspectionFile: undefined | string = args['introspection-file']
 if (!(graphqlUrl || introspectionFile)) {
   console.log(usage)
   process.exit(0)
 }
-warnIfContainsNonGenerated(`./src/${baseModule.join('/')}`)
-const tsDeclarationPath = args.output
+warnIfContainsNonGenerated(prependBasePath('/'))
 
 const onDataAvailable = (data: {}) => {
   let app = Elm.Main.worker({ data, baseModule })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
-    removeGenerated(`./src/${baseModule.join('/')}`)
-    fs.mkdirpSync(`./src/${baseModule.join('/')}/InputObject`)
-    fs.mkdirpSync(`./src/${baseModule.join('/')}/Object`)
-    fs.mkdirpSync(`./src/${baseModule.join('/')}/Interface`)
-    fs.mkdirpSync(`./src/${baseModule.join('/')}/Union`)
-    fs.mkdirpSync(`./src/${baseModule.join('/')}/Enum`)
+    removeGenerated(prependBasePath('/'))
+    fs.mkdirpSync(prependBasePath('InputObject'))
+    fs.mkdirpSync(prependBasePath('Object'))
+    fs.mkdirpSync(prependBasePath('Interface'))
+    fs.mkdirpSync(prependBasePath('Union'))
+    fs.mkdirpSync(prependBasePath('Enum'))
     for (let key in generatedFile) {
-      let path = './src/' + key
+      let filePath = path.join(outputPath, key)
       let value = generatedFile[key]
-      writeFile(path, targetComment + value)
+      writeFile(filePath, targetComment + value)
     }
   })
 }

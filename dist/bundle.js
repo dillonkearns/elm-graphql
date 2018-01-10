@@ -3758,9 +3758,10 @@ var minimist = __webpack_require__(93);
 var formatted_write_1 = __webpack_require__(94);
 var introspection_query_1 = __webpack_require__(96);
 var glob = __webpack_require__(31);
+var path = __webpack_require__(0);
 var npmVersion = __webpack_require__(106).version;
 var elmPackageVersion = __webpack_require__(107).version;
-var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)\n\n  graphqelm --version # print the current graphqelm version and target elm package version\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
+var usage = "Usage:\n  graphqelm url # generate files based on the schema at `url` in folder ./src/Api\n  graphqelm url --base My.Api.Submodule # generate files based on the schema at `url` in folder ./src/My/Api/Submodule\n  graphqelm url --output path/to/src # generates code within path/to/src/Api\n  graphqelm url --output path/to/src --base My.Api.Submodule # generates code within path/to/src/My/Api/Submodule\n  graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)\n\n  graphqelm --version # print the current graphqelm version and target elm package version\n  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args";
 function isGenerated(path) {
     return (fs
         .readFileSync(path)
@@ -3786,6 +3787,7 @@ if (args.version) {
 }
 var baseArgRegex = /^[A-Z][A-Za-z_]*(\.[A-Z][A-Za-z_]*)*$/;
 var baseModuleArg = args.base;
+var outputPath = args.output || './src';
 function isValidBaseArg(baseArg) {
     return !!baseArg.match(baseArgRegex);
 }
@@ -3812,32 +3814,35 @@ else {
     });
 }
 var baseModule = baseModuleArg ? baseModuleArg.split('.') : ['Api'];
+function prependBasePath(suffixPath) {
+    return path.join(outputPath, baseModule.join('/'), suffixPath);
+}
 var graphqlUrl = args._[0];
 var introspectionFile = args['introspection-file'];
 if (!(graphqlUrl || introspectionFile)) {
     console.log(usage);
     process.exit(0);
 }
-warnIfContainsNonGenerated("./src/" + baseModule.join('/'));
-var tsDeclarationPath = args.output;
+warnIfContainsNonGenerated(prependBasePath('/'));
 var onDataAvailable = function (data) {
     var app = Elm.Main.worker({ data: data, baseModule: baseModule });
     app.ports.generatedFiles.subscribe(function (generatedFile) {
-        removeGenerated("./src/" + baseModule.join('/'));
-        fs.mkdirpSync("./src/" + baseModule.join('/') + "/InputObject");
-        fs.mkdirpSync("./src/" + baseModule.join('/') + "/Object");
-        fs.mkdirpSync("./src/" + baseModule.join('/') + "/Interface");
-        fs.mkdirpSync("./src/" + baseModule.join('/') + "/Union");
-        fs.mkdirpSync("./src/" + baseModule.join('/') + "/Enum");
+        removeGenerated(prependBasePath('/'));
+        fs.mkdirpSync(prependBasePath('InputObject'));
+        fs.mkdirpSync(prependBasePath('Object'));
+        fs.mkdirpSync(prependBasePath('Interface'));
+        fs.mkdirpSync(prependBasePath('Union'));
+        fs.mkdirpSync(prependBasePath('Enum'));
         for (var key in generatedFile) {
-            var path_1 = './src/' + key;
+            var filePath = path.join(outputPath, key);
             var value = generatedFile[key];
-            formatted_write_1.writeFile(path_1, targetComment + value);
+            formatted_write_1.writeFile(filePath, targetComment + value);
         }
     });
 };
 if (introspectionFile) {
-    onDataAvailable(JSON.parse(fs.readFileSync(introspectionFile).toString()).data);
+    var introspectionFileJson = JSON.parse(fs.readFileSync(introspectionFile).toString());
+    onDataAvailable(introspectionFileJson.data || introspectionFileJson);
 }
 else {
     new graphql_request_1.GraphQLClient(graphqlUrl, {
@@ -21084,7 +21089,7 @@ function slice (args) {
 /* 106 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"graphqelm","version":"2.0.0","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","test":"elm-test","gen:starwars":"npm run build && cd examples && ../bin/graphqelm https://graphqelm.herokuapp.com --base Swapi && cd -","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && cd examples && ../bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && cd -","approve":"npm run build && npm link && cd examples && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github && graphqelm https://graphqelm.herokuapp.com/api --base Swapi && cd - && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.7.0-exp","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"graphqelm":"bin/graphqelm"}}
+module.exports = {"name":"graphqelm","version":"2.0.0","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","test":"elm-test","gen:starwars":"npm run build && ./bin/graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src","approve":"npm run build && npm link && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src && graphqelm https://graphqelm.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.7.0-exp","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"graphqelm":"bin/graphqelm"}}
 
 /***/ }),
 /* 107 */
