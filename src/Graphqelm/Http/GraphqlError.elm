@@ -1,7 +1,9 @@
 module Graphqelm.Http.GraphqlError exposing (GraphqlError, Location, decoder)
 
-{-| See the [Errors section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Errors).
+{-|
+
 @docs GraphqlError, decoder, Location
+
 -}
 
 import Dict exposing (Dict)
@@ -15,6 +17,10 @@ guarantees that your requests are valid according to the server's schema, so
 the two cases where you will get a GraphqlError are 1) when there is an implicit
 constraint that the schema doesn't specify, or 2) when your generated code is
 out of date with the schema.
+
+See the
+[Errors section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Errors).
+for more details about GraphQL errors.
 
 -}
 type alias GraphqlError =
