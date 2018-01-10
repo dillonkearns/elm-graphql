@@ -21,6 +21,7 @@ import Github.InputObject.DeleteProjectColumnInput
 import Github.InputObject.DeleteProjectInput
 import Github.InputObject.DeletePullRequestReviewInput
 import Github.InputObject.DismissPullRequestReviewInput
+import Github.InputObject.LockLockableInput
 import Github.InputObject.MoveProjectCardInput
 import Github.InputObject.MoveProjectColumnInput
 import Github.InputObject.RemoveOutsideCollaboratorInput
@@ -160,6 +161,13 @@ deletePullRequestReview requiredArgs object =
 dismissPullRequestReview : { input : Github.InputObject.DismissPullRequestReviewInput.DismissPullRequestReviewInput } -> SelectionSet selection Github.Object.DismissPullRequestReviewPayload -> FieldDecoder (Maybe selection) RootMutation
 dismissPullRequestReview requiredArgs object =
     Object.selectionFieldDecoder "dismissPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.DismissPullRequestReviewInput.encode ] object (identity >> Decode.maybe)
+
+
+{-| Lock a lockable object
+-}
+lockLockable : { input : Github.InputObject.LockLockableInput.LockLockableInput } -> SelectionSet selection Github.Object.LockLockablePayload -> FieldDecoder (Maybe selection) RootMutation
+lockLockable requiredArgs object =
+    Object.selectionFieldDecoder "lockLockable" [ Argument.required "input" requiredArgs.input Github.InputObject.LockLockableInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Moves a project card to another place.

@@ -6,6 +6,7 @@
 
 module Github.Interface.Lockable exposing (..)
 
+import Github.Enum.LockReason
 import Github.Interface
 import Github.Object
 import Github.Scalar
@@ -41,6 +42,13 @@ onIssue (SelectionSet fields decoder) =
 onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.Lockable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
+
+
+{-| Reason that the conversation was locked.
+-}
+activeLockReason : FieldDecoder (Maybe Github.Enum.LockReason.LockReason) Github.Interface.Lockable
+activeLockReason =
+    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
 
 
 {-| `true` if the object is locked

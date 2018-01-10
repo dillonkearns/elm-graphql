@@ -339,6 +339,10 @@ type LicenseRule
     = LicenseRule
 
 
+type LockLockablePayload
+    = LockLockablePayload
+
+
 type LockedEvent
     = LockedEvent
 

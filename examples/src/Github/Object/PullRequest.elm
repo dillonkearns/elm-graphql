@@ -8,6 +8,7 @@ module Github.Object.PullRequest exposing (..)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
+import Github.Enum.LockReason
 import Github.Enum.MergeableState
 import Github.Enum.PullRequestReviewState
 import Github.Enum.PullRequestState
@@ -32,6 +33,13 @@ import Json.Decode as Decode
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PullRequest
 selection constructor =
     Object.selection constructor
+
+
+{-| Reason that the conversation was locked.
+-}
+activeLockReason : FieldDecoder (Maybe Github.Enum.LockReason.LockReason) Github.Object.PullRequest
+activeLockReason =
+    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
 
 
 {-| The number of additions in this pull request.

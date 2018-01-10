@@ -87,6 +87,10 @@ type LanguageOrder
     = LanguageOrder
 
 
+type LockLockableInput
+    = LockLockableInput
+
+
 type MoveProjectCardInput
     = MoveProjectCardInput
 

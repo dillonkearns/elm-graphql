@@ -9,6 +9,7 @@ module Github.Object.Issue exposing (..)
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
 import Github.Enum.IssueState
+import Github.Enum.LockReason
 import Github.Enum.ReactionContent
 import Github.Enum.SubscriptionState
 import Github.InputObject.ReactionOrder
@@ -30,6 +31,13 @@ import Json.Decode as Decode
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Issue
 selection constructor =
     Object.selection constructor
+
+
+{-| Reason that the conversation was locked.
+-}
+activeLockReason : FieldDecoder (Maybe Github.Enum.LockReason.LockReason) Github.Object.Issue
+activeLockReason =
+    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
 
 
 {-| A list of Users assigned to this object.
