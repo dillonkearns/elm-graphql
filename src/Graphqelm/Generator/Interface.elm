@@ -40,7 +40,7 @@ prepend { apiSubmodule } moduleName fields =
 
 import Graphqelm.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
-import Graphqelm.Builder.Object as Object
+import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import {2}.Object

@@ -26,7 +26,7 @@ import {2}.Interface
 import {2}.Union
 import {2}.Scalar
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.Builder.Object as Object
+import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.Operation exposing (RootMutation)
 import Json.Decode as Decode exposing (Decoder)

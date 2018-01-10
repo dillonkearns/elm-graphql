@@ -1,7 +1,11 @@
-module Graphqelm.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionFieldDecoder, unionSelection)
+module Graphqelm.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionFieldDecoder, unionSelection)
 
-{-| Internal functions for use by auto-generated code from the `graphqelm` CLI.
+{-| **WARNING** `Graphqelm.Interal` modules are used by the `graphqelm` command line
+code generator tool. They should not be consumed through hand-written code.
+
+Internal functions for use by auto-generated code from the `graphqelm` CLI.
 @docs fieldDecoder, selection, selectionFieldDecoder, interfaceSelection, unionSelection
+
 -}
 
 import Dict
