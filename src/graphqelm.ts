@@ -86,7 +86,8 @@ if (typeof headerArg === 'string') {
 }
 const baseModule = baseModuleArg ? baseModuleArg.split('.') : ['Api']
 const graphqlUrl: undefined | string = args._[0]
-if (!graphqlUrl) {
+const introspectionFile: undefined | string = args['introspection-file']
+if (!(graphqlUrl || introspectionFile)) {
   console.log(usage)
   process.exit(0)
 }
@@ -109,15 +110,21 @@ const onDataAvailable = (data: {}) => {
     }
   })
 }
-new GraphQLClient(graphqlUrl, {
-  mode: 'cors',
-  headers: headers
-})
-  .request(introspectionQuery, { includeDeprecated: includeDeprecated })
-  .then(data => {
-    onDataAvailable(data)
+if (introspectionFile) {
+  onDataAvailable(
+    JSON.parse(fs.readFileSync(introspectionFile).toString()).data
+  )
+} else {
+  new GraphQLClient(graphqlUrl, {
+    mode: 'cors',
+    headers: headers
   })
-  .catch(err => {
-    console.log(err.response || err)
-    process.exit(1)
-  })
+    .request(introspectionQuery, { includeDeprecated: includeDeprecated })
+    .then(data => {
+      onDataAvailable(data)
+    })
+    .catch(err => {
+      console.log(err.response || err)
+      process.exit(1)
+    })
+}

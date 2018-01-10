@@ -3813,7 +3813,8 @@ else {
 }
 var baseModule = baseModuleArg ? baseModuleArg.split('.') : ['Api'];
 var graphqlUrl = args._[0];
-if (!graphqlUrl) {
+var introspectionFile = args['introspection-file'];
+if (!(graphqlUrl || introspectionFile)) {
     console.log(usage);
     process.exit(0);
 }
@@ -3835,18 +3836,23 @@ var onDataAvailable = function (data) {
         }
     });
 };
-new graphql_request_1.GraphQLClient(graphqlUrl, {
-    mode: 'cors',
-    headers: headers
-})
-    .request(introspection_query_1.introspectionQuery, { includeDeprecated: includeDeprecated })
-    .then(function (data) {
-    onDataAvailable(data);
-})
-    .catch(function (err) {
-    console.log(err.response || err);
-    process.exit(1);
-});
+if (introspectionFile) {
+    onDataAvailable(JSON.parse(fs.readFileSync(introspectionFile).toString()).data);
+}
+else {
+    new graphql_request_1.GraphQLClient(graphqlUrl, {
+        mode: 'cors',
+        headers: headers
+    })
+        .request(introspection_query_1.introspectionQuery, { includeDeprecated: includeDeprecated })
+        .then(function (data) {
+        onDataAvailable(data);
+    })
+        .catch(function (err) {
+        console.log(err.response || err);
+        process.exit(1);
+    });
+}
 
 
 /***/ }),
