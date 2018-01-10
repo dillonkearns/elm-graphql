@@ -42,7 +42,7 @@ import {1}.Object
 import {1}.Interface
 import {1}.Union
 import Json.Decode as Decode
-import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.Internal.Encode as Encode exposing (Value)
 
 
 selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}

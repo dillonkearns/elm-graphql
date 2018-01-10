@@ -1,7 +1,7 @@
 module EncodeTests exposing (all)
 
 import Expect
-import Graphqelm.Encode
+import Graphqelm.Internal.Encode
 import Test exposing (Test, describe, test)
 
 
@@ -15,33 +15,33 @@ all =
     describe "encode"
         [ test "string" <|
             \() ->
-                Graphqelm.Encode.string "hello"
-                    |> Graphqelm.Encode.serialize
+                Graphqelm.Internal.Encode.string "hello"
+                    |> Graphqelm.Internal.Encode.serialize
                     |> Expect.equal "\"hello\""
         , test "boolean" <|
             \() ->
-                Graphqelm.Encode.bool False
-                    |> Graphqelm.Encode.serialize
+                Graphqelm.Internal.Encode.bool False
+                    |> Graphqelm.Internal.Encode.serialize
                     |> Expect.equal "false"
         , test "int" <|
             \() ->
-                Graphqelm.Encode.int 123
-                    |> Graphqelm.Encode.serialize
+                Graphqelm.Internal.Encode.int 123
+                    |> Graphqelm.Internal.Encode.serialize
                     |> Expect.equal "123"
         , test "empty object" <|
             \() ->
-                Graphqelm.Encode.object
+                Graphqelm.Internal.Encode.object
                     []
-                    |> Graphqelm.Encode.serialize
+                    |> Graphqelm.Internal.Encode.serialize
                     |> Expect.equal """{}"""
         , test "non-empty object" <|
             \() ->
-                Graphqelm.Encode.object
-                    [ "number" => Graphqelm.Encode.int 47
-                    , "boolean" => Graphqelm.Encode.bool True
-                    , "enum" => Graphqelm.Encode.enum toString EMPIRE
+                Graphqelm.Internal.Encode.object
+                    [ "number" => Graphqelm.Internal.Encode.int 47
+                    , "boolean" => Graphqelm.Internal.Encode.bool True
+                    , "enum" => Graphqelm.Internal.Encode.enum toString EMPIRE
                     ]
-                    |> Graphqelm.Encode.serialize
+                    |> Graphqelm.Internal.Encode.serialize
                     |> Expect.equal """{number: 47, boolean: true, enum: EMPIRE}"""
         ]
 

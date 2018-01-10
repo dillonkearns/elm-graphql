@@ -4,7 +4,7 @@ module Graphqelm.Builder.Argument exposing (Argument(Argument), optional, requir
 @docs Argument, optional, required
 -}
 
-import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.Internal.Encode as Encode exposing (Value)
 import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument)
 
 

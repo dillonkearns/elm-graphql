@@ -29,7 +29,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.Operation exposing (RootQuery)
 import Json.Decode as Decode exposing (Decoder)
-import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.Internal.Encode as Encode exposing (Value)
 {1}
 
 

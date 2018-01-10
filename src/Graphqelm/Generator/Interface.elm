@@ -48,7 +48,7 @@ import {2}.Interface
 import {2}.Union
 import {2}.Scalar
 import Json.Decode as Decode
-import Graphqelm.Encode as Encode exposing (Value)
+import Graphqelm.Internal.Encode as Encode exposing (Value)
 {1}
 
 {-| Select only common fields from the interface.
