@@ -1,7 +1,7 @@
-module Graphqelm.Http.GraphqlError exposing (GraphqlError, decoder)
+module Graphqelm.Http.GraphqlError exposing (GraphqlError, Location, decoder)
 
 {-| See the [Errors section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Errors).
-@docs GraphqlError, decoder
+@docs GraphqlError, decoder, Location
 -}
 
 import Dict exposing (Dict)
@@ -39,6 +39,8 @@ decoder =
         |> Decode.field "errors"
 
 
+{-| The location in the GraphQL query document where the error occured
+-}
 type alias Location =
     { line : Int, column : Int }
 
