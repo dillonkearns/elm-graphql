@@ -111,9 +111,10 @@ const onDataAvailable = (data: {}) => {
   })
 }
 if (introspectionFile) {
-  onDataAvailable(
-    JSON.parse(fs.readFileSync(introspectionFile).toString()).data
+  const introspectionFileJson = JSON.parse(
+    fs.readFileSync(introspectionFile).toString()
   )
+  onDataAvailable(introspectionFileJson.data || introspectionFileJson)
 } else {
   new GraphQLClient(graphqlUrl, {
     mode: 'cors',
