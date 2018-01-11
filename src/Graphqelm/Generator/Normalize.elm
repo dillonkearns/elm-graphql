@@ -23,7 +23,7 @@ underscores string =
             }
 
         _ ->
-            Debug.crash "Unexpected"
+            Debug.crash ("Unexpected regex result for name " ++ string)
 
 
 isAllUpper : String -> Bool
