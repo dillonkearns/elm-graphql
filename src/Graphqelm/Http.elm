@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error, Request, buildMutationRequest, buildQueryRequest, send, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, buildQueryRequest, send, withHeader, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
