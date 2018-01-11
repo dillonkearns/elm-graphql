@@ -19,7 +19,9 @@ const writeWithElmFormat = (
   value: string,
   elmFormatPath: string
 ): void => {
-  const elmFormat = spawn(elmFormatPath, ['--stdin', '--output', path])
+  const elmFormat = spawn(elmFormatPath, ['--stdin', '--output', path], {
+    shell: true
+  })
 
   elmFormat.stdin.write(value)
   elmFormat.stdin.end()

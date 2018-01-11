@@ -19823,7 +19823,9 @@ exports.writeFile = function (path, value) {
     }
 };
 var writeWithElmFormat = function (path, value, elmFormatPath) {
-    var elmFormat = child_process_1.spawn(elmFormatPath, ['--stdin', '--output', path]);
+    var elmFormat = child_process_1.spawn(elmFormatPath, ['--stdin', '--output', path], {
+        shell: true
+    });
     elmFormat.stdin.write(value);
     elmFormat.stdin.end();
     elmFormat.stdout.on('data', function (data) {

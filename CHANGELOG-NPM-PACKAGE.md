@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* Fixed error on windows related to shelling out.
+
 ### Removed
 
 * Stopped generating unnecessary InputObject type definitions file.
