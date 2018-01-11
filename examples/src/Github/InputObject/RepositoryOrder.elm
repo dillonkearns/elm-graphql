@@ -8,7 +8,6 @@ module Github.InputObject.RepositoryOrder exposing (..)
 
 import Github.Enum.OrderDirection
 import Github.Enum.RepositoryOrderField
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

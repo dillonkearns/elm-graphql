@@ -8,7 +8,6 @@ module Github.InputObject.StarOrder exposing (..)
 
 import Github.Enum.OrderDirection
 import Github.Enum.StarOrderField
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

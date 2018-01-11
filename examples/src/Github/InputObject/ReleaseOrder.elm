@@ -8,7 +8,6 @@ module Github.InputObject.ReleaseOrder exposing (..)
 
 import Github.Enum.OrderDirection
 import Github.Enum.ReleaseOrderField
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

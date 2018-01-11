@@ -8,7 +8,6 @@ module Github.InputObject.IssueOrder exposing (..)
 
 import Github.Enum.IssueOrderField
 import Github.Enum.OrderDirection
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

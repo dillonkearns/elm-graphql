@@ -8,7 +8,6 @@ module Github.InputObject.LanguageOrder exposing (..)
 
 import Github.Enum.LanguageOrderField
 import Github.Enum.OrderDirection
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

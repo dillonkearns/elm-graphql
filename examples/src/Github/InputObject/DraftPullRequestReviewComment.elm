@@ -6,7 +6,6 @@
 
 module Github.InputObject.DraftPullRequestReviewComment exposing (..)
 
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

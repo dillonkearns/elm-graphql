@@ -7,7 +7,6 @@
 module Github.InputObject.DeclineTopicSuggestionInput exposing (..)
 
 import Github.Enum.TopicSuggestionDeclineReason
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -8,7 +8,6 @@ module Github.InputObject.RefOrder exposing (..)
 
 import Github.Enum.OrderDirection
 import Github.Enum.RefOrderField
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

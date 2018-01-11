@@ -8,7 +8,6 @@ import Interpolate exposing (interpolate)
 generate : List String -> List TypeDefinition -> List ( List String, String )
 generate apiSubmodule typeDefs =
     [ generateCommon "Union" unionName apiSubmodule typeDefs
-    , generateCommon "InputObject" inputObjectName apiSubmodule typeDefs
     , generateCommon "Object" objectName apiSubmodule typeDefs
     , generateCommon "Interface" interfaceName apiSubmodule typeDefs
     ]
@@ -54,16 +53,6 @@ generateType name =
         """type {0}
     = {0}"""
         [ ClassCaseName.normalized name ]
-
-
-inputObjectName : TypeDefinition -> Bool
-inputObjectName (TypeDefinition name definableType description) =
-    case definableType of
-        Type.InputObjectType _ ->
-            True
-
-        _ ->
-            False
 
 
 objectName : TypeDefinition -> Bool

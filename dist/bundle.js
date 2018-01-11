@@ -12869,7 +12869,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObject$prepend = F3(
 		var _p2 = _p1.apiSubmodule;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.InputObject\nimport {2}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{1}\n',
+			'module {0} exposing (..)\n\nimport Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{1}\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
@@ -13341,15 +13341,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectName =
 		return false;
 	}
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$inputObjectName = function (_p9) {
-	var _p10 = _p9;
-	var _p11 = _p10._1;
-	if (_p11.ctor === 'InputObjectType') {
-		return true;
-	} else {
-		return false;
-	}
-};
 var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType = function (name) {
 	return A2(
 		_dillonkearns$graphqelm$Interpolate$interpolate,
@@ -13379,9 +13370,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateComm
 			function () {
 				var typesToGenerate = A2(
 					_elm_lang$core$List$map,
-					function (_p12) {
-						var _p13 = _p12;
-						return _p13._0;
+					function (_p9) {
+						var _p10 = _p9;
+						return _p10._0;
 					},
 					A2(_elm_lang$core$List$filter, includeName, typeDefinitions));
 				return _elm_lang$core$Native_Utils.eq(
@@ -13437,15 +13428,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generate = F
 			_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Union', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$unionName, apiSubmodule, typeDefs),
 			_1: {
 				ctor: '::',
-				_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'InputObject', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$inputObjectName, apiSubmodule, typeDefs),
+				_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectName, apiSubmodule, typeDefs),
 				_1: {
 					ctor: '::',
-					_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectName, apiSubmodule, typeDefs),
-					_1: {
-						ctor: '::',
-						_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Interface', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$interfaceName, apiSubmodule, typeDefs),
-						_1: {ctor: '[]'}
-					}
+					_0: A4(_dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateCommon, 'Interface', _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$interfaceName, apiSubmodule, typeDefs),
+					_1: {ctor: '[]'}
 				}
 			}
 		};

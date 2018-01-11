@@ -7,7 +7,6 @@
 module Github.InputObject.AddPullRequestReviewInput exposing (..)
 
 import Github.Enum.PullRequestReviewEvent
-import Github.InputObject
 import Github.InputObject.DraftPullRequestReviewComment
 import Github.Interface
 import Github.Object

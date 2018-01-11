@@ -7,7 +7,6 @@
 module Github.InputObject.SubmitPullRequestReviewInput exposing (..)
 
 import Github.Enum.PullRequestReviewEvent
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -6,7 +6,6 @@
 
 module Github.InputObject.UpdateProjectColumnInput exposing (..)
 
-import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
