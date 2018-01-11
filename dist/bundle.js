@@ -21082,7 +21082,7 @@ module.exports = {"name":"graphqelm","version":"2.0.1","scripts":{"build":"webpa
 /* 107 */
 /***/ (function(module, exports) {
 
-module.exports = {"version":"5.0.1","summary":"Type-safe GraphQL queries in Elm.","repository":"https://github.com/dillonkearns/graphqelm.git","license":"BSD3","source-directories":["src"],"exposed-modules":["Graphqelm.Operation","Graphqelm.Http","Graphqelm.SelectionSet","Graphqelm.Internal.Encode","Graphqelm.Document","Graphqelm.FieldDecoder","Graphqelm.Internal.Builder.Argument","Graphqelm.Internal.Builder.Object","Graphqelm.OptionalArgument","Graphqelm.Http.GraphqlError"],"dependencies":{"elm-community/json-extra":"2.6.0 <= v < 3.0.0","elm-community/list-extra":"7.0.1 <= v < 8.0.0","elm-community/string-extra":"1.4.0 <= v < 2.0.0","elm-lang/core":"5.0.0 <= v < 6.0.0","elm-lang/http":"1.0.0 <= v < 2.0.0"},"elm-version":"0.18.0 <= v < 0.19.0"}
+module.exports = {"version":"6.0.0","summary":"Type-safe GraphQL queries in Elm.","repository":"https://github.com/dillonkearns/graphqelm.git","license":"BSD3","source-directories":["src"],"exposed-modules":["Graphqelm.Operation","Graphqelm.Http","Graphqelm.SelectionSet","Graphqelm.Internal.Encode","Graphqelm.Document","Graphqelm.FieldDecoder","Graphqelm.Internal.Builder.Argument","Graphqelm.Internal.Builder.Object","Graphqelm.OptionalArgument","Graphqelm.Http.GraphqlError"],"dependencies":{"elm-community/json-extra":"2.6.0 <= v < 3.0.0","elm-community/list-extra":"7.0.1 <= v < 8.0.0","elm-community/string-extra":"1.4.0 <= v < 2.0.0","elm-lang/core":"5.0.0 <= v < 6.0.0","elm-lang/http":"1.0.0 <= v < 2.0.0"},"elm-version":"0.18.0 <= v < 0.19.0"}
 
 /***/ })
 /******/ ]);
