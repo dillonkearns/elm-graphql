@@ -1,4 +1,4 @@
-module Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet), with)
+module Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet), hardcoded, with)
 
 {-| The auto-generated code from the `graphqelm` CLI will provide `selection`
 functions for Objects, Interfaces, and Unions in your GraphQL schema.
@@ -47,7 +47,7 @@ the `graphqelm` command line tool.
 The query itself is also a `SelectionSet` so it is built up similarly.
 See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
-@docs with
+@docs with, hardcoded
 
 
 ## Types
@@ -80,11 +80,12 @@ type FragmentSelectionSet decodesTo typeLock
 
     import Api.Enum.Episode as Episode exposing (Episode)
     import Api.Object
+    import Api.Scalar
     import Graphqelm.SelectionSet exposing (SelectionSet, with)
 
     type alias Hero =
         { name : String
-        , id : String
+        , id : Api.Scalar.Id
         , appearsIn : List Episode
         }
 
@@ -117,5 +118,32 @@ with (FieldDecoder field fieldDecoder) (SelectionSet objectFields objectDecoder)
     SelectionSet (objectFields ++ [ field ])
         (Decode.map2 (|>)
             (Decode.field decodeCamelCaseName fieldDecoder)
+            objectDecoder
+        )
+
+
+{-| Include a hardcoded value.
+
+        import Api.Enum.Episode as Episode exposing (Episode)
+        import Api.Object
+        import Graphqelm.SelectionSet exposing (SelectionSet, with, hardcoded)
+
+        type alias Hero =
+            { name : String
+            , movie : String
+            }
+
+        hero : SelectionSet Hero Api.Interface.Character
+        hero =
+            Character.commonSelection Hero
+                |> with Character.name
+                |> hardcoded "Star Wars"
+
+-}
+hardcoded : a -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
+hardcoded constant (SelectionSet objectFields objectDecoder) =
+    SelectionSet objectFields
+        (Decode.map2 (|>)
+            (Decode.succeed constant)
             objectDecoder
         )

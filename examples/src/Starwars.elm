@@ -5,7 +5,7 @@ import Graphqelm.FieldDecoder as FieldDecoder
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
+import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -41,6 +41,7 @@ type alias Character =
     , name : String
     , id : Swapi.Scalar.Id
     , friends : List String
+    , myNum : Int
     }
 
 
@@ -53,6 +54,7 @@ hero =
         |> with Character.name
         |> with Character.id
         |> with (Character.friends (Character.commonSelection identity |> with Character.name))
+        |> hardcoded 123
 
 
 type alias CharacterUnion =

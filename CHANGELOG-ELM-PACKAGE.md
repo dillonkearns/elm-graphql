@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `hardcoded` function to add arbitrary constants alongside `with` calls.
+
 ## [6.0.0] - 2018-01-10
 
 ### Added
