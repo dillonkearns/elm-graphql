@@ -8945,11 +8945,26 @@ var _elm_community$string_extra$String_Extra$decapitalize = function (word) {
 	return A2(_elm_community$string_extra$String_Extra$changeCase, _elm_lang$core$Char$toLower, word);
 };
 
+var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitilize = function (string) {
+	var _p0 = _elm_lang$core$String$toList(string);
+	if (_p0.ctor === '::') {
+		return _elm_lang$core$String$fromList(
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Char$toUpper(_p0._0),
+				_1: _p0._1
+			});
+	} else {
+		return '';
+	}
+};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$isAllUpper = function (string) {
-	return A2(_elm_lang$core$String$all, _elm_lang$core$Char$isUpper, string);
+	return _elm_lang$core$Native_Utils.eq(
+		_elm_lang$core$String$toUpper(string),
+		string);
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$underscores = function (string) {
-	var _p0 = A2(
+	var _p1 = A2(
 		_elm_lang$core$Maybe$map,
 		function (_) {
 			return _.submatches;
@@ -8958,28 +8973,37 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$underscores = function
 			A3(
 				_elm_lang$core$Regex$find,
 				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('^(_*)([^_].*[^_])(_*)$'),
+				_elm_lang$core$Regex$regex('^(_*)([^_]?.*[^_]?)(_*)$'),
 				string)));
-	if ((((((((_p0.ctor === 'Just') && (_p0._0.ctor === '::')) && (_p0._0._0.ctor === 'Just')) && (_p0._0._1.ctor === '::')) && (_p0._0._1._0.ctor === 'Just')) && (_p0._0._1._1.ctor === '::')) && (_p0._0._1._1._0.ctor === 'Just')) && (_p0._0._1._1._1.ctor === '[]')) {
-		return {leading: _p0._0._0._0, trailing: _p0._0._1._1._0._0, remaining: _p0._0._1._0._0};
+	if (_p1.ctor === 'Just') {
+		if (((((((_p1._0.ctor === '::') && (_p1._0._0.ctor === 'Just')) && (_p1._0._1.ctor === '::')) && (_p1._0._1._0.ctor === 'Just')) && (_p1._0._1._1.ctor === '::')) && (_p1._0._1._1._0.ctor === 'Just')) && (_p1._0._1._1._1.ctor === '[]')) {
+			return {leading: _p1._0._0._0, trailing: _p1._0._1._1._0._0, remaining: _p1._0._1._0._0};
+		} else {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Graphqelm.Generator.Normalize',
+				{
+					start: {line: 18, column: 5},
+					end: {line: 29, column: 72}
+				},
+				_p1)(
+				A2(_elm_lang$core$Basics_ops['++'], 'Unexpected regex result for name ', string));
+		}
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Graphqelm.Generator.Normalize',
 			{
 				start: {line: 18, column: 5},
-				end: {line: 26, column: 72}
+				end: {line: 29, column: 72}
 			},
-			_p0)(
-			A2(_elm_lang$core$Basics_ops['++'], 'Unexpected regex result for name ', string));
+			_p1)('Got nothing');
 	}
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized = function (name) {
 	var group = _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$underscores(name);
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		A2(_elm_lang$core$String$contains, '_', group.remaining) ? _elm_community$string_extra$String_Extra$classify(
-			_elm_lang$core$String$toLower(group.remaining)) : (_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$isAllUpper(group.remaining) ? _elm_community$string_extra$String_Extra$classify(
-			_elm_lang$core$String$toLower(group.remaining)) : _elm_community$string_extra$String_Extra$classify(group.remaining)),
+		_dillonkearns$graphqelm$Graphqelm_Generator_Normalize$isAllUpper(group.remaining) ? _elm_community$string_extra$String_Extra$classify(
+			_elm_lang$core$String$toLower(group.remaining)) : _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitilize(group.remaining),
 		A2(_elm_lang$core$Basics_ops['++'], group.leading, group.trailing));
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$normalizeIfElmReserved = function (name) {

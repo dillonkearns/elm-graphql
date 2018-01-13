@@ -9,7 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [2.0.3] - 2018-01-13
+### Fixed
+
+* Single-letter names no longer cause exceptions (like `x` or `y`).
+
+### Changed
+
+* Update name normalization strategy to make only the minimal change to make a name valid
+  (that is, put leading underscores at the tail, and make sure the first letter is the correct case).
+  Unless it is ALL_UPPERCASE_UNDERSCORE_SEPARATED_NAME, then make it ClassCase.
+  ## [2.0.3] - 2018-01-13
 
 ### Added
 

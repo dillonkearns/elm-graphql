@@ -2,12 +2,8 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Normalize.Object exposing (..)
+module Normalize.Scalar exposing (..)
 
 
-type Droid
-    = Droid
-
-
-type Human_
-    = Human_
+type Id
+    = Id String

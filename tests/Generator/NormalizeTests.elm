@@ -16,10 +16,14 @@ all =
             \() ->
                 Normalize.decapitalized "type"
                     |> Expect.equal "type_"
-        , test "camel field name" <|
+        , test "leaves valid snake_case names untouched" <|
             \() ->
-                Normalize.decapitalized "firstName"
-                    |> Expect.equal "firstName"
+                Normalize.decapitalized "year_budget"
+                    |> Expect.equal "year_budget"
+        , test "corrects casing on otherwise valid snake_case names" <|
+            \() ->
+                Normalize.capitalized "year_budget"
+                    |> Expect.equal "Year_budget"
         , test "already normalized module name" <|
             \() ->
                 Normalize.capitalized "MyInterface"
@@ -28,20 +32,32 @@ all =
             \() ->
                 Normalize.capitalized "_ModelMutationType"
                     |> Expect.equal "ModelMutationType_"
-        , test "capitalized & underscorized with leading underscore" <|
+        , test "normalizes all uppercase names to capitalized" <|
             \() ->
                 Normalize.capitalized "ENUMERATION"
                     |> Expect.equal "Enumeration"
         , test "uppercase with leading underscore" <|
             \() ->
                 Normalize.capitalized "_My_Module_Name"
-                    |> Expect.equal "MyModuleName_"
-        , test "All uppercase underscore-seperated" <|
+                    |> Expect.equal "My_Module_Name_"
+        , test "normalizes enums that follow convention into class case" <|
             \() ->
                 Normalize.capitalized "MOBILE_WEB"
                     |> Expect.equal "MobileWeb"
-        , test "all lowercase" <|
+        , test "leaves unconventional but valid names untouched" <|
+            \() ->
+                Normalize.capitalized "BillingSubscriptions_UpdateBillingEmailsPayload"
+                    |> Expect.equal "BillingSubscriptions_UpdateBillingEmailsPayload"
+        , test "fixes first letter only in all lowercase" <|
             \() ->
                 Normalize.capitalized "hello"
                     |> Expect.equal "Hello"
+        , test "fixes single letter names" <|
+            \() ->
+                Normalize.decapitalized "X"
+                    |> Expect.equal "x"
+        , test "puts multiple leading underscores to the back" <|
+            \() ->
+                Normalize.decapitalized "________x"
+                    |> Expect.equal "x________"
         ]
