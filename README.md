@@ -4,6 +4,12 @@
 
 [![Build Status](https://travis-ci.org/dillonkearns/graphqelm.svg?branch=master)](https://travis-ci.org/dillonkearns/graphqelm)
 
+Why use this package over the other available Elm GraphQL packages? This is the only one that
+generates type-safe code for your entire schema. (It's also the only type-safe
+library with Elm 0.18 support, see
+[this discourse thread](https://discourse.elm-lang.org/t/introducing-graphqelm-a-tool-for-type-safe-graphql-queries/472/5?u=dillonkearns)
+).
+
 I built this package because I wanted to have something that:
 
 1. Gives you type-safe GraphQL queries (if it compiles, it's valid according to the schema),
