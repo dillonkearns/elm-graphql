@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.3] - 2018-01-13
+
 ### Added
 
 * Generate metadata json file with target elm package version and npm package version.
