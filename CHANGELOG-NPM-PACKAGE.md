@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Removed
+
+* Remove npm version number and target elm package version number from comments
+  on generated modules to reduce diff noise in future updates.
+
 ## [2.0.2] - 2018-01-11
 
 ### Fixed
