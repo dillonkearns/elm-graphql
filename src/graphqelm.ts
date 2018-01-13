@@ -8,7 +8,7 @@ import { writeFile } from './formatted-write'
 import { introspectionQuery } from './introspection-query'
 import * as glob from 'glob'
 import * as path from 'path'
-const npmVersion = require('../package.json').version
+const npmPackageVersion = require('../package.json').version
 const elmPackageVersion = require('../elm-package.json').version
 
 const usage = `Usage:
@@ -52,7 +52,7 @@ const targetComment = `-- Do not manually edit this file, it was auto-generated 
 `
 const args = minimist(process.argv.slice(2))
 if (args.version) {
-  console.log('npm version ', npmVersion)
+  console.log('npm version ', npmPackageVersion)
   console.log(
     `Targeting elm package dillonkearns/graphqelm@${elmPackageVersion}`
   )
@@ -112,6 +112,10 @@ const onDataAvailable = (data: {}) => {
       let value = generatedFile[key]
       writeFile(filePath, targetComment + value)
     }
+    fs.writeFileSync(
+      prependBasePath('graphqelm-metadata.json'),
+      `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
+    )
   })
 }
 if (introspectionFile) {
