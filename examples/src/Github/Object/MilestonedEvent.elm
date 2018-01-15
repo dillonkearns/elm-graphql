@@ -26,7 +26,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.MilestonedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.MilestonedEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
@@ -52,6 +52,6 @@ milestoneTitle =
 
 {-| Object referenced by event.
 -}
-subject : SelectionSet selection Github.Union.MilestoneItem -> Field selection Github.Object.MilestonedEvent
+subject : SelectionSet decodesTo Github.Union.MilestoneItem -> Field decodesTo Github.Object.MilestonedEvent
 subject object =
     Object.selectionField "subject" [] object identity

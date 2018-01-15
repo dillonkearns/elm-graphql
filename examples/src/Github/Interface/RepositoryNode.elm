@@ -31,43 +31,43 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Interface.RepositoryNode
+onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
 onCommitComment (SelectionSet fields decoder) =
     FragmentSelectionSet "CommitComment" fields decoder
 
 
-onCommitCommentThread : SelectionSet selection Github.Object.CommitCommentThread -> FragmentSelectionSet selection Github.Interface.RepositoryNode
+onCommitCommentThread : SelectionSet decodesTo Github.Object.CommitCommentThread -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
 onCommitCommentThread (SelectionSet fields decoder) =
     FragmentSelectionSet "CommitCommentThread" fields decoder
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.RepositoryNode
+onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Interface.RepositoryNode
+onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
 onIssueComment (SelectionSet fields decoder) =
     FragmentSelectionSet "IssueComment" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.RepositoryNode
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
 
-onPullRequestReview : SelectionSet selection Github.Object.PullRequestReview -> FragmentSelectionSet selection Github.Interface.RepositoryNode
+onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
 onPullRequestReview (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReview" fields decoder
 
 
-onPullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FragmentSelectionSet selection Github.Interface.RepositoryNode
+onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
 onPullRequestReviewComment (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReviewComment" fields decoder
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Interface.RepositoryNode
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Interface.RepositoryNode
 repository object =
     Object.selectionField "repository" [] object identity

@@ -33,6 +33,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet selection Github.Object.Gist -> Field (Maybe selection) Github.Object.GistEdge
+node : SelectionSet decodesTo Github.Object.Gist -> Field (Maybe decodesTo) Github.Object.GistEdge
 node object =
     Object.selectionField "node" [] object (identity >> Decode.maybe)

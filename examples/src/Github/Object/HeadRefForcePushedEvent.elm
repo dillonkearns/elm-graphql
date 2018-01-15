@@ -26,21 +26,21 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.HeadRefForcePushedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the after commit SHA for the 'head_ref_force_pushed' event.
 -}
-afterCommit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.HeadRefForcePushedEvent
+afterCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 afterCommit object =
     Object.selectionField "afterCommit" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the before commit SHA for the 'head_ref_force_pushed' event.
 -}
-beforeCommit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.HeadRefForcePushedEvent
+beforeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 beforeCommit object =
     Object.selectionField "beforeCommit" [] object (identity >> Decode.maybe)
 
@@ -59,13 +59,13 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.HeadRefForcePushedEvent
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.HeadRefForcePushedEvent
 pullRequest object =
     Object.selectionField "pullRequest" [] object identity
 
 
 {-| Identifies the fully qualified ref name for the 'head_ref_force_pushed' event.
 -}
-ref : SelectionSet selection Github.Object.Ref -> Field (Maybe selection) Github.Object.HeadRefForcePushedEvent
+ref : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 ref object =
     Object.selectionField "ref" [] object (identity >> Decode.maybe)

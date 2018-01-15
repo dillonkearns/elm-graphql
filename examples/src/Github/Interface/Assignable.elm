@@ -31,12 +31,12 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.Assignable
+onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Assignable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.Assignable
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Assignable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
@@ -49,7 +49,7 @@ onPullRequest (SelectionSet fields decoder) =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> Field selection Github.Interface.Assignable
+assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Interface.Assignable
 assignees fillInOptionals object =
     let
         filledInOptionals =

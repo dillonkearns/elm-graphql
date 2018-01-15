@@ -22,7 +22,7 @@ fragments context implementors moduleName =
 fragment : Context -> List String -> ClassCaseName -> String
 fragment context moduleName interfaceImplementor =
     interpolate
-        """on{0} : SelectionSet selection {2} -> FragmentSelectionSet selection {3}
+        """on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}
 on{0} (SelectionSet fields decoder) =
     FragmentSelectionSet "{1}" fields decoder
 """

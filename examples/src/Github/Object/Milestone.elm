@@ -50,7 +50,7 @@ createdAt =
 
 {-| Identifies the actor who created the milestone.
 -}
-creator : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.Milestone
+creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Milestone
 creator object =
     Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
@@ -85,7 +85,7 @@ id =
   - states - A list of states to filter the issues by.
 
 -}
-issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }) -> SelectionSet selection Github.Object.IssueConnection -> Field selection Github.Object.Milestone
+issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }) -> SelectionSet decodesTo Github.Object.IssueConnection -> Field decodesTo Github.Object.Milestone
 issues fillInOptionals object =
     let
         filledInOptionals =
@@ -107,7 +107,7 @@ number =
 
 {-| The repository associated with this milestone.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Milestone
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Milestone
 repository object =
     Object.selectionField "repository" [] object identity
 

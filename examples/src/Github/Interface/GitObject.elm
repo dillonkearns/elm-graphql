@@ -31,22 +31,22 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onBlob : SelectionSet selection Github.Object.Blob -> FragmentSelectionSet selection Github.Interface.GitObject
+onBlob : SelectionSet decodesTo Github.Object.Blob -> FragmentSelectionSet decodesTo Github.Interface.GitObject
 onBlob (SelectionSet fields decoder) =
     FragmentSelectionSet "Blob" fields decoder
 
 
-onCommit : SelectionSet selection Github.Object.Commit -> FragmentSelectionSet selection Github.Interface.GitObject
+onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Interface.GitObject
 onCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "Commit" fields decoder
 
 
-onTag : SelectionSet selection Github.Object.Tag -> FragmentSelectionSet selection Github.Interface.GitObject
+onTag : SelectionSet decodesTo Github.Object.Tag -> FragmentSelectionSet decodesTo Github.Interface.GitObject
 onTag (SelectionSet fields decoder) =
     FragmentSelectionSet "Tag" fields decoder
 
 
-onTree : SelectionSet selection Github.Object.Tree -> FragmentSelectionSet selection Github.Interface.GitObject
+onTree : SelectionSet decodesTo Github.Object.Tree -> FragmentSelectionSet decodesTo Github.Interface.GitObject
 onTree (SelectionSet fields decoder) =
     FragmentSelectionSet "Tree" fields decoder
 
@@ -86,6 +86,6 @@ oid =
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Interface.GitObject
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Interface.GitObject
 repository object =
     Object.selectionField "repository" [] object identity

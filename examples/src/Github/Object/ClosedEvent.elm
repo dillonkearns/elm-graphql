@@ -26,21 +26,21 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.ClosedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ClosedEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Object that was closed.
 -}
-closable : SelectionSet selection Github.Interface.Closable -> Field selection Github.Object.ClosedEvent
+closable : SelectionSet decodesTo Github.Interface.Closable -> Field decodesTo Github.Object.ClosedEvent
 closable object =
     Object.selectionField "closable" [] object identity
 
 
 {-| Object which triggered the creation of this event.
 -}
-closer : SelectionSet selection Github.Union.Closer -> Field (Maybe selection) Github.Object.ClosedEvent
+closer : SelectionSet decodesTo Github.Union.Closer -> Field (Maybe decodesTo) Github.Object.ClosedEvent
 closer object =
     Object.selectionField "closer" [] object (identity >> Decode.maybe)
 

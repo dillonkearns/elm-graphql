@@ -21,11 +21,11 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
-onCommit : SelectionSet selection Github.Object.Commit -> FragmentSelectionSet selection Github.Union.Closer
+onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Union.Closer
 onCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "Commit" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Union.Closer
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Union.Closer
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder

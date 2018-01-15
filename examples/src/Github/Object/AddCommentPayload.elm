@@ -33,20 +33,20 @@ clientMutationId =
 
 {-| The edge from the subject's comment connection.
 -}
-commentEdge : SelectionSet selection Github.Object.IssueCommentEdge -> Field selection Github.Object.AddCommentPayload
+commentEdge : SelectionSet decodesTo Github.Object.IssueCommentEdge -> Field decodesTo Github.Object.AddCommentPayload
 commentEdge object =
     Object.selectionField "commentEdge" [] object identity
 
 
 {-| The subject
 -}
-subject : SelectionSet selection Github.Interface.Node -> Field selection Github.Object.AddCommentPayload
+subject : SelectionSet decodesTo Github.Interface.Node -> Field decodesTo Github.Object.AddCommentPayload
 subject object =
     Object.selectionField "subject" [] object identity
 
 
 {-| The edge from the subject's timeline connection.
 -}
-timelineEdge : SelectionSet selection Github.Object.IssueTimelineItemEdge -> Field selection Github.Object.AddCommentPayload
+timelineEdge : SelectionSet decodesTo Github.Object.IssueTimelineItemEdge -> Field decodesTo Github.Object.AddCommentPayload
 timelineEdge object =
     Object.selectionField "timelineEdge" [] object identity

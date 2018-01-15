@@ -33,6 +33,6 @@ clientMutationId =
 
 {-| The item that was locked.
 -}
-lockedRecord : SelectionSet selection Github.Interface.Lockable -> Field (Maybe selection) Github.Object.LockLockablePayload
+lockedRecord : SelectionSet decodesTo Github.Interface.Lockable -> Field (Maybe decodesTo) Github.Object.LockLockablePayload
 lockedRecord object =
     Object.selectionField "lockedRecord" [] object (identity >> Decode.maybe)

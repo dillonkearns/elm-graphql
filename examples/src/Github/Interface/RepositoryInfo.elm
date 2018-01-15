@@ -32,12 +32,12 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.RepositoryInfo
+onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.RepositoryInfo
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-onRepositoryInvitationRepository : SelectionSet selection Github.Object.RepositoryInvitationRepository -> FragmentSelectionSet selection Github.Interface.RepositoryInfo
+onRepositoryInvitationRepository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> FragmentSelectionSet decodesTo Github.Interface.RepositoryInfo
 onRepositoryInvitationRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "RepositoryInvitationRepository" fields decoder
 
@@ -128,7 +128,7 @@ isPrivate =
 
 {-| The license associated with the repository
 -}
-licenseInfo : SelectionSet selection Github.Object.License -> Field (Maybe selection) Github.Interface.RepositoryInfo
+licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Interface.RepositoryInfo
 licenseInfo object =
     Object.selectionField "licenseInfo" [] object (identity >> Decode.maybe)
 
@@ -163,7 +163,7 @@ nameWithOwner =
 
 {-| The User owner of the repository.
 -}
-owner : SelectionSet selection Github.Interface.RepositoryOwner -> Field selection Github.Interface.RepositoryInfo
+owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field decodesTo Github.Interface.RepositoryInfo
 owner object =
     Object.selectionField "owner" [] object identity
 

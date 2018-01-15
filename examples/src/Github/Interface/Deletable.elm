@@ -31,27 +31,27 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Interface.Deletable
+onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.Deletable
 onCommitComment (SelectionSet fields decoder) =
     FragmentSelectionSet "CommitComment" fields decoder
 
 
-onGistComment : SelectionSet selection Github.Object.GistComment -> FragmentSelectionSet selection Github.Interface.Deletable
+onGistComment : SelectionSet decodesTo Github.Object.GistComment -> FragmentSelectionSet decodesTo Github.Interface.Deletable
 onGistComment (SelectionSet fields decoder) =
     FragmentSelectionSet "GistComment" fields decoder
 
 
-onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Interface.Deletable
+onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.Deletable
 onIssueComment (SelectionSet fields decoder) =
     FragmentSelectionSet "IssueComment" fields decoder
 
 
-onPullRequestReview : SelectionSet selection Github.Object.PullRequestReview -> FragmentSelectionSet selection Github.Interface.Deletable
+onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> FragmentSelectionSet decodesTo Github.Interface.Deletable
 onPullRequestReview (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReview" fields decoder
 
 
-onPullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FragmentSelectionSet selection Github.Interface.Deletable
+onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.Deletable
 onPullRequestReviewComment (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReviewComment" fields decoder
 

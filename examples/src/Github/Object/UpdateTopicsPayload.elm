@@ -40,6 +40,6 @@ invalidTopicNames =
 
 {-| The updated repository.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.UpdateTopicsPayload
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.UpdateTopicsPayload
 repository object =
     Object.selectionField "repository" [] object identity

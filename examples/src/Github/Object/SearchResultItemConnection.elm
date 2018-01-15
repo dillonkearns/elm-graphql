@@ -33,7 +33,7 @@ codeCount =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.SearchResultItemEdge -> Field (Maybe (List (Maybe selection))) Github.Object.SearchResultItemConnection
+edges : SelectionSet decodesTo Github.Object.SearchResultItemEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
@@ -47,14 +47,14 @@ issueCount =
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Union.SearchResultItem -> Field (Maybe (List (Maybe selection))) Github.Object.SearchResultItemConnection
+nodes : SelectionSet decodesTo Github.Union.SearchResultItem -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.SearchResultItemConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.SearchResultItemConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

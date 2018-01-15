@@ -26,21 +26,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.ReleaseAssetEdge -> Field (Maybe (List (Maybe selection))) Github.Object.ReleaseAssetConnection
+edges : SelectionSet decodesTo Github.Object.ReleaseAssetEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReleaseAssetConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.ReleaseAsset -> Field (Maybe (List (Maybe selection))) Github.Object.ReleaseAssetConnection
+nodes : SelectionSet decodesTo Github.Object.ReleaseAsset -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReleaseAssetConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.ReleaseAssetConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.ReleaseAssetConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

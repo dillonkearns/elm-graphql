@@ -58,209 +58,209 @@ selection constructor =
 
 {-| Applies a suggested topic to the repository.
 -}
-acceptTopicSuggestion : { input : Github.InputObject.AcceptTopicSuggestionInput.AcceptTopicSuggestionInput } -> SelectionSet selection Github.Object.AcceptTopicSuggestionPayload -> Field (Maybe selection) RootMutation
+acceptTopicSuggestion : { input : Github.InputObject.AcceptTopicSuggestionInput.AcceptTopicSuggestionInput } -> SelectionSet decodesTo Github.Object.AcceptTopicSuggestionPayload -> Field (Maybe decodesTo) RootMutation
 acceptTopicSuggestion requiredArgs object =
     Object.selectionField "acceptTopicSuggestion" [ Argument.required "input" requiredArgs.input Github.InputObject.AcceptTopicSuggestionInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Adds a comment to an Issue or Pull Request.
 -}
-addComment : { input : Github.InputObject.AddCommentInput.AddCommentInput } -> SelectionSet selection Github.Object.AddCommentPayload -> Field (Maybe selection) RootMutation
+addComment : { input : Github.InputObject.AddCommentInput.AddCommentInput } -> SelectionSet decodesTo Github.Object.AddCommentPayload -> Field (Maybe decodesTo) RootMutation
 addComment requiredArgs object =
     Object.selectionField "addComment" [ Argument.required "input" requiredArgs.input Github.InputObject.AddCommentInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Adds a card to a ProjectColumn. Either `contentId` or `note` must be provided but **not** both.
 -}
-addProjectCard : { input : Github.InputObject.AddProjectCardInput.AddProjectCardInput } -> SelectionSet selection Github.Object.AddProjectCardPayload -> Field (Maybe selection) RootMutation
+addProjectCard : { input : Github.InputObject.AddProjectCardInput.AddProjectCardInput } -> SelectionSet decodesTo Github.Object.AddProjectCardPayload -> Field (Maybe decodesTo) RootMutation
 addProjectCard requiredArgs object =
     Object.selectionField "addProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.AddProjectCardInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Adds a column to a Project.
 -}
-addProjectColumn : { input : Github.InputObject.AddProjectColumnInput.AddProjectColumnInput } -> SelectionSet selection Github.Object.AddProjectColumnPayload -> Field (Maybe selection) RootMutation
+addProjectColumn : { input : Github.InputObject.AddProjectColumnInput.AddProjectColumnInput } -> SelectionSet decodesTo Github.Object.AddProjectColumnPayload -> Field (Maybe decodesTo) RootMutation
 addProjectColumn requiredArgs object =
     Object.selectionField "addProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.AddProjectColumnInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Adds a review to a Pull Request.
 -}
-addPullRequestReview : { input : Github.InputObject.AddPullRequestReviewInput.AddPullRequestReviewInput } -> SelectionSet selection Github.Object.AddPullRequestReviewPayload -> Field (Maybe selection) RootMutation
+addPullRequestReview : { input : Github.InputObject.AddPullRequestReviewInput.AddPullRequestReviewInput } -> SelectionSet decodesTo Github.Object.AddPullRequestReviewPayload -> Field (Maybe decodesTo) RootMutation
 addPullRequestReview requiredArgs object =
     Object.selectionField "addPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.AddPullRequestReviewInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Adds a comment to a review.
 -}
-addPullRequestReviewComment : { input : Github.InputObject.AddPullRequestReviewCommentInput.AddPullRequestReviewCommentInput } -> SelectionSet selection Github.Object.AddPullRequestReviewCommentPayload -> Field (Maybe selection) RootMutation
+addPullRequestReviewComment : { input : Github.InputObject.AddPullRequestReviewCommentInput.AddPullRequestReviewCommentInput } -> SelectionSet decodesTo Github.Object.AddPullRequestReviewCommentPayload -> Field (Maybe decodesTo) RootMutation
 addPullRequestReviewComment requiredArgs object =
     Object.selectionField "addPullRequestReviewComment" [ Argument.required "input" requiredArgs.input Github.InputObject.AddPullRequestReviewCommentInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Adds a reaction to a subject.
 -}
-addReaction : { input : Github.InputObject.AddReactionInput.AddReactionInput } -> SelectionSet selection Github.Object.AddReactionPayload -> Field (Maybe selection) RootMutation
+addReaction : { input : Github.InputObject.AddReactionInput.AddReactionInput } -> SelectionSet decodesTo Github.Object.AddReactionPayload -> Field (Maybe decodesTo) RootMutation
 addReaction requiredArgs object =
     Object.selectionField "addReaction" [ Argument.required "input" requiredArgs.input Github.InputObject.AddReactionInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Adds a star to a Starrable.
 -}
-addStar : { input : Github.InputObject.AddStarInput.AddStarInput } -> SelectionSet selection Github.Object.AddStarPayload -> Field (Maybe selection) RootMutation
+addStar : { input : Github.InputObject.AddStarInput.AddStarInput } -> SelectionSet decodesTo Github.Object.AddStarPayload -> Field (Maybe decodesTo) RootMutation
 addStar requiredArgs object =
     Object.selectionField "addStar" [ Argument.required "input" requiredArgs.input Github.InputObject.AddStarInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Creates a new project.
 -}
-createProject : { input : Github.InputObject.CreateProjectInput.CreateProjectInput } -> SelectionSet selection Github.Object.CreateProjectPayload -> Field (Maybe selection) RootMutation
+createProject : { input : Github.InputObject.CreateProjectInput.CreateProjectInput } -> SelectionSet decodesTo Github.Object.CreateProjectPayload -> Field (Maybe decodesTo) RootMutation
 createProject requiredArgs object =
     Object.selectionField "createProject" [ Argument.required "input" requiredArgs.input Github.InputObject.CreateProjectInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Rejects a suggested topic for the repository.
 -}
-declineTopicSuggestion : { input : Github.InputObject.DeclineTopicSuggestionInput.DeclineTopicSuggestionInput } -> SelectionSet selection Github.Object.DeclineTopicSuggestionPayload -> Field (Maybe selection) RootMutation
+declineTopicSuggestion : { input : Github.InputObject.DeclineTopicSuggestionInput.DeclineTopicSuggestionInput } -> SelectionSet decodesTo Github.Object.DeclineTopicSuggestionPayload -> Field (Maybe decodesTo) RootMutation
 declineTopicSuggestion requiredArgs object =
     Object.selectionField "declineTopicSuggestion" [ Argument.required "input" requiredArgs.input Github.InputObject.DeclineTopicSuggestionInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Deletes a project.
 -}
-deleteProject : { input : Github.InputObject.DeleteProjectInput.DeleteProjectInput } -> SelectionSet selection Github.Object.DeleteProjectPayload -> Field (Maybe selection) RootMutation
+deleteProject : { input : Github.InputObject.DeleteProjectInput.DeleteProjectInput } -> SelectionSet decodesTo Github.Object.DeleteProjectPayload -> Field (Maybe decodesTo) RootMutation
 deleteProject requiredArgs object =
     Object.selectionField "deleteProject" [ Argument.required "input" requiredArgs.input Github.InputObject.DeleteProjectInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Deletes a project card.
 -}
-deleteProjectCard : { input : Github.InputObject.DeleteProjectCardInput.DeleteProjectCardInput } -> SelectionSet selection Github.Object.DeleteProjectCardPayload -> Field (Maybe selection) RootMutation
+deleteProjectCard : { input : Github.InputObject.DeleteProjectCardInput.DeleteProjectCardInput } -> SelectionSet decodesTo Github.Object.DeleteProjectCardPayload -> Field (Maybe decodesTo) RootMutation
 deleteProjectCard requiredArgs object =
     Object.selectionField "deleteProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.DeleteProjectCardInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Deletes a project column.
 -}
-deleteProjectColumn : { input : Github.InputObject.DeleteProjectColumnInput.DeleteProjectColumnInput } -> SelectionSet selection Github.Object.DeleteProjectColumnPayload -> Field (Maybe selection) RootMutation
+deleteProjectColumn : { input : Github.InputObject.DeleteProjectColumnInput.DeleteProjectColumnInput } -> SelectionSet decodesTo Github.Object.DeleteProjectColumnPayload -> Field (Maybe decodesTo) RootMutation
 deleteProjectColumn requiredArgs object =
     Object.selectionField "deleteProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.DeleteProjectColumnInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Deletes a pull request review.
 -}
-deletePullRequestReview : { input : Github.InputObject.DeletePullRequestReviewInput.DeletePullRequestReviewInput } -> SelectionSet selection Github.Object.DeletePullRequestReviewPayload -> Field (Maybe selection) RootMutation
+deletePullRequestReview : { input : Github.InputObject.DeletePullRequestReviewInput.DeletePullRequestReviewInput } -> SelectionSet decodesTo Github.Object.DeletePullRequestReviewPayload -> Field (Maybe decodesTo) RootMutation
 deletePullRequestReview requiredArgs object =
     Object.selectionField "deletePullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.DeletePullRequestReviewInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Dismisses an approved or rejected pull request review.
 -}
-dismissPullRequestReview : { input : Github.InputObject.DismissPullRequestReviewInput.DismissPullRequestReviewInput } -> SelectionSet selection Github.Object.DismissPullRequestReviewPayload -> Field (Maybe selection) RootMutation
+dismissPullRequestReview : { input : Github.InputObject.DismissPullRequestReviewInput.DismissPullRequestReviewInput } -> SelectionSet decodesTo Github.Object.DismissPullRequestReviewPayload -> Field (Maybe decodesTo) RootMutation
 dismissPullRequestReview requiredArgs object =
     Object.selectionField "dismissPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.DismissPullRequestReviewInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Lock a lockable object
 -}
-lockLockable : { input : Github.InputObject.LockLockableInput.LockLockableInput } -> SelectionSet selection Github.Object.LockLockablePayload -> Field (Maybe selection) RootMutation
+lockLockable : { input : Github.InputObject.LockLockableInput.LockLockableInput } -> SelectionSet decodesTo Github.Object.LockLockablePayload -> Field (Maybe decodesTo) RootMutation
 lockLockable requiredArgs object =
     Object.selectionField "lockLockable" [ Argument.required "input" requiredArgs.input Github.InputObject.LockLockableInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Moves a project card to another place.
 -}
-moveProjectCard : { input : Github.InputObject.MoveProjectCardInput.MoveProjectCardInput } -> SelectionSet selection Github.Object.MoveProjectCardPayload -> Field (Maybe selection) RootMutation
+moveProjectCard : { input : Github.InputObject.MoveProjectCardInput.MoveProjectCardInput } -> SelectionSet decodesTo Github.Object.MoveProjectCardPayload -> Field (Maybe decodesTo) RootMutation
 moveProjectCard requiredArgs object =
     Object.selectionField "moveProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.MoveProjectCardInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Moves a project column to another place.
 -}
-moveProjectColumn : { input : Github.InputObject.MoveProjectColumnInput.MoveProjectColumnInput } -> SelectionSet selection Github.Object.MoveProjectColumnPayload -> Field (Maybe selection) RootMutation
+moveProjectColumn : { input : Github.InputObject.MoveProjectColumnInput.MoveProjectColumnInput } -> SelectionSet decodesTo Github.Object.MoveProjectColumnPayload -> Field (Maybe decodesTo) RootMutation
 moveProjectColumn requiredArgs object =
     Object.selectionField "moveProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.MoveProjectColumnInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Removes outside collaborator from all repositories in an organization.
 -}
-removeOutsideCollaborator : { input : Github.InputObject.RemoveOutsideCollaboratorInput.RemoveOutsideCollaboratorInput } -> SelectionSet selection Github.Object.RemoveOutsideCollaboratorPayload -> Field (Maybe selection) RootMutation
+removeOutsideCollaborator : { input : Github.InputObject.RemoveOutsideCollaboratorInput.RemoveOutsideCollaboratorInput } -> SelectionSet decodesTo Github.Object.RemoveOutsideCollaboratorPayload -> Field (Maybe decodesTo) RootMutation
 removeOutsideCollaborator requiredArgs object =
     Object.selectionField "removeOutsideCollaborator" [ Argument.required "input" requiredArgs.input Github.InputObject.RemoveOutsideCollaboratorInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Removes a reaction from a subject.
 -}
-removeReaction : { input : Github.InputObject.RemoveReactionInput.RemoveReactionInput } -> SelectionSet selection Github.Object.RemoveReactionPayload -> Field (Maybe selection) RootMutation
+removeReaction : { input : Github.InputObject.RemoveReactionInput.RemoveReactionInput } -> SelectionSet decodesTo Github.Object.RemoveReactionPayload -> Field (Maybe decodesTo) RootMutation
 removeReaction requiredArgs object =
     Object.selectionField "removeReaction" [ Argument.required "input" requiredArgs.input Github.InputObject.RemoveReactionInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Removes a star from a Starrable.
 -}
-removeStar : { input : Github.InputObject.RemoveStarInput.RemoveStarInput } -> SelectionSet selection Github.Object.RemoveStarPayload -> Field (Maybe selection) RootMutation
+removeStar : { input : Github.InputObject.RemoveStarInput.RemoveStarInput } -> SelectionSet decodesTo Github.Object.RemoveStarPayload -> Field (Maybe decodesTo) RootMutation
 removeStar requiredArgs object =
     Object.selectionField "removeStar" [ Argument.required "input" requiredArgs.input Github.InputObject.RemoveStarInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Set review requests on a pull request.
 -}
-requestReviews : { input : Github.InputObject.RequestReviewsInput.RequestReviewsInput } -> SelectionSet selection Github.Object.RequestReviewsPayload -> Field (Maybe selection) RootMutation
+requestReviews : { input : Github.InputObject.RequestReviewsInput.RequestReviewsInput } -> SelectionSet decodesTo Github.Object.RequestReviewsPayload -> Field (Maybe decodesTo) RootMutation
 requestReviews requiredArgs object =
     Object.selectionField "requestReviews" [ Argument.required "input" requiredArgs.input Github.InputObject.RequestReviewsInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Submits a pending pull request review.
 -}
-submitPullRequestReview : { input : Github.InputObject.SubmitPullRequestReviewInput.SubmitPullRequestReviewInput } -> SelectionSet selection Github.Object.SubmitPullRequestReviewPayload -> Field (Maybe selection) RootMutation
+submitPullRequestReview : { input : Github.InputObject.SubmitPullRequestReviewInput.SubmitPullRequestReviewInput } -> SelectionSet decodesTo Github.Object.SubmitPullRequestReviewPayload -> Field (Maybe decodesTo) RootMutation
 submitPullRequestReview requiredArgs object =
     Object.selectionField "submitPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.SubmitPullRequestReviewInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Updates an existing project.
 -}
-updateProject : { input : Github.InputObject.UpdateProjectInput.UpdateProjectInput } -> SelectionSet selection Github.Object.UpdateProjectPayload -> Field (Maybe selection) RootMutation
+updateProject : { input : Github.InputObject.UpdateProjectInput.UpdateProjectInput } -> SelectionSet decodesTo Github.Object.UpdateProjectPayload -> Field (Maybe decodesTo) RootMutation
 updateProject requiredArgs object =
     Object.selectionField "updateProject" [ Argument.required "input" requiredArgs.input Github.InputObject.UpdateProjectInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Updates an existing project card.
 -}
-updateProjectCard : { input : Github.InputObject.UpdateProjectCardInput.UpdateProjectCardInput } -> SelectionSet selection Github.Object.UpdateProjectCardPayload -> Field (Maybe selection) RootMutation
+updateProjectCard : { input : Github.InputObject.UpdateProjectCardInput.UpdateProjectCardInput } -> SelectionSet decodesTo Github.Object.UpdateProjectCardPayload -> Field (Maybe decodesTo) RootMutation
 updateProjectCard requiredArgs object =
     Object.selectionField "updateProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.UpdateProjectCardInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Updates an existing project column.
 -}
-updateProjectColumn : { input : Github.InputObject.UpdateProjectColumnInput.UpdateProjectColumnInput } -> SelectionSet selection Github.Object.UpdateProjectColumnPayload -> Field (Maybe selection) RootMutation
+updateProjectColumn : { input : Github.InputObject.UpdateProjectColumnInput.UpdateProjectColumnInput } -> SelectionSet decodesTo Github.Object.UpdateProjectColumnPayload -> Field (Maybe decodesTo) RootMutation
 updateProjectColumn requiredArgs object =
     Object.selectionField "updateProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.UpdateProjectColumnInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Updates the body of a pull request review.
 -}
-updatePullRequestReview : { input : Github.InputObject.UpdatePullRequestReviewInput.UpdatePullRequestReviewInput } -> SelectionSet selection Github.Object.UpdatePullRequestReviewPayload -> Field (Maybe selection) RootMutation
+updatePullRequestReview : { input : Github.InputObject.UpdatePullRequestReviewInput.UpdatePullRequestReviewInput } -> SelectionSet decodesTo Github.Object.UpdatePullRequestReviewPayload -> Field (Maybe decodesTo) RootMutation
 updatePullRequestReview requiredArgs object =
     Object.selectionField "updatePullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.UpdatePullRequestReviewInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Updates a pull request review comment.
 -}
-updatePullRequestReviewComment : { input : Github.InputObject.UpdatePullRequestReviewCommentInput.UpdatePullRequestReviewCommentInput } -> SelectionSet selection Github.Object.UpdatePullRequestReviewCommentPayload -> Field (Maybe selection) RootMutation
+updatePullRequestReviewComment : { input : Github.InputObject.UpdatePullRequestReviewCommentInput.UpdatePullRequestReviewCommentInput } -> SelectionSet decodesTo Github.Object.UpdatePullRequestReviewCommentPayload -> Field (Maybe decodesTo) RootMutation
 updatePullRequestReviewComment requiredArgs object =
     Object.selectionField "updatePullRequestReviewComment" [ Argument.required "input" requiredArgs.input Github.InputObject.UpdatePullRequestReviewCommentInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Updates viewers repository subscription state.
 -}
-updateSubscription : { input : Github.InputObject.UpdateSubscriptionInput.UpdateSubscriptionInput } -> SelectionSet selection Github.Object.UpdateSubscriptionPayload -> Field (Maybe selection) RootMutation
+updateSubscription : { input : Github.InputObject.UpdateSubscriptionInput.UpdateSubscriptionInput } -> SelectionSet decodesTo Github.Object.UpdateSubscriptionPayload -> Field (Maybe decodesTo) RootMutation
 updateSubscription requiredArgs object =
     Object.selectionField "updateSubscription" [ Argument.required "input" requiredArgs.input Github.InputObject.UpdateSubscriptionInput.encode ] object (identity >> Decode.maybe)
 
 
 {-| Replaces the repository's topics with the given topics.
 -}
-updateTopics : { input : Github.InputObject.UpdateTopicsInput.UpdateTopicsInput } -> SelectionSet selection Github.Object.UpdateTopicsPayload -> Field (Maybe selection) RootMutation
+updateTopics : { input : Github.InputObject.UpdateTopicsInput.UpdateTopicsInput } -> SelectionSet decodesTo Github.Object.UpdateTopicsPayload -> Field (Maybe decodesTo) RootMutation
 updateTopics requiredArgs object =
     Object.selectionField "updateTopics" [ Argument.required "input" requiredArgs.input Github.InputObject.UpdateTopicsInput.encode ] object (identity >> Decode.maybe)

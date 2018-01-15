@@ -21,11 +21,11 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
-onUser : SelectionSet selection Github.Object.User -> FragmentSelectionSet selection Github.Union.ReviewDismissalAllowanceActor
+onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor
 onUser (SelectionSet fields decoder) =
     FragmentSelectionSet "User" fields decoder
 
 
-onTeam : SelectionSet selection Github.Object.Team -> FragmentSelectionSet selection Github.Union.ReviewDismissalAllowanceActor
+onTeam : SelectionSet decodesTo Github.Object.Team -> FragmentSelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor
 onTeam (SelectionSet fields decoder) =
     FragmentSelectionSet "Team" fields decoder

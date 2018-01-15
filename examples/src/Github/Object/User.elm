@@ -74,7 +74,7 @@ bioHTML =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-commitComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.CommitCommentConnection -> Field selection Github.Object.User
+commitComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.User
 commitComments fillInOptionals object =
     let
         filledInOptionals =
@@ -123,7 +123,7 @@ email =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-followers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.FollowerConnection -> Field selection Github.Object.User
+followers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.FollowerConnection -> Field decodesTo Github.Object.User
 followers fillInOptionals object =
     let
         filledInOptionals =
@@ -144,7 +144,7 @@ followers fillInOptionals object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-following : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.FollowingConnection -> Field selection Github.Object.User
+following : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.FollowingConnection -> Field decodesTo Github.Object.User
 following fillInOptionals object =
     let
         filledInOptionals =
@@ -162,7 +162,7 @@ following fillInOptionals object =
   - name - The gist name to find.
 
 -}
-gist : { name : String } -> SelectionSet selection Github.Object.Gist -> Field (Maybe selection) Github.Object.User
+gist : { name : String } -> SelectionSet decodesTo Github.Object.Gist -> Field (Maybe decodesTo) Github.Object.User
 gist requiredArgs object =
     Object.selectionField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
@@ -175,7 +175,7 @@ gist requiredArgs object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-gistComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.GistCommentConnection -> Field selection Github.Object.User
+gistComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> Field decodesTo Github.Object.User
 gistComments fillInOptionals object =
     let
         filledInOptionals =
@@ -198,7 +198,7 @@ gistComments fillInOptionals object =
   - orderBy - Ordering options for gists returned from the connection
 
 -}
-gists : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.GistPrivacy.GistPrivacy, orderBy : OptionalArgument Github.InputObject.GistOrder.GistOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.GistPrivacy.GistPrivacy, orderBy : OptionalArgument Github.InputObject.GistOrder.GistOrder }) -> SelectionSet selection Github.Object.GistConnection -> Field selection Github.Object.User
+gists : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.GistPrivacy.GistPrivacy, orderBy : OptionalArgument Github.InputObject.GistOrder.GistOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.GistPrivacy.GistPrivacy, orderBy : OptionalArgument Github.InputObject.GistOrder.GistOrder }) -> SelectionSet decodesTo Github.Object.GistConnection -> Field decodesTo Github.Object.User
 gists fillInOptionals object =
     let
         filledInOptionals =
@@ -273,7 +273,7 @@ isViewer =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-issueComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.IssueCommentConnection -> Field selection Github.Object.User
+issueComments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> Field decodesTo Github.Object.User
 issueComments fillInOptionals object =
     let
         filledInOptionals =
@@ -297,7 +297,7 @@ issueComments fillInOptionals object =
   - states - A list of states to filter the issues by.
 
 -}
-issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }) -> SelectionSet selection Github.Object.IssueConnection -> Field selection Github.Object.User
+issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }) -> SelectionSet decodesTo Github.Object.IssueConnection -> Field decodesTo Github.Object.User
 issues fillInOptionals object =
     let
         filledInOptionals =
@@ -336,7 +336,7 @@ name =
   - login - The login of the organization to find.
 
 -}
-organization : { login : String } -> SelectionSet selection Github.Object.Organization -> Field (Maybe selection) Github.Object.User
+organization : { login : String } -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) Github.Object.User
 organization requiredArgs object =
     Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.maybe)
 
@@ -349,7 +349,7 @@ organization requiredArgs object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-organizations : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.OrganizationConnection -> Field selection Github.Object.User
+organizations : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.OrganizationConnection -> Field decodesTo Github.Object.User
 organizations fillInOptionals object =
     let
         filledInOptionals =
@@ -374,7 +374,7 @@ organizations fillInOptionals object =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-pinnedRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet selection Github.Object.RepositoryConnection -> Field selection Github.Object.User
+pinnedRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
 pinnedRepositories fillInOptionals object =
     let
         filledInOptionals =
@@ -395,7 +395,7 @@ pinnedRepositories fillInOptionals object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-publicKeys : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PublicKeyConnection -> Field selection Github.Object.User
+publicKeys : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PublicKeyConnection -> Field decodesTo Github.Object.User
 publicKeys fillInOptionals object =
     let
         filledInOptionals =
@@ -421,7 +421,7 @@ publicKeys fillInOptionals object =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-pullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder }) -> SelectionSet selection Github.Object.PullRequestConnection -> Field selection Github.Object.User
+pullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder }) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.User
 pullRequests fillInOptionals object =
     let
         filledInOptionals =
@@ -447,7 +447,7 @@ pullRequests fillInOptionals object =
   - isFork - If non-null, filters repositories according to whether they are forks of another repository
 
 -}
-repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }) -> SelectionSet selection Github.Object.RepositoryConnection -> Field selection Github.Object.User
+repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
 repositories fillInOptionals object =
     let
         filledInOptionals =
@@ -473,7 +473,7 @@ repositories fillInOptionals object =
   - contributionTypes - If non-null, include only the specified types of contributions. The GitHub.com UI uses [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
 
 -}
-repositoriesContributedTo : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, isLocked : OptionalArgument Bool, includeUserRepositories : OptionalArgument Bool, contributionTypes : OptionalArgument (List (Maybe Github.Enum.RepositoryContributionType.RepositoryContributionType)) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, isLocked : OptionalArgument Bool, includeUserRepositories : OptionalArgument Bool, contributionTypes : OptionalArgument (List (Maybe Github.Enum.RepositoryContributionType.RepositoryContributionType)) }) -> SelectionSet selection Github.Object.RepositoryConnection -> Field selection Github.Object.User
+repositoriesContributedTo : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, isLocked : OptionalArgument Bool, includeUserRepositories : OptionalArgument Bool, contributionTypes : OptionalArgument (List (Maybe Github.Enum.RepositoryContributionType.RepositoryContributionType)) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, isLocked : OptionalArgument Bool, includeUserRepositories : OptionalArgument Bool, contributionTypes : OptionalArgument (List (Maybe Github.Enum.RepositoryContributionType.RepositoryContributionType)) }) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
 repositoriesContributedTo fillInOptionals object =
     let
         filledInOptionals =
@@ -491,7 +491,7 @@ repositoriesContributedTo fillInOptionals object =
   - name - Name of Repository to find.
 
 -}
-repository : { name : String } -> SelectionSet selection Github.Object.Repository -> Field (Maybe selection) Github.Object.User
+repository : { name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.User
 repository requiredArgs object =
     Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
@@ -513,7 +513,7 @@ resourcePath =
   - orderBy - Order for connection
 
 -}
-starredRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, ownedByViewer : OptionalArgument Bool, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, ownedByViewer : OptionalArgument Bool, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder }) -> SelectionSet selection Github.Object.StarredRepositoryConnection -> Field selection Github.Object.User
+starredRepositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, ownedByViewer : OptionalArgument Bool, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, ownedByViewer : OptionalArgument Bool, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder }) -> SelectionSet decodesTo Github.Object.StarredRepositoryConnection -> Field decodesTo Github.Object.User
 starredRepositories fillInOptionals object =
     let
         filledInOptionals =
@@ -559,7 +559,7 @@ viewerIsFollowing =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-watching : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet selection Github.Object.RepositoryConnection -> Field selection Github.Object.User
+watching : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
 watching fillInOptionals object =
     let
         filledInOptionals =

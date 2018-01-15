@@ -29,7 +29,7 @@ cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet selection Github.Object.User -> Field selection Github.Object.ReactingUserEdge
+node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.ReactingUserEdge
 node object =
     Object.selectionField "node" [] object identity
 

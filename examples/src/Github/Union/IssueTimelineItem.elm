@@ -21,86 +21,86 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
-onCommit : SelectionSet selection Github.Object.Commit -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "Commit" fields decoder
 
 
-onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onIssueComment (SelectionSet fields decoder) =
     FragmentSelectionSet "IssueComment" fields decoder
 
 
-onCrossReferencedEvent : SelectionSet selection Github.Object.CrossReferencedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onCrossReferencedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "CrossReferencedEvent" fields decoder
 
 
-onClosedEvent : SelectionSet selection Github.Object.ClosedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onClosedEvent : SelectionSet decodesTo Github.Object.ClosedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onClosedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "ClosedEvent" fields decoder
 
 
-onReopenedEvent : SelectionSet selection Github.Object.ReopenedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onReopenedEvent : SelectionSet decodesTo Github.Object.ReopenedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onReopenedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "ReopenedEvent" fields decoder
 
 
-onSubscribedEvent : SelectionSet selection Github.Object.SubscribedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onSubscribedEvent : SelectionSet decodesTo Github.Object.SubscribedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onSubscribedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "SubscribedEvent" fields decoder
 
 
-onUnsubscribedEvent : SelectionSet selection Github.Object.UnsubscribedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onUnsubscribedEvent : SelectionSet decodesTo Github.Object.UnsubscribedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onUnsubscribedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "UnsubscribedEvent" fields decoder
 
 
-onReferencedEvent : SelectionSet selection Github.Object.ReferencedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onReferencedEvent : SelectionSet decodesTo Github.Object.ReferencedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onReferencedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "ReferencedEvent" fields decoder
 
 
-onAssignedEvent : SelectionSet selection Github.Object.AssignedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onAssignedEvent : SelectionSet decodesTo Github.Object.AssignedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onAssignedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "AssignedEvent" fields decoder
 
 
-onUnassignedEvent : SelectionSet selection Github.Object.UnassignedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onUnassignedEvent : SelectionSet decodesTo Github.Object.UnassignedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onUnassignedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "UnassignedEvent" fields decoder
 
 
-onLabeledEvent : SelectionSet selection Github.Object.LabeledEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onLabeledEvent : SelectionSet decodesTo Github.Object.LabeledEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onLabeledEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "LabeledEvent" fields decoder
 
 
-onUnlabeledEvent : SelectionSet selection Github.Object.UnlabeledEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onUnlabeledEvent : SelectionSet decodesTo Github.Object.UnlabeledEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onUnlabeledEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "UnlabeledEvent" fields decoder
 
 
-onMilestonedEvent : SelectionSet selection Github.Object.MilestonedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onMilestonedEvent : SelectionSet decodesTo Github.Object.MilestonedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onMilestonedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "MilestonedEvent" fields decoder
 
 
-onDemilestonedEvent : SelectionSet selection Github.Object.DemilestonedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onDemilestonedEvent : SelectionSet decodesTo Github.Object.DemilestonedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onDemilestonedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "DemilestonedEvent" fields decoder
 
 
-onRenamedTitleEvent : SelectionSet selection Github.Object.RenamedTitleEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onRenamedTitleEvent : SelectionSet decodesTo Github.Object.RenamedTitleEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onRenamedTitleEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "RenamedTitleEvent" fields decoder
 
 
-onLockedEvent : SelectionSet selection Github.Object.LockedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onLockedEvent : SelectionSet decodesTo Github.Object.LockedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onLockedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "LockedEvent" fields decoder
 
 
-onUnlockedEvent : SelectionSet selection Github.Object.UnlockedEvent -> FragmentSelectionSet selection Github.Union.IssueTimelineItem
+onUnlockedEvent : SelectionSet decodesTo Github.Object.UnlockedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
 onUnlockedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "UnlockedEvent" fields decoder

@@ -31,22 +31,22 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.Closable
+onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Closable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onMilestone : SelectionSet selection Github.Object.Milestone -> FragmentSelectionSet selection Github.Interface.Closable
+onMilestone : SelectionSet decodesTo Github.Object.Milestone -> FragmentSelectionSet decodesTo Github.Interface.Closable
 onMilestone (SelectionSet fields decoder) =
     FragmentSelectionSet "Milestone" fields decoder
 
 
-onProject : SelectionSet selection Github.Object.Project -> FragmentSelectionSet selection Github.Interface.Closable
+onProject : SelectionSet decodesTo Github.Object.Project -> FragmentSelectionSet decodesTo Github.Interface.Closable
 onProject (SelectionSet fields decoder) =
     FragmentSelectionSet "Project" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.Closable
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Closable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 

@@ -26,7 +26,7 @@ selection constructor =
 
 {-| The new edge of the moved card.
 -}
-cardEdge : SelectionSet selection Github.Object.ProjectCardEdge -> Field selection Github.Object.MoveProjectCardPayload
+cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> Field decodesTo Github.Object.MoveProjectCardPayload
 cardEdge object =
     Object.selectionField "cardEdge" [] object identity
 

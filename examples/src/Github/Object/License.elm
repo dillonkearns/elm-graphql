@@ -33,7 +33,7 @@ body =
 
 {-| The conditions set by the license
 -}
-conditions : SelectionSet selection Github.Object.LicenseRule -> Field (List (Maybe selection)) Github.Object.License
+conditions : SelectionSet decodesTo Github.Object.LicenseRule -> Field (List (Maybe decodesTo)) Github.Object.License
 conditions object =
     Object.selectionField "conditions" [] object (identity >> Decode.maybe >> Decode.list)
 
@@ -80,7 +80,7 @@ key =
 
 {-| The limitations set by the license
 -}
-limitations : SelectionSet selection Github.Object.LicenseRule -> Field (List (Maybe selection)) Github.Object.License
+limitations : SelectionSet decodesTo Github.Object.LicenseRule -> Field (List (Maybe decodesTo)) Github.Object.License
 limitations object =
     Object.selectionField "limitations" [] object (identity >> Decode.maybe >> Decode.list)
 
@@ -101,7 +101,7 @@ nickname =
 
 {-| The permissions set by the license
 -}
-permissions : SelectionSet selection Github.Object.LicenseRule -> Field (List (Maybe selection)) Github.Object.License
+permissions : SelectionSet decodesTo Github.Object.LicenseRule -> Field (List (Maybe decodesTo)) Github.Object.License
 permissions object =
     Object.selectionField "permissions" [] object (identity >> Decode.maybe >> Decode.list)
 

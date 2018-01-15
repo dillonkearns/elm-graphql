@@ -33,6 +33,6 @@ clientMutationId =
 
 {-| The input subscribable entity.
 -}
-subscribable : SelectionSet selection Github.Interface.Subscribable -> Field selection Github.Object.UpdateSubscriptionPayload
+subscribable : SelectionSet decodesTo Github.Interface.Subscribable -> Field decodesTo Github.Object.UpdateSubscriptionPayload
 subscribable object =
     Object.selectionField "subscribable" [] object identity

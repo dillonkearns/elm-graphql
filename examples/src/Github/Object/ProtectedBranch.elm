@@ -26,7 +26,7 @@ selection constructor =
 
 {-| The actor who created this protected branch.
 -}
-creator : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.ProtectedBranch
+creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProtectedBranch
 creator object =
     Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
@@ -100,7 +100,7 @@ name =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pushAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PushAllowanceConnection -> Field selection Github.Object.ProtectedBranch
+pushAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PushAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
 pushAllowances fillInOptionals object =
     let
         filledInOptionals =
@@ -115,7 +115,7 @@ pushAllowances fillInOptionals object =
 
 {-| The repository associated with this protected branch.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.ProtectedBranch
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.ProtectedBranch
 repository object =
     Object.selectionField "repository" [] object identity
 
@@ -135,7 +135,7 @@ requiredStatusCheckContexts =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-reviewDismissalAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ReviewDismissalAllowanceConnection -> Field selection Github.Object.ProtectedBranch
+reviewDismissalAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals object =
     let
         filledInOptionals =

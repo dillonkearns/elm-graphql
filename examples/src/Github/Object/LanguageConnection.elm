@@ -26,21 +26,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.LanguageEdge -> Field (Maybe (List (Maybe selection))) Github.Object.LanguageConnection
+edges : SelectionSet decodesTo Github.Object.LanguageEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LanguageConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.Language -> Field (Maybe (List (Maybe selection))) Github.Object.LanguageConnection
+nodes : SelectionSet decodesTo Github.Object.Language -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LanguageConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.LanguageConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.LanguageConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

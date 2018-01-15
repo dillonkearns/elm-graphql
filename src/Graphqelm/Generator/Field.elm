@@ -158,7 +158,7 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
 
         objectArgAnnotation =
             interpolate
-                "SelectionSet selection {0}"
+                "SelectionSet decodesTo {0}"
                 [ typeLock ]
     in
     { annotatedArgs = []

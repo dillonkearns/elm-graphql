@@ -26,7 +26,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.SubscribedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.SubscribedEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
@@ -45,6 +45,6 @@ id =
 
 {-| Object referenced by event.
 -}
-subscribable : SelectionSet selection Github.Interface.Subscribable -> Field selection Github.Object.SubscribedEvent
+subscribable : SelectionSet decodesTo Github.Interface.Subscribable -> Field decodesTo Github.Object.SubscribedEvent
 subscribable object =
     Object.selectionField "subscribable" [] object identity

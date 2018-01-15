@@ -33,27 +33,27 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Interface.Reactable
+onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.Reactable
 onCommitComment (SelectionSet fields decoder) =
     FragmentSelectionSet "CommitComment" fields decoder
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.Reactable
+onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Reactable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Interface.Reactable
+onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.Reactable
 onIssueComment (SelectionSet fields decoder) =
     FragmentSelectionSet "IssueComment" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.Reactable
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Reactable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
 
-onPullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FragmentSelectionSet selection Github.Interface.Reactable
+onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.Reactable
 onPullRequestReviewComment (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReviewComment" fields decoder
 
@@ -65,7 +65,7 @@ id =
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> Field (Maybe (List selection)) Github.Interface.Reactable
+reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Interface.Reactable
 reactionGroups object =
     Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
@@ -80,7 +80,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet selection Github.Object.ReactionConnection -> Field selection Github.Interface.Reactable
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Interface.Reactable
 reactions fillInOptionals object =
     let
         filledInOptionals =

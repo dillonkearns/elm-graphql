@@ -32,37 +32,37 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onCommitComment : SelectionSet selection Github.Object.CommitComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
+onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.UpdatableComment
 onCommitComment (SelectionSet fields decoder) =
     FragmentSelectionSet "CommitComment" fields decoder
 
 
-onGistComment : SelectionSet selection Github.Object.GistComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
+onGistComment : SelectionSet decodesTo Github.Object.GistComment -> FragmentSelectionSet decodesTo Github.Interface.UpdatableComment
 onGistComment (SelectionSet fields decoder) =
     FragmentSelectionSet "GistComment" fields decoder
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.UpdatableComment
+onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.UpdatableComment
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onIssueComment : SelectionSet selection Github.Object.IssueComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
+onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.UpdatableComment
 onIssueComment (SelectionSet fields decoder) =
     FragmentSelectionSet "IssueComment" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.UpdatableComment
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.UpdatableComment
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
 
-onPullRequestReview : SelectionSet selection Github.Object.PullRequestReview -> FragmentSelectionSet selection Github.Interface.UpdatableComment
+onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> FragmentSelectionSet decodesTo Github.Interface.UpdatableComment
 onPullRequestReview (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReview" fields decoder
 
 
-onPullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FragmentSelectionSet selection Github.Interface.UpdatableComment
+onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.UpdatableComment
 onPullRequestReviewComment (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReviewComment" fields decoder
 

@@ -47,14 +47,14 @@ invitationType =
 
 {-| The user who was invited to the organization.
 -}
-invitee : SelectionSet selection Github.Object.User -> Field (Maybe selection) Github.Object.OrganizationInvitation
+invitee : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.OrganizationInvitation
 invitee object =
     Object.selectionField "invitee" [] object (identity >> Decode.maybe)
 
 
 {-| The user who created the invitation.
 -}
-inviter : SelectionSet selection Github.Object.User -> Field selection Github.Object.OrganizationInvitation
+inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.OrganizationInvitation
 inviter object =
     Object.selectionField "inviter" [] object identity
 

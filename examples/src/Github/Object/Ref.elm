@@ -39,7 +39,7 @@ selection constructor =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-associatedPullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder }) -> SelectionSet selection Github.Object.PullRequestConnection -> Field selection Github.Object.Ref
+associatedPullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder }) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Ref
 associatedPullRequests fillInOptionals object =
     let
         filledInOptionals =
@@ -73,13 +73,13 @@ prefix =
 
 {-| The repository the ref belongs to.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Ref
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Ref
 repository object =
     Object.selectionField "repository" [] object identity
 
 
 {-| The object the ref points to.
 -}
-target : SelectionSet selection Github.Interface.GitObject -> Field selection Github.Object.Ref
+target : SelectionSet decodesTo Github.Interface.GitObject -> Field decodesTo Github.Object.Ref
 target object =
     Object.selectionField "target" [] object identity

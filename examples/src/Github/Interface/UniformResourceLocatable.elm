@@ -31,67 +31,67 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onBot : SelectionSet selection Github.Object.Bot -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onBot : SelectionSet decodesTo Github.Object.Bot -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onBot (SelectionSet fields decoder) =
     FragmentSelectionSet "Bot" fields decoder
 
 
-onCrossReferencedEvent : SelectionSet selection Github.Object.CrossReferencedEvent -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onCrossReferencedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "CrossReferencedEvent" fields decoder
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onMergedEvent : SelectionSet selection Github.Object.MergedEvent -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onMergedEvent : SelectionSet decodesTo Github.Object.MergedEvent -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onMergedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "MergedEvent" fields decoder
 
 
-onMilestone : SelectionSet selection Github.Object.Milestone -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onMilestone : SelectionSet decodesTo Github.Object.Milestone -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onMilestone (SelectionSet fields decoder) =
     FragmentSelectionSet "Milestone" fields decoder
 
 
-onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onOrganization (SelectionSet fields decoder) =
     FragmentSelectionSet "Organization" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
 
-onPullRequestCommit : SelectionSet selection Github.Object.PullRequestCommit -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onPullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onPullRequestCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestCommit" fields decoder
 
 
-onRelease : SelectionSet selection Github.Object.Release -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onRelease : SelectionSet decodesTo Github.Object.Release -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onRelease (SelectionSet fields decoder) =
     FragmentSelectionSet "Release" fields decoder
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-onRepositoryTopic : SelectionSet selection Github.Object.RepositoryTopic -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onRepositoryTopic : SelectionSet decodesTo Github.Object.RepositoryTopic -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onRepositoryTopic (SelectionSet fields decoder) =
     FragmentSelectionSet "RepositoryTopic" fields decoder
 
 
-onReviewDismissedEvent : SelectionSet selection Github.Object.ReviewDismissedEvent -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onReviewDismissedEvent : SelectionSet decodesTo Github.Object.ReviewDismissedEvent -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onReviewDismissedEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "ReviewDismissedEvent" fields decoder
 
 
-onUser : SelectionSet selection Github.Object.User -> FragmentSelectionSet selection Github.Interface.UniformResourceLocatable
+onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onUser (SelectionSet fields decoder) =
     FragmentSelectionSet "User" fields decoder
 

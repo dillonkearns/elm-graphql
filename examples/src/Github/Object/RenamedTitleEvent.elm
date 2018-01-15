@@ -26,7 +26,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.RenamedTitleEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.RenamedTitleEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
@@ -59,6 +59,6 @@ previousTitle =
 
 {-| Subject that was renamed.
 -}
-subject : SelectionSet selection Github.Union.RenamedTitleSubject -> Field selection Github.Object.RenamedTitleEvent
+subject : SelectionSet decodesTo Github.Union.RenamedTitleSubject -> Field decodesTo Github.Object.RenamedTitleEvent
 subject object =
     Object.selectionField "subject" [] object identity

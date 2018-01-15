@@ -33,6 +33,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet selection Github.Object.ProtectedBranch -> Field (Maybe selection) Github.Object.ProtectedBranchEdge
+node : SelectionSet decodesTo Github.Object.ProtectedBranch -> Field (Maybe decodesTo) Github.Object.ProtectedBranchEdge
 node object =
     Object.selectionField "node" [] object (identity >> Decode.maybe)

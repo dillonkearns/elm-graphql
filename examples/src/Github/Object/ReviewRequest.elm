@@ -31,13 +31,13 @@ id =
 
 {-| Identifies the pull request associated with this review request.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.ReviewRequest
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.ReviewRequest
 pullRequest object =
     Object.selectionField "pullRequest" [] object identity
 
 
 {-| The reviewer that is requested.
 -}
-requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> Field (Maybe selection) Github.Object.ReviewRequest
+requestedReviewer : SelectionSet decodesTo Github.Union.RequestedReviewer -> Field (Maybe decodesTo) Github.Object.ReviewRequest
 requestedReviewer object =
     Object.selectionField "requestedReviewer" [] object (identity >> Decode.maybe)

@@ -33,6 +33,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet selection Github.Object.PullRequestReview -> Field (Maybe selection) Github.Object.PullRequestReviewEdge
+node : SelectionSet decodesTo Github.Object.PullRequestReview -> Field (Maybe decodesTo) Github.Object.PullRequestReviewEdge
 node object =
     Object.selectionField "node" [] object (identity >> Decode.maybe)

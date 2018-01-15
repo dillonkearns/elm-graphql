@@ -33,6 +33,6 @@ clientMutationId =
 
 {-| The declined topic.
 -}
-topic : SelectionSet selection Github.Object.Topic -> Field selection Github.Object.DeclineTopicSuggestionPayload
+topic : SelectionSet decodesTo Github.Object.Topic -> Field decodesTo Github.Object.DeclineTopicSuggestionPayload
 topic object =
     Object.selectionField "topic" [] object identity

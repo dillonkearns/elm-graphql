@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Renamed type variables from `selection` to `decodesTo` for clarity.
+
 ## [2.1.0] - 2018-01-13
 
 ### Fixed

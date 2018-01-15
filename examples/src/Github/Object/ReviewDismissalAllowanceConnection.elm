@@ -26,21 +26,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.ReviewDismissalAllowanceEdge -> Field (Maybe (List (Maybe selection))) Github.Object.ReviewDismissalAllowanceConnection
+edges : SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReviewDismissalAllowanceConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.ReviewDismissalAllowance -> Field (Maybe (List (Maybe selection))) Github.Object.ReviewDismissalAllowanceConnection
+nodes : SelectionSet decodesTo Github.Object.ReviewDismissalAllowance -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReviewDismissalAllowanceConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.ReviewDismissalAllowanceConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.ReviewDismissalAllowanceConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

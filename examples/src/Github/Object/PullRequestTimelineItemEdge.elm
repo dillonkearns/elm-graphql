@@ -33,6 +33,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet selection Github.Union.PullRequestTimelineItem -> Field (Maybe selection) Github.Object.PullRequestTimelineItemEdge
+node : SelectionSet decodesTo Github.Union.PullRequestTimelineItem -> Field (Maybe decodesTo) Github.Object.PullRequestTimelineItemEdge
 node object =
     Object.selectionField "node" [] object (identity >> Decode.maybe)

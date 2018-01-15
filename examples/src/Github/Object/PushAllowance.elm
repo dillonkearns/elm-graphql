@@ -26,7 +26,7 @@ selection constructor =
 
 {-| The actor that can push.
 -}
-actor : SelectionSet selection Github.Union.PushAllowanceActor -> Field (Maybe selection) Github.Object.PushAllowance
+actor : SelectionSet decodesTo Github.Union.PushAllowanceActor -> Field (Maybe decodesTo) Github.Object.PushAllowance
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
@@ -38,6 +38,6 @@ id =
 
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
-protectedBranch : SelectionSet selection Github.Object.ProtectedBranch -> Field selection Github.Object.PushAllowance
+protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> Field decodesTo Github.Object.PushAllowance
 protectedBranch object =
     Object.selectionField "protectedBranch" [] object identity

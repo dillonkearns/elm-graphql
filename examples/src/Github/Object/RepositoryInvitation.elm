@@ -31,20 +31,20 @@ id =
 
 {-| The user who received the invitation.
 -}
-invitee : SelectionSet selection Github.Object.User -> Field selection Github.Object.RepositoryInvitation
+invitee : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
 invitee object =
     Object.selectionField "invitee" [] object identity
 
 
 {-| The user who created the invitation.
 -}
-inviter : SelectionSet selection Github.Object.User -> Field selection Github.Object.RepositoryInvitation
+inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
 inviter object =
     Object.selectionField "inviter" [] object identity
 
 
 {-| The Repository the user is invited to.
 -}
-repository : SelectionSet selection Github.Object.RepositoryInvitationRepository -> Field (Maybe selection) Github.Object.RepositoryInvitation
+repository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> Field (Maybe decodesTo) Github.Object.RepositoryInvitation
 repository object =
     Object.selectionField "repository" [] object (identity >> Decode.maybe)

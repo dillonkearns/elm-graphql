@@ -26,21 +26,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.MilestoneEdge -> Field (Maybe (List (Maybe selection))) Github.Object.MilestoneConnection
+edges : SelectionSet decodesTo Github.Object.MilestoneEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.MilestoneConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.Milestone -> Field (Maybe (List (Maybe selection))) Github.Object.MilestoneConnection
+nodes : SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe (List (Maybe decodesTo))) Github.Object.MilestoneConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.MilestoneConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.MilestoneConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

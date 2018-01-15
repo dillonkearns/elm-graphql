@@ -46,7 +46,7 @@ me =
                 }
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "RootQuery")
                     |> Expect.equal
-                        """droid : SelectionSet selection Api.Object.Droid -> Field selection RootQuery
+                        """droid : SelectionSet decodesTo Api.Object.Droid -> Field decodesTo RootQuery
 droid object =
       Object.selectionField "droid" [] (object) (identity)
 """
@@ -70,7 +70,7 @@ droid object =
                         )
                         (ClassCaseName.build "RootQuery")
                     |> Expect.equal
-                        """hero : SelectionSet selection Swapi.Interface.Character -> Field selection RootQuery
+                        """hero : SelectionSet decodesTo Swapi.Interface.Character -> Field decodesTo RootQuery
 hero object =
       Object.selectionField "hero" [] (object) (identity)
 """
@@ -83,7 +83,7 @@ hero object =
                 }
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "Foo")
                     |> Expect.equal
-                        """droid : SelectionSet selection Api.Object.Droid -> Field selection Api.Object.Foo
+                        """droid : SelectionSet decodesTo Api.Object.Droid -> Field decodesTo Api.Object.Foo
 droid object =
       Object.selectionField "droid" [] (object) (identity)
 """
@@ -96,7 +96,7 @@ droid object =
                 }
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "Foo")
                     |> Expect.equal
-                        """droid : SelectionSet selection Api.Object.Droid -> Field (List selection) Api.Object.Foo
+                        """droid : SelectionSet decodesTo Api.Object.Droid -> Field (List decodesTo) Api.Object.Foo
 droid object =
       Object.selectionField "droid" [] (object) (identity >> Decode.list)
 """
@@ -114,7 +114,7 @@ droid object =
                 }
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "RootQuery")
                     |> Expect.equal
-                        """human : { id : String } -> SelectionSet selection Api.Object.Human -> Field selection RootQuery
+                        """human : { id : String } -> SelectionSet decodesTo Api.Object.Human -> Field decodesTo RootQuery
 human requiredArgs object =
       Object.selectionField "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object) (identity)
 """
@@ -132,7 +132,7 @@ human requiredArgs object =
                 }
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "RootQuery")
                     |> Expect.equal
-                        """menuItems : ({ contains : OptionalArgument String } -> { contains : OptionalArgument String }) -> SelectionSet selection Api.Object.MenuItem -> Field (List selection) RootQuery
+                        """menuItems : ({ contains : OptionalArgument String } -> { contains : OptionalArgument String }) -> SelectionSet decodesTo Api.Object.MenuItem -> Field (List decodesTo) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =

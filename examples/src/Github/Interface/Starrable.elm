@@ -32,12 +32,12 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onGist : SelectionSet selection Github.Object.Gist -> FragmentSelectionSet selection Github.Interface.Starrable
+onGist : SelectionSet decodesTo Github.Object.Gist -> FragmentSelectionSet decodesTo Github.Interface.Starrable
 onGist (SelectionSet fields decoder) =
     FragmentSelectionSet "Gist" fields decoder
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.Starrable
+onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.Starrable
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
@@ -56,7 +56,7 @@ id =
   - orderBy - Order for connection
 
 -}
-stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder }) -> SelectionSet selection Github.Object.StargazerConnection -> Field selection Github.Interface.Starrable
+stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder }) -> SelectionSet decodesTo Github.Object.StargazerConnection -> Field decodesTo Github.Interface.Starrable
 stargazers fillInOptionals object =
     let
         filledInOptionals =

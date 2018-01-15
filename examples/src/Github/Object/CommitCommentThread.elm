@@ -32,7 +32,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.CommitCommentConnection -> Field selection Github.Object.CommitCommentThread
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.CommitCommentThread
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -47,7 +47,7 @@ comments fillInOptionals object =
 
 {-| The commit the comments were made on.
 -}
-commit : SelectionSet selection Github.Object.Commit -> Field selection Github.Object.CommitCommentThread
+commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.CommitCommentThread
 commit object =
     Object.selectionField "commit" [] object identity
 
@@ -73,6 +73,6 @@ position =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.CommitCommentThread
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.CommitCommentThread
 repository object =
     Object.selectionField "repository" [] object identity

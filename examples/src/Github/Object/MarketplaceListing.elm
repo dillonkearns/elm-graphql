@@ -217,7 +217,7 @@ pricingUrl =
 
 {-| The category that best describes the listing.
 -}
-primaryCategory : SelectionSet selection Github.Object.MarketplaceCategory -> Field selection Github.Object.MarketplaceListing
+primaryCategory : SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field decodesTo Github.Object.MarketplaceListing
 primaryCategory object =
     Object.selectionField "primaryCategory" [] object identity
 
@@ -245,7 +245,7 @@ screenshotUrls =
 
 {-| An alternate category that describes the listing.
 -}
-secondaryCategory : SelectionSet selection Github.Object.MarketplaceCategory -> Field (Maybe selection) Github.Object.MarketplaceListing
+secondaryCategory : SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (Maybe decodesTo) Github.Object.MarketplaceListing
 secondaryCategory object =
     Object.selectionField "secondaryCategory" [] object (identity >> Decode.maybe)
 

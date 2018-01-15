@@ -33,6 +33,6 @@ clientMutationId =
 
 {-| The updated ProjectCard.
 -}
-projectCard : SelectionSet selection Github.Object.ProjectCard -> Field selection Github.Object.UpdateProjectCardPayload
+projectCard : SelectionSet decodesTo Github.Object.ProjectCard -> Field decodesTo Github.Object.UpdateProjectCardPayload
 projectCard object =
     Object.selectionField "projectCard" [] object identity

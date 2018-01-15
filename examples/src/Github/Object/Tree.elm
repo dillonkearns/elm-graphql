@@ -47,7 +47,7 @@ commitUrl =
 
 {-| A list of tree entries.
 -}
-entries : SelectionSet selection Github.Object.TreeEntry -> Field (Maybe (List selection)) Github.Object.Tree
+entries : SelectionSet decodesTo Github.Object.TreeEntry -> Field (Maybe (List decodesTo)) Github.Object.Tree
 entries object =
     Object.selectionField "entries" [] object (identity >> Decode.list >> Decode.maybe)
 
@@ -66,6 +66,6 @@ oid =
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Tree
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Tree
 repository object =
     Object.selectionField "repository" [] object identity

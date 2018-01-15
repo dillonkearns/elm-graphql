@@ -46,13 +46,13 @@ id =
 
 {-| The reactable piece of content
 -}
-reactable : SelectionSet selection Github.Interface.Reactable -> Field selection Github.Object.Reaction
+reactable : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.Reaction
 reactable object =
     Object.selectionField "reactable" [] object identity
 
 
 {-| Identifies the user who created this reaction.
 -}
-user : SelectionSet selection Github.Object.User -> Field (Maybe selection) Github.Object.Reaction
+user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Reaction
 user object =
     Object.selectionField "user" [] object (identity >> Decode.maybe)

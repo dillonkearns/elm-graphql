@@ -26,21 +26,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.ReactionEdge -> Field (Maybe (List (Maybe selection))) Github.Object.ReactionConnection
+edges : SelectionSet decodesTo Github.Object.ReactionEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReactionConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.Reaction -> Field (Maybe (List (Maybe selection))) Github.Object.ReactionConnection
+nodes : SelectionSet decodesTo Github.Object.Reaction -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReactionConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.ReactionConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.ReactionConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

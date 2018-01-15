@@ -33,6 +33,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet selection Github.Object.PublicKey -> Field (Maybe selection) Github.Object.PublicKeyEdge
+node : SelectionSet decodesTo Github.Object.PublicKey -> Field (Maybe decodesTo) Github.Object.PublicKeyEdge
 node object =
     Object.selectionField "node" [] object (identity >> Decode.maybe)

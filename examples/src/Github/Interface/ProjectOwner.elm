@@ -33,12 +33,12 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Interface.ProjectOwner
+onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.ProjectOwner
 onOrganization (SelectionSet fields decoder) =
     FragmentSelectionSet "Organization" fields decoder
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.ProjectOwner
+onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.ProjectOwner
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
@@ -53,7 +53,7 @@ id =
   - number - The project number to find.
 
 -}
-project : { number : Int } -> SelectionSet selection Github.Object.Project -> Field (Maybe selection) Github.Interface.ProjectOwner
+project : { number : Int } -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Interface.ProjectOwner
 project requiredArgs object =
     Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.maybe)
 
@@ -69,7 +69,7 @@ project requiredArgs object =
   - states - A list of states to filter the projects by.
 
 -}
-projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ProjectOrder.ProjectOrder, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ProjectOrder.ProjectOrder, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet selection Github.Object.ProjectConnection -> Field selection Github.Interface.ProjectOwner
+projects : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ProjectOrder.ProjectOrder, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ProjectOrder.ProjectOrder, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }) -> SelectionSet decodesTo Github.Object.ProjectConnection -> Field decodesTo Github.Interface.ProjectOwner
 projects fillInOptionals object =
     let
         filledInOptionals =

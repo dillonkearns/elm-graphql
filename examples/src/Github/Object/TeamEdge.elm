@@ -33,6 +33,6 @@ cursor =
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet selection Github.Object.Team -> Field (Maybe selection) Github.Object.TeamEdge
+node : SelectionSet decodesTo Github.Object.Team -> Field (Maybe decodesTo) Github.Object.TeamEdge
 node object =
     Object.selectionField "node" [] object (identity >> Decode.maybe)

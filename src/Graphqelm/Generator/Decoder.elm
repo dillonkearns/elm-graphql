@@ -178,13 +178,13 @@ generateTypeCommon nullableString apiSubmodule (Type.TypeReference referrableTyp
             "(List " ++ generateType apiSubmodule typeRef ++ ")"
 
         Type.ObjectRef objectName ->
-            "selection"
+            "decodesTo"
 
         Type.InterfaceRef interfaceName ->
-            "selection"
+            "decodesTo"
 
         Type.UnionRef unionName ->
-            "selection"
+            "decodesTo"
 
         Type.EnumRef enumName ->
             ModuleName.enumTypeName { apiSubmodule = apiSubmodule } enumName

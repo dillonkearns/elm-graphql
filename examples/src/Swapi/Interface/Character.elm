@@ -32,12 +32,12 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onHuman : SelectionSet selection Swapi.Object.Human -> FragmentSelectionSet selection Swapi.Interface.Character
+onHuman : SelectionSet decodesTo Swapi.Object.Human -> FragmentSelectionSet decodesTo Swapi.Interface.Character
 onHuman (SelectionSet fields decoder) =
     FragmentSelectionSet "Human" fields decoder
 
 
-onDroid : SelectionSet selection Swapi.Object.Droid -> FragmentSelectionSet selection Swapi.Interface.Character
+onDroid : SelectionSet decodesTo Swapi.Object.Droid -> FragmentSelectionSet decodesTo Swapi.Interface.Character
 onDroid (SelectionSet fields decoder) =
     FragmentSelectionSet "Droid" fields decoder
 
@@ -51,7 +51,7 @@ appearsIn =
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet selection Swapi.Interface.Character -> Field (List selection) Swapi.Interface.Character
+friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Interface.Character
 friends object =
     Object.selectionField "friends" [] object (identity >> Decode.list)
 

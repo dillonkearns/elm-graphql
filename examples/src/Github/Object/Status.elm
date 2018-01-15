@@ -27,7 +27,7 @@ selection constructor =
 
 {-| The commit this status is attached to.
 -}
-commit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.Status
+commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Status
 commit object =
     Object.selectionField "commit" [] object (identity >> Decode.maybe)
 
@@ -37,14 +37,14 @@ commit object =
   - name - The context name.
 
 -}
-context : { name : String } -> SelectionSet selection Github.Object.StatusContext -> Field (Maybe selection) Github.Object.Status
+context : { name : String } -> SelectionSet decodesTo Github.Object.StatusContext -> Field (Maybe decodesTo) Github.Object.Status
 context requiredArgs object =
     Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
 
 {-| The individual status contexts for this commit.
 -}
-contexts : SelectionSet selection Github.Object.StatusContext -> Field (List selection) Github.Object.Status
+contexts : SelectionSet decodesTo Github.Object.StatusContext -> Field (List decodesTo) Github.Object.Status
 contexts object =
     Object.selectionField "contexts" [] object (identity >> Decode.list)
 

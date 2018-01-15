@@ -30,7 +30,7 @@ selection constructor =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.PullRequestReviewComment
+author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 author object =
     Object.selectionField "author" [] object (identity >> Decode.maybe)
 
@@ -65,7 +65,7 @@ bodyText =
 
 {-| Identifies the commit associated with the comment.
 -}
-commit : SelectionSet selection Github.Object.Commit -> Field selection Github.Object.PullRequestReviewComment
+commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.PullRequestReviewComment
 commit object =
     Object.selectionField "commit" [] object identity
 
@@ -100,7 +100,7 @@ draftedAt =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.PullRequestReviewComment
+editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 editor object =
     Object.selectionField "editor" [] object (identity >> Decode.maybe)
 
@@ -119,7 +119,7 @@ lastEditedAt =
 
 {-| Identifies the original commit associated with the comment.
 -}
-originalCommit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.PullRequestReviewComment
+originalCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 originalCommit object =
     Object.selectionField "originalCommit" [] object (identity >> Decode.maybe)
 
@@ -154,21 +154,21 @@ publishedAt =
 
 {-| The pull request associated with this review comment.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.PullRequestReviewComment
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestReviewComment
 pullRequest object =
     Object.selectionField "pullRequest" [] object identity
 
 
 {-| The pull request review associated with this review comment.
 -}
-pullRequestReview : SelectionSet selection Github.Object.PullRequestReview -> Field (Maybe selection) Github.Object.PullRequestReviewComment
+pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 pullRequestReview object =
     Object.selectionField "pullRequestReview" [] object (identity >> Decode.maybe)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> Field (Maybe (List selection)) Github.Object.PullRequestReviewComment
+reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Object.PullRequestReviewComment
 reactionGroups object =
     Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
@@ -183,7 +183,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet selection Github.Object.ReactionConnection -> Field selection Github.Object.PullRequestReviewComment
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Object.PullRequestReviewComment
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -198,14 +198,14 @@ reactions fillInOptionals object =
 
 {-| The comment this is a reply to.
 -}
-replyTo : SelectionSet selection Github.Object.PullRequestReviewComment -> Field (Maybe selection) Github.Object.PullRequestReviewComment
+replyTo : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 replyTo object =
     Object.selectionField "replyTo" [] object (identity >> Decode.maybe)
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.PullRequestReviewComment
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.PullRequestReviewComment
 repository object =
     Object.selectionField "repository" [] object identity
 

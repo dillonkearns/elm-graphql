@@ -44,7 +44,7 @@ memberAccessUrl =
     Object.fieldDecoder "memberAccessUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-node : SelectionSet selection Github.Object.User -> Field selection Github.Object.TeamMemberEdge
+node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.TeamMemberEdge
 node object =
     Object.selectionField "node" [] object identity
 

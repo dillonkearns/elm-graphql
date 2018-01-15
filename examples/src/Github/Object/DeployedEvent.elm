@@ -26,7 +26,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.DeployedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.DeployedEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
@@ -40,7 +40,7 @@ createdAt =
 
 {-| The deployment associated with the 'deployed' event.
 -}
-deployment : SelectionSet selection Github.Object.Deployment -> Field selection Github.Object.DeployedEvent
+deployment : SelectionSet decodesTo Github.Object.Deployment -> Field decodesTo Github.Object.DeployedEvent
 deployment object =
     Object.selectionField "deployment" [] object identity
 
@@ -52,13 +52,13 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.DeployedEvent
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.DeployedEvent
 pullRequest object =
     Object.selectionField "pullRequest" [] object identity
 
 
 {-| The ref associated with the 'deployed' event.
 -}
-ref : SelectionSet selection Github.Object.Ref -> Field (Maybe selection) Github.Object.DeployedEvent
+ref : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.DeployedEvent
 ref object =
     Object.selectionField "ref" [] object (identity >> Decode.maybe)

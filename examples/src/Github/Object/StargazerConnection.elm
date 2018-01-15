@@ -26,21 +26,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.StargazerEdge -> Field (Maybe (List (Maybe selection))) Github.Object.StargazerConnection
+edges : SelectionSet decodesTo Github.Object.StargazerEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.StargazerConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.User -> Field (Maybe (List (Maybe selection))) Github.Object.StargazerConnection
+nodes : SelectionSet decodesTo Github.Object.User -> Field (Maybe (List (Maybe decodesTo))) Github.Object.StargazerConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.StargazerConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.StargazerConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

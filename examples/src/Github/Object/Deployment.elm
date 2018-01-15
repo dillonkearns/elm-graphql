@@ -27,7 +27,7 @@ selection constructor =
 
 {-| Identifies the commit sha of the deployment.
 -}
-commit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.Deployment
+commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Deployment
 commit object =
     Object.selectionField "commit" [] object (identity >> Decode.maybe)
 
@@ -41,7 +41,7 @@ createdAt =
 
 {-| Identifies the actor who triggered the deployment.
 -}
-creator : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.Deployment
+creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Deployment
 creator object =
     Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
@@ -60,7 +60,7 @@ id =
 
 {-| The latest status of this deployment.
 -}
-latestStatus : SelectionSet selection Github.Object.DeploymentStatus -> Field (Maybe selection) Github.Object.Deployment
+latestStatus : SelectionSet decodesTo Github.Object.DeploymentStatus -> Field (Maybe decodesTo) Github.Object.Deployment
 latestStatus object =
     Object.selectionField "latestStatus" [] object (identity >> Decode.maybe)
 
@@ -74,7 +74,7 @@ payload =
 
 {-| Identifies the repository associated with the deployment.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Deployment
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Deployment
 repository object =
     Object.selectionField "repository" [] object identity
 
@@ -94,7 +94,7 @@ state =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-statuses : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.DeploymentStatusConnection -> Field (Maybe selection) Github.Object.Deployment
+statuses : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.DeploymentStatusConnection -> Field (Maybe decodesTo) Github.Object.Deployment
 statuses fillInOptionals object =
     let
         filledInOptionals =

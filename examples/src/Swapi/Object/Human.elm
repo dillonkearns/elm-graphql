@@ -34,7 +34,7 @@ appearsIn =
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet selection Swapi.Interface.Character -> Field (List selection) Swapi.Object.Human
+friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Object.Human
 friends object =
     Object.selectionField "friends" [] object (identity >> Decode.list)
 

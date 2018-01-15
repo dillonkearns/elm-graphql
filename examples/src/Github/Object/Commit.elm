@@ -42,7 +42,7 @@ additions =
 
 {-| Authorship details of the commit.
 -}
-author : SelectionSet selection Github.Object.GitActor -> Field (Maybe selection) Github.Object.Commit
+author : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Commit
 author object =
     Object.selectionField "author" [] object (identity >> Decode.maybe)
 
@@ -66,7 +66,7 @@ authoredDate =
   - path - The file whose Git blame information you want.
 
 -}
-blame : { path : String } -> SelectionSet selection Github.Object.Blame -> Field selection Github.Object.Commit
+blame : { path : String } -> SelectionSet decodesTo Github.Object.Blame -> Field decodesTo Github.Object.Commit
 blame requiredArgs object =
     Object.selectionField "blame" [ Argument.required "path" requiredArgs.path Encode.string ] object identity
 
@@ -86,7 +86,7 @@ changedFiles =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.CommitCommentConnection -> Field selection Github.Object.Commit
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.Commit
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -129,7 +129,7 @@ committedViaWeb =
 
 {-| Committership details of the commit.
 -}
-committer : SelectionSet selection Github.Object.GitActor -> Field (Maybe selection) Github.Object.Commit
+committer : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Commit
 committer object =
     Object.selectionField "committer" [] object (identity >> Decode.maybe)
 
@@ -153,7 +153,7 @@ deletions =
   - until - Allows specifying an ending time or date for fetching commits.
 
 -}
-history : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp }) -> SelectionSet selection Github.Object.CommitHistoryConnection -> Field selection Github.Object.Commit
+history : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp }) -> SelectionSet decodesTo Github.Object.CommitHistoryConnection -> Field decodesTo Github.Object.Commit
 history fillInOptionals object =
     let
         filledInOptionals =
@@ -221,7 +221,7 @@ oid =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-parents : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.CommitConnection -> Field selection Github.Object.Commit
+parents : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.CommitConnection -> Field decodesTo Github.Object.Commit
 parents fillInOptionals object =
     let
         filledInOptionals =
@@ -243,7 +243,7 @@ pushedDate =
 
 {-| The Repository this commit belongs to
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Commit
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Commit
 repository object =
     Object.selectionField "repository" [] object identity
 
@@ -257,14 +257,14 @@ resourcePath =
 
 {-| Commit signing information, if present.
 -}
-signature : SelectionSet selection Github.Interface.GitSignature -> Field (Maybe selection) Github.Object.Commit
+signature : SelectionSet decodesTo Github.Interface.GitSignature -> Field (Maybe decodesTo) Github.Object.Commit
 signature object =
     Object.selectionField "signature" [] object (identity >> Decode.maybe)
 
 
 {-| Status information for this commit
 -}
-status : SelectionSet selection Github.Object.Status -> Field (Maybe selection) Github.Object.Commit
+status : SelectionSet decodesTo Github.Object.Status -> Field (Maybe decodesTo) Github.Object.Commit
 status object =
     Object.selectionField "status" [] object (identity >> Decode.maybe)
 
@@ -278,7 +278,7 @@ tarballUrl =
 
 {-| Commit's root Tree
 -}
-tree : SelectionSet selection Github.Object.Tree -> Field selection Github.Object.Commit
+tree : SelectionSet decodesTo Github.Object.Tree -> Field decodesTo Github.Object.Commit
 tree object =
     Object.selectionField "tree" [] object identity
 

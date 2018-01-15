@@ -26,7 +26,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.ReviewRequestedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
@@ -45,13 +45,13 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.ReviewRequestedEvent
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.ReviewRequestedEvent
 pullRequest object =
     Object.selectionField "pullRequest" [] object identity
 
 
 {-| Identifies the reviewer whose review was requested.
 -}
-requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> Field (Maybe selection) Github.Object.ReviewRequestedEvent
+requestedReviewer : SelectionSet decodesTo Github.Union.RequestedReviewer -> Field (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 requestedReviewer object =
     Object.selectionField "requestedReviewer" [] object (identity >> Decode.maybe)

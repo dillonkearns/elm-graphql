@@ -55,7 +55,7 @@ additions =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> Field selection Github.Object.PullRequest
+assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.PullRequest
 assignees fillInOptionals object =
     let
         filledInOptionals =
@@ -70,7 +70,7 @@ assignees fillInOptionals object =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.PullRequest
+author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequest
 author object =
     Object.selectionField "author" [] object (identity >> Decode.maybe)
 
@@ -84,7 +84,7 @@ authorAssociation =
 
 {-| Identifies the base Ref associated with the pull request.
 -}
-baseRef : SelectionSet selection Github.Object.Ref -> Field (Maybe selection) Github.Object.PullRequest
+baseRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.PullRequest
 baseRef object =
     Object.selectionField "baseRef" [] object (identity >> Decode.maybe)
 
@@ -146,7 +146,7 @@ closedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.IssueCommentConnection -> Field selection Github.Object.PullRequest
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> Field decodesTo Github.Object.PullRequest
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -167,7 +167,7 @@ comments fillInOptionals object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-commits : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestCommitConnection -> Field selection Github.Object.PullRequest
+commits : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PullRequestCommitConnection -> Field decodesTo Github.Object.PullRequest
 commits fillInOptionals object =
     let
         filledInOptionals =
@@ -203,14 +203,14 @@ deletions =
 
 {-| The actor who edited this pull request's body.
 -}
-editor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.PullRequest
+editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequest
 editor object =
     Object.selectionField "editor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the head Ref associated with the pull request.
 -}
-headRef : SelectionSet selection Github.Object.Ref -> Field (Maybe selection) Github.Object.PullRequest
+headRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.PullRequest
 headRef object =
     Object.selectionField "headRef" [] object (identity >> Decode.maybe)
 
@@ -224,14 +224,14 @@ headRefName =
 
 {-| The repository associated with this pull request's head Ref.
 -}
-headRepository : SelectionSet selection Github.Object.Repository -> Field (Maybe selection) Github.Object.PullRequest
+headRepository : SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.PullRequest
 headRepository object =
     Object.selectionField "headRepository" [] object (identity >> Decode.maybe)
 
 
 {-| The owner of the repository associated with this pull request's head Ref.
 -}
-headRepositoryOwner : SelectionSet selection Github.Interface.RepositoryOwner -> Field (Maybe selection) Github.Object.PullRequest
+headRepositoryOwner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) Github.Object.PullRequest
 headRepositoryOwner object =
     Object.selectionField "headRepositoryOwner" [] object (identity >> Decode.maybe)
 
@@ -256,7 +256,7 @@ isCrossRepository =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.LabelConnection -> Field (Maybe selection) Github.Object.PullRequest
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.LabelConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -285,7 +285,7 @@ locked =
 
 {-| The commit that was created when this pull request was merged.
 -}
-mergeCommit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.PullRequest
+mergeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequest
 mergeCommit object =
     Object.selectionField "mergeCommit" [] object (identity >> Decode.maybe)
 
@@ -313,7 +313,7 @@ mergedAt =
 
 {-| Identifies the milestone associated with the pull request.
 -}
-milestone : SelectionSet selection Github.Object.Milestone -> Field (Maybe selection) Github.Object.PullRequest
+milestone : SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe decodesTo) Github.Object.PullRequest
 milestone object =
     Object.selectionField "milestone" [] object (identity >> Decode.maybe)
 
@@ -333,7 +333,7 @@ number =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> Field selection Github.Object.PullRequest
+participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.PullRequest
 participants fillInOptionals object =
     let
         filledInOptionals =
@@ -348,7 +348,7 @@ participants fillInOptionals object =
 
 {-| The commit that GitHub automatically generated to test if this pull request could be merged. This field will not return a value if the pull request is merged, or if the test merge commit is still being generated. See the `mergeable` field for more details on the mergeability of the pull request.
 -}
-potentialMergeCommit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.PullRequest
+potentialMergeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequest
 potentialMergeCommit object =
     Object.selectionField "potentialMergeCommit" [] object (identity >> Decode.maybe)
 
@@ -361,7 +361,7 @@ potentialMergeCommit object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> Field selection Github.Object.PullRequest
+projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.PullRequest
 projectCards fillInOptionals object =
     let
         filledInOptionals =
@@ -383,7 +383,7 @@ publishedAt =
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> Field (Maybe (List selection)) Github.Object.PullRequest
+reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Object.PullRequest
 reactionGroups object =
     Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
@@ -398,7 +398,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet selection Github.Object.ReactionConnection -> Field selection Github.Object.PullRequest
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Object.PullRequest
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -413,7 +413,7 @@ reactions fillInOptionals object =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.PullRequest
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.PullRequest
 repository object =
     Object.selectionField "repository" [] object identity
 
@@ -447,7 +447,7 @@ revertUrl =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-reviewRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ReviewRequestConnection -> Field (Maybe selection) Github.Object.PullRequest
+reviewRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ReviewRequestConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
 reviewRequests fillInOptionals object =
     let
         filledInOptionals =
@@ -470,7 +470,7 @@ reviewRequests fillInOptionals object =
   - author - Filter by author of the review.
 
 -}
-reviews : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestReviewConnection -> Field (Maybe selection) Github.Object.PullRequest
+reviews : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PullRequestReviewConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
 reviews fillInOptionals object =
     let
         filledInOptionals =
@@ -492,7 +492,7 @@ state =
 
 {-| A list of reviewer suggestions based on commit history and past review comments.
 -}
-suggestedReviewers : SelectionSet selection Github.Object.SuggestedReviewer -> Field (List (Maybe selection)) Github.Object.PullRequest
+suggestedReviewers : SelectionSet decodesTo Github.Object.SuggestedReviewer -> Field (List (Maybe decodesTo)) Github.Object.PullRequest
 suggestedReviewers object =
     Object.selectionField "suggestedReviewers" [] object (identity >> Decode.maybe >> Decode.list)
 
@@ -506,7 +506,7 @@ suggestedReviewers object =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }) -> SelectionSet selection Github.Object.PullRequestTimelineConnection -> Field selection Github.Object.PullRequest
+timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }) -> SelectionSet decodesTo Github.Object.PullRequestTimelineConnection -> Field decodesTo Github.Object.PullRequest
 timeline fillInOptionals object =
     let
         filledInOptionals =

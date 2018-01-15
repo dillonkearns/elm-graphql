@@ -31,17 +31,17 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onBot : SelectionSet selection Github.Object.Bot -> FragmentSelectionSet selection Github.Interface.Actor
+onBot : SelectionSet decodesTo Github.Object.Bot -> FragmentSelectionSet decodesTo Github.Interface.Actor
 onBot (SelectionSet fields decoder) =
     FragmentSelectionSet "Bot" fields decoder
 
 
-onOrganization : SelectionSet selection Github.Object.Organization -> FragmentSelectionSet selection Github.Interface.Actor
+onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.Actor
 onOrganization (SelectionSet fields decoder) =
     FragmentSelectionSet "Organization" fields decoder
 
 
-onUser : SelectionSet selection Github.Object.User -> FragmentSelectionSet selection Github.Interface.Actor
+onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Interface.Actor
 onUser (SelectionSet fields decoder) =
     FragmentSelectionSet "User" fields decoder
 

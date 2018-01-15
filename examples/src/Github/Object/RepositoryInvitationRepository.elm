@@ -111,7 +111,7 @@ isPrivate =
 
 {-| The license associated with the repository
 -}
-licenseInfo : SelectionSet selection Github.Object.License -> Field (Maybe selection) Github.Object.RepositoryInvitationRepository
+licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Object.RepositoryInvitationRepository
 licenseInfo object =
     Object.selectionField "licenseInfo" [] object (identity >> Decode.maybe)
 
@@ -146,7 +146,7 @@ nameWithOwner =
 
 {-| The owner of the repository associated with this invitation repository.
 -}
-owner : SelectionSet selection Github.Interface.RepositoryOwner -> Field selection Github.Object.RepositoryInvitationRepository
+owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field decodesTo Github.Object.RepositoryInvitationRepository
 owner object =
     Object.selectionField "owner" [] object identity
 

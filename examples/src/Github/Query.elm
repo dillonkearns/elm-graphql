@@ -32,14 +32,14 @@ selection constructor =
   - key - The code of conduct's key
 
 -}
-codeOfConduct : { key : String } -> SelectionSet selection Github.Object.CodeOfConduct -> Field (Maybe selection) RootQuery
+codeOfConduct : { key : String } -> SelectionSet decodesTo Github.Object.CodeOfConduct -> Field (Maybe decodesTo) RootQuery
 codeOfConduct requiredArgs object =
     Object.selectionField "codeOfConduct" [ Argument.required "key" requiredArgs.key Encode.string ] object (identity >> Decode.maybe)
 
 
 {-| Look up a code of conduct by its key
 -}
-codesOfConduct : SelectionSet selection Github.Object.CodeOfConduct -> Field (Maybe (List (Maybe selection))) RootQuery
+codesOfConduct : SelectionSet decodesTo Github.Object.CodeOfConduct -> Field (Maybe (List (Maybe decodesTo))) RootQuery
 codesOfConduct object =
     Object.selectionField "codesOfConduct" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
@@ -49,14 +49,14 @@ codesOfConduct object =
   - key - The license's downcased SPDX ID
 
 -}
-license : { key : String } -> SelectionSet selection Github.Object.License -> Field (Maybe selection) RootQuery
+license : { key : String } -> SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) RootQuery
 license requiredArgs object =
     Object.selectionField "license" [ Argument.required "key" requiredArgs.key Encode.string ] object (identity >> Decode.maybe)
 
 
 {-| Return a list of known open source licenses
 -}
-licenses : SelectionSet selection Github.Object.License -> Field (List (Maybe selection)) RootQuery
+licenses : SelectionSet decodesTo Github.Object.License -> Field (List (Maybe decodesTo)) RootQuery
 licenses object =
     Object.selectionField "licenses" [] object (identity >> Decode.maybe >> Decode.list)
 
@@ -66,7 +66,7 @@ licenses object =
   - excludeEmpty - Exclude categories with no listings.
 
 -}
-marketplaceCategories : ({ excludeEmpty : OptionalArgument Bool } -> { excludeEmpty : OptionalArgument Bool }) -> SelectionSet selection Github.Object.MarketplaceCategory -> Field (List selection) RootQuery
+marketplaceCategories : ({ excludeEmpty : OptionalArgument Bool } -> { excludeEmpty : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (List decodesTo) RootQuery
 marketplaceCategories fillInOptionals object =
     let
         filledInOptionals =
@@ -84,7 +84,7 @@ marketplaceCategories fillInOptionals object =
   - slug - The URL slug of the category.
 
 -}
-marketplaceCategory : { slug : String } -> SelectionSet selection Github.Object.MarketplaceCategory -> Field (Maybe selection) RootQuery
+marketplaceCategory : { slug : String } -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (Maybe decodesTo) RootQuery
 marketplaceCategory requiredArgs object =
     Object.selectionField "marketplaceCategory" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.maybe)
 
@@ -94,7 +94,7 @@ marketplaceCategory requiredArgs object =
   - slug - Select the listing that matches this slug. It's the short name of the listing used in its URL.
 
 -}
-marketplaceListing : { slug : String } -> SelectionSet selection Github.Object.MarketplaceListing -> Field (Maybe selection) RootQuery
+marketplaceListing : { slug : String } -> SelectionSet decodesTo Github.Object.MarketplaceListing -> Field (Maybe decodesTo) RootQuery
 marketplaceListing requiredArgs object =
     Object.selectionField "marketplaceListing" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.maybe)
 
@@ -128,7 +128,7 @@ marketplaceListing requiredArgs object =
   - withFreeTrialsOnly - Select only listings that offer a free trial.
 
 -}
-marketplaceListings : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool }) -> SelectionSet selection Github.Object.MarketplaceListingConnection -> Field selection RootQuery
+marketplaceListings : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.MarketplaceListingConnection -> Field decodesTo RootQuery
 marketplaceListings fillInOptionals object =
     let
         filledInOptionals =
@@ -143,7 +143,7 @@ marketplaceListings fillInOptionals object =
 
 {-| Return information about the GitHub instance
 -}
-meta : SelectionSet selection Github.Object.GitHubMetadata -> Field selection RootQuery
+meta : SelectionSet decodesTo Github.Object.GitHubMetadata -> Field decodesTo RootQuery
 meta object =
     Object.selectionField "meta" [] object identity
 
@@ -153,7 +153,7 @@ meta object =
   - id - ID of the object.
 
 -}
-node : { id : Github.Scalar.Id } -> SelectionSet selection Github.Interface.Node -> Field (Maybe selection) RootQuery
+node : { id : Github.Scalar.Id } -> SelectionSet decodesTo Github.Interface.Node -> Field (Maybe decodesTo) RootQuery
 node requiredArgs object =
     Object.selectionField "node" [ Argument.required "id" requiredArgs.id (\(Github.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
@@ -163,7 +163,7 @@ node requiredArgs object =
   - ids - The list of node IDs.
 
 -}
-nodes : { ids : List Github.Scalar.Id } -> SelectionSet selection Github.Interface.Node -> Field (List (Maybe selection)) RootQuery
+nodes : { ids : List Github.Scalar.Id } -> SelectionSet decodesTo Github.Interface.Node -> Field (List (Maybe decodesTo)) RootQuery
 nodes requiredArgs object =
     Object.selectionField "nodes" [ Argument.required "ids" requiredArgs.ids ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) ] object (identity >> Decode.maybe >> Decode.list)
 
@@ -173,7 +173,7 @@ nodes requiredArgs object =
   - login - The organization's login.
 
 -}
-organization : { login : String } -> SelectionSet selection Github.Object.Organization -> Field (Maybe selection) RootQuery
+organization : { login : String } -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) RootQuery
 organization requiredArgs object =
     Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.maybe)
 
@@ -183,7 +183,7 @@ organization requiredArgs object =
   - dryRun - If true, calculate the cost for the query without evaluating it
 
 -}
-rateLimit : ({ dryRun : OptionalArgument Bool } -> { dryRun : OptionalArgument Bool }) -> SelectionSet selection Github.Object.RateLimit -> Field (Maybe selection) RootQuery
+rateLimit : ({ dryRun : OptionalArgument Bool } -> { dryRun : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.RateLimit -> Field (Maybe decodesTo) RootQuery
 rateLimit fillInOptionals object =
     let
         filledInOptionals =
@@ -198,7 +198,7 @@ rateLimit fillInOptionals object =
 
 {-| Hack to workaround <https://github.com/facebook/relay/issues/112> re-exposing the root query object
 -}
-relay : SelectionSet selection RootQuery -> Field selection RootQuery
+relay : SelectionSet decodesTo RootQuery -> Field decodesTo RootQuery
 relay object =
     Object.selectionField "relay" [] object identity
 
@@ -209,7 +209,7 @@ relay object =
   - name - The name of the repository
 
 -}
-repository : { owner : String, name : String } -> SelectionSet selection Github.Object.Repository -> Field (Maybe selection) RootQuery
+repository : { owner : String, name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) RootQuery
 repository requiredArgs object =
     Object.selectionField "repository" [ Argument.required "owner" requiredArgs.owner Encode.string, Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
@@ -219,7 +219,7 @@ repository requiredArgs object =
   - login - The username to lookup the owner by.
 
 -}
-repositoryOwner : { login : String } -> SelectionSet selection Github.Interface.RepositoryOwner -> Field (Maybe selection) RootQuery
+repositoryOwner : { login : String } -> SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) RootQuery
 repositoryOwner requiredArgs object =
     Object.selectionField "repositoryOwner" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.maybe)
 
@@ -229,7 +229,7 @@ repositoryOwner requiredArgs object =
   - url - The URL.
 
 -}
-resource : { url : Github.Scalar.Uri } -> SelectionSet selection Github.Interface.UniformResourceLocatable -> Field (Maybe selection) RootQuery
+resource : { url : Github.Scalar.Uri } -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable -> Field (Maybe decodesTo) RootQuery
 resource requiredArgs object =
     Object.selectionField "resource" [ Argument.required "url" requiredArgs.url (\(Github.Scalar.Uri raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
@@ -244,7 +244,7 @@ resource requiredArgs object =
   - type_ - The types of search items to search within.
 
 -}
-search : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> { query : String, type_ : Github.Enum.SearchType.SearchType } -> SelectionSet selection Github.Object.SearchResultItemConnection -> Field selection RootQuery
+search : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> { query : String, type_ : Github.Enum.SearchType.SearchType } -> SelectionSet decodesTo Github.Object.SearchResultItemConnection -> Field decodesTo RootQuery
 search fillInOptionals requiredArgs object =
     let
         filledInOptionals =
@@ -262,7 +262,7 @@ search fillInOptionals requiredArgs object =
   - name - The topic's name.
 
 -}
-topic : { name : String } -> SelectionSet selection Github.Object.Topic -> Field (Maybe selection) RootQuery
+topic : { name : String } -> SelectionSet decodesTo Github.Object.Topic -> Field (Maybe decodesTo) RootQuery
 topic requiredArgs object =
     Object.selectionField "topic" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
@@ -272,13 +272,13 @@ topic requiredArgs object =
   - login - The user's login.
 
 -}
-user : { login : String } -> SelectionSet selection Github.Object.User -> Field (Maybe selection) RootQuery
+user : { login : String } -> SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) RootQuery
 user requiredArgs object =
     Object.selectionField "user" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.maybe)
 
 
 {-| The currently authenticated user.
 -}
-viewer : SelectionSet selection Github.Object.User -> Field selection RootQuery
+viewer : SelectionSet decodesTo Github.Object.User -> Field decodesTo RootQuery
 viewer object =
     Object.selectionField "viewer" [] object identity

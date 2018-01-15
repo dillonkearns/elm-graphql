@@ -32,27 +32,27 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onCommit : SelectionSet selection Github.Object.Commit -> FragmentSelectionSet selection Github.Interface.Subscribable
+onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
 onCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "Commit" fields decoder
 
 
-onIssue : SelectionSet selection Github.Object.Issue -> FragmentSelectionSet selection Github.Interface.Subscribable
+onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder
 
 
-onPullRequest : SelectionSet selection Github.Object.PullRequest -> FragmentSelectionSet selection Github.Interface.Subscribable
+onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
 onPullRequest (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequest" fields decoder
 
 
-onRepository : SelectionSet selection Github.Object.Repository -> FragmentSelectionSet selection Github.Interface.Subscribable
+onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
 onRepository (SelectionSet fields decoder) =
     FragmentSelectionSet "Repository" fields decoder
 
 
-onTeam : SelectionSet selection Github.Object.Team -> FragmentSelectionSet selection Github.Interface.Subscribable
+onTeam : SelectionSet decodesTo Github.Object.Team -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
 onTeam (SelectionSet fields decoder) =
     FragmentSelectionSet "Team" fields decoder
 

@@ -33,13 +33,13 @@ clientMutationId =
 
 {-| The pull request that is getting requests.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.RequestReviewsPayload
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.RequestReviewsPayload
 pullRequest object =
     Object.selectionField "pullRequest" [] object identity
 
 
 {-| The edge from the pull request to the requested reviewers.
 -}
-requestedReviewersEdge : SelectionSet selection Github.Object.UserEdge -> Field selection Github.Object.RequestReviewsPayload
+requestedReviewersEdge : SelectionSet decodesTo Github.Object.UserEdge -> Field decodesTo Github.Object.RequestReviewsPayload
 requestedReviewersEdge object =
     Object.selectionField "requestedReviewersEdge" [] object identity

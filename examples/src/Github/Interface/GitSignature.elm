@@ -32,17 +32,17 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
-onGpgSignature : SelectionSet selection Github.Object.GpgSignature -> FragmentSelectionSet selection Github.Interface.GitSignature
+onGpgSignature : SelectionSet decodesTo Github.Object.GpgSignature -> FragmentSelectionSet decodesTo Github.Interface.GitSignature
 onGpgSignature (SelectionSet fields decoder) =
     FragmentSelectionSet "GpgSignature" fields decoder
 
 
-onSmimeSignature : SelectionSet selection Github.Object.SmimeSignature -> FragmentSelectionSet selection Github.Interface.GitSignature
+onSmimeSignature : SelectionSet decodesTo Github.Object.SmimeSignature -> FragmentSelectionSet decodesTo Github.Interface.GitSignature
 onSmimeSignature (SelectionSet fields decoder) =
     FragmentSelectionSet "SmimeSignature" fields decoder
 
 
-onUnknownSignature : SelectionSet selection Github.Object.UnknownSignature -> FragmentSelectionSet selection Github.Interface.GitSignature
+onUnknownSignature : SelectionSet decodesTo Github.Object.UnknownSignature -> FragmentSelectionSet decodesTo Github.Interface.GitSignature
 onUnknownSignature (SelectionSet fields decoder) =
     FragmentSelectionSet "UnknownSignature" fields decoder
 
@@ -77,7 +77,7 @@ signature =
 
 {-| GitHub user corresponding to the email signing this commit.
 -}
-signer : SelectionSet selection Github.Object.User -> Field (Maybe selection) Github.Interface.GitSignature
+signer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Interface.GitSignature
 signer object =
     Object.selectionField "signer" [] object (identity >> Decode.maybe)
 

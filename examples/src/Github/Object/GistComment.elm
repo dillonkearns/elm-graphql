@@ -28,7 +28,7 @@ selection constructor =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.GistComment
+author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
 author object =
     Object.selectionField "author" [] object (identity >> Decode.maybe)
 
@@ -70,14 +70,14 @@ createdViaEmail =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.GistComment
+editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
 editor object =
     Object.selectionField "editor" [] object (identity >> Decode.maybe)
 
 
 {-| The associated gist.
 -}
-gist : SelectionSet selection Github.Object.Gist -> Field selection Github.Object.GistComment
+gist : SelectionSet decodesTo Github.Object.Gist -> Field decodesTo Github.Object.GistComment
 gist object =
     Object.selectionField "gist" [] object identity
 

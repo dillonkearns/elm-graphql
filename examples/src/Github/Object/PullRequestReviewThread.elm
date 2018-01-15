@@ -32,7 +32,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestReviewCommentConnection -> Field selection Github.Object.PullRequestReviewThread
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection -> Field decodesTo Github.Object.PullRequestReviewThread
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -52,13 +52,13 @@ id =
 
 {-| Identifies the pull request associated with this thread.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.PullRequestReviewThread
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestReviewThread
 pullRequest object =
     Object.selectionField "pullRequest" [] object identity
 
 
 {-| Identifies the repository associated with this thread.
 -}
-repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.PullRequestReviewThread
+repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.PullRequestReviewThread
 repository object =
     Object.selectionField "repository" [] object identity

@@ -26,7 +26,7 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.CrossReferencedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.CrossReferencedEvent
 actor object =
     Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
@@ -66,14 +66,14 @@ resourcePath =
 
 {-| Issue or pull request that made the reference.
 -}
-source : SelectionSet selection Github.Union.ReferencedSubject -> Field selection Github.Object.CrossReferencedEvent
+source : SelectionSet decodesTo Github.Union.ReferencedSubject -> Field decodesTo Github.Object.CrossReferencedEvent
 source object =
     Object.selectionField "source" [] object identity
 
 
 {-| Issue or pull request to which the reference was made.
 -}
-target : SelectionSet selection Github.Union.ReferencedSubject -> Field selection Github.Object.CrossReferencedEvent
+target : SelectionSet decodesTo Github.Union.ReferencedSubject -> Field decodesTo Github.Object.CrossReferencedEvent
 target object =
     Object.selectionField "target" [] object identity
 

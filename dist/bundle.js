@@ -11545,11 +11545,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon = F3(
 								A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p3._0),
 								')'));
 					case 'ObjectRef':
-						return 'selection';
+						return 'decodesTo';
 					case 'InterfaceRef':
-						return 'selection';
+						return 'decodesTo';
 					case 'UnionRef':
-						return 'selection';
+						return 'decodesTo';
 					case 'EnumRef':
 						return A2(
 							_elm_lang$core$String$join,
@@ -12501,7 +12501,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 		}();
 		var objectArgAnnotation = A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'SelectionSet selection {0}',
+			'SelectionSet decodesTo {0}',
 			{
 				ctor: '::',
 				_0: typeLock,
@@ -13067,7 +13067,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragment = F3(
 	function (context, moduleName, interfaceImplementor) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'on{0} : SelectionSet selection {2} -> FragmentSelectionSet selection {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
+			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
 			{
 				ctor: '::',
 				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(interfaceImplementor),
@@ -13484,7 +13484,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Union$fragment = F3(
 	function (context, moduleName, interfaceImplementor) {
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'on{0} : SelectionSet selection {2} -> FragmentSelectionSet selection {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
+			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
 			{
 				ctor: '::',
 				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(interfaceImplementor),

@@ -26,21 +26,21 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.IssueCommentEdge -> Field (Maybe (List (Maybe selection))) Github.Object.IssueCommentConnection
+edges : SelectionSet decodesTo Github.Object.IssueCommentEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.IssueCommentConnection
 edges object =
     Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.IssueComment -> Field (Maybe (List (Maybe selection))) Github.Object.IssueCommentConnection
+nodes : SelectionSet decodesTo Github.Object.IssueComment -> Field (Maybe (List (Maybe decodesTo))) Github.Object.IssueCommentConnection
 nodes object =
     Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.IssueCommentConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.IssueCommentConnection
 pageInfo object =
     Object.selectionField "pageInfo" [] object identity
 

@@ -33,7 +33,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.GistCommentConnection -> Field selection Github.Object.Gist
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> Field decodesTo Github.Object.Gist
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -81,7 +81,7 @@ name =
 
 {-| The gist owner.
 -}
-owner : SelectionSet selection Github.Interface.RepositoryOwner -> Field (Maybe selection) Github.Object.Gist
+owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) Github.Object.Gist
 owner object =
     Object.selectionField "owner" [] object (identity >> Decode.maybe)
 
@@ -102,7 +102,7 @@ pushedAt =
   - orderBy - Order for connection
 
 -}
-stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder }) -> SelectionSet selection Github.Object.StargazerConnection -> Field selection Github.Object.Gist
+stargazers : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder.StarOrder }) -> SelectionSet decodesTo Github.Object.StargazerConnection -> Field decodesTo Github.Object.Gist
 stargazers fillInOptionals object =
     let
         filledInOptionals =
