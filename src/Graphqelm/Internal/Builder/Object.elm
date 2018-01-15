@@ -9,7 +9,7 @@ Internal functions for use by auto-generated code from the `graphqelm` CLI.
 -}
 
 import Dict
-import Graphqelm.Field exposing (Field)
+import Graphqelm.RawField exposing (RawField)
 import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecoder))
 import Graphqelm.Internal.Builder.Argument exposing (Argument)
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(..))
@@ -35,14 +35,14 @@ selectionFieldDecoder fieldName args (SelectionSet fields decoder) decoderTransf
     FieldDecoder (composite fieldName args fields) (decoderTransform decoder)
 
 
-composite : String -> List Argument -> List Field -> Field
+composite : String -> List Argument -> List RawField -> RawField
 composite fieldName args fields =
-    Graphqelm.Field.Composite fieldName args fields
+    Graphqelm.RawField.Composite fieldName args fields
 
 
-leaf : String -> List Argument -> Field
+leaf : String -> List Argument -> RawField
 leaf fieldName args =
-    Graphqelm.Field.Leaf fieldName args
+    Graphqelm.RawField.Leaf fieldName args
 
 
 {-| Used to create the `selection` functions in auto-generated code.

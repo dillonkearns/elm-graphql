@@ -10,7 +10,7 @@ are helpful for debugging and demo purposes.
 
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
 import Graphqelm.Document.Field as Field
-import Graphqelm.Field exposing (Field)
+import Graphqelm.RawField exposing (RawField)
 import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
 import Interpolate exposing (interpolate)
 
@@ -29,7 +29,7 @@ serializeMutation (SelectionSet fields decoder) =
     serialize "mutation" fields
 
 
-serialize : String -> List Field -> String
+serialize : String -> List RawField -> String
 serialize operationName queries =
     interpolate """{0} {
 {1}

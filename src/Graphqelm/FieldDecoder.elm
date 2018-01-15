@@ -5,13 +5,13 @@ You can use `Graphqelm.FieldDecoder.map` to transform a value.
 @docs map, FieldDecoder
 -}
 
-import Graphqelm.Field as Field exposing (Field)
+import Graphqelm.RawField as Field exposing (RawField)
 import Json.Decode as Decode exposing (Decoder)
 
 
 {-| -}
 type FieldDecoder decodesTo typeLock
-    = FieldDecoder Field (Decoder decodesTo)
+    = FieldDecoder RawField (Decoder decodesTo)
 
 
 {-| Maps the data coming back from the GraphQL endpoint. In this example,

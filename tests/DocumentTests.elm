@@ -2,14 +2,14 @@ module DocumentTests exposing (all)
 
 import Expect
 import Graphqelm.Document
-import Graphqelm.Field exposing (Field(Composite, Leaf))
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
+import Graphqelm.RawField exposing (RawField(Composite, Leaf))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(SelectionSet))
 import Json.Decode as Decode
 import Test exposing (Test, describe, test)
 
 
-document : List Field -> SelectionSet () RootQuery
+document : List RawField -> SelectionSet () RootQuery
 document fields =
     SelectionSet fields (Decode.fail "")
 

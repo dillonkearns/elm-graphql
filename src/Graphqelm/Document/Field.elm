@@ -2,21 +2,21 @@ module Graphqelm.Document.Field exposing (serialize, serializeChildren)
 
 import Graphqelm.Document.Argument as Argument
 import Graphqelm.Document.Indent as Indent
-import Graphqelm.Field exposing (Field(Composite, Leaf))
+import Graphqelm.RawField exposing (RawField(Composite, Leaf))
 import List.Extra
 
 
-alias : Int -> List Field -> Field -> Maybe String
+alias : Int -> List RawField -> RawField -> Maybe String
 alias fieldIndex fields field =
     let
         fieldName =
-            Graphqelm.Field.name field
+            Graphqelm.RawField.name field
 
         indices =
             fields
                 |> List.Extra.findIndices
                     (\currentField ->
-                        Graphqelm.Field.name currentField
+                        Graphqelm.RawField.name currentField
                             == fieldName
                     )
                 |> List.filter (\index -> index < fieldIndex)
@@ -27,7 +27,7 @@ alias fieldIndex fields field =
         Just (fieldName ++ toString (List.length indices + 1))
 
 
-serialize : Maybe String -> Int -> Field -> Maybe String
+serialize : Maybe String -> Int -> RawField -> Maybe String
 serialize alias indentationLevel field =
     let
         prefix =
@@ -64,7 +64,7 @@ serialize alias indentationLevel field =
             )
 
 
-serializeChildren : Int -> List Field -> String
+serializeChildren : Int -> List RawField -> String
 serializeChildren indentationLevel children =
     children
         |> List.indexedMap
