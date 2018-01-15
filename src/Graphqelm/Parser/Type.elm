@@ -67,7 +67,7 @@ inputObjectDecoder : Decoder TypeDefinition
 inputObjectDecoder =
     Decode.map2 createInputObject
         (Decode.field "name" Decode.string)
-        (inputFieldDecoder
+        (inputField
             |> Decode.map parseField
             |> Decode.list
             |> Decode.field "inputFields"
@@ -191,8 +191,8 @@ fieldDecoder =
         (argDecoder |> Decode.list |> Decode.field "args")
 
 
-inputFieldDecoder : Decoder RawField
-inputFieldDecoder =
+inputField : Decoder RawField
+inputField =
     Decode.map4 RawField
         (Decode.field "name" Decode.string)
         (Decode.field "description" (Decode.maybe Decode.string))

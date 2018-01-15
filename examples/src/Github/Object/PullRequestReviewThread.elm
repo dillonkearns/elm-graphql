@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -32,7 +32,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestReviewCommentConnection -> FieldDecoder selection Github.Object.PullRequestReviewThread
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.PullRequestReviewCommentConnection -> Field selection Github.Object.PullRequestReviewThread
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -42,23 +42,23 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "comments" optionalArgs object identity
+    Object.selectionField "comments" optionalArgs object identity
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.PullRequestReviewThread
+id : Field Github.Scalar.Id Github.Object.PullRequestReviewThread
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this thread.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.PullRequestReviewThread
+pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.PullRequestReviewThread
 pullRequest object =
-    Object.selectionFieldDecoder "pullRequest" [] object identity
+    Object.selectionField "pullRequest" [] object identity
 
 
 {-| Identifies the repository associated with this thread.
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.PullRequestReviewThread
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.PullRequestReviewThread
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity

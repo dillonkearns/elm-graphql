@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,32 +26,32 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.MilestonedEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.MilestonedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.MilestonedEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.MilestonedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.MilestonedEvent
+id : Field Github.Scalar.Id Github.Object.MilestonedEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the milestone title associated with the 'milestoned' event.
 -}
-milestoneTitle : FieldDecoder String Github.Object.MilestonedEvent
+milestoneTitle : Field String Github.Object.MilestonedEvent
 milestoneTitle =
     Object.fieldDecoder "milestoneTitle" [] Decode.string
 
 
 {-| Object referenced by event.
 -}
-subject : SelectionSet selection Github.Union.MilestoneItem -> FieldDecoder selection Github.Object.MilestonedEvent
+subject : SelectionSet selection Github.Union.MilestoneItem -> Field selection Github.Object.MilestonedEvent
 subject object =
-    Object.selectionFieldDecoder "subject" [] object identity
+    Object.selectionField "subject" [] object identity

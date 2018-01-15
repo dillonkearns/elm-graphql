@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -57,20 +57,20 @@ onTeam (SelectionSet fields decoder) =
     FragmentSelectionSet "Team" fields decoder
 
 
-id : FieldDecoder Github.Scalar.Id Github.Interface.Subscribable
+id : Field Github.Scalar.Id Github.Interface.Subscribable
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : FieldDecoder Bool Github.Interface.Subscribable
+viewerCanSubscribe : Field Bool Github.Interface.Subscribable
 viewerCanSubscribe =
     Object.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : FieldDecoder Github.Enum.SubscriptionState.SubscriptionState Github.Interface.Subscribable
+viewerSubscription : Field Github.Enum.SubscriptionState.SubscriptionState Github.Interface.Subscribable
 viewerSubscription =
     Object.fieldDecoder "viewerSubscription" [] Github.Enum.SubscriptionState.decoder

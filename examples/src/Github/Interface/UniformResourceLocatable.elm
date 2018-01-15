@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -98,13 +98,13 @@ onUser (SelectionSet fields decoder) =
 
 {-| The HTML path to this resource.
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.UniformResourceLocatable
+resourcePath : Field Github.Scalar.Uri Github.Interface.UniformResourceLocatable
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The URL to this resource.
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Interface.UniformResourceLocatable
+url : Field Github.Scalar.Uri Github.Interface.UniformResourceLocatable
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

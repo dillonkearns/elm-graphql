@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,27 +26,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.PullRequestReviewEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.PullRequestReviewConnection
+edges : SelectionSet selection Github.Object.PullRequestReviewEdge -> Field (Maybe (List (Maybe selection))) Github.Object.PullRequestReviewConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.PullRequestReview -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.PullRequestReviewConnection
+nodes : SelectionSet selection Github.Object.PullRequestReview -> Field (Maybe (List (Maybe selection))) Github.Object.PullRequestReviewConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.PullRequestReviewConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.PullRequestReviewConnection
 pageInfo object =
-    Object.selectionFieldDecoder "pageInfo" [] object identity
+    Object.selectionField "pageInfo" [] object identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : FieldDecoder Int Github.Object.PullRequestReviewConnection
+totalCount : Field Int Github.Object.PullRequestReviewConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,53 +26,53 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ReferencedEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.ReferencedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the commit associated with the 'referenced' event.
 -}
-commit : SelectionSet selection Github.Object.Commit -> FieldDecoder (Maybe selection) Github.Object.ReferencedEvent
+commit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.ReferencedEvent
 commit object =
-    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the repository associated with the 'referenced' event.
 -}
-commitRepository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.ReferencedEvent
+commitRepository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.ReferencedEvent
 commitRepository object =
-    Object.selectionFieldDecoder "commitRepository" [] object identity
+    Object.selectionField "commitRepository" [] object identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ReferencedEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.ReferencedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.ReferencedEvent
+id : Field Github.Scalar.Id Github.Object.ReferencedEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Reference originated in a different repository.
 -}
-isCrossRepository : FieldDecoder Bool Github.Object.ReferencedEvent
+isCrossRepository : Field Bool Github.Object.ReferencedEvent
 isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
 {-| Checks if the commit message itself references the subject. Can be false in the case of a commit comment reference.
 -}
-isDirectReference : FieldDecoder Bool Github.Object.ReferencedEvent
+isDirectReference : Field Bool Github.Object.ReferencedEvent
 isDirectReference =
     Object.fieldDecoder "isDirectReference" [] Decode.bool
 
 
 {-| Object referenced by event.
 -}
-subject : SelectionSet selection Github.Union.ReferencedSubject -> FieldDecoder selection Github.Object.ReferencedEvent
+subject : SelectionSet selection Github.Union.ReferencedSubject -> Field selection Github.Object.ReferencedEvent
 subject object =
-    Object.selectionFieldDecoder "subject" [] object identity
+    Object.selectionField "subject" [] object identity

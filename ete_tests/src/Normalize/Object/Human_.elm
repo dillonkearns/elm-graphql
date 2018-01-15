@@ -4,7 +4,7 @@
 
 module Normalize.Object.Human_ exposing (..)
 
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -27,34 +27,34 @@ selection constructor =
 
 {-| Which movies they appear in.
 -}
-appearsIn : FieldDecoder (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Human_
+appearsIn : Field (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Human_
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet selection Normalize.Interface.Character -> FieldDecoder (List selection) Normalize.Object.Human_
+friends : SelectionSet selection Normalize.Interface.Character -> Field (List selection) Normalize.Object.Human_
 friends object =
-    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
+    Object.selectionField "friends" [] object (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.
 -}
-homePlanet : FieldDecoder (Maybe String) Normalize.Object.Human_
+homePlanet : Field (Maybe String) Normalize.Object.Human_
 homePlanet =
     Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.maybe)
 
 
 {-| The ID of the human.
 -}
-id : FieldDecoder Normalize.Scalar.Id Normalize.Object.Human_
+id : Field Normalize.Scalar.Id Normalize.Object.Human_
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the human.
 -}
-name : FieldDecoder String Normalize.Object.Human_
+name : Field String Normalize.Object.Human_
 name =
     Object.fieldDecoder "name" [] Decode.string

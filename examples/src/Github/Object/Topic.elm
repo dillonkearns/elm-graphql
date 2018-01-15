@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -24,14 +24,14 @@ selection constructor =
     Object.selection constructor
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Topic
+id : Field Github.Scalar.Id Github.Object.Topic
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The topic's name.
 -}
-name : FieldDecoder String Github.Object.Topic
+name : Field String Github.Object.Topic
 name =
     Object.fieldDecoder "name" [] Decode.string
 
@@ -39,6 +39,6 @@ name =
 {-| A list of related topics, including aliases of this topic, sorted with the most relevant
 first.
 -}
-relatedTopics : SelectionSet selection Github.Object.Topic -> FieldDecoder (List selection) Github.Object.Topic
+relatedTopics : SelectionSet selection Github.Object.Topic -> Field (List selection) Github.Object.Topic
 relatedTopics object =
-    Object.selectionFieldDecoder "relatedTopics" [] object (identity >> Decode.list)
+    Object.selectionField "relatedTopics" [] object (identity >> Decode.list)

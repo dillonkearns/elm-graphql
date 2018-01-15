@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,67 +26,67 @@ selection constructor =
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : FieldDecoder String Github.Object.Blob
+abbreviatedOid : Field String Github.Object.Blob
 abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
 {-| Byte size of Blob object
 -}
-byteSize : FieldDecoder Int Github.Object.Blob
+byteSize : Field Int Github.Object.Blob
 byteSize =
     Object.fieldDecoder "byteSize" [] Decode.int
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Blob
+commitResourcePath : Field Github.Scalar.Uri Github.Object.Blob
 commitResourcePath =
     Object.fieldDecoder "commitResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : FieldDecoder Github.Scalar.Uri Github.Object.Blob
+commitUrl : Field Github.Scalar.Uri Github.Object.Blob
 commitUrl =
     Object.fieldDecoder "commitUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Blob
+id : Field Github.Scalar.Id Github.Object.Blob
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates whether the Blob is binary or text
 -}
-isBinary : FieldDecoder Bool Github.Object.Blob
+isBinary : Field Bool Github.Object.Blob
 isBinary =
     Object.fieldDecoder "isBinary" [] Decode.bool
 
 
 {-| Indicates whether the contents is truncated
 -}
-isTruncated : FieldDecoder Bool Github.Object.Blob
+isTruncated : Field Bool Github.Object.Blob
 isTruncated =
     Object.fieldDecoder "isTruncated" [] Decode.bool
 
 
 {-| The Git object ID
 -}
-oid : FieldDecoder Github.Scalar.GitObjectID Github.Object.Blob
+oid : Field Github.Scalar.GitObjectID Github.Object.Blob
 oid =
     Object.fieldDecoder "oid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.Blob
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Blob
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity
 
 
 {-| UTF8 text data or null if the Blob is binary
 -}
-text : FieldDecoder (Maybe String) Github.Object.Blob
+text : Field (Maybe String) Github.Object.Blob
 text =
     Object.fieldDecoder "text" [] (Decode.string |> Decode.maybe)

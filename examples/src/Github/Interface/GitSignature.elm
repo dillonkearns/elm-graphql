@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -49,41 +49,41 @@ onUnknownSignature (SelectionSet fields decoder) =
 
 {-| Email used to sign this object.
 -}
-email : FieldDecoder String Github.Interface.GitSignature
+email : Field String Github.Interface.GitSignature
 email =
     Object.fieldDecoder "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
-isValid : FieldDecoder Bool Github.Interface.GitSignature
+isValid : Field Bool Github.Interface.GitSignature
 isValid =
     Object.fieldDecoder "isValid" [] Decode.bool
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
-payload : FieldDecoder String Github.Interface.GitSignature
+payload : Field String Github.Interface.GitSignature
 payload =
     Object.fieldDecoder "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
-signature : FieldDecoder String Github.Interface.GitSignature
+signature : Field String Github.Interface.GitSignature
 signature =
     Object.fieldDecoder "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
 -}
-signer : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Interface.GitSignature
+signer : SelectionSet selection Github.Object.User -> Field (Maybe selection) Github.Interface.GitSignature
 signer object =
-    Object.selectionFieldDecoder "signer" [] object (identity >> Decode.maybe)
+    Object.selectionField "signer" [] object (identity >> Decode.maybe)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.
 -}
-state : FieldDecoder Github.Enum.GitSignatureState.GitSignatureState Github.Interface.GitSignature
+state : Field Github.Enum.GitSignatureState.GitSignatureState Github.Interface.GitSignature
 state =
     Object.fieldDecoder "state" [] Github.Enum.GitSignatureState.decoder

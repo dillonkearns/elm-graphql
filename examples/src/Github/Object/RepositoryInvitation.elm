@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -24,27 +24,27 @@ selection constructor =
     Object.selection constructor
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.RepositoryInvitation
+id : Field Github.Scalar.Id Github.Object.RepositoryInvitation
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The user who received the invitation.
 -}
-invitee : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.RepositoryInvitation
+invitee : SelectionSet selection Github.Object.User -> Field selection Github.Object.RepositoryInvitation
 invitee object =
-    Object.selectionFieldDecoder "invitee" [] object identity
+    Object.selectionField "invitee" [] object identity
 
 
 {-| The user who created the invitation.
 -}
-inviter : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.RepositoryInvitation
+inviter : SelectionSet selection Github.Object.User -> Field selection Github.Object.RepositoryInvitation
 inviter object =
-    Object.selectionFieldDecoder "inviter" [] object identity
+    Object.selectionField "inviter" [] object identity
 
 
 {-| The Repository the user is invited to.
 -}
-repository : SelectionSet selection Github.Object.RepositoryInvitationRepository -> FieldDecoder (Maybe selection) Github.Object.RepositoryInvitation
+repository : SelectionSet selection Github.Object.RepositoryInvitationRepository -> Field (Maybe selection) Github.Object.RepositoryInvitation
 repository object =
-    Object.selectionFieldDecoder "repository" [] object (identity >> Decode.maybe)
+    Object.selectionField "repository" [] object (identity >> Decode.maybe)

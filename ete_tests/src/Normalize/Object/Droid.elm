@@ -4,7 +4,7 @@
 
 module Normalize.Object.Droid exposing (..)
 
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -27,34 +27,34 @@ selection constructor =
 
 {-| Which movies they appear in.
 -}
-appearsIn : FieldDecoder (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
+appearsIn : Field (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet selection Normalize.Interface.Character -> FieldDecoder (List selection) Normalize.Object.Droid
+friends : SelectionSet selection Normalize.Interface.Character -> Field (List selection) Normalize.Object.Droid
 friends object =
-    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
+    Object.selectionField "friends" [] object (identity >> Decode.list)
 
 
 {-| The ID of the droid.
 -}
-id : FieldDecoder Normalize.Scalar.Id Normalize.Object.Droid
+id : Field Normalize.Scalar.Id Normalize.Object.Droid
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the droid.
 -}
-name : FieldDecoder String Normalize.Object.Droid
+name : Field String Normalize.Object.Droid
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The primary function of the droid.
 -}
-primaryFunction : FieldDecoder (Maybe String) Normalize.Object.Droid
+primaryFunction : Field (Maybe String) Normalize.Object.Droid
 primaryFunction =
     Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.maybe)

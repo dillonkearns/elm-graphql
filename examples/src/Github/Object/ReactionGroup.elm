@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -27,23 +27,23 @@ selection constructor =
 
 {-| Identifies the emoji reaction.
 -}
-content : FieldDecoder Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup
+content : Field Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup
 content =
     Object.fieldDecoder "content" [] Github.Enum.ReactionContent.decoder
 
 
 {-| Identifies when the reaction was created.
 -}
-createdAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
+createdAt : Field (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| The subject that was reacted to.
 -}
-subject : SelectionSet selection Github.Interface.Reactable -> FieldDecoder selection Github.Object.ReactionGroup
+subject : SelectionSet selection Github.Interface.Reactable -> Field selection Github.Object.ReactionGroup
 subject object =
-    Object.selectionFieldDecoder "subject" [] object identity
+    Object.selectionField "subject" [] object identity
 
 
 {-| Users who have reacted to the reaction subject with the emotion represented by this reaction group
@@ -54,7 +54,7 @@ subject object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-users : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ReactingUserConnection -> FieldDecoder selection Github.Object.ReactionGroup
+users : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ReactingUserConnection -> Field selection Github.Object.ReactionGroup
 users fillInOptionals object =
     let
         filledInOptionals =
@@ -64,11 +64,11 @@ users fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "users" optionalArgs object identity
+    Object.selectionField "users" optionalArgs object identity
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.
 -}
-viewerHasReacted : FieldDecoder Bool Github.Object.ReactionGroup
+viewerHasReacted : Field Bool Github.Object.ReactionGroup
 viewerHasReacted =
     Object.fieldDecoder "viewerHasReacted" [] Decode.bool

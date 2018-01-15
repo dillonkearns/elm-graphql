@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -69,74 +69,74 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Interface.Comment
+author : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Interface.Comment
 author object =
-    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.maybe)
 
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Interface.Comment
+authorAssociation : Field Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Interface.Comment
 authorAssociation =
     Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| The comment body as Markdown.
 -}
-body : FieldDecoder String Github.Interface.Comment
+body : Field String Github.Interface.Comment
 body =
     Object.fieldDecoder "body" [] Decode.string
 
 
 {-| The comment body rendered to HTML.
 -}
-bodyHTML : FieldDecoder Github.Scalar.Html Github.Interface.Comment
+bodyHTML : Field Github.Scalar.Html Github.Interface.Comment
 bodyHTML =
     Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Interface.Comment
+createdAt : Field Github.Scalar.DateTime Github.Interface.Comment
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : FieldDecoder Bool Github.Interface.Comment
+createdViaEmail : Field Bool Github.Interface.Comment
 createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Interface.Comment
+editor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Interface.Comment
 editor object =
-    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Interface.Comment
+id : Field Github.Scalar.Id Github.Interface.Comment
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Interface.Comment
+lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Comment
 lastEditedAt =
     Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Interface.Comment
+publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Comment
 publishedAt =
     Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : FieldDecoder Bool Github.Interface.Comment
+viewerDidAuthor : Field Bool Github.Interface.Comment
 viewerDidAuthor =
     Object.fieldDecoder "viewerDidAuthor" [] Decode.bool

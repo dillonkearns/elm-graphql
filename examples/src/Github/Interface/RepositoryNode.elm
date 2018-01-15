@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -68,6 +68,6 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Interface.RepositoryNode
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Interface.RepositoryNode
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity

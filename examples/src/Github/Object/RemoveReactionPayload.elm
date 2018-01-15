@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveReactionPayload
+clientMutationId : Field (Maybe String) Github.Object.RemoveReactionPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The reaction object.
 -}
-reaction : SelectionSet selection Github.Object.Reaction -> FieldDecoder selection Github.Object.RemoveReactionPayload
+reaction : SelectionSet selection Github.Object.Reaction -> Field selection Github.Object.RemoveReactionPayload
 reaction object =
-    Object.selectionFieldDecoder "reaction" [] object identity
+    Object.selectionField "reaction" [] object identity
 
 
 {-| The reactable subject.
 -}
-subject : SelectionSet selection Github.Interface.Reactable -> FieldDecoder selection Github.Object.RemoveReactionPayload
+subject : SelectionSet selection Github.Interface.Reactable -> Field selection Github.Object.RemoveReactionPayload
 subject object =
-    Object.selectionFieldDecoder "subject" [] object identity
+    Object.selectionField "subject" [] object identity

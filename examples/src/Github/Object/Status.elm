@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -27,9 +27,9 @@ selection constructor =
 
 {-| The commit this status is attached to.
 -}
-commit : SelectionSet selection Github.Object.Commit -> FieldDecoder (Maybe selection) Github.Object.Status
+commit : SelectionSet selection Github.Object.Commit -> Field (Maybe selection) Github.Object.Status
 commit object =
-    Object.selectionFieldDecoder "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.maybe)
 
 
 {-| Looks up an individual status context by context name.
@@ -37,25 +37,25 @@ commit object =
   - name - The context name.
 
 -}
-context : { name : String } -> SelectionSet selection Github.Object.StatusContext -> FieldDecoder (Maybe selection) Github.Object.Status
+context : { name : String } -> SelectionSet selection Github.Object.StatusContext -> Field (Maybe selection) Github.Object.Status
 context requiredArgs object =
-    Object.selectionFieldDecoder "context" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
 
 
 {-| The individual status contexts for this commit.
 -}
-contexts : SelectionSet selection Github.Object.StatusContext -> FieldDecoder (List selection) Github.Object.Status
+contexts : SelectionSet selection Github.Object.StatusContext -> Field (List selection) Github.Object.Status
 contexts object =
-    Object.selectionFieldDecoder "contexts" [] object (identity >> Decode.list)
+    Object.selectionField "contexts" [] object (identity >> Decode.list)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Status
+id : Field Github.Scalar.Id Github.Object.Status
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The combined commit status.
 -}
-state : FieldDecoder Github.Enum.StatusState.StatusState Github.Object.Status
+state : Field Github.Enum.StatusState.StatusState Github.Object.Status
 state =
     Object.fieldDecoder "state" [] Github.Enum.StatusState.decoder

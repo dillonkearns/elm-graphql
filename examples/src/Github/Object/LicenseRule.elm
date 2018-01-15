@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| A description of the rule
 -}
-description : FieldDecoder String Github.Object.LicenseRule
+description : Field String Github.Object.LicenseRule
 description =
     Object.fieldDecoder "description" [] Decode.string
 
 
 {-| The machine-readable rule key
 -}
-key : FieldDecoder String Github.Object.LicenseRule
+key : Field String Github.Object.LicenseRule
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
 {-| The human-readable rule label
 -}
-label : FieldDecoder String Github.Object.LicenseRule
+label : Field String Github.Object.LicenseRule
 label =
     Object.fieldDecoder "label" [] Decode.string

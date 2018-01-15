@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -24,13 +24,13 @@ selection constructor =
     Object.selection constructor
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.PublicKey
+id : Field Github.Scalar.Id Github.Object.PublicKey
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The public key string
 -}
-key : FieldDecoder String Github.Object.PublicKey
+key : Field String Github.Object.PublicKey
 key =
     Object.fieldDecoder "key" [] Decode.string

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,55 +26,55 @@ selection constructor =
 
 {-| The number of pieces of code that matched the search query.
 -}
-codeCount : FieldDecoder Int Github.Object.SearchResultItemConnection
+codeCount : Field Int Github.Object.SearchResultItemConnection
 codeCount =
     Object.fieldDecoder "codeCount" [] Decode.int
 
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.SearchResultItemEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.SearchResultItemConnection
+edges : SelectionSet selection Github.Object.SearchResultItemEdge -> Field (Maybe (List (Maybe selection))) Github.Object.SearchResultItemConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| The number of issues that matched the search query.
 -}
-issueCount : FieldDecoder Int Github.Object.SearchResultItemConnection
+issueCount : Field Int Github.Object.SearchResultItemConnection
 issueCount =
     Object.fieldDecoder "issueCount" [] Decode.int
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Union.SearchResultItem -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.SearchResultItemConnection
+nodes : SelectionSet selection Github.Union.SearchResultItem -> Field (Maybe (List (Maybe selection))) Github.Object.SearchResultItemConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.SearchResultItemConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.SearchResultItemConnection
 pageInfo object =
-    Object.selectionFieldDecoder "pageInfo" [] object identity
+    Object.selectionField "pageInfo" [] object identity
 
 
 {-| The number of repositories that matched the search query.
 -}
-repositoryCount : FieldDecoder Int Github.Object.SearchResultItemConnection
+repositoryCount : Field Int Github.Object.SearchResultItemConnection
 repositoryCount =
     Object.fieldDecoder "repositoryCount" [] Decode.int
 
 
 {-| The number of users that matched the search query.
 -}
-userCount : FieldDecoder Int Github.Object.SearchResultItemConnection
+userCount : Field Int Github.Object.SearchResultItemConnection
 userCount =
     Object.fieldDecoder "userCount" [] Decode.int
 
 
 {-| The number of wiki pages that matched the search query.
 -}
-wikiCount : FieldDecoder Int Github.Object.SearchResultItemConnection
+wikiCount : Field Int Github.Object.SearchResultItemConnection
 wikiCount =
     Object.fieldDecoder "wikiCount" [] Decode.int

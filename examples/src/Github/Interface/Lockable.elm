@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -44,13 +44,13 @@ onPullRequest (SelectionSet fields decoder) =
 
 {-| Reason that the conversation was locked.
 -}
-activeLockReason : FieldDecoder (Maybe Github.Enum.LockReason.LockReason) Github.Interface.Lockable
+activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Interface.Lockable
 activeLockReason =
     Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
 
 
 {-| `true` if the object is locked
 -}
-locked : FieldDecoder Bool Github.Interface.Lockable
+locked : Field Bool Github.Interface.Lockable
 locked =
     Object.fieldDecoder "locked" [] Decode.bool

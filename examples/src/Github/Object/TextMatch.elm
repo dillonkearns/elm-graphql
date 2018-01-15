@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| The specific text fragment within the property matched on.
 -}
-fragment : FieldDecoder String Github.Object.TextMatch
+fragment : Field String Github.Object.TextMatch
 fragment =
     Object.fieldDecoder "fragment" [] Decode.string
 
 
 {-| Highlights within the matched fragment.
 -}
-highlights : SelectionSet selection Github.Object.TextMatchHighlight -> FieldDecoder (List (Maybe selection)) Github.Object.TextMatch
+highlights : SelectionSet selection Github.Object.TextMatchHighlight -> Field (List (Maybe selection)) Github.Object.TextMatch
 highlights object =
-    Object.selectionFieldDecoder "highlights" [] object (identity >> Decode.maybe >> Decode.list)
+    Object.selectionField "highlights" [] object (identity >> Decode.maybe >> Decode.list)
 
 
 {-| The property matched on.
 -}
-property : FieldDecoder String Github.Object.TextMatch
+property : Field String Github.Object.TextMatch
 property =
     Object.fieldDecoder "property" [] Decode.string

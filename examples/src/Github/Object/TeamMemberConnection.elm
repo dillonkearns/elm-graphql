@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,27 +26,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.TeamMemberEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.TeamMemberConnection
+edges : SelectionSet selection Github.Object.TeamMemberEdge -> Field (Maybe (List (Maybe selection))) Github.Object.TeamMemberConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.TeamMemberConnection
+nodes : SelectionSet selection Github.Object.User -> Field (Maybe (List (Maybe selection))) Github.Object.TeamMemberConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.TeamMemberConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.TeamMemberConnection
 pageInfo object =
-    Object.selectionFieldDecoder "pageInfo" [] object identity
+    Object.selectionField "pageInfo" [] object identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : FieldDecoder Int Github.Object.TeamMemberConnection
+totalCount : Field Int Github.Object.TeamMemberConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

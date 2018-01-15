@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -53,13 +53,13 @@ onPullRequest (SelectionSet fields decoder) =
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : FieldDecoder Bool Github.Interface.Closable
+closed : Field Bool Github.Interface.Closable
 closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Interface.Closable
+closedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Closable
 closedAt =
     Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,13 +26,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.AcceptTopicSuggestionPayload
+clientMutationId : Field (Maybe String) Github.Object.AcceptTopicSuggestionPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The accepted topic.
 -}
-topic : SelectionSet selection Github.Object.Topic -> FieldDecoder selection Github.Object.AcceptTopicSuggestionPayload
+topic : SelectionSet selection Github.Object.Topic -> Field selection Github.Object.AcceptTopicSuggestionPayload
 topic object =
-    Object.selectionFieldDecoder "topic" [] object identity
+    Object.selectionField "topic" [] object identity

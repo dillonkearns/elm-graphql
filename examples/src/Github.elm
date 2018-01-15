@@ -9,7 +9,7 @@ import Github.Object.Topic
 import Github.Query as Query
 import Github.Scalar
 import Graphqelm.Document as Document
-import Graphqelm.FieldDecoder
+import Graphqelm.Field
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
@@ -82,7 +82,7 @@ type alias Release =
 release : SelectionSet Release Github.Object.Release
 release =
     Github.Object.Release.selection Release
-        |> with (Github.Object.Release.name |> Graphqelm.FieldDecoder.map (Maybe.withDefault ""))
+        |> with (Github.Object.Release.name |> Graphqelm.Field.map (Maybe.withDefault ""))
         |> with Github.Object.Release.url
 
 

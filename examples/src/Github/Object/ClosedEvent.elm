@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,32 +26,32 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ClosedEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.ClosedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Object that was closed.
 -}
-closable : SelectionSet selection Github.Interface.Closable -> FieldDecoder selection Github.Object.ClosedEvent
+closable : SelectionSet selection Github.Interface.Closable -> Field selection Github.Object.ClosedEvent
 closable object =
-    Object.selectionFieldDecoder "closable" [] object identity
+    Object.selectionField "closable" [] object identity
 
 
 {-| Object which triggered the creation of this event.
 -}
-closer : SelectionSet selection Github.Union.Closer -> FieldDecoder (Maybe selection) Github.Object.ClosedEvent
+closer : SelectionSet selection Github.Union.Closer -> Field (Maybe selection) Github.Object.ClosedEvent
 closer object =
-    Object.selectionFieldDecoder "closer" [] object (identity >> Decode.maybe)
+    Object.selectionField "closer" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ClosedEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.ClosedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.ClosedEvent
+id : Field Github.Scalar.Id Github.Object.ClosedEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)

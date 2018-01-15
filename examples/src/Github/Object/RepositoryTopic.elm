@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -24,27 +24,27 @@ selection constructor =
     Object.selection constructor
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.RepositoryTopic
+id : Field Github.Scalar.Id Github.Object.RepositoryTopic
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The HTTP path for this repository-topic.
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.RepositoryTopic
+resourcePath : Field Github.Scalar.Uri Github.Object.RepositoryTopic
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The topic.
 -}
-topic : SelectionSet selection Github.Object.Topic -> FieldDecoder selection Github.Object.RepositoryTopic
+topic : SelectionSet selection Github.Object.Topic -> Field selection Github.Object.RepositoryTopic
 topic object =
-    Object.selectionFieldDecoder "topic" [] object identity
+    Object.selectionField "topic" [] object identity
 
 
 {-| The HTTP URL for this repository-topic.
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.RepositoryTopic
+url : Field Github.Scalar.Uri Github.Object.RepositoryTopic
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

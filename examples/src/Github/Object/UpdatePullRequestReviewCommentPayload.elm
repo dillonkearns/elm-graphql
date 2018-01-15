@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,13 +26,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.UpdatePullRequestReviewCommentPayload
+clientMutationId : Field (Maybe String) Github.Object.UpdatePullRequestReviewCommentPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The updated comment.
 -}
-pullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> FieldDecoder selection Github.Object.UpdatePullRequestReviewCommentPayload
+pullRequestReviewComment : SelectionSet selection Github.Object.PullRequestReviewComment -> Field selection Github.Object.UpdatePullRequestReviewCommentPayload
 pullRequestReviewComment object =
-    Object.selectionFieldDecoder "pullRequestReviewComment" [] object identity
+    Object.selectionField "pullRequestReviewComment" [] object identity

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,13 +26,13 @@ selection constructor =
 
 {-| A cursor for use in pagination.
 -}
-cursor : FieldDecoder String Github.Object.RepositoryEdge
+cursor : Field String Github.Object.RepositoryEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet selection Github.Object.Repository -> FieldDecoder (Maybe selection) Github.Object.RepositoryEdge
+node : SelectionSet selection Github.Object.Repository -> Field (Maybe selection) Github.Object.RepositoryEdge
 node object =
-    Object.selectionFieldDecoder "node" [] object (identity >> Decode.maybe)
+    Object.selectionField "node" [] object (identity >> Decode.maybe)

@@ -1,7 +1,7 @@
 module Starwars exposing (main)
 
 import Graphqelm.Document as Document
-import Graphqelm.FieldDecoder as FieldDecoder
+import Graphqelm.Field as Field
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
@@ -100,7 +100,7 @@ human : SelectionSet HumanLookup Swapi.Object.Human
 human =
     Human.selection HumanLookup
         |> with Human.name
-        |> with (Human.appearsIn |> FieldDecoder.map (List.map episodeYear))
+        |> with (Human.appearsIn |> Field.map (List.map episodeYear))
 
 
 episodeYear : Episode -> Int

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,39 +26,39 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.RenamedTitleEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.RenamedTitleEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.RenamedTitleEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.RenamedTitleEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the current title of the issue or pull request.
 -}
-currentTitle : FieldDecoder String Github.Object.RenamedTitleEvent
+currentTitle : Field String Github.Object.RenamedTitleEvent
 currentTitle =
     Object.fieldDecoder "currentTitle" [] Decode.string
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.RenamedTitleEvent
+id : Field Github.Scalar.Id Github.Object.RenamedTitleEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the previous title of the issue or pull request.
 -}
-previousTitle : FieldDecoder String Github.Object.RenamedTitleEvent
+previousTitle : Field String Github.Object.RenamedTitleEvent
 previousTitle =
     Object.fieldDecoder "previousTitle" [] Decode.string
 
 
 {-| Subject that was renamed.
 -}
-subject : SelectionSet selection Github.Union.RenamedTitleSubject -> FieldDecoder selection Github.Object.RenamedTitleEvent
+subject : SelectionSet selection Github.Union.RenamedTitleSubject -> Field selection Github.Object.RenamedTitleEvent
 subject object =
-    Object.selectionFieldDecoder "subject" [] object identity
+    Object.selectionField "subject" [] object identity

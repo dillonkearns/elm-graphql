@@ -4,7 +4,7 @@
 
 module Swapi.Query exposing (..)
 
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -33,12 +33,12 @@ selection constructor =
   - id - ID of the droid.
 
 -}
-droid : { id : Swapi.Scalar.Id } -> SelectionSet selection Swapi.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
+droid : { id : Swapi.Scalar.Id } -> SelectionSet selection Swapi.Object.Droid -> Field (Maybe selection) RootQuery
 droid requiredArgs object =
-    Object.selectionFieldDecoder "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
 
-greet : { input : Swapi.InputObject.Greeting.Greeting } -> FieldDecoder String RootQuery
+greet : { input : Swapi.InputObject.Greeting.Greeting } -> Field String RootQuery
 greet requiredArgs =
     Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.Greeting.encode ] Decode.string
 
@@ -48,7 +48,7 @@ greet requiredArgs =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet selection Swapi.Interface.Character -> FieldDecoder selection RootQuery
+hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet selection Swapi.Interface.Character -> Field selection RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -58,7 +58,7 @@ hero fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "hero" optionalArgs object identity
+    Object.selectionField "hero" optionalArgs object identity
 
 
 {-|
@@ -66,7 +66,7 @@ hero fillInOptionals object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet selection Swapi.Union.CharacterUnion -> FieldDecoder (Maybe selection) RootQuery
+heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet selection Swapi.Union.CharacterUnion -> Field (Maybe selection) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =
@@ -76,7 +76,7 @@ heroUnion fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "heroUnion" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.maybe)
 
 
 {-|
@@ -84,6 +84,6 @@ heroUnion fillInOptionals object =
   - id - ID of the human.
 
 -}
-human : { id : Swapi.Scalar.Id } -> SelectionSet selection Swapi.Object.Human -> FieldDecoder (Maybe selection) RootQuery
+human : { id : Swapi.Scalar.Id } -> SelectionSet selection Swapi.Object.Human -> Field (Maybe selection) RootQuery
 human requiredArgs object =
-    Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)

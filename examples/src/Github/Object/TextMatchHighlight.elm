@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| The indice in the fragment where the matched text begins.
 -}
-beginIndice : FieldDecoder Int Github.Object.TextMatchHighlight
+beginIndice : Field Int Github.Object.TextMatchHighlight
 beginIndice =
     Object.fieldDecoder "beginIndice" [] Decode.int
 
 
 {-| The indice in the fragment where the matched text ends.
 -}
-endIndice : FieldDecoder Int Github.Object.TextMatchHighlight
+endIndice : Field Int Github.Object.TextMatchHighlight
 endIndice =
     Object.fieldDecoder "endIndice" [] Decode.int
 
 
 {-| The text matched.
 -}
-text : FieldDecoder String Github.Object.TextMatchHighlight
+text : Field String Github.Object.TextMatchHighlight
 text =
     Object.fieldDecoder "text" [] Decode.string

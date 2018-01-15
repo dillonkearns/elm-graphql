@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.UpdateTopicsPayload
+clientMutationId : Field (Maybe String) Github.Object.UpdateTopicsPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| Names of the provided topics that are not valid.
 -}
-invalidTopicNames : FieldDecoder (Maybe (List String)) Github.Object.UpdateTopicsPayload
+invalidTopicNames : Field (Maybe (List String)) Github.Object.UpdateTopicsPayload
 invalidTopicNames =
     Object.fieldDecoder "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
 {-| The updated repository.
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.UpdateTopicsPayload
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.UpdateTopicsPayload
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity

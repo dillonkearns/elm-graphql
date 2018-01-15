@@ -11,7 +11,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -29,47 +29,47 @@ selection constructor =
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : FieldDecoder Bool Github.Object.Milestone
+closed : Field Bool Github.Object.Milestone
 closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Milestone
+closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Milestone
 closedAt =
     Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Milestone
+createdAt : Field Github.Scalar.DateTime Github.Object.Milestone
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the actor who created the milestone.
 -}
-creator : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.Milestone
+creator : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.Milestone
 creator object =
-    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the description of the milestone.
 -}
-description : FieldDecoder (Maybe String) Github.Object.Milestone
+description : Field (Maybe String) Github.Object.Milestone
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
 {-| Identifies the due date of the milestone.
 -}
-dueOn : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Milestone
+dueOn : Field (Maybe Github.Scalar.DateTime) Github.Object.Milestone
 dueOn =
     Object.fieldDecoder "dueOn" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Milestone
+id : Field Github.Scalar.Id Github.Object.Milestone
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
@@ -85,7 +85,7 @@ id =
   - states - A list of states to filter the issues by.
 
 -}
-issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }) -> SelectionSet selection Github.Object.IssueConnection -> FieldDecoder selection Github.Object.Milestone
+issues : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }) -> SelectionSet selection Github.Object.IssueConnection -> Field selection Github.Object.Milestone
 issues fillInOptionals object =
     let
         filledInOptionals =
@@ -95,46 +95,46 @@ issues fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.IssueOrder.encode, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "issues" optionalArgs object identity
+    Object.selectionField "issues" optionalArgs object identity
 
 
 {-| Identifies the number of the milestone.
 -}
-number : FieldDecoder Int Github.Object.Milestone
+number : Field Int Github.Object.Milestone
 number =
     Object.fieldDecoder "number" [] Decode.int
 
 
 {-| The repository associated with this milestone.
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.Milestone
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Milestone
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity
 
 
 {-| The HTTP path for this milestone
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Milestone
+resourcePath : Field Github.Scalar.Uri Github.Object.Milestone
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the state of the milestone.
 -}
-state : FieldDecoder Github.Enum.MilestoneState.MilestoneState Github.Object.Milestone
+state : Field Github.Enum.MilestoneState.MilestoneState Github.Object.Milestone
 state =
     Object.fieldDecoder "state" [] Github.Enum.MilestoneState.decoder
 
 
 {-| Identifies the title of the milestone.
 -}
-title : FieldDecoder String Github.Object.Milestone
+title : Field String Github.Object.Milestone
 title =
     Object.fieldDecoder "title" [] Decode.string
 
 
 {-| The HTTP URL for this milestone
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.Milestone
+url : Field Github.Scalar.Uri Github.Object.Milestone
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

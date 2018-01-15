@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -29,7 +29,7 @@ selection constructor =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Uri Github.Object.Bot
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> Field Github.Scalar.Uri Github.Object.Bot
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -44,32 +44,32 @@ avatarUrl fillInOptionals =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Bot
+createdAt : Field Github.Scalar.DateTime Github.Object.Bot
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Bot
+id : Field Github.Scalar.Id Github.Object.Bot
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The username of the actor.
 -}
-login : FieldDecoder String Github.Object.Bot
+login : Field String Github.Object.Bot
 login =
     Object.fieldDecoder "login" [] Decode.string
 
 
 {-| The HTTP path for this bot
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Bot
+resourcePath : Field Github.Scalar.Uri Github.Object.Bot
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this bot
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.Bot
+url : Field Github.Scalar.Uri Github.Object.Bot
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

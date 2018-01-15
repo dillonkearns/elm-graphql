@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,18 +26,18 @@ selection constructor =
 
 {-| The actor that can push.
 -}
-actor : SelectionSet selection Github.Union.PushAllowanceActor -> FieldDecoder (Maybe selection) Github.Object.PushAllowance
+actor : SelectionSet selection Github.Union.PushAllowanceActor -> Field (Maybe selection) Github.Object.PushAllowance
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.PushAllowance
+id : Field Github.Scalar.Id Github.Object.PushAllowance
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
-protectedBranch : SelectionSet selection Github.Object.ProtectedBranch -> FieldDecoder selection Github.Object.PushAllowance
+protectedBranch : SelectionSet selection Github.Object.ProtectedBranch -> Field selection Github.Object.PushAllowance
 protectedBranch object =
-    Object.selectionFieldDecoder "protectedBranch" [] object identity
+    Object.selectionField "protectedBranch" [] object identity

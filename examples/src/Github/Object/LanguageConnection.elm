@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,34 +26,34 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.LanguageEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.LanguageConnection
+edges : SelectionSet selection Github.Object.LanguageEdge -> Field (Maybe (List (Maybe selection))) Github.Object.LanguageConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.Language -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.LanguageConnection
+nodes : SelectionSet selection Github.Object.Language -> Field (Maybe (List (Maybe selection))) Github.Object.LanguageConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.LanguageConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.LanguageConnection
 pageInfo object =
-    Object.selectionFieldDecoder "pageInfo" [] object identity
+    Object.selectionField "pageInfo" [] object identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : FieldDecoder Int Github.Object.LanguageConnection
+totalCount : Field Int Github.Object.LanguageConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int
 
 
 {-| The total size in bytes of files written in that language.
 -}
-totalSize : FieldDecoder Int Github.Object.LanguageConnection
+totalSize : Field Int Github.Object.LanguageConnection
 totalSize =
     Object.fieldDecoder "totalSize" [] Decode.int

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| The edge from the ProjectColumn's card connection.
 -}
-cardEdge : SelectionSet selection Github.Object.ProjectCardEdge -> FieldDecoder selection Github.Object.AddProjectCardPayload
+cardEdge : SelectionSet selection Github.Object.ProjectCardEdge -> Field selection Github.Object.AddProjectCardPayload
 cardEdge object =
-    Object.selectionFieldDecoder "cardEdge" [] object identity
+    Object.selectionField "cardEdge" [] object identity
 
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.AddProjectCardPayload
+clientMutationId : Field (Maybe String) Github.Object.AddProjectCardPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The ProjectColumn
 -}
-projectColumn : SelectionSet selection Github.Object.Project -> FieldDecoder selection Github.Object.AddProjectCardPayload
+projectColumn : SelectionSet selection Github.Object.Project -> Field selection Github.Object.AddProjectCardPayload
 projectColumn object =
-    Object.selectionFieldDecoder "projectColumn" [] object identity
+    Object.selectionField "projectColumn" [] object identity

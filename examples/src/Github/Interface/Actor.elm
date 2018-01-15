@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -51,7 +51,7 @@ onUser (SelectionSet fields decoder) =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> FieldDecoder Github.Scalar.Uri Github.Interface.Actor
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> Field Github.Scalar.Uri Github.Interface.Actor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -66,20 +66,20 @@ avatarUrl fillInOptionals =
 
 {-| The username of the actor.
 -}
-login : FieldDecoder String Github.Interface.Actor
+login : Field String Github.Interface.Actor
 login =
     Object.fieldDecoder "login" [] Decode.string
 
 
 {-| The HTTP path for this actor.
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.Actor
+resourcePath : Field Github.Scalar.Uri Github.Interface.Actor
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this actor.
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Interface.Actor
+url : Field Github.Scalar.Uri Github.Interface.Actor
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

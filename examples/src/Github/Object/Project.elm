@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -27,28 +27,28 @@ selection constructor =
 
 {-| The project's description body.
 -}
-body : FieldDecoder (Maybe String) Github.Object.Project
+body : Field (Maybe String) Github.Object.Project
 body =
     Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
 
 
 {-| The projects description body rendered to HTML.
 -}
-bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.Project
+bodyHTML : Field Github.Scalar.Html Github.Object.Project
 bodyHTML =
     Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : FieldDecoder Bool Github.Object.Project
+closed : Field Bool Github.Object.Project
 closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Project
+closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Project
 closedAt =
     Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
@@ -61,7 +61,7 @@ closedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-columns : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectColumnConnection -> FieldDecoder selection Github.Object.Project
+columns : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectColumnConnection -> Field selection Github.Object.Project
 columns fillInOptionals object =
     let
         filledInOptionals =
@@ -71,47 +71,47 @@ columns fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "columns" optionalArgs object identity
+    Object.selectionField "columns" optionalArgs object identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Project
+createdAt : Field Github.Scalar.DateTime Github.Object.Project
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who originally created the project.
 -}
-creator : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.Project
+creator : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.Project
 creator object =
-    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Project
+id : Field Github.Scalar.Id Github.Object.Project
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The project's name.
 -}
-name : FieldDecoder String Github.Object.Project
+name : Field String Github.Object.Project
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The project's number.
 -}
-number : FieldDecoder Int Github.Object.Project
+number : Field Int Github.Object.Project
 number =
     Object.fieldDecoder "number" [] Decode.int
 
 
 {-| The project's owner. Currently limited to repositories and organizations.
 -}
-owner : SelectionSet selection Github.Interface.ProjectOwner -> FieldDecoder selection Github.Object.Project
+owner : SelectionSet selection Github.Interface.ProjectOwner -> Field selection Github.Object.Project
 owner object =
-    Object.selectionFieldDecoder "owner" [] object identity
+    Object.selectionField "owner" [] object identity
 
 
 {-| List of pending cards in this project
@@ -122,7 +122,7 @@ owner object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pendingCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> FieldDecoder selection Github.Object.Project
+pendingCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> Field selection Github.Object.Project
 pendingCards fillInOptionals object =
     let
         filledInOptionals =
@@ -132,32 +132,32 @@ pendingCards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "pendingCards" optionalArgs object identity
+    Object.selectionField "pendingCards" optionalArgs object identity
 
 
 {-| The HTTP path for this project
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Project
+resourcePath : Field Github.Scalar.Uri Github.Object.Project
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Whether the project is open or closed.
 -}
-state : FieldDecoder Github.Enum.ProjectState.ProjectState Github.Object.Project
+state : Field Github.Enum.ProjectState.ProjectState Github.Object.Project
 state =
     Object.fieldDecoder "state" [] Github.Enum.ProjectState.decoder
 
 
 {-| The HTTP URL for this project
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.Project
+url : Field Github.Scalar.Uri Github.Object.Project
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : FieldDecoder Bool Github.Object.Project
+viewerCanUpdate : Field Bool Github.Object.Project
 viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool

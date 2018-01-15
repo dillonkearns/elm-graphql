@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,13 +26,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.DeleteProjectPayload
+clientMutationId : Field (Maybe String) Github.Object.DeleteProjectPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The repository or organization the project was removed from.
 -}
-owner : SelectionSet selection Github.Interface.ProjectOwner -> FieldDecoder selection Github.Object.DeleteProjectPayload
+owner : SelectionSet selection Github.Interface.ProjectOwner -> Field selection Github.Object.DeleteProjectPayload
 owner object =
-    Object.selectionFieldDecoder "owner" [] object identity
+    Object.selectionField "owner" [] object identity

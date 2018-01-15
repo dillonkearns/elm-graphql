@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -24,18 +24,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : FieldDecoder String Github.Object.LanguageEdge
+cursor : Field String Github.Object.LanguageEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet selection Github.Object.Language -> FieldDecoder selection Github.Object.LanguageEdge
+node : SelectionSet selection Github.Object.Language -> Field selection Github.Object.LanguageEdge
 node object =
-    Object.selectionFieldDecoder "node" [] object identity
+    Object.selectionField "node" [] object identity
 
 
 {-| The number of bytes of code written in the language.
 -}
-size : FieldDecoder Int Github.Object.LanguageEdge
+size : Field Int Github.Object.LanguageEdge
 size =
     Object.fieldDecoder "size" [] Decode.int

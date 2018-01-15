@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,54 +26,54 @@ selection constructor =
 
 {-| The author of the release
 -}
-author : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.Release
+author : SelectionSet selection Github.Object.User -> Field (Maybe selection) Github.Object.Release
 author object =
-    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Release
+createdAt : Field Github.Scalar.DateTime Github.Object.Release
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the description of the release.
 -}
-description : FieldDecoder (Maybe String) Github.Object.Release
+description : Field (Maybe String) Github.Object.Release
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Release
+id : Field Github.Scalar.Id Github.Object.Release
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether or not the release is a draft
 -}
-isDraft : FieldDecoder Bool Github.Object.Release
+isDraft : Field Bool Github.Object.Release
 isDraft =
     Object.fieldDecoder "isDraft" [] Decode.bool
 
 
 {-| Whether or not the release is a prerelease
 -}
-isPrerelease : FieldDecoder Bool Github.Object.Release
+isPrerelease : Field Bool Github.Object.Release
 isPrerelease =
     Object.fieldDecoder "isPrerelease" [] Decode.bool
 
 
 {-| Identifies the title of the release.
 -}
-name : FieldDecoder (Maybe String) Github.Object.Release
+name : Field (Maybe String) Github.Object.Release
 name =
     Object.fieldDecoder "name" [] (Decode.string |> Decode.maybe)
 
 
 {-| Identifies the date and time when the release was created.
 -}
-publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Release
+publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Release
 publishedAt =
     Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
@@ -87,7 +87,7 @@ publishedAt =
   - name - A list of names to filter the assets by.
 
 -}
-releaseAssets : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }) -> SelectionSet selection Github.Object.ReleaseAssetConnection -> FieldDecoder selection Github.Object.Release
+releaseAssets : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }) -> SelectionSet selection Github.Object.ReleaseAssetConnection -> Field selection Github.Object.Release
 releaseAssets fillInOptionals object =
     let
         filledInOptionals =
@@ -97,25 +97,25 @@ releaseAssets fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "releaseAssets" optionalArgs object identity
+    Object.selectionField "releaseAssets" optionalArgs object identity
 
 
 {-| The HTTP path for this issue
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Release
+resourcePath : Field Github.Scalar.Uri Github.Object.Release
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The Git tag the release points to
 -}
-tag : SelectionSet selection Github.Object.Ref -> FieldDecoder (Maybe selection) Github.Object.Release
+tag : SelectionSet selection Github.Object.Ref -> Field (Maybe selection) Github.Object.Release
 tag object =
-    Object.selectionFieldDecoder "tag" [] object (identity >> Decode.maybe)
+    Object.selectionField "tag" [] object (identity >> Decode.maybe)
 
 
 {-| The HTTP URL for this issue
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.Release
+url : Field Github.Scalar.Uri Github.Object.Release
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

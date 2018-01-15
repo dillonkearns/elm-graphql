@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| Is this suggestion based on past commits?
 -}
-isAuthor : FieldDecoder Bool Github.Object.SuggestedReviewer
+isAuthor : Field Bool Github.Object.SuggestedReviewer
 isAuthor =
     Object.fieldDecoder "isAuthor" [] Decode.bool
 
 
 {-| Is this suggestion based on past review comments?
 -}
-isCommenter : FieldDecoder Bool Github.Object.SuggestedReviewer
+isCommenter : Field Bool Github.Object.SuggestedReviewer
 isCommenter =
     Object.fieldDecoder "isCommenter" [] Decode.bool
 
 
 {-| Identifies the user suggested to review the pull request.
 -}
-reviewer : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.SuggestedReviewer
+reviewer : SelectionSet selection Github.Object.User -> Field selection Github.Object.SuggestedReviewer
 reviewer object =
-    Object.selectionFieldDecoder "reviewer" [] object identity
+    Object.selectionField "reviewer" [] object identity

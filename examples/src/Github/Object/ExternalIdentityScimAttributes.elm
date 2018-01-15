@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,6 +26,6 @@ selection constructor =
 
 {-| The userName of the SCIM identity
 -}
-username : FieldDecoder (Maybe String) Github.Object.ExternalIdentityScimAttributes
+username : Field (Maybe String) Github.Object.ExternalIdentityScimAttributes
 username =
     Object.fieldDecoder "username" [] (Decode.string |> Decode.maybe)

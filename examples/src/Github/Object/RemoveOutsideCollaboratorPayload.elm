@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,13 +26,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
+clientMutationId : Field (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The user that was removed as an outside collaborator.
 -}
-removedUser : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.RemoveOutsideCollaboratorPayload
+removedUser : SelectionSet selection Github.Object.User -> Field selection Github.Object.RemoveOutsideCollaboratorPayload
 removedUser object =
-    Object.selectionFieldDecoder "removedUser" [] object identity
+    Object.selectionField "removedUser" [] object identity

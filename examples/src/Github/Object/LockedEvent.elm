@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,25 +26,25 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.LockedEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.LockedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.LockedEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.LockedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.LockedEvent
+id : Field Github.Scalar.Id Github.Object.LockedEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Object that was locked.
 -}
-lockable : SelectionSet selection Github.Interface.Lockable -> FieldDecoder selection Github.Object.LockedEvent
+lockable : SelectionSet selection Github.Interface.Lockable -> Field selection Github.Object.LockedEvent
 lockable object =
-    Object.selectionFieldDecoder "lockable" [] object identity
+    Object.selectionField "lockable" [] object identity

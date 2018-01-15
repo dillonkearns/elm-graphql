@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -30,67 +30,67 @@ project column at a time. The column field will be null if the card is created
 in a pending state and has yet to be associated with a column. Once cards are
 associated with a column, they will not become pending in the future.
 -}
-column : SelectionSet selection Github.Object.ProjectColumn -> FieldDecoder (Maybe selection) Github.Object.ProjectCard
+column : SelectionSet selection Github.Object.ProjectColumn -> Field (Maybe selection) Github.Object.ProjectCard
 column object =
-    Object.selectionFieldDecoder "column" [] object (identity >> Decode.maybe)
+    Object.selectionField "column" [] object (identity >> Decode.maybe)
 
 
 {-| The card content item
 -}
-content : SelectionSet selection Github.Union.ProjectCardItem -> FieldDecoder (Maybe selection) Github.Object.ProjectCard
+content : SelectionSet selection Github.Union.ProjectCardItem -> Field (Maybe selection) Github.Object.ProjectCard
 content object =
-    Object.selectionFieldDecoder "content" [] object (identity >> Decode.maybe)
+    Object.selectionField "content" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ProjectCard
+createdAt : Field Github.Scalar.DateTime Github.Object.ProjectCard
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who created this card
 -}
-creator : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.ProjectCard
+creator : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.ProjectCard
 creator object =
-    Object.selectionFieldDecoder "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.ProjectCard
+id : Field Github.Scalar.Id Github.Object.ProjectCard
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The card note
 -}
-note : FieldDecoder (Maybe String) Github.Object.ProjectCard
+note : Field (Maybe String) Github.Object.ProjectCard
 note =
     Object.fieldDecoder "note" [] (Decode.string |> Decode.maybe)
 
 
 {-| The project that contains this card.
 -}
-project : SelectionSet selection Github.Object.Project -> FieldDecoder selection Github.Object.ProjectCard
+project : SelectionSet selection Github.Object.Project -> Field selection Github.Object.ProjectCard
 project object =
-    Object.selectionFieldDecoder "project" [] object identity
+    Object.selectionField "project" [] object identity
 
 
 {-| The HTTP path for this card
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.ProjectCard
+resourcePath : Field Github.Scalar.Uri Github.Object.ProjectCard
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The state of ProjectCard
 -}
-state : FieldDecoder (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
+state : Field (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
 state =
     Object.fieldDecoder "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.maybe)
 
 
 {-| The HTTP URL for this card
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.ProjectCard
+url : Field Github.Scalar.Uri Github.Object.ProjectCard
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

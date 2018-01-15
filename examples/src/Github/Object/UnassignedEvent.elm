@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,32 +26,32 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.UnassignedEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.UnassignedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the assignable associated with the event.
 -}
-assignable : SelectionSet selection Github.Interface.Assignable -> FieldDecoder selection Github.Object.UnassignedEvent
+assignable : SelectionSet selection Github.Interface.Assignable -> Field selection Github.Object.UnassignedEvent
 assignable object =
-    Object.selectionFieldDecoder "assignable" [] object identity
+    Object.selectionField "assignable" [] object identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.UnassignedEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.UnassignedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.UnassignedEvent
+id : Field Github.Scalar.Id Github.Object.UnassignedEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the subject (user) who was unassigned.
 -}
-user : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.UnassignedEvent
+user : SelectionSet selection Github.Object.User -> Field (Maybe selection) Github.Object.UnassignedEvent
 user object =
-    Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)
+    Object.selectionField "user" [] object (identity >> Decode.maybe)

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,27 +26,27 @@ selection constructor =
 
 {-| The body of the CoC
 -}
-body : FieldDecoder (Maybe String) Github.Object.CodeOfConduct
+body : Field (Maybe String) Github.Object.CodeOfConduct
 body =
     Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
 
 
 {-| The key for the CoC
 -}
-key : FieldDecoder String Github.Object.CodeOfConduct
+key : Field String Github.Object.CodeOfConduct
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
 {-| The formal name of the CoC
 -}
-name : FieldDecoder String Github.Object.CodeOfConduct
+name : Field String Github.Object.CodeOfConduct
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The path to the CoC
 -}
-url : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
+url : Field (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)

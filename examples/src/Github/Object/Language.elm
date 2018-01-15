@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,18 +26,18 @@ selection constructor =
 
 {-| The color defined for the current language.
 -}
-color : FieldDecoder (Maybe String) Github.Object.Language
+color : Field (Maybe String) Github.Object.Language
 color =
     Object.fieldDecoder "color" [] (Decode.string |> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Language
+id : Field Github.Scalar.Id Github.Object.Language
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The name of the current language.
 -}
-name : FieldDecoder String Github.Object.Language
+name : Field String Github.Object.Language
 name =
     Object.fieldDecoder "name" [] Decode.string

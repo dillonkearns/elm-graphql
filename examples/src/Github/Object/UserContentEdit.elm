@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,18 +26,18 @@ selection constructor =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.UserContentEdit
+createdAt : Field Github.Scalar.DateTime Github.Object.UserContentEdit
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who edited this content,
 -}
-editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.UserContentEdit
+editor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.UserContentEdit
 editor object =
-    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.UserContentEdit
+id : Field Github.Scalar.Id Github.Object.UserContentEdit
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)

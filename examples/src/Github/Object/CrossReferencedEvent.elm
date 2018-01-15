@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,67 +26,67 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.CrossReferencedEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.CrossReferencedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.CrossReferencedEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.CrossReferencedEvent
+id : Field Github.Scalar.Id Github.Object.CrossReferencedEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Reference originated in a different repository.
 -}
-isCrossRepository : FieldDecoder Bool Github.Object.CrossReferencedEvent
+isCrossRepository : Field Bool Github.Object.CrossReferencedEvent
 isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
 {-| Identifies when the reference was made.
 -}
-referencedAt : FieldDecoder Github.Scalar.DateTime Github.Object.CrossReferencedEvent
+referencedAt : Field Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 referencedAt =
     Object.fieldDecoder "referencedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.CrossReferencedEvent
+resourcePath : Field Github.Scalar.Uri Github.Object.CrossReferencedEvent
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Issue or pull request that made the reference.
 -}
-source : SelectionSet selection Github.Union.ReferencedSubject -> FieldDecoder selection Github.Object.CrossReferencedEvent
+source : SelectionSet selection Github.Union.ReferencedSubject -> Field selection Github.Object.CrossReferencedEvent
 source object =
-    Object.selectionFieldDecoder "source" [] object identity
+    Object.selectionField "source" [] object identity
 
 
 {-| Issue or pull request to which the reference was made.
 -}
-target : SelectionSet selection Github.Union.ReferencedSubject -> FieldDecoder selection Github.Object.CrossReferencedEvent
+target : SelectionSet selection Github.Union.ReferencedSubject -> Field selection Github.Object.CrossReferencedEvent
 target object =
-    Object.selectionFieldDecoder "target" [] object identity
+    Object.selectionField "target" [] object identity
 
 
 {-| The HTTP URL for this pull request.
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.CrossReferencedEvent
+url : Field Github.Scalar.Uri Github.Object.CrossReferencedEvent
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Checks if the target will be closed when the source is merged.
 -}
-willCloseTarget : FieldDecoder Bool Github.Object.CrossReferencedEvent
+willCloseTarget : Field Bool Github.Object.CrossReferencedEvent
 willCloseTarget =
     Object.fieldDecoder "willCloseTarget" [] Decode.bool

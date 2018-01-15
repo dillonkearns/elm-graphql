@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Rename `FieldDecoder` type and module to `Field` to match GraphQL domain language more closely.
+
 ## [6.1.0] - 2018-01-11
 
 ### Added

@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -25,32 +25,32 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : FieldDecoder String Github.Object.TeamMemberEdge
+cursor : Field String Github.Object.TeamMemberEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
 {-| The HTTP path to the organization's member access page.
 -}
-memberAccessResourcePath : FieldDecoder Github.Scalar.Uri Github.Object.TeamMemberEdge
+memberAccessResourcePath : Field Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessResourcePath =
     Object.fieldDecoder "memberAccessResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL to the organization's member access page.
 -}
-memberAccessUrl : FieldDecoder Github.Scalar.Uri Github.Object.TeamMemberEdge
+memberAccessUrl : Field Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessUrl =
     Object.fieldDecoder "memberAccessUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-node : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.TeamMemberEdge
+node : SelectionSet selection Github.Object.User -> Field selection Github.Object.TeamMemberEdge
 node object =
-    Object.selectionFieldDecoder "node" [] object identity
+    Object.selectionField "node" [] object identity
 
 
 {-| The role the member has on the team.
 -}
-role : FieldDecoder Github.Enum.TeamMemberRole.TeamMemberRole Github.Object.TeamMemberEdge
+role : Field Github.Enum.TeamMemberRole.TeamMemberRole Github.Object.TeamMemberEdge
 role =
     Object.fieldDecoder "role" [] Github.Enum.TeamMemberRole.decoder

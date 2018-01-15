@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -24,20 +24,20 @@ selection constructor =
     Object.selection constructor
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.ReviewRequest
+id : Field Github.Scalar.Id Github.Object.ReviewRequest
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this review request.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.ReviewRequest
+pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.ReviewRequest
 pullRequest object =
-    Object.selectionFieldDecoder "pullRequest" [] object identity
+    Object.selectionField "pullRequest" [] object identity
 
 
 {-| The reviewer that is requested.
 -}
-requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> FieldDecoder (Maybe selection) Github.Object.ReviewRequest
+requestedReviewer : SelectionSet selection Github.Union.RequestedReviewer -> Field (Maybe selection) Github.Object.ReviewRequest
 requestedReviewer object =
-    Object.selectionFieldDecoder "requestedReviewer" [] object (identity >> Decode.maybe)
+    Object.selectionField "requestedReviewer" [] object (identity >> Decode.maybe)

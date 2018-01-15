@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,39 +26,39 @@ selection constructor =
 
 {-| The GUID for this identity
 -}
-guid : FieldDecoder String Github.Object.ExternalIdentity
+guid : Field String Github.Object.ExternalIdentity
 guid =
     Object.fieldDecoder "guid" [] Decode.string
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.ExternalIdentity
+id : Field Github.Scalar.Id Github.Object.ExternalIdentity
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Organization invitation for this SCIM-provisioned external identity
 -}
-organizationInvitation : SelectionSet selection Github.Object.OrganizationInvitation -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
+organizationInvitation : SelectionSet selection Github.Object.OrganizationInvitation -> Field (Maybe selection) Github.Object.ExternalIdentity
 organizationInvitation object =
-    Object.selectionFieldDecoder "organizationInvitation" [] object (identity >> Decode.maybe)
+    Object.selectionField "organizationInvitation" [] object (identity >> Decode.maybe)
 
 
 {-| SAML Identity attributes
 -}
-samlIdentity : SelectionSet selection Github.Object.ExternalIdentitySamlAttributes -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
+samlIdentity : SelectionSet selection Github.Object.ExternalIdentitySamlAttributes -> Field (Maybe selection) Github.Object.ExternalIdentity
 samlIdentity object =
-    Object.selectionFieldDecoder "samlIdentity" [] object (identity >> Decode.maybe)
+    Object.selectionField "samlIdentity" [] object (identity >> Decode.maybe)
 
 
 {-| SCIM Identity attributes
 -}
-scimIdentity : SelectionSet selection Github.Object.ExternalIdentityScimAttributes -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
+scimIdentity : SelectionSet selection Github.Object.ExternalIdentityScimAttributes -> Field (Maybe selection) Github.Object.ExternalIdentity
 scimIdentity object =
-    Object.selectionFieldDecoder "scimIdentity" [] object (identity >> Decode.maybe)
+    Object.selectionField "scimIdentity" [] object (identity >> Decode.maybe)
 
 
 {-| User linked to this external identity
 -}
-user : SelectionSet selection Github.Object.User -> FieldDecoder (Maybe selection) Github.Object.ExternalIdentity
+user : SelectionSet selection Github.Object.User -> Field (Maybe selection) Github.Object.ExternalIdentity
 user object =
-    Object.selectionFieldDecoder "user" [] object (identity >> Decode.maybe)
+    Object.selectionField "user" [] object (identity >> Decode.maybe)

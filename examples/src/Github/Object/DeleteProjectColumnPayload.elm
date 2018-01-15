@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.DeleteProjectColumnPayload
+clientMutationId : Field (Maybe String) Github.Object.DeleteProjectColumnPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The deleted column ID.
 -}
-deletedColumnId : FieldDecoder Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
+deletedColumnId : Field Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
 deletedColumnId =
     Object.fieldDecoder "deletedColumnId" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The project the deleted column was in.
 -}
-project : SelectionSet selection Github.Object.Project -> FieldDecoder selection Github.Object.DeleteProjectColumnPayload
+project : SelectionSet selection Github.Object.Project -> Field selection Github.Object.DeleteProjectColumnPayload
 project object =
-    Object.selectionFieldDecoder "project" [] object identity
+    Object.selectionField "project" [] object identity

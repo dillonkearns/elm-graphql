@@ -45,7 +45,7 @@ generateForInterface context thisObjectName field =
 
 forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> String
 forObject_ context thisObjectName field fieldGenerator =
-    fieldGeneratorToString (interpolate "FieldDecoder {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectName |> String.join "." ]) field fieldGenerator
+    fieldGeneratorToString (interpolate "Field {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectName |> String.join "." ]) field fieldGenerator
 
 
 fieldGeneratorToString : String -> Type.Field -> FieldGenerator -> String
@@ -165,7 +165,7 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder = "object"
-    , otherThing = ".selectionFieldDecoder"
+    , otherThing = ".selectionField"
     , letBindings = []
     , objectDecoderChain =
         " ("

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -24,18 +24,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : FieldDecoder String Github.Object.StargazerEdge
+cursor : Field String Github.Object.StargazerEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.StargazerEdge
+node : SelectionSet selection Github.Object.User -> Field selection Github.Object.StargazerEdge
 node object =
-    Object.selectionFieldDecoder "node" [] object identity
+    Object.selectionField "node" [] object identity
 
 
 {-| Identifies when the item was starred.
 -}
-starredAt : FieldDecoder Github.Scalar.DateTime Github.Object.StargazerEdge
+starredAt : Field Github.Scalar.DateTime Github.Object.StargazerEdge
 starredAt =
     Object.fieldDecoder "starredAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)

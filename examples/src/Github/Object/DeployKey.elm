@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,39 +26,39 @@ selection constructor =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.DeployKey
+createdAt : Field Github.Scalar.DateTime Github.Object.DeployKey
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.DeployKey
+id : Field Github.Scalar.Id Github.Object.DeployKey
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The deploy key.
 -}
-key : FieldDecoder String Github.Object.DeployKey
+key : Field String Github.Object.DeployKey
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
 {-| Whether or not the deploy key is read only.
 -}
-readOnly : FieldDecoder Bool Github.Object.DeployKey
+readOnly : Field Bool Github.Object.DeployKey
 readOnly =
     Object.fieldDecoder "readOnly" [] Decode.bool
 
 
 {-| The deploy key title.
 -}
-title : FieldDecoder String Github.Object.DeployKey
+title : Field String Github.Object.DeployKey
 title =
     Object.fieldDecoder "title" [] Decode.string
 
 
 {-| Whether or not the deploy key has been verified.
 -}
-verified : FieldDecoder Bool Github.Object.DeployKey
+verified : Field Bool Github.Object.DeployKey
 verified =
     Object.fieldDecoder "verified" [] Decode.bool

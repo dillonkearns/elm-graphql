@@ -12,7 +12,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -30,82 +30,82 @@ selection constructor =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.IssueComment
+author : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.IssueComment
 author object =
-    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.maybe)
 
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.IssueComment
+authorAssociation : Field Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.IssueComment
 authorAssociation =
     Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| Identifies the comment body.
 -}
-body : FieldDecoder String Github.Object.IssueComment
+body : Field String Github.Object.IssueComment
 body =
     Object.fieldDecoder "body" [] Decode.string
 
 
 {-| The comment body rendered to HTML.
 -}
-bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.IssueComment
+bodyHTML : Field Github.Scalar.Html Github.Object.IssueComment
 bodyHTML =
     Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the body of the issue rendered to text.
 -}
-bodyText : FieldDecoder String Github.Object.IssueComment
+bodyText : Field String Github.Object.IssueComment
 bodyText =
     Object.fieldDecoder "bodyText" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.IssueComment
+createdAt : Field Github.Scalar.DateTime Github.Object.IssueComment
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : FieldDecoder Bool Github.Object.IssueComment
+createdViaEmail : Field Bool Github.Object.IssueComment
 createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.IssueComment
+editor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.IssueComment
 editor object =
-    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.IssueComment
+id : Field Github.Scalar.Id Github.Object.IssueComment
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the issue associated with the comment.
 -}
-issue : SelectionSet selection Github.Object.Issue -> FieldDecoder selection Github.Object.IssueComment
+issue : SelectionSet selection Github.Object.Issue -> Field selection Github.Object.IssueComment
 issue object =
-    Object.selectionFieldDecoder "issue" [] object identity
+    Object.selectionField "issue" [] object identity
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.IssueComment
+lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.IssueComment
 lastEditedAt =
     Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.IssueComment
+publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.IssueComment
 publishedAt =
     Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
@@ -113,16 +113,16 @@ publishedAt =
 {-| Returns the pull request associated with the comment, if this comment was made on a
 pull request.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder (Maybe selection) Github.Object.IssueComment
+pullRequest : SelectionSet selection Github.Object.PullRequest -> Field (Maybe selection) Github.Object.IssueComment
 pullRequest object =
-    Object.selectionFieldDecoder "pullRequest" [] object (identity >> Decode.maybe)
+    Object.selectionField "pullRequest" [] object (identity >> Decode.maybe)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> FieldDecoder (Maybe (List selection)) Github.Object.IssueComment
+reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> Field (Maybe (List selection)) Github.Object.IssueComment
 reactionGroups object =
-    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 {-| A list of Reactions left on the Issue.
@@ -135,7 +135,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet selection Github.Object.ReactionConnection -> FieldDecoder selection Github.Object.IssueComment
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet selection Github.Object.ReactionConnection -> Field selection Github.Object.IssueComment
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -145,60 +145,60 @@ reactions fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.ReactionOrder.encode ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "reactions" optionalArgs object identity
+    Object.selectionField "reactions" optionalArgs object identity
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.IssueComment
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.IssueComment
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity
 
 
 {-| The HTTP path for this issue comment
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.IssueComment
+resourcePath : Field Github.Scalar.Uri Github.Object.IssueComment
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this issue comment
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.IssueComment
+url : Field Github.Scalar.Uri Github.Object.IssueComment
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the current viewer can delete this object.
 -}
-viewerCanDelete : FieldDecoder Bool Github.Object.IssueComment
+viewerCanDelete : Field Bool Github.Object.IssueComment
 viewerCanDelete =
     Object.fieldDecoder "viewerCanDelete" [] Decode.bool
 
 
 {-| Can user react to this subject
 -}
-viewerCanReact : FieldDecoder Bool Github.Object.IssueComment
+viewerCanReact : Field Bool Github.Object.IssueComment
 viewerCanReact =
     Object.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : FieldDecoder Bool Github.Object.IssueComment
+viewerCanUpdate : Field Bool Github.Object.IssueComment
 viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : FieldDecoder (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.IssueComment
+viewerCannotUpdateReasons : Field (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.IssueComment
 viewerCannotUpdateReasons =
     Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : FieldDecoder Bool Github.Object.IssueComment
+viewerDidAuthor : Field Bool Github.Object.IssueComment
 viewerDidAuthor =
     Object.fieldDecoder "viewerDidAuthor" [] Decode.bool

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -32,7 +32,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-cards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> FieldDecoder selection Github.Object.ProjectColumn
+cards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> Field selection Github.Object.ProjectColumn
 cards fillInOptionals object =
     let
         filledInOptionals =
@@ -42,44 +42,44 @@ cards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "cards" optionalArgs object identity
+    Object.selectionField "cards" optionalArgs object identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ProjectColumn
+createdAt : Field Github.Scalar.DateTime Github.Object.ProjectColumn
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.ProjectColumn
+id : Field Github.Scalar.Id Github.Object.ProjectColumn
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The project column's name.
 -}
-name : FieldDecoder String Github.Object.ProjectColumn
+name : Field String Github.Object.ProjectColumn
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The project that contains this column.
 -}
-project : SelectionSet selection Github.Object.Project -> FieldDecoder selection Github.Object.ProjectColumn
+project : SelectionSet selection Github.Object.Project -> Field selection Github.Object.ProjectColumn
 project object =
-    Object.selectionFieldDecoder "project" [] object identity
+    Object.selectionField "project" [] object identity
 
 
 {-| The HTTP path for this project column
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.ProjectColumn
+resourcePath : Field Github.Scalar.Uri Github.Object.ProjectColumn
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this project column
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.ProjectColumn
+url : Field Github.Scalar.Uri Github.Object.ProjectColumn
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

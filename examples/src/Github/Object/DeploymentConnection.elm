@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,27 +26,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.DeploymentEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.DeploymentConnection
+edges : SelectionSet selection Github.Object.DeploymentEdge -> Field (Maybe (List (Maybe selection))) Github.Object.DeploymentConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.Deployment -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.DeploymentConnection
+nodes : SelectionSet selection Github.Object.Deployment -> Field (Maybe (List (Maybe selection))) Github.Object.DeploymentConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.DeploymentConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.DeploymentConnection
 pageInfo object =
-    Object.selectionFieldDecoder "pageInfo" [] object identity
+    Object.selectionField "pageInfo" [] object identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : FieldDecoder Int Github.Object.DeploymentConnection
+totalCount : Field Int Github.Object.DeploymentConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

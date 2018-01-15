@@ -4,7 +4,7 @@
 
 module Normalize.Interface.Character exposing (..)
 
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -44,27 +44,27 @@ onDroid (SelectionSet fields decoder) =
 
 {-| Which movies they appear in.
 -}
-appearsIn : FieldDecoder (List Normalize.Enum.Episode_.Episode_) Normalize.Interface.Character
+appearsIn : Field (List Normalize.Enum.Episode_.Episode_) Normalize.Interface.Character
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet selection Normalize.Interface.Character -> FieldDecoder (List selection) Normalize.Interface.Character
+friends : SelectionSet selection Normalize.Interface.Character -> Field (List selection) Normalize.Interface.Character
 friends object =
-    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
+    Object.selectionField "friends" [] object (identity >> Decode.list)
 
 
 {-| The ID of the character.
 -}
-id : FieldDecoder Normalize.Scalar.Id Normalize.Interface.Character
+id : Field Normalize.Scalar.Id Normalize.Interface.Character
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the character.
 -}
-name : FieldDecoder String Normalize.Interface.Character
+name : Field String Normalize.Interface.Character
 name =
     Object.fieldDecoder "name" [] Decode.string

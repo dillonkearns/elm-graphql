@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.DeleteProjectCardPayload
+clientMutationId : Field (Maybe String) Github.Object.DeleteProjectCardPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The column the deleted card was in.
 -}
-column : SelectionSet selection Github.Object.ProjectColumn -> FieldDecoder selection Github.Object.DeleteProjectCardPayload
+column : SelectionSet selection Github.Object.ProjectColumn -> Field selection Github.Object.DeleteProjectCardPayload
 column object =
-    Object.selectionFieldDecoder "column" [] object identity
+    Object.selectionField "column" [] object identity
 
 
 {-| The deleted card ID.
 -}
-deletedCardId : FieldDecoder Github.Scalar.Id Github.Object.DeleteProjectCardPayload
+deletedCardId : Field Github.Scalar.Id Github.Object.DeleteProjectCardPayload
 deletedCardId =
     Object.fieldDecoder "deletedCardId" [] (Decode.string |> Decode.map Github.Scalar.Id)

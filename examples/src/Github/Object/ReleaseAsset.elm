@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,67 +26,67 @@ selection constructor =
 
 {-| The asset's content-type
 -}
-contentType : FieldDecoder String Github.Object.ReleaseAsset
+contentType : Field String Github.Object.ReleaseAsset
 contentType =
     Object.fieldDecoder "contentType" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.ReleaseAsset
+createdAt : Field Github.Scalar.DateTime Github.Object.ReleaseAsset
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The number of times this asset was downloaded
 -}
-downloadCount : FieldDecoder Int Github.Object.ReleaseAsset
+downloadCount : Field Int Github.Object.ReleaseAsset
 downloadCount =
     Object.fieldDecoder "downloadCount" [] Decode.int
 
 
 {-| Identifies the URL where you can download the release asset via the browser.
 -}
-downloadUrl : FieldDecoder Github.Scalar.Uri Github.Object.ReleaseAsset
+downloadUrl : Field Github.Scalar.Uri Github.Object.ReleaseAsset
 downloadUrl =
     Object.fieldDecoder "downloadUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.ReleaseAsset
+id : Field Github.Scalar.Id Github.Object.ReleaseAsset
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the title of the release asset.
 -}
-name : FieldDecoder String Github.Object.ReleaseAsset
+name : Field String Github.Object.ReleaseAsset
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| Release that the asset is associated with
 -}
-release : SelectionSet selection Github.Object.Release -> FieldDecoder (Maybe selection) Github.Object.ReleaseAsset
+release : SelectionSet selection Github.Object.Release -> Field (Maybe selection) Github.Object.ReleaseAsset
 release object =
-    Object.selectionFieldDecoder "release" [] object (identity >> Decode.maybe)
+    Object.selectionField "release" [] object (identity >> Decode.maybe)
 
 
 {-| The size (in bytes) of the asset
 -}
-size : FieldDecoder Int Github.Object.ReleaseAsset
+size : Field Int Github.Object.ReleaseAsset
 size =
     Object.fieldDecoder "size" [] Decode.int
 
 
 {-| The user that performed the upload
 -}
-uploadedBy : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.ReleaseAsset
+uploadedBy : SelectionSet selection Github.Object.User -> Field selection Github.Object.ReleaseAsset
 uploadedBy object =
-    Object.selectionFieldDecoder "uploadedBy" [] object identity
+    Object.selectionField "uploadedBy" [] object identity
 
 
 {-| Identifies the URL of the release asset.
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.ReleaseAsset
+url : Field Github.Scalar.Uri Github.Object.ReleaseAsset
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)

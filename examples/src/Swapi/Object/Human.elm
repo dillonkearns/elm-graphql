@@ -4,7 +4,7 @@
 
 module Swapi.Object.Human exposing (..)
 
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -27,34 +27,34 @@ selection constructor =
 
 {-| Which movies they appear in.
 -}
-appearsIn : FieldDecoder (List Swapi.Enum.Episode.Episode) Swapi.Object.Human
+appearsIn : Field (List Swapi.Enum.Episode.Episode) Swapi.Object.Human
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet selection Swapi.Interface.Character -> FieldDecoder (List selection) Swapi.Object.Human
+friends : SelectionSet selection Swapi.Interface.Character -> Field (List selection) Swapi.Object.Human
 friends object =
-    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
+    Object.selectionField "friends" [] object (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.
 -}
-homePlanet : FieldDecoder (Maybe String) Swapi.Object.Human
+homePlanet : Field (Maybe String) Swapi.Object.Human
 homePlanet =
     Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.maybe)
 
 
 {-| The ID of the human.
 -}
-id : FieldDecoder Swapi.Scalar.Id Swapi.Object.Human
+id : Field Swapi.Scalar.Id Swapi.Object.Human
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the human.
 -}
-name : FieldDecoder String Swapi.Object.Human
+name : Field String Swapi.Object.Human
 name =
     Object.fieldDecoder "name" [] Decode.string

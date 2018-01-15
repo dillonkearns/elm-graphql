@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,13 +26,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.LockLockablePayload
+clientMutationId : Field (Maybe String) Github.Object.LockLockablePayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The item that was locked.
 -}
-lockedRecord : SelectionSet selection Github.Interface.Lockable -> FieldDecoder (Maybe selection) Github.Object.LockLockablePayload
+lockedRecord : SelectionSet selection Github.Interface.Lockable -> Field (Maybe selection) Github.Object.LockLockablePayload
 lockedRecord object =
-    Object.selectionFieldDecoder "lockedRecord" [] object (identity >> Decode.maybe)
+    Object.selectionField "lockedRecord" [] object (identity >> Decode.maybe)

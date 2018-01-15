@@ -4,7 +4,7 @@
 
 module Normalize.Query exposing (..)
 
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -32,9 +32,9 @@ selection constructor =
   - iD_ - ID of the droid.
 
 -}
-droid_ : { iD_ : Normalize.Scalar.Id } -> SelectionSet selection Normalize.Object.Droid -> FieldDecoder (Maybe selection) RootQuery
+droid_ : { iD_ : Normalize.Scalar.Id } -> SelectionSet selection Normalize.Object.Droid -> Field (Maybe selection) RootQuery
 droid_ requiredArgs object =
-    Object.selectionFieldDecoder "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
 
 {-|
@@ -42,7 +42,7 @@ droid_ requiredArgs object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Interface.Character -> FieldDecoder selection RootQuery
+hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Interface.Character -> Field selection RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -52,7 +52,7 @@ hero fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "hero" optionalArgs object identity
+    Object.selectionField "hero" optionalArgs object identity
 
 
 {-|
@@ -60,7 +60,7 @@ hero fillInOptionals object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Union.CharacterUnion -> FieldDecoder (Maybe selection) RootQuery
+heroUnion : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Union.CharacterUnion -> Field (Maybe selection) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =
@@ -70,7 +70,7 @@ heroUnion fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "heroUnion" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.maybe)
 
 
 {-|
@@ -78,6 +78,6 @@ heroUnion fillInOptionals object =
   - id - ID of the human.
 
 -}
-human : { id : Normalize.Scalar.Id } -> SelectionSet selection Normalize.Object.Human_ -> FieldDecoder (Maybe selection) RootQuery
+human : { id : Normalize.Scalar.Id } -> SelectionSet selection Normalize.Object.Human_ -> Field (Maybe selection) RootQuery
 human requiredArgs object =
-    Object.selectionFieldDecoder "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)

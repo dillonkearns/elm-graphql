@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,7 +26,7 @@ selection constructor =
 
 {-| The digest algorithm used to sign SAML requests for the Identity Provider.
 -}
-digestMethod : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
+digestMethod : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 digestMethod =
     Object.fieldDecoder "digestMethod" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
@@ -39,7 +39,7 @@ digestMethod =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-externalIdentities : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ExternalIdentityConnection -> FieldDecoder selection Github.Object.OrganizationIdentityProvider
+externalIdentities : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ExternalIdentityConnection -> Field selection Github.Object.OrganizationIdentityProvider
 externalIdentities fillInOptionals object =
     let
         filledInOptionals =
@@ -49,44 +49,44 @@ externalIdentities fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "externalIdentities" optionalArgs object identity
+    Object.selectionField "externalIdentities" optionalArgs object identity
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.OrganizationIdentityProvider
+id : Field Github.Scalar.Id Github.Object.OrganizationIdentityProvider
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The x509 certificate used by the Identity Provder to sign assertions and responses.
 -}
-idpCertificate : FieldDecoder (Maybe Github.Scalar.X509Certificate) Github.Object.OrganizationIdentityProvider
+idpCertificate : Field (Maybe Github.Scalar.X509Certificate) Github.Object.OrganizationIdentityProvider
 idpCertificate =
     Object.fieldDecoder "idpCertificate" [] (Decode.string |> Decode.map Github.Scalar.X509Certificate |> Decode.maybe)
 
 
 {-| The Issuer Entity ID for the SAML Identity Provider
 -}
-issuer : FieldDecoder (Maybe String) Github.Object.OrganizationIdentityProvider
+issuer : Field (Maybe String) Github.Object.OrganizationIdentityProvider
 issuer =
     Object.fieldDecoder "issuer" [] (Decode.string |> Decode.maybe)
 
 
 {-| Organization this Identity Provider belongs to
 -}
-organization : SelectionSet selection Github.Object.Organization -> FieldDecoder (Maybe selection) Github.Object.OrganizationIdentityProvider
+organization : SelectionSet selection Github.Object.Organization -> Field (Maybe selection) Github.Object.OrganizationIdentityProvider
 organization object =
-    Object.selectionFieldDecoder "organization" [] object (identity >> Decode.maybe)
+    Object.selectionField "organization" [] object (identity >> Decode.maybe)
 
 
 {-| The signature algorithm used to sign SAML requests for the Identity Provider.
 -}
-signatureMethod : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
+signatureMethod : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 signatureMethod =
     Object.fieldDecoder "signatureMethod" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
 {-| The URL endpoint for the Identity Provider's SAML SSO.
 -}
-ssoUrl : FieldDecoder (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
+ssoUrl : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 ssoUrl =
     Object.fieldDecoder "ssoUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)

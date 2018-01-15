@@ -15,7 +15,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -33,7 +33,7 @@ selection constructor =
 
 {-| Reason that the conversation was locked.
 -}
-activeLockReason : FieldDecoder (Maybe Github.Enum.LockReason.LockReason) Github.Object.Issue
+activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Object.Issue
 activeLockReason =
     Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
 
@@ -46,7 +46,7 @@ activeLockReason =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> FieldDecoder selection Github.Object.Issue
+assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> Field selection Github.Object.Issue
 assignees fillInOptionals object =
     let
         filledInOptionals =
@@ -56,54 +56,54 @@ assignees fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "assignees" optionalArgs object identity
+    Object.selectionField "assignees" optionalArgs object identity
 
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.Issue
+author : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.Issue
 author object =
-    Object.selectionFieldDecoder "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.maybe)
 
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : FieldDecoder Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Issue
+authorAssociation : Field Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Issue
 authorAssociation =
     Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| Identifies the body of the issue.
 -}
-body : FieldDecoder String Github.Object.Issue
+body : Field String Github.Object.Issue
 body =
     Object.fieldDecoder "body" [] Decode.string
 
 
 {-| Identifies the body of the issue rendered to HTML.
 -}
-bodyHTML : FieldDecoder Github.Scalar.Html Github.Object.Issue
+bodyHTML : Field Github.Scalar.Html Github.Object.Issue
 bodyHTML =
     Object.fieldDecoder "bodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the body of the issue rendered to text.
 -}
-bodyText : FieldDecoder String Github.Object.Issue
+bodyText : Field String Github.Object.Issue
 bodyText =
     Object.fieldDecoder "bodyText" [] Decode.string
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : FieldDecoder Bool Github.Object.Issue
+closed : Field Bool Github.Object.Issue
 closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Issue
+closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
 closedAt =
     Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
@@ -116,7 +116,7 @@ closedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.IssueCommentConnection -> FieldDecoder selection Github.Object.Issue
+comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.IssueCommentConnection -> Field selection Github.Object.Issue
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -126,31 +126,31 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "comments" optionalArgs object identity
+    Object.selectionField "comments" optionalArgs object identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.Issue
+createdAt : Field Github.Scalar.DateTime Github.Object.Issue
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : FieldDecoder Bool Github.Object.Issue
+createdViaEmail : Field Bool Github.Object.Issue
 createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.Issue
+editor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.Issue
 editor object =
-    Object.selectionFieldDecoder "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.maybe)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.Issue
+id : Field Github.Scalar.Id Github.Object.Issue
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
@@ -163,7 +163,7 @@ id =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.LabelConnection -> FieldDecoder (Maybe selection) Github.Object.Issue
+labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.LabelConnection -> Field (Maybe selection) Github.Object.Issue
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -173,33 +173,33 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "labels" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "labels" optionalArgs object (identity >> Decode.maybe)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Issue
+lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
 lastEditedAt =
     Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| `true` if the object is locked
 -}
-locked : FieldDecoder Bool Github.Object.Issue
+locked : Field Bool Github.Object.Issue
 locked =
     Object.fieldDecoder "locked" [] Decode.bool
 
 
 {-| Identifies the milestone associated with the issue.
 -}
-milestone : SelectionSet selection Github.Object.Milestone -> FieldDecoder (Maybe selection) Github.Object.Issue
+milestone : SelectionSet selection Github.Object.Milestone -> Field (Maybe selection) Github.Object.Issue
 milestone object =
-    Object.selectionFieldDecoder "milestone" [] object (identity >> Decode.maybe)
+    Object.selectionField "milestone" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the issue number.
 -}
-number : FieldDecoder Int Github.Object.Issue
+number : Field Int Github.Object.Issue
 number =
     Object.fieldDecoder "number" [] Decode.int
 
@@ -212,7 +212,7 @@ number =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> FieldDecoder selection Github.Object.Issue
+participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.UserConnection -> Field selection Github.Object.Issue
 participants fillInOptionals object =
     let
         filledInOptionals =
@@ -222,7 +222,7 @@ participants fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "participants" optionalArgs object identity
+    Object.selectionField "participants" optionalArgs object identity
 
 
 {-| List of project cards associated with this issue.
@@ -233,7 +233,7 @@ participants fillInOptionals object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> FieldDecoder selection Github.Object.Issue
+projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet selection Github.Object.ProjectCardConnection -> Field selection Github.Object.Issue
 projectCards fillInOptionals object =
     let
         filledInOptionals =
@@ -243,21 +243,21 @@ projectCards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "projectCards" optionalArgs object identity
+    Object.selectionField "projectCards" optionalArgs object identity
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : FieldDecoder (Maybe Github.Scalar.DateTime) Github.Object.Issue
+publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
 publishedAt =
     Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> FieldDecoder (Maybe (List selection)) Github.Object.Issue
+reactionGroups : SelectionSet selection Github.Object.ReactionGroup -> Field (Maybe (List selection)) Github.Object.Issue
 reactionGroups object =
-    Object.selectionFieldDecoder "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
 {-| A list of Reactions left on the Issue.
@@ -270,7 +270,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet selection Github.Object.ReactionConnection -> FieldDecoder selection Github.Object.Issue
+reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder.ReactionOrder }) -> SelectionSet selection Github.Object.ReactionConnection -> Field selection Github.Object.Issue
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -280,26 +280,26 @@ reactions fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.ReactionOrder.encode ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "reactions" optionalArgs object identity
+    Object.selectionField "reactions" optionalArgs object identity
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Object.Issue
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Object.Issue
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity
 
 
 {-| The HTTP path for this issue
 -}
-resourcePath : FieldDecoder Github.Scalar.Uri Github.Object.Issue
+resourcePath : Field Github.Scalar.Uri Github.Object.Issue
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the state of the issue.
 -}
-state : FieldDecoder Github.Enum.IssueState.IssueState Github.Object.Issue
+state : Field Github.Enum.IssueState.IssueState Github.Object.Issue
 state =
     Object.fieldDecoder "state" [] Github.Enum.IssueState.decoder
 
@@ -313,7 +313,7 @@ state =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }) -> SelectionSet selection Github.Object.IssueTimelineConnection -> FieldDecoder selection Github.Object.Issue
+timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }) -> SelectionSet selection Github.Object.IssueTimelineConnection -> Field selection Github.Object.Issue
 timeline fillInOptionals object =
     let
         filledInOptionals =
@@ -323,60 +323,60 @@ timeline fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since (\(Github.Scalar.DateTime raw) -> Encode.string raw) ]
                 |> List.filterMap identity
     in
-    Object.selectionFieldDecoder "timeline" optionalArgs object identity
+    Object.selectionField "timeline" optionalArgs object identity
 
 
 {-| Identifies the issue title.
 -}
-title : FieldDecoder String Github.Object.Issue
+title : Field String Github.Object.Issue
 title =
     Object.fieldDecoder "title" [] Decode.string
 
 
 {-| The HTTP URL for this issue
 -}
-url : FieldDecoder Github.Scalar.Uri Github.Object.Issue
+url : Field Github.Scalar.Uri Github.Object.Issue
 url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can user react to this subject
 -}
-viewerCanReact : FieldDecoder Bool Github.Object.Issue
+viewerCanReact : Field Bool Github.Object.Issue
 viewerCanReact =
     Object.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : FieldDecoder Bool Github.Object.Issue
+viewerCanSubscribe : Field Bool Github.Object.Issue
 viewerCanSubscribe =
     Object.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : FieldDecoder Bool Github.Object.Issue
+viewerCanUpdate : Field Bool Github.Object.Issue
 viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : FieldDecoder (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.Issue
+viewerCannotUpdateReasons : Field (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.Issue
 viewerCannotUpdateReasons =
     Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : FieldDecoder Bool Github.Object.Issue
+viewerDidAuthor : Field Bool Github.Object.Issue
 viewerDidAuthor =
     Object.fieldDecoder "viewerDidAuthor" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : FieldDecoder Github.Enum.SubscriptionState.SubscriptionState Github.Object.Issue
+viewerSubscription : Field Github.Enum.SubscriptionState.SubscriptionState Github.Object.Issue
 viewerSubscription =
     Object.fieldDecoder "viewerSubscription" [] Github.Enum.SubscriptionState.decoder

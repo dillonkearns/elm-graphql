@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,27 +26,27 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.AddCommentPayload
+clientMutationId : Field (Maybe String) Github.Object.AddCommentPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The edge from the subject's comment connection.
 -}
-commentEdge : SelectionSet selection Github.Object.IssueCommentEdge -> FieldDecoder selection Github.Object.AddCommentPayload
+commentEdge : SelectionSet selection Github.Object.IssueCommentEdge -> Field selection Github.Object.AddCommentPayload
 commentEdge object =
-    Object.selectionFieldDecoder "commentEdge" [] object identity
+    Object.selectionField "commentEdge" [] object identity
 
 
 {-| The subject
 -}
-subject : SelectionSet selection Github.Interface.Node -> FieldDecoder selection Github.Object.AddCommentPayload
+subject : SelectionSet selection Github.Interface.Node -> Field selection Github.Object.AddCommentPayload
 subject object =
-    Object.selectionFieldDecoder "subject" [] object identity
+    Object.selectionField "subject" [] object identity
 
 
 {-| The edge from the subject's timeline connection.
 -}
-timelineEdge : SelectionSet selection Github.Object.IssueTimelineItemEdge -> FieldDecoder selection Github.Object.AddCommentPayload
+timelineEdge : SelectionSet selection Github.Object.IssueTimelineItemEdge -> Field selection Github.Object.AddCommentPayload
 timelineEdge object =
-    Object.selectionFieldDecoder "timelineEdge" [] object identity
+    Object.selectionField "timelineEdge" [] object identity

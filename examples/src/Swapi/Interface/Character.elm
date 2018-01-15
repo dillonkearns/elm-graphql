@@ -4,7 +4,7 @@
 
 module Swapi.Interface.Character exposing (..)
 
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -44,27 +44,27 @@ onDroid (SelectionSet fields decoder) =
 
 {-| Which movies they appear in.
 -}
-appearsIn : FieldDecoder (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
+appearsIn : Field (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet selection Swapi.Interface.Character -> FieldDecoder (List selection) Swapi.Interface.Character
+friends : SelectionSet selection Swapi.Interface.Character -> Field (List selection) Swapi.Interface.Character
 friends object =
-    Object.selectionFieldDecoder "friends" [] object (identity >> Decode.list)
+    Object.selectionField "friends" [] object (identity >> Decode.list)
 
 
 {-| The ID of the character.
 -}
-id : FieldDecoder Swapi.Scalar.Id Swapi.Interface.Character
+id : Field Swapi.Scalar.Id Swapi.Interface.Character
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the character.
 -}
-name : FieldDecoder String Swapi.Interface.Character
+name : Field String Swapi.Interface.Character
 name =
     Object.fieldDecoder "name" [] Decode.string

@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,6 +26,6 @@ selection constructor =
 
 {-| The list of ranges from a Git blame.
 -}
-ranges : SelectionSet selection Github.Object.BlameRange -> FieldDecoder (List selection) Github.Object.Blame
+ranges : SelectionSet selection Github.Object.BlameRange -> Field (List selection) Github.Object.Blame
 ranges object =
-    Object.selectionFieldDecoder "ranges" [] object (identity >> Decode.list)
+    Object.selectionField "ranges" [] object (identity >> Decode.list)

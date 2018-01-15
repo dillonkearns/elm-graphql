@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,27 +26,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet selection Github.Object.IssueCommentEdge -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.IssueCommentConnection
+edges : SelectionSet selection Github.Object.IssueCommentEdge -> Field (Maybe (List (Maybe selection))) Github.Object.IssueCommentConnection
 edges object =
-    Object.selectionFieldDecoder "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet selection Github.Object.IssueComment -> FieldDecoder (Maybe (List (Maybe selection))) Github.Object.IssueCommentConnection
+nodes : SelectionSet selection Github.Object.IssueComment -> Field (Maybe (List (Maybe selection))) Github.Object.IssueCommentConnection
 nodes object =
-    Object.selectionFieldDecoder "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet selection Github.Object.PageInfo -> FieldDecoder selection Github.Object.IssueCommentConnection
+pageInfo : SelectionSet selection Github.Object.PageInfo -> Field selection Github.Object.IssueCommentConnection
 pageInfo object =
-    Object.selectionFieldDecoder "pageInfo" [] object identity
+    Object.selectionField "pageInfo" [] object identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : FieldDecoder Int Github.Object.IssueCommentConnection
+totalCount : Field Int Github.Object.IssueCommentConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

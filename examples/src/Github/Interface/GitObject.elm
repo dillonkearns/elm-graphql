@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -53,39 +53,39 @@ onTree (SelectionSet fields decoder) =
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : FieldDecoder String Github.Interface.GitObject
+abbreviatedOid : Field String Github.Interface.GitObject
 abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : FieldDecoder Github.Scalar.Uri Github.Interface.GitObject
+commitResourcePath : Field Github.Scalar.Uri Github.Interface.GitObject
 commitResourcePath =
     Object.fieldDecoder "commitResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : FieldDecoder Github.Scalar.Uri Github.Interface.GitObject
+commitUrl : Field Github.Scalar.Uri Github.Interface.GitObject
 commitUrl =
     Object.fieldDecoder "commitUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
-id : FieldDecoder Github.Scalar.Id Github.Interface.GitObject
+id : Field Github.Scalar.Id Github.Interface.GitObject
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
-oid : FieldDecoder Github.Scalar.GitObjectID Github.Interface.GitObject
+oid : Field Github.Scalar.GitObjectID Github.Interface.GitObject
 oid =
     Object.fieldDecoder "oid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet selection Github.Object.Repository -> FieldDecoder selection Github.Interface.GitObject
+repository : SelectionSet selection Github.Object.Repository -> Field selection Github.Interface.GitObject
 repository object =
-    Object.selectionFieldDecoder "repository" [] object identity
+    Object.selectionField "repository" [] object identity

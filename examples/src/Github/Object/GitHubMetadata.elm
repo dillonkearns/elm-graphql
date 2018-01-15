@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,41 +26,41 @@ selection constructor =
 
 {-| Returns a String that's a SHA of `github-services`
 -}
-gitHubServicesSha : FieldDecoder String Github.Object.GitHubMetadata
+gitHubServicesSha : Field String Github.Object.GitHubMetadata
 gitHubServicesSha =
     Object.fieldDecoder "gitHubServicesSha" [] Decode.string
 
 
 {-| IP addresses that users connect to for git operations
 -}
-gitIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
+gitIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 gitIpAddresses =
     Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
 {-| IP addresses that service hooks are sent from
 -}
-hookIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
+hookIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 hookIpAddresses =
     Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
 {-| IP addresses that the importer connects from
 -}
-importerIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
+importerIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 importerIpAddresses =
     Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
 
 
 {-| Whether or not users are verified
 -}
-isPasswordAuthenticationVerifiable : FieldDecoder Bool Github.Object.GitHubMetadata
+isPasswordAuthenticationVerifiable : Field Bool Github.Object.GitHubMetadata
 isPasswordAuthenticationVerifiable =
     Object.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.bool
 
 
 {-| IP addresses for GitHub Pages' A records
 -}
-pagesIpAddresses : FieldDecoder (Maybe (List String)) Github.Object.GitHubMetadata
+pagesIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 pagesIpAddresses =
     Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)

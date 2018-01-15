@@ -9,7 +9,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -25,18 +25,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : FieldDecoder String Github.Object.RepositoryCollaboratorEdge
+cursor : Field String Github.Object.RepositoryCollaboratorEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet selection Github.Object.User -> FieldDecoder selection Github.Object.RepositoryCollaboratorEdge
+node : SelectionSet selection Github.Object.User -> Field selection Github.Object.RepositoryCollaboratorEdge
 node object =
-    Object.selectionFieldDecoder "node" [] object identity
+    Object.selectionField "node" [] object identity
 
 
 {-| The permission the user has on the repository.
 -}
-permission : FieldDecoder Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryCollaboratorEdge
+permission : Field Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryCollaboratorEdge
 permission =
     Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder

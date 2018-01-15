@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,39 +26,39 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet selection Github.Interface.Actor -> FieldDecoder (Maybe selection) Github.Object.DeployedEvent
+actor : SelectionSet selection Github.Interface.Actor -> Field (Maybe selection) Github.Object.DeployedEvent
 actor object =
-    Object.selectionFieldDecoder "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.maybe)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : FieldDecoder Github.Scalar.DateTime Github.Object.DeployedEvent
+createdAt : Field Github.Scalar.DateTime Github.Object.DeployedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The deployment associated with the 'deployed' event.
 -}
-deployment : SelectionSet selection Github.Object.Deployment -> FieldDecoder selection Github.Object.DeployedEvent
+deployment : SelectionSet selection Github.Object.Deployment -> Field selection Github.Object.DeployedEvent
 deployment object =
-    Object.selectionFieldDecoder "deployment" [] object identity
+    Object.selectionField "deployment" [] object identity
 
 
-id : FieldDecoder Github.Scalar.Id Github.Object.DeployedEvent
+id : Field Github.Scalar.Id Github.Object.DeployedEvent
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.DeployedEvent
+pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.DeployedEvent
 pullRequest object =
-    Object.selectionFieldDecoder "pullRequest" [] object identity
+    Object.selectionField "pullRequest" [] object identity
 
 
 {-| The ref associated with the 'deployed' event.
 -}
-ref : SelectionSet selection Github.Object.Ref -> FieldDecoder (Maybe selection) Github.Object.DeployedEvent
+ref : SelectionSet selection Github.Object.Ref -> Field (Maybe selection) Github.Object.DeployedEvent
 ref object =
-    Object.selectionFieldDecoder "ref" [] object (identity >> Decode.maybe)
+    Object.selectionField "ref" [] object (identity >> Decode.maybe)

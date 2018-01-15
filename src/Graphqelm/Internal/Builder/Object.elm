@@ -1,16 +1,16 @@
-module Graphqelm.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionFieldDecoder, unionSelection)
+module Graphqelm.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionField, unionSelection)
 
 {-| **WARNING** `Graphqelm.Interal` modules are used by the `graphqelm` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `graphqelm` CLI.
-@docs fieldDecoder, selection, selectionFieldDecoder, interfaceSelection, unionSelection
+@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection
 
 -}
 
 import Dict
 import Graphqelm.RawField exposing (RawField)
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder(FieldDecoder))
+import Graphqelm.Field as Field exposing (Field(Field))
 import Graphqelm.Internal.Builder.Argument exposing (Argument)
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
@@ -18,21 +18,21 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Refer to a field in auto-generated code.
 -}
-fieldDecoder : String -> List Argument -> Decoder decodesTo -> FieldDecoder decodesTo lockedTo
+fieldDecoder : String -> List Argument -> Decoder decodesTo -> Field decodesTo lockedTo
 fieldDecoder fieldName args decoder =
-    FieldDecoder (leaf fieldName args) decoder
+    Field (leaf fieldName args) decoder
 
 
 {-| Refer to an object in auto-generated code.
 -}
-selectionFieldDecoder :
+selectionField :
     String
     -> List Argument
     -> SelectionSet a objectTypeLock
     -> (Decoder a -> Decoder b)
-    -> FieldDecoder b lockedTo
-selectionFieldDecoder fieldName args (SelectionSet fields decoder) decoderTransform =
-    FieldDecoder (composite fieldName args fields) (decoderTransform decoder)
+    -> Field b lockedTo
+selectionField fieldName args (SelectionSet fields decoder) decoderTransform =
+    Field (composite fieldName args fields) (decoderTransform decoder)
 
 
 composite : String -> List Argument -> List RawField -> RawField

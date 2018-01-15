@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,13 +26,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.AddStarPayload
+clientMutationId : Field (Maybe String) Github.Object.AddStarPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The starrable.
 -}
-starrable : SelectionSet selection Github.Interface.Starrable -> FieldDecoder selection Github.Object.AddStarPayload
+starrable : SelectionSet selection Github.Interface.Starrable -> Field selection Github.Object.AddStarPayload
 starrable object =
-    Object.selectionFieldDecoder "starrable" [] object identity
+    Object.selectionField "starrable" [] object identity

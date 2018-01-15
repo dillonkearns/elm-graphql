@@ -8,7 +8,7 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphqelm.FieldDecoder as FieldDecoder exposing (FieldDecoder)
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
@@ -26,20 +26,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : FieldDecoder (Maybe String) Github.Object.RequestReviewsPayload
+clientMutationId : Field (Maybe String) Github.Object.RequestReviewsPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
 
 
 {-| The pull request that is getting requests.
 -}
-pullRequest : SelectionSet selection Github.Object.PullRequest -> FieldDecoder selection Github.Object.RequestReviewsPayload
+pullRequest : SelectionSet selection Github.Object.PullRequest -> Field selection Github.Object.RequestReviewsPayload
 pullRequest object =
-    Object.selectionFieldDecoder "pullRequest" [] object identity
+    Object.selectionField "pullRequest" [] object identity
 
 
 {-| The edge from the pull request to the requested reviewers.
 -}
-requestedReviewersEdge : SelectionSet selection Github.Object.UserEdge -> FieldDecoder selection Github.Object.RequestReviewsPayload
+requestedReviewersEdge : SelectionSet selection Github.Object.UserEdge -> Field selection Github.Object.RequestReviewsPayload
 requestedReviewersEdge object =
-    Object.selectionFieldDecoder "requestedReviewersEdge" [] object identity
+    Object.selectionField "requestedReviewersEdge" [] object identity
