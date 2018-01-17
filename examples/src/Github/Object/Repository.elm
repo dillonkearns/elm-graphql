@@ -125,7 +125,7 @@ defaultBranchRef object =
     Object.selectionField "defaultBranchRef" [] object (identity >> Decode.maybe)
 
 
-{-| A list of protected branches that are on this repository.
+{-| A list of deploy keys that are on this repository.
 
   - first - Returns the first _n_ elements from the list.
   - after - Returns the elements in the list that come after the specified global ID.
