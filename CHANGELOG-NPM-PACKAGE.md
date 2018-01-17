@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.1] - 2018-01-17
+
 ### Changed
 
 * Renamed type variables from `selection` to `decodesTo` for clarity.
+* Updated code generation to use type and module name `Field` rather than `FieldDecoder` for elm package version 7.0.0.
 
 ## [2.1.0] - 2018-01-13
 
