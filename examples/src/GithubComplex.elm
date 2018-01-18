@@ -4,6 +4,8 @@ import ElmReposRequest
 import Github.Scalar
 import Graphqelm.Document as Document
 import Graphqelm.Http
+import Graphqelm.Operation exposing (RootQuery)
+import Graphqelm.SelectionSet
 import Html exposing (Html, a, div, h1, img, p, pre, text)
 import Html.Attributes exposing (href, src, style, target)
 import PrintAny
@@ -12,7 +14,7 @@ import RemoteData exposing (RemoteData)
 
 makeRequest : Cmd Msg
 makeRequest =
-    ElmReposRequest.query
+    query
         |> Graphqelm.Http.buildQueryRequest "https://api.github.com/graphql"
         |> Graphqelm.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
@@ -33,13 +35,18 @@ init =
     )
 
 
+query : Graphqelm.SelectionSet.SelectionSet ElmReposRequest.Response RootQuery
+query =
+    ElmReposRequest.query ElmReposRequest.Updated
+
+
 view : Model -> Html.Html Msg
 view model =
     div []
         [ elmProjectsView model
         , div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery ElmReposRequest.query) ]
+            , pre [] [ text (Document.serializeQuery query) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]
@@ -74,6 +81,8 @@ resultView result =
         [ avatarView result.owner.avatarUrl
         , repoLink result.name result.url
         , text ("⭐️" ++ toString result.stargazerCount)
+        , text ("🍴" ++ toString result.forkCount)
+        , text ("  Created: " ++ toString result.createdAt)
         ]
 
 

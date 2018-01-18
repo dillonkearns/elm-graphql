@@ -1,4 +1,4 @@
-module ElmReposRequest exposing (Owner, Repo, Response, query)
+module ElmReposRequest exposing (Owner, Repo, Response, SortOrder(..), query)
 
 import Github.Enum.IssueState
 import Github.Enum.SearchType
@@ -24,12 +24,25 @@ type alias Response =
     }
 
 
-query : SelectionSet Response RootQuery
-query =
+type SortOrder
+    = Forks
+    | Stars
+    | Updated
+
+
+order : SortOrder
+order =
+    Forks
+
+
+query : SortOrder -> SelectionSet Response RootQuery
+query sortOrder =
     Query.selection Response
         |> with
             (Query.search (\optionals -> { optionals | first = Present 100 })
-                { query = "language:Elm sort:stars", type_ = Github.Enum.SearchType.Repository }
+                { query = "language:Elm sort:" ++ (sortOrder |> toString |> String.toLower)
+                , type_ = Github.Enum.SearchType.Repository
+                }
                 searchSelection
             )
 
