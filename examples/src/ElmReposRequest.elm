@@ -80,6 +80,7 @@ type alias Repo =
     , forkCount : Int
     , issues : Int
     , owner : Owner
+    , url : Github.Scalar.Uri
     }
 
 
@@ -93,6 +94,7 @@ repositorySelection =
         |> with Repository.forkCount
         |> with openIssues
         |> with (Repository.owner ownerSelection)
+        |> with Repository.url
 
 
 openIssues : Field.Field Int Github.Object.Repository

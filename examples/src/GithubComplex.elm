@@ -4,8 +4,8 @@ import ElmReposRequest
 import Github.Scalar
 import Graphqelm.Document as Document
 import Graphqelm.Http
-import Html exposing (Html, div, h1, img, p, pre, text)
-import Html.Attributes exposing (src, style)
+import Html exposing (Html, a, div, h1, img, p, pre, text)
+import Html.Attributes exposing (href, src, style, target)
 import PrintAny
 import RemoteData exposing (RemoteData)
 
@@ -71,12 +71,20 @@ successView data =
 resultView : ElmReposRequest.Repo -> Html.Html msg
 resultView result =
     div []
-        [ avatarView result.owner.avatarUrl ]
+        [ avatarView result.owner.avatarUrl
+        , repoLink result.name result.url
+        , text ("⭐️" ++ toString result.stargazerCount)
+        ]
 
 
 avatarView : Github.Scalar.Uri -> Html msg
 avatarView (Github.Scalar.Uri avatarUrl) =
-    img [ src avatarUrl, style [ ( "width", "25px" ) ] ] []
+    img [ src avatarUrl, style [ ( "width", "35px" ) ] ] []
+
+
+repoLink : String -> Github.Scalar.Uri -> Html msg
+repoLink repoName (Github.Scalar.Uri repoUrl) =
+    a [ href repoUrl, target "_blank" ] [ text repoName ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
