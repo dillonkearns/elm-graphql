@@ -19,13 +19,14 @@ import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
-import Html exposing (div, h1, p, pre, text)
+import Html exposing (Html, div, h1, img, p, pre, text)
+import Html.Attributes exposing (src, style)
 import PrintAny
 import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    { searchResults : List (Maybe SearchResult)
+    { searchResults : List (Maybe (Maybe Repo))
     }
 
 
@@ -54,13 +55,13 @@ expect maybe =
             Debug.crash "Expected to get thing, got nothing"
 
 
-searchSelection : SelectionSet (List (Maybe SearchResult)) Github.Object.SearchResultItemConnection
+searchSelection : SelectionSet (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
 searchSelection =
     Github.Object.SearchResultItemConnection.selection identity
         |> with thing
 
 
-thing : Field.Field (List (Maybe SearchResult)) Github.Object.SearchResultItemConnection
+thing : Field.Field (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
 thing =
     Github.Object.SearchResultItemConnection.nodes searchResultSelection |> expectField
 
@@ -70,14 +71,9 @@ maybeWithDefault default =
     Field.map (Maybe.withDefault default)
 
 
-type alias SearchResult =
-    { details : Maybe Repo
-    }
-
-
-searchResultSelection : SelectionSet SearchResult Github.Union.SearchResultItem
+searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
 searchResultSelection =
-    Github.Union.SearchResultItem.selection SearchResult
+    Github.Union.SearchResultItem.selection identity
         [ Github.Union.SearchResultItem.onRepository repositorySelection
         ]
 
@@ -184,7 +180,23 @@ elmProjectsView model =
 
 successView : Response -> Html.Html msg
 successView data =
-    div [] []
+    div []
+        (data.searchResults
+            |> List.filterMap identity
+            |> List.filterMap identity
+            |> List.map resultView
+        )
+
+
+resultView : Repo -> Html.Html msg
+resultView result =
+    div []
+        [ avatarView result.owner.avatarUrl ]
+
+
+avatarView : Github.Scalar.Uri -> Html msg
+avatarView (Github.Scalar.Uri avatarUrl) =
+    img [ src avatarUrl, style [ ( "width", "25px" ) ] ] []
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
