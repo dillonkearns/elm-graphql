@@ -82,7 +82,8 @@ resultView result =
         , repoLink result.name result.url
         , text ("⭐️" ++ toString result.stargazerCount)
         , text ("🍴" ++ toString result.forkCount)
-        , text ("  Created: " ++ toString result.createdAt)
+        , text (" Created: " ++ toString result.createdAt)
+        , text (" Updated: " ++ toString result.updatedAt)
         ]
 
 

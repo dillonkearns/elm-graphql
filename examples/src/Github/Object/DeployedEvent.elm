@@ -38,6 +38,13 @@ createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Object.DeployedEvent
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 {-| The deployment associated with the 'deployed' event.
 -}
 deployment : SelectionSet decodesTo Github.Object.Deployment -> Field decodesTo Github.Object.DeployedEvent

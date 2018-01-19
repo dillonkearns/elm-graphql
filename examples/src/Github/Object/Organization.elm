@@ -50,6 +50,13 @@ avatarUrl fillInOptionals =
     Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Object.Organization
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 {-| The organization's public profile description.
 -}
 description : Field (Maybe String) Github.Object.Organization

@@ -41,3 +41,10 @@ editor object =
 id : Field Github.Scalar.Id Github.Object.UserContentEdit
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
+
+
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.UserContentEdit
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)

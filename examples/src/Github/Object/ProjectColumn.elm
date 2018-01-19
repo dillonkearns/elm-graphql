@@ -52,6 +52,13 @@ createdAt =
     Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Object.ProjectColumn
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 id : Field Github.Scalar.Id Github.Object.ProjectColumn
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
@@ -76,6 +83,13 @@ project object =
 resourcePath : Field Github.Scalar.Uri Github.Object.ProjectColumn
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+
+
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.ProjectColumn
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this project column

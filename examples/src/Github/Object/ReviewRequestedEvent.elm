@@ -55,3 +55,10 @@ pullRequest object =
 requestedReviewer : SelectionSet decodesTo Github.Union.RequestedReviewer -> Field (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 requestedReviewer object =
     Object.selectionField "requestedReviewer" [] object (identity >> Decode.maybe)
+
+
+{-| Identifies the user whose review was requested.
+-}
+subject : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.ReviewRequestedEvent
+subject object =
+    Object.selectionField "subject" [] object (identity >> Decode.maybe)

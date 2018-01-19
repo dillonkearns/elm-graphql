@@ -90,6 +90,7 @@ type alias Repo =
     , description : Maybe String
     , stargazerCount : Int
     , createdAt : Github.Scalar.DateTime
+    , updatedAt : Github.Scalar.DateTime
     , forkCount : Int
     , issues : Int
     , owner : Owner
@@ -104,6 +105,7 @@ repositorySelection =
         |> with Repository.description
         |> with (Repository.stargazers (\optionals -> { optionals | first = Present 0 }) stargazersCount)
         |> with Repository.createdAt
+        |> with Repository.updatedAt
         |> with Repository.forkCount
         |> with openIssues
         |> with (Repository.owner ownerSelection)

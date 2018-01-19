@@ -281,6 +281,13 @@ teamsUrl =
     Object.fieldDecoder "teamsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.Team
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+
+
 {-| The HTTP URL for this team
 -}
 url : Field Github.Scalar.Uri Github.Object.Team

@@ -58,6 +58,13 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
     FragmentSelectionSet "PullRequestReviewComment" fields decoder
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Interface.Reactable
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 id : Field Github.Scalar.Id Github.Interface.Reactable
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)

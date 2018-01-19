@@ -56,6 +56,13 @@ creator object =
     Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Object.ProjectCard
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 id : Field Github.Scalar.Id Github.Object.ProjectCard
 id =
     Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
@@ -75,6 +82,13 @@ project object =
     Object.selectionField "project" [] object identity
 
 
+{-| The column that contains this card.
+-}
+projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> Field decodesTo Github.Object.ProjectCard
+projectColumn object =
+    Object.selectionField "projectColumn" [] object identity
+
+
 {-| The HTTP path for this card
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.ProjectCard
@@ -87,6 +101,13 @@ resourcePath =
 state : Field (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
 state =
     Object.fieldDecoder "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.maybe)
+
+
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.ProjectCard
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this card

@@ -84,6 +84,13 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Object.PullRequestReviewComment
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 {-| The diff hunk to which the comment applies.
 -}
 diffHunk : Field String Github.Object.PullRequestReviewComment

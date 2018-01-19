@@ -194,6 +194,13 @@ createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Object.PullRequest
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 {-| The number of deletions in this pull request.
 -}
 deletions : Field Int Github.Object.PullRequest
@@ -524,6 +531,13 @@ timeline fillInOptionals object =
 title : Field String Github.Object.PullRequest
 title =
     Object.fieldDecoder "title" [] Decode.string
+
+
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.PullRequest
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this pull request.

@@ -128,6 +128,13 @@ isPrivate =
 
 {-| The license associated with the repository
 -}
+license : Field (Maybe String) Github.Interface.RepositoryInfo
+license =
+    Object.fieldDecoder "license" [] (Decode.string |> Decode.maybe)
+
+
+{-| The license associated with the repository
+-}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Interface.RepositoryInfo
 licenseInfo object =
     Object.selectionField "licenseInfo" [] object (identity >> Decode.maybe)
@@ -198,6 +205,13 @@ shortDescriptionHTML fillInOptionals =
                 |> List.filterMap identity
     in
     Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.string |> Decode.map Github.Scalar.Html)
+
+
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Interface.RepositoryInfo
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this repository

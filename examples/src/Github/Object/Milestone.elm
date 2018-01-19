@@ -6,6 +6,7 @@ module Github.Object.Milestone exposing (..)
 
 import Github.Enum.IssueState
 import Github.Enum.MilestoneState
+import Github.Enum.PullRequestState
 import Github.InputObject.IssueOrder
 import Github.Interface
 import Github.Object
@@ -105,6 +106,32 @@ number =
     Object.fieldDecoder "number" [] Decode.int
 
 
+{-| A list of pull requests associated with the milestone.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+  - states - A list of states to filter the pull requests by.
+  - labels - A list of label names to filter the pull requests by.
+  - headRefName - The head ref name to filter the pull requests by.
+  - baseRefName - The base ref name to filter the pull requests by.
+  - orderBy - Ordering options for pull requests returned from the connection.
+
+-}
+pullRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder.IssueOrder }) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Milestone
+pullRequests fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.IssueOrder.encode ]
+                |> List.filterMap identity
+    in
+    Object.selectionField "pullRequests" optionalArgs object identity
+
+
 {-| The repository associated with this milestone.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Milestone
@@ -131,6 +158,13 @@ state =
 title : Field String Github.Object.Milestone
 title =
     Object.fieldDecoder "title" [] Decode.string
+
+
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.Milestone
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this milestone

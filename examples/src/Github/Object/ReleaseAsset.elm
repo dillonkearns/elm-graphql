@@ -78,6 +78,13 @@ size =
     Object.fieldDecoder "size" [] Decode.int
 
 
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.ReleaseAsset
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+
+
 {-| The user that performed the upload
 -}
 uploadedBy : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.ReleaseAsset

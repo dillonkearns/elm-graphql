@@ -46,6 +46,13 @@ creator object =
     Object.selectionField "creator" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the primary key from the database.
+-}
+databaseId : Field (Maybe Int) Github.Object.Deployment
+databaseId =
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+
+
 {-| The environment to which this deployment was made.
 -}
 environment : Field (Maybe String) Github.Object.Deployment

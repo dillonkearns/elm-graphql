@@ -114,6 +114,13 @@ tag object =
     Object.selectionField "tag" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.Release
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+
+
 {-| The HTTP URL for this issue
 -}
 url : Field Github.Scalar.Uri Github.Object.Release

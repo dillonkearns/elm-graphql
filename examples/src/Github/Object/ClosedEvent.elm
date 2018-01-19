@@ -45,6 +45,13 @@ closer object =
     Object.selectionField "closer" [] object (identity >> Decode.maybe)
 
 
+{-| Identifies the commit associated with the 'closed' event.
+-}
+commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.ClosedEvent
+commit object =
+    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+
+
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.ClosedEvent

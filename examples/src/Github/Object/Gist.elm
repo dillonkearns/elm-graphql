@@ -115,6 +115,13 @@ stargazers fillInOptionals object =
     Object.selectionField "stargazers" optionalArgs object identity
 
 
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Object.Gist
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+
+
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
 viewerHasStarred : Field Bool Github.Object.Gist

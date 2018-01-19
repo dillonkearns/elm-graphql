@@ -135,6 +135,13 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
+{-| Identifies the date and time when the object was last updated.
+-}
+updatedAt : Field Github.Scalar.DateTime Github.Interface.Comment
+updatedAt =
+    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+
+
 {-| Did the viewer author this comment.
 -}
 viewerDidAuthor : Field Bool Github.Interface.Comment
