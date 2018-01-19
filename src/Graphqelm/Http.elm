@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, buildQueryRequest, send, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, buildQueryRequest, send, toTask, withCredentials, withHeader, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -6,7 +6,7 @@ folder for some end-to-end examples.
 The builder syntax is inspired by Luke Westby's
 [elm-http-builder package](http://package.elm-lang.org/packages/lukewestby/elm-http-builder/latest).
 
-@docs buildQueryRequest, buildMutationRequest, send, withHeader, withTimeout
+@docs buildQueryRequest, buildMutationRequest, send, withHeader, withTimeout, withCredentials, toTask
 @docs Request, Error
 
 -}
@@ -19,6 +19,7 @@ import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
 import Json.Decode
 import Json.Encode
+import Task exposing (Task)
 import Time exposing (Time)
 
 
@@ -127,6 +128,28 @@ toRequest : Request decodesTo -> Http.Request (SuccessOrError decodesTo)
 toRequest (Request request) =
     { request | expect = Http.expectJson (decoderOrError request.expect) }
         |> Http.request
+
+
+{-| Convert a Request to a Task. See `Graphqelm.Http.send` for an example of
+how to build up a Request.
+-}
+toTask : Request decodesTo -> Task Error decodesTo
+toTask request =
+    request
+        |> toRequest
+        |> Http.toTask
+        |> Task.mapError HttpError
+        |> Task.andThen failTaskOnHttpSuccessWithErrors
+
+
+failTaskOnHttpSuccessWithErrors : SuccessOrError decodesTo -> Task Error decodesTo
+failTaskOnHttpSuccessWithErrors successOrError =
+    case successOrError of
+        Success value ->
+            Task.succeed value
+
+        ErrorThing graphqlErrorGraphqlErrorList ->
+            Task.fail (GraphqlError graphqlErrorGraphqlErrorList)
 
 
 decoderOrError : Json.Decode.Decoder a -> Json.Decode.Decoder (SuccessOrError a)

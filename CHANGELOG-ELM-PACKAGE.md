@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `Graphqelm.Http.toTask`.
+* Expose `Graphqelm.Http.withCredentials`.
+
 ## [7.0.0] - 2018-01-17
 
 ### Changed
