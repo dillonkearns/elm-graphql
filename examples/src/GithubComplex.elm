@@ -21,16 +21,16 @@ makeRequest =
 
 
 type Msg
-    = GotResponse Model
+    = GotResponse (RemoteData Graphqelm.Http.Error ElmReposRequest.Response)
 
 
 type alias Model =
-    RemoteData Graphqelm.Http.Error ElmReposRequest.Response
+    { githubResponse : RemoteData Graphqelm.Http.Error ElmReposRequest.Response }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( RemoteData.Loading
+    ( { githubResponse = RemoteData.Loading }
     , makeRequest
     )
 
@@ -57,7 +57,7 @@ view model =
 
 elmProjectsView : Model -> Html.Html msg
 elmProjectsView model =
-    case model of
+    case model.githubResponse of
         RemoteData.Success data ->
             successView data
 
@@ -101,7 +101,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotResponse response ->
-            ( response, Cmd.none )
+            ( { model | githubResponse = response }, Cmd.none )
 
 
 main : Program Never Model Msg
