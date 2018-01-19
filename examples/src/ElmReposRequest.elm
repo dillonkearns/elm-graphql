@@ -30,11 +30,6 @@ type SortOrder
     | Updated
 
 
-order : SortOrder
-order =
-    Forks
-
-
 query : SortOrder -> SelectionSet Response RootQuery
 query sortOrder =
     Query.selection Response

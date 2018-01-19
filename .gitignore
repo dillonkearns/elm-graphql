@@ -1,6 +1,7 @@
 # Distribution
 build/
 documentation.json
+*/elm.js
 
 # elm-package generated files
 elm-stuff
