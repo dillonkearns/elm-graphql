@@ -12,9 +12,9 @@ import PrintAny
 import RemoteData exposing (RemoteData)
 
 
-makeRequest : Cmd Msg
-makeRequest =
-    query
+makeRequest : ElmReposRequest.SortOrder -> Cmd Msg
+makeRequest sortOrder =
+    query sortOrder
         |> Graphqelm.Http.buildQueryRequest "https://api.github.com/graphql"
         |> Graphqelm.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
@@ -25,19 +25,23 @@ type Msg
 
 
 type alias Model =
-    { githubResponse : RemoteData Graphqelm.Http.Error ElmReposRequest.Response }
+    { githubResponse : RemoteData Graphqelm.Http.Error ElmReposRequest.Response
+    , sortOrder : ElmReposRequest.SortOrder
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { githubResponse = RemoteData.Loading }
-    , makeRequest
+    ( { githubResponse = RemoteData.Loading
+      , sortOrder = ElmReposRequest.Stars
+      }
+    , makeRequest ElmReposRequest.Stars
     )
 
 
-query : Graphqelm.SelectionSet.SelectionSet ElmReposRequest.Response RootQuery
-query =
-    ElmReposRequest.query ElmReposRequest.Updated
+query : ElmReposRequest.SortOrder -> Graphqelm.SelectionSet.SelectionSet ElmReposRequest.Response RootQuery
+query sortOrder =
+    ElmReposRequest.query sortOrder
 
 
 view : Model -> Html.Html Msg
@@ -46,7 +50,7 @@ view model =
         [ elmProjectsView model
         , div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery query) ]
+            , pre [] [ text (Document.serializeQuery (query model.sortOrder)) ]
             ]
         , div []
             [ h1 [] [ text "Response" ]
