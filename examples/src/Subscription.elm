@@ -233,6 +233,18 @@ phraseToString phrase =
         Phrase.Try ->
             "Do, or do not, there is no try."
 
+        Phrase.BadFeeling ->
+            "I've got a bad feeling about this."
+
+        Phrase.Droids ->
+            "These aren't the droids you're looking for."
+
+        Phrase.Traitor ->
+            "You are a part of the Rebel Alliance and a traitor!"
+
+        Phrase.Trap ->
+            "It's a trap!"
+
 
 socketUrl : String
 socketUrl =

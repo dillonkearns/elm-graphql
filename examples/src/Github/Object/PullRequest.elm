@@ -96,6 +96,13 @@ baseRefName =
     Object.fieldDecoder "baseRefName" [] Decode.string
 
 
+{-| Identifies the oid of the base ref associated with the pull request, even if the ref has been deleted.
+-}
+baseRefOid : Field Github.Scalar.GitObjectID Github.Object.PullRequest
+baseRefOid =
+    Object.fieldDecoder "baseRefOid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
+
+
 {-| Identifies the body of the pull request.
 -}
 body : Field String Github.Object.PullRequest
@@ -227,6 +234,13 @@ headRef object =
 headRefName : Field String Github.Object.PullRequest
 headRefName =
     Object.fieldDecoder "headRefName" [] Decode.string
+
+
+{-| Identifies the oid of the head ref associated with the pull request, even if the ref has been deleted.
+-}
+headRefOid : Field Github.Scalar.GitObjectID Github.Object.PullRequest
+headRefOid =
+    Object.fieldDecoder "headRefOid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The repository associated with this pull request's head Ref.

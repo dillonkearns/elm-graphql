@@ -9,18 +9,26 @@ import Json.Decode as Decode exposing (Decoder)
 
 {-| Phrases for StarChat
 
+  - BadFeeling - Originally said by Han Solo
+  - Droids - Originally said by Obi-Wan
   - Faith - Originally said by Vader.
   - Father - Originally said by Vader.
   - Help - Originally said by Leia.
   - TheForce - Originally said by Obi-Wan.
+  - Traitor - Originally said by Vader
+  - Trap - Originally said by Admiral Ackbar
   - Try - Originally said by Yoda.
 
 -}
 type Phrase
-    = Faith
+    = BadFeeling
+    | Droids
+    | Faith
     | Father
     | Help
     | TheForce
+    | Traitor
+    | Trap
     | Try
 
 
@@ -30,6 +38,12 @@ decoder =
         |> Decode.andThen
             (\string ->
                 case string of
+                    "BAD_FEELING" ->
+                        Decode.succeed BadFeeling
+
+                    "DROIDS" ->
+                        Decode.succeed Droids
+
                     "FAITH" ->
                         Decode.succeed Faith
 
@@ -41,6 +55,12 @@ decoder =
 
                     "THE_FORCE" ->
                         Decode.succeed TheForce
+
+                    "TRAITOR" ->
+                        Decode.succeed Traitor
+
+                    "TRAP" ->
+                        Decode.succeed Trap
 
                     "TRY" ->
                         Decode.succeed Try
@@ -55,6 +75,12 @@ decoder =
 toString : Phrase -> String
 toString enum =
     case enum of
+        BadFeeling ->
+            "BAD_FEELING"
+
+        Droids ->
+            "DROIDS"
+
         Faith ->
             "FAITH"
 
@@ -66,6 +92,12 @@ toString enum =
 
         TheForce ->
             "THE_FORCE"
+
+        Traitor ->
+            "TRAITOR"
+
+        Trap ->
+            "TRAP"
 
         Try ->
             "TRY"
