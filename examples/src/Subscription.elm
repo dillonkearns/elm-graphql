@@ -1,9 +1,9 @@
 module Subscription exposing (main)
 
 import Graphqelm.Document
-import Graphqelm.Document.LowLevel
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
+import Graphqelm.Subscription
 import Html exposing (button, div, h1, li, p, pre, text, ul)
 import Html.Events exposing (onClick)
 import Json.Decode
@@ -16,7 +16,6 @@ import Swapi.Object
 import Swapi.Object.ChatMessage
 import Swapi.Scalar
 import Swapi.Subscription as Subscription
-import Time
 import WebSocket
 
 
@@ -54,6 +53,7 @@ characterSelection =
 type alias Model =
     { data : List ChatMessage
     , subscriptionStatus : SubscriptionStatus
+    , graphqlSubscriptionModel : Graphqelm.Subscription.Model Msg ChatMessage
     }
 
 
@@ -63,17 +63,22 @@ type SubscriptionStatus
 
 
 type Msg
-    = GraphqlSubscriptionMsg (Result String (SubscriptionResponse ChatMessage))
-    | SendMessage Phrase
-    | Sendheartbeat Time.Time
+    = SendMessage Phrase
+    | GraphqlSubscriptionMsg (Graphqelm.Subscription.Msg ChatMessage)
+    | SubscriptionDataReceived ChatMessage
 
 
 init : ( Model, Cmd Msg )
 init =
+    let
+        ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
+            Graphqelm.Subscription.init socketUrl document SubscriptionDataReceived
+    in
     ( { data = []
       , subscriptionStatus = Uninitialized
+      , graphqlSubscriptionModel = graphqlSubscriptionModel
       }
-    , WebSocket.send socketUrl initMessage
+    , graphqlSubscriptionCmd
     )
 
 
@@ -141,41 +146,14 @@ socketUrl =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        GraphqlSubscriptionMsg response ->
-            let
-                _ =
-                    Debug.log "GraphqlSubscriptionMsg" response
-            in
-            case response of
-                Ok value ->
-                    case value of
-                        SubscriptionData newData ->
-                            ( { model | data = newData :: model.data }, Cmd.none )
-
-                        HealthStatus ->
-                            let
-                                _ =
-                                    Debug.log "Health check"
-                            in
-                            if model.subscriptionStatus == Uninitialized then
-                                ( { model | subscriptionStatus = Connected }
-                                , WebSocket.send socketUrl (documentRequest (Graphqelm.Document.serializeSubscription document))
-                                )
-                            else
-                                ( model, Cmd.none )
-
-                Err error ->
-                    let
-                        _ =
-                            Debug.log ("ERROR: " ++ error)
-                    in
-                    ( model, Cmd.none )
+        GraphqlSubscriptionMsg graphqlSubscriptionMsg ->
+            Graphqelm.Subscription.update graphqlSubscriptionMsg model
 
         SendMessage phrase ->
             ( model, WebSocket.send socketUrl (documentRequest (Graphqelm.Document.serializeMutation (sendMessage phrase))) )
 
-        Sendheartbeat _ ->
-            ( model, WebSocket.send socketUrl heartBeatMessage )
+        SubscriptionDataReceived newData ->
+            ( { model | data = newData :: model.data }, Cmd.none )
 
 
 initMessage : String
@@ -216,11 +194,7 @@ documentRequest operation =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.batch
-        [ WebSocket.listen socketUrl
-            (subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document) >> GraphqlSubscriptionMsg)
-        , Time.every (30 * Time.second) Sendheartbeat
-        ]
+    Graphqelm.Subscription.subscription GraphqlSubscriptionMsg socketUrl document
 
 
 subscriptionDecoder : Json.Decode.Decoder a -> String -> Result String (SubscriptionResponse a)
