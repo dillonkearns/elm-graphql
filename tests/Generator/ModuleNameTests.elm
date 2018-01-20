@@ -17,6 +17,7 @@ all =
                     (Context.context
                         { query = "RootQueryType"
                         , mutation = Nothing
+                        , subscription = Nothing
                         , apiSubmodule = [ "Api" ]
                         , interfaces = Dict.empty
                         }
