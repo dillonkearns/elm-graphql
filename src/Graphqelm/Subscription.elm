@@ -1,4 +1,4 @@
-module Graphqelm.Subscription exposing (Model, Msg, init, subscription, update)
+module Graphqelm.Subscription exposing (FrameworkKnowledge, Model, Msg, Response(..), init, subscription, update)
 
 import Graphqelm.Document
 import Graphqelm.Document.LowLevel
@@ -32,30 +32,33 @@ type Model msg decodesTo
         , subscriptionDocument : SelectionSet decodesTo RootSubscription
         , socketUrl : String
         , onData : decodesTo -> msg
+        , frameworkKnowledge : FrameworkKnowledge decodesTo
         }
 
 
-init : String -> SelectionSet decodesTo RootSubscription -> (decodesTo -> msg) -> ( Model msg decodesTo, Cmd msg )
-init socketUrl subscriptionDocument onData =
+init : FrameworkKnowledge decodesTo -> String -> SelectionSet decodesTo RootSubscription -> (decodesTo -> msg) -> ( Model msg decodesTo, Cmd msg )
+init frameworkKnowledge socketUrl subscriptionDocument onData =
     ( Model
         { status = Uninitialized
         , subscriptionDocument = subscriptionDocument
         , socketUrl = socketUrl
         , onData = onData
+        , frameworkKnowledge = frameworkKnowledge
         }
     , WebSocket.send socketUrl (frameworkKnowledge.initMessage |> Encode.encode 0)
     )
 
 
 subscription :
-    (Msg decodesTo -> msg)
+    Model msg decodesTo
+    -> (Msg decodesTo -> msg)
     -> String
     -> Graphqelm.SelectionSet.SelectionSet decodesTo RootSubscription
     -> Sub msg
-subscription toMsg socketUrl document =
+subscription (Model model) toMsg socketUrl document =
     Sub.batch
         [ WebSocket.listen socketUrl
-            (Json.Decode.decodeString (frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document))
+            (Json.Decode.decodeString (model.frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document))
                 >> ResponseReceived
             )
         , Time.every (30 * Time.second) SendHeartbeat
@@ -72,12 +75,12 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
         Model model ->
             case msg of
                 SendHeartbeat time ->
-                    ( fullModel, WebSocket.send model.socketUrl (frameworkKnowledge.heartBeatMessage |> Encode.encode 0) )
+                    ( fullModel, WebSocket.send model.socketUrl (model.frameworkKnowledge.heartBeatMessage |> Encode.encode 0) )
 
                 ResponseReceived response ->
                     let
                         documentRequest =
-                            frameworkKnowledge.documentRequest >> Encode.encode 0
+                            model.frameworkKnowledge.documentRequest >> Encode.encode 0
                     in
                     case response of
                         Ok HealthStatus ->
@@ -97,56 +100,11 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
                             ( fullModel, Cmd.none )
 
 
-frameworkKnowledge :
+type alias FrameworkKnowledge subscriptionDecodesTo =
     { documentRequest : String -> Encode.Value
     , heartBeatMessage : Encode.Value
     , initMessage : Encode.Value
     , subscriptionDecoder :
-        Json.Decode.Decoder a -> Json.Decode.Decoder (Response a)
+        Json.Decode.Decoder subscriptionDecodesTo
+        -> Json.Decode.Decoder (Response subscriptionDecodesTo)
     }
-frameworkKnowledge =
-    { initMessage =
-        Encode.list
-            [ Encode.string "1"
-            , Encode.string "1"
-            , Encode.string "__absinthe__:control"
-            , Encode.string "phx_join"
-            , Encode.object []
-            ]
-    , heartBeatMessage =
-        Encode.list
-            [ Encode.null
-            , Encode.string "1"
-            , Encode.string "phoenix"
-            , Encode.string "heartbeat"
-            , Encode.object []
-            ]
-    , documentRequest =
-        \operation ->
-            Encode.list
-                [ Encode.string "1"
-                , Encode.string "1"
-                , Encode.string "__absinthe__:control"
-                , Encode.string "doc"
-                , Encode.object [ ( "query", operation |> Encode.string ) ]
-                ]
-    , subscriptionDecoder =
-        \decoder ->
-            subscriptionResponseDecoder
-                (decoder
-                    |> Json.Decode.field "result"
-                    |> Json.Decode.index 4
-                )
-    }
-
-
-subscriptionResponseDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (Response a)
-subscriptionResponseDecoder decoder =
-    Json.Decode.index 3 Json.Decode.string
-        |> Json.Decode.andThen
-            (\responseType ->
-                if responseType == "subscription:data" then
-                    decoder |> Json.Decode.map SubscriptionDataReceived
-                else
-                    Json.Decode.succeed HealthStatus
-            )

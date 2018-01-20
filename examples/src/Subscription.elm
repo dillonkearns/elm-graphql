@@ -68,11 +68,48 @@ type Msg
     | SubscriptionDataReceived ChatMessage
 
 
+frameworkKnowledge : Graphqelm.Subscription.FrameworkKnowledge subscriptionDecodesTo
+frameworkKnowledge =
+    { initMessage =
+        Encode.list
+            [ Encode.string "1"
+            , Encode.string "1"
+            , Encode.string "__absinthe__:control"
+            , Encode.string "phx_join"
+            , Encode.object []
+            ]
+    , heartBeatMessage =
+        Encode.list
+            [ Encode.null
+            , Encode.string "1"
+            , Encode.string "phoenix"
+            , Encode.string "heartbeat"
+            , Encode.object []
+            ]
+    , documentRequest =
+        \operation ->
+            Encode.list
+                [ Encode.string "1"
+                , Encode.string "1"
+                , Encode.string "__absinthe__:control"
+                , Encode.string "doc"
+                , Encode.object [ ( "query", operation |> Encode.string ) ]
+                ]
+    , subscriptionDecoder =
+        \decoder ->
+            subscriptionResponseDecoder
+                (decoder
+                    |> Json.Decode.field "result"
+                    |> Json.Decode.index 4
+                )
+    }
+
+
 init : ( Model, Cmd Msg )
 init =
     let
         ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-            Graphqelm.Subscription.init socketUrl document SubscriptionDataReceived
+            Graphqelm.Subscription.init frameworkKnowledge socketUrl document SubscriptionDataReceived
     in
     ( { data = []
       , subscriptionStatus = Uninitialized
@@ -156,30 +193,6 @@ update msg model =
             ( { model | data = newData :: model.data }, Cmd.none )
 
 
-initMessage : String
-initMessage =
-    Encode.list
-        [ Encode.string "1"
-        , Encode.string "1"
-        , Encode.string "__absinthe__:control"
-        , Encode.string "phx_join"
-        , Encode.object []
-        ]
-        |> Encode.encode 0
-
-
-heartBeatMessage : String
-heartBeatMessage =
-    Encode.list
-        [ Encode.null
-        , Encode.string "1"
-        , Encode.string "phoenix"
-        , Encode.string "heartbeat"
-        , Encode.object []
-        ]
-        |> Encode.encode 0
-
-
 documentRequest : String -> String
 documentRequest operation =
     Encode.list
@@ -194,36 +207,19 @@ documentRequest operation =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Graphqelm.Subscription.subscription GraphqlSubscriptionMsg socketUrl document
+    Graphqelm.Subscription.subscription model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl document
 
 
-subscriptionDecoder : Json.Decode.Decoder a -> String -> Result String (SubscriptionResponse a)
-subscriptionDecoder decoder response =
-    response
-        |> Json.Decode.decodeString
-            (subscriptionResponseDecoder
-                (decoder
-                    |> Json.Decode.field "result"
-                    |> Json.Decode.index 4
-                )
-            )
-
-
-subscriptionResponseDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (SubscriptionResponse a)
+subscriptionResponseDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (Graphqelm.Subscription.Response a)
 subscriptionResponseDecoder decoder =
     Json.Decode.index 3 Json.Decode.string
         |> Json.Decode.andThen
             (\responseType ->
                 if responseType == "subscription:data" then
-                    decoder |> Json.Decode.map SubscriptionData
+                    decoder |> Json.Decode.map Graphqelm.Subscription.SubscriptionDataReceived
                 else
-                    Json.Decode.succeed HealthStatus
+                    Json.Decode.succeed Graphqelm.Subscription.HealthStatus
             )
-
-
-type SubscriptionResponse a
-    = SubscriptionData a
-    | HealthStatus
 
 
 main : Program Never Model Msg
