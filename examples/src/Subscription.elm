@@ -2,7 +2,6 @@ module Subscription exposing (main)
 
 import Graphqelm.Document
 import Graphqelm.Document.LowLevel
-import Graphqelm.Http
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, li, p, pre, text, ul)
@@ -65,7 +64,6 @@ type SubscriptionStatus
 type Msg
     = GotResponse (Result String (SubscriptionResponse ChatMessage))
     | SendMessage Phrase
-    | NoOp (Result Graphqelm.Http.Error (Maybe ()))
 
 
 init : ( Model, Cmd Msg )
@@ -167,13 +165,7 @@ update msg model =
                     ( model, Cmd.none )
 
         SendMessage phrase ->
-            ( model
-            , Graphqelm.Http.buildMutationRequest "https://graphqelm.herokuapp.com/" (sendMessage phrase)
-                |> Graphqelm.Http.send NoOp
-            )
-
-        NoOp _ ->
-            ( model, Cmd.none )
+            ( model, WebSocket.send socketUrl (documentRequest (Graphqelm.Document.serializeMutation (sendMessage phrase))) )
 
 
 initMessage : String
