@@ -24,8 +24,8 @@ sendChatMessage characterId phrase =
         |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty)
 
 
-document : SelectionSet ChatMessage RootSubscription
-document =
+subscriptionsDocument : SelectionSet ChatMessage RootSubscription
+subscriptionsDocument =
     Subscription.selection identity
         |> with (Subscription.newMessage chatMessageSelection)
 
@@ -125,7 +125,7 @@ init : ( Model, Cmd Msg )
 init =
     let
         ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-            Graphqelm.Subscription.init frameworkKnowledge socketUrl document SubscriptionDataReceived
+            Graphqelm.Subscription.init frameworkKnowledge socketUrl subscriptionsDocument SubscriptionDataReceived
     in
     ( { data = []
       , subscriptionStatus = Graphqelm.Subscription.Uninitialized
@@ -167,12 +167,18 @@ characterRadioButtons =
 messageButtons : Html.Html Msg
 messageButtons =
     div []
-        [ messageButton Phrase.Faith
-        , messageButton Phrase.Father
-        , messageButton Phrase.Help
-        , messageButton Phrase.TheForce
-        , messageButton Phrase.Try
-        ]
+        ([ Phrase.Faith
+         , Phrase.Father
+         , Phrase.Help
+         , Phrase.TheForce
+         , Phrase.Try
+         , Phrase.BadFeeling
+         , Phrase.Droids
+         , Phrase.Traitor
+         , Phrase.Trap
+         ]
+            |> List.map messageButton
+        )
 
 
 (=>) : a -> b -> ( a, b )
@@ -272,7 +278,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Graphqelm.Subscription.listen model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl document
+    Graphqelm.Subscription.listen model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl subscriptionsDocument
 
 
 main : Program Never Model Msg
