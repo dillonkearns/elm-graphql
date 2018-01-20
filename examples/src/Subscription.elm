@@ -165,6 +165,10 @@ update msg model =
                                 ( model, Cmd.none )
 
                 Err error ->
+                    let
+                        _ =
+                            Debug.log ("ERROR: " ++ error)
+                    in
                     ( model, Cmd.none )
 
         SendMessage phrase ->
