@@ -278,7 +278,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Graphqelm.Subscription.listen model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl subscriptionsDocument
+    Graphqelm.Subscription.listen model.graphqlSubscriptionModel GraphqlSubscriptionMsg
 
 
 main : Program Never Model Msg

@@ -144,13 +144,11 @@ onStatusChanged onStatusChanged (Model model) =
 listen :
     Model msg decodesTo
     -> (Msg decodesTo -> msg)
-    -> String
-    -> Graphqelm.SelectionSet.SelectionSet decodesTo RootSubscription
     -> Sub msg
-listen (Model model) toMsg socketUrl document =
+listen (Model model) toMsg =
     Sub.batch
-        [ WebSocket.listen socketUrl
-            (Json.Decode.decodeString (model.frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document))
+        [ WebSocket.listen model.socketUrl
+            (Json.Decode.decodeString (model.frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder model.subscriptionDocument))
                 >> ResponseReceived
             )
         , Time.every (30 * Time.second) SendHeartbeat
