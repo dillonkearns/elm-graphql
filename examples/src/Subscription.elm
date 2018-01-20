@@ -16,6 +16,7 @@ import Swapi.Object
 import Swapi.Object.ChatMessage
 import Swapi.Scalar
 import Swapi.Subscription as Subscription
+import Time
 import WebSocket
 
 
@@ -64,6 +65,7 @@ type SubscriptionStatus
 type Msg
     = GotResponse (Result String (SubscriptionResponse ChatMessage))
     | SendMessage Phrase
+    | SendHeartbeat Time.Time
 
 
 init : ( Model, Cmd Msg )
@@ -168,6 +170,9 @@ update msg model =
         SendMessage phrase ->
             ( model, WebSocket.send socketUrl (documentRequest (Graphqelm.Document.serializeMutation (sendMessage phrase))) )
 
+        SendHeartbeat _ ->
+            ( model, WebSocket.send socketUrl heartBeatMessage )
+
 
 initMessage : String
 initMessage =
@@ -179,6 +184,22 @@ initMessage =
         , Encode.object []
         ]
         |> Encode.encode 0
+
+
+heartBeatMessage : String
+heartBeatMessage =
+    Encode.list
+        [ Encode.null
+        , Encode.string "1"
+        , Encode.string "phoenix"
+        , Encode.string "heartbeat"
+        , Encode.object []
+        ]
+        |> Encode.encode 0
+
+
+
+-- [null, "3", "phoenix", "heartbeat", {}]
 
 
 documentRequest : String -> String
@@ -203,6 +224,7 @@ subscriptions model =
     Sub.batch
         [ WebSocket.listen socketUrl
             (subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document) >> GotResponse)
+        , Time.every (30 * Time.second) SendHeartbeat
         ]
 
 
