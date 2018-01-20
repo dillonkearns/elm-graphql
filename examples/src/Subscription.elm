@@ -63,7 +63,7 @@ type SubscriptionStatus
 
 
 type Msg
-    = GotResponse (Result String (SubscriptionResponse ChatMessage))
+    = GraphqlSubscriptionMsg (Result String (SubscriptionResponse ChatMessage))
     | SendMessage Phrase
     | SendHeartbeat Time.Time
 
@@ -141,10 +141,10 @@ socketUrl =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        GotResponse response ->
+        GraphqlSubscriptionMsg response ->
             let
                 _ =
-                    Debug.log "GotResponse" response
+                    Debug.log "GraphqlSubscriptionMsg" response
             in
             case response of
                 Ok value ->
@@ -218,7 +218,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ WebSocket.listen socketUrl
-            (subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document) >> GotResponse)
+            (subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document) >> GraphqlSubscriptionMsg)
         , Time.every (30 * Time.second) SendHeartbeat
         ]
 
