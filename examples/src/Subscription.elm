@@ -198,10 +198,6 @@ heartBeatMessage =
         |> Encode.encode 0
 
 
-
--- [null, "3", "phoenix", "heartbeat", {}]
-
-
 documentRequest : String -> String
 documentRequest operation =
     Encode.list
@@ -209,12 +205,7 @@ documentRequest operation =
         , Encode.string "1"
         , Encode.string "__absinthe__:control"
         , Encode.string "doc"
-        , Encode.object
-            [ ( "query"
-              , operation
-                    |> Encode.string
-              )
-            ]
+        , Encode.object [ ( "query", operation |> Encode.string ) ]
         ]
         |> Encode.encode 0
 
