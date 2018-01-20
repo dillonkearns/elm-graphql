@@ -18,8 +18,8 @@ import Swapi.Scalar
 import Swapi.Subscription as Subscription
 
 
-sendMessage : String -> Phrase -> SelectionSet (Maybe ()) Graphqelm.Operation.RootMutation
-sendMessage characterId phrase =
+sendChatMessage : String -> Phrase -> SelectionSet (Maybe ()) Graphqelm.Operation.RootMutation
+sendChatMessage characterId phrase =
     Mutation.selection identity
         |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty)
 
@@ -220,7 +220,7 @@ update msg model =
             Graphqelm.Subscription.update graphqlSubscriptionMsg model
 
         SendMessage phrase ->
-            ( model, Graphqelm.Subscription.sendMutation model.graphqlSubscriptionModel (sendMessage model.characterId phrase) )
+            ( model, Graphqelm.Subscription.sendMutation model.graphqlSubscriptionModel (sendChatMessage model.characterId phrase) )
 
         SubscriptionDataReceived newData ->
             ( { model | data = newData :: model.data }, Cmd.none )
