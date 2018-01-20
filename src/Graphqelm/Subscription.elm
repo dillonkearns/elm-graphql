@@ -1,4 +1,4 @@
-module Graphqelm.Subscription exposing (FrameworkKnowledge, Model, Msg, Response(..), Status(..), init, onStatusChanged, subscription, update)
+module Graphqelm.Subscription exposing (FrameworkKnowledge, Model, Msg, Response(..), Status(..), init, onStatusChanged, sendMutation, subscription, update)
 
 import Graphqelm.Document
 import Graphqelm.Document.LowLevel
@@ -35,6 +35,22 @@ type Model msg decodesTo
         , onStatusChanged : Maybe (Status -> msg)
         , frameworkKnowledge : FrameworkKnowledge decodesTo
         }
+
+
+{-| Performs the mutation over the websocket. If the connection is uninitialized,
+it will be dropped.
+TODO: should it always be queued? Or should it optionally be queued?
+-}
+sendMutation :
+    Model msg decodesTo
+    -> SelectionSet mutationDecodesTo Graphqelm.Operation.RootMutation
+    -> Cmd msg
+sendMutation (Model model) mutationDocument =
+    let
+        documentRequest =
+            model.frameworkKnowledge.documentRequest >> Encode.encode 0
+    in
+    WebSocket.send model.socketUrl (documentRequest (Graphqelm.Document.serializeMutation mutationDocument))
 
 
 init : FrameworkKnowledge decodesTo -> String -> SelectionSet decodesTo RootSubscription -> (decodesTo -> msg) -> ( Model msg decodesTo, Cmd msg )

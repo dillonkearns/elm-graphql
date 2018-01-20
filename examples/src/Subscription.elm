@@ -1,6 +1,5 @@
 module Subscription exposing (main)
 
-import Graphqelm.Document
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Graphqelm.Subscription
@@ -16,7 +15,6 @@ import Swapi.Object
 import Swapi.Object.ChatMessage
 import Swapi.Scalar
 import Swapi.Subscription as Subscription
-import WebSocket
 
 
 sendMessage : Phrase -> SelectionSet (Maybe ()) Graphqelm.Operation.RootMutation
@@ -185,25 +183,13 @@ update msg model =
             Graphqelm.Subscription.update graphqlSubscriptionMsg model
 
         SendMessage phrase ->
-            ( model, WebSocket.send socketUrl (documentRequest (Graphqelm.Document.serializeMutation (sendMessage phrase))) )
+            ( model, Graphqelm.Subscription.sendMutation model.graphqlSubscriptionModel (sendMessage phrase) )
 
         SubscriptionDataReceived newData ->
             ( { model | data = newData :: model.data }, Cmd.none )
 
         SubscriptionStatusChanged newStatus ->
             ( { model | subscriptionStatus = newStatus }, Cmd.none )
-
-
-documentRequest : String -> String
-documentRequest operation =
-    Encode.list
-        [ Encode.string "1"
-        , Encode.string "1"
-        , Encode.string "__absinthe__:control"
-        , Encode.string "doc"
-        , Encode.object [ ( "query", operation |> Encode.string ) ]
-        ]
-        |> Encode.encode 0
 
 
 subscriptions : Model -> Sub Msg
