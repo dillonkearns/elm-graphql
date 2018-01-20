@@ -71,6 +71,16 @@ type SelectionSet decodesTo typeLock
 
 
 {-| Useful for Mutations when you don't want any data back.
+
+    import Api.Mutation as Mutation
+    import Graphqelm.Operation exposing (RootMutation)
+    import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
+
+    sendChatMessage : String -> SelectionSet () RootMutation
+    sendChatMessage message =
+        Mutation.selection identity
+            |> with (Mutation.sendMessage { message = message } SelectionSet.empty)
+
 -}
 empty : SelectionSet () typeLock
 empty =

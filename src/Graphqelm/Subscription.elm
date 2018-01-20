@@ -6,11 +6,19 @@ module Graphqelm.Subscription
         , Response(..)
         , Status(..)
         , init
+        , listen
         , onStatusChanged
         , sendMutation
-        , subscription
         , update
         )
+
+{-|
+
+@docs FrameworkKnowledge
+
+@docs Model, Msg, Response, Status, init, onStatusChanged, sendMutation, listen, update
+
+-}
 
 import Graphqelm.Document
 import Graphqelm.Document.LowLevel
@@ -23,21 +31,48 @@ import Time exposing (Time)
 import WebSocket
 
 
+{-| Low-level type used for building FrameworkKnowledge. Represents incoming server messages.
+-}
 type Response a
     = SubscriptionDataReceived a
     | HealthStatus
 
 
+{-| An opaque type that needs to be passed through to the `Subscription.update` function
+in your program's `update`.
+
+    type Msg
+        = GraphqlSubscriptionMsg (Graphqelm.Subscription.Msg ChatMessage)
+        | SubscriptionDataReceived ChatMessage
+
+    update : Msg -> Model -> ( Model, Cmd Msg )
+    update msg model =
+        case msg of
+            GraphqlSubscriptionMsg graphqlSubscriptionMsg ->
+                Graphqelm.Subscription.update graphqlSubscriptionMsg model
+
+            SubscriptionDataReceived newData ->
+                ( { model | data = newData :: model.data }, Cmd.none )
+
+    subscriptions : Model -> Sub Msg
+    subscriptions model =
+        Graphqelm.Subscription.subscription model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl document
+
+-}
 type Msg a
     = SendHeartbeat Time
     | ResponseReceived (Result String (Response a))
 
 
+{-| The Subscription connection status. Use `onStatusChanged` to register a Msg to listen for this.
+-}
 type Status
     = Uninitialized
     | Connected
 
 
+{-| Model
+-}
 type Model msg decodesTo
     = Model
         { status : Status
@@ -65,6 +100,8 @@ sendMutation (Model model) mutationDocument =
     WebSocket.send model.socketUrl (documentRequest (Graphqelm.Document.serializeMutation mutationDocument))
 
 
+{-| Initialize a Subscription (passed in to `listen`).
+-}
 init : FrameworkKnowledge decodesTo -> String -> SelectionSet decodesTo RootSubscription -> (decodesTo -> msg) -> ( Model msg decodesTo, Cmd msg )
 init frameworkKnowledge socketUrl subscriptionDocument onData =
     ( Model
@@ -79,18 +116,38 @@ init frameworkKnowledge socketUrl subscriptionDocument onData =
     )
 
 
+{-| Register a Msg to receive when a connection is established.
+
+    init : ( Model, Cmd Msg )
+    init =
+        let
+            ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
+                Graphqelm.Subscription.init frameworkKnowledge socketUrl subscriptionDocument SubscriptionDataReceived
+        in
+        ( { data = []
+          , subscriptionStatus = Graphqelm.Subscription.Uninitialized
+          , graphqlSubscriptionModel =
+                graphqlSubscriptionModel
+                    |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
+          }
+        , graphqlSubscriptionCmd
+        )
+
+-}
 onStatusChanged : (Status -> msg) -> Model msg decodesTo -> Model msg decodesTo
 onStatusChanged onStatusChanged (Model model) =
     Model { model | onStatusChanged = Just onStatusChanged }
 
 
-subscription :
+{-| Add this to your subscriptions.
+-}
+listen :
     Model msg decodesTo
     -> (Msg decodesTo -> msg)
     -> String
     -> Graphqelm.SelectionSet.SelectionSet decodesTo RootSubscription
     -> Sub msg
-subscription (Model model) toMsg socketUrl document =
+listen (Model model) toMsg socketUrl document =
     Sub.batch
         [ WebSocket.listen socketUrl
             (Json.Decode.decodeString (model.frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document))
@@ -101,6 +158,9 @@ subscription (Model model) toMsg socketUrl document =
         |> Sub.map toMsg
 
 
+{-| Needs to be called from your program's `update` function in order to listen
+for and respond to Subscription communications.
+-}
 update :
     Msg decodesTo
     -> { model | graphqlSubscriptionModel : Model msg decodesTo }
@@ -160,6 +220,48 @@ setStatus newStatus ( { graphqlSubscriptionModel } as fullModel, cmds ) =
             )
 
 
+{-| This encapsulates the Subscriptions protocol for a specific framework, like Phoenix/Absinthe.
+The low-level details of how to initiate a connection and check that it was successful, etc., can be
+very different between GraphQL server implementations. Here is an example for the Absinthe framework
+for Elixir/Phoenix:
+
+        frameworkKnowledge : Graphqelm.Subscription.FrameworkKnowledge subscriptionDecodesTo
+        frameworkKnowledge =
+        { initMessage =
+        Encode.list
+            [ Encode.string "1"
+            , Encode.string "1"
+            , Encode.string "__absinthe__:control"
+            , Encode.string "phx_join"
+            , Encode.object []
+            ]
+        , heartBeatMessage =
+        Encode.list
+            [ Encode.null
+            , Encode.string "1"
+            , Encode.string "phoenix"
+            , Encode.string "heartbeat"
+            , Encode.object []
+            ]
+        , documentRequest =
+        \operation ->
+            Encode.list
+                [ Encode.string "1"
+                , Encode.string "1"
+                , Encode.string "__absinthe__:control"
+                , Encode.string "doc"
+                , Encode.object [ ( "query", operation |> Encode.string ) ]
+                ]
+        , subscriptionDecoder =
+        \decoder ->
+            subscriptionResponseDecoder
+                (decoder
+                    |> Json.Decode.field "result"
+                    |> Json.Decode.index 4
+                )
+        }
+
+-}
 type alias FrameworkKnowledge subscriptionDecodesTo =
     { documentRequest : String -> Encode.Value
     , heartBeatMessage : Encode.Value
