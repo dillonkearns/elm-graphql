@@ -13,6 +13,8 @@ generate context (Type.TypeDefinition name definableType description) =
                 query context
             else if Just name == context.mutation then
                 mutation context
+            else if Just name == context.subscription then
+                subscription context
             else
                 object context name
 
@@ -33,11 +35,13 @@ generate context (Type.TypeDefinition name definableType description) =
 
 
 object : Context -> ClassCaseName -> List String
-object { query, mutation, apiSubmodule } name =
+object { query, mutation, apiSubmodule, subscription } name =
     if name == query then
         [ "RootQuery" ]
     else if Just name == mutation then
         [ "RootMutation" ]
+    else if Just name == subscription then
+        [ "RootSubscription" ]
     else
         apiSubmodule ++ [ "Object", ClassCaseName.normalized name ]
 
@@ -75,3 +79,8 @@ query { apiSubmodule } =
 mutation : { context | apiSubmodule : List String } -> List String
 mutation { apiSubmodule } =
     apiSubmodule ++ [ "Mutation" ]
+
+
+subscription : { context | apiSubmodule : List String } -> List String
+subscription { apiSubmodule } =
+    apiSubmodule ++ [ "Subscription" ]

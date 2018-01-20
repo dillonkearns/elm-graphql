@@ -5,6 +5,10 @@
 module Swapi.Object exposing (..)
 
 
+type ChatMessage
+    = ChatMessage
+
+
 type Droid
     = Droid
 

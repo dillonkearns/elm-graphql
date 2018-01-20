@@ -6,6 +6,9 @@ export const introspectionQuery = `query IntrospectionQuery($includeDeprecated: 
       mutationType {
         name
       }
+      subscriptionType {
+        name
+      }
       types {
         ...FullType
       }

@@ -10,6 +10,7 @@ import Graphqelm.Generator.Mutation
 import Graphqelm.Generator.Object
 import Graphqelm.Generator.Query
 import Graphqelm.Generator.Scalar as Scalar
+import Graphqelm.Generator.Subscription
 import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Generator.Union
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -20,14 +21,16 @@ type alias IntrospectionData =
     { typeDefinitions : List TypeDefinition
     , queryObjectName : String
     , mutationObjectName : Maybe String
+    , subscriptionObjectName : Maybe String
     }
 
 
-sortedIntrospectionData : List TypeDefinition -> String -> Maybe String -> IntrospectionData
-sortedIntrospectionData typeDefinitions queryObjectName mutationObjectName =
+sortedIntrospectionData : List TypeDefinition -> String -> Maybe String -> Maybe String -> IntrospectionData
+sortedIntrospectionData typeDefinitions queryObjectName mutationObjectName subscriptionObjectName =
     { typeDefinitions = typeDefinitions |> List.sortBy typeDefName
     , queryObjectName = queryObjectName
     , mutationObjectName = mutationObjectName
+    , subscriptionObjectName = subscriptionObjectName
     }
 
 
@@ -52,12 +55,13 @@ interfacePossibleTypesDict typeDefs =
 
 
 generateFiles : List String -> IntrospectionData -> Dict String String
-generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName } =
+generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName, subscriptionObjectName } =
     let
         context : Context
         context =
             { query = ClassCaseName.build queryObjectName
             , mutation = mutationObjectName |> Maybe.map ClassCaseName.build
+            , subscription = subscriptionObjectName |> Maybe.map ClassCaseName.build
             , apiSubmodule = apiSubmodule
             , interfaces = interfacePossibleTypesDict typeDefinitions
             }
@@ -68,6 +72,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                     |> excludeBuiltIns
                     |> excludeQuery context
                     |> excludeMutation context
+                    |> excludeSubscription context
                 )
 
         scalarDefinitions =
@@ -76,6 +81,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                     |> excludeBuiltIns
                     |> excludeQuery context
                     |> excludeMutation context
+                    |> excludeSubscription context
                 )
     in
     typeDefinitions
@@ -113,6 +119,17 @@ excludeMutation { mutation } typeDefinitions =
             typeDefinitions
 
 
+excludeSubscription : Context -> List TypeDefinition -> List TypeDefinition
+excludeSubscription { subscription } typeDefinitions =
+    case subscription of
+        Just subscriptionObjectName ->
+            typeDefinitions
+                |> List.filter (\(Type.TypeDefinition name definableType description) -> name /= subscriptionObjectName)
+
+        Nothing ->
+            typeDefinitions
+
+
 moduleToFileName : List String -> String
 moduleToFileName modulePath =
     (modulePath |> String.join "/")
@@ -132,6 +149,9 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
                     |> Just
             else if Just name == context.mutation then
                 Graphqelm.Generator.Mutation.generate context moduleName fields
+                    |> Just
+            else if Just name == context.subscription then
+                Graphqelm.Generator.Subscription.generate context moduleName fields
                     |> Just
             else
                 Graphqelm.Generator.Object.generate context name moduleName fields
