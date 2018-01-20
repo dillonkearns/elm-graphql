@@ -109,7 +109,9 @@ init =
     in
     ( { data = []
       , subscriptionStatus = Graphqelm.Subscription.Uninitialized
-      , graphqlSubscriptionModel = graphqlSubscriptionModel |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
+      , graphqlSubscriptionModel =
+            graphqlSubscriptionModel
+                |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
       }
     , graphqlSubscriptionCmd
     )
