@@ -3,7 +3,8 @@ module Subscription exposing (main)
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Graphqelm.Subscription
-import Html exposing (button, div, h1, li, p, pre, text, ul)
+import Html exposing (Html, button, div, fieldset, h1, input, label, li, p, pre, text, ul)
+import Html.Attributes exposing (name, type_)
 import Html.Events exposing (onClick)
 import Json.Decode
 import Json.Encode as Encode
@@ -17,10 +18,10 @@ import Swapi.Scalar
 import Swapi.Subscription as Subscription
 
 
-sendMessage : Phrase -> SelectionSet (Maybe ()) Graphqelm.Operation.RootMutation
-sendMessage phrase =
+sendMessage : String -> Phrase -> SelectionSet (Maybe ()) Graphqelm.Operation.RootMutation
+sendMessage characterId phrase =
     Mutation.selection identity
-        |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id "1001", phrase = phrase } SelectionSet.empty)
+        |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty)
 
 
 document : SelectionSet ChatMessage RootSubscription
@@ -52,6 +53,7 @@ type alias Model =
     { data : List ChatMessage
     , subscriptionStatus : Graphqelm.Subscription.Status
     , graphqlSubscriptionModel : Graphqelm.Subscription.Model Msg ChatMessage
+    , characterId : String
     }
 
 
@@ -60,6 +62,7 @@ type Msg
     | GraphqlSubscriptionMsg (Graphqelm.Subscription.Msg ChatMessage)
     | SubscriptionDataReceived ChatMessage
     | SubscriptionStatusChanged Graphqelm.Subscription.Status
+    | ChangeCharacter String
 
 
 frameworkKnowledge : Graphqelm.Subscription.FrameworkKnowledge subscriptionDecodesTo
@@ -110,6 +113,7 @@ init =
       , graphqlSubscriptionModel =
             graphqlSubscriptionModel
                 |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
+      , characterId = "1001"
       }
     , graphqlSubscriptionCmd
     )
@@ -120,9 +124,25 @@ view model =
     div []
         [ h1 [] [ text "Star Chat" ]
         , text ("Phoenix GraphQL Subscription connection status: " ++ toString model.subscriptionStatus)
+        , characterRadioButtons
         , messageButtons
         , chatMessagesView model.data
         ]
+
+
+characterRadioButton : ( String, String ) -> Html.Html Msg
+characterRadioButton ( characterId, characterName ) =
+    label []
+        [ input
+            [ type_ "radio", name "character", onClick (ChangeCharacter characterId) ]
+            []
+        , text characterName
+        ]
+
+
+characterRadioButtons : Html Msg
+characterRadioButtons =
+    fieldset [] (characters |> List.map characterRadioButton)
 
 
 messageButtons : Html.Html Msg
@@ -134,6 +154,23 @@ messageButtons =
         , messageButton Phrase.TheForce
         , messageButton Phrase.Try
         ]
+
+
+(=>) : a -> b -> ( a, b )
+(=>) =
+    (,)
+
+
+characters : List ( String, String )
+characters =
+    [ "1000" => "Luke"
+    , "1001" => "Vader"
+    , "1002" => "Han"
+    , "1003" => "Leia"
+    , "1004" => "Tarkin"
+    , "2000" => "Threepio"
+    , "2001" => "Artoo"
+    ]
 
 
 messageButton : Phrase -> Html.Html Msg
@@ -183,13 +220,16 @@ update msg model =
             Graphqelm.Subscription.update graphqlSubscriptionMsg model
 
         SendMessage phrase ->
-            ( model, Graphqelm.Subscription.sendMutation model.graphqlSubscriptionModel (sendMessage phrase) )
+            ( model, Graphqelm.Subscription.sendMutation model.graphqlSubscriptionModel (sendMessage model.characterId phrase) )
 
         SubscriptionDataReceived newData ->
             ( { model | data = newData :: model.data }, Cmd.none )
 
         SubscriptionStatusChanged newStatus ->
             ( { model | subscriptionStatus = newStatus }, Cmd.none )
+
+        ChangeCharacter characterId ->
+            ( { model | characterId = characterId }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
