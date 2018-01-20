@@ -1,4 +1,16 @@
-module Graphqelm.Subscription exposing (FrameworkKnowledge, Model, Msg, Response(..), Status(..), init, onStatusChanged, sendMutation, subscription, update)
+module Graphqelm.Subscription
+    exposing
+        ( FrameworkKnowledge
+        , Model
+        , Msg
+        , Response(..)
+        , Status(..)
+        , init
+        , onStatusChanged
+        , sendMutation
+        , subscription
+        , update
+        )
 
 import Graphqelm.Document
 import Graphqelm.Document.LowLevel
