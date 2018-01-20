@@ -142,18 +142,20 @@ onStatusChanged onStatusChanged (Model model) =
 {-| Add this to your subscriptions.
 -}
 listen :
-    Model msg decodesTo
-    -> (Msg decodesTo -> msg)
+    (Msg decodesTo -> msg)
+    -> { model | graphqlSubscriptionModel : Model msg decodesTo }
     -> Sub msg
-listen (Model model) toMsg =
-    Sub.batch
-        [ WebSocket.listen model.socketUrl
-            (Json.Decode.decodeString (model.frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder model.subscriptionDocument))
-                >> ResponseReceived
-            )
-        , Time.every (30 * Time.second) SendHeartbeat
-        ]
-        |> Sub.map toMsg
+listen toMsg { graphqlSubscriptionModel } =
+    case graphqlSubscriptionModel of
+        Model model ->
+            Sub.batch
+                [ WebSocket.listen model.socketUrl
+                    (Json.Decode.decodeString (model.frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder model.subscriptionDocument))
+                        >> ResponseReceived
+                    )
+                , Time.every (30 * Time.second) SendHeartbeat
+                ]
+                |> Sub.map toMsg
 
 
 {-| Needs to be called from your program's `update` function in order to listen
