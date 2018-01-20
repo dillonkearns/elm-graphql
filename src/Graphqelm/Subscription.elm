@@ -121,6 +121,10 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
                             ( fullModel, Task.succeed data |> Task.perform model.onData )
 
                         Err errorString ->
+                            let
+                                _ =
+                                    Debug.log "Error" errorString
+                            in
                             ( fullModel, Cmd.none )
 
 

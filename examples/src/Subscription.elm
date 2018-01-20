@@ -3,8 +3,8 @@ module Subscription exposing (main)
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Graphqelm.Subscription
-import Html exposing (Html, button, div, fieldset, h1, input, label, li, p, pre, text, ul)
-import Html.Attributes exposing (name, type_)
+import Html exposing (Html, button, div, fieldset, h1, img, input, label, li, p, pre, text, ul)
+import Html.Attributes exposing (name, src, style, type_)
 import Html.Events exposing (onClick)
 import Json.Decode
 import Json.Encode as Encode
@@ -32,7 +32,7 @@ document =
 
 type alias ChatMessage =
     { phrase : Phrase
-    , characterName : Maybe String
+    , character : Maybe Character
     }
 
 
@@ -43,10 +43,17 @@ chatMessageSelection =
         |> with (Swapi.Object.ChatMessage.character characterSelection)
 
 
-characterSelection : SelectionSet String Swapi.Interface.Character
+type alias Character =
+    { name : String
+    , avatarUrl : String
+    }
+
+
+characterSelection : SelectionSet Character Swapi.Interface.Character
 characterSelection =
-    Swapi.Interface.Character.commonSelection identity
+    Swapi.Interface.Character.commonSelection Character
         |> with Swapi.Interface.Character.name
+        |> with Swapi.Interface.Character.avatarUrl
 
 
 type alias Model =
@@ -100,6 +107,18 @@ frameworkKnowledge =
                     |> Json.Decode.index 4
                 )
     }
+
+
+subscriptionResponseDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (Graphqelm.Subscription.Response a)
+subscriptionResponseDecoder decoder =
+    Json.Decode.index 3 Json.Decode.string
+        |> Json.Decode.andThen
+            (\responseType ->
+                if responseType == "subscription:data" then
+                    decoder |> Json.Decode.map Graphqelm.Subscription.SubscriptionDataReceived
+                else
+                    Json.Decode.succeed Graphqelm.Subscription.HealthStatus
+            )
 
 
 init : ( Model, Cmd Msg )
@@ -183,8 +202,15 @@ chatMessagesView model =
     ul []
         (model
             |> List.map
-                (\{ phrase, characterName } ->
-                    li [] [ ((characterName |> Maybe.withDefault "") ++ ": " ++ (phrase |> phraseToString)) |> text ]
+                (\{ phrase, character } ->
+                    let
+                        characterName =
+                            character |> Maybe.map .name |> Maybe.withDefault ""
+
+                        avatar =
+                            character |> Maybe.map .avatarUrl |> Maybe.withDefault ""
+                    in
+                    li [] [ img [ style [ "width" => "40px", "padding-right" => "5px" ], src avatar ] [], (characterName ++ ": " ++ (phrase |> phraseToString)) |> text ]
                 )
         )
 
@@ -235,18 +261,6 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Graphqelm.Subscription.subscription model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl document
-
-
-subscriptionResponseDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (Graphqelm.Subscription.Response a)
-subscriptionResponseDecoder decoder =
-    Json.Decode.index 3 Json.Decode.string
-        |> Json.Decode.andThen
-            (\responseType ->
-                if responseType == "subscription:data" then
-                    decoder |> Json.Decode.map Graphqelm.Subscription.SubscriptionDataReceived
-                else
-                    Json.Decode.succeed Graphqelm.Subscription.HealthStatus
-            )
 
 
 main : Program Never Model Msg

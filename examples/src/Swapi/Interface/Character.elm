@@ -49,6 +49,13 @@ appearsIn =
     Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
+{-| Url to a profile picture for the character.
+-}
+avatarUrl : Field String Swapi.Interface.Character
+avatarUrl =
+    Object.fieldDecoder "avatarUrl" [] Decode.string
+
+
 {-| The friends of the character, or an empty list if they have none.
 -}
 friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Interface.Character
