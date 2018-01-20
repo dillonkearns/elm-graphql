@@ -79,6 +79,7 @@ view : Model -> Html.Html Msg
 view model =
     div []
         [ h1 [] [ text "Star Chat" ]
+        , text ("Phoenix GraphQL Subscription connection status: " ++ toString model.subscriptionStatus)
         , messageButtons
         , chatMessagesView model.data
         ]
