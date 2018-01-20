@@ -1,4 +1,4 @@
-module Graphqelm.Subscription exposing (FrameworkKnowledge, Model, Msg, Response(..), init, subscription, update)
+module Graphqelm.Subscription exposing (FrameworkKnowledge, Model, Msg, Response(..), Status(..), init, onStatusChanged, subscription, update)
 
 import Graphqelm.Document
 import Graphqelm.Document.LowLevel
@@ -32,6 +32,7 @@ type Model msg decodesTo
         , subscriptionDocument : SelectionSet decodesTo RootSubscription
         , socketUrl : String
         , onData : decodesTo -> msg
+        , onStatusChanged : Maybe (Status -> msg)
         , frameworkKnowledge : FrameworkKnowledge decodesTo
         }
 
@@ -43,10 +44,16 @@ init frameworkKnowledge socketUrl subscriptionDocument onData =
         , subscriptionDocument = subscriptionDocument
         , socketUrl = socketUrl
         , onData = onData
+        , onStatusChanged = Nothing
         , frameworkKnowledge = frameworkKnowledge
         }
     , WebSocket.send socketUrl (frameworkKnowledge.initMessage |> Encode.encode 0)
     )
+
+
+onStatusChanged : (Status -> msg) -> Model msg decodesTo -> Model msg decodesTo
+onStatusChanged onStatusChanged (Model model) =
+    Model { model | onStatusChanged = Just onStatusChanged }
 
 
 subscription :
@@ -85,11 +92,12 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
                     case response of
                         Ok HealthStatus ->
                             if model.status == Uninitialized then
-                                ( { fullModel | graphqlSubscriptionModel = Model { model | status = Connected } }
+                                ( fullModel
                                 , WebSocket.send
                                     model.socketUrl
                                     (documentRequest (Graphqelm.Document.serializeSubscription model.subscriptionDocument))
                                 )
+                                    |> setStatus Connected
                             else
                                 ( fullModel, Cmd.none )
 
@@ -98,6 +106,26 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
 
                         Err errorString ->
                             ( fullModel, Cmd.none )
+
+
+setStatus :
+    Status
+    -> ( { a | graphqlSubscriptionModel : Model msg decodesTo }, Cmd msg )
+    -> ( { a | graphqlSubscriptionModel : Model msg decodesTo }, Cmd msg )
+setStatus newStatus ( { graphqlSubscriptionModel } as fullModel, cmds ) =
+    case graphqlSubscriptionModel of
+        Model model ->
+            ( { fullModel | graphqlSubscriptionModel = Model { model | status = newStatus } }
+            , Cmd.batch
+                [ cmds
+                , case model.onStatusChanged of
+                    Nothing ->
+                        Cmd.none
+
+                    Just onStatusChanged ->
+                        Task.succeed newStatus |> Task.perform onStatusChanged
+                ]
+            )
 
 
 type alias FrameworkKnowledge subscriptionDecodesTo =

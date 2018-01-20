@@ -52,20 +52,16 @@ characterSelection =
 
 type alias Model =
     { data : List ChatMessage
-    , subscriptionStatus : SubscriptionStatus
+    , subscriptionStatus : Graphqelm.Subscription.Status
     , graphqlSubscriptionModel : Graphqelm.Subscription.Model Msg ChatMessage
     }
-
-
-type SubscriptionStatus
-    = Uninitialized
-    | Connected
 
 
 type Msg
     = SendMessage Phrase
     | GraphqlSubscriptionMsg (Graphqelm.Subscription.Msg ChatMessage)
     | SubscriptionDataReceived ChatMessage
+    | SubscriptionStatusChanged Graphqelm.Subscription.Status
 
 
 frameworkKnowledge : Graphqelm.Subscription.FrameworkKnowledge subscriptionDecodesTo
@@ -112,8 +108,8 @@ init =
             Graphqelm.Subscription.init frameworkKnowledge socketUrl document SubscriptionDataReceived
     in
     ( { data = []
-      , subscriptionStatus = Uninitialized
-      , graphqlSubscriptionModel = graphqlSubscriptionModel
+      , subscriptionStatus = Graphqelm.Subscription.Uninitialized
+      , graphqlSubscriptionModel = graphqlSubscriptionModel |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
       }
     , graphqlSubscriptionCmd
     )
@@ -191,6 +187,9 @@ update msg model =
 
         SubscriptionDataReceived newData ->
             ( { model | data = newData :: model.data }, Cmd.none )
+
+        SubscriptionStatusChanged newStatus ->
+            ( { model | subscriptionStatus = newStatus }, Cmd.none )
 
 
 documentRequest : String -> String
