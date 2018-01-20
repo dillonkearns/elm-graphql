@@ -64,8 +64,6 @@ type SubscriptionStatus
 
 type Msg
     = GotResponse (Result String (SubscriptionResponse ChatMessage))
-    | Init
-    | Subscribe
     | SendMessage Phrase
     | NoOp (Result Graphqelm.Http.Error (Maybe ()))
 
@@ -160,23 +158,13 @@ update msg model =
                             in
                             if model.subscriptionStatus == Uninitialized then
                                 ( { model | subscriptionStatus = Connected }
-                                , WebSocket.send socketUrl subscribeMessage
+                                , WebSocket.send socketUrl (documentRequest (Graphqelm.Document.serializeSubscription document))
                                 )
                             else
                                 ( model, Cmd.none )
 
                 Err error ->
                     ( model, Cmd.none )
-
-        Init ->
-            ( model
-            , WebSocket.send socketUrl initMessage
-            )
-
-        Subscribe ->
-            ( model
-            , WebSocket.send socketUrl subscribeMessage
-            )
 
         SendMessage phrase ->
             ( model
@@ -200,8 +188,8 @@ initMessage =
         |> Encode.encode 0
 
 
-subscribeMessage : String
-subscribeMessage =
+documentRequest : String -> String
+documentRequest operation =
     Encode.list
         [ Encode.string "1"
         , Encode.string "1"
@@ -209,8 +197,7 @@ subscribeMessage =
         , Encode.string "doc"
         , Encode.object
             [ ( "query"
-              , document
-                    |> Graphqelm.Document.serializeSubscription
+              , operation
                     |> Encode.string
               )
             ]
