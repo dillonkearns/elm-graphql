@@ -65,7 +65,7 @@ type SubscriptionStatus
 type Msg
     = GraphqlSubscriptionMsg (Result String (SubscriptionResponse ChatMessage))
     | SendMessage Phrase
-    | SendHeartbeat Time.Time
+    | Sendheartbeat Time.Time
 
 
 init : ( Model, Cmd Msg )
@@ -174,7 +174,7 @@ update msg model =
         SendMessage phrase ->
             ( model, WebSocket.send socketUrl (documentRequest (Graphqelm.Document.serializeMutation (sendMessage phrase))) )
 
-        SendHeartbeat _ ->
+        Sendheartbeat _ ->
             ( model, WebSocket.send socketUrl heartBeatMessage )
 
 
@@ -219,7 +219,7 @@ subscriptions model =
     Sub.batch
         [ WebSocket.listen socketUrl
             (subscriptionDecoder (Graphqelm.Document.LowLevel.decoder document) >> GraphqlSubscriptionMsg)
-        , Time.every (30 * Time.second) SendHeartbeat
+        , Time.every (30 * Time.second) Sendheartbeat
         ]
 
 
