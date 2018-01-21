@@ -12,7 +12,8 @@ module Graphqelm.Subscription
         , update
         )
 
-{-|
+{-| _Warning_ The Subscriptions functionality in this package is in a highly experimental stage
+and may change rapidly or have issues that make it not ready for production code yet.
 
 @docs FrameworkKnowledge
 
