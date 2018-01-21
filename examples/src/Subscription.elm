@@ -24,8 +24,8 @@ sendChatMessage characterId phrase =
         |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty)
 
 
-subscriptionsDocument : SelectionSet ChatMessage RootSubscription
-subscriptionsDocument =
+subscriptionDocument : SelectionSet ChatMessage RootSubscription
+subscriptionDocument =
     Subscription.selection identity
         |> with (Subscription.newMessage chatMessageSelection)
 
@@ -125,7 +125,7 @@ init : ( Model, Cmd Msg )
 init =
     let
         ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-            Graphqelm.Subscription.init frameworkKnowledge socketUrl subscriptionsDocument SubscriptionDataReceived
+            Graphqelm.Subscription.init frameworkKnowledge socketUrl subscriptionDocument SubscriptionDataReceived
     in
     ( { data = []
       , subscriptionStatus = Graphqelm.Subscription.Uninitialized
