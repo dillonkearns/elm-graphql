@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [7.2.0] - 2018-01-20
+
 ### Added
 
 * Add experimental subscriptions module and example.

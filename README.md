@@ -72,8 +72,11 @@ All core features are supported. That is, you can build any query or mutation
 with your graphqelm-generated code, and it is guaranteed to be valid according
 to your server's schema.
 
-I would like to investigate adding support for subscriptions, as well as generating
-helpers to make pagination simpler for Connections (based on the
+I am currently experimenting with subscriptions, see
+[`examples/src/Subscription.elm`](https://github.com/dillonkearns/graphqelm/blob/master/examples/src/Subscription.elm)
+for an example using Phoenix/Absinthe as a backend
+I would like to investigate generating helpers to make pagination simpler
+for Connections (based on the
 [Relay Cursor Connections Specification](https://facebook.github.io/relay/graphql/connections.htm)).
 
 See [the full roadmap on Trello](https://trello.com/b/BCIWtZeL/graphqelm).
