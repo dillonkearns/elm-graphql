@@ -15,6 +15,10 @@ module Graphqelm.Subscription
 {-| _Warning_ The Subscriptions functionality in this package is in a highly experimental stage
 and may change rapidly or have issues that make it not ready for production code yet.
 
+Not that you will need a FrameworkKnowledge data structure that fills in the low-level details about
+your server's GraphQL Subscription protocol. Ideally this will be published in a package or shared
+by community members in a trusted place so it is less error-prone and more stable.
+
 @docs FrameworkKnowledge
 
 @docs Model, Msg, Response, Status, init, onStatusChanged, sendMutation, listen, update
