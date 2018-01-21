@@ -80,7 +80,8 @@ type Status
 -}
 type Model msg decodesTo
     = Model
-        { status : Status
+        { referenceId : Int
+        , status : Status
         , subscriptionDocument : SelectionSet decodesTo RootSubscription
         , socketUrl : String
         , onData : decodesTo -> msg
@@ -100,7 +101,7 @@ sendMutation :
 sendMutation (Model model) mutationDocument =
     let
         documentRequest =
-            model.frameworkKnowledge.documentRequest >> Encode.encode 0
+            model.frameworkKnowledge.documentRequest model.referenceId >> Encode.encode 0
     in
     WebSocket.send model.socketUrl (documentRequest (Graphqelm.Document.serializeMutation mutationDocument))
 
@@ -110,14 +111,15 @@ sendMutation (Model model) mutationDocument =
 init : FrameworkKnowledge decodesTo -> String -> SelectionSet decodesTo RootSubscription -> (decodesTo -> msg) -> ( Model msg decodesTo, Cmd msg )
 init frameworkKnowledge socketUrl subscriptionDocument onData =
     ( Model
-        { status = Uninitialized
+        { referenceId = 2
+        , status = Uninitialized
         , subscriptionDocument = subscriptionDocument
         , socketUrl = socketUrl
         , onData = onData
         , onStatusChanged = Nothing
         , frameworkKnowledge = frameworkKnowledge
         }
-    , WebSocket.send socketUrl (frameworkKnowledge.initMessage |> Encode.encode 0)
+    , WebSocket.send socketUrl (frameworkKnowledge.initMessage 1 |> Encode.encode 0)
     )
 
 
@@ -175,17 +177,19 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
         Model model ->
             case msg of
                 SendHeartbeat time ->
-                    ( fullModel, WebSocket.send model.socketUrl (model.frameworkKnowledge.heartBeatMessage |> Encode.encode 0) )
+                    ( fullModel |> incrementRefId
+                    , WebSocket.send model.socketUrl (model.frameworkKnowledge.heartBeatMessage model.referenceId |> Encode.encode 0)
+                    )
 
                 ResponseReceived response ->
                     let
                         documentRequest =
-                            model.frameworkKnowledge.documentRequest >> Encode.encode 0
+                            model.frameworkKnowledge.documentRequest model.referenceId >> Encode.encode 0
                     in
                     case response of
                         Ok HealthStatus ->
                             if model.status == Uninitialized then
-                                ( fullModel
+                                ( fullModel |> incrementRefId
                                 , WebSocket.send
                                     model.socketUrl
                                     (documentRequest (Graphqelm.Document.serializeSubscription model.subscriptionDocument))
@@ -223,6 +227,15 @@ setStatus newStatus ( { graphqlSubscriptionModel } as fullModel, cmds ) =
                         Task.succeed newStatus |> Task.perform onStatusChanged
                 ]
             )
+
+
+incrementRefId :
+    { a | graphqlSubscriptionModel : Model msg decodesTo }
+    -> { a | graphqlSubscriptionModel : Model msg decodesTo }
+incrementRefId ({ graphqlSubscriptionModel } as fullModel) =
+    case graphqlSubscriptionModel of
+        Model model ->
+            { fullModel | graphqlSubscriptionModel = Model { model | referenceId = model.referenceId + 1 } }
 
 
 {-| This encapsulates the Subscriptions protocol for a specific framework, like Phoenix/Absinthe.
@@ -268,9 +281,9 @@ for Elixir/Phoenix:
 
 -}
 type alias FrameworkKnowledge subscriptionDecodesTo =
-    { documentRequest : String -> Encode.Value
-    , heartBeatMessage : Encode.Value
-    , initMessage : Encode.Value
+    { documentRequest : Int -> String -> Encode.Value
+    , heartBeatMessage : Int -> Encode.Value
+    , initMessage : Int -> Encode.Value
     , subscriptionDecoder :
         Json.Decode.Decoder subscriptionDecodesTo
         -> Json.Decode.Decoder (Response subscriptionDecodesTo)

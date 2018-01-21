@@ -75,26 +75,28 @@ type Msg
 frameworkKnowledge : Graphqelm.Subscription.FrameworkKnowledge subscriptionDecodesTo
 frameworkKnowledge =
     { initMessage =
-        Encode.list
-            [ Encode.string "1"
-            , Encode.string "1"
-            , Encode.string "__absinthe__:control"
-            , Encode.string "phx_join"
-            , Encode.object []
-            ]
+        \referenceId ->
+            Encode.list
+                [ Encode.null
+                , Encode.string (toString referenceId)
+                , Encode.string "__absinthe__:control"
+                , Encode.string "phx_join"
+                , Encode.object []
+                ]
     , heartBeatMessage =
-        Encode.list
-            [ Encode.null
-            , Encode.string "1"
-            , Encode.string "phoenix"
-            , Encode.string "heartbeat"
-            , Encode.object []
-            ]
+        \referenceId ->
+            Encode.list
+                [ Encode.null
+                , Encode.string (toString referenceId)
+                , Encode.string "phoenix"
+                , Encode.string "heartbeat"
+                , Encode.object []
+                ]
     , documentRequest =
-        \operation ->
+        \referenceId operation ->
             Encode.list
                 [ Encode.string "1"
-                , Encode.string "1"
+                , Encode.string (toString referenceId)
                 , Encode.string "__absinthe__:control"
                 , Encode.string "doc"
                 , Encode.object [ ( "query", operation |> Encode.string ) ]
