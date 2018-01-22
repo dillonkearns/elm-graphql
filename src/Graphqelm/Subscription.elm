@@ -41,6 +41,7 @@ import WebSocket
 type Response a
     = SubscriptionDataReceived a
     | HealthStatus
+    | Ignored String
 
 
 {-| An opaque type that needs to be passed through to the `Subscription.update` function
@@ -157,7 +158,11 @@ listen toMsg { graphqlSubscriptionModel } =
         Model model ->
             Sub.batch
                 [ WebSocket.listen model.socketUrl
-                    (Json.Decode.decodeString (model.frameworkKnowledge.subscriptionDecoder (Graphqelm.Document.LowLevel.decoder model.subscriptionDocument))
+                    (Debug.log "raw response"
+                        >> Json.Decode.decodeString
+                            (model.frameworkKnowledge.subscriptionDecoder
+                                (Graphqelm.Document.LowLevel.decoder model.subscriptionDocument)
+                            )
                         >> ResponseReceived
                     )
                 , Time.every (30 * Time.second) SendHeartbeat
@@ -183,6 +188,9 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
 
                 ResponseReceived response ->
                     let
+                        _ =
+                            Debug.log "Response: " response
+
                         documentRequest =
                             model.frameworkKnowledge.documentRequest model.referenceId >> Encode.encode 0
                     in
@@ -205,6 +213,13 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
                             let
                                 _ =
                                     Debug.log "Error" errorString
+                            in
+                            ( fullModel, Cmd.none )
+
+                        Ok (Ignored ignoredContent) ->
+                            let
+                                _ =
+                                    Debug.log "Ignored: " ignoredContent
                             in
                             ( fullModel, Cmd.none )
 
