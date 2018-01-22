@@ -17,7 +17,8 @@
         "Graphqelm.Internal.Builder.Object",
         "Graphqelm.OptionalArgument",
         "Graphqelm.Http.GraphqlError",
-        "Graphqelm.Subscription"
+        "Graphqelm.Subscription",
+        "Graphqelm.Subscription.Protocol"
     ],
     "dependencies": {
         "elm-community/json-extra": "2.6.0 <= v < 3.0.0",

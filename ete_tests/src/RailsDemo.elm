@@ -6,9 +6,8 @@ import Api.Subscription
 import Graphqelm.Operation exposing (RootMutation, RootSubscription)
 import Graphqelm.SelectionSet exposing (with)
 import Graphqelm.Subscription
+import Graphqelm.Subscription.Protocol exposing (Protocol)
 import Html exposing (Html, button, div, fieldset, h1, img, input, label, li, p, pre, text, ul)
-import Json.Decode
-import Json.Encode as Encode
 
 
 subscriptionDocument : Graphqelm.SelectionSet.SelectionSet Post RootSubscription
@@ -45,7 +44,7 @@ init : ( Model, Cmd Msg )
 init =
     let
         ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-            Graphqelm.Subscription.init frameworkKnowledge socketUrl subscriptionDocument SubscriptionDataReceived
+            Graphqelm.Subscription.init Graphqelm.Subscription.Protocol.rails socketUrl subscriptionDocument SubscriptionDataReceived
     in
     ( { graphqlSubscriptionModel =
             graphqlSubscriptionModel
@@ -55,65 +54,6 @@ init =
       }
     , graphqlSubscriptionCmd
     )
-
-
-frameworkKnowledge : Graphqelm.Subscription.FrameworkKnowledge subscriptionDecodesTo
-frameworkKnowledge =
-    { initMessage =
-        \referenceId ->
-            Encode.object
-                [ "command" => Encode.string "subscribe"
-                , "identifier" => Encode.string "{\"channel\":\"GraphqlChannel\",\"channelId\":\"ElmGraphql\"}"
-                ]
-    , heartBeatMessage =
-        \referenceId ->
-            Encode.list
-                [ Encode.null
-                , Encode.string (toString referenceId)
-                , Encode.string "phoenix"
-                , Encode.string "heartbeat"
-                , Encode.object []
-                ]
-    , documentRequest =
-        \referenceId operation ->
-            -- identifier and data are redundantly JSON encoded as per the Action Cable protocol, see:
-            --  https://github.com/NullVoxPopuli/action_cable_client#the-action-cable-protocol
-            Encode.object
-                [ "command" => Encode.string "message"
-                , "identifier"
-                    => Encode.string
-                        (Encode.object [ "channel" => Encode.string "GraphqlChannel", "channelId" => Encode.string "ElmGraphql" ] |> Encode.encode 0)
-                , "data"
-                    => (Encode.object
-                            [ "query"
-                                => (operation |> Encode.string)
-                            , "action" => Encode.string "execute"
-                            ]
-                            |> Encode.encode 0
-                            |> Encode.string
-                       )
-                ]
-    , subscriptionDecoder =
-        subscriptionResponseDecoder
-    }
-
-
-subscriptionResponseDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (Graphqelm.Subscription.Response a)
-subscriptionResponseDecoder decoder =
-    Json.Decode.oneOf
-        [ Json.Decode.at [ "message", "result" ] decoder
-            |> Json.Decode.map Graphqelm.Subscription.SubscriptionDataReceived
-        , Json.Decode.field "type" Json.Decode.string
-            |> Json.Decode.andThen
-                (\type_ ->
-                    if type_ == "confirm_subscription" then
-                        Json.Decode.succeed Graphqelm.Subscription.HealthStatus
-                    else if type_ == "ping" then
-                        Json.Decode.succeed Graphqelm.Subscription.HealthStatus
-                    else
-                        Json.Decode.succeed (Graphqelm.Subscription.Ignored ("Type was not confirm_subscription: " ++ type_))
-                )
-        ]
 
 
 view : Model -> Html.Html Msg

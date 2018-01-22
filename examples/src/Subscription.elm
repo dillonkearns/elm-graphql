@@ -3,11 +3,10 @@ module Subscription exposing (main)
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Graphqelm.Subscription
+import Graphqelm.Subscription.Protocol as Protocol
 import Html exposing (Html, button, div, fieldset, h1, img, input, label, li, p, pre, text, ul)
 import Html.Attributes exposing (name, src, style, type_)
 import Html.Events exposing (onClick)
-import Json.Decode
-import Json.Encode as Encode
 import Swapi.Enum.Phrase as Phrase exposing (Phrase)
 import Swapi.Interface
 import Swapi.Interface.Character
@@ -72,62 +71,11 @@ type Msg
     | ChangeCharacter String
 
 
-frameworkKnowledge : Graphqelm.Subscription.FrameworkKnowledge subscriptionDecodesTo
-frameworkKnowledge =
-    { initMessage =
-        \referenceId ->
-            Encode.list
-                [ Encode.null
-                , Encode.string (toString referenceId)
-                , Encode.string "__absinthe__:control"
-                , Encode.string "phx_join"
-                , Encode.object []
-                ]
-    , heartBeatMessage =
-        \referenceId ->
-            Encode.list
-                [ Encode.null
-                , Encode.string (toString referenceId)
-                , Encode.string "phoenix"
-                , Encode.string "heartbeat"
-                , Encode.object []
-                ]
-    , documentRequest =
-        \referenceId operation ->
-            Encode.list
-                [ Encode.string "1"
-                , Encode.string (toString referenceId)
-                , Encode.string "__absinthe__:control"
-                , Encode.string "doc"
-                , Encode.object [ ( "query", operation |> Encode.string ) ]
-                ]
-    , subscriptionDecoder =
-        \decoder ->
-            subscriptionResponseDecoder
-                (decoder
-                    |> Json.Decode.field "result"
-                    |> Json.Decode.index 4
-                )
-    }
-
-
-subscriptionResponseDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (Graphqelm.Subscription.Response a)
-subscriptionResponseDecoder decoder =
-    Json.Decode.index 3 Json.Decode.string
-        |> Json.Decode.andThen
-            (\responseType ->
-                if responseType == "subscription:data" then
-                    decoder |> Json.Decode.map Graphqelm.Subscription.SubscriptionDataReceived
-                else
-                    Json.Decode.succeed Graphqelm.Subscription.HealthStatus
-            )
-
-
 init : ( Model, Cmd Msg )
 init =
     let
         ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-            Graphqelm.Subscription.init frameworkKnowledge socketUrl subscriptionDocument SubscriptionDataReceived
+            Graphqelm.Subscription.init Protocol.phoenixAbsinthe socketUrl subscriptionDocument SubscriptionDataReceived
     in
     ( { data = []
       , subscriptionStatus = Graphqelm.Subscription.Uninitialized
