@@ -106,7 +106,6 @@ generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    -- "identity"
                     interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ]
 
         Type.List typeRef ->
