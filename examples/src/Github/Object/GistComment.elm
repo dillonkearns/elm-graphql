@@ -108,6 +108,27 @@ updatedAt =
     Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
+{-| A list of edits to this content.
+
+  - first - Returns the first _n_ elements from the list.
+  - after - Returns the elements in the list that come after the specified global ID.
+  - last - Returns the last _n_ elements from the list.
+  - before - Returns the elements in the list that come before the specified global ID.
+
+-}
+userContentEdits : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Object.GistComment
+userContentEdits fillInOptionals object =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+                |> List.filterMap identity
+    in
+    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.maybe)
+
+
 {-| Check if the current viewer can delete this object.
 -}
 viewerCanDelete : Field Bool Github.Object.GistComment

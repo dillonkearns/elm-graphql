@@ -26,6 +26,13 @@ selection constructor =
     Object.selection constructor
 
 
+{-| Identifies the date and time when the object was created.
+-}
+createdAt : Field Github.Scalar.DateTime Github.Object.OrganizationInvitation
+createdAt =
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+
+
 {-| The email address of the user invited to the organization.
 -}
 email : Field (Maybe String) Github.Object.OrganizationInvitation
@@ -57,6 +64,13 @@ invitee object =
 inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.OrganizationInvitation
 inviter object =
     Object.selectionField "inviter" [] object identity
+
+
+{-| The organization the invite is for
+-}
+organization : SelectionSet decodesTo Github.Object.Organization -> Field decodesTo Github.Object.OrganizationInvitation
+organization object =
+    Object.selectionField "organization" [] object identity
 
 
 {-| The user's pending role in the organization (e.g. member, owner).

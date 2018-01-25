@@ -51,6 +51,24 @@ ancestors fillInOptionals object =
     Object.selectionField "ancestors" optionalArgs object identity
 
 
+{-| A URL pointing to the team's avatar.
+
+  - size - The size in pixels of the resulting square image.
+
+-}
+avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> Field (Maybe Github.Scalar.Uri) Github.Object.Team
+avatarUrl fillInOptionals =
+    let
+        filledInOptionals =
+            fillInOptionals { size = Absent }
+
+        optionalArgs =
+            [ Argument.optional "size" filledInOptionals.size Encode.int ]
+                |> List.filterMap identity
+    in
+    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+
+
 {-| List of child teams belonging to this team
 
   - first - Returns the first _n_ elements from the list.

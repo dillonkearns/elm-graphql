@@ -421,6 +421,11 @@ onUser (SelectionSet fields decoder) =
     FragmentSelectionSet "User" fields decoder
 
 
+onUserContentEdit : SelectionSet decodesTo Github.Object.UserContentEdit -> FragmentSelectionSet decodesTo Github.Interface.Node
+onUserContentEdit (SelectionSet fields decoder) =
+    FragmentSelectionSet "UserContentEdit" fields decoder
+
+
 {-| ID of the object.
 -}
 id : Field Github.Scalar.Id Github.Interface.Node

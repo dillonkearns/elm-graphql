@@ -901,6 +901,10 @@ type UserContentEdit
     = UserContentEdit
 
 
+type UserContentEditConnection
+    = UserContentEditConnection
+
+
 type UserContentEditEdge
     = UserContentEditEdge
 
