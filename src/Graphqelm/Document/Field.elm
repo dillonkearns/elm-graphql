@@ -1,4 +1,4 @@
-module Graphqelm.Document.Field exposing (serialize, serializeChildren)
+module Graphqelm.Document.Field exposing (serializeChildren)
 
 import Graphqelm.Document.Argument as Argument
 import Graphqelm.Document.Indent as Indent
@@ -27,13 +27,20 @@ alias fieldIndex fields field =
         Just (fieldName ++ toString (List.length indices + 1))
 
 
-serialize : Maybe String -> Int -> RawField -> Maybe String
-serialize alias indentationLevel field =
+serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
+serialize alias mIndentationLevel field =
     let
         prefix =
             case alias of
                 Just aliasName ->
-                    aliasName ++ ": "
+                    aliasName
+                        ++ (case mIndentationLevel of
+                                Just _ ->
+                                    ": "
+
+                                Nothing ->
+                                    ":"
+                           )
 
                 Nothing ->
                     ""
@@ -43,33 +50,51 @@ serialize alias indentationLevel field =
             if children == [] then
                 Nothing
             else
-                (fieldName
-                    ++ Argument.serialize args
-                    ++ " {\n"
-                    ++ serializeChildren indentationLevel children
-                )
-                    ++ "\n"
-                    ++ Indent.generate indentationLevel
-                    ++ "}"
-                    |> Just
+                case mIndentationLevel of
+                    Nothing ->
+                        (fieldName
+                            ++ Argument.serialize args
+                            ++ "{"
+                            ++ serializeChildren Nothing children
+                        )
+                            ++ "}"
+                            |> Just
+
+                    Just indentationLevel ->
+                        (fieldName
+                            ++ Argument.serialize args
+                            ++ " {\n"
+                            ++ serializeChildren (Just indentationLevel) children
+                        )
+                            ++ "\n"
+                            ++ Indent.generate indentationLevel
+                            ++ "}"
+                            |> Just
 
         Leaf fieldName args ->
             Just (fieldName ++ Argument.serialize args)
     )
         |> Maybe.map
             (\string ->
-                Indent.generate indentationLevel
+                Indent.generate (mIndentationLevel |> Maybe.withDefault 0)
                     ++ prefix
                     ++ string
             )
 
 
-serializeChildren : Int -> List RawField -> String
+serializeChildren : Maybe Int -> List RawField -> String
 serializeChildren indentationLevel children =
     children
         |> List.indexedMap
             (\index selection ->
-                serialize (alias index children selection) (indentationLevel + 1) selection
+                serialize (alias index children selection) (indentationLevel |> Maybe.map ((+) 1)) selection
             )
         |> List.filterMap identity
-        |> String.join "\n"
+        |> String.join
+            (case indentationLevel of
+                Just _ ->
+                    "\n"
+
+                Nothing ->
+                    ","
+            )
