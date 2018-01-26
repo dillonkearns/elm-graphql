@@ -16,7 +16,7 @@ import RemoteData exposing (RemoteData)
 makeRequest : ElmReposRequest.SortOrder -> Cmd Msg
 makeRequest sortOrder =
     query sortOrder
-        |> Graphqelm.Http.buildQueryRequest "https://api.github.com/graphql"
+        |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
         |> Graphqelm.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 

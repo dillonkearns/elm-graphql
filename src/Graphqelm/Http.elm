@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, queryRequest, send, toTask, withCredentials, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error(..), Request, mutationRequest, queryRequest, send, toTask, withCredentials, withHeader, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -14,7 +14,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Begin `Request` Pipeline
 
-@docs queryRequest, buildMutationRequest
+@docs queryRequest, mutationRequest
 
 
 ## Configure `Request` Options
@@ -80,8 +80,8 @@ queryRequest baseUrl query =
 {-| Initialize a basic request from a Mutation. You can add on options with `withHeader`,
 `withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
 -}
-buildMutationRequest : String -> SelectionSet decodesTo RootMutation -> Request decodesTo
-buildMutationRequest baseUrl mutationSelectionSet =
+mutationRequest : String -> SelectionSet decodesTo RootMutation -> Request decodesTo
+mutationRequest baseUrl mutationSelectionSet =
     { details = Mutation mutationSelectionSet
     , headers = []
     , baseUrl = baseUrl
@@ -135,7 +135,7 @@ You can use it on its own, or with a library like
     makeRequest : Cmd Msg
     makeRequest =
         query
-            |> Graphqelm.Http.buildQueryRequest "https://graphqelm.herokuapp.com/"
+            |> Graphqelm.Http.queryRequest "https://graphqelm.herokuapp.com/"
             |> Graphqelm.Http.withHeader "authorization" "Bearer abcdefgh12345678"
             -- If you're not using remote data, it's just
             -- |> Graphqelm.Http.send GotResponse
@@ -228,7 +228,7 @@ decoderOrError decoder =
     makeRequest : Cmd Msg
     makeRequest =
         query
-            |> Graphqelm.Http.buildQueryRequest "https://api.github.com/graphql"
+            |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
             |> Graphqelm.Http.withHeader "authorization" "Bearer <my token>"
             |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 
