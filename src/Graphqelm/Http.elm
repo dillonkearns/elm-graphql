@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), Request, mutationRequest, queryRequest, send, toTask, withCredentials, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error(..), Request, mutationRequest, queryRequest, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -19,7 +19,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Configure `Request` Options
 
-@docs withHeader, withTimeout, withCredentials
+@docs withHeader, withTimeout, withCredentials, withQueryParams
 
 
 ## Perform `Request`
@@ -156,7 +156,7 @@ toRequest (Request request) =
         Query querySelectionSet ->
             let
                 queryRequestDetails =
-                    QueryHelper.build Nothing request.baseUrl [] querySelectionSet
+                    QueryHelper.build Nothing request.baseUrl request.queryParams querySelectionSet
             in
             { method =
                 case queryRequestDetails.method of
@@ -236,6 +236,21 @@ decoderOrError decoder =
 withHeader : String -> String -> Request decodesTo -> Request decodesTo
 withHeader key value (Request request) =
     Request { request | headers = Http.header key value :: request.headers }
+
+
+{-| Add query params. The values will be Uri encoded.
+
+    makeRequest : Cmd Msg
+    makeRequest =
+        query
+            |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
+            |> Graphqelm.Http.withQueryParams [ ( "version", "1.2.3" ) ]
+            |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+
+-}
+withQueryParams : List ( String, String ) -> Request decodesTo -> Request decodesTo
+withQueryParams additionalQueryParams (Request request) =
+    Request { request | queryParams = request.queryParams ++ additionalQueryParams }
 
 
 {-| Add a timeout.

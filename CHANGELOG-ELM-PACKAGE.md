@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `Graphqelm.Http.withQueryParams`.
+
 ### Changed
 
 * Rename `Graphqelm.Http` functions from `buildMutationRequest` => `mutationRequest`

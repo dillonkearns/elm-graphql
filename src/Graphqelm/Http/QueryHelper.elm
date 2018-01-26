@@ -32,7 +32,7 @@ build : Maybe HttpMethod -> String -> List QueryParam -> SelectionSet decodesTo 
 build forceMethod url queryParams queryDocument =
     let
         urlForGetRequest =
-            urlWithQueryParams [ ( "query", Document.serializeQueryGET queryDocument ) ] url
+            urlWithQueryParams (queryParams ++ [ ( "query", Document.serializeQueryGET queryDocument ) ]) url
     in
     if String.length urlForGetRequest >= maxLength then
         { method = Post
