@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, buildQueryRequest, queryRequest, send, toTask, withCredentials, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, queryRequest, send, toTask, withCredentials, withHeader, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -14,7 +14,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Begin `Request` Pipeline
 
-@docs queryRequest, buildQueryRequest, buildMutationRequest
+@docs queryRequest, buildMutationRequest
 
 
 ## Configure `Request` Options
@@ -93,14 +93,6 @@ queryRequest url query =
     , withCredentials = False
     }
         |> Request
-
-
-{-| Initialize a basic request from a Query. You can add on options with `withHeader`,
-`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
--}
-buildQueryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
-buildQueryRequest url query =
-    buildRequest url (Document.serializeQuery query) query
 
 
 {-| Initialize a basic request from a Mutation. You can add on options with `withHeader`,
