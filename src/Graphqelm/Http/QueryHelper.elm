@@ -4,6 +4,7 @@ import Graphqelm.Document as Document
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet)
 import Http
+import Json.Encode
 
 
 type HttpMethod
@@ -22,16 +23,27 @@ type alias QueryParam =
     ( String, String )
 
 
+maxLength : number
+maxLength =
+    2000
+
+
 build : Maybe HttpMethod -> String -> List QueryParam -> SelectionSet decodesTo RootQuery -> QueryRequest
 build forceMethod url queryParams queryDocument =
     let
-        getUrl =
+        urlForGetRequest =
             urlWithQueryParams [ ( "query", Document.serializeQueryGET queryDocument ) ] url
     in
-    { method = Get
-    , url = getUrl
-    , body = Http.emptyBody
-    }
+    if String.length urlForGetRequest >= maxLength then
+        { method = Post
+        , url = urlWithQueryParams [] url
+        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
+        }
+    else
+        { method = Get
+        , url = urlForGetRequest
+        , body = Http.emptyBody
+        }
 
 
 urlWithQueryParams : List ( String, String ) -> String -> String
