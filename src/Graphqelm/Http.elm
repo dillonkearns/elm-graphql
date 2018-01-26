@@ -52,6 +52,7 @@ type Request decodesTo
         , expect : Json.Decode.Decoder decodesTo
         , timeout : Maybe Time
         , withCredentials : Bool
+        , queryParams : List ( String, String )
         }
 
 
@@ -71,6 +72,7 @@ queryRequest baseUrl query =
     , timeout = Nothing
     , withCredentials = False
     , details = Query query
+    , queryParams = []
     }
         |> Request
 
@@ -86,6 +88,7 @@ buildMutationRequest baseUrl mutationSelectionSet =
     , expect = Document.decoder mutationSelectionSet
     , timeout = Nothing
     , withCredentials = False
+    , queryParams = []
     }
         |> Request
 
