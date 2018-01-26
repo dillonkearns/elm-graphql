@@ -39,7 +39,7 @@ all =
                         ]
                     ]
                     |> Graphqelm.Document.serializeQueryGET
-                    |> Expect.equal "{topLevel{viewer,viewer2:viewer}}"
+                    |> Expect.equal "{topLevel{viewer viewer2:viewer}}"
         , test "multiple top-level" <|
             \() ->
                 document [ Leaf "viewer" [], Leaf "labels" [] ]
