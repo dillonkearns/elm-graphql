@@ -75,19 +75,19 @@ buildRequest url queryDocument query =
 queryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
 queryRequest url query =
     let
-        stuff =
+        requestDetails =
             QueryHelper.build Nothing url [] query
     in
     { method =
-        case stuff.method of
+        case requestDetails.method of
             QueryHelper.Get ->
                 "GET"
 
             QueryHelper.Post ->
                 "Post"
     , headers = []
-    , url = stuff.url
-    , body = stuff.body
+    , url = requestDetails.url
+    , body = requestDetails.body
     , expect = Document.decoder query
     , timeout = Nothing
     , withCredentials = False
