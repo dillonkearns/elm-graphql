@@ -96,5 +96,5 @@ serializeChildren indentationLevel children =
                     "\n"
 
                 Nothing ->
-                    ","
+                    " "
             )

@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, buildQueryRequest, send, toTask, withCredentials, withHeader, withTimeout)
+module Graphqelm.Http exposing (Error(..), Request, buildMutationRequest, buildQueryRequest, queryRequest, send, toTask, withCredentials, withHeader, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -6,14 +6,32 @@ folder for some end-to-end examples.
 The builder syntax is inspired by Luke Westby's
 [elm-http-builder package](http://package.elm-lang.org/packages/lukewestby/elm-http-builder/latest).
 
-@docs buildQueryRequest, buildMutationRequest, send, withHeader, withTimeout, withCredentials, toTask
+
+## Data Types
+
 @docs Request, Error
+
+
+## Begin `Request` Pipeline
+
+@docs queryRequest, buildQueryRequest, buildMutationRequest
+
+
+## Configure `Request` Options
+
+@docs withHeader, withTimeout, withCredentials
+
+
+## Perform `Request`
+
+@docs send, toTask
 
 -}
 
 import Graphqelm.Document as Document
 import Graphqelm.Document.LowLevel as Document
 import Graphqelm.Http.GraphqlError as GraphqlError
+import Graphqelm.Http.QueryHelper as QueryHelper
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
@@ -44,6 +62,32 @@ buildRequest url queryDocument query =
     , headers = []
     , url = url
     , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string queryDocument ) ])
+    , expect = Document.decoder query
+    , timeout = Nothing
+    , withCredentials = False
+    }
+        |> Request
+
+
+{-| Initialize a basic request from a Query. You can add on options with `withHeader`,
+`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
+-}
+queryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
+queryRequest url query =
+    let
+        stuff =
+            QueryHelper.build Nothing url [] query
+    in
+    { method =
+        case stuff.method of
+            QueryHelper.Get ->
+                "GET"
+
+            QueryHelper.Post ->
+                "Post"
+    , headers = []
+    , url = stuff.url
+    , body = stuff.body
     , expect = Document.decoder query
     , timeout = Nothing
     , withCredentials = False
