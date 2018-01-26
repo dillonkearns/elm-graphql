@@ -46,51 +46,31 @@ request with `Graphqelm.Http.send`.
 -}
 type Request decodesTo
     = Request
-        { method : String
+        { details : Details decodesTo
         , headers : List Http.Header
-        , url : String
-        , body : Http.Body
+        , baseUrl : String
         , expect : Json.Decode.Decoder decodesTo
         , timeout : Maybe Time
         , withCredentials : Bool
         }
 
 
-buildRequest : String -> String -> SelectionSet decodesTo typeLock -> Request decodesTo
-buildRequest url queryDocument query =
-    { method = "POST"
-    , headers = []
-    , url = url
-    , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string queryDocument ) ])
-    , expect = Document.decoder query
-    , timeout = Nothing
-    , withCredentials = False
-    }
-        |> Request
+type Details decodesTo
+    = Query (SelectionSet decodesTo RootQuery)
+    | Mutation (SelectionSet decodesTo RootMutation)
 
 
 {-| Initialize a basic request from a Query. You can add on options with `withHeader`,
 `withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
 -}
 queryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
-queryRequest url query =
-    let
-        requestDetails =
-            QueryHelper.build Nothing url [] query
-    in
-    { method =
-        case requestDetails.method of
-            QueryHelper.Get ->
-                "GET"
-
-            QueryHelper.Post ->
-                "Post"
-    , headers = []
-    , url = requestDetails.url
-    , body = requestDetails.body
+queryRequest baseUrl query =
+    { headers = []
+    , baseUrl = baseUrl
     , expect = Document.decoder query
     , timeout = Nothing
     , withCredentials = False
+    , details = Query query
     }
         |> Request
 
@@ -99,8 +79,15 @@ queryRequest url query =
 `withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
 -}
 buildMutationRequest : String -> SelectionSet decodesTo RootMutation -> Request decodesTo
-buildMutationRequest url query =
-    buildRequest url (Document.serializeMutation query) query
+buildMutationRequest baseUrl mutationSelectionSet =
+    { details = Mutation mutationSelectionSet
+    , headers = []
+    , baseUrl = baseUrl
+    , expect = Document.decoder mutationSelectionSet
+    , timeout = Nothing
+    , withCredentials = False
+    }
+        |> Request
 
 
 {-| Represents the two types of errors you can get, an Http error or a GraphQL error.
@@ -162,7 +149,44 @@ send resultToMessage graphqelmRequest =
 
 toRequest : Request decodesTo -> Http.Request (SuccessOrError decodesTo)
 toRequest (Request request) =
-    { request | expect = Http.expectJson (decoderOrError request.expect) }
+    (case request.details of
+        Query querySelectionSet ->
+            let
+                queryRequestDetails =
+                    QueryHelper.build Nothing request.baseUrl [] querySelectionSet
+            in
+            { method =
+                case queryRequestDetails.method of
+                    QueryHelper.Get ->
+                        "GET"
+
+                    QueryHelper.Post ->
+                        "Post"
+            , headers = request.headers
+            , url = queryRequestDetails.url
+            , body = queryRequestDetails.body
+            , expect = Http.expectJson (decoderOrError request.expect)
+            , timeout = request.timeout
+            , withCredentials = request.withCredentials
+            }
+
+        Mutation mutationSelectionSet ->
+            { method = "POST"
+            , headers = request.headers
+            , url = request.baseUrl
+            , body =
+                Http.jsonBody
+                    (Json.Encode.object
+                        [ ( "query"
+                          , Json.Encode.string (Document.serializeMutation mutationSelectionSet)
+                          )
+                        ]
+                    )
+            , expect = Http.expectJson (decoderOrError request.expect)
+            , timeout = request.timeout
+            , withCredentials = request.withCredentials
+            }
+    )
         |> Http.request
 
 
