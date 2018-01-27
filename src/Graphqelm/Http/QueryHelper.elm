@@ -1,6 +1,7 @@
 module Graphqelm.Http.QueryHelper exposing (HttpMethod(..), build)
 
 import Graphqelm.Document as Document
+import Graphqelm.Http.QueryParams as QueryParams
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet)
 import Http
@@ -32,11 +33,11 @@ build : Maybe HttpMethod -> String -> List QueryParam -> SelectionSet decodesTo 
 build forceMethod url queryParams queryDocument =
     let
         urlForGetRequest =
-            urlWithQueryParams (queryParams ++ [ ( "query", Document.serializeQueryGET queryDocument ) ]) url
+            QueryParams.urlWithQueryParams (queryParams ++ [ ( "query", Document.serializeQueryGET queryDocument ) ]) url
     in
     if String.length urlForGetRequest >= maxLength then
         { method = Post
-        , url = urlWithQueryParams [] url
+        , url = QueryParams.urlWithQueryParams [] url
         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
         }
     else
@@ -44,31 +45,3 @@ build forceMethod url queryParams queryDocument =
         , url = urlForGetRequest
         , body = Http.emptyBody
         }
-
-
-urlWithQueryParams : List ( String, String ) -> String -> String
-urlWithQueryParams queryParams url =
-    if List.isEmpty queryParams then
-        url
-    else
-        url ++ "?" ++ joinUrlEncoded queryParams
-
-
-joinUrlEncoded : List ( String, String ) -> String
-joinUrlEncoded args =
-    String.join "&" (List.map queryPair args)
-
-
-queryPair : ( String, String ) -> String
-queryPair ( key, value ) =
-    queryEscape key ++ "=" ++ queryEscape value
-
-
-queryEscape : String -> String
-queryEscape =
-    Http.encodeUri >> replace "%20" "+"
-
-
-replace : String -> String -> String -> String
-replace old new =
-    String.split old >> String.join new
