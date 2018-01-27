@@ -32,6 +32,7 @@ import Graphqelm.Document as Document
 import Graphqelm.Document.LowLevel as Document
 import Graphqelm.Http.GraphqlError as GraphqlError
 import Graphqelm.Http.QueryHelper as QueryHelper
+import Graphqelm.Http.QueryParams as QueryParams
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Http
@@ -176,7 +177,7 @@ toRequest (Request request) =
         Mutation mutationSelectionSet ->
             { method = "POST"
             , headers = request.headers
-            , url = request.baseUrl
+            , url = request.baseUrl |> QueryParams.urlWithQueryParams request.queryParams
             , body =
                 Http.jsonBody
                     (Json.Encode.object
