@@ -25,16 +25,6 @@ import Swapi.Union.CharacterUnion as CharacterUnion
 type alias Response =
     { vader : Maybe HumanLookup
     , tarkin : Maybe HumanLookup
-    , other1 : Maybe HumanLookup
-    , other2 : Maybe HumanLookup
-    , other3 : Maybe HumanLookup
-    , other4 : Maybe HumanLookup
-    , other5 : Maybe HumanLookup
-    , other6 : Maybe HumanLookup
-    , other7 : Maybe HumanLookup
-    , other8 : Maybe HumanLookup
-    , other9 : Maybe HumanLookup
-    , other10 : Maybe HumanLookup
     , hero : Character
     , union : Maybe CharacterUnion
     , greeting : String
@@ -85,16 +75,6 @@ query =
     Query.selection Response
         |> with (Query.human { id = Swapi.Scalar.Id "1001" } human)
         |> with (Query.human { id = Swapi.Scalar.Id "1004" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1003" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1005" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1006" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1007" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1008" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1009" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1010" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1011" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1012" } human)
         |> with
             (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
         |> with
