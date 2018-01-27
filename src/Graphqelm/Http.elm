@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), Request, mutationRequest, queryRequest, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
+module Graphqelm.Http exposing (Error(..), ForceRequestMethod(..), Request, mutationRequest, queryRequest, queryRequestForceMethod, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -14,7 +14,8 @@ The builder syntax is inspired by Luke Westby's
 
 ## Begin `Request` Pipeline
 
-@docs queryRequest, mutationRequest
+@docs queryRequest, mutationRequest, queryRequestForceMethod
+@docs ForceRequestMethod
 
 
 ## Configure `Request` Options
@@ -57,8 +58,16 @@ type Request decodesTo
         }
 
 
+{-| Union type to pass in to `queryRequestForceMethod`. Only applies to queries.
+Mutations don't accept this configuration option and will always use POST.
+-}
+type ForceRequestMethod
+    = AlwaysGet
+    | AlwaysPost
+
+
 type Details decodesTo
-    = Query (SelectionSet decodesTo RootQuery)
+    = Query (Maybe ForceRequestMethod) (SelectionSet decodesTo RootQuery)
     | Mutation (SelectionSet decodesTo RootMutation)
 
 
@@ -72,7 +81,23 @@ queryRequest baseUrl query =
     , expect = Document.decoder query
     , timeout = Nothing
     , withCredentials = False
-    , details = Query query
+    , details = Query Nothing query
+    , queryParams = []
+    }
+        |> Request
+
+
+{-| Initialize a basic request from a Query. You can add on options with `withHeader`,
+`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
+-}
+queryRequestForceMethod : String -> ForceRequestMethod -> SelectionSet decodesTo RootQuery -> Request decodesTo
+queryRequestForceMethod baseUrl requestMethod query =
+    { headers = []
+    , baseUrl = baseUrl
+    , expect = Document.decoder query
+    , timeout = Nothing
+    , withCredentials = False
+    , details = Query (Just requestMethod) query
     , queryParams = []
     }
         |> Request
@@ -154,10 +179,24 @@ send resultToMessage graphqelmRequest =
 toRequest : Request decodesTo -> Http.Request (SuccessOrError decodesTo)
 toRequest (Request request) =
     (case request.details of
-        Query querySelectionSet ->
+        Query forcedRequestMethod querySelectionSet ->
             let
                 queryRequestDetails =
-                    QueryHelper.build Nothing request.baseUrl request.queryParams querySelectionSet
+                    QueryHelper.build
+                        (forcedRequestMethod
+                            |> Maybe.map
+                                (\forcedMethod ->
+                                    case forcedMethod of
+                                        AlwaysGet ->
+                                            QueryHelper.Get
+
+                                        AlwaysPost ->
+                                            QueryHelper.Post
+                                )
+                        )
+                        request.baseUrl
+                        request.queryParams
+                        querySelectionSet
             in
             { method =
                 case queryRequestDetails.method of

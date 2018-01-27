@@ -32,17 +32,25 @@ all =
     describe "document"
         [ test "uses GET when it is short enough" <|
             \() ->
-                document
-                    [ Composite "hero"
-                        []
-                        [ Leaf "name" []
-                        ]
-                    ]
+                document [ Composite "hero" [] [ Leaf "name" [] ] ]
                     |> QueryHelper.build Nothing "https://graphqelm.herokuapp.com/api" []
                     |> Expect.equal
                         { method = QueryHelper.Get
                         , url = "https://graphqelm.herokuapp.com/api?query=%7Bhero%7Bname%7D%7D"
                         , body = Http.emptyBody
+                        }
+        , test "uses POST when it is short enough for GET but POST is forced" <|
+            \() ->
+                let
+                    queryDocument =
+                        document [ Composite "hero" [] [ Leaf "name" [] ] ]
+                in
+                queryDocument
+                    |> QueryHelper.build (Just QueryHelper.Post) "https://graphqelm.herokuapp.com/api" []
+                    |> Expect.equal
+                        { method = QueryHelper.Post
+                        , url = "https://graphqelm.herokuapp.com/api"
+                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
                         }
         , test "uses POST when it too long" <|
             \() ->

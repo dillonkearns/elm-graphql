@@ -35,7 +35,7 @@ build forceMethod url queryParams queryDocument =
         urlForGetRequest =
             QueryParams.urlWithQueryParams (queryParams ++ [ ( "query", Document.serializeQueryGET queryDocument ) ]) url
     in
-    if String.length urlForGetRequest >= maxLength then
+    if forceMethod == Just Post || (String.length urlForGetRequest >= maxLength && forceMethod /= Just Get) then
         { method = Post
         , url = QueryParams.urlWithQueryParams [] url
         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
