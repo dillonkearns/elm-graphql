@@ -1,10 +1,10 @@
-module Graphqelm.Document exposing (serializeMutation, serializeQuery, serializeQueryGET, serializeSubscription)
+module Graphqelm.Document exposing (serializeMutation, serializeQuery, serializeQueryForUrl, serializeSubscription)
 
 {-| You'll usually want to use `Graphqelm.Http` to perform your queries directly.
 This package provides low-level functions for generating GraphQL documents that
 are helpful for debugging and demo purposes.
 
-@docs serializeQuery, serializeMutation, serializeSubscription, serializeQueryGET
+@docs serializeQuery, serializeMutation, serializeSubscription, serializeQueryForUrl
 
 -}
 
@@ -22,11 +22,11 @@ serializeQuery (SelectionSet fields decoder) =
     serialize "query" fields
 
 
-{-| Serialize a query selection set into a string for a GET request query param
-for a GraphQL endpoint.
+{-| Serialize a query selection set into a string with minimal whitespace. For
+use with a GET request as a query param.
 -}
-serializeQueryGET : SelectionSet decodesTo RootQuery -> String
-serializeQueryGET (SelectionSet fields decoder) =
+serializeQueryForUrl : SelectionSet decodesTo RootQuery -> String
+serializeQueryForUrl (SelectionSet fields decoder) =
     "{" ++ Field.serializeChildren Nothing fields ++ "}"
 
 

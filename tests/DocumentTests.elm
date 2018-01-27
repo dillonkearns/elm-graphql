@@ -27,7 +27,7 @@ all =
         , test "single leaf for GET serializer" <|
             \() ->
                 document [ Leaf "viewer" [] ]
-                    |> Graphqelm.Document.serializeQueryGET
+                    |> Graphqelm.Document.serializeQueryForUrl
                     |> Expect.equal """{viewer}"""
         , test "duplicate nested fields for GET serializer" <|
             \() ->
@@ -38,7 +38,7 @@ all =
                         , Leaf "viewer" []
                         ]
                     ]
-                    |> Graphqelm.Document.serializeQueryGET
+                    |> Graphqelm.Document.serializeQueryForUrl
                     |> Expect.equal "{topLevel{viewer viewer2:viewer}}"
         , test "multiple top-level" <|
             \() ->
