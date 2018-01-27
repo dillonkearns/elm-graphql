@@ -87,8 +87,15 @@ queryRequest baseUrl query =
         |> Request
 
 
-{-| Initialize a basic request from a Query. You can add on options with `withHeader`,
-`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
+{-| Exactly like `queryRequest`, but with an option to either force a request method
+of `AlwaysGet` or `AlwaysPost`. `queryRequest` will use GET for semantic reasons
+(unless it results in a URL of over 2000 characters). That is, a GraphQL Query
+does not perform side-effects on the server like a Mutation does, so a GET
+indicates this and allows some servers to cache requests. Use this function
+if for some reason you want to make sure that either GET or POST is always used
+(99% of the time, `queryRequest` will do exactly what you need). See
+[this github thread from the Apollo project](https://github.com/apollographql/apollo-client/issues/813)
+for more details.
 -}
 queryRequestForceMethod : String -> ForceRequestMethod -> SelectionSet decodesTo RootQuery -> Request decodesTo
 queryRequestForceMethod baseUrl requestMethod query =
