@@ -5,6 +5,7 @@ import Github.Object
 import Github.Object.PageInfo
 import Github.Object.Repository as Repository
 import Github.Object.SearchResultItemConnection
+import Github.Object.StargazerConnection
 import Github.Query as Query
 import Github.Scalar
 import Github.Union
@@ -96,8 +97,7 @@ type alias Repo =
     , description : Maybe String
     , createdAt : Github.Scalar.DateTime
     , updatedAt : Github.Scalar.DateTime
-    , forkCount : Int
-    , url : Github.Scalar.Uri
+    , stargazers : Int
     }
 
 
@@ -108,8 +108,7 @@ repositorySelection =
         |> with Repository.description
         |> with Repository.createdAt
         |> with Repository.updatedAt
-        |> with Repository.forkCount
-        |> with Repository.url
+        |> with (Repository.stargazers identity (Github.Object.StargazerConnection.selection identity |> with Github.Object.StargazerConnection.totalCount))
 
 
 makeRequest : Maybe String -> Cmd Msg
