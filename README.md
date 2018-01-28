@@ -58,7 +58,7 @@ type alias Human =
     { name : String }
 
 
-human : SelectionSet Human StarWars.Object.Human
+human : SelectionSet Human Human.Human
 human =
     Human.selection Human
         |> with Human.name
