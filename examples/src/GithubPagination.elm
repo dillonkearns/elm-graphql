@@ -15,7 +15,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
-import Graphqelm.SelectionSet exposing (SelectionSet, with)
+import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
 import PrintAny
@@ -23,8 +23,12 @@ import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    { repos : List (Maybe (Maybe Repo))
-    , pageInfo : PageInfo
+    Paginator (List (Maybe (Maybe Repo))) String
+
+
+type alias Paginator dataType cursorType =
+    { data : dataType
+    , paginationData : PaginationData cursorType
     }
 
 
@@ -63,20 +67,20 @@ expect maybe =
 
 searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
 searchSelection =
-    Github.Object.SearchResultItemConnection.selection Response
+    Github.Object.SearchResultItemConnection.selection Paginator
         |> with searchResultField
         |> with (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
 
 
-type alias PageInfo =
-    { endCursor : Maybe String
+type alias PaginationData cursorType =
+    { cursor : Maybe cursorType
     , hasNextPage : Bool
     }
 
 
-searchPageInfoSelection : SelectionSet PageInfo Github.Object.PageInfo
+searchPageInfoSelection : SelectionSet (PaginationData String) Github.Object.PageInfo
 searchPageInfoSelection =
-    Github.Object.PageInfo.selection PageInfo
+    Github.Object.PageInfo.selection PaginationData
         |> with Github.Object.PageInfo.endCursor
         |> with Github.Object.PageInfo.hasNextPage
 
@@ -160,8 +164,8 @@ update msg model =
         GetNextPage ->
             case model of
                 (RemoteData.Success successResponse) :: rest ->
-                    if successResponse.pageInfo.hasNextPage then
-                        ( RemoteData.Loading :: model, makeRequest successResponse.pageInfo.endCursor )
+                    if successResponse.paginationData.hasNextPage then
+                        ( RemoteData.Loading :: model, makeRequest successResponse.paginationData.cursor )
                     else
                         ( model, Cmd.none )
 
