@@ -110,15 +110,15 @@ makeRequest cursor =
 
 
 type Msg
-    = GotResponse ModelUnit
+    = GotResponse RemoteDataResponse
     | GetNextPage
 
 
 type alias Model =
-    List ModelUnit
+    List RemoteDataResponse
 
 
-type alias ModelUnit =
+type alias RemoteDataResponse =
     RemoteData Graphqelm.Http.Error Response
 
 
