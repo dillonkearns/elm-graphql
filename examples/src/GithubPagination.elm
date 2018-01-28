@@ -13,9 +13,10 @@ import Graphqelm.Document as Document
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
-import Html exposing (div, h1, p, pre, text)
+import Html exposing (button, div, h1, p, pre, text)
+import Html.Events exposing (onClick)
 import PrintAny
 import RemoteData exposing (RemoteData)
 
@@ -26,11 +27,23 @@ type alias Response =
     }
 
 
-query : SelectionSet Response RootQuery
-query =
+query : Maybe String -> SelectionSet Response RootQuery
+query cursor =
     Query.selection identity
         |> with
-            (Query.search (\optionals -> { optionals | first = Present 5 })
+            (Query.search
+                (\optionals ->
+                    { optionals
+                        | first = Present 1
+                        , after =
+                            case cursor of
+                                Just cursorValue ->
+                                    Present cursorValue
+
+                                Nothing ->
+                                    Absent
+                    }
+                )
                 { query = "language:Elm"
                 , type_ = Github.Enum.SearchType.Repository
                 }
@@ -105,26 +118,31 @@ repositorySelection =
         |> with Repository.url
 
 
-makeRequest : Cmd Msg
-makeRequest =
-    query
+makeRequest : Maybe String -> Cmd Msg
+makeRequest cursor =
+    query cursor
         |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
         |> Graphqelm.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
-    = GotResponse Model
+    = GotResponse ModelUnit
+    | GetNextPage
 
 
 type alias Model =
+    List ModelUnit
+
+
+type alias ModelUnit =
     RemoteData Graphqelm.Http.Error Response
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( RemoteData.Loading
-    , makeRequest
+    ( [ RemoteData.Loading ]
+    , makeRequest Nothing
     )
 
 
@@ -133,8 +151,9 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery query) ]
+            , pre [] [ text (Document.serializeQuery (query Nothing)) ]
             ]
+        , div [] [ button [ onClick GetNextPage ] [ text "Load next page..." ] ]
         , div []
             [ h1 [] [ text "Response" ]
             , PrintAny.view model
@@ -145,8 +164,21 @@ view model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        GetNextPage ->
+            case model of
+                (RemoteData.Success successResponse) :: rest ->
+                    ( RemoteData.Loading :: model, makeRequest successResponse.pageInfo.endCursor )
+
+                _ ->
+                    ( model, Cmd.none )
+
         GotResponse response ->
-            ( response, Cmd.none )
+            case model of
+                head :: rest ->
+                    ( response :: rest, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
 
 
 main : Program Never Model Msg
