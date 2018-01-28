@@ -22,6 +22,56 @@ See more end-to-end example code in the
 [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
 folder.
 
+## Overview
+
+`graphqelm` is an Elm package and accompanying command-line code generator that creates type-safe Elm code for your GraphQL endpoint. You don't write any decoders for your API with `graphqelm`, instead you simply select which fields you would like, similar to a standard GraphQL query but in Elm. For example, this GraphQL query
+
+```graphql
+query {
+  human(id: "1001") {
+    name
+  }
+}
+```
+
+would look like this in `graphqelm` (the code in this example that is prefixed with `StarWars` is auto-generated)
+
+```haskell
+import Graphqelm.Operation exposing (RootQuery)
+import Graphqelm.SelectionSet exposing (SelectionSet, with)
+import StarWars.Object
+import StarWars.Object.Human as Human
+import StarWars.Query as Query
+
+
+type alias Response =
+    { vader : Maybe Human }
+
+
+query : SelectionSet Response RootQuery
+query =
+    Query.selection Response
+        |> with (Query.human { id = StarWars.Scalar.Id "1001" } human)
+
+
+type alias Human =
+    { name : String }
+
+
+human : SelectionSet Human StarWars.Object.Human
+human =
+    Human.selection Human
+        |> with Human.name
+```
+
+GraphQL and Elm are a perfect match because GraphQL is used to enforce the types that your API takes as inputs and outputs, much like Elm's type system does within Elm. `elm-graphql` simply bridges this gap by making your Elm code aware of your GraphQL server's schema. If you are new to GraphQL, [graphql.org/learn/](http://graphql.org/learn/) is an excellent way to learn the basics.
+
+After installing the command line tool and Elm package, running `elm-graphql` just looks like
+
+```bash
+graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src
+```
+
 ## Usage
 
 `graphqelm` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `graphqelm`.
