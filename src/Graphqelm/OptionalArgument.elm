@@ -1,8 +1,9 @@
-module Graphqelm.OptionalArgument exposing (OptionalArgument(..))
+module Graphqelm.OptionalArgument exposing (OptionalArgument(..), fromMaybe)
 
 {-|
 
 @docs OptionalArgument
+@docs fromMaybe
 
 -}
 
@@ -43,3 +44,15 @@ type OptionalArgument a
     = Present a
     | Absent
     | Null
+
+
+{-| Convert a `Maybe` to an OptionalArgument.
+-}
+fromMaybe : Maybe a -> OptionalArgument a
+fromMaybe maybeValue =
+    case maybeValue of
+        Just value ->
+            Present value
+
+        Nothing ->
+            Absent

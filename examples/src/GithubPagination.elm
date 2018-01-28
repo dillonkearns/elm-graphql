@@ -13,7 +13,7 @@ import Graphqelm.Document as Document
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
+import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
@@ -35,13 +35,7 @@ query cursor =
                 (\optionals ->
                     { optionals
                         | first = Present 1
-                        , after =
-                            case cursor of
-                                Just cursorValue ->
-                                    Present cursorValue
-
-                                Nothing ->
-                                    Absent
+                        , after = OptionalArgument.fromMaybe cursor
                     }
                 )
                 { query = "language:Elm"

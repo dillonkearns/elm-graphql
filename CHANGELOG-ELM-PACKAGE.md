@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `Graphqelm.OptionalArgument.fromMaybe`.
+
 ## [8.0.1] - 2018-01-27
 
 ### Changed
