@@ -16,6 +16,7 @@ import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
+import Helpers
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
 import PrintAny
@@ -50,21 +51,6 @@ query cursor =
             )
 
 
-expectField : Field (Maybe a) typeLock -> Field a typeLock
-expectField =
-    Field.map expect
-
-
-expect : Maybe a -> a
-expect maybe =
-    case maybe of
-        Just thing ->
-            thing
-
-        Nothing ->
-            Debug.crash "Expected to get thing, got nothing"
-
-
 searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
 searchSelection =
     Github.Object.SearchResultItemConnection.selection Paginator
@@ -87,7 +73,7 @@ searchPageInfoSelection =
 
 searchResultField : Field.Field (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
 searchResultField =
-    Github.Object.SearchResultItemConnection.nodes searchResultSelection |> expectField
+    Github.Object.SearchResultItemConnection.nodes searchResultSelection |> Helpers.expectField
 
 
 searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
@@ -138,9 +124,7 @@ type alias ModelUnit =
 
 init : ( Model, Cmd Msg )
 init =
-    ( [ RemoteData.Loading ]
-    , makeRequest Nothing
-    )
+    ( [ RemoteData.Loading ], makeRequest Nothing )
 
 
 view : Model -> Html.Html Msg
