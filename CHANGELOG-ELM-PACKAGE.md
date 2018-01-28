@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * Add `Graphqelm.OptionalArgument.fromMaybe`.
+* Add `SelectionSet.map`.
 
 ## [8.0.1] - 2018-01-27
 
