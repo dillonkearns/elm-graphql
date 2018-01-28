@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [8.0.1] - 2018-01-27
+
+### Changed
+
+* Always use POST when sending query requests since some APIs like Github don't
+  support GET (see https://developer.github.com/v4/guides/forming-calls/#communicating-with-graphql).
+
 ## [8.0.0] - 2018-01-27
 
 ### Added
