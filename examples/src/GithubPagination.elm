@@ -1,15 +1,15 @@
 module GithubPagination exposing (main)
 
+import Github.Enum.SearchType
 import Github.Object
-import Github.Object.Release
-import Github.Object.ReleaseConnection
 import Github.Object.Repository as Repository
-import Github.Object.StargazerConnection
-import Github.Object.Topic
+import Github.Object.SearchResultItemConnection
 import Github.Query as Query
 import Github.Scalar
+import Github.Union
+import Github.Union.SearchResultItem
 import Graphqelm.Document as Document
-import Graphqelm.Field
+import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
@@ -20,70 +20,73 @@ import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    { repoInfo : Maybe RepositoryInfo
-    , topicId : Maybe Github.Scalar.Id
-    }
-
-
-type alias RepositoryInfo =
-    { createdAt : Github.Scalar.DateTime
-    , earlyReleases : ReleaseInfo
-    , lateReleases : ReleaseInfo
-    , stargazersCount : Int
+    { repos : List (Maybe (Maybe Repo))
     }
 
 
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
-        |> with (Query.topic { name = "" } topicId)
+        |> with
+            (Query.search (\optionals -> { optionals | first = Present 5 })
+                { query = "language:Elm"
+                , type_ = Github.Enum.SearchType.Repository
+                }
+                searchSelection
+            )
 
 
-topicId : SelectionSet Github.Scalar.Id Github.Object.Topic
-topicId =
-    Github.Object.Topic.selection identity |> with Github.Object.Topic.id
+expectField : Field (Maybe a) typeLock -> Field a typeLock
+expectField =
+    Field.map expect
 
 
-repo : SelectionSet RepositoryInfo Github.Object.Repository
-repo =
-    Repository.selection RepositoryInfo
-        |> with Repository.createdAt
-        |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
-        |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
-        |> with (Repository.stargazers identity stargazers)
+expect : Maybe a -> a
+expect maybe =
+    case maybe of
+        Just thing ->
+            thing
+
+        Nothing ->
+            Debug.crash "Expected to get thing, got nothing"
 
 
-stargazers : SelectionSet Int Github.Object.StargazerConnection
-stargazers =
-    Github.Object.StargazerConnection.selection identity
-        |> with Github.Object.StargazerConnection.totalCount
+searchSelection : SelectionSet (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
+searchSelection =
+    Github.Object.SearchResultItemConnection.selection identity
+        |> with searchResultField
 
 
-type alias ReleaseInfo =
-    { totalCount : Int
-    , releases : Maybe (List (Maybe Release))
-    }
+searchResultField : Field.Field (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
+searchResultField =
+    Github.Object.SearchResultItemConnection.nodes searchResultSelection |> expectField
 
 
-releases : SelectionSet ReleaseInfo Github.Object.ReleaseConnection
-releases =
-    Github.Object.ReleaseConnection.selection ReleaseInfo
-        |> with Github.Object.ReleaseConnection.totalCount
-        |> with (Github.Object.ReleaseConnection.nodes release)
+searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
+searchResultSelection =
+    Github.Union.SearchResultItem.selection identity
+        [ Github.Union.SearchResultItem.onRepository repositorySelection ]
 
 
-type alias Release =
+type alias Repo =
     { name : String
+    , description : Maybe String
+    , createdAt : Github.Scalar.DateTime
+    , updatedAt : Github.Scalar.DateTime
+    , forkCount : Int
     , url : Github.Scalar.Uri
     }
 
 
-release : SelectionSet Release Github.Object.Release
-release =
-    Github.Object.Release.selection Release
-        |> with (Github.Object.Release.name |> Graphqelm.Field.map (Maybe.withDefault ""))
-        |> with Github.Object.Release.url
+repositorySelection : SelectionSet Repo Github.Object.Repository
+repositorySelection =
+    Repository.selection Repo
+        |> with Repository.nameWithOwner
+        |> with Repository.description
+        |> with Repository.createdAt
+        |> with Repository.updatedAt
+        |> with Repository.forkCount
+        |> with Repository.url
 
 
 makeRequest : Cmd Msg
