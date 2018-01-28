@@ -9,14 +9,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [8.0.0] - 2018-01-27
+
 ### Added
 
 * Add `Graphqelm.Http.withQueryParams`.
 
 ### Changed
 
+* Use GET requests by default when sending a query request, unless the resulting
+  url would be over 2000 characters. `queryParamsForceMethod` allows you to specify a method when needed.
 * Rename `Graphqelm.Http` functions from `buildMutationRequest` => `mutationRequest`
   and `buildQueryRequest` => `queryRequest` to sound more declarative and concise.
+* Extract Subscription.Protocol module which encapsulates the details about
+  low-level subscription communication for a given framework. The module includes
+  an implementation for Rails and Absinthe/Rhoenix, or custom.
 
 ## [7.2.0] - 2018-01-20
 
