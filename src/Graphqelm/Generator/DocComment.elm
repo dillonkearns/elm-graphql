@@ -1,7 +1,7 @@
 module Graphqelm.Generator.DocComment exposing (generate, generateForEnum)
 
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.CamelCaseName as CamelCaseName
+import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type as Type exposing (EnumValue, Field)
 import Interpolate exposing (interpolate)
 
