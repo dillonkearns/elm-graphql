@@ -2,6 +2,7 @@ module GithubPagination exposing (main)
 
 import Github.Enum.SearchType
 import Github.Object
+import Github.Object.PageInfo
 import Github.Object.Repository as Repository
 import Github.Object.SearchResultItemConnection
 import Github.Query as Query
@@ -21,12 +22,13 @@ import RemoteData exposing (RemoteData)
 
 type alias Response =
     { repos : List (Maybe (Maybe Repo))
+    , pageInfo : PageInfo
     }
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
+    Query.selection identity
         |> with
             (Query.search (\optionals -> { optionals | first = Present 5 })
                 { query = "language:Elm"
@@ -51,10 +53,24 @@ expect maybe =
             Debug.crash "Expected to get thing, got nothing"
 
 
-searchSelection : SelectionSet (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
+searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
 searchSelection =
-    Github.Object.SearchResultItemConnection.selection identity
+    Github.Object.SearchResultItemConnection.selection Response
         |> with searchResultField
+        |> with (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
+
+
+type alias PageInfo =
+    { endCursor : Maybe String
+    , hasNextPage : Bool
+    }
+
+
+searchPageInfoSelection : SelectionSet PageInfo Github.Object.PageInfo
+searchPageInfoSelection =
+    Github.Object.PageInfo.selection PageInfo
+        |> with Github.Object.PageInfo.endCursor
+        |> with Github.Object.PageInfo.hasNextPage
 
 
 searchResultField : Field.Field (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
