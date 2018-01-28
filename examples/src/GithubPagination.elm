@@ -161,7 +161,10 @@ update msg model =
         GetNextPage ->
             case model of
                 (RemoteData.Success successResponse) :: rest ->
-                    ( RemoteData.Loading :: model, makeRequest successResponse.pageInfo.endCursor )
+                    if successResponse.pageInfo.hasNextPage then
+                        ( RemoteData.Loading :: model, makeRequest successResponse.pageInfo.endCursor )
+                    else
+                        ( model, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
