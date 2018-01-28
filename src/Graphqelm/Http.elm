@@ -81,19 +81,18 @@ queryRequest baseUrl query =
     , expect = Document.decoder query
     , timeout = Nothing
     , withCredentials = False
-    , details = Query Nothing query
+    , details = Query (Just AlwaysPost) query
     , queryParams = []
     }
         |> Request
 
 
 {-| Exactly like `queryRequest`, but with an option to either force a request method
-of `AlwaysGet` or `AlwaysPost`. `queryRequest` will use GET for semantic reasons
-(unless it results in a URL of over 2000 characters). That is, a GraphQL Query
-does not perform side-effects on the server like a Mutation does, so a GET
-indicates this and allows some servers to cache requests. Use this function
-if for some reason you want to make sure that either GET or POST is always used
-(99% of the time, `queryRequest` will do exactly what you need). See
+of `AlwaysGet` or `AlwaysPost`. `queryRequest` always uses POST since some
+GraphQL API's don't support GET requests. But for semantic reasons, GET requests
+are sometimes useful. That is, a GraphQL Query does not perform side-effects on the server
+like a Mutation does, so a GET
+indicates this and allows some servers to cache requests. See
 [this github thread from the Apollo project](https://github.com/apollographql/apollo-client/issues/813)
 for more details.
 -}
