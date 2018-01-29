@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), ForceRequestMethod(..), Request, mutationRequest, queryRequest, queryRequestForceMethod, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
+module Graphqelm.Http exposing (Error(..), QueryRequestMethod(..), Request, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -14,8 +14,8 @@ The builder syntax is inspired by Luke Westby's
 
 ## Begin `Request` Pipeline
 
-@docs queryRequest, mutationRequest, queryRequestForceMethod
-@docs ForceRequestMethod
+@docs queryRequest, mutationRequest, queryRequestWithHttpGet
+@docs QueryRequestMethod
 
 
 ## Configure `Request` Options
@@ -58,16 +58,16 @@ type Request decodesTo
         }
 
 
-{-| Union type to pass in to `queryRequestForceMethod`. Only applies to queries.
+{-| Union type to pass in to `queryRequestWithHttpGet`. Only applies to queries.
 Mutations don't accept this configuration option and will always use POST.
 -}
-type ForceRequestMethod
+type QueryRequestMethod
     = AlwaysGet
-    | AlwaysPost
+    | GetIfShortEnough
 
 
 type Details decodesTo
-    = Query (Maybe ForceRequestMethod) (SelectionSet decodesTo RootQuery)
+    = Query (Maybe QueryRequestMethod) (SelectionSet decodesTo RootQuery)
     | Mutation (SelectionSet decodesTo RootMutation)
 
 
@@ -81,7 +81,7 @@ queryRequest baseUrl query =
     , expect = Document.decoder query
     , timeout = Nothing
     , withCredentials = False
-    , details = Query (Just AlwaysPost) query
+    , details = Query Nothing query
     , queryParams = []
     }
         |> Request
@@ -96,8 +96,8 @@ indicates this and allows some servers to cache requests. See
 [this github thread from the Apollo project](https://github.com/apollographql/apollo-client/issues/813)
 for more details.
 -}
-queryRequestForceMethod : String -> ForceRequestMethod -> SelectionSet decodesTo RootQuery -> Request decodesTo
-queryRequestForceMethod baseUrl requestMethod query =
+queryRequestWithHttpGet : String -> QueryRequestMethod -> SelectionSet decodesTo RootQuery -> Request decodesTo
+queryRequestWithHttpGet baseUrl requestMethod query =
     { headers = []
     , baseUrl = baseUrl
     , expect = Document.decoder query
@@ -189,16 +189,15 @@ toRequest (Request request) =
             let
                 queryRequestDetails =
                     QueryHelper.build
-                        (forcedRequestMethod
-                            |> Maybe.map
-                                (\forcedMethod ->
-                                    case forcedMethod of
-                                        AlwaysGet ->
-                                            QueryHelper.Get
+                        (case forcedRequestMethod of
+                            Just AlwaysGet ->
+                                Just QueryHelper.Get
 
-                                        AlwaysPost ->
-                                            QueryHelper.Post
-                                )
+                            Just GetIfShortEnough ->
+                                Nothing
+
+                            Nothing ->
+                                Just QueryHelper.Post
                         )
                         request.baseUrl
                         request.queryParams
