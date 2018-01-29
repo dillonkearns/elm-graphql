@@ -34,7 +34,7 @@ appearsIn =
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet selection Normalize.Interface.Character -> Field (List selection) Normalize.Object.Human_
+friends : SelectionSet decodesTo Normalize.Interface.Character -> Field (List decodesTo) Normalize.Object.Human_
 friends object =
     Object.selectionField "friends" [] object (identity >> Decode.list)
 

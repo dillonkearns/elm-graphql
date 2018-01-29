@@ -32,7 +32,7 @@ selection constructor =
   - iD_ - ID of the droid.
 
 -}
-droid_ : { iD_ : Normalize.Scalar.Id } -> SelectionSet selection Normalize.Object.Droid -> Field (Maybe selection) RootQuery
+droid_ : { iD_ : Normalize.Scalar.Id } -> SelectionSet decodesTo Normalize.Object.Droid -> Field (Maybe decodesTo) RootQuery
 droid_ requiredArgs object =
     Object.selectionField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
@@ -42,7 +42,7 @@ droid_ requiredArgs object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Interface.Character -> Field selection RootQuery
+hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet decodesTo Normalize.Interface.Character -> Field decodesTo RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -60,7 +60,7 @@ hero fillInOptionals object =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet selection Normalize.Union.CharacterUnion -> Field (Maybe selection) RootQuery
+heroUnion : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet decodesTo Normalize.Union.CharacterUnion -> Field (Maybe decodesTo) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =
@@ -78,6 +78,6 @@ heroUnion fillInOptionals object =
   - id - ID of the human.
 
 -}
-human : { id : Normalize.Scalar.Id } -> SelectionSet selection Normalize.Object.Human_ -> Field (Maybe selection) RootQuery
+human : { id : Normalize.Scalar.Id } -> SelectionSet decodesTo Normalize.Object.Human_ -> Field (Maybe decodesTo) RootQuery
 human requiredArgs object =
     Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)

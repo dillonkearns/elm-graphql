@@ -21,11 +21,11 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
-onHuman_ : SelectionSet selection Normalize.Object.Human_ -> FragmentSelectionSet selection Normalize.Union.CharacterUnion
+onHuman_ : SelectionSet decodesTo Normalize.Object.Human_ -> FragmentSelectionSet decodesTo Normalize.Union.CharacterUnion
 onHuman_ (SelectionSet fields decoder) =
     FragmentSelectionSet "_human" fields decoder
 
 
-onDroid : SelectionSet selection Normalize.Object.Droid -> FragmentSelectionSet selection Normalize.Union.CharacterUnion
+onDroid : SelectionSet decodesTo Normalize.Object.Droid -> FragmentSelectionSet decodesTo Normalize.Union.CharacterUnion
 onDroid (SelectionSet fields decoder) =
     FragmentSelectionSet "Droid" fields decoder
