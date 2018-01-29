@@ -1,5 +1,5 @@
 {
-    "version": "8.0.1",
+    "version": "9.0.0",
     "summary": "Type-safe GraphQL queries in Elm.",
     "repository": "https://github.com/dillonkearns/graphqelm.git",
     "license": "BSD3",

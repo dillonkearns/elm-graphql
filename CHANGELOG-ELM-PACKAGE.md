@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [9.0.0] - 2018-01-28
+
 ### Changed
 
 * Remove `AlwaysPost` since `Graphqelm.Http.queryRequest` now always uses POST.
