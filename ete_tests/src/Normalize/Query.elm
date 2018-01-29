@@ -13,6 +13,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 import Normalize.Enum.Episode_
+import Normalize.InputObject as InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
@@ -25,6 +26,16 @@ functions from `Graphqelm.Http`.
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
 selection constructor =
     Object.selection constructor
+
+
+{-|
+
+  - input - Test circular input.
+
+-}
+circularInput : { input : InputObject.CircularOne } -> Field (Maybe String) RootQuery
+circularInput requiredArgs =
+    Object.fieldDecoder "circularInput" [ Argument.required "input" requiredArgs.input InputObject.encodeCircularOne ] (Decode.string |> Decode.maybe)
 
 
 {-|
@@ -81,3 +92,13 @@ heroUnion fillInOptionals object =
 human : { id : Normalize.Scalar.Id } -> SelectionSet decodesTo Normalize.Object.Human_ -> Field (Maybe decodesTo) RootQuery
 human requiredArgs object =
     Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+
+
+{-|
+
+  - input - Test recursive input.
+
+-}
+recursiveInput : { input : InputObject.Recursive } -> Field (Maybe String) RootQuery
+recursiveInput requiredArgs =
+    Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input InputObject.encodeRecursive ] (Decode.string |> Decode.maybe)
