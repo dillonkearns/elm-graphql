@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add log statements to show progress while running CLI.
+
 ### Changed
 
 * Include deprecated fields by default. Add `--excludeDeprecated` CLI flag in place

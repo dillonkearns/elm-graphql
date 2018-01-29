@@ -102,6 +102,7 @@ if (!(graphqlUrl || introspectionFile)) {
 warnIfContainsNonGenerated(prependBasePath('/'))
 
 const onDataAvailable = (data: {}) => {
+  console.log('Generating files...')
   let app = Elm.Main.worker({ data, baseModule })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     removeGenerated(prependBasePath('/'))
@@ -119,6 +120,7 @@ const onDataAvailable = (data: {}) => {
       prependBasePath('graphqelm-metadata.json'),
       `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
     )
+    console.log('Success!')
   })
 }
 if (introspectionFile) {
@@ -127,6 +129,7 @@ if (introspectionFile) {
   )
   onDataAvailable(introspectionFileJson.data || introspectionFileJson)
 } else {
+  console.log('Fetching GraphQL schema...')
   new GraphQLClient(graphqlUrl, {
     mode: 'cors',
     headers: headers

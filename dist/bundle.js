@@ -3827,6 +3827,7 @@ if (!(graphqlUrl || introspectionFile)) {
 }
 warnIfContainsNonGenerated(prependBasePath('/'));
 var onDataAvailable = function (data) {
+    console.log('Generating files...');
     var app = Elm.Main.worker({ data: data, baseModule: baseModule });
     app.ports.generatedFiles.subscribe(function (generatedFile) {
         removeGenerated(prependBasePath('/'));
@@ -3841,6 +3842,7 @@ var onDataAvailable = function (data) {
             formatted_write_1.writeFile(filePath, targetComment + value);
         }
         fs.writeFileSync(prependBasePath('graphqelm-metadata.json'), "{\"targetElmPackageVersion\": \"" + elmPackageVersion + "\", \"generatedByNpmPackageVersion\": \"" + npmPackageVersion + "\"}");
+        console.log('Success!');
     });
 };
 if (introspectionFile) {
@@ -3848,6 +3850,7 @@ if (introspectionFile) {
     onDataAvailable(introspectionFileJson.data || introspectionFileJson);
 }
 else {
+    console.log('Fetching GraphQL schema...');
     new graphql_request_1.GraphQLClient(graphqlUrl, {
         mode: 'cors',
         headers: headers
