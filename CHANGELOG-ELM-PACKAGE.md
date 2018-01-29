@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Remove `AlwaysPost` since `Graphqelm.Http.queryRequest` now always uses POST.
+  Added option to `GetWhenShortEnough`.
+
 ### Added
 
 * Add `Graphqelm.OptionalArgument.fromMaybe`.
