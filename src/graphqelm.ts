@@ -70,7 +70,10 @@ if (baseModuleArg && !isValidBaseArg(baseModuleArg)) {
   )
   process.exit(1)
 }
-const excludeDeprecated: boolean = !args.excludeDeprecated
+const excludeDeprecated: boolean =
+  args.excludeDeprecated === null || args.excludeDeprecated === undefined
+    ? false
+    : args.excludeDeprecated
 const headerArg: undefined | string | [string] = args.header
 const addHeader = (object: any, header: string) => {
   const [headerKey, headerValue] = header.split(':')
