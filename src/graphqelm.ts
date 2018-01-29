@@ -16,7 +16,7 @@ const usage = `Usage:
   graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
   graphqelm url --output path/to/src # generates code within path/to/src/Api
   graphqelm url --output path/to/src --base My.Api.Submodule # generates code within path/to/src/My/Api/Submodule
-  graphqelm url --includeDeprecated # includes deprecated enums and fields (they are omitted by default)
+  graphqelm url --excludeDeprecated # excludes deprecated enums and fields (they are included by default)
 
   graphqelm --version # print the current graphqelm version and target elm package version
   graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`
@@ -70,7 +70,7 @@ if (baseModuleArg && !isValidBaseArg(baseModuleArg)) {
   )
   process.exit(1)
 }
-const includeDeprecated: boolean = !!args.includeDeprecated
+const excludeDeprecated: boolean = !args.excludeDeprecated
 const headerArg: undefined | string | [string] = args.header
 const addHeader = (object: any, header: string) => {
   const [headerKey, headerValue] = header.split(':')
@@ -128,7 +128,7 @@ if (introspectionFile) {
     mode: 'cors',
     headers: headers
   })
-    .request(introspectionQuery, { includeDeprecated: includeDeprecated })
+    .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
     .then(data => {
       onDataAvailable(data)
     })

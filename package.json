@@ -8,8 +8,8 @@
     "test": "elm-test",
     "gen:starwars": "npm run build && ./bin/graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src",
     "gen:normalize_test": "npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -",
-    "gen:github": "npm run build && ./bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --includeDeprecated --output examples/src",
-    "approve": "npm run build && npm link && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --includeDeprecated --output examples/src && graphqelm https://graphqelm.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'",
+    "gen:github": "npm run build && ./bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src",
+    "approve": "npm run build && npm link && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src && graphqelm https://graphqelm.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'",
     "elm-analyse": "elm-analyse --serve"
   },
   "keywords": [

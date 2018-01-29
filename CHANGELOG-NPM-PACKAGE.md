@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Include deprecated fields by default. Add `--excludeDeprecated` CLI flag in place
+  of `--includeDeprecated`.
+
 ## [2.1.2] - 2018-01-20
 
 ### Changed
