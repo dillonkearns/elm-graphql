@@ -13,7 +13,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 import Normalize.Enum.Episode_
-import Normalize.InputObject as InputObject
+import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
@@ -33,9 +33,9 @@ selection constructor =
   - input - Test circular input.
 
 -}
-circularInput : { input : InputObject.CircularOne } -> Field (Maybe String) RootQuery
+circularInput : { input : Normalize.InputObject.CircularOne } -> Field (Maybe String) RootQuery
 circularInput requiredArgs =
-    Object.fieldDecoder "circularInput" [ Argument.required "input" requiredArgs.input InputObject.encodeCircularOne ] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.maybe)
 
 
 {-|
@@ -99,6 +99,6 @@ human requiredArgs object =
   - input - Test recursive input.
 
 -}
-recursiveInput : { input : InputObject.Recursive } -> Field (Maybe String) RootQuery
+recursiveInput : { input : Normalize.InputObject.Recursive } -> Field (Maybe String) RootQuery
 recursiveInput requiredArgs =
-    Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input InputObject.encodeRecursive ] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.maybe)
