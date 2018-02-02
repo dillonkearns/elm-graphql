@@ -12,6 +12,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 import Normalize.Enum.Episode_
+import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
