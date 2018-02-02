@@ -5,6 +5,7 @@
 module Github.Object.ReviewDismissedEvent exposing (..)
 
 import Github.Enum.PullRequestReviewState
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

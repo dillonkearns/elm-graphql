@@ -4,6 +4,7 @@
 
 module Github.Object.RemoveStarPayload exposing (..)
 
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -5,6 +5,7 @@
 module Github.Object.DeploymentStatus exposing (..)
 
 import Github.Enum.DeploymentStatusState
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

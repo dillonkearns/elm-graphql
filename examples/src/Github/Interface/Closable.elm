@@ -4,6 +4,7 @@
 
 module Github.Interface.Closable exposing (..)
 
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

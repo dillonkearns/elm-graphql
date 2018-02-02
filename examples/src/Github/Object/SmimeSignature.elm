@@ -5,6 +5,7 @@
 module Github.Object.SmimeSignature exposing (..)
 
 import Github.Enum.GitSignatureState
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

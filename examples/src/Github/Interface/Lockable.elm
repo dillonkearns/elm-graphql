@@ -5,6 +5,7 @@
 module Github.Interface.Lockable exposing (..)
 
 import Github.Enum.LockReason
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

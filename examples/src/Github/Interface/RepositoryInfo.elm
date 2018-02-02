@@ -5,6 +5,7 @@
 module Github.Interface.RepositoryInfo exposing (..)
 
 import Github.Enum.RepositoryLockReason
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -5,6 +5,7 @@
 module Github.Query exposing (..)
 
 import Github.Enum.SearchType
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

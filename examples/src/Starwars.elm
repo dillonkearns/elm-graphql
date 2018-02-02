@@ -11,6 +11,7 @@ import PrintAny
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Enum.Language as Language
+import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Interface.Character as Character
 import Swapi.Object
@@ -82,10 +83,11 @@ query =
         |> with
             (Query.greet
                 { input =
-                    { name = "Chewie"
-                    , language = Present Language.Es
-                    , options = Absent
-                    }
+                    Swapi.InputObject.Greeting
+                        { name = "Chewie"
+                        , language = Present Language.Es
+                        , options = Absent
+                        }
                 }
             )
 

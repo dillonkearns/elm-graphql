@@ -5,6 +5,7 @@
 module Github.Object.ReactionGroup exposing (..)
 
 import Github.Enum.ReactionContent
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -5,7 +5,7 @@
 module Github.Object.Commit exposing (..)
 
 import Github.Enum.SubscriptionState
-import Github.InputObject.CommitAuthor
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
@@ -153,14 +153,14 @@ deletions =
   - until - Allows specifying an ending time or date for fetching commits.
 
 -}
-history : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp }) -> SelectionSet decodesTo Github.Object.CommitHistoryConnection -> Field decodesTo Github.Object.Commit
+history : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp }) -> SelectionSet decodesTo Github.Object.CommitHistoryConnection -> Field decodesTo Github.Object.Commit
 history fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author Github.InputObject.CommitAuthor.encode, Argument.optional "since" filledInOptionals.since (\(Github.Scalar.GitTimestamp raw) -> Encode.string raw), Argument.optional "until" filledInOptionals.until (\(Github.Scalar.GitTimestamp raw) -> Encode.string raw) ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author Github.InputObject.encodeCommitAuthor, Argument.optional "since" filledInOptionals.since (\(Github.Scalar.GitTimestamp raw) -> Encode.string raw), Argument.optional "until" filledInOptionals.until (\(Github.Scalar.GitTimestamp raw) -> Encode.string raw) ]
                 |> List.filterMap identity
     in
     Object.selectionField "history" optionalArgs object identity

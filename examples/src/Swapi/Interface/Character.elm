@@ -12,6 +12,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
 import Json.Decode as Decode
 import Swapi.Enum.Episode
+import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar

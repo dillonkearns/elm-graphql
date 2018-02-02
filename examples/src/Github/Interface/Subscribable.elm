@@ -5,6 +5,7 @@
 module Github.Interface.Subscribable exposing (..)
 
 import Github.Enum.SubscriptionState
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -13,7 +13,7 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 import Swapi.Enum.Episode
-import Swapi.InputObject.Greeting
+import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
@@ -38,9 +38,9 @@ droid requiredArgs object =
     Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
 
-greet : { input : Swapi.InputObject.Greeting.Greeting } -> Field String RootQuery
+greet : { input : Swapi.InputObject.Greeting } -> Field String RootQuery
 greet requiredArgs =
-    Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.Greeting.encode ] Decode.string
+    Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
 
 
 {-|

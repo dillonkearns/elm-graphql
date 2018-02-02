@@ -6,6 +6,7 @@ module Github.Object.GistComment exposing (..)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

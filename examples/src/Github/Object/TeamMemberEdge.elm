@@ -5,6 +5,7 @@
 module Github.Object.TeamMemberEdge exposing (..)
 
 import Github.Enum.TeamMemberRole
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

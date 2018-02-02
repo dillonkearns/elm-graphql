@@ -5,6 +5,7 @@
 module Github.Interface.Comment exposing (..)
 
 import Github.Enum.CommentAuthorAssociation
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -8,8 +8,7 @@ import Github.Enum.SubscriptionState
 import Github.Enum.TeamMemberRole
 import Github.Enum.TeamMembershipType
 import Github.Enum.TeamPrivacy
-import Github.InputObject.TeamOrder
-import Github.InputObject.TeamRepositoryOrder
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
@@ -80,14 +79,14 @@ avatarUrl fillInOptionals =
   - immediateOnly - Whether to list immediate child teams or all descendant child teams.
 
 -}
-childTeams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamOrder.TeamOrder, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamOrder.TeamOrder, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.TeamConnection -> Field decodesTo Github.Object.Team
+childTeams : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamOrder, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamOrder, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.TeamConnection -> Field decodesTo Github.Object.Team
 childTeams fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, userLogins = Absent, immediateOnly = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.TeamOrder.encode, Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly Encode.bool ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeTeamOrder, Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionField "childTeams" optionalArgs object identity
@@ -244,14 +243,14 @@ privacy =
   - orderBy - Order for the connection.
 
 -}
-repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamRepositoryOrder.TeamRepositoryOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamRepositoryOrder.TeamRepositoryOrder }) -> SelectionSet decodesTo Github.Object.TeamRepositoryConnection -> Field decodesTo Github.Object.Team
+repositories : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamRepositoryOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamRepositoryOrder }) -> SelectionSet decodesTo Github.Object.TeamRepositoryConnection -> Field decodesTo Github.Object.Team
 repositories fillInOptionals object =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, orderBy = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.TeamRepositoryOrder.encode ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeTeamRepositoryOrder ]
                 |> List.filterMap identity
     in
     Object.selectionField "repositories" optionalArgs object identity

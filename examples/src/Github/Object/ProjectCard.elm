@@ -5,6 +5,7 @@
 module Github.Object.ProjectCard exposing (..)
 
 import Github.Enum.ProjectCardState
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

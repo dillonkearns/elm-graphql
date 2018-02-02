@@ -6,6 +6,7 @@ module Github.Object.OrganizationInvitation exposing (..)
 
 import Github.Enum.OrganizationInvitationRole
 import Github.Enum.OrganizationInvitationType
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

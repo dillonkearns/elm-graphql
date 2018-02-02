@@ -5,6 +5,7 @@
 module Github.Interface.UpdatableComment exposing (..)
 
 import Github.Enum.CommentCannotUpdateReason
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

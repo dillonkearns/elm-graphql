@@ -4,6 +4,7 @@
 
 module Github.Object.ClosedEvent exposing (..)
 
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

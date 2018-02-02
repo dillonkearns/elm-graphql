@@ -5,6 +5,7 @@
 module Github.Object.RepositoryCollaboratorEdge exposing (..)
 
 import Github.Enum.RepositoryPermission
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

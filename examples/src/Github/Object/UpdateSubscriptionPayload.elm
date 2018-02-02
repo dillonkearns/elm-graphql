@@ -4,6 +4,7 @@
 
 module Github.Object.UpdateSubscriptionPayload exposing (..)
 
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar

@@ -4,8 +4,10 @@
 
 module Github.Union.ReferencedSubject exposing (..)
 
+import Github.InputObject
 import Github.Interface
 import Github.Object
+import Github.Scalar
 import Github.Union
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)

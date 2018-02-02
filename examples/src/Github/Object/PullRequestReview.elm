@@ -7,6 +7,7 @@ module Github.Object.PullRequestReview exposing (..)
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
 import Github.Enum.PullRequestReviewState
+import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
