@@ -11496,9 +11496,9 @@ var _dillonkearns$graphqelm$Interpolate$interpolate = F2(
 			string);
 	});
 
-var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType = F2(
-	function (apiSubmodule, typeRef) {
-		return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon, false, 'Maybe', apiSubmodule, typeRef);
+var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType_ = F3(
+	function (fromInputObject, apiSubmodule, typeRef) {
+		return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon, fromInputObject, 'Maybe', apiSubmodule, typeRef);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon = F4(
 	function (fromInputObject, nullableString, apiSubmodule, _p0) {
@@ -11563,7 +11563,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon = F4(
 							'(List ',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p3._0),
+								A3(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType_, fromInputObject, apiSubmodule, _p3._0),
 								')'));
 					case 'ObjectRef':
 						return 'decodesTo';
@@ -11605,6 +11605,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon = F4(
 var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeForInputObject = F2(
 	function (apiSubmodule, typeRef) {
 		return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon, true, 'OptionalArgument', apiSubmodule, typeRef);
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType = F2(
+	function (apiSubmodule, typeRef) {
+		return A4(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon, false, 'Maybe', apiSubmodule, typeRef);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder_ = F3(
 	function (forInputObject, apiSubmodule, _p6) {

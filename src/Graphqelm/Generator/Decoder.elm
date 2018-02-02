@@ -149,6 +149,11 @@ generateType apiSubmodule typeRef =
     generateTypeCommon False "Maybe" apiSubmodule typeRef
 
 
+generateType_ : Bool -> List String -> TypeReference -> String
+generateType_ fromInputObject apiSubmodule typeRef =
+    generateTypeCommon fromInputObject "Maybe" apiSubmodule typeRef
+
+
 generateTypeForInputObject : List String -> TypeReference -> String
 generateTypeForInputObject apiSubmodule typeRef =
     generateTypeCommon True "OptionalArgument" apiSubmodule typeRef
@@ -182,7 +187,7 @@ generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReferen
                     constructor
 
         Type.List typeRef ->
-            "(List " ++ generateType apiSubmodule typeRef ++ ")"
+            "(List " ++ generateType_ fromInputObject apiSubmodule typeRef ++ ")"
 
         Type.ObjectRef objectName ->
             "decodesTo"
