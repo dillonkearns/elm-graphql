@@ -1,19 +1,69 @@
-module Graphqelm.Generator.InputObject exposing (generate)
+module Graphqelm.Generator.InputObjectFile exposing (generate)
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder as Decoder
 import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import Interpolate exposing (interpolate)
 
 
-generate : Context -> ClassCaseName -> List String -> List Type.Field -> String
-generate context name moduleName fields =
-    [ prepend context moduleName fields
-    , encoder context name fields
-    , typeAlias context name fields
+generate : Context -> List TypeDefinition -> ( List String, String )
+generate context typeDefinitions =
+    ( moduleName context
+    , generateFileContents context typeDefinitions
+    )
+
+
+moduleName : Context -> List String
+moduleName { apiSubmodule } =
+    apiSubmodule ++ [ "InputObject" ]
+
+
+generateFileContents : Context -> List TypeDefinition -> String
+generateFileContents context typeDefinitions =
+    let
+        typesToGenerate =
+            typeDefinitions
+                |> List.filterMap isInputObject
+
+        fields =
+            typesToGenerate
+                |> List.concatMap .fields
+    in
+    if typesToGenerate == [] then
+        interpolate
+            """module {0} exposing (..)
+
+
+placeholder : String
+placeholder =
+    ""
+"""
+            [ moduleName context |> String.join "." ]
+    else
+        interpolate
+            """module {0} exposing (..)
+
+
+{1}
+
+
+{2}
+"""
+            [ moduleName context |> String.join "."
+            , generateImports context fields
+            , typesToGenerate
+                |> List.map (generateEncoderAndAlias context)
+                |> String.join "\n\n\n"
+            ]
+
+
+generateEncoderAndAlias : Context -> InputObjectDetails -> String
+generateEncoderAndAlias context inputObjectDetails =
+    [ typeAlias context inputObjectDetails.name inputObjectDetails.fields
+    , encoder context inputObjectDetails.name inputObjectDetails.fields
     ]
         |> String.join "\n\n"
 
@@ -22,8 +72,8 @@ typeAlias : Context -> ClassCaseName -> List Type.Field -> String
 typeAlias context name fields =
     interpolate """{-| Type for the {0} input object.
 -}
-type alias {0} =
-    { {1} }
+type {0} =
+    {0} { {1} }
     """
         [ ClassCaseName.normalized name
         , List.map (aliasEntry context) fields |> String.join ", "
@@ -42,8 +92,8 @@ encoder : Context -> ClassCaseName -> List Type.Field -> String
 encoder context name fields =
     interpolate """{-| Encode a {0} into a value that can be used as an argument.
 -}
-encode : {0} -> Value
-encode input =
+encode{0} : {0} -> Value
+encode{0} ({0} input) =
     Encode.maybeObject
         [ {1} ]""" [ ClassCaseName.normalized name, fields |> List.map (encoderForField context) |> String.join ", " ]
 
@@ -75,24 +125,42 @@ encoderFunction { apiSubmodule } field =
                 ]
 
 
-prepend : Context -> List String -> List Type.Field -> String
-prepend { apiSubmodule } moduleName fields =
-    interpolate """module {0} exposing (..)
-
-import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
+generateImports : Context -> List Type.Field -> String
+generateImports ({ apiSubmodule } as context) fields =
+    interpolate """import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import {2}.Object
-import {2}.Interface
-import {2}.Union
-import {2}.Scalar
+import {1}.Object
+import {1}.Interface
+import {1}.Union
+import {1}.Scalar
 import Json.Decode as Decode
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-{1}
+{0}
 """
-        [ moduleName |> String.join "."
-        , Imports.importsString apiSubmodule moduleName fields
+        [ Imports.importsString apiSubmodule (moduleName context) fields
         , apiSubmodule |> String.join "."
         ]
+
+
+type alias InputObjectDetails =
+    { definableType : Type.DefinableType
+    , fields : List Type.Field
+    , name : ClassCaseName
+    }
+
+
+isInputObject : TypeDefinition -> Maybe InputObjectDetails
+isInputObject (TypeDefinition name definableType description) =
+    case definableType of
+        Type.InputObjectType fields ->
+            Just
+                { name = name
+                , definableType = definableType
+                , fields = fields
+                }
+
+        _ ->
+            Nothing

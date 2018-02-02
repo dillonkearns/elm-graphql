@@ -3,7 +3,7 @@ module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles, sor
 import Dict exposing (Dict)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Enum
-import Graphqelm.Generator.InputObject
+import Graphqelm.Generator.InputObjectFile
 import Graphqelm.Generator.Interface
 import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Generator.Mutation
@@ -88,6 +88,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
         |> excludeBuiltIns
         |> List.filterMap (toPair context)
         |> List.append typeLockDefinitions
+        |> List.append [ Graphqelm.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
@@ -173,7 +174,6 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
                 |> Just
 
         Type.InputObjectType fields ->
-            Graphqelm.Generator.InputObject.generate context name moduleName fields
-                |> Just
+            Nothing
     )
         |> Maybe.map (\fileContents -> ( moduleName, fileContents ))

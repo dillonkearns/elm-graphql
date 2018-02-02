@@ -41,6 +41,8 @@ import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import {1}.Object
 import {1}.Interface
 import {1}.Union
+import {1}.Scalar
+import {1}.InputObject
 import Json.Decode as Decode
 import Graphqelm.Internal.Encode as Encode exposing (Value)
 

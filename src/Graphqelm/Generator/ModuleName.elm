@@ -48,7 +48,7 @@ object { query, mutation, apiSubmodule, subscription } name =
 
 inputObject : { context | apiSubmodule : List String } -> ClassCaseName -> List String
 inputObject { apiSubmodule } name =
-    apiSubmodule ++ [ "InputObject", ClassCaseName.normalized name ]
+    apiSubmodule ++ [ "InputObject" ]
 
 
 interface : Context -> ClassCaseName -> List String

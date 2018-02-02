@@ -69,11 +69,16 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
 
 generateEncoderLowLevel : List String -> Type.ReferrableType -> String
 generateEncoderLowLevel apiSubmodule referrableType =
-    generateEncoder apiSubmodule (Type.TypeReference referrableType Type.NonNullable)
+    generateEncoder_ True apiSubmodule (Type.TypeReference referrableType Type.NonNullable)
 
 
 generateEncoder : List String -> TypeReference -> String
-generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
+generateEncoder =
+    generateEncoder_ False
+
+
+generateEncoder_ : Bool -> List String -> TypeReference -> String
+generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType isNullable) =
     let
         isNullableString =
             case isNullable of
@@ -109,7 +114,7 @@ generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                     interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ]
 
         Type.List typeRef ->
-            generateEncoder apiSubmodule typeRef ++ isNullableString ++ " |> Encode.list"
+            generateEncoder_ forInputObject apiSubmodule typeRef ++ isNullableString ++ " |> Encode.list"
 
         Type.ObjectRef objectName ->
             Debug.crash "I don't expect to see object references as argument types."
@@ -128,8 +133,11 @@ generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                 ]
 
         Type.InputObjectRef inputObjectName ->
-            ((ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
-                ++ [ "encode" ]
+            ((if forInputObject then
+                [ "encode" ++ ClassCaseName.normalized inputObjectName ]
+              else
+                ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
+                    ++ [ "encode" ++ ClassCaseName.normalized inputObjectName ]
              )
                 |> String.join "."
             )
@@ -138,16 +146,16 @@ generateEncoder apiSubmodule (Type.TypeReference referrableType isNullable) =
 
 generateType : List String -> TypeReference -> String
 generateType apiSubmodule typeRef =
-    generateTypeCommon "Maybe" apiSubmodule typeRef
+    generateTypeCommon False "Maybe" apiSubmodule typeRef
 
 
 generateTypeForInputObject : List String -> TypeReference -> String
 generateTypeForInputObject apiSubmodule typeRef =
-    generateTypeCommon "OptionalArgument" apiSubmodule typeRef
+    generateTypeCommon True "OptionalArgument" apiSubmodule typeRef
 
 
-generateTypeCommon : String -> List String -> TypeReference -> String
-generateTypeCommon nullableString apiSubmodule (Type.TypeReference referrableType isNullable) =
+generateTypeCommon : Bool -> String -> List String -> TypeReference -> String
+generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
             case scalar of
@@ -190,8 +198,11 @@ generateTypeCommon nullableString apiSubmodule (Type.TypeReference referrableTyp
                 |> String.join "."
 
         Type.InputObjectRef inputObjectName ->
-            (ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
-                ++ [ ClassCaseName.normalized inputObjectName ]
+            (if fromInputObject then
+                [ ClassCaseName.normalized inputObjectName ]
+             else
+                ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
+                    ++ [ ClassCaseName.normalized inputObjectName ]
             )
                 |> String.join "."
     )

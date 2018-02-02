@@ -47,6 +47,7 @@ import {2}.Object
 import {2}.Interface
 import {2}.Union
 import {2}.Scalar
+import {2}.InputObject
 import Json.Decode as Decode
 import Graphqelm.Internal.Encode as Encode exposing (Value)
 {1}

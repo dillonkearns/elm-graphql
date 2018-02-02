@@ -61,7 +61,7 @@ imports apiSubmodule (Type.TypeReference referrableType isNullable) =
             Just (ModuleName.enum { apiSubmodule = apiSubmodule } enumName)
 
         Type.InputObjectRef inputObjectName ->
-            Just (ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName)
+            Nothing
 
         Type.UnionRef unionName ->
             Nothing
