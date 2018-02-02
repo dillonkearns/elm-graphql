@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2018-02-01
+
 ### Fixed
 
 * Generate InputObjects as types (not type aliases) inside a single file to allow for recursive or circular input types.
