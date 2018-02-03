@@ -21,12 +21,14 @@ hasLoop typeDefs (TypeDefinition name definableType description) =
 
 isCircular : List TypeDefinition -> ClassCaseName -> List Field -> Bool
 isCircular typeDefs inputObjectName fields =
-    List.any (fieldIsCircular typeDefs inputObjectName) fields
+    fields
+        |> List.map .typeRef
+        |> List.any (fieldIsCircular typeDefs inputObjectName)
 
 
-fieldIsCircular : List TypeDefinition -> ClassCaseName -> Field -> Bool
-fieldIsCircular typeDefs inputObjectName field =
-    case field.typeRef of
+fieldIsCircular : List TypeDefinition -> ClassCaseName -> TypeReference -> Bool
+fieldIsCircular typeDefs inputObjectName fieldTypeRef =
+    case fieldTypeRef of
         TypeReference referrableType isNullable ->
             case referrableType of
                 InputObjectRef inputObjectRefName ->
@@ -35,13 +37,13 @@ fieldIsCircular typeDefs inputObjectName field =
                             isRecursive inputObjectName fields
                                 || List.any
                                     (fieldIsCircular typeDefs inputObjectName)
-                                    fields
+                                    (fields |> List.map .typeRef)
 
                         Nothing ->
                             False
 
-                Type.List typeRef ->
-                    False
+                Type.List listTypeRef ->
+                    fieldIsCircular typeDefs inputObjectName listTypeRef
 
                 _ ->
                     False

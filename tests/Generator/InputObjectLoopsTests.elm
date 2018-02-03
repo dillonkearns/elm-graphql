@@ -4,7 +4,7 @@ import Expect
 import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
 import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.ClassCaseName as ClassCaseName
-import Graphqelm.Parser.Type exposing (DefinableType(..), Field, IsNullable(NonNullable), ReferrableType(InputObjectRef), TypeDefinition(TypeDefinition), TypeReference(TypeReference))
+import Graphqelm.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(NonNullable), ReferrableType(InputObjectRef), TypeDefinition(TypeDefinition), TypeReference(TypeReference))
 import Test exposing (Test, describe, only, test)
 
 
@@ -70,6 +70,20 @@ all =
                 ]
                     |> InputObjectLoops.any
                     |> Expect.equal True
+        , test "nested loops through list reference" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "CircularInputObjectOne")
+                    (InputObjectType [ field "CircularInputObjectTwo" "fieldNameOne" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectTwo")
+                    (InputObjectType [ fieldListRef "CircularInputObjectThree" "fieldNameTwo" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectThree")
+                    (InputObjectType [ field "CircularInputObjectOne" "fieldNameThree" ])
+                    Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal True
         ]
 
 
@@ -78,5 +92,14 @@ field inputObjectName fieldName =
     { name = CamelCaseName.build fieldName
     , description = Nothing
     , typeRef = TypeReference (InputObjectRef (ClassCaseName.build inputObjectName)) NonNullable
+    , args = []
+    }
+
+
+fieldListRef : String -> String -> Field
+fieldListRef inputObjectName fieldName =
+    { name = CamelCaseName.build fieldName
+    , description = Nothing
+    , typeRef = TypeReference (Type.List (TypeReference (InputObjectRef (ClassCaseName.build inputObjectName)) NonNullable)) NonNullable
     , args = []
     }
