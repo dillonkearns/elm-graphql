@@ -5,7 +5,7 @@ import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
 import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type exposing (DefinableType(..), Field, IsNullable(NonNullable), ReferrableType(InputObjectRef), TypeDefinition(TypeDefinition), TypeReference(TypeReference))
-import Test exposing (Test, describe, test)
+import Test exposing (Test, describe, only, test)
 
 
 all : Test
@@ -16,7 +16,8 @@ all =
                 [ TypeDefinition (ClassCaseName.build "SomeScalar") ScalarType Nothing ]
                     |> InputObjectLoops.any
                     |> Expect.equal False
-        , test "no loop" <|
+        , -- , only <|
+          test "no loop" <|
             \() ->
                 [ TypeDefinition (ClassCaseName.build "MyInputObject")
                     (InputObjectType [ field "DifferentInputObject" "fieldName" ])
@@ -28,6 +29,43 @@ all =
             \() ->
                 [ TypeDefinition (ClassCaseName.build "RecursiveInputObject")
                     (InputObjectType [ field "RecursiveInputObject" "fieldName" ])
+                    Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal True
+        , test "circular" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "CircularInputObjectOne")
+                    (InputObjectType [ field "CircularInputObjectTwo" "fieldNameOne" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectTwo")
+                    (InputObjectType [ field "CircularInputObjectOne" "fieldNameTwo" ])
+                    Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal True
+        , test "doubly nested non-circular" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "CircularInputObjectOne")
+                    (InputObjectType [ field "CircularInputObjectTwo" "fieldNameOne" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectTwo")
+                    (InputObjectType [ field "CircularInputObjectThree" "fieldNameTwo" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectThree") ScalarType Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal False
+        , test "doubly nested circular" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "CircularInputObjectOne")
+                    (InputObjectType [ field "CircularInputObjectTwo" "fieldNameOne" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectTwo")
+                    (InputObjectType [ field "CircularInputObjectThree" "fieldNameTwo" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectThree")
+                    (InputObjectType [ field "CircularInputObjectOne" "fieldNameThree" ])
                     Nothing
                 ]
                     |> InputObjectLoops.any
