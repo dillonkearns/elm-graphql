@@ -11,6 +11,7 @@ import Graphqelm.Internal.Encode as Encode exposing (Value)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
+import Normalize.Enum.Language
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
@@ -43,6 +44,34 @@ encodeCircularTwo : CircularTwo -> Value
 encodeCircularTwo (CircularTwo input) =
     Encode.maybeObject
         [ ( "circularOne", encodeCircularOne |> Encode.optional input.circularOne ) ]
+
+
+{-| Type for the Greeting input object.
+-}
+type Greeting
+    = Greeting { language : OptionalArgument Normalize.Enum.Language.Language, name : String, options : OptionalArgument GreetingOptions }
+
+
+{-| Encode a Greeting into a value that can be used as an argument.
+-}
+encodeGreeting : Greeting -> Value
+encodeGreeting (Greeting input) =
+    Encode.maybeObject
+        [ ( "language", Encode.enum Normalize.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
+
+
+{-| Type for the GreetingOptions input object.
+-}
+type GreetingOptions
+    = GreetingOptions { prefix : OptionalArgument String }
+
+
+{-| Encode a GreetingOptions into a value that can be used as an argument.
+-}
+encodeGreetingOptions : GreetingOptions -> Value
+encodeGreetingOptions (GreetingOptions input) =
+    Encode.maybeObject
+        [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
 
 
 {-| Type for the Recursive input object.

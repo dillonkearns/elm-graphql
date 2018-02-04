@@ -48,6 +48,11 @@ droid_ requiredArgs object =
     Object.selectionField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
 
+greet : { input : Normalize.InputObject.Greeting } -> Field String RootQuery
+greet requiredArgs =
+    Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
+
+
 {-|
 
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
