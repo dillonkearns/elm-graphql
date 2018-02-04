@@ -70,15 +70,25 @@ generateEncoderAndAlias context inputObjectDetails =
 
 
 typeAlias : Context -> InputObjectDetails -> String
-typeAlias context { name, fields } =
-    interpolate """{-| Type for the {0} input object.
+typeAlias context { name, fields, hasLoop } =
+    if hasLoop then
+        interpolate """{-| Type for the {0} input object.
 -}
-type {0} =
-    {0} { {1} }
+type {0}
+    = {0} { {1} }
     """
-        [ ClassCaseName.normalized name
-        , List.map (aliasEntry context) fields |> String.join ", "
-        ]
+            [ ClassCaseName.normalized name
+            , List.map (aliasEntry context) fields |> String.join ", "
+            ]
+    else
+        interpolate """{-| Type for the {0} input object.
+-}
+type alias {0} =
+    { {1} }
+    """
+            [ ClassCaseName.normalized name
+            , List.map (aliasEntry context) fields |> String.join ", "
+            ]
 
 
 aliasEntry : Context -> Type.Field -> String
@@ -90,13 +100,24 @@ aliasEntry { apiSubmodule } field =
 
 
 encoder : Context -> InputObjectDetails -> String
-encoder context { name, fields } =
+encoder context { name, fields, hasLoop } =
+    let
+        parameter =
+            if hasLoop then
+                interpolate "({0} input)" [ ClassCaseName.normalized name ]
+            else
+                "input"
+    in
     interpolate """{-| Encode a {0} into a value that can be used as an argument.
 -}
 encode{0} : {0} -> Value
-encode{0} ({0} input) =
+encode{0} {1} =
     Encode.maybeObject
-        [ {1} ]""" [ ClassCaseName.normalized name, fields |> List.map (encoderForField context) |> String.join ", " ]
+        [ {2} ]"""
+        [ ClassCaseName.normalized name
+        , parameter
+        , fields |> List.map (encoderForField context) |> String.join ", "
+        ]
 
 
 encoderForField : Context -> Type.Field -> String

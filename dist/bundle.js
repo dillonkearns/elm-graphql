@@ -12927,17 +12927,123 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString = F3(
 						_dillonkearns$graphqelm$Graphqelm_Generator_Imports$allRefs(typeRefs)))));
 	});
 
-var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$isInputObject = function (_p0) {
-	var _p1 = _p0;
-	var _p3 = _p1._1;
-	var _p2 = _p3;
-	if (_p2.ctor === 'InputObjectType') {
-		return _elm_lang$core$Maybe$Just(
-			{name: _p1._0, definableType: _p3, fields: _p2._0});
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsRecursive = F2(
+	function (inputObjectName, field) {
+		var _p0 = field.typeRef;
+		var _p1 = _p0._0;
+		if (_p1.ctor === 'InputObjectRef') {
+			return _elm_lang$core$Native_Utils.eq(inputObjectName, _p1._0);
+		} else {
+			return false;
+		}
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isRecursive = F2(
+	function (inputObjectName, fields) {
+		return A2(
+			_elm_lang$core$List$any,
+			_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsRecursive(inputObjectName),
+			fields);
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$lookupInputObject = F2(
+	function (typeDefs, inputObjectName) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filterMap,
+				function (_p2) {
+					var _p3 = _p2;
+					var _p5 = _p3._0;
+					var _p4 = _p3._1;
+					if (_p4.ctor === 'InputObjectType') {
+						return _elm_lang$core$Native_Utils.eq(_p5, inputObjectName) ? _elm_lang$core$Maybe$Just(
+							{ctor: '_Tuple2', _0: _p5, _1: _p4._0}) : _elm_lang$core$Maybe$Nothing;
+					} else {
+						return _elm_lang$core$Maybe$Nothing;
+					}
+				},
+				typeDefs));
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsCircular = F3(
+	function (typeDefs, inputObjectName, fieldTypeRef) {
+		fieldIsCircular:
+		while (true) {
+			var _p6 = fieldTypeRef;
+			var _p7 = _p6._0;
+			switch (_p7.ctor) {
+				case 'InputObjectRef':
+					var _p8 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$lookupInputObject, typeDefs, _p7._0);
+					if (_p8.ctor === 'Just') {
+						var _p9 = _p8._0._1;
+						return A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isRecursive, inputObjectName, _p9) || A2(
+							_elm_lang$core$List$any,
+							A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsCircular, typeDefs, inputObjectName),
+							A2(
+								_elm_lang$core$List$map,
+								function (_) {
+									return _.typeRef;
+								},
+								_p9));
+					} else {
+						return false;
+					}
+				case 'List':
+					var _v7 = typeDefs,
+						_v8 = inputObjectName,
+						_v9 = _p7._0;
+					typeDefs = _v7;
+					inputObjectName = _v8;
+					fieldTypeRef = _v9;
+					continue fieldIsCircular;
+				default:
+					return false;
+			}
+		}
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isCircular = F3(
+	function (typeDefs, inputObjectName, fields) {
+		return A2(
+			_elm_lang$core$List$any,
+			A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsCircular, typeDefs, inputObjectName),
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.typeRef;
+				},
+				fields));
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$hasLoop = F2(
+	function (typeDefs, _p10) {
+		var _p11 = _p10;
+		var _p12 = _p11._1;
+		if (_p12.ctor === 'InputObjectType') {
+			return A3(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isCircular, typeDefs, _p11._0, _p12._0);
+		} else {
+			return false;
+		}
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$any = function (typeDefs) {
+	return A2(
+		_elm_lang$core$List$any,
+		_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$hasLoop(typeDefs),
+		typeDefs);
 };
+
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$isInputObject = F2(
+	function (typeDefs, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1._1;
+		var _p2 = _p3;
+		if (_p2.ctor === 'InputObjectType') {
+			return _elm_lang$core$Maybe$Just(
+				{
+					name: _p1._0,
+					definableType: _p3,
+					fields: _p2._0,
+					hasLoop: A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$hasLoop, typeDefs, _p1)
+				});
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderFunction = F2(
 	function (_p4, field) {
 		var _p5 = _p4;
@@ -12992,30 +13098,44 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderForField 
 				}
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoder = F3(
-	function (context, name, fields) {
-		return A2(
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoder = F2(
+	function (context, _p8) {
+		var _p9 = _p8;
+		var _p10 = _p9.name;
+		var parameter = _p9.hasLoop ? A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'{-| Encode a {0} into a value that can be used as an argument.\n-}\nencode{0} : {0} -> Value\nencode{0} ({0} input) =\n    Encode.maybeObject\n        [ {1} ]',
+			'({0} input)',
 			{
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(name),
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p10),
+				_1: {ctor: '[]'}
+			}) : 'input';
+		return A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'{-| Encode a {0} into a value that can be used as an argument.\n-}\nencode{0} : {0} -> Value\nencode{0} {1} =\n    Encode.maybeObject\n        [ {2} ]',
+			{
+				ctor: '::',
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p10),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						', ',
-						A2(
-							_elm_lang$core$List$map,
-							_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderForField(context),
-							fields)),
-					_1: {ctor: '[]'}
+					_0: parameter,
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$core$String$join,
+							', ',
+							A2(
+								_elm_lang$core$List$map,
+								_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderForField(context),
+								_p9.fields)),
+						_1: {ctor: '[]'}
+					}
 				}
 			});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$aliasEntry = F2(
-	function (_p8, field) {
-		var _p9 = _p8;
+	function (_p11, field) {
+		var _p12 = _p11;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
 			'{0} : {1}',
@@ -13024,19 +13144,22 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$aliasEntry = F2(
 				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(field.name),
 				_1: {
 					ctor: '::',
-					_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeForInputObject, _p9.apiSubmodule, field.typeRef),
+					_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeForInputObject, _p12.apiSubmodule, field.typeRef),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$typeAlias = F3(
-	function (context, name, fields) {
-		return A2(
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$typeAlias = F2(
+	function (context, _p13) {
+		var _p14 = _p13;
+		var _p16 = _p14.name;
+		var _p15 = _p14.fields;
+		return _p14.hasLoop ? A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'{-| Type for the {0} input object.\n-}\ntype {0} =\n    {0} { {1} }\n    ',
+			'{-| Type for the {0} input object.\n-}\ntype {0}\n    = {0} { {1} }\n    ',
 			{
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(name),
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p16),
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -13045,7 +13168,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$typeAlias = F3(
 						A2(
 							_elm_lang$core$List$map,
 							_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$aliasEntry(context),
-							fields)),
+							_p15)),
+					_1: {ctor: '[]'}
+				}
+			}) : A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'{-| Type for the {0} input object.\n-}\ntype alias {0} =\n    { {1} }\n    ',
+			{
+				ctor: '::',
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p16),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$String$join,
+						', ',
+						A2(
+							_elm_lang$core$List$map,
+							_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$aliasEntry(context),
+							_p15)),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -13057,19 +13197,19 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateEncoderA
 			'\n\n',
 			{
 				ctor: '::',
-				_0: A3(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$typeAlias, context, inputObjectDetails.name, inputObjectDetails.fields),
+				_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$typeAlias, context, inputObjectDetails),
 				_1: {
 					ctor: '::',
-					_0: A3(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoder, context, inputObjectDetails.name, inputObjectDetails.fields),
+					_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoder, context, inputObjectDetails),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName = function (_p10) {
-	var _p11 = _p10;
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName = function (_p17) {
+	var _p18 = _p17;
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		_p11.apiSubmodule,
+		_p18.apiSubmodule,
 		{
 			ctor: '::',
 			_0: 'InputObject',
@@ -13077,9 +13217,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName = fun
 		});
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateImports = F2(
-	function (_p12, fields) {
-		var _p13 = _p12;
-		var _p14 = _p13.apiSubmodule;
+	function (_p19, fields) {
+		var _p20 = _p19;
+		var _p21 = _p20.apiSubmodule;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
 			'import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{0}\n',
@@ -13087,19 +13227,22 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateImports 
 				ctor: '::',
 				_0: A3(
 					_dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString,
-					_p14,
-					_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName(_p13),
+					_p21,
+					_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName(_p20),
 					fields),
 				_1: {
 					ctor: '::',
-					_0: A2(_elm_lang$core$String$join, '.', _p14),
+					_0: A2(_elm_lang$core$String$join, '.', _p21),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateFileContents = F2(
 	function (context, typeDefinitions) {
-		var typesToGenerate = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$isInputObject, typeDefinitions);
+		var typesToGenerate = A2(
+			_elm_lang$core$List$filterMap,
+			_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$isInputObject(typeDefinitions),
+			typeDefinitions);
 		var fields = A2(
 			_elm_lang$core$List$concatMap,
 			function (_) {
@@ -13152,9 +13295,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generate = F2(
 			_1: A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateFileContents, context, typeDefinitions)
 		};
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$InputObjectDetails = F3(
-	function (a, b, c) {
-		return {definableType: a, fields: b, name: c};
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$InputObjectDetails = F4(
+	function (a, b, c, d) {
+		return {definableType: a, fields: b, name: c, hasLoop: d};
 	});
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$prepend = F3(
@@ -21310,7 +21453,7 @@ function slice (args) {
 /* 106 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"graphqelm","version":"3.0.0","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test","gen:starwars":"npm run build && ./bin/graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src","approve":"npm run build && npm link && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src && graphqelm https://graphqelm.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-live":"^2.7.5","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.7.0-exp","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"graphqelm":"bin/graphqelm"}}
+module.exports = {"name":"graphqelm","version":"3.0.1","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test","gen:starwars":"npm run build && ./bin/graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src","approve":"npm run build && npm link && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src && graphqelm https://graphqelm.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-live":"^2.7.5","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.7.0-exp","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"graphqelm":"bin/graphqelm"}}
 
 /***/ }),
 /* 107 */
