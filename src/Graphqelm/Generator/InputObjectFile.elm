@@ -3,6 +3,7 @@ module Graphqelm.Generator.InputObjectFile exposing (generate)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder as Decoder
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
@@ -26,7 +27,7 @@ generateFileContents context typeDefinitions =
     let
         typesToGenerate =
             typeDefinitions
-                |> List.filterMap isInputObject
+                |> List.filterMap (isInputObject typeDefinitions)
 
         fields =
             typesToGenerate
@@ -149,17 +150,19 @@ type alias InputObjectDetails =
     { definableType : Type.DefinableType
     , fields : List Type.Field
     , name : ClassCaseName
+    , hasLoop : Bool
     }
 
 
-isInputObject : TypeDefinition -> Maybe InputObjectDetails
-isInputObject (TypeDefinition name definableType description) =
+isInputObject : List TypeDefinition -> TypeDefinition -> Maybe InputObjectDetails
+isInputObject typeDefs ((TypeDefinition name definableType description) as typeDef) =
     case definableType of
         Type.InputObjectType fields ->
             Just
                 { name = name
                 , definableType = definableType
                 , fields = fields
+                , hasLoop = typeDef |> InputObjectLoops.hasLoop typeDefs
                 }
 
         _ ->
