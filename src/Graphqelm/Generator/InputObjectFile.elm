@@ -63,14 +63,14 @@ placeholder =
 
 generateEncoderAndAlias : Context -> InputObjectDetails -> String
 generateEncoderAndAlias context inputObjectDetails =
-    [ typeAlias context inputObjectDetails.name inputObjectDetails.fields
-    , encoder context inputObjectDetails.name inputObjectDetails.fields
+    [ typeAlias context inputObjectDetails
+    , encoder context inputObjectDetails
     ]
         |> String.join "\n\n"
 
 
-typeAlias : Context -> ClassCaseName -> List Type.Field -> String
-typeAlias context name fields =
+typeAlias : Context -> InputObjectDetails -> String
+typeAlias context { name, fields } =
     interpolate """{-| Type for the {0} input object.
 -}
 type {0} =
@@ -89,8 +89,8 @@ aliasEntry { apiSubmodule } field =
         ]
 
 
-encoder : Context -> ClassCaseName -> List Type.Field -> String
-encoder context name fields =
+encoder : Context -> InputObjectDetails -> String
+encoder context { name, fields } =
     interpolate """{-| Encode a {0} into a value that can be used as an argument.
 -}
 encode{0} : {0} -> Value
