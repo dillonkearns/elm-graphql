@@ -20,27 +20,27 @@ import Swapi.Union
 
 {-| Type for the Greeting input object.
 -}
-type Greeting
-    = Greeting { language : OptionalArgument Swapi.Enum.Language.Language, name : String, options : OptionalArgument GreetingOptions }
+type alias Greeting =
+    { language : OptionalArgument Swapi.Enum.Language.Language, name : String, options : OptionalArgument GreetingOptions }
 
 
 {-| Encode a Greeting into a value that can be used as an argument.
 -}
 encodeGreeting : Greeting -> Value
-encodeGreeting (Greeting input) =
+encodeGreeting input =
     Encode.maybeObject
         [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
 
 
 {-| Type for the GreetingOptions input object.
 -}
-type GreetingOptions
-    = GreetingOptions { prefix : OptionalArgument String }
+type alias GreetingOptions =
+    { prefix : OptionalArgument String }
 
 
 {-| Encode a GreetingOptions into a value that can be used as an argument.
 -}
 encodeGreetingOptions : GreetingOptions -> Value
-encodeGreetingOptions (GreetingOptions input) =
+encodeGreetingOptions input =
     Encode.maybeObject
         [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]

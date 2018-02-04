@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Github exposing (main)
 
 import Github.Object
 import Github.Object.Release

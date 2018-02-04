@@ -37,601 +37,601 @@ import Json.Decode as Decode
 
 {-| Type for the AcceptTopicSuggestionInput input object.
 -}
-type AcceptTopicSuggestionInput
-    = AcceptTopicSuggestionInput { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, name : String }
+type alias AcceptTopicSuggestionInput =
+    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, name : String }
 
 
 {-| Encode a AcceptTopicSuggestionInput into a value that can be used as an argument.
 -}
 encodeAcceptTopicSuggestionInput : AcceptTopicSuggestionInput -> Value
-encodeAcceptTopicSuggestionInput (AcceptTopicSuggestionInput input) =
+encodeAcceptTopicSuggestionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
 {-| Type for the AddCommentInput input object.
 -}
-type AddCommentInput
-    = AddCommentInput { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, body : String }
+type alias AddCommentInput =
+    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, body : String }
 
 
 {-| Encode a AddCommentInput into a value that can be used as an argument.
 -}
 encodeAddCommentInput : AddCommentInput -> Value
-encodeAddCommentInput (AddCommentInput input) =
+encodeAddCommentInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 {-| Type for the AddProjectCardInput input object.
 -}
-type AddProjectCardInput
-    = AddProjectCardInput { clientMutationId : OptionalArgument String, projectColumnId : Github.Scalar.Id, contentId : OptionalArgument Github.Scalar.Id, note : OptionalArgument String }
+type alias AddProjectCardInput =
+    { clientMutationId : OptionalArgument String, projectColumnId : Github.Scalar.Id, contentId : OptionalArgument Github.Scalar.Id, note : OptionalArgument String }
 
 
 {-| Encode a AddProjectCardInput into a value that can be used as an argument.
 -}
 encodeAddProjectCardInput : AddProjectCardInput -> Value
-encodeAddProjectCardInput (AddProjectCardInput input) =
+encodeAddProjectCardInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectColumnId |> Just ), ( "contentId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.contentId ), ( "note", Encode.string |> Encode.optional input.note ) ]
 
 
 {-| Type for the AddProjectColumnInput input object.
 -}
-type AddProjectColumnInput
-    = AddProjectColumnInput { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : String }
+type alias AddProjectColumnInput =
+    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : String }
 
 
 {-| Encode a AddProjectColumnInput into a value that can be used as an argument.
 -}
 encodeAddProjectColumnInput : AddProjectColumnInput -> Value
-encodeAddProjectColumnInput (AddProjectColumnInput input) =
+encodeAddProjectColumnInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
 {-| Type for the AddPullRequestReviewCommentInput input object.
 -}
-type AddPullRequestReviewCommentInput
-    = AddPullRequestReviewCommentInput { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : String, path : OptionalArgument String, position : OptionalArgument Int, inReplyTo : OptionalArgument Github.Scalar.Id }
+type alias AddPullRequestReviewCommentInput =
+    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : String, path : OptionalArgument String, position : OptionalArgument Int, inReplyTo : OptionalArgument Github.Scalar.Id }
 
 
 {-| Encode a AddPullRequestReviewCommentInput into a value that can be used as an argument.
 -}
 encodeAddPullRequestReviewCommentInput : AddPullRequestReviewCommentInput -> Value
-encodeAddPullRequestReviewCommentInput (AddPullRequestReviewCommentInput input) =
+encodeAddPullRequestReviewCommentInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "commitOID", (\(Github.Scalar.GitObjectID raw) -> Encode.string raw) |> Encode.optional input.commitOID ), ( "body", Encode.string input.body |> Just ), ( "path", Encode.string |> Encode.optional input.path ), ( "position", Encode.int |> Encode.optional input.position ), ( "inReplyTo", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.inReplyTo ) ]
 
 
 {-| Type for the AddPullRequestReviewInput input object.
 -}
-type AddPullRequestReviewInput
-    = AddPullRequestReviewInput { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : OptionalArgument String, event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment)) }
+type alias AddPullRequestReviewInput =
+    { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : OptionalArgument String, event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment)) }
 
 
 {-| Encode a AddPullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeAddPullRequestReviewInput : AddPullRequestReviewInput -> Value
-encodeAddPullRequestReviewInput (AddPullRequestReviewInput input) =
+encodeAddPullRequestReviewInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestId |> Just ), ( "commitOID", (\(Github.Scalar.GitObjectID raw) -> Encode.string raw) |> Encode.optional input.commitOID ), ( "body", Encode.string |> Encode.optional input.body ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString |> Encode.optional input.event ), ( "comments", (encodeDraftPullRequestReviewComment |> Encode.maybe |> Encode.list) |> Encode.optional input.comments ) ]
 
 
 {-| Type for the AddReactionInput input object.
 -}
-type AddReactionInput
-    = AddReactionInput { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+type alias AddReactionInput =
+    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
 
 
 {-| Encode a AddReactionInput into a value that can be used as an argument.
 -}
 encodeAddReactionInput : AddReactionInput -> Value
-encodeAddReactionInput (AddReactionInput input) =
+encodeAddReactionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
 {-| Type for the AddStarInput input object.
 -}
-type AddStarInput
-    = AddStarInput { clientMutationId : OptionalArgument String, starrableId : Github.Scalar.Id }
+type alias AddStarInput =
+    { clientMutationId : OptionalArgument String, starrableId : Github.Scalar.Id }
 
 
 {-| Encode a AddStarInput into a value that can be used as an argument.
 -}
 encodeAddStarInput : AddStarInput -> Value
-encodeAddStarInput (AddStarInput input) =
+encodeAddStarInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.starrableId |> Just ) ]
 
 
 {-| Type for the CommitAuthor input object.
 -}
-type CommitAuthor
-    = CommitAuthor { id : OptionalArgument Github.Scalar.Id, emails : OptionalArgument (List String) }
+type alias CommitAuthor =
+    { id : OptionalArgument Github.Scalar.Id, emails : OptionalArgument (List String) }
 
 
 {-| Encode a CommitAuthor into a value that can be used as an argument.
 -}
 encodeCommitAuthor : CommitAuthor -> Value
-encodeCommitAuthor (CommitAuthor input) =
+encodeCommitAuthor input =
     Encode.maybeObject
         [ ( "id", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list) |> Encode.optional input.emails ) ]
 
 
 {-| Type for the CreateProjectInput input object.
 -}
-type CreateProjectInput
-    = CreateProjectInput { clientMutationId : OptionalArgument String, ownerId : Github.Scalar.Id, name : String, body : OptionalArgument String }
+type alias CreateProjectInput =
+    { clientMutationId : OptionalArgument String, ownerId : Github.Scalar.Id, name : String, body : OptionalArgument String }
 
 
 {-| Encode a CreateProjectInput into a value that can be used as an argument.
 -}
 encodeCreateProjectInput : CreateProjectInput -> Value
-encodeCreateProjectInput (CreateProjectInput input) =
+encodeCreateProjectInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "ownerId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.ownerId |> Just ), ( "name", Encode.string input.name |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
 {-| Type for the DeclineTopicSuggestionInput input object.
 -}
-type DeclineTopicSuggestionInput
-    = DeclineTopicSuggestionInput { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, name : String, reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
+type alias DeclineTopicSuggestionInput =
+    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, name : String, reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
 
 
 {-| Encode a DeclineTopicSuggestionInput into a value that can be used as an argument.
 -}
 encodeDeclineTopicSuggestionInput : DeclineTopicSuggestionInput -> Value
-encodeDeclineTopicSuggestionInput (DeclineTopicSuggestionInput input) =
+encodeDeclineTopicSuggestionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ), ( "reason", Encode.enum Github.Enum.TopicSuggestionDeclineReason.toString input.reason |> Just ) ]
 
 
 {-| Type for the DeleteProjectCardInput input object.
 -}
-type DeleteProjectCardInput
-    = DeleteProjectCardInput { clientMutationId : OptionalArgument String, cardId : Github.Scalar.Id }
+type alias DeleteProjectCardInput =
+    { clientMutationId : OptionalArgument String, cardId : Github.Scalar.Id }
 
 
 {-| Encode a DeleteProjectCardInput into a value that can be used as an argument.
 -}
 encodeDeleteProjectCardInput : DeleteProjectCardInput -> Value
-encodeDeleteProjectCardInput (DeleteProjectCardInput input) =
+encodeDeleteProjectCardInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.cardId |> Just ) ]
 
 
 {-| Type for the DeleteProjectColumnInput input object.
 -}
-type DeleteProjectColumnInput
-    = DeleteProjectColumnInput { clientMutationId : OptionalArgument String, columnId : Github.Scalar.Id }
+type alias DeleteProjectColumnInput =
+    { clientMutationId : OptionalArgument String, columnId : Github.Scalar.Id }
 
 
 {-| Encode a DeleteProjectColumnInput into a value that can be used as an argument.
 -}
 encodeDeleteProjectColumnInput : DeleteProjectColumnInput -> Value
-encodeDeleteProjectColumnInput (DeleteProjectColumnInput input) =
+encodeDeleteProjectColumnInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ) ]
 
 
 {-| Type for the DeleteProjectInput input object.
 -}
-type DeleteProjectInput
-    = DeleteProjectInput { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id }
+type alias DeleteProjectInput =
+    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id }
 
 
 {-| Encode a DeleteProjectInput into a value that can be used as an argument.
 -}
 encodeDeleteProjectInput : DeleteProjectInput -> Value
-encodeDeleteProjectInput (DeleteProjectInput input) =
+encodeDeleteProjectInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ) ]
 
 
 {-| Type for the DeletePullRequestReviewInput input object.
 -}
-type DeletePullRequestReviewInput
-    = DeletePullRequestReviewInput { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id }
+type alias DeletePullRequestReviewInput =
+    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id }
 
 
 {-| Encode a DeletePullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeDeletePullRequestReviewInput : DeletePullRequestReviewInput -> Value
-encodeDeletePullRequestReviewInput (DeletePullRequestReviewInput input) =
+encodeDeletePullRequestReviewInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ) ]
 
 
 {-| Type for the DismissPullRequestReviewInput input object.
 -}
-type DismissPullRequestReviewInput
-    = DismissPullRequestReviewInput { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, message : String }
+type alias DismissPullRequestReviewInput =
+    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, message : String }
 
 
 {-| Encode a DismissPullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeDismissPullRequestReviewInput : DismissPullRequestReviewInput -> Value
-encodeDismissPullRequestReviewInput (DismissPullRequestReviewInput input) =
+encodeDismissPullRequestReviewInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "message", Encode.string input.message |> Just ) ]
 
 
 {-| Type for the DraftPullRequestReviewComment input object.
 -}
-type DraftPullRequestReviewComment
-    = DraftPullRequestReviewComment { path : String, position : Int, body : String }
+type alias DraftPullRequestReviewComment =
+    { path : String, position : Int, body : String }
 
 
 {-| Encode a DraftPullRequestReviewComment into a value that can be used as an argument.
 -}
 encodeDraftPullRequestReviewComment : DraftPullRequestReviewComment -> Value
-encodeDraftPullRequestReviewComment (DraftPullRequestReviewComment input) =
+encodeDraftPullRequestReviewComment input =
     Encode.maybeObject
         [ ( "path", Encode.string input.path |> Just ), ( "position", Encode.int input.position |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 {-| Type for the GistOrder input object.
 -}
-type GistOrder
-    = GistOrder { field : Github.Enum.GistOrderField.GistOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias GistOrder =
+    { field : Github.Enum.GistOrderField.GistOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a GistOrder into a value that can be used as an argument.
 -}
 encodeGistOrder : GistOrder -> Value
-encodeGistOrder (GistOrder input) =
+encodeGistOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.GistOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the IssueOrder input object.
 -}
-type IssueOrder
-    = IssueOrder { field : Github.Enum.IssueOrderField.IssueOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias IssueOrder =
+    { field : Github.Enum.IssueOrderField.IssueOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a IssueOrder into a value that can be used as an argument.
 -}
 encodeIssueOrder : IssueOrder -> Value
-encodeIssueOrder (IssueOrder input) =
+encodeIssueOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.IssueOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the LanguageOrder input object.
 -}
-type LanguageOrder
-    = LanguageOrder { field : Github.Enum.LanguageOrderField.LanguageOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias LanguageOrder =
+    { field : Github.Enum.LanguageOrderField.LanguageOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a LanguageOrder into a value that can be used as an argument.
 -}
 encodeLanguageOrder : LanguageOrder -> Value
-encodeLanguageOrder (LanguageOrder input) =
+encodeLanguageOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.LanguageOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the LockLockableInput input object.
 -}
-type LockLockableInput
-    = LockLockableInput { clientMutationId : OptionalArgument String, lockableId : Github.Scalar.Id, lockReason : OptionalArgument Github.Enum.LockReason.LockReason }
+type alias LockLockableInput =
+    { clientMutationId : OptionalArgument String, lockableId : Github.Scalar.Id, lockReason : OptionalArgument Github.Enum.LockReason.LockReason }
 
 
 {-| Encode a LockLockableInput into a value that can be used as an argument.
 -}
 encodeLockLockableInput : LockLockableInput -> Value
-encodeLockLockableInput (LockLockableInput input) =
+encodeLockLockableInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "lockableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.lockableId |> Just ), ( "lockReason", Encode.enum Github.Enum.LockReason.toString |> Encode.optional input.lockReason ) ]
 
 
 {-| Type for the MoveProjectCardInput input object.
 -}
-type MoveProjectCardInput
-    = MoveProjectCardInput { clientMutationId : OptionalArgument String, cardId : Github.Scalar.Id, columnId : Github.Scalar.Id, afterCardId : OptionalArgument Github.Scalar.Id }
+type alias MoveProjectCardInput =
+    { clientMutationId : OptionalArgument String, cardId : Github.Scalar.Id, columnId : Github.Scalar.Id, afterCardId : OptionalArgument Github.Scalar.Id }
 
 
 {-| Encode a MoveProjectCardInput into a value that can be used as an argument.
 -}
 encodeMoveProjectCardInput : MoveProjectCardInput -> Value
-encodeMoveProjectCardInput (MoveProjectCardInput input) =
+encodeMoveProjectCardInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.cardId |> Just ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ), ( "afterCardId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.afterCardId ) ]
 
 
 {-| Type for the MoveProjectColumnInput input object.
 -}
-type MoveProjectColumnInput
-    = MoveProjectColumnInput { clientMutationId : OptionalArgument String, columnId : Github.Scalar.Id, afterColumnId : OptionalArgument Github.Scalar.Id }
+type alias MoveProjectColumnInput =
+    { clientMutationId : OptionalArgument String, columnId : Github.Scalar.Id, afterColumnId : OptionalArgument Github.Scalar.Id }
 
 
 {-| Encode a MoveProjectColumnInput into a value that can be used as an argument.
 -}
 encodeMoveProjectColumnInput : MoveProjectColumnInput -> Value
-encodeMoveProjectColumnInput (MoveProjectColumnInput input) =
+encodeMoveProjectColumnInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ), ( "afterColumnId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.afterColumnId ) ]
 
 
 {-| Type for the ProjectOrder input object.
 -}
-type ProjectOrder
-    = ProjectOrder { field : Github.Enum.ProjectOrderField.ProjectOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias ProjectOrder =
+    { field : Github.Enum.ProjectOrderField.ProjectOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a ProjectOrder into a value that can be used as an argument.
 -}
 encodeProjectOrder : ProjectOrder -> Value
-encodeProjectOrder (ProjectOrder input) =
+encodeProjectOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.ProjectOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the ReactionOrder input object.
 -}
-type ReactionOrder
-    = ReactionOrder { field : Github.Enum.ReactionOrderField.ReactionOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias ReactionOrder =
+    { field : Github.Enum.ReactionOrderField.ReactionOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a ReactionOrder into a value that can be used as an argument.
 -}
 encodeReactionOrder : ReactionOrder -> Value
-encodeReactionOrder (ReactionOrder input) =
+encodeReactionOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.ReactionOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the RefOrder input object.
 -}
-type RefOrder
-    = RefOrder { field : Github.Enum.RefOrderField.RefOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias RefOrder =
+    { field : Github.Enum.RefOrderField.RefOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a RefOrder into a value that can be used as an argument.
 -}
 encodeRefOrder : RefOrder -> Value
-encodeRefOrder (RefOrder input) =
+encodeRefOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.RefOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the ReleaseOrder input object.
 -}
-type ReleaseOrder
-    = ReleaseOrder { field : Github.Enum.ReleaseOrderField.ReleaseOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias ReleaseOrder =
+    { field : Github.Enum.ReleaseOrderField.ReleaseOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a ReleaseOrder into a value that can be used as an argument.
 -}
 encodeReleaseOrder : ReleaseOrder -> Value
-encodeReleaseOrder (ReleaseOrder input) =
+encodeReleaseOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.ReleaseOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the RemoveOutsideCollaboratorInput input object.
 -}
-type RemoveOutsideCollaboratorInput
-    = RemoveOutsideCollaboratorInput { clientMutationId : OptionalArgument String, userId : Github.Scalar.Id, organizationId : Github.Scalar.Id }
+type alias RemoveOutsideCollaboratorInput =
+    { clientMutationId : OptionalArgument String, userId : Github.Scalar.Id, organizationId : Github.Scalar.Id }
 
 
 {-| Encode a RemoveOutsideCollaboratorInput into a value that can be used as an argument.
 -}
 encodeRemoveOutsideCollaboratorInput : RemoveOutsideCollaboratorInput -> Value
-encodeRemoveOutsideCollaboratorInput (RemoveOutsideCollaboratorInput input) =
+encodeRemoveOutsideCollaboratorInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "userId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.userId |> Just ), ( "organizationId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.organizationId |> Just ) ]
 
 
 {-| Type for the RemoveReactionInput input object.
 -}
-type RemoveReactionInput
-    = RemoveReactionInput { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+type alias RemoveReactionInput =
+    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
 
 
 {-| Encode a RemoveReactionInput into a value that can be used as an argument.
 -}
 encodeRemoveReactionInput : RemoveReactionInput -> Value
-encodeRemoveReactionInput (RemoveReactionInput input) =
+encodeRemoveReactionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
 {-| Type for the RemoveStarInput input object.
 -}
-type RemoveStarInput
-    = RemoveStarInput { clientMutationId : OptionalArgument String, starrableId : Github.Scalar.Id }
+type alias RemoveStarInput =
+    { clientMutationId : OptionalArgument String, starrableId : Github.Scalar.Id }
 
 
 {-| Encode a RemoveStarInput into a value that can be used as an argument.
 -}
 encodeRemoveStarInput : RemoveStarInput -> Value
-encodeRemoveStarInput (RemoveStarInput input) =
+encodeRemoveStarInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.starrableId |> Just ) ]
 
 
 {-| Type for the RepositoryOrder input object.
 -}
-type RepositoryOrder
-    = RepositoryOrder { field : Github.Enum.RepositoryOrderField.RepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias RepositoryOrder =
+    { field : Github.Enum.RepositoryOrderField.RepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a RepositoryOrder into a value that can be used as an argument.
 -}
 encodeRepositoryOrder : RepositoryOrder -> Value
-encodeRepositoryOrder (RepositoryOrder input) =
+encodeRepositoryOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.RepositoryOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the RequestReviewsInput input object.
 -}
-type RequestReviewsInput
-    = RequestReviewsInput { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, userIds : OptionalArgument (List Github.Scalar.Id), teamIds : OptionalArgument (List Github.Scalar.Id), union : OptionalArgument Bool }
+type alias RequestReviewsInput =
+    { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, userIds : OptionalArgument (List Github.Scalar.Id), teamIds : OptionalArgument (List Github.Scalar.Id), union : OptionalArgument Bool }
 
 
 {-| Encode a RequestReviewsInput into a value that can be used as an argument.
 -}
 encodeRequestReviewsInput : RequestReviewsInput -> Value
-encodeRequestReviewsInput (RequestReviewsInput input) =
+encodeRequestReviewsInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestId |> Just ), ( "userIds", ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) |> Encode.optional input.userIds ), ( "teamIds", ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) |> Encode.optional input.teamIds ), ( "union", Encode.bool |> Encode.optional input.union ) ]
 
 
 {-| Type for the StarOrder input object.
 -}
-type StarOrder
-    = StarOrder { field : Github.Enum.StarOrderField.StarOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias StarOrder =
+    { field : Github.Enum.StarOrderField.StarOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a StarOrder into a value that can be used as an argument.
 -}
 encodeStarOrder : StarOrder -> Value
-encodeStarOrder (StarOrder input) =
+encodeStarOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.StarOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the SubmitPullRequestReviewInput input object.
 -}
-type SubmitPullRequestReviewInput
-    = SubmitPullRequestReviewInput { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, body : OptionalArgument String }
+type alias SubmitPullRequestReviewInput =
+    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, body : OptionalArgument String }
 
 
 {-| Encode a SubmitPullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeSubmitPullRequestReviewInput : SubmitPullRequestReviewInput -> Value
-encodeSubmitPullRequestReviewInput (SubmitPullRequestReviewInput input) =
+encodeSubmitPullRequestReviewInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString input.event |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
 {-| Type for the TeamOrder input object.
 -}
-type TeamOrder
-    = TeamOrder { field : Github.Enum.TeamOrderField.TeamOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias TeamOrder =
+    { field : Github.Enum.TeamOrderField.TeamOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a TeamOrder into a value that can be used as an argument.
 -}
 encodeTeamOrder : TeamOrder -> Value
-encodeTeamOrder (TeamOrder input) =
+encodeTeamOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.TeamOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the TeamRepositoryOrder input object.
 -}
-type TeamRepositoryOrder
-    = TeamRepositoryOrder { field : Github.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+type alias TeamRepositoryOrder =
+    { field : Github.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Encode a TeamRepositoryOrder into a value that can be used as an argument.
 -}
 encodeTeamRepositoryOrder : TeamRepositoryOrder -> Value
-encodeTeamRepositoryOrder (TeamRepositoryOrder input) =
+encodeTeamRepositoryOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.TeamRepositoryOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the UpdateProjectCardInput input object.
 -}
-type UpdateProjectCardInput
-    = UpdateProjectCardInput { clientMutationId : OptionalArgument String, projectCardId : Github.Scalar.Id, note : String }
+type alias UpdateProjectCardInput =
+    { clientMutationId : OptionalArgument String, projectCardId : Github.Scalar.Id, note : String }
 
 
 {-| Encode a UpdateProjectCardInput into a value that can be used as an argument.
 -}
 encodeUpdateProjectCardInput : UpdateProjectCardInput -> Value
-encodeUpdateProjectCardInput (UpdateProjectCardInput input) =
+encodeUpdateProjectCardInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectCardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectCardId |> Just ), ( "note", Encode.string input.note |> Just ) ]
 
 
 {-| Type for the UpdateProjectColumnInput input object.
 -}
-type UpdateProjectColumnInput
-    = UpdateProjectColumnInput { clientMutationId : OptionalArgument String, projectColumnId : Github.Scalar.Id, name : String }
+type alias UpdateProjectColumnInput =
+    { clientMutationId : OptionalArgument String, projectColumnId : Github.Scalar.Id, name : String }
 
 
 {-| Encode a UpdateProjectColumnInput into a value that can be used as an argument.
 -}
 encodeUpdateProjectColumnInput : UpdateProjectColumnInput -> Value
-encodeUpdateProjectColumnInput (UpdateProjectColumnInput input) =
+encodeUpdateProjectColumnInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectColumnId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
 {-| Type for the UpdateProjectInput input object.
 -}
-type UpdateProjectInput
-    = UpdateProjectInput { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : OptionalArgument String, body : OptionalArgument String, state : OptionalArgument Github.Enum.ProjectState.ProjectState, public : OptionalArgument Bool }
+type alias UpdateProjectInput =
+    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : OptionalArgument String, body : OptionalArgument String, state : OptionalArgument Github.Enum.ProjectState.ProjectState, public : OptionalArgument Bool }
 
 
 {-| Encode a UpdateProjectInput into a value that can be used as an argument.
 -}
 encodeUpdateProjectInput : UpdateProjectInput -> Value
-encodeUpdateProjectInput (UpdateProjectInput input) =
+encodeUpdateProjectInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ), ( "name", Encode.string |> Encode.optional input.name ), ( "body", Encode.string |> Encode.optional input.body ), ( "state", Encode.enum Github.Enum.ProjectState.toString |> Encode.optional input.state ), ( "public", Encode.bool |> Encode.optional input.public ) ]
 
 
 {-| Type for the UpdatePullRequestReviewCommentInput input object.
 -}
-type UpdatePullRequestReviewCommentInput
-    = UpdatePullRequestReviewCommentInput { clientMutationId : OptionalArgument String, pullRequestReviewCommentId : Github.Scalar.Id, body : String }
+type alias UpdatePullRequestReviewCommentInput =
+    { clientMutationId : OptionalArgument String, pullRequestReviewCommentId : Github.Scalar.Id, body : String }
 
 
 {-| Encode a UpdatePullRequestReviewCommentInput into a value that can be used as an argument.
 -}
 encodeUpdatePullRequestReviewCommentInput : UpdatePullRequestReviewCommentInput -> Value
-encodeUpdatePullRequestReviewCommentInput (UpdatePullRequestReviewCommentInput input) =
+encodeUpdatePullRequestReviewCommentInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewCommentId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 {-| Type for the UpdatePullRequestReviewInput input object.
 -}
-type UpdatePullRequestReviewInput
-    = UpdatePullRequestReviewInput { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, body : String }
+type alias UpdatePullRequestReviewInput =
+    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, body : String }
 
 
 {-| Encode a UpdatePullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeUpdatePullRequestReviewInput : UpdatePullRequestReviewInput -> Value
-encodeUpdatePullRequestReviewInput (UpdatePullRequestReviewInput input) =
+encodeUpdatePullRequestReviewInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 {-| Type for the UpdateSubscriptionInput input object.
 -}
-type UpdateSubscriptionInput
-    = UpdateSubscriptionInput { clientMutationId : OptionalArgument String, subscribableId : Github.Scalar.Id, state : Github.Enum.SubscriptionState.SubscriptionState }
+type alias UpdateSubscriptionInput =
+    { clientMutationId : OptionalArgument String, subscribableId : Github.Scalar.Id, state : Github.Enum.SubscriptionState.SubscriptionState }
 
 
 {-| Encode a UpdateSubscriptionInput into a value that can be used as an argument.
 -}
 encodeUpdateSubscriptionInput : UpdateSubscriptionInput -> Value
-encodeUpdateSubscriptionInput (UpdateSubscriptionInput input) =
+encodeUpdateSubscriptionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subscribableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subscribableId |> Just ), ( "state", Encode.enum Github.Enum.SubscriptionState.toString input.state |> Just ) ]
 
 
 {-| Type for the UpdateTopicsInput input object.
 -}
-type UpdateTopicsInput
-    = UpdateTopicsInput { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, topicNames : List String }
+type alias UpdateTopicsInput =
+    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, topicNames : List String }
 
 
 {-| Encode a UpdateTopicsInput into a value that can be used as an argument.
 -}
 encodeUpdateTopicsInput : UpdateTopicsInput -> Value
-encodeUpdateTopicsInput (UpdateTopicsInput input) =
+encodeUpdateTopicsInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.repositoryId |> Just ), ( "topicNames", (Encode.string |> Encode.list) input.topicNames |> Just ) ]

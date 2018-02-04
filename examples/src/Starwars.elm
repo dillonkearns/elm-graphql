@@ -83,11 +83,10 @@ query =
         |> with
             (Query.greet
                 { input =
-                    Swapi.InputObject.Greeting
-                        { name = "Chewie"
-                        , language = Present Language.Es
-                        , options = Absent
-                        }
+                    { name = "Chewie"
+                    , language = Present Language.Es
+                    , options = Absent
+                    }
                 }
             )
 
