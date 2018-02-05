@@ -22,13 +22,13 @@ generate apiSubmodule args =
 requiredArgsString : List String -> List Type.Arg -> Maybe String
 requiredArgsString apiSubmodule args =
     let
-        stuff =
+        requiredArgs =
             List.filterMap (requiredArgString apiSubmodule) args
     in
-    if stuff == [] then
+    if requiredArgs == [] then
         Nothing
     else
-        Just ("[ " ++ (stuff |> String.join ", ") ++ " ]")
+        Just ("[ " ++ (requiredArgs |> String.join ", ") ++ " ]")
 
 
 requiredArgString : List String -> Type.Arg -> Maybe String
