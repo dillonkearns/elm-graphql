@@ -51,7 +51,7 @@ forObject_ context thisObjectName field fieldGenerator =
 fieldGeneratorToString : String -> Type.Field -> FieldGenerator -> String
 fieldGeneratorToString returnAnnotation field fieldGenerator =
     let
-        something =
+        fieldTypeAnnotation =
             ((fieldGenerator.annotatedArgs |> List.map .annotation)
                 ++ [ returnAnnotation ]
             )
@@ -65,7 +65,7 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
         [ field.name |> CamelCaseName.raw
         , fieldGenerator |> fieldArgsString
         , fieldGenerator.decoder
-        , something
+        , fieldTypeAnnotation
         , argsListString fieldGenerator
         , "Object" ++ fieldGenerator.otherThing
         , field.name |> CamelCaseName.normalized
