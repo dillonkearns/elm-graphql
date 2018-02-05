@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Include type alias for records in the union type for Input Objects with loops.
+  This allows for nicer annotations in consumer code.
+
 ## [3.1.0] - 2018-02-04
 
 ### Changed

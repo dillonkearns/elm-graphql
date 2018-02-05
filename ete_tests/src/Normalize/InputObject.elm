@@ -18,10 +18,19 @@ import Normalize.Scalar
 import Normalize.Union
 
 
+{-| Type alias for the `CircularOne` attributes. Note that this type
+needs to use the `CircularOne` type (not just a plain type alias) because it has either
+references itself either directly (recursive) or indirectly (circular). See
+<https://github.com/dillonkearns/graphqelm/issues/33>.
+-}
+type alias CircularOneRaw =
+    { circularTwo : OptionalArgument CircularTwo }
+
+
 {-| Type for the CircularOne input object.
 -}
 type CircularOne
-    = CircularOne { circularTwo : OptionalArgument CircularTwo }
+    = CircularOne CircularOneRaw
 
 
 {-| Encode a CircularOne into a value that can be used as an argument.
@@ -32,10 +41,19 @@ encodeCircularOne (CircularOne input) =
         [ ( "circularTwo", encodeCircularTwo |> Encode.optional input.circularTwo ) ]
 
 
+{-| Type alias for the `CircularTwo` attributes. Note that this type
+needs to use the `CircularTwo` type (not just a plain type alias) because it has either
+references itself either directly (recursive) or indirectly (circular). See
+<https://github.com/dillonkearns/graphqelm/issues/33>.
+-}
+type alias CircularTwoRaw =
+    { circularOne : OptionalArgument CircularOne }
+
+
 {-| Type for the CircularTwo input object.
 -}
 type CircularTwo
-    = CircularTwo { circularOne : OptionalArgument CircularOne }
+    = CircularTwo CircularTwoRaw
 
 
 {-| Encode a CircularTwo into a value that can be used as an argument.
@@ -74,10 +92,19 @@ encodeGreetingOptions input =
         [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
 
 
+{-| Type alias for the `Recursive` attributes. Note that this type
+needs to use the `Recursive` type (not just a plain type alias) because it has either
+references itself either directly (recursive) or indirectly (circular). See
+<https://github.com/dillonkearns/graphqelm/issues/33>.
+-}
+type alias RecursiveRaw =
+    { recursive : OptionalArgument Recursive }
+
+
 {-| Type for the Recursive input object.
 -}
 type Recursive
-    = Recursive { recursive : OptionalArgument Recursive }
+    = Recursive RecursiveRaw
 
 
 {-| Encode a Recursive into a value that can be used as an argument.
