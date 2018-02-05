@@ -50,13 +50,13 @@ requiredArgString apiSubmodule { name, typeRef } =
 requiredArgsAnnotation : List String -> List Type.Arg -> Maybe String
 requiredArgsAnnotation apiSubmodule args =
     let
-        stuff =
+        requiredArgs =
             List.filterMap (requiredArgAnnotation apiSubmodule) args
     in
-    if stuff == [] then
+    if requiredArgs == [] then
         Nothing
     else
-        Just ("{ " ++ (stuff |> String.join ", ") ++ " }")
+        Just ("{ " ++ (requiredArgs |> String.join ", ") ++ " }")
 
 
 requiredArgAnnotation : List String -> Type.Arg -> Maybe String
