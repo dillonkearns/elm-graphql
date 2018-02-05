@@ -12547,8 +12547,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Graphqelm.Generator.Field',
 						{
-							start: {line: 160, column: 13},
-							end: {line: 174, column: 39}
+							start: {line: 169, column: 13},
+							end: {line: 183, column: 39}
 						},
 						_p4)('TODO');
 				case 'Union':
@@ -12563,8 +12563,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Graphqelm.Generator.Field',
 						{
-							start: {line: 160, column: 13},
-							end: {line: 174, column: 39}
+							start: {line: 169, column: 13},
+							end: {line: 183, column: 39}
 						},
 						_p4)('TODO');
 			}
@@ -12601,13 +12601,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 				typeAliases: {ctor: '[]'}
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addOptionalArgs = F3(
-	function (apiSubmodule, args, fieldGenerator) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addOptionalArgs = F4(
+	function (field, apiSubmodule, args, fieldGenerator) {
 		var _p9 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$generate, apiSubmodule, args);
 		if (_p9.ctor === 'Just') {
 			return A2(
 				_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg,
-				_p9._0.annotatedArg,
+				{
+					annotation: A2(
+						_dillonkearns$graphqelm$Interpolate$interpolate,
+						'({0}OptionalArguments -> {0}OptionalArguments)',
+						{
+							ctor: '::',
+							_0: _elm_community$string_extra$String_Extra$classify(
+								_dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name)),
+							_1: {ctor: '[]'}
+						}),
+					arg: 'fillInOptionals'
+				},
 				_elm_lang$core$Native_Utils.update(
 					fieldGenerator,
 					{
@@ -12837,8 +12848,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType = function (_p20)
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Field',
 					{
-						start: {line: 217, column: 5},
-						end: {line: 237, column: 42}
+						start: {line: 226, column: 5},
+						end: {line: 246, column: 42}
 					},
 					_p22)('Unexpected type');
 		}
@@ -12869,8 +12880,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator = F2(
 	function (_p32, field) {
 		var _p33 = _p32;
 		var _p34 = _p33.apiSubmodule;
-		return A3(
+		return A4(
 			_dillonkearns$graphqelm$Graphqelm_Generator_Field$addOptionalArgs,
+			field,
 			_p34,
 			field.args,
 			A3(

@@ -116,7 +116,7 @@ toFieldGenerator : Context -> Type.Field -> FieldGenerator
 toFieldGenerator ({ apiSubmodule } as context) field =
     init context field.name field.typeRef
         |> addRequiredArgs apiSubmodule field.args
-        |> addOptionalArgs apiSubmodule field.args
+        |> addOptionalArgs field apiSubmodule field.args
 
 
 addRequiredArgs : List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
@@ -133,8 +133,8 @@ addRequiredArgs apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-addOptionalArgs : List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
-addOptionalArgs apiSubmodule args fieldGenerator =
+addOptionalArgs : Type.Field -> List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
+addOptionalArgs field apiSubmodule args fieldGenerator =
     case Graphqelm.Generator.OptionalArgs.generate apiSubmodule args of
         Just { annotatedArg, letBindings, typeAlias } ->
             { fieldGenerator
@@ -142,7 +142,16 @@ addOptionalArgs apiSubmodule args fieldGenerator =
                 , letBindings = fieldGenerator.letBindings ++ letBindings
                 , typeAliases = { suffix = "OptionalArguments", body = typeAlias } :: fieldGenerator.typeAliases
             }
-                |> prependArg annotatedArg
+                |> prependArg
+                    { annotation =
+                        interpolate
+                            "({0}OptionalArguments -> {0}OptionalArguments)"
+                            [ field.name
+                                |> CamelCaseName.raw
+                                |> String.Extra.classify
+                            ]
+                    , arg = "fillInOptionals"
+                    }
 
         Nothing ->
             fieldGenerator

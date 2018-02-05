@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Generate type alias for optional args to make it easier to annotate consumer code.
+
 ## [3.1.1] - 2018-02-04
 
 ### Added
