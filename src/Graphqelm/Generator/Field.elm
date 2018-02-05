@@ -22,6 +22,7 @@ type alias FieldGenerator =
     , otherThing : String
     , letBindings : List LetBinding
     , objectDecoderChain : Maybe String
+    , typeAliases : List String
     }
 
 
@@ -174,6 +175,7 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
                )
             ++ ")"
             |> Just
+    , typeAliases = []
     }
         |> prependArg
             { annotation = objectArgAnnotation
@@ -238,18 +240,7 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
             initScalarField apiSubmodule typeRef
 
 
-initScalarField :
-    List String
-    -> TypeReference
-    ->
-        { annotatedArgs : List b
-        , decoder : String
-        , decoderAnnotation : String
-        , fieldArgs : List c
-        , letBindings : List d
-        , objectDecoderChain : Maybe a
-        , otherThing : String
-        }
+initScalarField : List String -> TypeReference -> FieldGenerator
 initScalarField apiSubmodule typeRef =
     { annotatedArgs = []
     , fieldArgs = []
@@ -260,4 +251,5 @@ initScalarField apiSubmodule typeRef =
     , otherThing = ".fieldDecoder"
     , letBindings = []
     , objectDecoderChain = Nothing
+    , typeAliases = []
     }
