@@ -12451,19 +12451,19 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString =
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsString = F2(
 	function (apiSubmodule, args) {
-		var stuff = A2(
+		var requiredArgs = A2(
 			_elm_lang$core$List$filterMap,
 			_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString(apiSubmodule),
 			args);
 		return _elm_lang$core$Native_Utils.eq(
-			stuff,
+			requiredArgs,
 			{ctor: '[]'}) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				'[ ',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$String$join, ', ', stuff),
+					A2(_elm_lang$core$String$join, ', ', requiredArgs),
 					' ]')));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$Result = F2(
@@ -12532,8 +12532,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Graphqelm.Generator.Field',
 						{
-							start: {line: 166, column: 13},
-							end: {line: 180, column: 39}
+							start: {line: 177, column: 13},
+							end: {line: 191, column: 39}
 						},
 						_p4)('TODO');
 				case 'Union':
@@ -12548,8 +12548,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Graphqelm.Generator.Field',
 						{
-							start: {line: 166, column: 13},
-							end: {line: 180, column: 39}
+							start: {line: 177, column: 13},
+							end: {line: 191, column: 39}
 						},
 						_p4)('TODO');
 			}
@@ -12664,6 +12664,38 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString = function 
 				_p17)),
 		' ');
 };
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$typeAliasesToString = F2(
+	function (field, fieldGenerator) {
+		return _elm_lang$core$Native_Utils.eq(
+			fieldGenerator.typeAliases,
+			{ctor: '[]'}) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+			A2(
+				_elm_lang$core$String$join,
+				'\n\n',
+				A2(
+					_elm_lang$core$List$map,
+					function (_p18) {
+						var _p19 = _p18;
+						return A2(
+							_dillonkearns$graphqelm$Interpolate$interpolate,
+							'type alias {0}{1} = {2}',
+							{
+								ctor: '::',
+								_0: _elm_community$string_extra$String_Extra$classify(
+									_dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name)),
+								_1: {
+									ctor: '::',
+									_0: _p19.suffix,
+									_1: {
+										ctor: '::',
+										_0: _p19.body,
+										_1: {ctor: '[]'}
+									}
+								}
+							});
+					},
+					fieldGenerator.typeAliases)));
+	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F3(
 	function (returnAnnotation, field, fieldGenerator) {
 		var fieldTypeAnnotation = A2(
@@ -12683,78 +12715,64 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F
 					_1: {ctor: '[]'}
 				}));
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'{10}\n\n{9}{6} : {3}\n{6} {4}={7}\n      {5} \"{0}\" {1} ({2}){8}\n',
-			{
-				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name),
-				_1: {
+			_elm_lang$core$String$join,
+			'\n\n',
+			A2(
+				_elm_lang$core$List$filterMap,
+				_elm_lang$core$Basics$identity,
+				{
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldArgsString(fieldGenerator),
+					_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$typeAliasesToString, field, fieldGenerator),
 					_1: {
 						ctor: '::',
-						_0: fieldGenerator.decoder,
-						_1: {
-							ctor: '::',
-							_0: fieldTypeAnnotation,
-							_1: {
-								ctor: '::',
-								_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString(fieldGenerator),
-								_1: {
+						_0: _elm_lang$core$Maybe$Just(
+							A2(
+								_dillonkearns$graphqelm$Interpolate$interpolate,
+								'{9}{6} : {3}\n{6} {4}={7}\n      {5} \"{0}\" {1} ({2}){8}\n',
+								{
 									ctor: '::',
-									_0: A2(_elm_lang$core$Basics_ops['++'], 'Object', fieldGenerator.otherThing),
+									_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name),
 									_1: {
 										ctor: '::',
-										_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(field.name),
+										_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldArgsString(fieldGenerator),
 										_1: {
 											ctor: '::',
-											_0: _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate(fieldGenerator.letBindings),
+											_0: fieldGenerator.decoder,
 											_1: {
 												ctor: '::',
-												_0: A2(_elm_lang$core$Maybe$withDefault, '', fieldGenerator.objectDecoderChain),
+												_0: fieldTypeAnnotation,
 												_1: {
 													ctor: '::',
-													_0: _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate(field),
+													_0: _dillonkearns$graphqelm$Graphqelm_Generator_Field$argsListString(fieldGenerator),
 													_1: {
 														ctor: '::',
-														_0: A2(
-															_elm_lang$core$String$join,
-															'\n\n',
-															A2(
-																_elm_lang$core$List$map,
-																function (_p18) {
-																	var _p19 = _p18;
-																	return A2(
-																		_dillonkearns$graphqelm$Interpolate$interpolate,
-																		'type alias {0}{1} = {2}',
-																		{
-																			ctor: '::',
-																			_0: _elm_community$string_extra$String_Extra$classify(
-																				_dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name)),
-																			_1: {
-																				ctor: '::',
-																				_0: _p19.suffix,
-																				_1: {
-																					ctor: '::',
-																					_0: _p19.body,
-																					_1: {ctor: '[]'}
-																				}
-																			}
-																		});
-																},
-																fieldGenerator.typeAliases)),
-														_1: {ctor: '[]'}
+														_0: A2(_elm_lang$core$Basics_ops['++'], 'Object', fieldGenerator.otherThing),
+														_1: {
+															ctor: '::',
+															_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(field.name),
+															_1: {
+																ctor: '::',
+																_0: _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate(fieldGenerator.letBindings),
+																_1: {
+																	ctor: '::',
+																	_0: A2(_elm_lang$core$Maybe$withDefault, '', fieldGenerator.objectDecoderChain),
+																	_1: {
+																		ctor: '::',
+																		_0: _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate(field),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}
+														}
 													}
 												}
 											}
 										}
 									}
-								}
-							}
-						}
+								})),
+						_1: {ctor: '[]'}
 					}
-				}
-			});
+				}));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_ = F4(
 	function (context, thisObjectName, field, fieldGenerator) {
@@ -12820,8 +12838,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType = function (_p20)
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Field',
 					{
-						start: {line: 223, column: 5},
-						end: {line: 243, column: 42}
+						start: {line: 234, column: 5},
+						end: {line: 254, column: 42}
 					},
 					_p22)('Unexpected type');
 		}

@@ -177,12 +177,16 @@ logoBackgroundColor =
     Object.fieldDecoder "logoBackgroundColor" [] Decode.string
 
 
+type alias LogoUrlOptionalArguments =
+    { size : OptionalArgument Int }
+
+
 {-| URL for the listing's logo image.
 
   - size - The size in pixels of the resulting square image.
 
 -}
-logoUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+logoUrl : (LogoUrlOptionalArguments -> LogoUrlOptionalArguments) -> Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 logoUrl fillInOptionals =
     let
         filledInOptionals =

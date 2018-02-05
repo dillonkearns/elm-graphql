@@ -25,6 +25,10 @@ selection constructor =
     Object.selection constructor
 
 
+type alias CardsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| List of cards in the column
 
   - first - Returns the first _n_ elements from the list.
@@ -33,7 +37,7 @@ selection constructor =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-cards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.ProjectColumn
+cards : (CardsOptionalArguments -> CardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.ProjectColumn
 cards fillInOptionals object =
     let
         filledInOptionals =

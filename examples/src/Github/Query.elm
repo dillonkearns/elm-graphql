@@ -62,12 +62,16 @@ licenses object =
     Object.selectionField "licenses" [] object (identity >> Decode.maybe >> Decode.list)
 
 
+type alias MarketplaceCategoriesOptionalArguments =
+    { excludeEmpty : OptionalArgument Bool }
+
+
 {-| Get alphabetically sorted list of Marketplace categories
 
   - excludeEmpty - Exclude categories with no listings.
 
 -}
-marketplaceCategories : ({ excludeEmpty : OptionalArgument Bool } -> { excludeEmpty : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (List decodesTo) RootQuery
+marketplaceCategories : (MarketplaceCategoriesOptionalArguments -> MarketplaceCategoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (List decodesTo) RootQuery
 marketplaceCategories fillInOptionals object =
     let
         filledInOptionals =
@@ -100,6 +104,10 @@ marketplaceListing requiredArgs object =
     Object.selectionField "marketplaceListing" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.maybe)
 
 
+type alias MarketplaceListingsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool }
+
+
 {-| Look up Marketplace listings
 
   - first - Returns the first _n_ elements from the list.
@@ -129,7 +137,7 @@ marketplaceListing requiredArgs object =
   - withFreeTrialsOnly - Select only listings that offer a free trial.
 
 -}
-marketplaceListings : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.MarketplaceListingConnection -> Field decodesTo RootQuery
+marketplaceListings : (MarketplaceListingsOptionalArguments -> MarketplaceListingsOptionalArguments) -> SelectionSet decodesTo Github.Object.MarketplaceListingConnection -> Field decodesTo RootQuery
 marketplaceListings fillInOptionals object =
     let
         filledInOptionals =
@@ -179,12 +187,16 @@ organization requiredArgs object =
     Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.maybe)
 
 
+type alias RateLimitOptionalArguments =
+    { dryRun : OptionalArgument Bool }
+
+
 {-| The client's rate limit information.
 
   - dryRun - If true, calculate the cost for the query without evaluating it
 
 -}
-rateLimit : ({ dryRun : OptionalArgument Bool } -> { dryRun : OptionalArgument Bool }) -> SelectionSet decodesTo Github.Object.RateLimit -> Field (Maybe decodesTo) RootQuery
+rateLimit : (RateLimitOptionalArguments -> RateLimitOptionalArguments) -> SelectionSet decodesTo Github.Object.RateLimit -> Field (Maybe decodesTo) RootQuery
 rateLimit fillInOptionals object =
     let
         filledInOptionals =
@@ -235,6 +247,10 @@ resource requiredArgs object =
     Object.selectionField "resource" [ Argument.required "url" requiredArgs.url (\(Github.Scalar.Uri raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
 
 
+type alias SearchOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| Perform a search across resources.
 
   - first - Returns the first _n_ elements from the list.
@@ -245,7 +261,7 @@ resource requiredArgs object =
   - type_ - The types of search items to search within.
 
 -}
-search : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> { query : String, type_ : Github.Enum.SearchType.SearchType } -> SelectionSet decodesTo Github.Object.SearchResultItemConnection -> Field decodesTo RootQuery
+search : (SearchOptionalArguments -> SearchOptionalArguments) -> { query : String, type_ : Github.Enum.SearchType.SearchType } -> SelectionSet decodesTo Github.Object.SearchResultItemConnection -> Field decodesTo RootQuery
 search fillInOptionals requiredArgs object =
     let
         filledInOptionals =

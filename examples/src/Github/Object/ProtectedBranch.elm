@@ -93,6 +93,10 @@ name =
     Object.fieldDecoder "name" [] Decode.string
 
 
+type alias PushAllowancesOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list push allowances for this protected branch.
 
   - first - Returns the first _n_ elements from the list.
@@ -101,7 +105,7 @@ name =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pushAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PushAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
+pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.PushAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
 pushAllowances fillInOptionals object =
     let
         filledInOptionals =
@@ -128,6 +132,10 @@ requiredStatusCheckContexts =
     Object.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.maybe |> Decode.list |> Decode.maybe)
 
 
+type alias ReviewDismissalAllowancesOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list review dismissal allowances for this protected branch.
 
   - first - Returns the first _n_ elements from the list.
@@ -136,7 +144,7 @@ requiredStatusCheckContexts =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-reviewDismissalAllowances : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
+reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals object =
     let
         filledInOptionals =

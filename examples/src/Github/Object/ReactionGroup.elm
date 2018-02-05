@@ -47,6 +47,10 @@ subject object =
     Object.selectionField "subject" [] object identity
 
 
+type alias UsersOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| Users who have reacted to the reaction subject with the emotion represented by this reaction group
 
   - first - Returns the first _n_ elements from the list.
@@ -55,7 +59,7 @@ subject object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-users : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> Field decodesTo Github.Object.ReactionGroup
+users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> Field decodesTo Github.Object.ReactionGroup
 users fillInOptionals object =
     let
         filledInOptionals =

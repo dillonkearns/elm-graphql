@@ -32,6 +32,10 @@ digestMethod =
     Object.fieldDecoder "digestMethod" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
 
 
+type alias ExternalIdentitiesOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| External Identities provisioned by this Identity Provider
 
   - first - Returns the first _n_ elements from the list.
@@ -40,7 +44,7 @@ digestMethod =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-externalIdentities : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ExternalIdentityConnection -> Field decodesTo Github.Object.OrganizationIdentityProvider
+externalIdentities : (ExternalIdentitiesOptionalArguments -> ExternalIdentitiesOptionalArguments) -> SelectionSet decodesTo Github.Object.ExternalIdentityConnection -> Field decodesTo Github.Object.OrganizationIdentityProvider
 externalIdentities fillInOptionals object =
     let
         filledInOptionals =

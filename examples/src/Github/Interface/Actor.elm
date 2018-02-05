@@ -47,12 +47,16 @@ onUser (SelectionSet fields decoder) =
     FragmentSelectionSet "User" fields decoder
 
 
+type alias AvatarUrlOptionalArguments =
+    { size : OptionalArgument Int }
+
+
 {-| A URL pointing to the actor's public avatar.
 
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> Field Github.Scalar.Uri Github.Interface.Actor
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Interface.Actor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =

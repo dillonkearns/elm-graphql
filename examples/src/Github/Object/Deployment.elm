@@ -94,6 +94,10 @@ state =
     Object.fieldDecoder "state" [] (Github.Enum.DeploymentState.decoder |> Decode.maybe)
 
 
+type alias StatusesOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of statuses associated with the deployment.
 
   - first - Returns the first _n_ elements from the list.
@@ -102,7 +106,7 @@ state =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-statuses : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.DeploymentStatusConnection -> Field (Maybe decodesTo) Github.Object.Deployment
+statuses : (StatusesOptionalArguments -> StatusesOptionalArguments) -> SelectionSet decodesTo Github.Object.DeploymentStatusConnection -> Field (Maybe decodesTo) Github.Object.Deployment
 statuses fillInOptionals object =
     let
         filledInOptionals =

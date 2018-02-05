@@ -79,6 +79,10 @@ publishedAt =
     Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
+type alias ReleaseAssetsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }
+
+
 {-| List of releases assets which are dependent on this release.
 
   - first - Returns the first _n_ elements from the list.
@@ -88,7 +92,7 @@ publishedAt =
   - name - A list of names to filter the assets by.
 
 -}
-releaseAssets : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection -> Field decodesTo Github.Object.Release
+releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection -> Field decodesTo Github.Object.Release
 releaseAssets fillInOptionals object =
     let
         filledInOptionals =

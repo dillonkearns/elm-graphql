@@ -173,12 +173,16 @@ resourcePath =
     Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
+type alias ShortDescriptionHTMLOptionalArguments =
+    { limit : OptionalArgument Int }
+
+
 {-| A description of the repository, rendered to HTML without any links in it.
 
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : ({ limit : OptionalArgument Int } -> { limit : OptionalArgument Int }) -> Field Github.Scalar.Html Github.Object.RepositoryInvitationRepository
+shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> Field Github.Scalar.Html Github.Object.RepositoryInvitationRepository
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =

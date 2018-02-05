@@ -25,12 +25,16 @@ selection constructor =
     Object.selection constructor
 
 
+type alias AvatarUrlOptionalArguments =
+    { size : OptionalArgument Int }
+
+
 {-| A URL pointing to the GitHub App's public avatar.
 
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : ({ size : OptionalArgument Int } -> { size : OptionalArgument Int }) -> Field Github.Scalar.Uri Github.Object.Bot
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Object.Bot
 avatarUrl fillInOptionals =
     let
         filledInOptionals =

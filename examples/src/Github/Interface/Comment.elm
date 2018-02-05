@@ -143,6 +143,10 @@ updatedAt =
     Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
 
 
+type alias UserContentEditsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of edits to this content.
 
   - first - Returns the first _n_ elements from the list.
@@ -151,7 +155,7 @@ updatedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Interface.Comment
+userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Interface.Comment
 userContentEdits fillInOptionals object =
     let
         filledInOptionals =

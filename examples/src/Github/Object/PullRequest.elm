@@ -47,6 +47,10 @@ additions =
     Object.fieldDecoder "additions" [] Decode.int
 
 
+type alias AssigneesOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of Users assigned to this object.
 
   - first - Returns the first _n_ elements from the list.
@@ -55,7 +59,7 @@ additions =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.PullRequest
+assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.PullRequest
 assignees fillInOptionals object =
     let
         filledInOptionals =
@@ -145,6 +149,10 @@ closedAt =
     Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
+type alias CommentsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of comments associated with the pull request.
 
   - first - Returns the first _n_ elements from the list.
@@ -153,7 +161,7 @@ closedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> Field decodesTo Github.Object.PullRequest
+comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> Field decodesTo Github.Object.PullRequest
 comments fillInOptionals object =
     let
         filledInOptionals =
@@ -166,6 +174,10 @@ comments fillInOptionals object =
     Object.selectionField "comments" optionalArgs object identity
 
 
+type alias CommitsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of commits present in this pull request's head branch not present in the base branch.
 
   - first - Returns the first _n_ elements from the list.
@@ -174,7 +186,7 @@ comments fillInOptionals object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-commits : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PullRequestCommitConnection -> Field decodesTo Github.Object.PullRequest
+commits : (CommitsOptionalArguments -> CommitsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestCommitConnection -> Field decodesTo Github.Object.PullRequest
 commits fillInOptionals object =
     let
         filledInOptionals =
@@ -269,6 +281,10 @@ isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
+type alias LabelsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of labels associated with the object.
 
   - first - Returns the first _n_ elements from the list.
@@ -277,7 +293,7 @@ isCrossRepository =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.LabelConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
+labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
 labels fillInOptionals object =
     let
         filledInOptionals =
@@ -346,6 +362,10 @@ number =
     Object.fieldDecoder "number" [] Decode.int
 
 
+type alias ParticipantsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of Users that are participating in the Pull Request conversation.
 
   - first - Returns the first _n_ elements from the list.
@@ -354,7 +374,7 @@ number =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-participants : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.PullRequest
+participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.PullRequest
 participants fillInOptionals object =
     let
         filledInOptionals =
@@ -374,6 +394,10 @@ potentialMergeCommit object =
     Object.selectionField "potentialMergeCommit" [] object (identity >> Decode.maybe)
 
 
+type alias ProjectCardsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| List of project cards associated with this pull request.
 
   - first - Returns the first _n_ elements from the list.
@@ -382,7 +406,7 @@ potentialMergeCommit object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-projectCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.PullRequest
+projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.PullRequest
 projectCards fillInOptionals object =
     let
         filledInOptionals =
@@ -409,6 +433,10 @@ reactionGroups object =
     Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
 
 
+type alias ReactionsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder }
+
+
 {-| A list of Reactions left on the Issue.
 
   - first - Returns the first _n_ elements from the list.
@@ -419,7 +447,7 @@ reactionGroups object =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder }) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Object.PullRequest
+reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Object.PullRequest
 reactions fillInOptionals object =
     let
         filledInOptionals =
@@ -460,6 +488,10 @@ revertUrl =
     Object.fieldDecoder "revertUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
+type alias ReviewRequestsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of review requests associated with the pull request.
 
   - first - Returns the first _n_ elements from the list.
@@ -468,7 +500,7 @@ revertUrl =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-reviewRequests : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ReviewRequestConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
+reviewRequests : (ReviewRequestsOptionalArguments -> ReviewRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReviewRequestConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
 reviewRequests fillInOptionals object =
     let
         filledInOptionals =
@@ -481,6 +513,10 @@ reviewRequests fillInOptionals object =
     Object.selectionField "reviewRequests" optionalArgs object (identity >> Decode.maybe)
 
 
+type alias ReviewsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }
+
+
 {-| A list of reviews associated with the pull request.
 
   - first - Returns the first _n_ elements from the list.
@@ -491,7 +527,7 @@ reviewRequests fillInOptionals object =
   - author - Filter by author of the review.
 
 -}
-reviews : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.PullRequestReviewConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
+reviews : (ReviewsOptionalArguments -> ReviewsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestReviewConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
 reviews fillInOptionals object =
     let
         filledInOptionals =
@@ -518,6 +554,10 @@ suggestedReviewers object =
     Object.selectionField "suggestedReviewers" [] object (identity >> Decode.maybe >> Decode.list)
 
 
+type alias TimelineOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }
+
+
 {-| A list of events, comments, commits, etc. associated with the pull request.
 
   - first - Returns the first _n_ elements from the list.
@@ -527,7 +567,7 @@ suggestedReviewers object =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }) -> SelectionSet decodesTo Github.Object.PullRequestTimelineConnection -> Field decodesTo Github.Object.PullRequest
+timeline : (TimelineOptionalArguments -> TimelineOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestTimelineConnection -> Field decodesTo Github.Object.PullRequest
 timeline fillInOptionals object =
     let
         filledInOptionals =
@@ -561,6 +601,10 @@ url =
     Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
 
 
+type alias UserContentEditsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| A list of edits to this content.
 
   - first - Returns the first _n_ elements from the list.
@@ -569,7 +613,7 @@ url =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
+userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Object.PullRequest
 userContentEdits fillInOptionals object =
     let
         filledInOptionals =

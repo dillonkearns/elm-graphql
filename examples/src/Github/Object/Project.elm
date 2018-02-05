@@ -54,6 +54,10 @@ closedAt =
     Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
 
 
+type alias ColumnsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| List of columns in the project
 
   - first - Returns the first _n_ elements from the list.
@@ -62,7 +66,7 @@ closedAt =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-columns : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ProjectColumnConnection -> Field decodesTo Github.Object.Project
+columns : (ColumnsOptionalArguments -> ColumnsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectColumnConnection -> Field decodesTo Github.Object.Project
 columns fillInOptionals object =
     let
         filledInOptionals =
@@ -122,6 +126,10 @@ owner object =
     Object.selectionField "owner" [] object identity
 
 
+type alias PendingCardsOptionalArguments =
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
 {-| List of pending cards in this project
 
   - first - Returns the first _n_ elements from the list.
@@ -130,7 +138,7 @@ owner object =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pendingCards : ({ first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String } -> { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.Project
+pendingCards : (PendingCardsOptionalArguments -> PendingCardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.Project
 pendingCards fillInOptionals object =
     let
         filledInOptionals =
