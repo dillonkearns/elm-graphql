@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.0] - 2018-02-04
+
 ### Changed
 
 * Generate wrapped record union type for Input Objects with loop (recursive or circular references),
