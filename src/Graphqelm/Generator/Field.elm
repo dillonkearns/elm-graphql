@@ -59,10 +59,9 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
             )
                 |> String.join " -> "
     in
-    interpolate
-        """{10}
-
-{9}{6} : {3}
+    [ typeAliasesToString field fieldGenerator
+    , interpolate
+        """{9}{6} : {3}
 {6} {4}={7}
       {5} "{0}" {1} ({2}){8}
 """
@@ -76,7 +75,19 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
         , Let.generate fieldGenerator.letBindings
         , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
         , DocComment.generate field
-        , fieldGenerator.typeAliases
+        ]
+        |> Just
+    ]
+        |> List.filterMap identity
+        |> String.join "\n\n"
+
+
+typeAliasesToString : Type.Field -> FieldGenerator -> Maybe String
+typeAliasesToString field fieldGenerator =
+    if fieldGenerator.typeAliases == [] then
+        Nothing
+    else
+        fieldGenerator.typeAliases
             |> List.map
                 (\{ suffix, body } ->
                     interpolate "type alias {0}{1} = {2}"
@@ -88,7 +99,7 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
                         ]
                 )
             |> String.join "\n\n"
-        ]
+            |> Just
 
 
 argsListString : { fieldGenerator | annotatedArgs : List AnnotatedArg } -> String

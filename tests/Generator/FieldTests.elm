@@ -133,7 +133,9 @@ human requiredArgs object =
                 }
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, subscription = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "RootQuery")
                     |> Expect.equal
-                        """menuItems : ({ contains : OptionalArgument String } -> { contains : OptionalArgument String }) -> SelectionSet decodesTo Api.Object.MenuItem -> Field (List decodesTo) RootQuery
+                        """type alias MenuItemsOptionalArguments = { contains : OptionalArgument String }
+
+menuItems : (MenuItemsOptionalArguments -> MenuItemsOptionalArguments) -> SelectionSet decodesTo Api.Object.MenuItem -> Field (List decodesTo) RootQuery
 menuItems fillInOptionals object =
     let
         filledInOptionals =
