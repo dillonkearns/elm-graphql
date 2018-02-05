@@ -43,12 +43,16 @@ greet requiredArgs =
     Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
 
 
+type alias HeroOptionalArguments =
+    { episode : OptionalArgument Swapi.Enum.Episode.Episode }
+
+
 {-|
 
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet decodesTo Swapi.Interface.Character -> Field decodesTo RootQuery
+hero : (HeroOptionalArguments -> HeroOptionalArguments) -> SelectionSet decodesTo Swapi.Interface.Character -> Field decodesTo RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -61,12 +65,16 @@ hero fillInOptionals object =
     Object.selectionField "hero" optionalArgs object identity
 
 
+type alias HeroUnionOptionalArguments =
+    { episode : OptionalArgument Swapi.Enum.Episode.Episode }
+
+
 {-|
 
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Swapi.Enum.Episode.Episode } -> { episode : OptionalArgument Swapi.Enum.Episode.Episode }) -> SelectionSet decodesTo Swapi.Union.CharacterUnion -> Field (Maybe decodesTo) RootQuery
+heroUnion : (HeroUnionOptionalArguments -> HeroUnionOptionalArguments) -> SelectionSet decodesTo Swapi.Union.CharacterUnion -> Field (Maybe decodesTo) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =

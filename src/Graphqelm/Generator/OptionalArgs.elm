@@ -13,6 +13,7 @@ type alias Result =
         , arg : String
         }
     , letBindings : List LetBinding
+    , typeAlias : String
     }
 
 
@@ -46,6 +47,7 @@ generate apiSubmodule allArgs =
                                 ++ "\n                |> List.filterMap identity"
                            )
                     ]
+                , typeAlias = typeAlias apiSubmodule optionalArgs
                 }
 
 
@@ -95,6 +97,20 @@ annotation apiSubmodule optionalArgs =
     in
     interpolate """({ {0} } -> { {0} })"""
         [ insideRecord ]
+
+
+typeAlias : List String -> List OptionalArg -> String
+typeAlias apiSubmodule optionalArgs =
+    List.map
+        (\{ name, typeOf } ->
+            CamelCaseName.normalized name
+                ++ " : OptionalArgument "
+                ++ Graphqelm.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+        )
+        optionalArgs
+        |> String.join ", "
+        |> List.singleton
+        |> interpolate "{ {0} }"
 
 
 optionalArgOrNothing : Type.Arg -> Maybe OptionalArg

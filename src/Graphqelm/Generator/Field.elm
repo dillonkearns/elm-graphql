@@ -12,6 +12,7 @@ import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
 import Interpolate exposing (interpolate)
+import String.Extra
 
 
 type alias FieldGenerator =
@@ -22,7 +23,7 @@ type alias FieldGenerator =
     , otherThing : String
     , letBindings : List LetBinding
     , objectDecoderChain : Maybe String
-    , typeAliases : List String
+    , typeAliases : List { suffix : String, body : String }
     }
 
 
@@ -59,7 +60,9 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
                 |> String.join " -> "
     in
     interpolate
-        """{9}{6} : {3}
+        """{10}
+
+{9}{6} : {3}
 {6} {4}={7}
       {5} "{0}" {1} ({2}){8}
 """
@@ -73,6 +76,18 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
         , Let.generate fieldGenerator.letBindings
         , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
         , DocComment.generate field
+        , fieldGenerator.typeAliases
+            |> List.map
+                (\{ suffix, body } ->
+                    interpolate "type alias {0}{1} = {2}"
+                        [ field.name
+                            |> CamelCaseName.raw
+                            |> String.Extra.classify
+                        , suffix
+                        , body
+                        ]
+                )
+            |> String.join "\n\n"
         ]
 
 
@@ -121,10 +136,11 @@ addRequiredArgs apiSubmodule args fieldGenerator =
 addOptionalArgs : List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
 addOptionalArgs apiSubmodule args fieldGenerator =
     case Graphqelm.Generator.OptionalArgs.generate apiSubmodule args of
-        Just { annotatedArg, letBindings } ->
+        Just { annotatedArg, letBindings, typeAlias } ->
             { fieldGenerator
                 | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
                 , letBindings = fieldGenerator.letBindings ++ letBindings
+                , typeAliases = { suffix = "OptionalArguments", body = typeAlias } :: fieldGenerator.typeAliases
             }
                 |> prependArg annotatedArg
 
