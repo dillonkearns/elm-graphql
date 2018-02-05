@@ -140,18 +140,15 @@ addOptionalArgs field apiSubmodule args fieldGenerator =
             { fieldGenerator
                 | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
                 , letBindings = fieldGenerator.letBindings ++ letBindings
-                , typeAliases = { suffix = "OptionalArguments", body = typeAlias } :: fieldGenerator.typeAliases
+                , typeAliases = typeAlias :: fieldGenerator.typeAliases
             }
                 |> prependArg
-                    { annotation =
-                        interpolate
-                            "({0}OptionalArguments -> {0}OptionalArguments)"
-                            [ field.name
-                                |> CamelCaseName.raw
-                                |> String.Extra.classify
-                            ]
-                    , arg = "fillInOptionals"
-                    }
+                    (annotatedArg
+                        (field.name
+                            |> CamelCaseName.raw
+                            |> String.Extra.classify
+                        )
+                    )
 
         Nothing ->
             fieldGenerator

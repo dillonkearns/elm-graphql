@@ -9,11 +9,13 @@ import Interpolate exposing (interpolate)
 
 type alias Result =
     { annotatedArg :
-        { annotation : String
-        , arg : String
-        }
+        String
+        ->
+            { annotation : String
+            , arg : String
+            }
     , letBindings : List LetBinding
-    , typeAlias : String
+    , typeAlias : { body : String, suffix : String }
     }
 
 
@@ -37,9 +39,10 @@ generate apiSubmodule allArgs =
         optionalArgs ->
             Just
                 { annotatedArg =
-                    { annotation = annotation apiSubmodule optionalArgs
-                    , arg = "fillInOptionals"
-                    }
+                    \fieldName ->
+                        { annotation = annotation fieldName
+                        , arg = "fillInOptionals"
+                        }
                 , letBindings =
                     [ "filledInOptionals" => ("fillInOptionals " ++ emptyRecord optionalArgs)
                     , "optionalArgs"
@@ -47,7 +50,7 @@ generate apiSubmodule allArgs =
                                 ++ "\n                |> List.filterMap identity"
                            )
                     ]
-                , typeAlias = typeAlias apiSubmodule optionalArgs
+                , typeAlias = { suffix = "OptionalArguments", body = typeAlias apiSubmodule optionalArgs }
                 }
 
 
@@ -82,21 +85,10 @@ emptyRecord optionalArgs =
     interpolate "{ {0} }" [ recordEntries ]
 
 
-annotation : List String -> List OptionalArg -> String
-annotation apiSubmodule optionalArgs =
-    let
-        insideRecord =
-            List.map
-                (\{ name, typeOf } ->
-                    CamelCaseName.normalized name
-                        ++ " : OptionalArgument "
-                        ++ Graphqelm.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
-                )
-                optionalArgs
-                |> String.join ", "
-    in
-    interpolate """({ {0} } -> { {0} })"""
-        [ insideRecord ]
+annotation : String -> String
+annotation fieldName =
+    interpolate "({0}OptionalArguments -> {0}OptionalArguments)"
+        [ fieldName ]
 
 
 typeAlias : List String -> List OptionalArg -> String
