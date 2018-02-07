@@ -28,6 +28,10 @@ selection constructor =
     Object.selection constructor
 
 
-sendMessage : { characterId : Swapi.Scalar.Id, phrase : Swapi.Enum.Phrase.Phrase } -> SelectionSet decodesTo Swapi.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
+type alias SendMessageRequiredArguments =
+    { characterId : Swapi.Scalar.Id, phrase : Swapi.Enum.Phrase.Phrase }
+
+
+sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Swapi.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
 sendMessage requiredArgs object =
     Object.selectionField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(Swapi.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object (identity >> Decode.nullable)

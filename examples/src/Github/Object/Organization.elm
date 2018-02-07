@@ -174,12 +174,16 @@ pinnedRepositories fillInOptionals object =
     Object.selectionField "pinnedRepositories" optionalArgs object identity
 
 
+type alias ProjectRequiredArguments =
+    { number : Int }
+
+
 {-| Find project by number.
 
   - number - The project number to find.
 
 -}
-project : { number : Int } -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Object.Organization
+project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Object.Organization
 project requiredArgs object =
     Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
 
@@ -256,12 +260,16 @@ repositories fillInOptionals object =
     Object.selectionField "repositories" optionalArgs object identity
 
 
+type alias RepositoryRequiredArguments =
+    { name : String }
+
+
 {-| Find Repository.
 
   - name - Name of Repository to find.
 
 -}
-repository : { name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.Organization
+repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.Organization
 repository requiredArgs object =
     Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 
@@ -280,12 +288,16 @@ samlIdentityProvider object =
     Object.selectionField "samlIdentityProvider" [] object (identity >> Decode.nullable)
 
 
+type alias TeamRequiredArguments =
+    { slug : String }
+
+
 {-| Find an organization's team by its slug.
 
   - slug - The name or slug of the team to find.
 
 -}
-team : { slug : String } -> SelectionSet decodesTo Github.Object.Team -> Field (Maybe decodesTo) Github.Object.Organization
+team : TeamRequiredArguments -> SelectionSet decodesTo Github.Object.Team -> Field (Maybe decodesTo) Github.Object.Organization
 team requiredArgs object =
     Object.selectionField "team" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.nullable)
 

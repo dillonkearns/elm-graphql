@@ -28,14 +28,22 @@ selection constructor =
     Object.selection constructor
 
 
+type alias CircularInputRequiredArguments =
+    { input : Normalize.InputObject.CircularOne }
+
+
 {-|
 
   - input - Test circular input.
 
 -}
-circularInput : { input : Normalize.InputObject.CircularOne } -> Field (Maybe String) RootQuery
+circularInput : CircularInputRequiredArguments -> Field (Maybe String) RootQuery
 circularInput requiredArgs =
     Object.fieldDecoder "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
+
+
+type alias DroidRequiredArguments =
+    { iD_ : Normalize.Scalar.Id }
 
 
 {-|
@@ -43,12 +51,16 @@ circularInput requiredArgs =
   - iD_ - ID of the droid.
 
 -}
-droid_ : { iD_ : Normalize.Scalar.Id } -> SelectionSet decodesTo Normalize.Object.Droid -> Field (Maybe decodesTo) RootQuery
+droid_ : DroidRequiredArguments -> SelectionSet decodesTo Normalize.Object.Droid -> Field (Maybe decodesTo) RootQuery
 droid_ requiredArgs object =
     Object.selectionField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
 
 
-greet : { input : Normalize.InputObject.Greeting } -> Field String RootQuery
+type alias GreetRequiredArguments =
+    { input : Normalize.InputObject.Greeting }
+
+
+greet : GreetRequiredArguments -> Field String RootQuery
 greet requiredArgs =
     Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
 
@@ -97,14 +109,22 @@ heroUnion fillInOptionals object =
     Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.nullable)
 
 
+type alias HumanRequiredArguments =
+    { id : Normalize.Scalar.Id }
+
+
 {-|
 
   - id - ID of the human.
 
 -}
-human : { id : Normalize.Scalar.Id } -> SelectionSet decodesTo Normalize.Object.Human_ -> Field (Maybe decodesTo) RootQuery
+human : HumanRequiredArguments -> SelectionSet decodesTo Normalize.Object.Human_ -> Field (Maybe decodesTo) RootQuery
 human requiredArgs object =
     Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
+
+
+type alias RecursiveInputRequiredArguments =
+    { input : Normalize.InputObject.Recursive }
 
 
 {-|
@@ -112,6 +132,6 @@ human requiredArgs object =
   - input - Test recursive input.
 
 -}
-recursiveInput : { input : Normalize.InputObject.Recursive } -> Field (Maybe String) RootQuery
+recursiveInput : RecursiveInputRequiredArguments -> Field (Maybe String) RootQuery
 recursiveInput requiredArgs =
     Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)

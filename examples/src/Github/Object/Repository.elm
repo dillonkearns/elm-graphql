@@ -308,14 +308,22 @@ isPrivate =
     Object.fieldDecoder "isPrivate" [] Decode.bool
 
 
+type alias IssueRequiredArguments =
+    { number : Int }
+
+
 {-| Returns a single issue from the current repository by number.
 
   - number - The number for the issue to be returned.
 
 -}
-issue : { number : Int } -> SelectionSet decodesTo Github.Object.Issue -> Field (Maybe decodesTo) Github.Object.Repository
+issue : IssueRequiredArguments -> SelectionSet decodesTo Github.Object.Issue -> Field (Maybe decodesTo) Github.Object.Repository
 issue requiredArgs object =
     Object.selectionField "issue" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
+
+
+type alias IssueOrPullRequestRequiredArguments =
+    { number : Int }
 
 
 {-| Returns a single issue-like object from the current repository by number.
@@ -323,7 +331,7 @@ issue requiredArgs object =
   - number - The number for the issue to be returned.
 
 -}
-issueOrPullRequest : { number : Int } -> SelectionSet decodesTo Github.Union.IssueOrPullRequest -> Field (Maybe decodesTo) Github.Object.Repository
+issueOrPullRequest : IssueOrPullRequestRequiredArguments -> SelectionSet decodesTo Github.Union.IssueOrPullRequest -> Field (Maybe decodesTo) Github.Object.Repository
 issueOrPullRequest requiredArgs object =
     Object.selectionField "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
 
@@ -356,12 +364,16 @@ issues fillInOptionals object =
     Object.selectionField "issues" optionalArgs object identity
 
 
+type alias LabelRequiredArguments =
+    { name : String }
+
+
 {-| Returns a single label by name
 
   - name - Label name
 
 -}
-label : { name : String } -> SelectionSet decodesTo Github.Object.Label -> Field (Maybe decodesTo) Github.Object.Repository
+label : LabelRequiredArguments -> SelectionSet decodesTo Github.Object.Label -> Field (Maybe decodesTo) Github.Object.Repository
 label requiredArgs object =
     Object.selectionField "label" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 
@@ -463,12 +475,16 @@ mentionableUsers fillInOptionals object =
     Object.selectionField "mentionableUsers" optionalArgs object identity
 
 
+type alias MilestoneRequiredArguments =
+    { number : Int }
+
+
 {-| Returns a single milestone from the current repository by number.
 
   - number - The number for the milestone to be returned.
 
 -}
-milestone : { number : Int } -> SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe decodesTo) Github.Object.Repository
+milestone : MilestoneRequiredArguments -> SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe decodesTo) Github.Object.Repository
 milestone requiredArgs object =
     Object.selectionField "milestone" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
 
@@ -565,12 +581,16 @@ primaryLanguage object =
     Object.selectionField "primaryLanguage" [] object (identity >> Decode.nullable)
 
 
+type alias ProjectRequiredArguments =
+    { number : Int }
+
+
 {-| Find project by number.
 
   - number - The project number to find.
 
 -}
-project : { number : Int } -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Object.Repository
+project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Object.Repository
 project requiredArgs object =
     Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
 
@@ -642,12 +662,16 @@ protectedBranches fillInOptionals object =
     Object.selectionField "protectedBranches" optionalArgs object identity
 
 
+type alias PullRequestRequiredArguments =
+    { number : Int }
+
+
 {-| Returns a single pull request from the current repository by number.
 
   - number - The number for the pull request to be returned.
 
 -}
-pullRequest : { number : Int } -> SelectionSet decodesTo Github.Object.PullRequest -> Field (Maybe decodesTo) Github.Object.Repository
+pullRequest : PullRequestRequiredArguments -> SelectionSet decodesTo Github.Object.PullRequest -> Field (Maybe decodesTo) Github.Object.Repository
 pullRequest requiredArgs object =
     Object.selectionField "pullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
 
@@ -689,18 +713,26 @@ pushedAt =
     Object.fieldDecoder "pushedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
+type alias RefRequiredArguments =
+    { qualifiedName : String }
+
+
 {-| Fetch a given ref from the repository
 
   - qualifiedName - The ref to retrieve.Fully qualified matches are checked in order (`refs/heads/master`) before falling back onto checks for short name matches (`master`).
 
 -}
-ref : { qualifiedName : String } -> SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Repository
+ref : RefRequiredArguments -> SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Repository
 ref requiredArgs object =
     Object.selectionField "ref" [ Argument.required "qualifiedName" requiredArgs.qualifiedName Encode.string ] object (identity >> Decode.nullable)
 
 
 type alias RefsOptionalArguments =
     { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, direction : OptionalArgument Github.Enum.OrderDirection.OrderDirection, orderBy : OptionalArgument Github.InputObject.RefOrder }
+
+
+type alias RefsRequiredArguments =
+    { refPrefix : String }
 
 
 {-| Fetch a list of refs from the repository
@@ -714,7 +746,7 @@ type alias RefsOptionalArguments =
   - orderBy - Ordering options for refs returned from the connection.
 
 -}
-refs : (RefsOptionalArguments -> RefsOptionalArguments) -> { refPrefix : String } -> SelectionSet decodesTo Github.Object.RefConnection -> Field (Maybe decodesTo) Github.Object.Repository
+refs : (RefsOptionalArguments -> RefsOptionalArguments) -> RefsRequiredArguments -> SelectionSet decodesTo Github.Object.RefConnection -> Field (Maybe decodesTo) Github.Object.Repository
 refs fillInOptionals requiredArgs object =
     let
         filledInOptionals =
@@ -727,12 +759,16 @@ refs fillInOptionals requiredArgs object =
     Object.selectionField "refs" (optionalArgs ++ [ Argument.required "refPrefix" requiredArgs.refPrefix Encode.string ]) object (identity >> Decode.nullable)
 
 
+type alias ReleaseRequiredArguments =
+    { tagName : String }
+
+
 {-| Lookup a single release given various criteria.
 
   - tagName - The name of the Tag the Release was created from
 
 -}
-release : { tagName : String } -> SelectionSet decodesTo Github.Object.Release -> Field (Maybe decodesTo) Github.Object.Repository
+release : ReleaseRequiredArguments -> SelectionSet decodesTo Github.Object.Release -> Field (Maybe decodesTo) Github.Object.Repository
 release requiredArgs object =
     Object.selectionField "release" [ Argument.required "tagName" requiredArgs.tagName Encode.string ] object (identity >> Decode.nullable)
 

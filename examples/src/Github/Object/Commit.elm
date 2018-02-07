@@ -61,12 +61,16 @@ authoredDate =
     Object.fieldDecoder "authoredDate" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
+type alias BlameRequiredArguments =
+    { path : String }
+
+
 {-| Fetches `git blame` information.
 
   - path - The file whose Git blame information you want.
 
 -}
-blame : { path : String } -> SelectionSet decodesTo Github.Object.Blame -> Field decodesTo Github.Object.Commit
+blame : BlameRequiredArguments -> SelectionSet decodesTo Github.Object.Blame -> Field decodesTo Github.Object.Commit
 blame requiredArgs object =
     Object.selectionField "blame" [ Argument.required "path" requiredArgs.path Encode.string ] object identity
 

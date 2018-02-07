@@ -28,12 +28,16 @@ selection constructor =
     Object.selection constructor
 
 
+type alias CodeOfConductRequiredArguments =
+    { key : String }
+
+
 {-| Look up a code of conduct by its key
 
   - key - The code of conduct's key
 
 -}
-codeOfConduct : { key : String } -> SelectionSet decodesTo Github.Object.CodeOfConduct -> Field (Maybe decodesTo) RootQuery
+codeOfConduct : CodeOfConductRequiredArguments -> SelectionSet decodesTo Github.Object.CodeOfConduct -> Field (Maybe decodesTo) RootQuery
 codeOfConduct requiredArgs object =
     Object.selectionField "codeOfConduct" [ Argument.required "key" requiredArgs.key Encode.string ] object (identity >> Decode.nullable)
 
@@ -45,12 +49,16 @@ codesOfConduct object =
     Object.selectionField "codesOfConduct" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
+type alias LicenseRequiredArguments =
+    { key : String }
+
+
 {-| Look up an open source license by its key
 
   - key - The license's downcased SPDX ID
 
 -}
-license : { key : String } -> SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) RootQuery
+license : LicenseRequiredArguments -> SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) RootQuery
 license requiredArgs object =
     Object.selectionField "license" [ Argument.required "key" requiredArgs.key Encode.string ] object (identity >> Decode.nullable)
 
@@ -84,14 +92,22 @@ marketplaceCategories fillInOptionals object =
     Object.selectionField "marketplaceCategories" optionalArgs object (identity >> Decode.list)
 
 
+type alias MarketplaceCategoryRequiredArguments =
+    { slug : String }
+
+
 {-| Look up a Marketplace category by its slug.
 
   - slug - The URL slug of the category.
 
 -}
-marketplaceCategory : { slug : String } -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (Maybe decodesTo) RootQuery
+marketplaceCategory : MarketplaceCategoryRequiredArguments -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (Maybe decodesTo) RootQuery
 marketplaceCategory requiredArgs object =
     Object.selectionField "marketplaceCategory" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.nullable)
+
+
+type alias MarketplaceListingRequiredArguments =
+    { slug : String }
 
 
 {-| Look up a single Marketplace listing
@@ -99,7 +115,7 @@ marketplaceCategory requiredArgs object =
   - slug - Select the listing that matches this slug. It's the short name of the listing used in its URL.
 
 -}
-marketplaceListing : { slug : String } -> SelectionSet decodesTo Github.Object.MarketplaceListing -> Field (Maybe decodesTo) RootQuery
+marketplaceListing : MarketplaceListingRequiredArguments -> SelectionSet decodesTo Github.Object.MarketplaceListing -> Field (Maybe decodesTo) RootQuery
 marketplaceListing requiredArgs object =
     Object.selectionField "marketplaceListing" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.nullable)
 
@@ -157,14 +173,22 @@ meta object =
     Object.selectionField "meta" [] object identity
 
 
+type alias NodeRequiredArguments =
+    { id : Github.Scalar.Id }
+
+
 {-| Fetches an object given its ID.
 
   - id - ID of the object.
 
 -}
-node : { id : Github.Scalar.Id } -> SelectionSet decodesTo Github.Interface.Node -> Field (Maybe decodesTo) RootQuery
+node : NodeRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> Field (Maybe decodesTo) RootQuery
 node requiredArgs object =
     Object.selectionField "node" [ Argument.required "id" requiredArgs.id (\(Github.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
+
+
+type alias NodesRequiredArguments =
+    { ids : List Github.Scalar.Id }
 
 
 {-| Lookup nodes by a list of IDs.
@@ -172,9 +196,13 @@ node requiredArgs object =
   - ids - The list of node IDs.
 
 -}
-nodes : { ids : List Github.Scalar.Id } -> SelectionSet decodesTo Github.Interface.Node -> Field (List (Maybe decodesTo)) RootQuery
+nodes : NodesRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> Field (List (Maybe decodesTo)) RootQuery
 nodes requiredArgs object =
     Object.selectionField "nodes" [ Argument.required "ids" requiredArgs.ids ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) ] object (identity >> Decode.nullable >> Decode.list)
+
+
+type alias OrganizationRequiredArguments =
+    { login : String }
 
 
 {-| Lookup a organization by login.
@@ -182,7 +210,7 @@ nodes requiredArgs object =
   - login - The organization's login.
 
 -}
-organization : { login : String } -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) RootQuery
+organization : OrganizationRequiredArguments -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) RootQuery
 organization requiredArgs object =
     Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.nullable)
 
@@ -216,15 +244,23 @@ relay object =
     Object.selectionField "relay" [] object identity
 
 
+type alias RepositoryRequiredArguments =
+    { owner : String, name : String }
+
+
 {-| Lookup a given repository by the owner and repository name.
 
   - owner - The login field of a user or organization
   - name - The name of the repository
 
 -}
-repository : { owner : String, name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) RootQuery
+repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) RootQuery
 repository requiredArgs object =
     Object.selectionField "repository" [ Argument.required "owner" requiredArgs.owner Encode.string, Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
+
+
+type alias RepositoryOwnerRequiredArguments =
+    { login : String }
 
 
 {-| Lookup a repository owner (ie. either a User or an Organization) by login.
@@ -232,9 +268,13 @@ repository requiredArgs object =
   - login - The username to lookup the owner by.
 
 -}
-repositoryOwner : { login : String } -> SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) RootQuery
+repositoryOwner : RepositoryOwnerRequiredArguments -> SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) RootQuery
 repositoryOwner requiredArgs object =
     Object.selectionField "repositoryOwner" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.nullable)
+
+
+type alias ResourceRequiredArguments =
+    { url : Github.Scalar.Uri }
 
 
 {-| Lookup resource by a URL.
@@ -242,13 +282,17 @@ repositoryOwner requiredArgs object =
   - url - The URL.
 
 -}
-resource : { url : Github.Scalar.Uri } -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable -> Field (Maybe decodesTo) RootQuery
+resource : ResourceRequiredArguments -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable -> Field (Maybe decodesTo) RootQuery
 resource requiredArgs object =
     Object.selectionField "resource" [ Argument.required "url" requiredArgs.url (\(Github.Scalar.Uri raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
 
 
 type alias SearchOptionalArguments =
     { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+
+
+type alias SearchRequiredArguments =
+    { query : String, type_ : Github.Enum.SearchType.SearchType }
 
 
 {-| Perform a search across resources.
@@ -261,7 +305,7 @@ type alias SearchOptionalArguments =
   - type_ - The types of search items to search within.
 
 -}
-search : (SearchOptionalArguments -> SearchOptionalArguments) -> { query : String, type_ : Github.Enum.SearchType.SearchType } -> SelectionSet decodesTo Github.Object.SearchResultItemConnection -> Field decodesTo RootQuery
+search : (SearchOptionalArguments -> SearchOptionalArguments) -> SearchRequiredArguments -> SelectionSet decodesTo Github.Object.SearchResultItemConnection -> Field decodesTo RootQuery
 search fillInOptionals requiredArgs object =
     let
         filledInOptionals =
@@ -274,14 +318,22 @@ search fillInOptionals requiredArgs object =
     Object.selectionField "search" (optionalArgs ++ [ Argument.required "query" requiredArgs.query Encode.string, Argument.required "type" requiredArgs.type_ (Encode.enum Github.Enum.SearchType.toString) ]) object identity
 
 
+type alias TopicRequiredArguments =
+    { name : String }
+
+
 {-| Look up a topic by name.
 
   - name - The topic's name.
 
 -}
-topic : { name : String } -> SelectionSet decodesTo Github.Object.Topic -> Field (Maybe decodesTo) RootQuery
+topic : TopicRequiredArguments -> SelectionSet decodesTo Github.Object.Topic -> Field (Maybe decodesTo) RootQuery
 topic requiredArgs object =
     Object.selectionField "topic" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
+
+
+type alias UserRequiredArguments =
+    { login : String }
 
 
 {-| Lookup a user by login.
@@ -289,7 +341,7 @@ topic requiredArgs object =
   - login - The user's login.
 
 -}
-user : { login : String } -> SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) RootQuery
+user : UserRequiredArguments -> SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) RootQuery
 user requiredArgs object =
     Object.selectionField "user" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.nullable)
 

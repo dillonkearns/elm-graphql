@@ -137,12 +137,16 @@ repositories fillInOptionals object =
     Object.selectionField "repositories" optionalArgs object identity
 
 
+type alias RepositoryRequiredArguments =
+    { name : String }
+
+
 {-| Find Repository.
 
   - name - Name of Repository to find.
 
 -}
-repository : { name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Interface.RepositoryOwner
+repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Interface.RepositoryOwner
 repository requiredArgs object =
     Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 

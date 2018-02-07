@@ -206,12 +206,16 @@ following fillInOptionals object =
     Object.selectionField "following" optionalArgs object identity
 
 
+type alias GistRequiredArguments =
+    { name : String }
+
+
 {-| Find gist by repo name.
 
   - name - The gist name to find.
 
 -}
-gist : { name : String } -> SelectionSet decodesTo Github.Object.Gist -> Field (Maybe decodesTo) Github.Object.User
+gist : GistRequiredArguments -> SelectionSet decodesTo Github.Object.Gist -> Field (Maybe decodesTo) Github.Object.User
 gist requiredArgs object =
     Object.selectionField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 
@@ -396,12 +400,16 @@ name =
     Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
 
 
+type alias OrganizationRequiredArguments =
+    { login : String }
+
+
 {-| Find an organization by its login that the user belongs to.
 
   - login - The login of the organization to find.
 
 -}
-organization : { login : String } -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) Github.Object.User
+organization : OrganizationRequiredArguments -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) Github.Object.User
 organization requiredArgs object =
     Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.nullable)
 
@@ -575,12 +583,16 @@ repositoriesContributedTo fillInOptionals object =
     Object.selectionField "repositoriesContributedTo" optionalArgs object identity
 
 
+type alias RepositoryRequiredArguments =
+    { name : String }
+
+
 {-| Find Repository.
 
   - name - Name of Repository to find.
 
 -}
-repository : { name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.User
+repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.User
 repository requiredArgs object =
     Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 

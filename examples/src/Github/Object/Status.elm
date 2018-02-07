@@ -33,12 +33,16 @@ commit object =
     Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
+type alias ContextRequiredArguments =
+    { name : String }
+
+
 {-| Looks up an individual status context by context name.
 
   - name - The context name.
 
 -}
-context : { name : String } -> SelectionSet decodesTo Github.Object.StatusContext -> Field (Maybe decodesTo) Github.Object.Status
+context : ContextRequiredArguments -> SelectionSet decodesTo Github.Object.StatusContext -> Field (Maybe decodesTo) Github.Object.Status
 context requiredArgs object =
     Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 

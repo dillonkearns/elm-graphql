@@ -28,17 +28,25 @@ selection constructor =
     Object.selection constructor
 
 
+type alias DroidRequiredArguments =
+    { id : Swapi.Scalar.Id }
+
+
 {-|
 
   - id - ID of the droid.
 
 -}
-droid : { id : Swapi.Scalar.Id } -> SelectionSet decodesTo Swapi.Object.Droid -> Field (Maybe decodesTo) RootQuery
+droid : DroidRequiredArguments -> SelectionSet decodesTo Swapi.Object.Droid -> Field (Maybe decodesTo) RootQuery
 droid requiredArgs object =
     Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
 
 
-greet : { input : Swapi.InputObject.Greeting } -> Field String RootQuery
+type alias GreetRequiredArguments =
+    { input : Swapi.InputObject.Greeting }
+
+
+greet : GreetRequiredArguments -> Field String RootQuery
 greet requiredArgs =
     Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
 
@@ -87,11 +95,15 @@ heroUnion fillInOptionals object =
     Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.nullable)
 
 
+type alias HumanRequiredArguments =
+    { id : Swapi.Scalar.Id }
+
+
 {-|
 
   - id - ID of the human.
 
 -}
-human : { id : Swapi.Scalar.Id } -> SelectionSet decodesTo Swapi.Object.Human -> Field (Maybe decodesTo) RootQuery
+human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> Field (Maybe decodesTo) RootQuery
 human requiredArgs object =
     Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
