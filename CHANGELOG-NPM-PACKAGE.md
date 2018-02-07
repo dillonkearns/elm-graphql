@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.3] - 2018-02-07
+
 ### Fixed
 
-* Fix issue with type generation for InputObject type aliases that contain a List type.
+* Add support for non-string scalars, fixes issue #37.
 
 ## [3.1.2] - 2018-02-06
 
