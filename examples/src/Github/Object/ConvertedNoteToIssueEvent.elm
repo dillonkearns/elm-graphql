@@ -29,7 +29,7 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ConvertedNoteToIssueEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -43,7 +43,7 @@ createdAt =
 -}
 databaseId : Field (Maybe Int) Github.Object.ConvertedNoteToIssueEvent
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.ConvertedNoteToIssueEvent

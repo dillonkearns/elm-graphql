@@ -32,7 +32,7 @@ selection constructor =
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReview
 author object =
-    Object.selectionField "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -92,7 +92,7 @@ comments fillInOptionals object =
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequestReview
 commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -113,14 +113,14 @@ createdViaEmail =
 -}
 databaseId : Field (Maybe Int) Github.Object.PullRequestReview
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReview
 editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.PullRequestReview
@@ -132,14 +132,14 @@ id =
 -}
 lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReview
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReview
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the pull request associated with this pull request review.
@@ -174,7 +174,7 @@ state =
 -}
 submittedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReview
 submittedAt =
-    Object.fieldDecoder "submittedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "submittedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
@@ -213,7 +213,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

@@ -29,7 +29,7 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Union.PushAllowanceActor -> Field (Maybe decodesTo) Github.Object.PushAllowance
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.PushAllowance

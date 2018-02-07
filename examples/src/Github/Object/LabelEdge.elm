@@ -36,4 +36,4 @@ cursor =
 -}
 node : SelectionSet decodesTo Github.Object.Label -> Field (Maybe decodesTo) Github.Object.LabelEdge
 node object =
-    Object.selectionField "node" [] object (identity >> Decode.maybe)
+    Object.selectionField "node" [] object (identity >> Decode.nullable)

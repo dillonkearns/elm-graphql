@@ -44,7 +44,7 @@ isValid =
 -}
 keyId : Field (Maybe String) Github.Object.GpgSignature
 keyId =
-    Object.fieldDecoder "keyId" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "keyId" [] (Decode.string |> Decode.nullable)
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
@@ -65,7 +65,7 @@ signature =
 -}
 signer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.GpgSignature
 signer object =
-    Object.selectionField "signer" [] object (identity >> Decode.maybe)
+    Object.selectionField "signer" [] object (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.

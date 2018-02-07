@@ -57,7 +57,7 @@ avatarUrl fillInOptionals =
 -}
 bio : Field (Maybe String) Github.Object.User
 bio =
-    Object.fieldDecoder "bio" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "bio" [] (Decode.string |> Decode.nullable)
 
 
 {-| The user's public profile bio as HTML.
@@ -96,7 +96,7 @@ commitComments fillInOptionals object =
 -}
 company : Field (Maybe String) Github.Object.User
 company =
-    Object.fieldDecoder "company" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "company" [] (Decode.string |> Decode.nullable)
 
 
 {-| The user's public profile company as HTML.
@@ -146,7 +146,7 @@ createdAt =
 -}
 databaseId : Field (Maybe Int) Github.Object.User
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The user's publicly visible profile email.
@@ -213,7 +213,7 @@ following fillInOptionals object =
 -}
 gist : { name : String } -> SelectionSet decodesTo Github.Object.Gist -> Field (Maybe decodesTo) Github.Object.User
 gist requiredArgs object =
-    Object.selectionField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 
 
 type alias GistCommentsOptionalArguments =
@@ -379,7 +379,7 @@ issues fillInOptionals object =
 -}
 location : Field (Maybe String) Github.Object.User
 location =
-    Object.fieldDecoder "location" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "location" [] (Decode.string |> Decode.nullable)
 
 
 {-| The username used to login.
@@ -393,7 +393,7 @@ login =
 -}
 name : Field (Maybe String) Github.Object.User
 name =
-    Object.fieldDecoder "name" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
 
 
 {-| Find an organization by its login that the user belongs to.
@@ -403,7 +403,7 @@ name =
 -}
 organization : { login : String } -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) Github.Object.User
 organization requiredArgs object =
-    Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.nullable)
 
 
 type alias OrganizationsOptionalArguments =
@@ -582,7 +582,7 @@ repositoriesContributedTo fillInOptionals object =
 -}
 repository : { name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.User
 repository requiredArgs object =
-    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
@@ -680,4 +680,4 @@ watching fillInOptionals object =
 -}
 websiteUrl : Field (Maybe Github.Scalar.Uri) Github.Object.User
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)

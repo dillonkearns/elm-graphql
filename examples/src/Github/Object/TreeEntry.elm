@@ -43,7 +43,7 @@ name =
 -}
 object : SelectionSet decodesTo Github.Interface.GitObject -> Field (Maybe decodesTo) Github.Object.TreeEntry
 object object =
-    Object.selectionField "object" [] object (identity >> Decode.maybe)
+    Object.selectionField "object" [] object (identity >> Decode.nullable)
 
 
 {-| Entry file Git object ID.

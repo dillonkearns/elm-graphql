@@ -29,7 +29,7 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ClosedEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Object that was closed.
@@ -43,14 +43,14 @@ closable object =
 -}
 closer : SelectionSet decodesTo Github.Union.Closer -> Field (Maybe decodesTo) Github.Object.ClosedEvent
 closer object =
-    Object.selectionField "closer" [] object (identity >> Decode.maybe)
+    Object.selectionField "closer" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'closed' event.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.ClosedEvent
 commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.

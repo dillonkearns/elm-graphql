@@ -58,4 +58,4 @@ name =
 -}
 primaryFunction : Field (Maybe String) Normalize.Object.Droid
 primaryFunction =
-    Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.nullable)

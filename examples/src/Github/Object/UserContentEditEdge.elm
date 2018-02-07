@@ -36,4 +36,4 @@ cursor =
 -}
 node : SelectionSet decodesTo Github.Object.UserContentEdit -> Field (Maybe decodesTo) Github.Object.UserContentEditEdge
 node object =
-    Object.selectionField "node" [] object (identity >> Decode.maybe)
+    Object.selectionField "node" [] object (identity >> Decode.nullable)

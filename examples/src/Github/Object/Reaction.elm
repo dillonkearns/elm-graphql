@@ -44,7 +44,7 @@ createdAt =
 -}
 databaseId : Field (Maybe Int) Github.Object.Reaction
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Reaction
@@ -63,4 +63,4 @@ reactable object =
 -}
 user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Reaction
 user object =
-    Object.selectionField "user" [] object (identity >> Decode.maybe)
+    Object.selectionField "user" [] object (identity >> Decode.nullable)

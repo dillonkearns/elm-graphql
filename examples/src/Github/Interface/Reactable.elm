@@ -62,7 +62,7 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
 -}
 databaseId : Field (Maybe Int) Github.Interface.Reactable
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Interface.Reactable
@@ -74,7 +74,7 @@ id =
 -}
 reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Interface.Reactable
 reactionGroups object =
-    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =

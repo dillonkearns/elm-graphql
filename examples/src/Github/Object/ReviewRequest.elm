@@ -29,7 +29,7 @@ selection constructor =
 -}
 databaseId : Field (Maybe Int) Github.Object.ReviewRequest
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.ReviewRequest
@@ -48,11 +48,11 @@ pullRequest object =
 -}
 requestedReviewer : SelectionSet decodesTo Github.Union.RequestedReviewer -> Field (Maybe decodesTo) Github.Object.ReviewRequest
 requestedReviewer object =
-    Object.selectionField "requestedReviewer" [] object (identity >> Decode.maybe)
+    Object.selectionField "requestedReviewer" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the author associated with this review request.
 -}
 reviewer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.ReviewRequest
 reviewer object =
-    Object.selectionField "reviewer" [] object (identity >> Decode.maybe)
+    Object.selectionField "reviewer" [] object (identity >> Decode.nullable)

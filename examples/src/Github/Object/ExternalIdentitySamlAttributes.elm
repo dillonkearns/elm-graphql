@@ -29,4 +29,4 @@ selection constructor =
 -}
 nameId : Field (Maybe String) Github.Object.ExternalIdentitySamlAttributes
 nameId =
-    Object.fieldDecoder "nameId" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "nameId" [] (Decode.string |> Decode.nullable)

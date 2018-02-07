@@ -73,7 +73,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 type alias ChildTeamsOptionalArguments =
@@ -122,7 +122,7 @@ createdAt =
 -}
 description : Field (Maybe String) Github.Object.Team
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The HTTP path for editing this team
@@ -166,7 +166,7 @@ invitations fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "invitations" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "invitations" optionalArgs object (identity >> Decode.nullable)
 
 
 type alias MembersOptionalArguments =
@@ -243,7 +243,7 @@ organization object =
 -}
 parentTeam : SelectionSet decodesTo Github.Object.Team -> Field (Maybe decodesTo) Github.Object.Team
 parentTeam object =
-    Object.selectionField "parentTeam" [] object (identity >> Decode.maybe)
+    Object.selectionField "parentTeam" [] object (identity >> Decode.nullable)
 
 
 {-| The level of privacy the team has.

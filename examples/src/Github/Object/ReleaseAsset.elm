@@ -69,7 +69,7 @@ name =
 -}
 release : SelectionSet decodesTo Github.Object.Release -> Field (Maybe decodesTo) Github.Object.ReleaseAsset
 release object =
-    Object.selectionField "release" [] object (identity >> Decode.maybe)
+    Object.selectionField "release" [] object (identity >> Decode.nullable)
 
 
 {-| The size (in bytes) of the asset

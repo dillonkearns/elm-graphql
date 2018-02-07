@@ -29,14 +29,14 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReferencedEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'referenced' event.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.ReferencedEvent
 commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the repository associated with the 'referenced' event.

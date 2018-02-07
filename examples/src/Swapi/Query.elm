@@ -35,7 +35,7 @@ selection constructor =
 -}
 droid : { id : Swapi.Scalar.Id } -> SelectionSet decodesTo Swapi.Object.Droid -> Field (Maybe decodesTo) RootQuery
 droid requiredArgs object =
-    Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
 
 
 greet : { input : Swapi.InputObject.Greeting } -> Field String RootQuery
@@ -84,7 +84,7 @@ heroUnion fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.nullable)
 
 
 {-|
@@ -94,4 +94,4 @@ heroUnion fillInOptionals object =
 -}
 human : { id : Swapi.Scalar.Id } -> SelectionSet decodesTo Swapi.Object.Human -> Field (Maybe decodesTo) RootQuery
 human requiredArgs object =
-    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)

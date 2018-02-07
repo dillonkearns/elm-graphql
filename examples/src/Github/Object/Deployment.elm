@@ -30,7 +30,7 @@ selection constructor =
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Deployment
 commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -44,21 +44,21 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Deployment
 creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : Field (Maybe Int) Github.Object.Deployment
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The environment to which this deployment was made.
 -}
 environment : Field (Maybe String) Github.Object.Deployment
 environment =
-    Object.fieldDecoder "environment" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "environment" [] (Decode.string |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Deployment
@@ -70,14 +70,14 @@ id =
 -}
 latestStatus : SelectionSet decodesTo Github.Object.DeploymentStatus -> Field (Maybe decodesTo) Github.Object.Deployment
 latestStatus object =
-    Object.selectionField "latestStatus" [] object (identity >> Decode.maybe)
+    Object.selectionField "latestStatus" [] object (identity >> Decode.nullable)
 
 
 {-| Extra information that a deployment system might need.
 -}
 payload : Field (Maybe String) Github.Object.Deployment
 payload =
-    Object.fieldDecoder "payload" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "payload" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the repository associated with the deployment.
@@ -91,7 +91,7 @@ repository object =
 -}
 state : Field (Maybe Github.Enum.DeploymentState.DeploymentState) Github.Object.Deployment
 state =
-    Object.fieldDecoder "state" [] (Github.Enum.DeploymentState.decoder |> Decode.maybe)
+    Object.fieldDecoder "state" [] (Github.Enum.DeploymentState.decoder |> Decode.nullable)
 
 
 type alias StatusesOptionalArguments =
@@ -116,4 +116,4 @@ statuses fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "statuses" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "statuses" optionalArgs object (identity >> Decode.nullable)

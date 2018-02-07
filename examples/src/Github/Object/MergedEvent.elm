@@ -29,14 +29,14 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.MergedEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the `merge` event.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.MergedEvent
 commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -55,7 +55,7 @@ id =
 -}
 mergeRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.MergedEvent
 mergeRef object =
-    Object.selectionField "mergeRef" [] object (identity >> Decode.maybe)
+    Object.selectionField "mergeRef" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the name of the Ref associated with the `merge` event.

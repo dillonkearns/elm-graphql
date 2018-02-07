@@ -29,14 +29,14 @@ selection constructor =
 -}
 description : Field (Maybe String) Github.Object.MarketplaceCategory
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The technical description of how apps listed in this category work with GitHub.
 -}
 howItWorks : Field (Maybe String) Github.Object.MarketplaceCategory
 howItWorks =
-    Object.fieldDecoder "howItWorks" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "howItWorks" [] (Decode.string |> Decode.nullable)
 
 
 {-| The category's name.

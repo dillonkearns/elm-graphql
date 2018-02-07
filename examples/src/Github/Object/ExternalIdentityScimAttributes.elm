@@ -29,4 +29,4 @@ selection constructor =
 -}
 username : Field (Maybe String) Github.Object.ExternalIdentityScimAttributes
 username =
-    Object.fieldDecoder "username" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "username" [] (Decode.string |> Decode.nullable)

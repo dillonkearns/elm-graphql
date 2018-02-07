@@ -29,7 +29,7 @@ selection constructor =
 -}
 clientMutationId : Field (Maybe String) Github.Object.DeleteProjectColumnPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The deleted column ID.

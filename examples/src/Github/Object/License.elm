@@ -36,14 +36,14 @@ body =
 -}
 conditions : SelectionSet decodesTo Github.Object.LicenseRule -> Field (List (Maybe decodesTo)) Github.Object.License
 conditions object =
-    Object.selectionField "conditions" [] object (identity >> Decode.maybe >> Decode.list)
+    Object.selectionField "conditions" [] object (identity >> Decode.nullable >> Decode.list)
 
 
 {-| A human-readable description of the license
 -}
 description : Field (Maybe String) Github.Object.License
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| Whether the license should be featured
@@ -69,7 +69,7 @@ id =
 -}
 implementation : Field (Maybe String) Github.Object.License
 implementation =
-    Object.fieldDecoder "implementation" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "implementation" [] (Decode.string |> Decode.nullable)
 
 
 {-| The lowercased SPDX ID of the license
@@ -83,7 +83,7 @@ key =
 -}
 limitations : SelectionSet decodesTo Github.Object.LicenseRule -> Field (List (Maybe decodesTo)) Github.Object.License
 limitations object =
-    Object.selectionField "limitations" [] object (identity >> Decode.maybe >> Decode.list)
+    Object.selectionField "limitations" [] object (identity >> Decode.nullable >> Decode.list)
 
 
 {-| The license full name specified by <https://spdx.org/licenses>
@@ -97,25 +97,25 @@ name =
 -}
 nickname : Field (Maybe String) Github.Object.License
 nickname =
-    Object.fieldDecoder "nickname" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "nickname" [] (Decode.string |> Decode.nullable)
 
 
 {-| The permissions set by the license
 -}
 permissions : SelectionSet decodesTo Github.Object.LicenseRule -> Field (List (Maybe decodesTo)) Github.Object.License
 permissions object =
-    Object.selectionField "permissions" [] object (identity >> Decode.maybe >> Decode.list)
+    Object.selectionField "permissions" [] object (identity >> Decode.nullable >> Decode.list)
 
 
 {-| Short identifier specified by <https://spdx.org/licenses>
 -}
 spdxId : Field (Maybe String) Github.Object.License
 spdxId =
-    Object.fieldDecoder "spdxId" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "spdxId" [] (Decode.string |> Decode.nullable)
 
 
 {-| URL to the license on <https://choosealicense.com>
 -}
 url : Field (Maybe Github.Scalar.Uri) Github.Object.License
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)

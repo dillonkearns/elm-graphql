@@ -29,7 +29,7 @@ selection constructor =
 -}
 color : Field (Maybe String) Github.Object.Language
 color =
-    Object.fieldDecoder "color" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "color" [] (Decode.string |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Language

@@ -30,7 +30,7 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -44,7 +44,7 @@ createdAt =
 -}
 databaseId : Field (Maybe Int) Github.Object.ReviewDismissedEvent
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.ReviewDismissedEvent
@@ -84,7 +84,7 @@ pullRequest object =
 -}
 pullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit -> Field (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 pullRequestCommit object =
-    Object.selectionField "pullRequestCommit" [] object (identity >> Decode.maybe)
+    Object.selectionField "pullRequestCommit" [] object (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this review dismissed event.
@@ -98,7 +98,7 @@ resourcePath =
 -}
 review : SelectionSet decodesTo Github.Object.PullRequestReview -> Field (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 review object =
-    Object.selectionField "review" [] object (identity >> Decode.maybe)
+    Object.selectionField "review" [] object (identity >> Decode.nullable)
 
 
 {-| The HTTP URL for this review dismissed event.

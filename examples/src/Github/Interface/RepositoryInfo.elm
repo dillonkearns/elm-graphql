@@ -54,7 +54,7 @@ createdAt =
 -}
 description : Field (Maybe String) Github.Interface.RepositoryInfo
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The description of the repository rendered to HTML.
@@ -89,7 +89,7 @@ hasWikiEnabled =
 -}
 homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -131,28 +131,28 @@ isPrivate =
 -}
 license : Field (Maybe String) Github.Interface.RepositoryInfo
 license =
-    Object.fieldDecoder "license" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "license" [] (Decode.string |> Decode.nullable)
 
 
 {-| The license associated with the repository
 -}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Interface.RepositoryInfo
 licenseInfo object =
-    Object.selectionField "licenseInfo" [] object (identity >> Decode.maybe)
+    Object.selectionField "licenseInfo" [] object (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
 -}
 lockReason : Field (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Interface.RepositoryInfo
 lockReason =
-    Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.maybe)
+    Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.nullable)
 
 
 {-| The repository's original mirror URL.
 -}
 mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The name of the repository.
@@ -180,7 +180,7 @@ owner object =
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.RepositoryInfo
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The HTTP path for this repository

@@ -41,25 +41,25 @@ id =
 -}
 organizationInvitation : SelectionSet decodesTo Github.Object.OrganizationInvitation -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
 organizationInvitation object =
-    Object.selectionField "organizationInvitation" [] object (identity >> Decode.maybe)
+    Object.selectionField "organizationInvitation" [] object (identity >> Decode.nullable)
 
 
 {-| SAML Identity attributes
 -}
 samlIdentity : SelectionSet decodesTo Github.Object.ExternalIdentitySamlAttributes -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
 samlIdentity object =
-    Object.selectionField "samlIdentity" [] object (identity >> Decode.maybe)
+    Object.selectionField "samlIdentity" [] object (identity >> Decode.nullable)
 
 
 {-| SCIM Identity attributes
 -}
 scimIdentity : SelectionSet decodesTo Github.Object.ExternalIdentityScimAttributes -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
 scimIdentity object =
-    Object.selectionField "scimIdentity" [] object (identity >> Decode.maybe)
+    Object.selectionField "scimIdentity" [] object (identity >> Decode.nullable)
 
 
 {-| User linked to this external identity
 -}
 user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
 user object =
-    Object.selectionField "user" [] object (identity >> Decode.maybe)
+    Object.selectionField "user" [] object (identity >> Decode.nullable)

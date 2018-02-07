@@ -29,14 +29,14 @@ selection constructor =
 -}
 clientMutationId : Field (Maybe String) Github.Object.UpdateTopicsPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| Names of the provided topics that are not valid.
 -}
 invalidTopicNames : Field (Maybe (List String)) Github.Object.UpdateTopicsPayload
 invalidTopicNames =
-    Object.fieldDecoder "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.maybe)
+    Object.fieldDecoder "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| The updated repository.

@@ -47,7 +47,7 @@ onPullRequest (SelectionSet fields decoder) =
 -}
 activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Interface.Lockable
 activeLockReason =
-    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
+    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
 
 
 {-| `true` if the object is locked

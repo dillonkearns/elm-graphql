@@ -31,7 +31,7 @@ selection constructor =
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
 author object =
-    Object.selectionField "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.nullable)
 
 
 {-| Author's association with the gist.
@@ -73,7 +73,7 @@ createdViaEmail =
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
 editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.nullable)
 
 
 {-| The associated gist.
@@ -92,14 +92,14 @@ id =
 -}
 lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.GistComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.GistComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
@@ -131,7 +131,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

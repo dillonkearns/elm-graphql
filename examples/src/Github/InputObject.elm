@@ -8,6 +8,7 @@ import Github.Enum.GistOrderField
 import Github.Enum.IssueOrderField
 import Github.Enum.LanguageOrderField
 import Github.Enum.LockReason
+import Github.Enum.MilestoneOrderField
 import Github.Enum.OrderDirection
 import Github.Enum.ProjectOrderField
 import Github.Enum.ProjectState
@@ -327,6 +328,20 @@ encodeLockLockableInput : LockLockableInput -> Value
 encodeLockLockableInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "lockableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.lockableId |> Just ), ( "lockReason", Encode.enum Github.Enum.LockReason.toString |> Encode.optional input.lockReason ) ]
+
+
+{-| Type for the MilestoneOrder input object.
+-}
+type alias MilestoneOrder =
+    { field : Github.Enum.MilestoneOrderField.MilestoneOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+
+
+{-| Encode a MilestoneOrder into a value that can be used as an argument.
+-}
+encodeMilestoneOrder : MilestoneOrder -> Value
+encodeMilestoneOrder input =
+    Encode.maybeObject
+        [ ( "field", Encode.enum Github.Enum.MilestoneOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
 {-| Type for the MoveProjectCardInput input object.

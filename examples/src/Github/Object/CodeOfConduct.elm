@@ -29,7 +29,7 @@ selection constructor =
 -}
 body : Field (Maybe String) Github.Object.CodeOfConduct
 body =
-    Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "body" [] (Decode.string |> Decode.nullable)
 
 
 {-| The key for the CoC
@@ -50,4 +50,4 @@ name =
 -}
 url : Field (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)

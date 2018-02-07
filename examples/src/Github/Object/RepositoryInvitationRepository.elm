@@ -37,7 +37,7 @@ createdAt =
 -}
 description : Field (Maybe String) Github.Object.RepositoryInvitationRepository
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The description of the repository rendered to HTML.
@@ -72,7 +72,7 @@ hasWikiEnabled =
 -}
 homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -114,28 +114,28 @@ isPrivate =
 -}
 license : Field (Maybe String) Github.Object.RepositoryInvitationRepository
 license =
-    Object.fieldDecoder "license" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "license" [] (Decode.string |> Decode.nullable)
 
 
 {-| The license associated with the repository
 -}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Object.RepositoryInvitationRepository
 licenseInfo object =
-    Object.selectionField "licenseInfo" [] object (identity >> Decode.maybe)
+    Object.selectionField "licenseInfo" [] object (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
 -}
 lockReason : Field (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Object.RepositoryInvitationRepository
 lockReason =
-    Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.maybe)
+    Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.nullable)
 
 
 {-| The repository's original mirror URL.
 -}
 mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The name of the repository.
@@ -163,7 +163,7 @@ owner object =
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.RepositoryInvitationRepository
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The HTTP path for this repository

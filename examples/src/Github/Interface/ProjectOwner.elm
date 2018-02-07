@@ -55,7 +55,7 @@ id =
 -}
 project : { number : Int } -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Interface.ProjectOwner
 project requiredArgs object =
-    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.maybe)
+    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =

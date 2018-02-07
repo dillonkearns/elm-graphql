@@ -36,21 +36,21 @@ gitHubServicesSha =
 -}
 gitIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 gitIpAddresses =
-    Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
+    Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that service hooks are sent from
 -}
 hookIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 hookIpAddresses =
-    Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
+    Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that the importer connects from
 -}
 importerIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 importerIpAddresses =
-    Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
+    Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| Whether or not users are verified
@@ -64,4 +64,4 @@ isPasswordAuthenticationVerifiable =
 -}
 pagesIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
 pagesIpAddresses =
-    Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.maybe)
+    Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)

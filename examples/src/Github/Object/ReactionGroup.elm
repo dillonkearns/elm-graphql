@@ -37,7 +37,7 @@ content =
 -}
 createdAt : Field (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The subject that was reacted to.

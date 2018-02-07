@@ -65,4 +65,4 @@ name =
 -}
 primaryFunction : Field (Maybe String) Swapi.Object.Droid
 primaryFunction =
-    Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.nullable)

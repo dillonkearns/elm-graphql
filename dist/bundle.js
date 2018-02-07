@@ -11885,7 +11885,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 				if (_p20.ctor === 'Nullable') {
 					return {
 						ctor: '::',
-						_0: 'Decode.maybe',
+						_0: 'Decode.nullable',
 						_1: {ctor: '[]'}
 					};
 				} else {

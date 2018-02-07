@@ -19,8 +19,8 @@ import Normalize.Union
 
 
 {-| Type alias for the `CircularOne` attributes. Note that this type
-needs to use the `CircularOne` type (not just a plain type alias) because it has either
-references itself either directly (recursive) or indirectly (circular). See
+needs to use the `CircularOne` type (not just a plain type alias) because it has
+references to itself either directly (recursive) or indirectly (circular). See
 <https://github.com/dillonkearns/graphqelm/issues/33>.
 -}
 type alias CircularOneRaw =
@@ -42,8 +42,8 @@ encodeCircularOne (CircularOne input) =
 
 
 {-| Type alias for the `CircularTwo` attributes. Note that this type
-needs to use the `CircularTwo` type (not just a plain type alias) because it has either
-references itself either directly (recursive) or indirectly (circular). See
+needs to use the `CircularTwo` type (not just a plain type alias) because it has
+references to itself either directly (recursive) or indirectly (circular). See
 <https://github.com/dillonkearns/graphqelm/issues/33>.
 -}
 type alias CircularTwoRaw =
@@ -93,8 +93,8 @@ encodeGreetingOptions input =
 
 
 {-| Type alias for the `Recursive` attributes. Note that this type
-needs to use the `Recursive` type (not just a plain type alias) because it has either
-references itself either directly (recursive) or indirectly (circular). See
+needs to use the `Recursive` type (not just a plain type alias) because it has
+references to itself either directly (recursive) or indirectly (circular). See
 <https://github.com/dillonkearns/graphqelm/issues/33>.
 -}
 type alias RecursiveRaw =

@@ -35,7 +35,7 @@ selection constructor =
 -}
 activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Object.Issue
 activeLockReason =
-    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
+    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
 
 
 type alias AssigneesOptionalArguments =
@@ -67,7 +67,7 @@ assignees fillInOptionals object =
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Issue
 author object =
-    Object.selectionField "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -109,7 +109,7 @@ closed =
 -}
 closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias CommentsOptionalArguments =
@@ -155,14 +155,14 @@ createdViaEmail =
 -}
 databaseId : Field (Maybe Int) Github.Object.Issue
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Issue
 editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Issue
@@ -192,14 +192,14 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "labels" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "labels" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| The moment the editor made the last edit
 -}
 lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| `true` if the object is locked
@@ -213,7 +213,7 @@ locked =
 -}
 milestone : SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe decodesTo) Github.Object.Issue
 milestone object =
-    Object.selectionField "milestone" [] object (identity >> Decode.maybe)
+    Object.selectionField "milestone" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the issue number.
@@ -277,14 +277,14 @@ projectCards fillInOptionals object =
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Object.Issue
 reactionGroups object =
-    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -404,7 +404,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| Can user react to this subject

@@ -35,7 +35,7 @@ selection constructor =
 -}
 circularInput : { input : Normalize.InputObject.CircularOne } -> Field (Maybe String) RootQuery
 circularInput requiredArgs =
-    Object.fieldDecoder "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
 
 
 {-|
@@ -45,7 +45,7 @@ circularInput requiredArgs =
 -}
 droid_ : { iD_ : Normalize.Scalar.Id } -> SelectionSet decodesTo Normalize.Object.Droid -> Field (Maybe decodesTo) RootQuery
 droid_ requiredArgs object =
-    Object.selectionField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
 
 
 greet : { input : Normalize.InputObject.Greeting } -> Field String RootQuery
@@ -53,12 +53,16 @@ greet requiredArgs =
     Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
 
 
+type alias HeroOptionalArguments =
+    { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }
+
+
 {-|
 
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet decodesTo Normalize.Interface.Character -> Field decodesTo RootQuery
+hero : (HeroOptionalArguments -> HeroOptionalArguments) -> SelectionSet decodesTo Normalize.Interface.Character -> Field decodesTo RootQuery
 hero fillInOptionals object =
     let
         filledInOptionals =
@@ -71,12 +75,16 @@ hero fillInOptionals object =
     Object.selectionField "hero" optionalArgs object identity
 
 
+type alias HeroUnionOptionalArguments =
+    { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }
+
+
 {-|
 
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : ({ episode : OptionalArgument Normalize.Enum.Episode_.Episode_ } -> { episode : OptionalArgument Normalize.Enum.Episode_.Episode_ }) -> SelectionSet decodesTo Normalize.Union.CharacterUnion -> Field (Maybe decodesTo) RootQuery
+heroUnion : (HeroUnionOptionalArguments -> HeroUnionOptionalArguments) -> SelectionSet decodesTo Normalize.Union.CharacterUnion -> Field (Maybe decodesTo) RootQuery
 heroUnion fillInOptionals object =
     let
         filledInOptionals =
@@ -86,7 +94,7 @@ heroUnion fillInOptionals object =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "heroUnion" optionalArgs object (identity >> Decode.nullable)
 
 
 {-|
@@ -96,7 +104,7 @@ heroUnion fillInOptionals object =
 -}
 human : { id : Normalize.Scalar.Id } -> SelectionSet decodesTo Normalize.Object.Human_ -> Field (Maybe decodesTo) RootQuery
 human requiredArgs object =
-    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.maybe)
+    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
 
 
 {-|
@@ -106,4 +114,4 @@ human requiredArgs object =
 -}
 recursiveInput : { input : Normalize.InputObject.Recursive } -> Field (Maybe String) RootQuery
 recursiveInput requiredArgs =
-    Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)

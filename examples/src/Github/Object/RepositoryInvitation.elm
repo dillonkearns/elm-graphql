@@ -48,4 +48,4 @@ inviter object =
 -}
 repository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> Field (Maybe decodesTo) Github.Object.RepositoryInvitation
 repository object =
-    Object.selectionField "repository" [] object (identity >> Decode.maybe)
+    Object.selectionField "repository" [] object (identity >> Decode.nullable)

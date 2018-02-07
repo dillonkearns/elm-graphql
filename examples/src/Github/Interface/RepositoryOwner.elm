@@ -144,7 +144,7 @@ repositories fillInOptionals object =
 -}
 repository : { name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Interface.RepositoryOwner
 repository requiredArgs object =
-    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 
 
 {-| The HTTP URL for the owner.

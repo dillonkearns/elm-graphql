@@ -29,7 +29,7 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReviewRequestRemovedEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -55,11 +55,11 @@ pullRequest object =
 -}
 requestedReviewer : SelectionSet decodesTo Github.Union.RequestedReviewer -> Field (Maybe decodesTo) Github.Object.ReviewRequestRemovedEvent
 requestedReviewer object =
-    Object.selectionField "requestedReviewer" [] object (identity >> Decode.maybe)
+    Object.selectionField "requestedReviewer" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the user whose review request was removed.
 -}
 subject : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.ReviewRequestRemovedEvent
 subject object =
-    Object.selectionField "subject" [] object (identity >> Decode.maybe)
+    Object.selectionField "subject" [] object (identity >> Decode.nullable)

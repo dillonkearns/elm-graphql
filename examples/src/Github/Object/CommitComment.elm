@@ -32,7 +32,7 @@ selection constructor =
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.CommitComment
 author object =
-    Object.selectionField "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -60,7 +60,7 @@ bodyHTML =
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.CommitComment
 commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -81,14 +81,14 @@ createdViaEmail =
 -}
 databaseId : Field (Maybe Int) Github.Object.CommitComment
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.CommitComment
 editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.CommitComment
@@ -100,35 +100,35 @@ id =
 -}
 lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the file path associated with the comment.
 -}
 path : Field (Maybe String) Github.Object.CommitComment
 path =
-    Object.fieldDecoder "path" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "path" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the line position associated with the comment.
 -}
 position : Field (Maybe Int) Github.Object.CommitComment
 position =
-    Object.fieldDecoder "position" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Object.CommitComment
 reactionGroups object =
-    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -208,7 +208,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

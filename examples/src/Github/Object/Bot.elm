@@ -58,7 +58,7 @@ createdAt =
 -}
 databaseId : Field (Maybe Int) Github.Object.Bot
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Bot

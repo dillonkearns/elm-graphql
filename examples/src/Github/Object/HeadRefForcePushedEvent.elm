@@ -29,21 +29,21 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the after commit SHA for the 'head_ref_force_pushed' event.
 -}
 afterCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 afterCommit object =
-    Object.selectionField "afterCommit" [] object (identity >> Decode.maybe)
+    Object.selectionField "afterCommit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the before commit SHA for the 'head_ref_force_pushed' event.
 -}
 beforeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 beforeCommit object =
-    Object.selectionField "beforeCommit" [] object (identity >> Decode.maybe)
+    Object.selectionField "beforeCommit" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -69,4 +69,4 @@ pullRequest object =
 -}
 ref : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 ref object =
-    Object.selectionField "ref" [] object (identity >> Decode.maybe)
+    Object.selectionField "ref" [] object (identity >> Decode.nullable)

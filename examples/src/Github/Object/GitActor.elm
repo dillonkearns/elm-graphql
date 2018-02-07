@@ -51,25 +51,25 @@ avatarUrl fillInOptionals =
 -}
 date : Field (Maybe Github.Scalar.GitTimestamp) Github.Object.GitActor
 date =
-    Object.fieldDecoder "date" [] (Decode.string |> Decode.map Github.Scalar.GitTimestamp |> Decode.maybe)
+    Object.fieldDecoder "date" [] (Decode.string |> Decode.map Github.Scalar.GitTimestamp |> Decode.nullable)
 
 
 {-| The email in the Git commit.
 -}
 email : Field (Maybe String) Github.Object.GitActor
 email =
-    Object.fieldDecoder "email" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "email" [] (Decode.string |> Decode.nullable)
 
 
 {-| The name in the Git commit.
 -}
 name : Field (Maybe String) Github.Object.GitActor
 name =
-    Object.fieldDecoder "name" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
 
 
 {-| The GitHub user corresponding to the email field. Null if no such user exists.
 -}
 user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.GitActor
 user object =
-    Object.selectionField "user" [] object (identity >> Decode.maybe)
+    Object.selectionField "user" [] object (identity >> Decode.nullable)

@@ -29,7 +29,7 @@ selection constructor =
 -}
 companyUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 companyUrl =
-    Object.fieldDecoder "companyUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "companyUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The HTTP path for configuring access to the listing's integration or OAuth app
@@ -50,14 +50,14 @@ configurationUrl =
 -}
 documentationUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 documentationUrl =
-    Object.fieldDecoder "documentationUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "documentationUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The listing's detailed description.
 -}
 extendedDescription : Field (Maybe String) Github.Object.MarketplaceListing
 extendedDescription =
-    Object.fieldDecoder "extendedDescription" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "extendedDescription" [] (Decode.string |> Decode.nullable)
 
 
 {-| The listing's detailed description rendered to HTML.
@@ -106,7 +106,7 @@ hasTermsOfService =
 -}
 howItWorks : Field (Maybe String) Github.Object.MarketplaceListing
 howItWorks =
-    Object.fieldDecoder "howItWorks" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "howItWorks" [] (Decode.string |> Decode.nullable)
 
 
 {-| The listing's technical description rendered to HTML.
@@ -125,7 +125,7 @@ id =
 -}
 installationUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 installationUrl =
-    Object.fieldDecoder "installationUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "installationUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Whether this listing's app has been installed for the current viewer
@@ -196,7 +196,7 @@ logoUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "logoUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "logoUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The listing's full name.
@@ -217,7 +217,7 @@ normalizedShortDescription =
 -}
 pricingUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 pricingUrl =
-    Object.fieldDecoder "pricingUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "pricingUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The category that best describes the listing.
@@ -245,14 +245,14 @@ resourcePath =
 -}
 screenshotUrls : Field (List (Maybe String)) Github.Object.MarketplaceListing
 screenshotUrls =
-    Object.fieldDecoder "screenshotUrls" [] (Decode.string |> Decode.maybe |> Decode.list)
+    Object.fieldDecoder "screenshotUrls" [] (Decode.string |> Decode.nullable |> Decode.list)
 
 
 {-| An alternate category that describes the listing.
 -}
 secondaryCategory : SelectionSet decodesTo Github.Object.MarketplaceCategory -> Field (Maybe decodesTo) Github.Object.MarketplaceListing
 secondaryCategory object =
-    Object.selectionField "secondaryCategory" [] object (identity >> Decode.maybe)
+    Object.selectionField "secondaryCategory" [] object (identity >> Decode.nullable)
 
 
 {-| The listing's very short description.
@@ -273,14 +273,14 @@ slug =
 -}
 statusUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 statusUrl =
-    Object.fieldDecoder "statusUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "statusUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| An email address for support for this listing's app.
 -}
 supportEmail : Field (Maybe String) Github.Object.MarketplaceListing
 supportEmail =
-    Object.fieldDecoder "supportEmail" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "supportEmail" [] (Decode.string |> Decode.nullable)
 
 
 {-| Either a URL or an email address for support for this listing's app.
@@ -294,7 +294,7 @@ supportUrl =
 -}
 termsOfServiceUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 termsOfServiceUrl =
-    Object.fieldDecoder "termsOfServiceUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "termsOfServiceUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The HTTP URL for the Marketplace listing.

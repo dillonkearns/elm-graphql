@@ -55,7 +55,7 @@ id =
 -}
 message : Field (Maybe String) Github.Object.Tag
 message =
-    Object.fieldDecoder "message" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "message" [] (Decode.string |> Decode.nullable)
 
 
 {-| The Git tag name.
@@ -83,7 +83,7 @@ repository object =
 -}
 tagger : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Tag
 tagger object =
-    Object.selectionField "tagger" [] object (identity >> Decode.maybe)
+    Object.selectionField "tagger" [] object (identity >> Decode.nullable)
 
 
 {-| The Git object the tag points to.

@@ -29,7 +29,7 @@ selection constructor =
 -}
 digestMethod : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 digestMethod =
-    Object.fieldDecoder "digestMethod" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "digestMethod" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 type alias ExternalIdentitiesOptionalArguments =
@@ -66,32 +66,32 @@ id =
 -}
 idpCertificate : Field (Maybe Github.Scalar.X509Certificate) Github.Object.OrganizationIdentityProvider
 idpCertificate =
-    Object.fieldDecoder "idpCertificate" [] (Decode.string |> Decode.map Github.Scalar.X509Certificate |> Decode.maybe)
+    Object.fieldDecoder "idpCertificate" [] (Decode.string |> Decode.map Github.Scalar.X509Certificate |> Decode.nullable)
 
 
 {-| The Issuer Entity ID for the SAML Identity Provider
 -}
 issuer : Field (Maybe String) Github.Object.OrganizationIdentityProvider
 issuer =
-    Object.fieldDecoder "issuer" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "issuer" [] (Decode.string |> Decode.nullable)
 
 
 {-| Organization this Identity Provider belongs to
 -}
 organization : SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) Github.Object.OrganizationIdentityProvider
 organization object =
-    Object.selectionField "organization" [] object (identity >> Decode.maybe)
+    Object.selectionField "organization" [] object (identity >> Decode.nullable)
 
 
 {-| The signature algorithm used to sign SAML requests for the Identity Provider.
 -}
 signatureMethod : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 signatureMethod =
-    Object.fieldDecoder "signatureMethod" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "signatureMethod" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The URL endpoint for the Identity Provider's SAML SSO.
 -}
 ssoUrl : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 ssoUrl =
-    Object.fieldDecoder "ssoUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "ssoUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)

@@ -33,14 +33,14 @@ associated with a column, they will not become pending in the future.
 -}
 column : SelectionSet decodesTo Github.Object.ProjectColumn -> Field (Maybe decodesTo) Github.Object.ProjectCard
 column object =
-    Object.selectionField "column" [] object (identity >> Decode.maybe)
+    Object.selectionField "column" [] object (identity >> Decode.nullable)
 
 
 {-| The card content item
 -}
 content : SelectionSet decodesTo Github.Union.ProjectCardItem -> Field (Maybe decodesTo) Github.Object.ProjectCard
 content object =
-    Object.selectionField "content" [] object (identity >> Decode.maybe)
+    Object.selectionField "content" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -54,14 +54,14 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProjectCard
 creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : Field (Maybe Int) Github.Object.ProjectCard
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.ProjectCard
@@ -73,7 +73,7 @@ id =
 -}
 note : Field (Maybe String) Github.Object.ProjectCard
 note =
-    Object.fieldDecoder "note" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "note" [] (Decode.string |> Decode.nullable)
 
 
 {-| The project that contains this card.
@@ -101,7 +101,7 @@ resourcePath =
 -}
 state : Field (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
 state =
-    Object.fieldDecoder "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.maybe)
+    Object.fieldDecoder "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.

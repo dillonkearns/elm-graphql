@@ -51,7 +51,7 @@ friends object =
 -}
 homePlanet : Field (Maybe String) Swapi.Object.Human
 homePlanet =
-    Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.nullable)
 
 
 {-| The ID of the human.

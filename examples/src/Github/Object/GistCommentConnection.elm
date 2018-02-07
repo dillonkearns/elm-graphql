@@ -29,14 +29,14 @@ selection constructor =
 -}
 edges : SelectionSet decodesTo Github.Object.GistCommentEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.GistCommentConnection
 edges object =
-    Object.selectionField "edges" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "edges" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo Github.Object.GistComment -> Field (Maybe (List (Maybe decodesTo))) Github.Object.GistCommentConnection
 nodes object =
-    Object.selectionField "nodes" [] object (identity >> Decode.maybe >> Decode.list >> Decode.maybe)
+    Object.selectionField "nodes" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.

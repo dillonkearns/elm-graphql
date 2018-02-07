@@ -29,11 +29,11 @@ selection constructor =
 -}
 clientMutationId : Field (Maybe String) Github.Object.LockLockablePayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The item that was locked.
 -}
 lockedRecord : SelectionSet decodesTo Github.Interface.Lockable -> Field (Maybe decodesTo) Github.Object.LockLockablePayload
 lockedRecord object =
-    Object.selectionField "lockedRecord" [] object (identity >> Decode.maybe)
+    Object.selectionField "lockedRecord" [] object (identity >> Decode.nullable)

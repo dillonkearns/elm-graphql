@@ -44,7 +44,7 @@ friends object =
 -}
 homePlanet : Field (Maybe String) Normalize.Object.Human_
 homePlanet =
-    Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.nullable)
 
 
 {-| The ID of the human.

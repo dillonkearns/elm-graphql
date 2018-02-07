@@ -44,7 +44,7 @@ additions =
 -}
 author : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Commit
 author object =
-    Object.selectionField "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.nullable)
 
 
 {-| Check if the committer and the author match.
@@ -135,7 +135,7 @@ committedViaWeb =
 -}
 committer : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Commit
 committer object =
-    Object.selectionField "committer" [] object (identity >> Decode.maybe)
+    Object.selectionField "committer" [] object (identity >> Decode.nullable)
 
 
 {-| The number of deletions in this commit.
@@ -250,7 +250,7 @@ parents fillInOptionals object =
 -}
 pushedDate : Field (Maybe Github.Scalar.DateTime) Github.Object.Commit
 pushedDate =
-    Object.fieldDecoder "pushedDate" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "pushedDate" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The Repository this commit belongs to
@@ -271,14 +271,14 @@ resourcePath =
 -}
 signature : SelectionSet decodesTo Github.Interface.GitSignature -> Field (Maybe decodesTo) Github.Object.Commit
 signature object =
-    Object.selectionField "signature" [] object (identity >> Decode.maybe)
+    Object.selectionField "signature" [] object (identity >> Decode.nullable)
 
 
 {-| Status information for this commit
 -}
 status : SelectionSet decodesTo Github.Object.Status -> Field (Maybe decodesTo) Github.Object.Commit
 status object =
-    Object.selectionField "status" [] object (identity >> Decode.maybe)
+    Object.selectionField "status" [] object (identity >> Decode.nullable)
 
 
 {-| Returns a URL to download a tarball archive for a repository. Note: For private repositories, these links are temporary and expire after five minutes.

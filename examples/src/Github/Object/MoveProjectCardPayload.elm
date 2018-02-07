@@ -36,4 +36,4 @@ cardEdge object =
 -}
 clientMutationId : Field (Maybe String) Github.Object.MoveProjectCardPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)

@@ -32,7 +32,7 @@ selection constructor =
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 author object =
-    Object.selectionField "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -88,7 +88,7 @@ createdViaEmail =
 -}
 databaseId : Field (Maybe Int) Github.Object.PullRequestReviewComment
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The diff hunk to which the comment applies.
@@ -109,7 +109,7 @@ draftedAt =
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.PullRequestReviewComment
@@ -121,14 +121,14 @@ id =
 -}
 lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReviewComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the original commit associated with the comment.
 -}
 originalCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 originalCommit object =
-    Object.selectionField "originalCommit" [] object (identity >> Decode.maybe)
+    Object.selectionField "originalCommit" [] object (identity >> Decode.nullable)
 
 
 {-| The original line index in the diff to which the comment applies.
@@ -149,14 +149,14 @@ path =
 -}
 position : Field (Maybe Int) Github.Object.PullRequestReviewComment
 position =
-    Object.fieldDecoder "position" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReviewComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The pull request associated with this review comment.
@@ -170,14 +170,14 @@ pullRequest object =
 -}
 pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 pullRequestReview object =
-    Object.selectionField "pullRequestReview" [] object (identity >> Decode.maybe)
+    Object.selectionField "pullRequestReview" [] object (identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Object.PullRequestReviewComment
 reactionGroups object =
-    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -211,7 +211,7 @@ reactions fillInOptionals object =
 -}
 replyTo : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> Field (Maybe decodesTo) Github.Object.PullRequestReviewComment
 replyTo object =
-    Object.selectionField "replyTo" [] object (identity >> Decode.maybe)
+    Object.selectionField "replyTo" [] object (identity >> Decode.nullable)
 
 
 {-| The repository associated with this node.
@@ -264,7 +264,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

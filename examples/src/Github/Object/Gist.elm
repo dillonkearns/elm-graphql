@@ -61,7 +61,7 @@ createdAt =
 -}
 description : Field (Maybe String) Github.Object.Gist
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Gist
@@ -87,14 +87,14 @@ name =
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) Github.Object.Gist
 owner object =
-    Object.selectionField "owner" [] object (identity >> Decode.maybe)
+    Object.selectionField "owner" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies when the gist was last pushed to.
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Gist
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias StargazersOptionalArguments =

@@ -30,7 +30,7 @@ selection constructor =
 -}
 body : Field (Maybe String) Github.Object.Project
 body =
-    Object.fieldDecoder "body" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "body" [] (Decode.string |> Decode.nullable)
 
 
 {-| The projects description body rendered to HTML.
@@ -51,7 +51,7 @@ closed =
 -}
 closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Project
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias ColumnsOptionalArguments =
@@ -90,14 +90,14 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Project
 creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : Field (Maybe Int) Github.Object.Project
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Project

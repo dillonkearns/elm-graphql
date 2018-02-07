@@ -39,7 +39,7 @@ closed =
 -}
 closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Milestone
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -53,21 +53,21 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Milestone
 creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the description of the milestone.
 -}
 description : Field (Maybe String) Github.Object.Milestone
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the due date of the milestone.
 -}
 dueOn : Field (Maybe Github.Scalar.DateTime) Github.Object.Milestone
 dueOn =
-    Object.fieldDecoder "dueOn" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "dueOn" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Milestone

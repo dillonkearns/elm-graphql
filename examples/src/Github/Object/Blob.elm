@@ -90,4 +90,4 @@ repository object =
 -}
 text : Field (Maybe String) Github.Object.Blob
 text =
-    Object.fieldDecoder "text" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "text" [] (Decode.string |> Decode.nullable)

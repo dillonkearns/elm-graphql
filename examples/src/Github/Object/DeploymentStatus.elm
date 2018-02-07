@@ -37,7 +37,7 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.DeploymentStatus
 creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the deployment associated with status.
@@ -51,14 +51,14 @@ deployment object =
 -}
 description : Field (Maybe String) Github.Object.DeploymentStatus
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the environment URL of the deployment.
 -}
 environmentUrl : Field (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
 environmentUrl =
-    Object.fieldDecoder "environmentUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "environmentUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.DeploymentStatus
@@ -70,7 +70,7 @@ id =
 -}
 logUrl : Field (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
 logUrl =
-    Object.fieldDecoder "logUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "logUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Identifies the current state of the deployment.

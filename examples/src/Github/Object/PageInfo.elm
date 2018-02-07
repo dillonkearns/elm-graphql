@@ -29,7 +29,7 @@ selection constructor =
 -}
 endCursor : Field (Maybe String) Github.Object.PageInfo
 endCursor =
-    Object.fieldDecoder "endCursor" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "endCursor" [] (Decode.string |> Decode.nullable)
 
 
 {-| When paginating forwards, are there more items?
@@ -50,4 +50,4 @@ hasPreviousPage =
 -}
 startCursor : Field (Maybe String) Github.Object.PageInfo
 startCursor =
-    Object.fieldDecoder "startCursor" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "startCursor" [] (Decode.string |> Decode.nullable)

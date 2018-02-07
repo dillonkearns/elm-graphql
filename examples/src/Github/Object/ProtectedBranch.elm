@@ -29,7 +29,7 @@ selection constructor =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProtectedBranch
 creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.nullable)
 
 
 {-| Will new commits pushed to this branch dismiss pull request review approvals.
@@ -129,7 +129,7 @@ repository object =
 -}
 requiredStatusCheckContexts : Field (Maybe (List (Maybe String))) Github.Object.ProtectedBranch
 requiredStatusCheckContexts =
-    Object.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.maybe |> Decode.list |> Decode.maybe)
+    Object.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
 
 
 type alias ReviewDismissalAllowancesOptionalArguments =

@@ -38,7 +38,7 @@ createdAt =
 -}
 email : Field (Maybe String) Github.Object.OrganizationInvitation
 email =
-    Object.fieldDecoder "email" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "email" [] (Decode.string |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.OrganizationInvitation
@@ -57,7 +57,7 @@ invitationType =
 -}
 invitee : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.OrganizationInvitation
 invitee object =
-    Object.selectionField "invitee" [] object (identity >> Decode.maybe)
+    Object.selectionField "invitee" [] object (identity >> Decode.nullable)
 
 
 {-| The user who created the invitation.

@@ -37,7 +37,7 @@ selection constructor =
 -}
 activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Object.PullRequest
 activeLockReason =
-    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.maybe)
+    Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
 
 
 {-| The number of additions in this pull request.
@@ -76,7 +76,7 @@ assignees fillInOptionals object =
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequest
 author object =
-    Object.selectionField "author" [] object (identity >> Decode.maybe)
+    Object.selectionField "author" [] object (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -90,7 +90,7 @@ authorAssociation =
 -}
 baseRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.PullRequest
 baseRef object =
-    Object.selectionField "baseRef" [] object (identity >> Decode.maybe)
+    Object.selectionField "baseRef" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the name of the base Ref associated with the pull request, even if the ref has been deleted.
@@ -146,7 +146,7 @@ closed =
 -}
 closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "closedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias CommentsOptionalArguments =
@@ -217,7 +217,7 @@ createdViaEmail =
 -}
 databaseId : Field (Maybe Int) Github.Object.PullRequest
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The number of deletions in this pull request.
@@ -231,14 +231,14 @@ deletions =
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequest
 editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.maybe)
+    Object.selectionField "editor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the head Ref associated with the pull request.
 -}
 headRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.PullRequest
 headRef object =
-    Object.selectionField "headRef" [] object (identity >> Decode.maybe)
+    Object.selectionField "headRef" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the name of the head Ref associated with the pull request, even if the ref has been deleted.
@@ -259,14 +259,14 @@ headRefOid =
 -}
 headRepository : SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.PullRequest
 headRepository object =
-    Object.selectionField "headRepository" [] object (identity >> Decode.maybe)
+    Object.selectionField "headRepository" [] object (identity >> Decode.nullable)
 
 
 {-| The owner of the repository associated with this pull request's head Ref.
 -}
 headRepositoryOwner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) Github.Object.PullRequest
 headRepositoryOwner object =
-    Object.selectionField "headRepositoryOwner" [] object (identity >> Decode.maybe)
+    Object.selectionField "headRepositoryOwner" [] object (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.PullRequest
@@ -303,14 +303,14 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "labels" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "labels" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| The moment the editor made the last edit
 -}
 lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "lastEditedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| `true` if the pull request is locked
@@ -324,7 +324,7 @@ locked =
 -}
 mergeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequest
 mergeCommit object =
-    Object.selectionField "mergeCommit" [] object (identity >> Decode.maybe)
+    Object.selectionField "mergeCommit" [] object (identity >> Decode.nullable)
 
 
 {-| Whether or not the pull request can be merged based on the existence of merge conflicts.
@@ -345,14 +345,14 @@ merged =
 -}
 mergedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 mergedAt =
-    Object.fieldDecoder "mergedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "mergedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the milestone associated with the pull request.
 -}
 milestone : SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe decodesTo) Github.Object.PullRequest
 milestone object =
-    Object.selectionField "milestone" [] object (identity >> Decode.maybe)
+    Object.selectionField "milestone" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the pull request number.
@@ -391,7 +391,7 @@ participants fillInOptionals object =
 -}
 potentialMergeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequest
 potentialMergeCommit object =
-    Object.selectionField "potentialMergeCommit" [] object (identity >> Decode.maybe)
+    Object.selectionField "potentialMergeCommit" [] object (identity >> Decode.nullable)
 
 
 type alias ProjectCardsOptionalArguments =
@@ -423,14 +423,14 @@ projectCards fillInOptionals object =
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.maybe)
+    Object.fieldDecoder "publishedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Object.PullRequest
 reactionGroups object =
-    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "reactionGroups" [] object (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -510,7 +510,7 @@ reviewRequests fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "reviewRequests" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "reviewRequests" optionalArgs object (identity >> Decode.nullable)
 
 
 type alias ReviewsOptionalArguments =
@@ -537,7 +537,7 @@ reviews fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestReviewState.toString |> Encode.list), Argument.optional "author" filledInOptionals.author Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "reviews" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "reviews" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| Identifies the state of the pull request.
@@ -551,7 +551,7 @@ state =
 -}
 suggestedReviewers : SelectionSet decodesTo Github.Object.SuggestedReviewer -> Field (List (Maybe decodesTo)) Github.Object.PullRequest
 suggestedReviewers object =
-    Object.selectionField "suggestedReviewers" [] object (identity >> Decode.maybe >> Decode.list)
+    Object.selectionField "suggestedReviewers" [] object (identity >> Decode.nullable >> Decode.list)
 
 
 type alias TimelineOptionalArguments =
@@ -623,7 +623,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.maybe)
+    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
 
 
 {-| Can user react to this subject

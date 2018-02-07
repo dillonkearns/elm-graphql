@@ -30,7 +30,7 @@ selection constructor =
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.StatusContext
 commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.maybe)
+    Object.selectionField "commit" [] object (identity >> Decode.nullable)
 
 
 {-| The name of this status context.
@@ -51,14 +51,14 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.StatusContext
 creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.maybe)
+    Object.selectionField "creator" [] object (identity >> Decode.nullable)
 
 
 {-| The description for this status context.
 -}
 description : Field (Maybe String) Github.Object.StatusContext
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.StatusContext
@@ -77,4 +77,4 @@ state =
 -}
 targetUrl : Field (Maybe Github.Scalar.Uri) Github.Object.StatusContext
 targetUrl =
-    Object.fieldDecoder "targetUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "targetUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)

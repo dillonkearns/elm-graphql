@@ -50,7 +50,7 @@ commitUrl =
 -}
 entries : SelectionSet decodesTo Github.Object.TreeEntry -> Field (Maybe (List decodesTo)) Github.Object.Tree
 entries object =
-    Object.selectionField "entries" [] object (identity >> Decode.list >> Decode.maybe)
+    Object.selectionField "entries" [] object (identity >> Decode.list >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Tree

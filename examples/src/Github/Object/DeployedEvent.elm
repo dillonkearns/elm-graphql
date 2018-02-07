@@ -29,7 +29,7 @@ selection constructor =
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.DeployedEvent
 actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.maybe)
+    Object.selectionField "actor" [] object (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -43,7 +43,7 @@ createdAt =
 -}
 databaseId : Field (Maybe Int) Github.Object.DeployedEvent
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The deployment associated with the 'deployed' event.
@@ -69,4 +69,4 @@ pullRequest object =
 -}
 ref : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.DeployedEvent
 ref object =
-    Object.selectionField "ref" [] object (identity >> Decode.maybe)
+    Object.selectionField "ref" [] object (identity >> Decode.nullable)

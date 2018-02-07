@@ -56,21 +56,21 @@ avatarUrl fillInOptionals =
 -}
 databaseId : Field (Maybe Int) Github.Object.Organization
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The organization's public profile description.
 -}
 description : Field (Maybe String) Github.Object.Organization
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The organization's public email.
 -}
 email : Field (Maybe String) Github.Object.Organization
 email =
-    Object.fieldDecoder "email" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "email" [] (Decode.string |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Organization
@@ -82,7 +82,7 @@ id =
 -}
 location : Field (Maybe String) Github.Object.Organization
 location =
-    Object.fieldDecoder "location" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "location" [] (Decode.string |> Decode.nullable)
 
 
 {-| The organization's login name.
@@ -121,7 +121,7 @@ members fillInOptionals object =
 -}
 name : Field (Maybe String) Github.Object.Organization
 name =
-    Object.fieldDecoder "name" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
 
 
 {-| The HTTP path creating a new team
@@ -142,7 +142,7 @@ newTeamUrl =
 -}
 organizationBillingEmail : Field (Maybe String) Github.Object.Organization
 organizationBillingEmail =
-    Object.fieldDecoder "organizationBillingEmail" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "organizationBillingEmail" [] (Decode.string |> Decode.nullable)
 
 
 type alias PinnedRepositoriesOptionalArguments =
@@ -181,7 +181,7 @@ pinnedRepositories fillInOptionals object =
 -}
 project : { number : Int } -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Object.Organization
 project requiredArgs object =
-    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.maybe)
+    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -263,7 +263,7 @@ repositories fillInOptionals object =
 -}
 repository : { name : String } -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.Organization
 repository requiredArgs object =
-    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
@@ -277,7 +277,7 @@ resourcePath =
 -}
 samlIdentityProvider : SelectionSet decodesTo Github.Object.OrganizationIdentityProvider -> Field (Maybe decodesTo) Github.Object.Organization
 samlIdentityProvider object =
-    Object.selectionField "samlIdentityProvider" [] object (identity >> Decode.maybe)
+    Object.selectionField "samlIdentityProvider" [] object (identity >> Decode.nullable)
 
 
 {-| Find an organization's team by its slug.
@@ -287,7 +287,7 @@ samlIdentityProvider object =
 -}
 team : { slug : String } -> SelectionSet decodesTo Github.Object.Team -> Field (Maybe decodesTo) Github.Object.Organization
 team requiredArgs object =
-    Object.selectionField "team" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.maybe)
+    Object.selectionField "team" [ Argument.required "slug" requiredArgs.slug Encode.string ] object (identity >> Decode.nullable)
 
 
 type alias TeamsOptionalArguments =
@@ -382,4 +382,4 @@ viewerIsAMember =
 -}
 websiteUrl : Field (Maybe Github.Scalar.Uri) Github.Object.Organization
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.maybe)
+    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)

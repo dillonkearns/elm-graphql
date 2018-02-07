@@ -66,14 +66,14 @@ id =
 -}
 path : Field (Maybe String) Github.Object.CommitCommentThread
 path =
-    Object.fieldDecoder "path" [] (Decode.string |> Decode.maybe)
+    Object.fieldDecoder "path" [] (Decode.string |> Decode.nullable)
 
 
 {-| The position in the diff for the commit that the comment was made on.
 -}
 position : Field (Maybe Int) Github.Object.CommitCommentThread
 position =
-    Object.fieldDecoder "position" [] (Decode.int |> Decode.maybe)
+    Object.fieldDecoder "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| The repository associated with this node.
