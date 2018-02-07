@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add functions for transforming `Field`s using `Result`s. These functions are
+  handy for converting values into types like `DateTime`s but can cause your
+  entire response to error when decoding if any incorrect assumptions are made
+  so they should be used with extreme care.
+
 ## [9.0.0] - 2018-01-28
 
 ### Changed

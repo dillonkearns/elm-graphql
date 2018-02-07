@@ -1,5 +1,6 @@
 module Github exposing (main)
 
+import Date
 import Github.Object
 import Github.Object.Release
 import Github.Object.ReleaseConnection
@@ -7,9 +8,9 @@ import Github.Object.Repository as Repository
 import Github.Object.StargazerConnection
 import Github.Object.Topic
 import Github.Query as Query
-import Github.Scalar
+import Github.Scalar exposing (Date)
 import Graphqelm.Document as Document
-import Graphqelm.Field
+import Graphqelm.Field as Field
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
@@ -20,13 +21,13 @@ import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    { repoInfo : Maybe RepositoryInfo
+    { repoInfo : RepositoryInfo
     , topicId : Maybe Github.Scalar.Id
     }
 
 
 type alias RepositoryInfo =
-    { createdAt : Github.Scalar.DateTime
+    { createdAt : Date.Date
     , earlyReleases : ReleaseInfo
     , lateReleases : ReleaseInfo
     , stargazersCount : Int
@@ -36,7 +37,7 @@ type alias RepositoryInfo =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo)
+        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo |> Field.nonNullOrFail)
         |> with (Query.topic { name = "" } topicId)
 
 
@@ -48,10 +49,19 @@ topicId =
 repo : SelectionSet RepositoryInfo Github.Object.Repository
 repo =
     Repository.selection RepositoryInfo
-        |> with Repository.createdAt
+        |> with createdAt
         |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
         |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
         |> with (Repository.stargazers identity stargazers)
+
+
+createdAt : Field.Field Date.Date Github.Object.Repository
+createdAt =
+    Repository.createdAt
+        |> Field.mapOrFail
+            (\(Github.Scalar.DateTime rawDateTime) ->
+                Date.fromString rawDateTime
+            )
 
 
 stargazers : SelectionSet Int Github.Object.StargazerConnection
@@ -62,7 +72,7 @@ stargazers =
 
 type alias ReleaseInfo =
     { totalCount : Int
-    , releases : Maybe (List (Maybe Release))
+    , releases : List Release
     }
 
 
@@ -70,7 +80,7 @@ releases : SelectionSet ReleaseInfo Github.Object.ReleaseConnection
 releases =
     Github.Object.ReleaseConnection.selection ReleaseInfo
         |> with Github.Object.ReleaseConnection.totalCount
-        |> with (Github.Object.ReleaseConnection.nodes release)
+        |> with (Github.Object.ReleaseConnection.nodes release |> Field.nonNullOrFail |> Field.nonNullElementsOrFail)
 
 
 type alias Release =
@@ -82,7 +92,7 @@ type alias Release =
 release : SelectionSet Release Github.Object.Release
 release =
     Github.Object.Release.selection Release
-        |> with (Github.Object.Release.name |> Graphqelm.Field.map (Maybe.withDefault ""))
+        |> with (Github.Object.Release.name |> Field.map (Maybe.withDefault ""))
         |> with Github.Object.Release.url
 
 

@@ -11,7 +11,6 @@ import PrintAny
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Enum.Language as Language
-import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Interface.Character as Character
 import Swapi.Object
@@ -24,8 +23,8 @@ import Swapi.Union.CharacterUnion as CharacterUnion
 
 
 type alias Response =
-    { vader : Maybe HumanLookup
-    , tarkin : Maybe HumanLookup
+    { vader : HumanLookup
+    , tarkin : HumanLookup
     , hero : Character
     , union : Maybe CharacterUnion
     , greeting : String
@@ -74,8 +73,8 @@ heroUnion =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human)
-        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human)
+        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> Field.nonNullOrFail)
+        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> Field.nonNullOrFail)
         |> with
             (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
         |> with

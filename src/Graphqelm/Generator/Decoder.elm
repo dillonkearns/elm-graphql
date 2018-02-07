@@ -60,7 +60,7 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
     )
         ++ (case isNullable of
                 Type.Nullable ->
-                    [ "Decode.maybe" ]
+                    [ "Decode.nullable" ]
 
                 Type.NonNullable ->
                     []

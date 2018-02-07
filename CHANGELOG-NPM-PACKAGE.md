@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Use `Decode.nullable` rather than `Decode.maybe` so that decode failures don't
+  incorrectly get swallowed into a `Nothing` values but rather bubble up as
+  `Err` `Results`.
+
 ### Added
 
 * Generate type alias for optional args to make it easier to annotate consumer code.
