@@ -44,7 +44,7 @@ context =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.StatusContext
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who created this status context.
@@ -63,7 +63,7 @@ description =
 
 id : Field Github.Scalar.Id Github.Object.StatusContext
 id =
-    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| The state of this status context.
@@ -77,4 +77,4 @@ state =
 -}
 targetUrl : Field (Maybe Github.Scalar.Uri) Github.Object.StatusContext
 targetUrl =
-    Object.fieldDecoder "targetUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "targetUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)

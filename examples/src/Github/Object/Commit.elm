@@ -58,7 +58,7 @@ authoredByCommitter =
 -}
 authoredDate : Field Github.Scalar.DateTime Github.Object.Commit
 authoredDate =
-    Object.fieldDecoder "authoredDate" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "authoredDate" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Fetches `git blame` information.
@@ -107,21 +107,21 @@ comments fillInOptionals object =
 -}
 commitResourcePath : Field Github.Scalar.Uri Github.Object.Commit
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "commitResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : Field Github.Scalar.Uri Github.Object.Commit
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "commitUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The datetime when this commit was committed.
 -}
 committedDate : Field Github.Scalar.DateTime Github.Object.Commit
 committedDate =
-    Object.fieldDecoder "committedDate" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "committedDate" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if commited via GitHub web UI.
@@ -176,7 +176,7 @@ history fillInOptionals object =
 
 id : Field Github.Scalar.Id Github.Object.Commit
 id =
-    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git commit message
@@ -197,7 +197,7 @@ messageBody =
 -}
 messageBodyHTML : Field Github.Scalar.Html Github.Object.Commit
 messageBodyHTML =
-    Object.fieldDecoder "messageBodyHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "messageBodyHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
 
 
 {-| The Git commit message headline
@@ -211,14 +211,14 @@ messageHeadline =
 -}
 messageHeadlineHTML : Field Github.Scalar.Html Github.Object.Commit
 messageHeadlineHTML =
-    Object.fieldDecoder "messageHeadlineHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "messageHeadlineHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
 
 
 {-| The Git object ID
 -}
 oid : Field Github.Scalar.GitObjectID Github.Object.Commit
 oid =
-    Object.fieldDecoder "oid" [] (Decode.string |> Decode.map Github.Scalar.GitObjectID)
+    Object.fieldDecoder "oid" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.GitObjectID)
 
 
 type alias ParentsOptionalArguments =
@@ -250,7 +250,7 @@ parents fillInOptionals object =
 -}
 pushedDate : Field (Maybe Github.Scalar.DateTime) Github.Object.Commit
 pushedDate =
-    Object.fieldDecoder "pushedDate" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "pushedDate" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The Repository this commit belongs to
@@ -264,7 +264,7 @@ repository object =
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.Commit
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| Commit signing information, if present.
@@ -285,7 +285,7 @@ status object =
 -}
 tarballUrl : Field Github.Scalar.Uri Github.Object.Commit
 tarballUrl =
-    Object.fieldDecoder "tarballUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "tarballUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| Commit's root Tree
@@ -299,21 +299,21 @@ tree object =
 -}
 treeResourcePath : Field Github.Scalar.Uri Github.Object.Commit
 treeResourcePath =
-    Object.fieldDecoder "treeResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "treeResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for the tree of this commit
 -}
 treeUrl : Field Github.Scalar.Uri Github.Object.Commit
 treeUrl =
-    Object.fieldDecoder "treeUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "treeUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this commit
 -}
 url : Field Github.Scalar.Uri Github.Object.Commit
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
@@ -334,4 +334,4 @@ viewerSubscription =
 -}
 zipballUrl : Field Github.Scalar.Uri Github.Object.Commit
 zipballUrl =
-    Object.fieldDecoder "zipballUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "zipballUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)

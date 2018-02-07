@@ -39,4 +39,4 @@ node object =
 -}
 starredAt : Field Github.Scalar.DateTime Github.Object.StargazerEdge
 starredAt =
-    Object.fieldDecoder "starredAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "starredAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)

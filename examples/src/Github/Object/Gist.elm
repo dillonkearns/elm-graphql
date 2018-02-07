@@ -54,7 +54,7 @@ comments fillInOptionals object =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.Gist
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The gist description.
@@ -66,7 +66,7 @@ description =
 
 id : Field Github.Scalar.Id Github.Object.Gist
 id =
-    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether the gist is public or not.
@@ -94,7 +94,7 @@ owner object =
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Gist
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "pushedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias StargazersOptionalArguments =
@@ -127,7 +127,7 @@ stargazers fillInOptionals object =
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.Gist
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.

@@ -30,7 +30,7 @@ selection constructor =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.RepositoryInvitationRepository
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The description of the repository.
@@ -44,7 +44,7 @@ description =
 -}
 descriptionHTML : Field Github.Scalar.Html Github.Object.RepositoryInvitationRepository
 descriptionHTML =
-    Object.fieldDecoder "descriptionHTML" [] (Decode.string |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "descriptionHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
 
 
 {-| Returns how many forks there are of this repository in the whole network.
@@ -72,7 +72,7 @@ hasWikiEnabled =
 -}
 homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "homepageUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -135,7 +135,7 @@ lockReason =
 -}
 mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "mirrorUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The name of the repository.
@@ -163,14 +163,14 @@ owner object =
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.RepositoryInvitationRepository
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "pushedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The HTTP path for this repository
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.RepositoryInvitationRepository
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -192,18 +192,18 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.string |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.RepositoryInvitationRepository
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this repository
 -}
 url : Field Github.Scalar.Uri Github.Object.RepositoryInvitationRepository
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)

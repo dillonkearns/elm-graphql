@@ -50,4 +50,4 @@ name =
 -}
 url : Field (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)

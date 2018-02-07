@@ -39,4 +39,4 @@ node object =
 -}
 reactedAt : Field Github.Scalar.DateTime Github.Object.ReactingUserEdge
 reactedAt =
-    Object.fieldDecoder "reactedAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "reactedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)

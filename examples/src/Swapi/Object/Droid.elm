@@ -51,7 +51,7 @@ friends object =
 -}
 id : Field Swapi.Scalar.Id Swapi.Object.Droid
 id =
-    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Swapi.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the droid.

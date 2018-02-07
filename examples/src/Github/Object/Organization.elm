@@ -49,7 +49,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the primary key from the database.
@@ -75,7 +75,7 @@ email =
 
 id : Field Github.Scalar.Id Github.Object.Organization
 id =
-    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| The organization's public profile location.
@@ -128,14 +128,14 @@ name =
 -}
 newTeamResourcePath : Field Github.Scalar.Uri Github.Object.Organization
 newTeamResourcePath =
-    Object.fieldDecoder "newTeamResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "newTeamResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL creating a new team
 -}
 newTeamUrl : Field Github.Scalar.Uri Github.Object.Organization
 newTeamUrl =
-    Object.fieldDecoder "newTeamUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "newTeamUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The billing email for the organization.
@@ -216,14 +216,14 @@ projects fillInOptionals object =
 -}
 projectsResourcePath : Field Github.Scalar.Uri Github.Object.Organization
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing organization's projects
 -}
 projectsUrl : Field Github.Scalar.Uri Github.Object.Organization
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 type alias RepositoriesOptionalArguments =
@@ -270,7 +270,7 @@ repository requiredArgs object =
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.Organization
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The Organization's SAML Identity Providers
@@ -326,21 +326,21 @@ teams fillInOptionals object =
 -}
 teamsResourcePath : Field Github.Scalar.Uri Github.Object.Organization
 teamsResourcePath =
-    Object.fieldDecoder "teamsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "teamsResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing organization's teams
 -}
 teamsUrl : Field Github.Scalar.Uri Github.Object.Organization
 teamsUrl =
-    Object.fieldDecoder "teamsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "teamsUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this user
 -}
 url : Field Github.Scalar.Uri Github.Object.Organization
 url =
-    Object.fieldDecoder "url" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| Organization is adminable by the viewer.
@@ -382,4 +382,4 @@ viewerIsAMember =
 -}
 websiteUrl : Field (Maybe Github.Scalar.Uri) Github.Object.Organization
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "websiteUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)

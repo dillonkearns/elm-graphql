@@ -45,7 +45,7 @@ onRepository (SelectionSet fields decoder) =
 
 id : Field Github.Scalar.Id Github.Interface.ProjectOwner
 id =
-    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| Find project by number.
@@ -90,14 +90,14 @@ projects fillInOptionals object =
 -}
 projectsResourcePath : Field Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing owners projects
 -}
 projectsUrl : Field Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can the current viewer create new projects on this owner.

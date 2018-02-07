@@ -35,14 +35,14 @@ cursor =
 -}
 memberAccessResourcePath : Field Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessResourcePath =
-    Object.fieldDecoder "memberAccessResourcePath" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "memberAccessResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL to the organization's member access page.
 -}
 memberAccessUrl : Field Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessUrl =
-    Object.fieldDecoder "memberAccessUrl" [] (Decode.string |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "memberAccessUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
 
 
 node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.TeamMemberEdge

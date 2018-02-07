@@ -57,4 +57,4 @@ remaining =
 -}
 resetAt : Field Github.Scalar.DateTime Github.Object.RateLimit
 resetAt =
-    Object.fieldDecoder "resetAt" [] (Decode.string |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "resetAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)

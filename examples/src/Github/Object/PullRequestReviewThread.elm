@@ -52,7 +52,7 @@ comments fillInOptionals object =
 
 id : Field Github.Scalar.Id Github.Object.PullRequestReviewThread
 id =
-    Object.fieldDecoder "id" [] (Decode.string |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this thread.
