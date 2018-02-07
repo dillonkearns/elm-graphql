@@ -36,7 +36,7 @@ query {
 
 would look like this in `graphqelm` (the code in this example that is prefixed with `StarWars` is auto-generated)
 
-```haskell
+```elm
 import Graphqelm.Operation exposing (RootQuery)
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 import StarWars.Object
