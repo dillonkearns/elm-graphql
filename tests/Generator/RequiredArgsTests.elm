@@ -29,32 +29,26 @@ all =
             \() ->
                 [ idArg ]
                     |> RequiredArgs.generate []
-                    |> Expect.equal
-                        (Just
-                            { annotation = """{ id : String }"""
-                            , list = """[ Argument.required "id" requiredArgs.id (Encode.string) ]"""
-                            }
-                        )
+                    |> expectResult
+                        { typeAlias = """{ id : String }"""
+                        , list = """[ Argument.required "id" requiredArgs.id (Encode.string) ]"""
+                        }
         , test "composite" <|
             \() ->
                 [ numbersArg ]
                     |> RequiredArgs.generate []
-                    |> Expect.equal
-                        (Just
-                            { annotation = """{ numbers : (List Int) }"""
-                            , list = """[ Argument.required "numbers" requiredArgs.numbers (Encode.int |> Encode.list) ]"""
-                            }
-                        )
+                    |> expectResult
+                        { typeAlias = """{ numbers : (List Int) }"""
+                        , list = """[ Argument.required "numbers" requiredArgs.numbers (Encode.int |> Encode.list) ]"""
+                        }
         , test "multiple primitives" <|
             \() ->
                 [ idArg, nameArg ]
                     |> RequiredArgs.generate []
-                    |> Expect.equal
-                        (Just
-                            { annotation = "{ id : String, name : String }"
-                            , list = """[ Argument.required "id" requiredArgs.id (Encode.string), Argument.required "name" requiredArgs.name (Encode.string) ]"""
-                            }
-                        )
+                    |> expectResult
+                        { typeAlias = "{ id : String, name : String }"
+                        , list = """[ Argument.required "id" requiredArgs.id (Encode.string), Argument.required "name" requiredArgs.name (Encode.string) ]"""
+                        }
         , test "normalizes arguments" <|
             \() ->
                 [ { name = CamelCaseName.build "type"
@@ -63,13 +57,26 @@ all =
                   }
                 ]
                     |> RequiredArgs.generate []
-                    |> Expect.equal
-                        (Just
-                            { annotation = "{ type_ : String }"
-                            , list = """[ Argument.required "type" requiredArgs.type_ (Encode.string) ]"""
-                            }
-                        )
+                    |> expectResult
+                        { typeAlias = "{ type_ : String }"
+                        , list = """[ Argument.required "type" requiredArgs.type_ (Encode.string) ]"""
+                        }
         ]
+
+
+expectResult :
+    { list : String, typeAlias : String }
+    -> Maybe RequiredArgs.Result
+    -> Expect.Expectation
+expectResult expected actual =
+    actual
+        |> Maybe.map
+            (\value ->
+                { list = value.list
+                , typeAlias = value.typeAlias.body
+                }
+            )
+        |> Expect.equal (Just expected)
 
 
 nameArg : Type.Arg

@@ -1,4 +1,4 @@
-module Graphqelm.Generator.RequiredArgs exposing (generate)
+module Graphqelm.Generator.RequiredArgs exposing (Result, generate)
 
 import Graphqelm.Generator.Decoder
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
@@ -7,8 +7,9 @@ import Interpolate exposing (interpolate)
 
 
 type alias Result =
-    { annotation : String
+    { annotation : String -> String
     , list : String
+    , typeAlias : { body : String, suffix : String }
     }
 
 
@@ -23,8 +24,9 @@ generate apiSubmodule args =
         Nothing
     else
         Just
-            { annotation = requiredArgsAnnotation apiSubmodule requiredArgs
+            { annotation = \fieldName -> interpolate "{0}RequiredArguments" [ fieldName ]
             , list = requiredArgsString apiSubmodule requiredArgs
+            , typeAlias = { body = requiredArgsAnnotation apiSubmodule requiredArgs, suffix = "RequiredArguments" }
             }
 
 

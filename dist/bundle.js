@@ -12384,99 +12384,110 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ReferenceLeaf$get = function (_p
 var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgAnnotation = F2(
 	function (apiSubmodule, _p0) {
 		var _p1 = _p0;
-		var _p3 = _p1.typeRef;
-		var _p2 = _p3;
-		if (_p2._1.ctor === 'NonNullable') {
-			return _elm_lang$core$Maybe$Just(
-				A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
-					'{0} : {1}',
-					{
-						ctor: '::',
-						_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p1.name),
-						_1: {
-							ctor: '::',
-							_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p3),
-							_1: {ctor: '[]'}
-						}
-					}));
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
+		return A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'{0} : {1}',
+			{
+				ctor: '::',
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p1.name),
+				_1: {
+					ctor: '::',
+					_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateType, apiSubmodule, _p1.typeRef),
+					_1: {ctor: '[]'}
+				}
+			});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsAnnotation = F2(
-	function (apiSubmodule, args) {
-		var requiredArgs = A2(
-			_elm_lang$core$List$filterMap,
+	function (apiSubmodule, requiredArgs) {
+		var annotations = A2(
+			_elm_lang$core$List$map,
 			_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgAnnotation(apiSubmodule),
-			args);
-		return _elm_lang$core$Native_Utils.eq(
-			requiredArgs,
-			{ctor: '[]'}) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+			requiredArgs);
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			'{ ',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				'{ ',
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$String$join, ', ', requiredArgs),
-					' }')));
+				A2(_elm_lang$core$String$join, ', ', annotations),
+				' }'));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString = F2(
-	function (apiSubmodule, _p4) {
-		var _p5 = _p4;
-		var _p8 = _p5.typeRef;
-		var _p7 = _p5.name;
-		var _p6 = _p8;
-		if (_p6._1.ctor === 'NonNullable') {
-			return _elm_lang$core$Maybe$Just(
-				A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
-					'Argument.required \"{0}\" requiredArgs.{1} ({2})',
-					{
+	function (apiSubmodule, _p2) {
+		var _p3 = _p2;
+		var _p4 = _p3.name;
+		return A2(
+			_dillonkearns$graphqelm$Interpolate$interpolate,
+			'Argument.required \"{0}\" requiredArgs.{1} ({2})',
+			{
+				ctor: '::',
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(_p4),
+				_1: {
+					ctor: '::',
+					_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p4),
+					_1: {
 						ctor: '::',
-						_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(_p7),
-						_1: {
-							ctor: '::',
-							_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(_p7),
-							_1: {
-								ctor: '::',
-								_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder, apiSubmodule, _p8),
-								_1: {ctor: '[]'}
-							}
-						}
-					}));
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
+						_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder, apiSubmodule, _p3.typeRef),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsString = F2(
-	function (apiSubmodule, args) {
-		var requiredArgs = A2(
-			_elm_lang$core$List$filterMap,
+	function (apiSubmodule, requiredArgs) {
+		var requiredArgContents = A2(
+			_elm_lang$core$List$map,
 			_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString(apiSubmodule),
-			args);
+			requiredArgs);
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			'[ ',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(_elm_lang$core$String$join, ', ', requiredArgContents),
+				' ]'));
+	});
+var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgOrNothing = function (_p5) {
+	var _p6 = _p5;
+	var _p8 = _p6.typeRef;
+	var _p7 = _p8;
+	if (_p7._1.ctor === 'NonNullable') {
+		return _elm_lang$core$Maybe$Just(
+			{name: _p6.name, referrableType: _p7._0, typeRef: _p8});
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$generate = F2(
+	function (apiSubmodule, args) {
+		var requiredArgs = A2(_elm_lang$core$List$filterMap, _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgOrNothing, args);
 		return _elm_lang$core$Native_Utils.eq(
 			requiredArgs,
 			{ctor: '[]'}) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'[ ',
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$String$join, ', ', requiredArgs),
-					' ]')));
+			{
+				annotation: function (fieldName) {
+					return A2(
+						_dillonkearns$graphqelm$Interpolate$interpolate,
+						'{0}RequiredArguments',
+						{
+							ctor: '::',
+							_0: fieldName,
+							_1: {ctor: '[]'}
+						});
+				},
+				list: A2(_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsString, apiSubmodule, requiredArgs),
+				typeAlias: {
+					body: A2(_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsAnnotation, apiSubmodule, requiredArgs),
+					suffix: 'RequiredArguments'
+				}
+			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$Result = F2(
-	function (a, b) {
-		return {annotation: a, list: b};
+var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$Result = F3(
+	function (a, b, c) {
+		return {annotation: a, list: b, typeAlias: c};
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$generate = F2(
-	function (apiSubmodule, args) {
-		return A3(
-			_elm_lang$core$Maybe$map2,
-			_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$Result,
-			A2(_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsAnnotation, apiSubmodule, args),
-			A2(_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgsString, apiSubmodule, args));
+var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$RequiredArg = F3(
+	function (a, b, c) {
+		return {name: a, referrableType: b, typeRef: c};
 	});
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Field$initScalarField = F2(
@@ -12532,8 +12543,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Graphqelm.Generator.Field',
 						{
-							start: {line: 177, column: 13},
-							end: {line: 191, column: 39}
+							start: {line: 185, column: 13},
+							end: {line: 199, column: 39}
 						},
 						_p4)('TODO');
 				case 'Union':
@@ -12548,8 +12559,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Graphqelm.Generator.Field',
 						{
-							start: {line: 177, column: 13},
-							end: {line: 191, column: 39}
+							start: {line: 185, column: 13},
+							end: {line: 199, column: 39}
 						},
 						_p4)('TODO');
 			}
@@ -12606,13 +12617,18 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addOptionalArgs = F4(
 			return fieldGenerator;
 		}
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addRequiredArgs = F3(
-	function (apiSubmodule, args, fieldGenerator) {
+var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addRequiredArgs = F4(
+	function (field, apiSubmodule, args, fieldGenerator) {
 		var _p10 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$generate, apiSubmodule, args);
 		if (_p10.ctor === 'Just') {
 			return A2(
 				_dillonkearns$graphqelm$Graphqelm_Generator_Field$prependArg,
-				{annotation: _p10._0.annotation, arg: 'requiredArgs'},
+				{
+					annotation: _p10._0.annotation(
+						_elm_community$string_extra$String_Extra$classify(
+							_dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name))),
+					arg: 'requiredArgs'
+				},
 				_elm_lang$core$Native_Utils.update(
 					fieldGenerator,
 					{
@@ -12620,7 +12636,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$addRequiredArgs = F3(
 							ctor: '::',
 							_0: _p10._0.list,
 							_1: {ctor: '[]'}
-						}
+						},
+						typeAliases: {ctor: '::', _0: _p10._0.typeAlias, _1: fieldGenerator.typeAliases}
 					}));
 		} else {
 			return fieldGenerator;
@@ -12838,8 +12855,8 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$leafType = function (_p20)
 				return _elm_lang$core$Native_Utils.crashCase(
 					'Graphqelm.Generator.Field',
 					{
-						start: {line: 234, column: 5},
-						end: {line: 254, column: 42}
+						start: {line: 242, column: 5},
+						end: {line: 262, column: 42}
 					},
 					_p22)('Unexpected type');
 		}
@@ -12875,8 +12892,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$toFieldGenerator = F2(
 			field,
 			_p34,
 			field.args,
-			A3(
+			A4(
 				_dillonkearns$graphqelm$Graphqelm_Generator_Field$addRequiredArgs,
+				field,
 				_p34,
 				field.args,
 				A3(_dillonkearns$graphqelm$Graphqelm_Generator_Field$init, _p33, field.name, field.typeRef)));
@@ -21518,7 +21536,7 @@ function slice (args) {
 /* 106 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"graphqelm","version":"3.1.2","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test","gen:starwars":"npm run build && ./bin/graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src","approve":"npm run build && npm link && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src && graphqelm https://graphqelm.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-live":"^2.7.5","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.7.0-exp","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"graphqelm":"bin/graphqelm"}}
+module.exports = {"name":"graphqelm","version":"3.1.3","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test","gen:starwars":"npm run build && ./bin/graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/graphqelm http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src","approve":"npm run build && npm link && graphqelm https://api.github.com/graphql --header 'authorization: Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59' --base Github --output examples/src && graphqelm https://graphqelm.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/graphqelm","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-live":"^2.7.5","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.7.0-exp","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"graphqelm":"bin/graphqelm"}}
 
 /***/ }),
 /* 107 */

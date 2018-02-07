@@ -126,17 +126,25 @@ fieldArgsString { fieldArgs } =
 toFieldGenerator : Context -> Type.Field -> FieldGenerator
 toFieldGenerator ({ apiSubmodule } as context) field =
     init context field.name field.typeRef
-        |> addRequiredArgs apiSubmodule field.args
+        |> addRequiredArgs field apiSubmodule field.args
         |> addOptionalArgs field apiSubmodule field.args
 
 
-addRequiredArgs : List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
-addRequiredArgs apiSubmodule args fieldGenerator =
+addRequiredArgs : Type.Field -> List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
+addRequiredArgs field apiSubmodule args fieldGenerator =
     case Graphqelm.Generator.RequiredArgs.generate apiSubmodule args of
-        Just { annotation, list } ->
-            { fieldGenerator | fieldArgs = [ list ] }
+        Just { annotation, list, typeAlias } ->
+            { fieldGenerator
+                | fieldArgs = [ list ]
+                , typeAliases = typeAlias :: fieldGenerator.typeAliases
+            }
                 |> prependArg
-                    { annotation = annotation
+                    { annotation =
+                        annotation
+                            (field.name
+                                |> CamelCaseName.raw
+                                |> String.Extra.classify
+                            )
                     , arg = "requiredArgs"
                     }
 

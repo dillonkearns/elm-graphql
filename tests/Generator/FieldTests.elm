@@ -115,7 +115,9 @@ droid object =
                 }
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, subscription = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "RootQuery")
                     |> Expect.equal
-                        """human : { id : String } -> SelectionSet decodesTo Api.Object.Human -> Field decodesTo RootQuery
+                        """type alias HumanRequiredArguments = { id : String }
+
+human : HumanRequiredArguments -> SelectionSet decodesTo Api.Object.Human -> Field decodesTo RootQuery
 human requiredArgs object =
       Object.selectionField "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object) (identity)
 """
