@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.2] - 2018-02-06
+
 ### Changed
 
 * Use `Decode.nullable` rather than `Decode.maybe` so that decode failures don't
