@@ -1,7 +1,7 @@
 module Graphqelm.Generator.RequiredArgs exposing (generate)
 
 import Graphqelm.Generator.Decoder
-import Graphqelm.Parser.CamelCaseName as CamelCaseName
+import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.Type as Type
 import Interpolate exposing (interpolate)
 
@@ -14,9 +14,34 @@ type alias Result =
 
 generate : List String -> List Type.Arg -> Maybe Result
 generate apiSubmodule args =
-    Maybe.map2 Result
-        (requiredArgsAnnotation apiSubmodule args)
-        (requiredArgsString apiSubmodule args)
+    let
+        requiredArgs : List RequiredArg
+        requiredArgs =
+            List.filterMap requiredArgOrNothing args
+    in
+    if requiredArgs == [] then
+        Nothing
+    else
+        -- Just { annotation = requiredArgOrNothing apiSubmodule requiredArgs
+        -- , list = requiredArgsString apiSubmodule requiredArgs
+        -- }
+        Maybe.map2 Result
+            (requiredArgsAnnotation apiSubmodule args)
+            (requiredArgsString apiSubmodule args)
+
+
+type alias RequiredArg =
+    { name : CamelCaseName, referrableType : Type.ReferrableType }
+
+
+requiredArgOrNothing : Type.Arg -> Maybe RequiredArg
+requiredArgOrNothing { name, typeRef } =
+    case typeRef of
+        Type.TypeReference referrableType Type.NonNullable ->
+            Just { name = name, referrableType = referrableType }
+
+        Type.TypeReference referrableType Type.Nullable ->
+            Nothing
 
 
 requiredArgsString : List String -> List Type.Arg -> Maybe String
