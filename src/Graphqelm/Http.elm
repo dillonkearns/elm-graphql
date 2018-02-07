@@ -87,14 +87,22 @@ queryRequest baseUrl query =
         |> Request
 
 
-{-| Exactly like `queryRequest`, but with an option to either force a request method
-of `AlwaysGet` or `AlwaysPost`. `queryRequest` always uses POST since some
-GraphQL API's don't support GET requests. But for semantic reasons, GET requests
-are sometimes useful. That is, a GraphQL Query does not perform side-effects on the server
-like a Mutation does, so a GET
+{-| Exactly like `queryRequest`, but with an option to use the HTTP GET request
+method. You will probably want to use `GetIfShortEnough`, which uses GET if the
+full URL ends up being under 2000 characters, or POST otherwise, since [some browsers
+don't support URLs over a certain length](https://stackoverflow.com/questions/812925/what-is-the-maximum-possible-length-of-a-query-string?noredirect=1&lq=1).
+`GetIfShortEnough` will typically do what you need. If you must use GET no matter
+what when hitting your endpoint, you can use `AlwaysGet`.
+
+`queryRequest` always uses POST since some GraphQL API's don't support GET
+requests (for example, the Github API assumes that you are doing an introspection
+query if you make a GET request). But for semantic reasons, GET requests
+are sometimes useful for sending GraphQL Query requests. That is, a GraphQL Query
+does not perform side-effects on the server like a Mutation does, so a GET
 indicates this and allows some servers to cache requests. See
 [this github thread from the Apollo project](https://github.com/apollographql/apollo-client/issues/813)
 for more details.
+
 -}
 queryRequestWithHttpGet : String -> QueryRequestMethod -> SelectionSet decodesTo RootQuery -> Request decodesTo
 queryRequestWithHttpGet baseUrl requestMethod query =
