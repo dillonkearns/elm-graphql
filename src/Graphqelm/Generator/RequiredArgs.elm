@@ -22,78 +22,65 @@ generate apiSubmodule args =
     if requiredArgs == [] then
         Nothing
     else
-        -- Just { annotation = requiredArgOrNothing apiSubmodule requiredArgs
-        -- , list = requiredArgsString apiSubmodule requiredArgs
-        -- }
-        Maybe.map2 Result
-            (requiredArgsAnnotation apiSubmodule args)
-            (requiredArgsString apiSubmodule args)
+        Just
+            { annotation = requiredArgsAnnotation apiSubmodule requiredArgs
+            , list = requiredArgsString apiSubmodule requiredArgs
+            }
 
 
 type alias RequiredArg =
-    { name : CamelCaseName, referrableType : Type.ReferrableType }
+    { name : CamelCaseName
+    , referrableType : Type.ReferrableType
+    , typeRef : Type.TypeReference
+    }
 
 
 requiredArgOrNothing : Type.Arg -> Maybe RequiredArg
 requiredArgOrNothing { name, typeRef } =
     case typeRef of
         Type.TypeReference referrableType Type.NonNullable ->
-            Just { name = name, referrableType = referrableType }
+            Just
+                { name = name
+                , referrableType = referrableType
+                , typeRef = typeRef
+                }
 
         Type.TypeReference referrableType Type.Nullable ->
             Nothing
 
 
-requiredArgsString : List String -> List Type.Arg -> Maybe String
-requiredArgsString apiSubmodule args =
+requiredArgsString : List String -> List RequiredArg -> String
+requiredArgsString apiSubmodule requiredArgs =
     let
-        requiredArgs =
-            List.filterMap (requiredArgString apiSubmodule) args
+        requiredArgContents =
+            List.map (requiredArgString apiSubmodule) requiredArgs
     in
-    if requiredArgs == [] then
-        Nothing
-    else
-        Just ("[ " ++ (requiredArgs |> String.join ", ") ++ " ]")
+    "[ " ++ (requiredArgContents |> String.join ", ") ++ " ]"
 
 
-requiredArgString : List String -> Type.Arg -> Maybe String
-requiredArgString apiSubmodule { name, typeRef } =
-    case typeRef of
-        Type.TypeReference referrableType Type.NonNullable ->
-            interpolate
-                "Argument.required \"{0}\" requiredArgs.{1} ({2})"
-                [ name |> CamelCaseName.raw
-                , name |> CamelCaseName.normalized
-                , Graphqelm.Generator.Decoder.generateEncoder apiSubmodule typeRef
-                ]
-                |> Just
-
-        Type.TypeReference referrableType Type.Nullable ->
-            Nothing
+requiredArgString : List String -> RequiredArg -> String
+requiredArgString apiSubmodule { name, referrableType, typeRef } =
+    interpolate
+        "Argument.required \"{0}\" requiredArgs.{1} ({2})"
+        [ name |> CamelCaseName.raw
+        , name |> CamelCaseName.normalized
+        , Graphqelm.Generator.Decoder.generateEncoder apiSubmodule typeRef
+        ]
 
 
-requiredArgsAnnotation : List String -> List Type.Arg -> Maybe String
-requiredArgsAnnotation apiSubmodule args =
+requiredArgsAnnotation : List String -> List RequiredArg -> String
+requiredArgsAnnotation apiSubmodule requiredArgs =
     let
-        requiredArgs =
-            List.filterMap (requiredArgAnnotation apiSubmodule) args
+        annotations =
+            List.map (requiredArgAnnotation apiSubmodule) requiredArgs
     in
-    if requiredArgs == [] then
-        Nothing
-    else
-        Just ("{ " ++ (requiredArgs |> String.join ", ") ++ " }")
+    "{ " ++ (annotations |> String.join ", ") ++ " }"
 
 
-requiredArgAnnotation : List String -> Type.Arg -> Maybe String
+requiredArgAnnotation : List String -> RequiredArg -> String
 requiredArgAnnotation apiSubmodule { name, typeRef } =
-    case typeRef of
-        Type.TypeReference referrableType Type.NonNullable ->
-            interpolate
-                "{0} : {1}"
-                [ name |> CamelCaseName.normalized
-                , Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
-                ]
-                |> Just
-
-        Type.TypeReference referrableType Type.Nullable ->
-            Nothing
+    interpolate
+        "{0} : {1}"
+        [ name |> CamelCaseName.normalized
+        , Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
+        ]
