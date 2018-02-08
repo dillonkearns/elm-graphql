@@ -211,7 +211,11 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GraphqlSubscriptionMsg graphqlSubscriptionMsg ->
-            Graphqelm.Subscription.update graphqlSubscriptionMsg model
+            let
+                ( newModel, cmd ) =
+                    Graphqelm.Subscription.update graphqlSubscriptionMsg model.graphqlSubscriptionModel
+            in
+            ( { model | graphqlSubscriptionModel = newModel }, cmd )
 
         SendMessage phrase ->
             ( model, Graphqelm.Subscription.sendMutation model.graphqlSubscriptionModel (sendChatMessage model.characterId phrase) )
@@ -228,7 +232,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Graphqelm.Subscription.listen GraphqlSubscriptionMsg model
+    Graphqelm.Subscription.listen GraphqlSubscriptionMsg model.graphqlSubscriptionModel
 
 
 main : Program Never Model Msg

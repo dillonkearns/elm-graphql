@@ -138,9 +138,9 @@ onStatusChanged onStatusChanged (Model model) =
 -}
 listen :
     (Msg decodesTo -> msg)
-    -> { model | graphqlSubscriptionModel : Model msg decodesTo }
+    -> Model msg decodesTo
     -> Sub msg
-listen toMsg { graphqlSubscriptionModel } =
+listen toMsg graphqlSubscriptionModel =
     case graphqlSubscriptionModel of
         Model model ->
             Sub.batch
@@ -162,14 +162,14 @@ for and respond to Subscription communications.
 -}
 update :
     Msg decodesTo
-    -> { model | graphqlSubscriptionModel : Model msg decodesTo }
-    -> ( { model | graphqlSubscriptionModel : Model msg decodesTo }, Cmd msg )
-update msg ({ graphqlSubscriptionModel } as fullModel) =
+    -> Model msg decodesTo
+    -> ( Model msg decodesTo, Cmd msg )
+update msg graphqlSubscriptionModel =
     case graphqlSubscriptionModel of
         Model model ->
             case msg of
                 SendHeartbeat time ->
-                    ( fullModel |> incrementRefId
+                    ( graphqlSubscriptionModel |> incrementRefId
                     , WebSocket.send model.socketUrl (model.protocol.heartBeatMessage model.referenceId |> Encode.encode 0)
                     )
 
@@ -184,41 +184,41 @@ update msg ({ graphqlSubscriptionModel } as fullModel) =
                     case response of
                         Ok Protocol.HealthStatus ->
                             if model.status == Uninitialized then
-                                ( fullModel |> incrementRefId
+                                ( graphqlSubscriptionModel |> incrementRefId
                                 , WebSocket.send
                                     model.socketUrl
                                     (documentRequest (Graphqelm.Document.serializeSubscription model.subscriptionDocument))
                                 )
                                     |> setStatus Connected
                             else
-                                ( fullModel, Cmd.none )
+                                ( graphqlSubscriptionModel, Cmd.none )
 
                         Ok (Protocol.SubscriptionDataReceived data) ->
-                            ( fullModel, Task.succeed data |> Task.perform model.onData )
+                            ( graphqlSubscriptionModel, Task.succeed data |> Task.perform model.onData )
 
                         Err errorString ->
                             let
                                 _ =
                                     Debug.log "Error" errorString
                             in
-                            ( fullModel, Cmd.none )
+                            ( graphqlSubscriptionModel, Cmd.none )
 
                         Ok (Protocol.Ignored ignoredContent) ->
                             let
                                 _ =
                                     Debug.log "Ignored: " ignoredContent
                             in
-                            ( fullModel, Cmd.none )
+                            ( graphqlSubscriptionModel, Cmd.none )
 
 
 setStatus :
     Status
-    -> ( { a | graphqlSubscriptionModel : Model msg decodesTo }, Cmd msg )
-    -> ( { a | graphqlSubscriptionModel : Model msg decodesTo }, Cmd msg )
-setStatus newStatus ( { graphqlSubscriptionModel } as fullModel, cmds ) =
+    -> ( Model msg decodesTo, Cmd msg )
+    -> ( Model msg decodesTo, Cmd msg )
+setStatus newStatus ( graphqlSubscriptionModel, cmds ) =
     case graphqlSubscriptionModel of
         Model model ->
-            ( { fullModel | graphqlSubscriptionModel = Model { model | status = newStatus } }
+            ( Model { model | status = newStatus }
             , Cmd.batch
                 [ cmds
                 , case model.onStatusChanged of
@@ -231,10 +231,8 @@ setStatus newStatus ( { graphqlSubscriptionModel } as fullModel, cmds ) =
             )
 
 
-incrementRefId :
-    { a | graphqlSubscriptionModel : Model msg decodesTo }
-    -> { a | graphqlSubscriptionModel : Model msg decodesTo }
-incrementRefId ({ graphqlSubscriptionModel } as fullModel) =
+incrementRefId : Model msg decodesTo -> Model msg decodesTo
+incrementRefId graphqlSubscriptionModel =
     case graphqlSubscriptionModel of
         Model model ->
-            { fullModel | graphqlSubscriptionModel = Model { model | referenceId = model.referenceId + 1 } }
+            Model { model | referenceId = model.referenceId + 1 }
