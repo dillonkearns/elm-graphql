@@ -1,14 +1,46 @@
-module Graphqelm.Generator.Normalize exposing (capitalized, decapitalized)
+module Graphqelm.Generator.Normalize exposing (capitalized, decapitalized, elmKeywords)
 
 import Char
 import Regex
 import String.Extra
 
 
+{-| Taken from <https://github.com/elm-lang/elm-compiler/blob/master/src/Parse/Primitives/Keyword.hs>
+-}
+elmKeywords : List String
+elmKeywords =
+    [ "type"
+    , "alias"
+    , "port"
+    , "if"
+    , "then"
+    , "else"
+    , "case"
+    , "of"
+    , "let"
+    , "in"
+    , "infix"
+    , "left"
+    , "right"
+    , "non"
+    , "module"
+    , "import"
+    , "exposing"
+    , "as"
+    , "where"
+    , "effect"
+    , "command"
+    , "subscription"
+    , "true"
+    , "false"
+    , "null"
+    ]
+
+
 normalizeIfElmReserved : String -> String
 normalizeIfElmReserved name =
-    if name == "type" then
-        "type_"
+    if List.member name elmKeywords then
+        name ++ "_"
     else
         name
 
