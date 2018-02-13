@@ -38,6 +38,11 @@ import Graphqelm.Internal.Encode as Encode exposing (Value)
 selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
 selection constructor =
     Object.selection constructor
+
+
+typename__ : Field String {0}
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

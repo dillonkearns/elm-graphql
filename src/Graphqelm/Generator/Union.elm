@@ -50,6 +50,11 @@ import Graphqelm.Internal.Encode as Encode exposing (Value)
 selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}
 selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
+
+
+typename__ : Field String {0}
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
 """
         [ moduleName |> String.join "."
         , apiSubmodule |> String.join "."

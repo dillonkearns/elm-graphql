@@ -64,6 +64,11 @@ commonSelection constructor =
 selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}
 selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
+
+
+typename__ : Field String {0}
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields
