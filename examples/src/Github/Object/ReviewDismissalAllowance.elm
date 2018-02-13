@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ReviewDismissalAllowance
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The actor that can dismiss.
 -}
 actor : SelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor -> Field (Maybe decodesTo) Github.Object.ReviewDismissalAllowance

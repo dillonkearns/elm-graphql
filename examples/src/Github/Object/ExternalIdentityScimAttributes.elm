@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ExternalIdentityScimAttributes
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The userName of the SCIM identity
 -}
 username : Field (Maybe String) Github.Object.ExternalIdentityScimAttributes

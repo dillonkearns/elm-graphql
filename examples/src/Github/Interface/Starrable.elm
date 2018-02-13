@@ -32,6 +32,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.Starrable
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onGist : SelectionSet decodesTo Github.Object.Gist -> FragmentSelectionSet decodesTo Github.Interface.Starrable
 onGist (SelectionSet fields decoder) =
     FragmentSelectionSet "Gist" fields decoder

@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.BlameRange
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Identifies the recency of the change, from 1 (new) to 10 (old). This is calculated as a 2-quantile and determines the length of distance between the median age of all the changes in the file and the recency of the current range's change.
 -}
 age : Field Int Github.Object.BlameRange

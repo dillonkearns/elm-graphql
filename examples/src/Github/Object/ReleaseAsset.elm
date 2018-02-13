@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ReleaseAsset
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The asset's content-type
 -}
 contentType : Field String Github.Object.ReleaseAsset

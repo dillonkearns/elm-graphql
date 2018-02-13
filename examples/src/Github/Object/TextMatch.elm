@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.TextMatch
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The specific text fragment within the property matched on.
 -}
 fragment : Field String Github.Object.TextMatch

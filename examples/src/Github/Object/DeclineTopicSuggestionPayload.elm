@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.DeclineTopicSuggestionPayload
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| A unique identifier for the client performing the mutation.
 -}
 clientMutationId : Field (Maybe String) Github.Object.DeclineTopicSuggestionPayload

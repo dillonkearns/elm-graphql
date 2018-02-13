@@ -33,6 +33,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.PullRequest
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Reason that the conversation was locked.
 -}
 activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Object.PullRequest

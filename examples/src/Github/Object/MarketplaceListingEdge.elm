@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.MarketplaceListingEdge
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| A cursor for use in pagination.
 -}
 cursor : Field String Github.Object.MarketplaceListingEdge

@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.GitHubMetadata
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Returns a String that's a SHA of `github-services`
 -}
 gitHubServicesSha : Field String Github.Object.GitHubMetadata

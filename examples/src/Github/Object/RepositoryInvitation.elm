@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.RepositoryInvitation
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 id : Field Github.Scalar.Id Github.Object.RepositoryInvitation
 id =
     Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)

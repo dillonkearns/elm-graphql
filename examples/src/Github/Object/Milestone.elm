@@ -28,6 +28,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Milestone
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
 closed : Field Bool Github.Object.Milestone

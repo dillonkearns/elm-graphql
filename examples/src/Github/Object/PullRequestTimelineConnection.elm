@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.PullRequestTimelineConnection
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo Github.Object.PullRequestTimelineItemEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestTimelineConnection

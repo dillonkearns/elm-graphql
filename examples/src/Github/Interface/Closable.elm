@@ -32,6 +32,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.Closable
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Closable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder

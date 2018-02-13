@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Project
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The project's description body.
 -}
 body : Field (Maybe String) Github.Object.Project

@@ -34,6 +34,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.RepositoryOwner
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.RepositoryOwner
 onOrganization (SelectionSet fields decoder) =
     FragmentSelectionSet "Organization" fields decoder

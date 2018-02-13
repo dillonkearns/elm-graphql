@@ -33,6 +33,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.GitSignature
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onGpgSignature : SelectionSet decodesTo Github.Object.GpgSignature -> FragmentSelectionSet decodesTo Github.Interface.GitSignature
 onGpgSignature (SelectionSet fields decoder) =
     FragmentSelectionSet "GpgSignature" fields decoder

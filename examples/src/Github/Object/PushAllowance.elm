@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.PushAllowance
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The actor that can push.
 -}
 actor : SelectionSet decodesTo Github.Union.PushAllowanceActor -> Field (Maybe decodesTo) Github.Object.PushAllowance

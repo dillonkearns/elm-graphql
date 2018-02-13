@@ -32,6 +32,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.UniformResourceLocatable
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onBot : SelectionSet decodesTo Github.Object.Bot -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
 onBot (SelectionSet fields decoder) =
     FragmentSelectionSet "Bot" fields decoder

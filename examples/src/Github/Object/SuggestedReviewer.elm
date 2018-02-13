@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.SuggestedReviewer
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Is this suggestion based on past commits?
 -}
 isAuthor : Field Bool Github.Object.SuggestedReviewer

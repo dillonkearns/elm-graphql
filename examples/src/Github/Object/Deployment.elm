@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Deployment
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Identifies the commit sha of the deployment.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Deployment

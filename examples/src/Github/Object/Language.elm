@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Language
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The color defined for the current language.
 -}
 color : Field (Maybe String) Github.Object.Language

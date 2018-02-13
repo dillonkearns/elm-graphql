@@ -32,6 +32,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.Labelable
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Labelable
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder

@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Swapi.Object.ChatMessage
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 character : SelectionSet decodesTo Swapi.Interface.Character -> Field (Maybe decodesTo) Swapi.Object.ChatMessage
 character object =
     Object.selectionField "character" [] object (identity >> Decode.nullable)

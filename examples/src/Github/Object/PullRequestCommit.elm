@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.PullRequestCommit
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The Git commit object
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.PullRequestCommit

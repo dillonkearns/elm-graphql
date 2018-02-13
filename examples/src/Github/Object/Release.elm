@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Release
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The author of the release
 -}
 author : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Release

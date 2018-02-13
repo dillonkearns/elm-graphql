@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.PullRequestReviewThread
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 type alias CommentsOptionalArguments =
     { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
 

@@ -27,6 +27,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Label
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Identifies the label color.
 -}
 color : Field String Github.Object.Label

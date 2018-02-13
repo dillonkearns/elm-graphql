@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ProjectCard
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The project column this card is associated under. A card may only belong to one
 project column at a time. The column field will be null if the card is created
 in a pending state and has yet to be associated with a column. Once cards are

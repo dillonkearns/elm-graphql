@@ -27,6 +27,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.GistComment
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment

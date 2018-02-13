@@ -23,6 +23,11 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Union.Closer
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Union.Closer
 onCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "Commit" fields decoder

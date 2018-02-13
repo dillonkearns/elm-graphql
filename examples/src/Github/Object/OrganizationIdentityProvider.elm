@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.OrganizationIdentityProvider
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The digest algorithm used to sign SAML requests for the Identity Provider.
 -}
 digestMethod : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider

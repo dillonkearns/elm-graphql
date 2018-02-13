@@ -23,6 +23,11 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Union.ProjectCardItem
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Union.ProjectCardItem
 onIssue (SelectionSet fields decoder) =
     FragmentSelectionSet "Issue" fields decoder

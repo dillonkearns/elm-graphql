@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.RateLimit
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The point cost for the current query counting against the rate limit.
 -}
 cost : Field Int Github.Object.RateLimit

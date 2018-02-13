@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Swapi.Object.Human
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Which movies they appear in.
 -}
 appearsIn : Field (List Swapi.Enum.Episode.Episode) Swapi.Object.Human

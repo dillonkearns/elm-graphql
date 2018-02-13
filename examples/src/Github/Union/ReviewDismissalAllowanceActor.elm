@@ -23,6 +23,11 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Union.ReviewDismissalAllowanceActor
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor
 onUser (SelectionSet fields decoder) =
     FragmentSelectionSet "User" fields decoder

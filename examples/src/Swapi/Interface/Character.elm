@@ -33,6 +33,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Swapi.Interface.Character
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onHuman : SelectionSet decodesTo Swapi.Object.Human -> FragmentSelectionSet decodesTo Swapi.Interface.Character
 onHuman (SelectionSet fields decoder) =
     FragmentSelectionSet "Human" fields decoder
