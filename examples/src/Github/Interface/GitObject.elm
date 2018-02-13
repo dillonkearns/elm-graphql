@@ -32,6 +32,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.GitObject
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onBlob : SelectionSet decodesTo Github.Object.Blob -> FragmentSelectionSet decodesTo Github.Interface.GitObject
 onBlob (SelectionSet fields decoder) =
     FragmentSelectionSet "Blob" fields decoder

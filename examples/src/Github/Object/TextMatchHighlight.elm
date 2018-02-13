@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.TextMatchHighlight
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The indice in the fragment where the matched text begins.
 -}
 beginIndice : Field Int Github.Object.TextMatchHighlight

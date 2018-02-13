@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Blame
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The list of ranges from a Git blame.
 -}
 ranges : SelectionSet decodesTo Github.Object.BlameRange -> Field (List decodesTo) Github.Object.Blame

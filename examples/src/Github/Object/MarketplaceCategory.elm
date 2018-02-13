@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.MarketplaceCategory
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The category's description.
 -}
 description : Field (Maybe String) Github.Object.MarketplaceCategory

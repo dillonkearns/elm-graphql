@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.OrganizationInvitationConnection
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo Github.Object.OrganizationInvitationEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.OrganizationInvitationConnection

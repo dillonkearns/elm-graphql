@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.MoveProjectCardPayload
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The new edge of the moved card.
 -}
 cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> Field decodesTo Github.Object.MoveProjectCardPayload

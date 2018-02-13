@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ReactionGroup
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Identifies the emoji reaction.
 -}
 content : Field Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup

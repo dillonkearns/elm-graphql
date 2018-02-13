@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.LicenseRule
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| A description of the rule
 -}
 description : Field String Github.Object.LicenseRule

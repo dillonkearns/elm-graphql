@@ -23,6 +23,11 @@ selection constructor typeSpecificDecoders =
     Object.unionSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Swapi.Union.CharacterUnion
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onHuman : SelectionSet decodesTo Swapi.Object.Human -> FragmentSelectionSet decodesTo Swapi.Union.CharacterUnion
 onHuman (SelectionSet fields decoder) =
     FragmentSelectionSet "Human" fields decoder

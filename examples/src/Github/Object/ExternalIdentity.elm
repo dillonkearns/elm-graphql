@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ExternalIdentity
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The GUID for this identity
 -}
 guid : Field String Github.Object.ExternalIdentity

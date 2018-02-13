@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ReleaseConnection
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo Github.Object.ReleaseEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReleaseConnection

@@ -27,6 +27,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.OrganizationInvitation
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.OrganizationInvitation

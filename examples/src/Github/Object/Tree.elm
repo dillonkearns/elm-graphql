@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Tree
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| An abbreviated version of the Git object ID
 -}
 abbreviatedOid : Field String Github.Object.Tree

@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.TreeEntry
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| Entry file mode.
 -}
 mode : Field Int Github.Object.TreeEntry

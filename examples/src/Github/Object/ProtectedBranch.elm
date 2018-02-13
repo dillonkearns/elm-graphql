@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.ProtectedBranch
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The actor who created this protected branch.
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProtectedBranch

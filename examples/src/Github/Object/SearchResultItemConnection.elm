@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.SearchResultItemConnection
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| The number of pieces of code that matched the search query.
 -}
 codeCount : Field Int Github.Object.SearchResultItemConnection

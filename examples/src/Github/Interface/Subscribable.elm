@@ -33,6 +33,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.Subscribable
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
 onCommit (SelectionSet fields decoder) =
     FragmentSelectionSet "Commit" fields decoder

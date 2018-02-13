@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.PageInfo
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| When paginating forwards, the cursor to continue.
 -}
 endCursor : Field (Maybe String) Github.Object.PageInfo

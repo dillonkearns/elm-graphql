@@ -25,6 +25,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.MarketplaceListing
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| URL to the listing owner's company site.
 -}
 companyUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing

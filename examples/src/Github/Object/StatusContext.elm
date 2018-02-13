@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.StatusContext
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 {-| This commit this status context is attached to.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.StatusContext

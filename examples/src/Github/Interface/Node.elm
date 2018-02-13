@@ -32,6 +32,11 @@ selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
 
 
+typename__ : Field String Github.Interface.Node
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 onAddedToProjectEvent : SelectionSet decodesTo Github.Object.AddedToProjectEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
 onAddedToProjectEvent (SelectionSet fields decoder) =
     FragmentSelectionSet "AddedToProjectEvent" fields decoder

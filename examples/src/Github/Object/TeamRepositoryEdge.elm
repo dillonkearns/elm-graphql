@@ -26,6 +26,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.TeamRepositoryEdge
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 cursor : Field String Github.Object.TeamRepositoryEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string

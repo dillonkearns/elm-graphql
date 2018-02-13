@@ -30,6 +30,11 @@ selection constructor =
     Object.selection constructor
 
 
+typename__ : Field String Github.Object.Organization
+typename__ =
+    Object.fieldDecoder "__typename" [] Decode.string
+
+
 type alias AvatarUrlOptionalArguments =
     { size : OptionalArgument Int }
 
