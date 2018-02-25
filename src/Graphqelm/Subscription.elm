@@ -18,7 +18,6 @@ and may change rapidly or have issues that make it not ready for production code
 -}
 
 import Graphqelm.Document
-import Graphqelm.Document.LowLevel
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.Subscription.Protocol as Protocol exposing (Protocol)
@@ -148,7 +147,7 @@ listen toMsg graphqlSubscriptionModel =
                     (Debug.log "raw response"
                         >> Json.Decode.decodeString
                             (model.protocol.subscriptionDecoder
-                                (Graphqelm.Document.LowLevel.decoder model.subscriptionDocument)
+                                (Graphqelm.Document.decoder model.subscriptionDocument)
                             )
                         >> ResponseReceived
                     )

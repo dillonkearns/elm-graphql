@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [10.1.0] - 2018-02-25
+
+### Changed
+
+* Expose GraphQL response decoder publicly.
+
 ## [10.0.0] - 2018-02-07
 
 ### Changed
