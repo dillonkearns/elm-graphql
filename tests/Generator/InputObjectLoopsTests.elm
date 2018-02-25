@@ -16,8 +16,7 @@ all =
                 [ TypeDefinition (ClassCaseName.build "SomeScalar") ScalarType Nothing ]
                     |> InputObjectLoops.any
                     |> Expect.equal False
-        , -- , only <|
-          test "no loop" <|
+        , test "no loop" <|
             \() ->
                 [ TypeDefinition (ClassCaseName.build "MyInputObject")
                     (InputObjectType [ field "DifferentInputObject" "fieldName" ])
