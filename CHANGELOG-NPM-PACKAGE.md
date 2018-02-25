@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.5] - 2018-02-24
+
 ### Fixed
 
 * Fix infinite loop when checking for circular InputObject defs. This resolves issue #47 (the CLI was crashing for graph.cool endpoints).
