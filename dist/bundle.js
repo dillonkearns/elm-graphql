@@ -13010,15 +13010,38 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString = F3(
 						_dillonkearns$graphqelm$Graphqelm_Generator_Imports$allRefs(typeRefs)))));
 	});
 
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$hasRecursiveRef = F2(
+	function (inputObjectName, referrableType) {
+		hasRecursiveRef:
+		while (true) {
+			var _p0 = referrableType;
+			switch (_p0.ctor) {
+				case 'InputObjectRef':
+					return _elm_lang$core$Native_Utils.eq(inputObjectName, _p0._0);
+				case 'List':
+					var _p1 = _p0._0;
+					var _v2 = inputObjectName,
+						_v3 = _p1._0;
+					inputObjectName = _v2;
+					referrableType = _v3;
+					continue hasRecursiveRef;
+				case 'Scalar':
+					return false;
+				case 'EnumRef':
+					return false;
+				case 'ObjectRef':
+					return false;
+				case 'UnionRef':
+					return false;
+				default:
+					return false;
+			}
+		}
+	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsRecursive = F2(
 	function (inputObjectName, field) {
-		var _p0 = field.typeRef;
-		var _p1 = _p0._0;
-		if (_p1.ctor === 'InputObjectRef') {
-			return _elm_lang$core$Native_Utils.eq(inputObjectName, _p1._0);
-		} else {
-			return false;
-		}
+		var _p2 = field.typeRef;
+		return A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$hasRecursiveRef, inputObjectName, _p2._0);
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isRecursive = F2(
 	function (inputObjectName, fields) {
@@ -13032,13 +13055,13 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$lookupInputObje
 		return _elm_lang$core$List$head(
 			A2(
 				_elm_lang$core$List$filterMap,
-				function (_p2) {
-					var _p3 = _p2;
-					var _p5 = _p3._0;
-					var _p4 = _p3._1;
-					if (_p4.ctor === 'InputObjectType') {
-						return _elm_lang$core$Native_Utils.eq(_p5, inputObjectName) ? _elm_lang$core$Maybe$Just(
-							{ctor: '_Tuple2', _0: _p5, _1: _p4._0}) : _elm_lang$core$Maybe$Nothing;
+				function (_p3) {
+					var _p4 = _p3;
+					var _p6 = _p4._0;
+					var _p5 = _p4._1;
+					if (_p5.ctor === 'InputObjectType') {
+						return _elm_lang$core$Native_Utils.eq(_p6, inputObjectName) ? _elm_lang$core$Maybe$Just(
+							{ctor: '_Tuple2', _0: _p6, _1: _p5._0}) : _elm_lang$core$Maybe$Nothing;
 					} else {
 						return _elm_lang$core$Maybe$Nothing;
 					}
@@ -13049,14 +13072,14 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsCircular
 	function (typeDefs, inputObjectName, fieldTypeRef) {
 		fieldIsCircular:
 		while (true) {
-			var _p6 = fieldTypeRef;
-			var _p7 = _p6._0;
-			switch (_p7.ctor) {
+			var _p7 = fieldTypeRef;
+			var _p8 = _p7._0;
+			switch (_p8.ctor) {
 				case 'InputObjectRef':
-					var _p8 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$lookupInputObject, typeDefs, _p7._0);
-					if (_p8.ctor === 'Just') {
-						var _p9 = _p8._0._1;
-						return A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isRecursive, inputObjectName, _p9) || A2(
+					var _p9 = A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$lookupInputObject, typeDefs, _p8._0);
+					if (_p9.ctor === 'Just') {
+						var _p10 = _p9._0._1;
+						return A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isRecursive, inputObjectName, _p10) || A2(
 							_elm_lang$core$List$any,
 							A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsCircular, typeDefs, inputObjectName),
 							A2(
@@ -13064,17 +13087,17 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$fieldIsCircular
 								function (_) {
 									return _.typeRef;
 								},
-								_p9));
+								_p10));
 					} else {
 						return false;
 					}
 				case 'List':
-					var _v7 = typeDefs,
-						_v8 = inputObjectName,
-						_v9 = _p7._0;
-					typeDefs = _v7;
-					inputObjectName = _v8;
-					fieldTypeRef = _v9;
+					var _v10 = typeDefs,
+						_v11 = inputObjectName,
+						_v12 = _p8._0;
+					typeDefs = _v10;
+					inputObjectName = _v11;
+					fieldTypeRef = _v12;
 					continue fieldIsCircular;
 				default:
 					return false;
@@ -13094,11 +13117,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isCircular = F3
 				fields));
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$hasLoop = F2(
-	function (typeDefs, _p10) {
-		var _p11 = _p10;
-		var _p12 = _p11._1;
-		if (_p12.ctor === 'InputObjectType') {
-			return A3(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isCircular, typeDefs, _p11._0, _p12._0);
+	function (typeDefs, _p11) {
+		var _p12 = _p11;
+		var _p13 = _p12._1;
+		if (_p13.ctor === 'InputObjectType') {
+			return A3(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectLoops$isCircular, typeDefs, _p12._0, _p13._0);
 		} else {
 			return false;
 		}
@@ -21542,7 +21565,7 @@ module.exports = {"name":"graphqelm","version":"3.1.4","scripts":{"build":"webpa
 /* 107 */
 /***/ (function(module, exports) {
 
-module.exports = {"version":"9.1.0","summary":"Type-safe GraphQL queries in Elm.","repository":"https://github.com/dillonkearns/graphqelm.git","license":"BSD3","source-directories":["src"],"exposed-modules":["Graphqelm.Operation","Graphqelm.Http","Graphqelm.SelectionSet","Graphqelm.Internal.Encode","Graphqelm.Document","Graphqelm.Field","Graphqelm.Internal.Builder.Argument","Graphqelm.Internal.Builder.Object","Graphqelm.OptionalArgument","Graphqelm.Http.GraphqlError","Graphqelm.Subscription","Graphqelm.Subscription.Protocol"],"dependencies":{"elm-community/json-extra":"2.6.0 <= v < 3.0.0","elm-community/list-extra":"7.0.1 <= v < 8.0.0","elm-community/string-extra":"1.4.0 <= v < 2.0.0","elm-lang/core":"5.0.0 <= v < 6.0.0","elm-lang/http":"1.0.0 <= v < 2.0.0","elm-lang/websocket":"1.0.2 <= v < 2.0.0"},"elm-version":"0.18.0 <= v < 0.19.0"}
+module.exports = {"version":"10.0.0","summary":"Type-safe GraphQL queries in Elm.","repository":"https://github.com/dillonkearns/graphqelm.git","license":"BSD3","source-directories":["src"],"exposed-modules":["Graphqelm.Operation","Graphqelm.Http","Graphqelm.SelectionSet","Graphqelm.Internal.Encode","Graphqelm.Document","Graphqelm.Field","Graphqelm.Internal.Builder.Argument","Graphqelm.Internal.Builder.Object","Graphqelm.OptionalArgument","Graphqelm.Http.GraphqlError","Graphqelm.Subscription","Graphqelm.Subscription.Protocol"],"dependencies":{"elm-community/json-extra":"2.6.0 <= v < 3.0.0","elm-community/list-extra":"7.0.1 <= v < 8.0.0","elm-community/string-extra":"1.4.0 <= v < 2.0.0","elm-lang/core":"5.0.0 <= v < 6.0.0","elm-lang/http":"1.0.0 <= v < 2.0.0","elm-lang/websocket":"1.0.2 <= v < 2.0.0"},"elm-version":"0.18.0 <= v < 0.19.0"}
 
 /***/ })
 /******/ ]);

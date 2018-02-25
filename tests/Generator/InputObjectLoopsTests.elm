@@ -83,6 +83,14 @@ all =
                 ]
                     |> InputObjectLoops.any
                     |> Expect.equal True
+        , test "recursive loop through list reference" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "CircularInputObject")
+                    (InputObjectType [ fieldListRef "CircularInputObject" "recursiveListField" ])
+                    Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal True
         ]
 
 

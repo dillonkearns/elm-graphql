@@ -76,9 +76,31 @@ fieldIsRecursive : ClassCaseName -> Field -> Bool
 fieldIsRecursive inputObjectName field =
     case field.typeRef of
         TypeReference referrableType isNullable ->
-            case referrableType of
-                InputObjectRef referredInputObjectName ->
-                    inputObjectName == referredInputObjectName
+            hasRecursiveRef inputObjectName referrableType
 
-                _ ->
-                    False
+
+hasRecursiveRef : ClassCaseName -> ReferrableType -> Bool
+hasRecursiveRef inputObjectName referrableType =
+    case referrableType of
+        InputObjectRef referredInputObjectName ->
+            inputObjectName == referredInputObjectName
+
+        Type.List listTypeRef ->
+            case listTypeRef of
+                Type.TypeReference listType isNullable ->
+                    hasRecursiveRef inputObjectName listType
+
+        Type.Scalar _ ->
+            False
+
+        Type.EnumRef _ ->
+            False
+
+        Type.ObjectRef _ ->
+            False
+
+        Type.UnionRef _ ->
+            False
+
+        Type.InterfaceRef _ ->
+            False
