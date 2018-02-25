@@ -34,6 +34,13 @@ color =
     Object.fieldDecoder "color" [] Decode.string
 
 
+{-| A brief description of this label.
+-}
+description : Field (Maybe String) Github.Object.Label
+description =
+    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
+
+
 id : Field Github.Scalar.Id Github.Object.Label
 id =
     Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
