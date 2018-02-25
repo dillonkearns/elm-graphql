@@ -4,6 +4,7 @@
 
 module Github.Object.RepositoryInvitation exposing (..)
 
+import Github.Enum.RepositoryPermission
 import Github.InputObject
 import Github.Interface
 import Github.Object
@@ -42,6 +43,13 @@ invitee object =
 inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
 inviter object =
     Object.selectionField "inviter" [] object identity
+
+
+{-| The permission granted on this repository by this invitation.
+-}
+permission : Field Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryInvitation
+permission =
+    Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder
 
 
 {-| The Repository the user is invited to.

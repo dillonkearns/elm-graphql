@@ -379,7 +379,7 @@ label requiredArgs object =
 
 
 type alias LabelsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String }
 
 
 {-| A list of labels associated with the repository.
@@ -388,16 +388,17 @@ type alias LabelsOptionalArguments =
   - after - Returns the elements in the list that come after the specified global ID.
   - last - Returns the last _n_ elements from the list.
   - before - Returns the elements in the list that come before the specified global ID.
+  - query - If provided, searches labels by name and description.
 
 -}
 labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> Field (Maybe decodesTo) Github.Object.Repository
 labels fillInOptionals object =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionField "labels" optionalArgs object (identity >> Decode.nullable)
