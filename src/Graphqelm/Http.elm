@@ -30,7 +30,6 @@ The builder syntax is inspired by Luke Westby's
 -}
 
 import Graphqelm.Document as Document
-import Graphqelm.Document.LowLevel as Document
 import Graphqelm.Http.GraphqlError as GraphqlError
 import Graphqelm.Http.QueryHelper as QueryHelper
 import Graphqelm.Http.QueryParams as QueryParams
