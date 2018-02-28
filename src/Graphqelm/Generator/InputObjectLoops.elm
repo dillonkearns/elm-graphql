@@ -13,17 +13,12 @@ hasLoop : List TypeDefinition -> TypeDefinition -> Bool
 hasLoop typeDefs (TypeDefinition name definableType description) =
     case definableType of
         InputObjectType fields ->
-            isCircular typeDefs name fields
+            fields
+                |> List.map .typeRef
+                |> List.any (fieldIsCircular typeDefs name)
 
         _ ->
             False
-
-
-isCircular : List TypeDefinition -> ClassCaseName -> List Field -> Bool
-isCircular typeDefs inputObjectName fields =
-    fields
-        |> List.map .typeRef
-        |> List.any (fieldIsCircular typeDefs inputObjectName)
 
 
 fieldIsCircular : List TypeDefinition -> ClassCaseName -> TypeReference -> Bool
