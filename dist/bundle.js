@@ -13716,19 +13716,18 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$generate = F2(
 var _dillonkearns$graphqelm$Graphqelm_Generator_Subscription$prepend = F3(
 	function (_p0, moduleName, fields) {
 		var _p1 = _p0;
-		var _p2 = _p1.apiSubmodule;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootSubscription)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootSubscription\nselection constructor =\n    Object.selection constructor\n',
+			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootSubscription\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
 				_1: {
 					ctor: '::',
-					_0: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString, _p2, moduleName, fields),
+					_0: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString, _p1.apiSubmodule, moduleName, fields),
 					_1: {
 						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, '.', _p2),
+						_0: _dillonkearns$graphqelm$Graphqelm_Generator_StaticImports$all(_p1),
 						_1: {ctor: '[]'}
 					}
 				}
