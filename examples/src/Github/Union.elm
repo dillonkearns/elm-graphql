@@ -9,6 +9,10 @@ type Closer
     = Closer
 
 
+type CollectionItemContent
+    = CollectionItemContent
+
+
 type IssueOrPullRequest
     = IssueOrPullRequest
 
