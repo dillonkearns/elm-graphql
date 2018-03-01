@@ -111,7 +111,7 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ]
+                    interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ] ++ isNullableString
 
         Type.List typeRef ->
             generateEncoder_ forInputObject apiSubmodule typeRef ++ isNullableString ++ " |> Encode.list"
