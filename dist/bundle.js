@@ -13562,38 +13562,49 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Object$generate = F4(
 					fields)));
 	});
 
+var _dillonkearns$graphqelm$Graphqelm_Generator_StaticImports$all = function (_p0) {
+	var _p1 = _p0;
+	return A2(
+		_dillonkearns$graphqelm$Interpolate$interpolate,
+		'import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\nimport Graphqelm.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Json.Decode as Decode exposing (Decoder)\nimport {0}.Object\nimport {0}.Interface\nimport {0}.Union\nimport {0}.Scalar\nimport {0}.InputObject\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Internal.Encode as Encode exposing (Value)',
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$String$join, '.', _p1.apiSubmodule),
+			_1: {ctor: '[]'}
+		});
+};
+
 var _dillonkearns$graphqelm$Graphqelm_Generator_Query$prepend = F3(
-	function (apiSubmodule, moduleName, fields) {
+	function (_p0, moduleName, fields) {
+		var _p1 = _p0;
 		return A2(
 			_dillonkearns$graphqelm$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootQuery)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a top-level query. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.selection constructor\n',
+			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level query. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
 				_0: A2(_elm_lang$core$String$join, '.', moduleName),
 				_1: {
 					ctor: '::',
-					_0: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString, apiSubmodule, moduleName, fields),
+					_0: A3(_dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString, _p1.apiSubmodule, moduleName, fields),
 					_1: {
 						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, '.', apiSubmodule),
+						_0: _dillonkearns$graphqelm$Graphqelm_Generator_StaticImports$all(_p1),
 						_1: {ctor: '[]'}
 					}
 				}
 			});
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Query$generate = F3(
-	function (_p0, moduleName, fields) {
-		var _p1 = _p0;
-		var _p2 = _p1;
+	function (context, moduleName, fields) {
 		return A2(
 			_elm_lang$core$Basics_ops['++'],
-			A3(_dillonkearns$graphqelm$Graphqelm_Generator_Query$prepend, _p1.apiSubmodule, moduleName, fields),
+			A3(_dillonkearns$graphqelm$Graphqelm_Generator_Query$prepend, context, moduleName, fields),
 			A2(
 				_elm_lang$core$String$join,
 				'\n\n',
 				A2(
 					_elm_lang$core$List$map,
-					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generateForObject, _p2, _p2.query),
+					A2(_dillonkearns$graphqelm$Graphqelm_Generator_Field$generateForObject, context, context.query),
 					fields)));
 	});
 
