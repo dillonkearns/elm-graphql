@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.6] - 2018-03-01
+
+* Add maybe encoder to pipeline for nullable scalar encoders. Fixes #44.
+
 ## [3.1.5] - 2018-02-24
 
 ### Fixed
