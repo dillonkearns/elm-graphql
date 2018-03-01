@@ -12,6 +12,7 @@ import Github.Enum.ProjectState
 import Github.Enum.PullRequestState
 import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryLockReason
+import Github.Enum.RepositoryPermission
 import Github.Enum.RepositoryPrivacy
 import Github.Enum.SubscriptionState
 import Github.InputObject
@@ -720,7 +721,7 @@ type alias RefRequiredArguments =
 
 {-| Fetch a given ref from the repository
 
-  - qualifiedName - The ref to retrieve.Fully qualified matches are checked in order (`refs/heads/master`) before falling back onto checks for short name matches (`master`).
+  - qualifiedName - The ref to retrieve. Fully qualified matches are checked in order (`refs/heads/master`) before falling back onto checks for short name matches (`master`).
 
 -}
 ref : RefRequiredArguments -> SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Repository
@@ -934,6 +935,13 @@ viewerCanUpdateTopics =
 viewerHasStarred : Field Bool Github.Object.Repository
 viewerHasStarred =
     Object.fieldDecoder "viewerHasStarred" [] Decode.bool
+
+
+{-| The users permission level on the repository. Will return null if authenticated as an GitHub App.
+-}
+viewerPermission : Field (Maybe Github.Enum.RepositoryPermission.RepositoryPermission) Github.Object.Repository
+viewerPermission =
+    Object.fieldDecoder "viewerPermission" [] (Github.Enum.RepositoryPermission.decoder |> Decode.nullable)
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
