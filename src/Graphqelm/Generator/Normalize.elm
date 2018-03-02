@@ -7,8 +7,8 @@ import String.Extra
 
 normalizeIfElmReserved : String -> String
 normalizeIfElmReserved name =
-    if name == "type" then
-        "type_"
+    if List.member name elmReservedWords then
+        name ++ "_"
     else
         name
 
@@ -69,3 +69,25 @@ decapitalized name =
         |> capitalized
         |> String.Extra.decapitalize
         |> normalizeIfElmReserved
+
+
+{-| Taken from <https://github.com/elm-lang/elm-compiler/blob/d07679322ef5d71de1bd2b987ddc660a85599b87/compiler/src/Parse/Primitives/Variable.hs#L64>
+-}
+elmReservedWords : List String
+elmReservedWords =
+    [ "as"
+    , "case"
+    , "else"
+    , "exposing"
+    , "if"
+    , "import"
+    , "in"
+    , "infix" -- `infix` is a keyword rather than reserved, but it can't be used as a top-level identifier
+    , "let"
+    , "module"
+    , "of"
+    , "port"
+    , "then"
+    , "type"
+    , "where"
+    ]

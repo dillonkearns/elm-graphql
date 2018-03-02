@@ -12,10 +12,6 @@ all =
             \() ->
                 Normalize.decapitalized "validCamelCaseName"
                     |> Expect.equal "validCamelCaseName"
-        , test "type field name" <|
-            \() ->
-                Normalize.decapitalized "type"
-                    |> Expect.equal "type_"
         , test "leaves valid snake_case names untouched" <|
             \() ->
                 Normalize.decapitalized "year_budget"
@@ -60,4 +56,22 @@ all =
             \() ->
                 Normalize.decapitalized "________x"
                     |> Expect.equal "x________"
+        , describe "reserved words"
+            [ test "type" <|
+                \() ->
+                    Normalize.decapitalized "type"
+                        |> Expect.equal "type_"
+            , test "where" <|
+                \() ->
+                    Normalize.decapitalized "where"
+                        |> Expect.equal "where_"
+            , test "of" <|
+                \() ->
+                    Normalize.decapitalized "of"
+                        |> Expect.equal "of_"
+            , test "infix" <|
+                \() ->
+                    Normalize.decapitalized "infix"
+                        |> Expect.equal "infix_"
+            ]
         ]
