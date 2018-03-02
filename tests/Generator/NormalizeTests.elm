@@ -7,7 +7,7 @@ import Test exposing (Test, describe, only, test)
 
 all : Test
 all =
-    describe "normalize" <|
+    describe "normalize"
         [ test "leaves valid names untouched" <|
             \() ->
                 Normalize.decapitalized "validCamelCaseName"
@@ -56,12 +56,18 @@ all =
             \() ->
                 Normalize.decapitalized "________x"
                     |> Expect.equal "x________"
+        , describe "reserved words"
+            [ test "type" <|
+                \() ->
+                    Normalize.decapitalized "type"
+                        |> Expect.equal "type_"
+            , test "where" <|
+                \() ->
+                    Normalize.decapitalized "where"
+                        |> Expect.equal "where_"
+            , test "of" <|
+                \() ->
+                    Normalize.decapitalized "of"
+                        |> Expect.equal "of_"
+            ]
         ]
-            ++ List.map
-                (\keyword ->
-                    test (keyword ++ " field name") <|
-                        \() ->
-                            Normalize.decapitalized keyword
-                                |> Expect.equal (keyword ++ "_")
-                )
-                Normalize.elmKeywords

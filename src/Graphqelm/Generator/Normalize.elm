@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Normalize exposing (capitalized, decapitalized, elmKeywords)
+module Graphqelm.Generator.Normalize exposing (capitalized, decapitalized)
 
 import Char
 import Regex
