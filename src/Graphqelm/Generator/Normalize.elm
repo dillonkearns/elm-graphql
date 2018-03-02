@@ -5,28 +5,6 @@ import Regex
 import String.Extra
 
 
-{-| Taken from <https://github.com/elm-lang/elm-compiler/blob/master/src/Parse/Primitives/Keyword.hs>
--}
-elmKeywords : List String
-elmKeywords =
-    [ "type"
-    , "port"
-    , "if"
-    , "then"
-    , "else"
-    , "case"
-    , "of"
-    , "let"
-    , "in"
-    , "infix"
-    , "module"
-    , "import"
-    , "exposing"
-    , "as"
-    , "where"
-    ]
-
-
 normalizeIfElmReserved : String -> String
 normalizeIfElmReserved name =
     if List.member name elmKeywords then
@@ -91,3 +69,25 @@ decapitalized name =
         |> capitalized
         |> String.Extra.decapitalize
         |> normalizeIfElmReserved
+
+
+{-| Taken from <https://github.com/elm-lang/elm-compiler/blob/master/src/Parse/Primitives/Keyword.hs>
+-}
+elmKeywords : List String
+elmKeywords =
+    [ "type"
+    , "port"
+    , "if"
+    , "then"
+    , "else"
+    , "case"
+    , "of"
+    , "let"
+    , "in"
+    , "infix"
+    , "module"
+    , "import"
+    , "exposing"
+    , "as"
+    , "where"
+    ]
