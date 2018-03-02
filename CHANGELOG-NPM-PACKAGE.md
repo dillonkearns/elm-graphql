@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.8] - 2018-03-02
+
 ### Fixed
 
 * Normalize all Elm reserved words by appending an `_` (previously only `type` was normalized). Resolves #40 (thanks for pull request #41 @madsflensted!).
