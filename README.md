@@ -112,6 +112,8 @@ all your feedback, the elm-format PR, and for [the incredible logo design](https
 Thank you Mike Stock ([mikeastock](https://github.com/mikeastock/)) for
 setting up Travis CI!
 
+Thanks for [the reserved words pull request](https://github.com/dillonkearns/graphqelm/pull/41) @madsflensted!
+
 ## Roadmap
 
 All core features are supported. That is, you can build any query or mutation
