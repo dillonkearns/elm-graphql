@@ -69,5 +69,9 @@ all =
                 \() ->
                     Normalize.decapitalized "of"
                         |> Expect.equal "of_"
+            , test "infix" <|
+                \() ->
+                    Normalize.decapitalized "infix"
+                        |> Expect.equal "infix_"
             ]
         ]

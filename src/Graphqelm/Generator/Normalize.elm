@@ -82,7 +82,7 @@ elmReservedWords =
     , "if"
     , "import"
     , "in"
-    , "infix"
+    , "infix" -- `infix` is a keyword rather than reserved, but it can't be used as a top-level identifier
     , "let"
     , "module"
     , "of"
