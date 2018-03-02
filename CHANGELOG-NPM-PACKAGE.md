@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* Normalize all Elm reserved words by appending an `_` (previously only `type` was normalized). Resolves #40 (thanks for pull request #41 @madsflensted!).
+
 ## [3.1.7] - 2018-03-01
 
 * Import all `Operation` values (it's rare but possible for schemas to refer to other operations) #45.

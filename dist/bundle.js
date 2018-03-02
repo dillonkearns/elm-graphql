@@ -8950,6 +8950,67 @@ var _elm_community$string_extra$String_Extra$decapitalize = function (word) {
 	return A2(_elm_community$string_extra$String_Extra$changeCase, _elm_lang$core$Char$toLower, word);
 };
 
+var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$elmReservedWords = {
+	ctor: '::',
+	_0: 'as',
+	_1: {
+		ctor: '::',
+		_0: 'case',
+		_1: {
+			ctor: '::',
+			_0: 'else',
+			_1: {
+				ctor: '::',
+				_0: 'exposing',
+				_1: {
+					ctor: '::',
+					_0: 'if',
+					_1: {
+						ctor: '::',
+						_0: 'import',
+						_1: {
+							ctor: '::',
+							_0: 'in',
+							_1: {
+								ctor: '::',
+								_0: 'infix',
+								_1: {
+									ctor: '::',
+									_0: 'let',
+									_1: {
+										ctor: '::',
+										_0: 'module',
+										_1: {
+											ctor: '::',
+											_0: 'of',
+											_1: {
+												ctor: '::',
+												_0: 'port',
+												_1: {
+													ctor: '::',
+													_0: 'then',
+													_1: {
+														ctor: '::',
+														_0: 'type',
+														_1: {
+															ctor: '::',
+															_0: 'where',
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+};
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitilize = function (string) {
 	var _p0 = _elm_lang$core$String$toList(string);
 	if (_p0.ctor === '::') {
@@ -9012,7 +9073,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$capitalized = function
 		A2(_elm_lang$core$Basics_ops['++'], group.leading, group.trailing));
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$normalizeIfElmReserved = function (name) {
-	return _elm_lang$core$Native_Utils.eq(name, 'type') ? 'type_' : name;
+	return A2(_elm_lang$core$List$member, name, _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$elmReservedWords) ? A2(_elm_lang$core$Basics_ops['++'], name, '_') : name;
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$decapitalized = function (name) {
 	return _dillonkearns$graphqelm$Graphqelm_Generator_Normalize$normalizeIfElmReserved(
