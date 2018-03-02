@@ -10,7 +10,6 @@ import String.Extra
 elmKeywords : List String
 elmKeywords =
     [ "type"
-    , "alias"
     , "port"
     , "if"
     , "then"
@@ -20,20 +19,11 @@ elmKeywords =
     , "let"
     , "in"
     , "infix"
-    , "left"
-    , "right"
-    , "non"
     , "module"
     , "import"
     , "exposing"
     , "as"
     , "where"
-    , "effect"
-    , "command"
-    , "subscription"
-    , "true"
-    , "false"
-    , "null"
     ]
 
 
