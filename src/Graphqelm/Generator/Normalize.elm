@@ -7,7 +7,7 @@ import String.Extra
 
 normalizeIfElmReserved : String -> String
 normalizeIfElmReserved name =
-    if List.member name elmKeywords then
+    if List.member name elmReservedWords then
         name ++ "_"
     else
         name
@@ -71,23 +71,23 @@ decapitalized name =
         |> normalizeIfElmReserved
 
 
-{-| Taken from <https://github.com/elm-lang/elm-compiler/blob/master/src/Parse/Primitives/Keyword.hs>
+{-| Taken from <https://github.com/elm-lang/elm-compiler/blob/d07679322ef5d71de1bd2b987ddc660a85599b87/compiler/src/Parse/Primitives/Variable.hs#L64>
 -}
-elmKeywords : List String
-elmKeywords =
-    [ "type"
-    , "port"
-    , "if"
-    , "then"
-    , "else"
+elmReservedWords : List String
+elmReservedWords =
+    [ "as"
     , "case"
-    , "of"
-    , "let"
+    , "else"
+    , "exposing"
+    , "if"
+    , "import"
     , "in"
     , "infix"
+    , "let"
     , "module"
-    , "import"
-    , "exposing"
-    , "as"
+    , "of"
+    , "port"
+    , "then"
+    , "type"
     , "where"
     ]
