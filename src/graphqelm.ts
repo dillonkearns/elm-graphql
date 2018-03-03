@@ -18,6 +18,9 @@ const usage = `Usage:
   graphqelm url --output path/to/src --base My.Api.Submodule # generates code within path/to/src/My/Api/Submodule
   graphqelm url --excludeDeprecated # excludes deprecated enums and fields (they are included by default)
 
+  # Schema file instead of URL
+  graphqelm --introspection-file path/to/introspection-response.json
+
   graphqelm --version # print the current graphqelm version and target elm package version
   graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`
 

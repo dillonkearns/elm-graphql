@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `--introspection-file` CLI option to usage message.
+
 ## [3.1.8] - 2018-03-02
 
 ### Fixed
