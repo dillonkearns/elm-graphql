@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* Fixed `RangeError: Maximum call stack size exceeded` that was coming from
+  infinite recursion CLI bug, issue #47.
+
 ### Added
 
 * Add `--introspection-file` CLI option to usage message.

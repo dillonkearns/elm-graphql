@@ -83,6 +83,20 @@ all =
                 ]
                     |> InputObjectLoops.any
                     |> Expect.equal True
+        , test "deeploy nested loops through list reference" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "CircularInputObjectOne")
+                    (InputObjectType [ field "CircularInputObjectTwo" "fieldNameOne" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectTwo")
+                    (InputObjectType [ fieldListRef "CircularInputObjectThree" "fieldNameTwo" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "CircularInputObjectThree")
+                    (InputObjectType [ field "CircularInputObjectOne" "fieldNameThree" ])
+                    Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal True
         , test "recursive loop through list reference" <|
             \() ->
                 [ TypeDefinition (ClassCaseName.build "CircularInputObject")

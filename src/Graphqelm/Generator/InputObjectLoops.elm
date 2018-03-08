@@ -2,6 +2,7 @@ module Graphqelm.Generator.InputObjectLoops exposing (any, hasLoop)
 
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(NonNullable), ReferrableType(InputObjectRef), TypeDefinition(TypeDefinition), TypeReference(TypeReference))
+import List.Extra
 
 
 any : List TypeDefinition -> Bool
@@ -23,22 +24,34 @@ hasLoop typeDefs (TypeDefinition name definableType description) =
 
 fieldIsCircular : List TypeDefinition -> ClassCaseName -> TypeReference -> Bool
 fieldIsCircular typeDefs inputObjectName fieldTypeRef =
+    fieldIsCircular_ [] typeDefs inputObjectName fieldTypeRef
+
+
+fieldIsCircular_ : List ClassCaseName -> List TypeDefinition -> ClassCaseName -> TypeReference -> Bool
+fieldIsCircular_ visitedNames typeDefs inputObjectName fieldTypeRef =
+    let
+        alreadyVisitedThis =
+            visitedNames
+                |> List.map ClassCaseName.raw
+                |> List.Extra.allDifferent
+    in
     case fieldTypeRef of
         TypeReference referrableType isNullable ->
             case referrableType of
                 InputObjectRef inputObjectRefName ->
                     case lookupInputObject typeDefs inputObjectRefName of
                         Just ( name, fields ) ->
-                            isRecursive inputObjectName fields
+                            not alreadyVisitedThis
+                                || isRecursive inputObjectName fields
                                 || List.any
-                                    (fieldIsCircular typeDefs inputObjectName)
+                                    (fieldIsCircular_ (inputObjectName :: visitedNames) typeDefs inputObjectName)
                                     (fields |> List.map .typeRef)
 
                         Nothing ->
                             False
 
                 Type.List listTypeRef ->
-                    fieldIsCircular typeDefs inputObjectName listTypeRef
+                    fieldIsCircular_ (inputObjectName :: visitedNames) typeDefs inputObjectName listTypeRef
 
                 _ ->
                     False
