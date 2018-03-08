@@ -3,7 +3,7 @@ module Graphqelm.Generator.Union exposing (generate)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 generate : Context -> ClassCaseName -> List String -> List ClassCaseName -> String

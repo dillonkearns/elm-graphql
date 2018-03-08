@@ -7,7 +7,7 @@ import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 generate : Context -> List TypeDefinition -> ( List String, String )

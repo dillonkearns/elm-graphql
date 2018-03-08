@@ -5,7 +5,7 @@ import Graphqelm.Generator.Field as FieldGenerator
 import Graphqelm.Generator.Imports as Imports
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 generate : Context -> ClassCaseName -> List String -> List Type.Field -> String

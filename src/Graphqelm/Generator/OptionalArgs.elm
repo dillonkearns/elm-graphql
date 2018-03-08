@@ -4,7 +4,7 @@ import Graphqelm.Generator.Decoder
 import Graphqelm.Generator.Let exposing (LetBinding)
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.Type as Type
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 type alias Result =

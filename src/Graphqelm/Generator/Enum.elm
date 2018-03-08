@@ -3,7 +3,7 @@ module Graphqelm.Generator.Enum exposing (enumType, generate)
 import Graphqelm.Generator.DocComment as DocComment
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type exposing (EnumValue)
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 generate : ClassCaseName -> List String -> List EnumValue -> Maybe String -> String

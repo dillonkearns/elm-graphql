@@ -46,6 +46,13 @@ id =
     Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
 
 
+{-| Indicates whether or not this is a default label.
+-}
+isDefault : Field Bool Github.Object.Label
+isDefault =
+    Object.fieldDecoder "isDefault" [] Decode.bool
+
+
 type alias IssuesOptionalArguments =
     { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }
 

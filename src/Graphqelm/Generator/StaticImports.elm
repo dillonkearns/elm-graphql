@@ -1,7 +1,7 @@
 module Graphqelm.Generator.StaticImports exposing (all)
 
 import Graphqelm.Generator.Context exposing (Context)
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 all : Context -> String

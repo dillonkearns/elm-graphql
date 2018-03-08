@@ -4,7 +4,7 @@ import Graphqelm.Generator.ModuleName as ModuleName
 import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Scalar as Scalar
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 generateDecoder : List String -> TypeReference -> List String

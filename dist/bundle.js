@@ -11524,7 +11524,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_ModuleName$generate = F2(
 		}
 	});
 
-var _dillonkearns$graphqelm$Interpolate$applyInterpolation = F2(
+var _lukewestby$elm_string_interpolate$String_Interpolate$applyInterpolation = F2(
 	function (replacements, match) {
 		var ordinalString = function (_p0) {
 			return A2(
@@ -11545,15 +11545,15 @@ var _dillonkearns$graphqelm$Interpolate$applyInterpolation = F2(
 			}
 		}
 	});
-var _dillonkearns$graphqelm$Interpolate$interpolationRegex = _elm_lang$core$Regex$regex('\\{\\d+\\}');
-var _dillonkearns$graphqelm$Interpolate$interpolate = F2(
+var _lukewestby$elm_string_interpolate$String_Interpolate$interpolationRegex = _elm_lang$core$Regex$regex('\\{\\d+\\}');
+var _lukewestby$elm_string_interpolate$String_Interpolate$interpolate = F2(
 	function (string, args) {
 		var asArray = _elm_lang$core$Array$fromList(args);
 		return A4(
 			_elm_lang$core$Regex$replace,
 			_elm_lang$core$Regex$All,
-			_dillonkearns$graphqelm$Interpolate$interpolationRegex,
-			_dillonkearns$graphqelm$Interpolate$applyInterpolation(asArray),
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolationRegex,
+			_lukewestby$elm_string_interpolate$String_Interpolate$applyInterpolation(asArray),
 			string);
 	});
 
@@ -11568,7 +11568,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateTypeCommon = F4(
 			var _p2 = _p1._1;
 			if (_p2.ctor === 'Nullable') {
 				return A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
+					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 					'({0} {1})',
 					{
 						ctor: '::',
@@ -11717,7 +11717,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder_ = F3(
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
 							A2(
-								_dillonkearns$graphqelm$Interpolate$interpolate,
+								_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 								'(\\({0} raw) -> Encode.string raw)',
 								{
 									ctor: '::',
@@ -11757,7 +11757,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateEncoder_ = F3(
 					_p9)('Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions');
 			case 'EnumRef':
 				return A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
+					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 					A2(_elm_lang$core$Basics_ops['++'], '(Encode.enum {0})', isNullableString),
 					{
 						ctor: '::',
@@ -11877,7 +11877,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Decoder$generateDecoder = F2(
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_dillonkearns$graphqelm$Interpolate$interpolate,
+											_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 											'Decode.map {0}',
 											{
 												ctor: '::',
@@ -11964,7 +11964,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argDoc = function (_p
 		_elm_lang$core$Maybe$map,
 		function (aDescription) {
 			return A2(
-				_dillonkearns$graphqelm$Interpolate$interpolate,
+				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 				'  - {0} - {1}',
 				{
 					ctor: '::',
@@ -11984,7 +11984,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$argsDoc = function (a
 		return '';
 	} else {
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'\n\n{0}\n',
 			{
 				ctor: '::',
@@ -12011,7 +12011,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs = F2(
 var _dillonkearns$graphqelm$Graphqelm_Generator_DocComment$generate_ = F2(
 	function (mainDescription, itemDescriptions) {
 		return A2(_dillonkearns$graphqelm$Graphqelm_Generator_DocComment$hasDocs, mainDescription, itemDescriptions) ? A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{-|{0}{1}\n-}\n',
 			{
 				ctor: '::',
@@ -12069,7 +12069,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 		return A2(
 			_elm_lang$core$Basics_ops['++'],
 			A2(
-				_dillonkearns$graphqelm$Interpolate$interpolate,
+				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 				'decoder : Decoder {0}\ndecoder =\n    Decode.string\n        |> Decode.andThen\n            (\\string ->\n                case string of\n',
 				{
 					ctor: '::',
@@ -12111,7 +12111,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumDecoder = F2(
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$toStringCase = function (enumValue) {
 	return A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
+		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 		'        {0} ->\n                \"{1}\"\n',
 		{
 			ctor: '::',
@@ -12126,7 +12126,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$toStringCase = function (en
 var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$enumToString = F2(
 	function (enumName, enumValues) {
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.\n-}\ntoString : {0} -> String\ntoString enum =\n    case enum of\n{1}',
 			{
 				ctor: '::',
@@ -12173,7 +12173,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Enum$prepend = F4(
 		return A2(
 			_elm_lang$core$Basics_ops['++'],
 			A2(
-				_dillonkearns$graphqelm$Interpolate$interpolate,
+				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 				'module {0} exposing (..)\n\nimport Json.Decode as Decode exposing (Decoder)\n\n\n',
 				{
 					ctor: '::',
@@ -12212,7 +12212,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate = function (letBind
 	var toLetString = function (_p0) {
 		var _p1 = _p0;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'        {0} =\n            {1}',
 			{
 				ctor: '::',
@@ -12231,7 +12231,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate = function (letBind
 	return _elm_lang$core$Native_Utils.eq(
 		letBindings,
 		{ctor: '[]'}) ? '' : A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
+		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 		'\n    let\n{0}\n    in',
 		{
 			ctor: '::',
@@ -12253,7 +12253,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$optionalArgOrNothin
 var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$typeAlias = F2(
 	function (apiSubmodule, optionalArgs) {
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{ {0} }',
 			_elm_lang$core$List$singleton(
 				A2(
@@ -12278,7 +12278,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$typeAlias = F2(
 	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$annotation = function (fieldName) {
 	return A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
+		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 		'({0}OptionalArguments -> {0}OptionalArguments)',
 		{
 			ctor: '::',
@@ -12301,7 +12301,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$emptyRecord = funct
 			},
 			optionalArgs));
 	return A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
+		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 		'{ {0} }',
 		{
 			ctor: '::',
@@ -12314,7 +12314,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValue = F2(
 		var _p8 = _p7;
 		var _p9 = _p8.name;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'Argument.optional \"{0}\" filledInOptionals.{1} ({2})',
 			{
 				ctor: '::',
@@ -12343,7 +12343,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValues = F2(
 				_dillonkearns$graphqelm$Graphqelm_Generator_OptionalArgs$argValue(apiSubmodule),
 				optionalArgs));
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'[ {0} ]',
 			{
 				ctor: '::',
@@ -12449,7 +12449,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgAnnotati
 	function (apiSubmodule, _p0) {
 		var _p1 = _p0;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{0} : {1}',
 			{
 				ctor: '::',
@@ -12480,7 +12480,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$requiredArgString =
 		var _p3 = _p2;
 		var _p4 = _p3.name;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'Argument.required \"{0}\" requiredArgs.{1} ({2})',
 			{
 				ctor: '::',
@@ -12530,7 +12530,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_RequiredArgs$generate = F2(
 			{
 				annotation: function (fieldName) {
 					return A2(
-						_dillonkearns$graphqelm$Interpolate$interpolate,
+						_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 						'{0}RequiredArguments',
 						{
 							ctor: '::',
@@ -12630,7 +12630,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$objectThing = F4(
 			}
 		}();
 		var objectArgAnnotation = A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'SelectionSet decodesTo {0}',
 			{
 				ctor: '::',
@@ -12758,7 +12758,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$typeAliasesToString = F2(
 					function (_p18) {
 						var _p19 = _p18;
 						return A2(
-							_dillonkearns$graphqelm$Interpolate$interpolate,
+							_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 							'type alias {0}{1} = {2}',
 							{
 								ctor: '::',
@@ -12808,7 +12808,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString = F
 						ctor: '::',
 						_0: _elm_lang$core$Maybe$Just(
 							A2(
-								_dillonkearns$graphqelm$Interpolate$interpolate,
+								_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 								'{9}{6} : {3}\n{6} {4}={7}\n      {5} \"{0}\" {1} ({2}){8}\n',
 								{
 									ctor: '::',
@@ -12860,7 +12860,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Field$forObject_ = F4(
 		return A3(
 			_dillonkearns$graphqelm$Graphqelm_Generator_Field$fieldGeneratorToString,
 			A2(
-				_dillonkearns$graphqelm$Interpolate$interpolate,
+				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 				'Field {0} {1}',
 				{
 					ctor: '::',
@@ -13218,7 +13218,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderFunction 
 			var _p7 = _p6._1;
 			if (_p7.ctor === 'NonNullable') {
 				return A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
+					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 					' input.{0} |> Just',
 					{
 						ctor: '::',
@@ -13227,7 +13227,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderFunction 
 					});
 			} else {
 				return A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
+					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 					' |> Encode.optional input.{0}',
 					{
 						ctor: '::',
@@ -13237,7 +13237,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderFunction 
 			}
 		}();
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'({0}) {1}',
 			{
 				ctor: '::',
@@ -13252,7 +13252,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderFunction 
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderForField = F2(
 	function (context, field) {
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'( \"{0}\", {1} )',
 			{
 				ctor: '::',
@@ -13269,7 +13269,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoder = F2(
 		var _p9 = _p8;
 		var _p10 = _p9.name;
 		var parameter = _p9.hasLoop ? A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'({0} input)',
 			{
 				ctor: '::',
@@ -13277,7 +13277,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoder = F2(
 				_1: {ctor: '[]'}
 			}) : 'input';
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{-| Encode a {0} into a value that can be used as an argument.\n-}\nencode{0} : {0} -> Value\nencode{0} {1} =\n    Encode.maybeObject\n        [ {2} ]',
 			{
 				ctor: '::',
@@ -13303,7 +13303,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$aliasEntry = F2(
 	function (_p11, field) {
 		var _p12 = _p11;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{0} : {1}',
 			{
 				ctor: '::',
@@ -13321,7 +13321,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$typeAlias = F2(
 		var _p16 = _p14.name;
 		var _p15 = _p14.fields;
 		return _p14.hasLoop ? A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{-| Type alias for the `{0}` attributes. Note that this type\nneeds to use the `{0}` type (not just a plain type alias) because it has\nreferences to itself either directly (recursive) or indirectly (circular). See\n<https://github.com/dillonkearns/graphqelm/issues/33>.\n-}\ntype alias {0}Raw =\n    { {1} }\n\n\n{-| Type for the {0} input object.\n-}\ntype {0}\n    = {0} {0}Raw\n    ',
 			{
 				ctor: '::',
@@ -13338,7 +13338,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$typeAlias = F2(
 					_1: {ctor: '[]'}
 				}
 			}) : A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{-| Type for the {0} input object.\n-}\ntype alias {0} =\n    { {1} }\n    ',
 			{
 				ctor: '::',
@@ -13387,7 +13387,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateImports 
 		var _p20 = _p19;
 		var _p21 = _p20.apiSubmodule;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{0}\n',
 			{
 				ctor: '::',
@@ -13418,7 +13418,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateFileCont
 		return _elm_lang$core$Native_Utils.eq(
 			typesToGenerate,
 			{ctor: '[]'}) ? A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
 			{
 				ctor: '::',
@@ -13428,7 +13428,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateFileCont
 					_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName(context)),
 				_1: {ctor: '[]'}
 			}) : A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\n\n{1}\n\n\n{2}\n',
 			{
 				ctor: '::',
@@ -13471,7 +13471,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$prepend = F3(
 		var _p1 = _p0;
 		var _p2 = _p1.apiSubmodule;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\nimport Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{1}\n\n{-| Select only common fields from the interface.\n-}\ncommonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\ncommonSelection constructor =\n    Object.selection constructor\n\n\n{-| Select both common and type-specific fields from the interface.\n-}\nselection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}\nselection constructor typeSpecificDecoders =\n    Object.interfaceSelection typeSpecificDecoders constructor\n',
 			{
 				ctor: '::',
@@ -13490,7 +13490,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$prepend = F3(
 var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$fragment = F3(
 	function (context, moduleName, interfaceImplementor) {
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
 			{
 				ctor: '::',
@@ -13550,7 +13550,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Interface$generate = F4(
 var _dillonkearns$graphqelm$Graphqelm_Generator_StaticImports$all = function (_p0) {
 	var _p1 = _p0;
 	return A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
+		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 		'import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\nimport Graphqelm.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Json.Decode as Decode exposing (Decoder)\nimport {0}.Object\nimport {0}.Interface\nimport {0}.Union\nimport {0}.Scalar\nimport {0}.InputObject\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphqelm.Internal.Encode as Encode exposing (Value)',
 		{
 			ctor: '::',
@@ -13563,7 +13563,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Mutation$prepend = F3(
 	function (_p0, moduleName, fields) {
 		var _p1 = _p0;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
@@ -13604,7 +13604,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Object$prepend = F3(
 		var _p1 = _p0;
 		var _p2 = _p1.apiSubmodule;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\nimport Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a SelectionSet for this object.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
@@ -13638,7 +13638,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Query$prepend = F3(
 	function (_p0, moduleName, fields) {
 		var _p1 = _p0;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level query. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
@@ -13670,7 +13670,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Query$generate = F3(
 
 var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$generateType = function (name) {
 	return A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
+		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 		'type {0}\n    = {0} String',
 		{
 			ctor: '::',
@@ -13736,14 +13736,14 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Scalar$fileContents = F2(
 		return _elm_lang$core$Native_Utils.eq(
 			typesToGenerate,
 			{ctor: '[]'}) ? A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
 			{
 				ctor: '::',
 				_0: moduleName,
 				_1: {ctor: '[]'}
 			}) : A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\n\n{1}\n',
 			{
 				ctor: '::',
@@ -13778,7 +13778,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Subscription$prepend = F3(
 	function (_p0, moduleName, fields) {
 		var _p1 = _p0;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphqelm.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootSubscription\nselection constructor =\n    Object.selection constructor\n',
 			{
 				ctor: '::',
@@ -13843,7 +13843,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$objectName =
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateType = function (name) {
 	return A2(
-		_dillonkearns$graphqelm$Interpolate$interpolate,
+		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 		'type {0}\n    = {0}',
 		{
 			ctor: '::',
@@ -13878,7 +13878,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateComm
 				return _elm_lang$core$Native_Utils.eq(
 					typesToGenerate,
 					{ctor: '[]'}) ? A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
+					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 					'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
 					{
 						ctor: '::',
@@ -13895,7 +13895,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_TypeLockDefinitions$generateComm
 								})),
 						_1: {ctor: '[]'}
 					}) : A2(
-					_dillonkearns$graphqelm$Interpolate$interpolate,
+					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 					'module {0} exposing (..)\n\n\n{1}\n',
 					{
 						ctor: '::',
@@ -13942,7 +13942,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Union$prepend = F2(
 	function (_p0, moduleName) {
 		var _p1 = _p0;
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'module {0} exposing (..)\n\nimport Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport {1}.InputObject\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n\n\nselection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}\nselection constructor typeSpecificDecoders =\n    Object.unionSelection typeSpecificDecoders constructor\n',
 			{
 				ctor: '::',
@@ -13957,7 +13957,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_Union$prepend = F2(
 var _dillonkearns$graphqelm$Graphqelm_Generator_Union$fragment = F3(
 	function (context, moduleName, interfaceImplementor) {
 		return A2(
-			_dillonkearns$graphqelm$Interpolate$interpolate,
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
 			{
 				ctor: '::',
@@ -21634,7 +21634,7 @@ module.exports = {"name":"graphqelm","version":"3.1.8","scripts":{"build":"webpa
 /* 107 */
 /***/ (function(module, exports) {
 
-module.exports = {"version":"10.1.0","summary":"Type-safe GraphQL queries in Elm.","repository":"https://github.com/dillonkearns/graphqelm.git","license":"BSD3","source-directories":["src"],"exposed-modules":["Graphqelm.Operation","Graphqelm.Http","Graphqelm.SelectionSet","Graphqelm.Internal.Encode","Graphqelm.Document","Graphqelm.Field","Graphqelm.Internal.Builder.Argument","Graphqelm.Internal.Builder.Object","Graphqelm.OptionalArgument","Graphqelm.Http.GraphqlError","Graphqelm.Subscription","Graphqelm.Subscription.Protocol"],"dependencies":{"elm-community/json-extra":"2.6.0 <= v < 3.0.0","elm-community/list-extra":"7.0.1 <= v < 8.0.0","elm-community/string-extra":"1.4.0 <= v < 2.0.0","elm-lang/core":"5.0.0 <= v < 6.0.0","elm-lang/http":"1.0.0 <= v < 2.0.0","elm-lang/websocket":"1.0.2 <= v < 2.0.0"},"elm-version":"0.18.0 <= v < 0.19.0"}
+module.exports = {"version":"10.1.0","summary":"Type-safe GraphQL queries in Elm.","repository":"https://github.com/dillonkearns/graphqelm.git","license":"BSD3","source-directories":["src"],"exposed-modules":["Graphqelm.Operation","Graphqelm.Http","Graphqelm.SelectionSet","Graphqelm.Internal.Encode","Graphqelm.Document","Graphqelm.Field","Graphqelm.Internal.Builder.Argument","Graphqelm.Internal.Builder.Object","Graphqelm.OptionalArgument","Graphqelm.Http.GraphqlError","Graphqelm.Subscription","Graphqelm.Subscription.Protocol"],"dependencies":{"elm-community/json-extra":"2.6.0 <= v < 3.0.0","elm-community/list-extra":"7.0.1 <= v < 8.0.0","elm-community/string-extra":"1.4.0 <= v < 2.0.0","elm-lang/core":"5.0.0 <= v < 6.0.0","elm-lang/http":"1.0.0 <= v < 2.0.0","elm-lang/websocket":"1.0.2 <= v < 2.0.0","lukewestby/elm-string-interpolate":"1.0.2 <= v < 2.0.0"},"elm-version":"0.18.0 <= v < 0.19.0"}
 
 /***/ })
 /******/ ]);

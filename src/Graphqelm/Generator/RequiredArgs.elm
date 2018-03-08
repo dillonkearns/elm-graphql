@@ -3,7 +3,7 @@ module Graphqelm.Generator.RequiredArgs exposing (Result, generate)
 import Graphqelm.Generator.Decoder
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.Type as Type
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 type alias Result =

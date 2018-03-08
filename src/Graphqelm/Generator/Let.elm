@@ -1,6 +1,6 @@
 module Graphqelm.Generator.Let exposing (LetBinding, generate)
 
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 type alias LetBinding =

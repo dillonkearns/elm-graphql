@@ -11,7 +11,7 @@ import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 import String.Extra
 
 

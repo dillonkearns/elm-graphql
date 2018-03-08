@@ -3,7 +3,7 @@ module Graphqelm.Generator.DocComment exposing (generate, generateForEnum)
 import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.ClassCaseName as ClassCaseName
 import Graphqelm.Parser.Type as Type exposing (EnumValue, Field)
-import Interpolate exposing (interpolate)
+import String.Interpolate exposing (interpolate)
 
 
 hasDocs : Maybe String -> List { item | name : String, description : Maybe String } -> Bool
