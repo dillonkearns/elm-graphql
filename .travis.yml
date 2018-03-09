@@ -12,7 +12,6 @@ cache:
 
 os:
   - linux
-  - osx
 
 env:
   matrix:
