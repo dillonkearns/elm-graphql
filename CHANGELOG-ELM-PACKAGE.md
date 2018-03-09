@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `SelectionSet.succeed` to provide a hardcoded value as the result of a
+  SelectionSet.
+
 ## [10.1.0] - 2018-02-25
 
 ### Changed

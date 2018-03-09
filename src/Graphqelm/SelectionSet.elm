@@ -1,4 +1,4 @@
-module Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet), empty, hardcoded, map, with)
+module Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet), empty, hardcoded, map, succeed, with)
 
 {-| The auto-generated code from the `graphqelm` CLI will provide `selection`
 functions for Objects, Interfaces, and Unions in your GraphQL schema.
@@ -47,7 +47,7 @@ the `graphqelm` command line tool.
 The query itself is also a `SelectionSet` so it is built up similarly.
 See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
-@docs with, hardcoded, empty, map
+@docs with, hardcoded, empty, map, succeed
 
 
 ## Types
@@ -171,3 +171,30 @@ hardcoded constant (SelectionSet objectFields objectDecoder) =
             (Decode.succeed constant)
             objectDecoder
         )
+
+
+{-| Instead of hardcoding a field like `hardcoded`, `SelectionSet.succeed` hardcodes
+an entire `SelectionSet`. This can be useful if you want hardcoded data based on
+only the type when using a polymorphic type (Interface or Union).
+
+    type alias Character =
+        { details : Maybe HumanOrDroid
+        , name : String
+        }
+
+    type HumanOrDroid
+        = Human
+        | Droid
+
+    hero : SelectionSet Character Swapi.Interface.Character
+    hero =
+        Character.selection Character
+            [ Character.onDroid (SelectionSet.succeed Droid)
+            , Character.onHuman (SelectionSet.succeed Human)
+            ]
+            |> with Character.name
+
+-}
+succeed : a -> SelectionSet a typeLock
+succeed constant =
+    SelectionSet [ RawField.Leaf "__typename" [] ] (Decode.succeed constant)
