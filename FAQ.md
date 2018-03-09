@@ -16,3 +16,12 @@ An optional argument can be either present, absent, or null, so using a Maybe do
 
 My recommendation is to keep them in their own module. I have an example of this with [ElmReposRequest.elm](https://github.com/dillonkearns/graphqelm/blob/master/examples/src/ElmReposRequest.elm).
 That query module is consumed by the [GithubComplex.elm](https://github.com/dillonkearns/graphqelm/blob/master/examples/src/GithubComplex.elm#L44-L46) module.
+
+
+## How and why does Graphqelm change some of the names from my GraphQL schema?
+Some GraphQL names are invalid in Elm, and others are not idiomatic and would sound awkard in the context of Elm code.
+For example, it is conventional to name a Union's values with all caps in GraphQL, like a union `Episode` with values `NEWHOPE`, `EMPIRE`, `JEDI`. Graphqelm will generate the following union type `type Episode = Empire | Jedi | Newhope`. If you follow the GraphQL naming conventions, Graphqelm will generate nice names that follow Elm naming conventions.
+
+Elm also has to avoid reserved words in the language like, so it would convert a field name like `module` or `import` into `module_` and `import_` (See https://github.com/dillonkearns/graphqelm/pull/41 for more in-depth discussion of this).
+
+What if you have two names that Graphqelm normalizes to the same thing, like a field called `user` and `User` (which would both turn into `user`? This is possible, but indicates that you are not following GraphQL conventions. Consider using a different naming convention. If you have a compelling reason for your naming, open an issue so we can discuss the normalization strategy.
