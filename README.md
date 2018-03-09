@@ -105,7 +105,7 @@ graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src
 4. With the above in your `package.json`, running `npm run api` will generate Graphqelm code for you to call in `./src/StarWars/`. You can now use the generated code as in this [Ellie example](https://rebrand.ly/graphqelm) or in the [`examples`](https://github.com/dillonkearns/graphqelm/tree/master/examples) folder.
 
 ## Frequently Asked Questions
-If you're wondering why code is generated a certain way, you're likely to find an answer in the [FAQ](https://github.com/dillonkearns/graphqelm/blob/master/FAQ.md#how-and-why-does-graphqelm-change-some-of-the-names-from-my-graphql-schema). There's also a very helpful group of people in the #graphql channel in [the Elm Slack](http://elmlang.herokuapp.com/).
+If you're wondering why code is generated a certain way, you're likely to find an answer in the [FAQ](https://github.com/dillonkearns/graphqelm/blob/master/FAQ.md). There's also a very helpful group of people in the #graphql channel in [the Elm Slack](http://elmlang.herokuapp.com/).
 
 ## Contributors
 
