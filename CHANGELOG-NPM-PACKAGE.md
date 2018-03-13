@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [3.1.9] - 2018-03-08
+## [3.1.10] - 2018-03-13
 
 ### Added
 
 * Generate `build<InputObject>` constructor functions (#49).
+
+## [3.1.9] - 2018-03-08
 
 ### Fixed
 
