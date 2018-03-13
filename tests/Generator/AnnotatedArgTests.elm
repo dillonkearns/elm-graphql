@@ -35,4 +35,12 @@ intToString n =
                         """mapInt : (String -> String) -> Int -> String
 mapInt mapFn n =
 """
+        , test "two args built with `buildWithArgs`" <|
+            \() ->
+                AnnotatedArg.buildWithArgs [ ( "(String -> String)", "mapFn" ), ( "Int", "n" ) ] "String"
+                    |> AnnotatedArg.toString "mapInt"
+                    |> Expect.equal
+                        """mapInt : (String -> String) -> Int -> String
+mapInt mapFn n =
+"""
         ]

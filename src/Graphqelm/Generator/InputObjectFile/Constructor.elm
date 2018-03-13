@@ -1,5 +1,6 @@
 module Graphqelm.Generator.InputObjectFile.Constructor exposing (generate)
 
+import Graphqelm.Generator.AnnotatedArg as AnnotatedArg
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder as Decoder
 import Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
@@ -49,8 +50,20 @@ generate context { name, fields, hasLoop } =
                 |> String.join ", "
 
         annotation =
-            interpolate """build{0} : ({0}OptionalFields -> {0}OptionalFields) -> {0}RequiredFields -> {0}
-build{0} fillOptionals required =""" [ ClassCaseName.normalized name ]
+            AnnotatedArg.buildWithArgs
+                ([ Just
+                    ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
+                    , "fillOptionals"
+                    )
+                 , Just
+                    ( interpolate "{0}RequiredFields" [ ClassCaseName.normalized name ]
+                    , "required"
+                    )
+                 ]
+                    |> List.filterMap identity
+                )
+                (ClassCaseName.normalized name)
+                |> AnnotatedArg.toString ("build" ++ ClassCaseName.normalized name)
     in
     interpolate
         """{0}

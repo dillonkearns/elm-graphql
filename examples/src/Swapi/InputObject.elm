@@ -60,10 +60,6 @@ buildGreetingOptions fillOptionals required =
     { prefix = optionals.prefix }
 
 
-type alias GreetingOptionsRequiredFields =
-    {}
-
-
 type alias GreetingOptionsOptionalFields =
     { prefix : OptionalArgument String }
 

@@ -1,4 +1,4 @@
-module Graphqelm.Generator.AnnotatedArg exposing (build, prepend, toString)
+module Graphqelm.Generator.AnnotatedArg exposing (build, buildWithArgs, prepend, toString)
 
 import String.Interpolate exposing (interpolate)
 
@@ -6,6 +6,11 @@ import String.Interpolate exposing (interpolate)
 build : String -> AnnotatedArgs
 build returnAnnotation =
     AnnotatedArgs [] returnAnnotation
+
+
+buildWithArgs : List AnnotatedArg -> String -> AnnotatedArgs
+buildWithArgs args returnAnnotation =
+    AnnotatedArgs args returnAnnotation
 
 
 prepend : ( String, String ) -> AnnotatedArgs -> AnnotatedArgs
