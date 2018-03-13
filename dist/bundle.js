@@ -13299,14 +13299,27 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 						}
 					}),
 				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)));
-		var letClause = _elm_lang$core$List$isEmpty(optionalFields) ? '' : A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'\n    let\n        optionals =\n            fillOptionals\n                { {0} }\n    in',
-			{
-				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$filledOptionalsRecord(optionalFields),
-				_1: {ctor: '[]'}
-			});
+		var letClause = _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate(
+			A2(
+				_elm_lang$core$List$filterMap,
+				_elm_lang$core$Basics$identity,
+				{
+					ctor: '::',
+					_0: _elm_lang$core$List$isEmpty(optionalFields) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+						{
+							ctor: '_Tuple2',
+							_0: 'optionals',
+							_1: A2(
+								_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+								'\n            fillOptionals\n                { {0} }',
+								{
+									ctor: '::',
+									_0: _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$filledOptionalsRecord(optionalFields),
+									_1: {ctor: '[]'}
+								})
+						}),
+					_1: {ctor: '[]'}
+				}));
 		return A2(
 			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{0}{1}\n    { {2} }\n\n{3}\n{4}\n',

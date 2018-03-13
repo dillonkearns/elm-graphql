@@ -4,6 +4,7 @@ import Graphqelm.Generator.AnnotatedArg as AnnotatedArg
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder as Decoder
 import Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
+import Graphqelm.Generator.Let as Let
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
@@ -72,17 +73,20 @@ generate context { name, fields, hasLoop } =
                 |> AnnotatedArg.toString ("build" ++ ClassCaseName.normalized name)
 
         letClause =
-            if List.isEmpty optionalFields then
-                ""
-            else
-                interpolate
-                    """
-    let
-        optionals =
+            Let.generate
+                ([ if List.isEmpty optionalFields then
+                    Nothing
+                   else
+                    Just
+                        ( "optionals"
+                        , interpolate """
             fillOptionals
-                { {0} }
-    in"""
-                    [ filledOptionalsRecord optionalFields ]
+                { {0} }"""
+                            [ filledOptionalsRecord optionalFields ]
+                        )
+                 ]
+                    |> List.filterMap identity
+                )
     in
     interpolate
         """{0}{1}
