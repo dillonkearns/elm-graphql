@@ -31,7 +31,7 @@ generate context { name, fields, hasLoop } =
                                 isNullable == Type.NonNullable
                     )
 
-        allValues =
+        returnRecord =
             fields
                 |> List.map
                     (\field ->
@@ -70,22 +70,27 @@ generate context { name, fields, hasLoop } =
                 )
                 (ClassCaseName.normalized name)
                 |> AnnotatedArg.toString ("build" ++ ClassCaseName.normalized name)
-    in
-    interpolate
-        """{0}
+
+        letClause =
+            interpolate
+                """
     let
         optionals =
             fillOptionals
-                { {1} }
+                { {0} }
+    in"""
+                [ filledOptionalsRecord optionalFields ]
     in
+    interpolate
+        """{0}{1}
     { {2} }
 
 {3}
 {4}
 """
         [ annotation
-        , filledOptionalsRecord optionalFields
-        , allValues
+        , letClause
+        , returnRecord
         , constructorFieldsAlias (ClassCaseName.normalized name ++ "RequiredFields") context requiredFields
         , constructorFieldsAlias (ClassCaseName.normalized name ++ "OptionalFields") context optionalFields
         ]

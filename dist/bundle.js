@@ -13212,7 +13212,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 		var _p3 = _p2;
 		var _p9 = _p3.name;
 		var _p8 = _p3.fields;
-		var allValues = A2(
+		var returnRecord = A2(
 			_elm_lang$core$String$join,
 			', ',
 			A2(
@@ -13299,18 +13299,26 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 						}
 					}),
 				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)));
+		var letClause = A2(
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			'\n    let\n        optionals =\n            fillOptionals\n                { {0} }\n    in',
+			{
+				ctor: '::',
+				_0: _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$filledOptionalsRecord(optionalFields),
+				_1: {ctor: '[]'}
+			});
 		return A2(
 			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{0}\n    let\n        optionals =\n            fillOptionals\n                { {1} }\n    in\n    { {2} }\n\n{3}\n{4}\n',
+			'{0}{1}\n    { {2} }\n\n{3}\n{4}\n',
 			{
 				ctor: '::',
 				_0: annotation,
 				_1: {
 					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$filledOptionalsRecord(optionalFields),
+					_0: letClause,
 					_1: {
 						ctor: '::',
-						_0: allValues,
+						_0: returnRecord,
 						_1: {
 							ctor: '::',
 							_0: A3(
