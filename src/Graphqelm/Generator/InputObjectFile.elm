@@ -1,18 +1,14 @@
 module Graphqelm.Generator.InputObjectFile exposing (generate)
 
-import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Generator.Decoder as Decoder
 import Graphqelm.Generator.Imports as Imports
+import Graphqelm.Generator.InputObjectFile.Constructor as Constructor
+import Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
 import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
-import Graphqelm.Internal.Builder.Object as Object
-import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
-import Graphqelm.SelectionSet exposing (SelectionSet)
-import Json.Decode as Decode
 import String.Interpolate exposing (interpolate)
 
 
@@ -69,77 +65,11 @@ placeholder =
 
 generateEncoderAndAlias : Context -> InputObjectDetails -> String
 generateEncoderAndAlias context inputObjectDetails =
-    [ constructorFunction context inputObjectDetails
+    [ Constructor.generate context inputObjectDetails
     , typeAlias context inputObjectDetails
     , encoder context inputObjectDetails
     ]
         |> String.join "\n\n"
-
-
-constructorFunction : Context -> InputObjectDetails -> String
-constructorFunction context { name, fields, hasLoop } =
-    let
-        optionalFields =
-            fields
-                |> List.filter
-                    (\field ->
-                        case field.typeRef of
-                            Type.TypeReference referrableType isNullable ->
-                                isNullable == Type.Nullable
-                    )
-
-        requiredFields =
-            fields
-                |> List.filter
-                    (\field ->
-                        case field.typeRef of
-                            Type.TypeReference referrableType isNullable ->
-                                isNullable == Type.NonNullable
-                    )
-
-        allValues =
-            fields
-                |> List.map
-                    (\field ->
-                        interpolate "{0} = {1}.{0}"
-                            [ CamelCaseName.normalized field.name
-                            , case field.typeRef of
-                                Type.TypeReference referrableType isNullable ->
-                                    case isNullable of
-                                        Type.Nullable ->
-                                            "optionals"
-
-                                        Type.NonNullable ->
-                                            "required"
-                            ]
-                    )
-                |> String.join ", "
-    in
-    interpolate
-        """
-build{0} : ({0}OptionalFields -> {0}OptionalFields) -> {0}RequiredFields -> {0}
-build{0} fillOptionals required =
-    let
-        optionals =
-            fillOptionals
-                { {1} }
-    in
-    { {2} }
-
-
-type alias {0}RequiredFields =
-    { {3} }
-
-
-type alias {0}OptionalFields =
-    { {4} }
-  """
-        [ ClassCaseName.normalized name
-        , filledOptionalsRecord optionalFields
-        , allValues
-        , List.map (aliasEntry context) requiredFields |> String.join ", "
-        , List.map (aliasEntry context) optionalFields |> String.join ", "
-        ]
 
 
 filledOptionalsRecord : List Type.Field -> String
@@ -255,14 +185,6 @@ import Graphqelm.Internal.Encode as Encode exposing (Value)
         [ Imports.importsString apiSubmodule (moduleName context) fields
         , apiSubmodule |> String.join "."
         ]
-
-
-type alias InputObjectDetails =
-    { definableType : Type.DefinableType
-    , fields : List Type.Field
-    , name : ClassCaseName
-    , hasLoop : Bool
-    }
 
 
 isInputObject : List TypeDefinition -> TypeDefinition -> Maybe InputObjectDetails
