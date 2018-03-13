@@ -52,40 +52,31 @@ generate context { name, fields, hasLoop } =
 
         annotation =
             AnnotatedArg.buildWithArgs
-                ([ if List.isEmpty optionalFields then
-                    Nothing
-                   else
-                    Just
-                        ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
-                        , "fillOptionals"
-                        )
-                 , if List.isEmpty requiredFields then
-                    Nothing
-                   else
-                    Just
-                        ( interpolate "{0}RequiredFields" [ ClassCaseName.normalized name ]
-                        , "required"
-                        )
+                ([ when (List.length optionalFields > 0)
+                    ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
+                    , "fillOptionals"
+                    )
+                 , when (List.length requiredFields > 0)
+                    ( interpolate "{0}RequiredFields" [ ClassCaseName.normalized name ]
+                    , "required"
+                    )
                  ]
-                    |> List.filterMap identity
+                    |> compact
                 )
                 (ClassCaseName.normalized name)
                 |> AnnotatedArg.toString ("build" ++ ClassCaseName.normalized name)
 
         letClause =
             Let.generate
-                ([ if List.isEmpty optionalFields then
-                    Nothing
-                   else
-                    Just
-                        ( "optionals"
-                        , interpolate """
+                ([ when (List.length optionalFields > 0)
+                    ( "optionals"
+                    , interpolate """
             fillOptionals
                 { {0} }"""
-                            [ filledOptionalsRecord optionalFields ]
-                        )
+                        [ filledOptionalsRecord optionalFields ]
+                    )
                  ]
-                    |> List.filterMap identity
+                    |> compact
                 )
     in
     interpolate
@@ -128,3 +119,16 @@ aliasEntry { apiSubmodule } field =
         [ CamelCaseName.normalized field.name
         , Decoder.generateTypeForInputObject apiSubmodule field.typeRef
         ]
+
+
+when : Bool -> value -> Maybe value
+when condition value =
+    if condition then
+        Just value
+    else
+        Nothing
+
+
+compact : List (Maybe value) -> List value
+compact =
+    List.filterMap identity

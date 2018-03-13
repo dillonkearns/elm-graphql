@@ -13149,6 +13149,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Details$InputObj
 		return {definableType: a, fields: b, name: c, hasLoop: d};
 	});
 
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$compact = _elm_lang$core$List$filterMap(_elm_lang$core$Basics$identity);
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$when = F2(
+	function (condition, value) {
+		return condition ? _elm_lang$core$Maybe$Just(value) : _elm_lang$core$Maybe$Nothing;
+	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$aliasEntry = F2(
 	function (_p0, field) {
 		var _p1 = _p0;
@@ -13262,12 +13267,14 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)),
 			A2(
 				_dillonkearns$graphqelm$Graphqelm_Generator_AnnotatedArg$buildWithArgs,
-				A2(
-					_elm_lang$core$List$filterMap,
-					_elm_lang$core$Basics$identity,
+				_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$compact(
 					{
 						ctor: '::',
-						_0: _elm_lang$core$List$isEmpty(optionalFields) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+						_0: A2(
+							_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$when,
+							_elm_lang$core$Native_Utils.cmp(
+								_elm_lang$core$List$length(optionalFields),
+								0) > 0,
 							{
 								ctor: '_Tuple2',
 								_0: A2(
@@ -13282,7 +13289,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 							}),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$core$List$isEmpty(requiredFields) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+							_0: A2(
+								_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$when,
+								_elm_lang$core$Native_Utils.cmp(
+									_elm_lang$core$List$length(requiredFields),
+									0) > 0,
 								{
 									ctor: '_Tuple2',
 									_0: A2(
@@ -13300,12 +13311,14 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 					}),
 				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)));
 		var letClause = _dillonkearns$graphqelm$Graphqelm_Generator_Let$generate(
-			A2(
-				_elm_lang$core$List$filterMap,
-				_elm_lang$core$Basics$identity,
+			_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$compact(
 				{
 					ctor: '::',
-					_0: _elm_lang$core$List$isEmpty(optionalFields) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+					_0: A2(
+						_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$when,
+						_elm_lang$core$Native_Utils.cmp(
+							_elm_lang$core$List$length(optionalFields),
+							0) > 0,
 						{
 							ctor: '_Tuple2',
 							_0: 'optionals',
