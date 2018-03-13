@@ -50,8 +50,8 @@ encodeGreeting input =
         [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
 
 
-buildGreetingOptions : (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields) -> GreetingOptionsRequiredFields -> GreetingOptions
-buildGreetingOptions fillOptionals required =
+buildGreetingOptions : (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields) -> GreetingOptions
+buildGreetingOptions fillOptionals =
     let
         optionals =
             fillOptionals

@@ -13212,46 +13212,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 		var _p3 = _p2;
 		var _p9 = _p3.name;
 		var _p8 = _p3.fields;
-		var annotation = A2(
-			_dillonkearns$graphqelm$Graphqelm_Generator_AnnotatedArg$toString,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'build',
-				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)),
-			A2(
-				_dillonkearns$graphqelm$Graphqelm_Generator_AnnotatedArg$buildWithArgs,
-				{
-					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: A2(
-							_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-							'({0}OptionalFields -> {0}OptionalFields)',
-							{
-								ctor: '::',
-								_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
-								_1: {ctor: '[]'}
-							}),
-						_1: 'fillOptionals'
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							ctor: '_Tuple2',
-							_0: A2(
-								_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-								'{0}RequiredFields',
-								{
-									ctor: '::',
-									_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
-									_1: {ctor: '[]'}
-								}),
-							_1: 'required'
-						},
-						_1: {ctor: '[]'}
-					}
-				},
-				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)));
 		var allValues = A2(
 			_elm_lang$core$String$join,
 			', ',
@@ -13294,6 +13254,51 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 				return _elm_lang$core$Native_Utils.eq(_p7._1, _dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
 			},
 			_p8);
+		var annotation = A2(
+			_dillonkearns$graphqelm$Graphqelm_Generator_AnnotatedArg$toString,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'build',
+				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)),
+			A2(
+				_dillonkearns$graphqelm$Graphqelm_Generator_AnnotatedArg$buildWithArgs,
+				A2(
+					_elm_lang$core$List$filterMap,
+					_elm_lang$core$Basics$identity,
+					{
+						ctor: '::',
+						_0: _elm_lang$core$List$isEmpty(optionalFields) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+							{
+								ctor: '_Tuple2',
+								_0: A2(
+									_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+									'({0}OptionalFields -> {0}OptionalFields)',
+									{
+										ctor: '::',
+										_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
+										_1: {ctor: '[]'}
+									}),
+								_1: 'fillOptionals'
+							}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$List$isEmpty(requiredFields) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+								{
+									ctor: '_Tuple2',
+									_0: A2(
+										_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+										'{0}RequiredFields',
+										{
+											ctor: '::',
+											_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
+											_1: {ctor: '[]'}
+										}),
+									_1: 'required'
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)));
 		return A2(
 			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'{0}\n    let\n        optionals =\n            fillOptionals\n                { {1} }\n    in\n    { {2} }\n\n{3}\n{4}\n',
