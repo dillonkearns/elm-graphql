@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [3.1.9] - 2018-03-08
 
+### Added
+
+* Generate `build<InputObject>` constructor functions (#49).
+
 ### Fixed
 
 * Fixed `RangeError: Maximum call stack size exceeded` that was coming from

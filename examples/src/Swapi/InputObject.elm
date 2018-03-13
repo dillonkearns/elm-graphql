@@ -25,10 +25,7 @@ buildGreeting fillOptionals required =
             fillOptionals
                 { language = Absent, options = Absent }
     in
-    { language = optionals.language
-    , options = optionals.options
-    , name = required.name
-    }
+    { language = optionals.language, name = required.name, options = optionals.options }
 
 
 type alias GreetingRequiredFields =
@@ -51,6 +48,24 @@ encodeGreeting : Greeting -> Value
 encodeGreeting input =
     Encode.maybeObject
         [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
+
+
+buildGreetingOptions : (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields) -> GreetingOptionsRequiredFields -> GreetingOptions
+buildGreetingOptions fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { prefix = Absent }
+    in
+    { prefix = optionals.prefix }
+
+
+type alias GreetingOptionsRequiredFields =
+    {}
+
+
+type alias GreetingOptionsOptionalFields =
+    { prefix : OptionalArgument String }
 
 
 {-| Type for the GreetingOptions input object.
