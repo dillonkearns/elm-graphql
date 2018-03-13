@@ -72,14 +72,17 @@ generate context { name, fields, hasLoop } =
                 |> AnnotatedArg.toString ("build" ++ ClassCaseName.normalized name)
 
         letClause =
-            interpolate
-                """
+            if List.isEmpty optionalFields then
+                ""
+            else
+                interpolate
+                    """
     let
         optionals =
             fillOptionals
                 { {0} }
     in"""
-                [ filledOptionalsRecord optionalFields ]
+                    [ filledOptionalsRecord optionalFields ]
     in
     interpolate
         """{0}{1}

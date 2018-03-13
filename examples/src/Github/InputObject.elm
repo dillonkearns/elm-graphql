@@ -36,6 +36,24 @@ import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
+buildAcceptTopicSuggestionInput : (AcceptTopicSuggestionInputOptionalFields -> AcceptTopicSuggestionInputOptionalFields) -> AcceptTopicSuggestionInputRequiredFields -> AcceptTopicSuggestionInput
+buildAcceptTopicSuggestionInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, repositoryId = required.repositoryId, name = required.name }
+
+
+type alias AcceptTopicSuggestionInputRequiredFields =
+    { repositoryId : Github.Scalar.Id, name : String }
+
+
+type alias AcceptTopicSuggestionInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the AcceptTopicSuggestionInput input object.
 -}
 type alias AcceptTopicSuggestionInput =
@@ -48,6 +66,24 @@ encodeAcceptTopicSuggestionInput : AcceptTopicSuggestionInput -> Value
 encodeAcceptTopicSuggestionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ) ]
+
+
+buildAddCommentInput : (AddCommentInputOptionalFields -> AddCommentInputOptionalFields) -> AddCommentInputRequiredFields -> AddCommentInput
+buildAddCommentInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, subjectId = required.subjectId, body = required.body }
+
+
+type alias AddCommentInputRequiredFields =
+    { subjectId : Github.Scalar.Id, body : String }
+
+
+type alias AddCommentInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the AddCommentInput input object.
@@ -64,6 +100,24 @@ encodeAddCommentInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
+buildAddProjectCardInput : (AddProjectCardInputOptionalFields -> AddProjectCardInputOptionalFields) -> AddProjectCardInputRequiredFields -> AddProjectCardInput
+buildAddProjectCardInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, contentId = Absent, note = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, projectColumnId = required.projectColumnId, contentId = optionals.contentId, note = optionals.note }
+
+
+type alias AddProjectCardInputRequiredFields =
+    { projectColumnId : Github.Scalar.Id }
+
+
+type alias AddProjectCardInputOptionalFields =
+    { clientMutationId : OptionalArgument String, contentId : OptionalArgument Github.Scalar.Id, note : OptionalArgument String }
+
+
 {-| Type for the AddProjectCardInput input object.
 -}
 type alias AddProjectCardInput =
@@ -76,6 +130,24 @@ encodeAddProjectCardInput : AddProjectCardInput -> Value
 encodeAddProjectCardInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectColumnId |> Just ), ( "contentId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.contentId ), ( "note", Encode.string |> Encode.optional input.note ) ]
+
+
+buildAddProjectColumnInput : (AddProjectColumnInputOptionalFields -> AddProjectColumnInputOptionalFields) -> AddProjectColumnInputRequiredFields -> AddProjectColumnInput
+buildAddProjectColumnInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, projectId = required.projectId, name = required.name }
+
+
+type alias AddProjectColumnInputRequiredFields =
+    { projectId : Github.Scalar.Id, name : String }
+
+
+type alias AddProjectColumnInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the AddProjectColumnInput input object.
@@ -92,6 +164,24 @@ encodeAddProjectColumnInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
+buildAddPullRequestReviewCommentInput : (AddPullRequestReviewCommentInputOptionalFields -> AddPullRequestReviewCommentInputOptionalFields) -> AddPullRequestReviewCommentInputRequiredFields -> AddPullRequestReviewCommentInput
+buildAddPullRequestReviewCommentInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, commitOID = Absent, path = Absent, position = Absent, inReplyTo = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required.pullRequestReviewId, commitOID = optionals.commitOID, body = required.body, path = optionals.path, position = optionals.position, inReplyTo = optionals.inReplyTo }
+
+
+type alias AddPullRequestReviewCommentInputRequiredFields =
+    { pullRequestReviewId : Github.Scalar.Id, body : String }
+
+
+type alias AddPullRequestReviewCommentInputOptionalFields =
+    { clientMutationId : OptionalArgument String, commitOID : OptionalArgument Github.Scalar.GitObjectID, path : OptionalArgument String, position : OptionalArgument Int, inReplyTo : OptionalArgument Github.Scalar.Id }
+
+
 {-| Type for the AddPullRequestReviewCommentInput input object.
 -}
 type alias AddPullRequestReviewCommentInput =
@@ -104,6 +194,24 @@ encodeAddPullRequestReviewCommentInput : AddPullRequestReviewCommentInput -> Val
 encodeAddPullRequestReviewCommentInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "commitOID", (\(Github.Scalar.GitObjectID raw) -> Encode.string raw) |> Encode.optional input.commitOID ), ( "body", Encode.string input.body |> Just ), ( "path", Encode.string |> Encode.optional input.path ), ( "position", Encode.int |> Encode.optional input.position ), ( "inReplyTo", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.inReplyTo ) ]
+
+
+buildAddPullRequestReviewInput : (AddPullRequestReviewInputOptionalFields -> AddPullRequestReviewInputOptionalFields) -> AddPullRequestReviewInputRequiredFields -> AddPullRequestReviewInput
+buildAddPullRequestReviewInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, commitOID = Absent, body = Absent, event = Absent, comments = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestId = required.pullRequestId, commitOID = optionals.commitOID, body = optionals.body, event = optionals.event, comments = optionals.comments }
+
+
+type alias AddPullRequestReviewInputRequiredFields =
+    { pullRequestId : Github.Scalar.Id }
+
+
+type alias AddPullRequestReviewInputOptionalFields =
+    { clientMutationId : OptionalArgument String, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : OptionalArgument String, event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment)) }
 
 
 {-| Type for the AddPullRequestReviewInput input object.
@@ -120,6 +228,24 @@ encodeAddPullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestId |> Just ), ( "commitOID", (\(Github.Scalar.GitObjectID raw) -> Encode.string raw) |> Encode.optional input.commitOID ), ( "body", Encode.string |> Encode.optional input.body ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString |> Encode.optional input.event ), ( "comments", (encodeDraftPullRequestReviewComment |> Encode.maybe |> Encode.list) |> Encode.optional input.comments ) ]
 
 
+buildAddReactionInput : (AddReactionInputOptionalFields -> AddReactionInputOptionalFields) -> AddReactionInputRequiredFields -> AddReactionInput
+buildAddReactionInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, subjectId = required.subjectId, content = required.content }
+
+
+type alias AddReactionInputRequiredFields =
+    { subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+
+
+type alias AddReactionInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the AddReactionInput input object.
 -}
 type alias AddReactionInput =
@@ -132,6 +258,24 @@ encodeAddReactionInput : AddReactionInput -> Value
 encodeAddReactionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
+
+
+buildAddStarInput : (AddStarInputOptionalFields -> AddStarInputOptionalFields) -> AddStarInputRequiredFields -> AddStarInput
+buildAddStarInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, starrableId = required.starrableId }
+
+
+type alias AddStarInputRequiredFields =
+    { starrableId : Github.Scalar.Id }
+
+
+type alias AddStarInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the AddStarInput input object.
@@ -148,6 +292,20 @@ encodeAddStarInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.starrableId |> Just ) ]
 
 
+buildCommitAuthor : (CommitAuthorOptionalFields -> CommitAuthorOptionalFields) -> CommitAuthor
+buildCommitAuthor fillOptionals =
+    let
+        optionals =
+            fillOptionals
+                { id = Absent, emails = Absent }
+    in
+    { id = optionals.id, emails = optionals.emails }
+
+
+type alias CommitAuthorOptionalFields =
+    { id : OptionalArgument Github.Scalar.Id, emails : OptionalArgument (List String) }
+
+
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
@@ -160,6 +318,24 @@ encodeCommitAuthor : CommitAuthor -> Value
 encodeCommitAuthor input =
     Encode.maybeObject
         [ ( "id", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list) |> Encode.optional input.emails ) ]
+
+
+buildCreateProjectInput : (CreateProjectInputOptionalFields -> CreateProjectInputOptionalFields) -> CreateProjectInputRequiredFields -> CreateProjectInput
+buildCreateProjectInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, body = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, ownerId = required.ownerId, name = required.name, body = optionals.body }
+
+
+type alias CreateProjectInputRequiredFields =
+    { ownerId : Github.Scalar.Id, name : String }
+
+
+type alias CreateProjectInputOptionalFields =
+    { clientMutationId : OptionalArgument String, body : OptionalArgument String }
 
 
 {-| Type for the CreateProjectInput input object.
@@ -176,6 +352,24 @@ encodeCreateProjectInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "ownerId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.ownerId |> Just ), ( "name", Encode.string input.name |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
+buildDeclineTopicSuggestionInput : (DeclineTopicSuggestionInputOptionalFields -> DeclineTopicSuggestionInputOptionalFields) -> DeclineTopicSuggestionInputRequiredFields -> DeclineTopicSuggestionInput
+buildDeclineTopicSuggestionInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, repositoryId = required.repositoryId, name = required.name, reason = required.reason }
+
+
+type alias DeclineTopicSuggestionInputRequiredFields =
+    { repositoryId : Github.Scalar.Id, name : String, reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
+
+
+type alias DeclineTopicSuggestionInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the DeclineTopicSuggestionInput input object.
 -}
 type alias DeclineTopicSuggestionInput =
@@ -188,6 +382,24 @@ encodeDeclineTopicSuggestionInput : DeclineTopicSuggestionInput -> Value
 encodeDeclineTopicSuggestionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ), ( "reason", Encode.enum Github.Enum.TopicSuggestionDeclineReason.toString input.reason |> Just ) ]
+
+
+buildDeleteProjectCardInput : (DeleteProjectCardInputOptionalFields -> DeleteProjectCardInputOptionalFields) -> DeleteProjectCardInputRequiredFields -> DeleteProjectCardInput
+buildDeleteProjectCardInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, cardId = required.cardId }
+
+
+type alias DeleteProjectCardInputRequiredFields =
+    { cardId : Github.Scalar.Id }
+
+
+type alias DeleteProjectCardInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the DeleteProjectCardInput input object.
@@ -204,6 +416,24 @@ encodeDeleteProjectCardInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.cardId |> Just ) ]
 
 
+buildDeleteProjectColumnInput : (DeleteProjectColumnInputOptionalFields -> DeleteProjectColumnInputOptionalFields) -> DeleteProjectColumnInputRequiredFields -> DeleteProjectColumnInput
+buildDeleteProjectColumnInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, columnId = required.columnId }
+
+
+type alias DeleteProjectColumnInputRequiredFields =
+    { columnId : Github.Scalar.Id }
+
+
+type alias DeleteProjectColumnInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the DeleteProjectColumnInput input object.
 -}
 type alias DeleteProjectColumnInput =
@@ -216,6 +446,24 @@ encodeDeleteProjectColumnInput : DeleteProjectColumnInput -> Value
 encodeDeleteProjectColumnInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ) ]
+
+
+buildDeleteProjectInput : (DeleteProjectInputOptionalFields -> DeleteProjectInputOptionalFields) -> DeleteProjectInputRequiredFields -> DeleteProjectInput
+buildDeleteProjectInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, projectId = required.projectId }
+
+
+type alias DeleteProjectInputRequiredFields =
+    { projectId : Github.Scalar.Id }
+
+
+type alias DeleteProjectInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the DeleteProjectInput input object.
@@ -232,6 +480,24 @@ encodeDeleteProjectInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ) ]
 
 
+buildDeletePullRequestReviewInput : (DeletePullRequestReviewInputOptionalFields -> DeletePullRequestReviewInputOptionalFields) -> DeletePullRequestReviewInputRequiredFields -> DeletePullRequestReviewInput
+buildDeletePullRequestReviewInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required.pullRequestReviewId }
+
+
+type alias DeletePullRequestReviewInputRequiredFields =
+    { pullRequestReviewId : Github.Scalar.Id }
+
+
+type alias DeletePullRequestReviewInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the DeletePullRequestReviewInput input object.
 -}
 type alias DeletePullRequestReviewInput =
@@ -244,6 +510,24 @@ encodeDeletePullRequestReviewInput : DeletePullRequestReviewInput -> Value
 encodeDeletePullRequestReviewInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ) ]
+
+
+buildDismissPullRequestReviewInput : (DismissPullRequestReviewInputOptionalFields -> DismissPullRequestReviewInputOptionalFields) -> DismissPullRequestReviewInputRequiredFields -> DismissPullRequestReviewInput
+buildDismissPullRequestReviewInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required.pullRequestReviewId, message = required.message }
+
+
+type alias DismissPullRequestReviewInputRequiredFields =
+    { pullRequestReviewId : Github.Scalar.Id, message : String }
+
+
+type alias DismissPullRequestReviewInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the DismissPullRequestReviewInput input object.
@@ -260,6 +544,15 @@ encodeDismissPullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "message", Encode.string input.message |> Just ) ]
 
 
+buildDraftPullRequestReviewComment : DraftPullRequestReviewCommentRequiredFields -> DraftPullRequestReviewComment
+buildDraftPullRequestReviewComment required =
+    { path = required.path, position = required.position, body = required.body }
+
+
+type alias DraftPullRequestReviewCommentRequiredFields =
+    { path : String, position : Int, body : String }
+
+
 {-| Type for the DraftPullRequestReviewComment input object.
 -}
 type alias DraftPullRequestReviewComment =
@@ -272,6 +565,15 @@ encodeDraftPullRequestReviewComment : DraftPullRequestReviewComment -> Value
 encodeDraftPullRequestReviewComment input =
     Encode.maybeObject
         [ ( "path", Encode.string input.path |> Just ), ( "position", Encode.int input.position |> Just ), ( "body", Encode.string input.body |> Just ) ]
+
+
+buildGistOrder : GistOrderRequiredFields -> GistOrder
+buildGistOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias GistOrderRequiredFields =
+    { field : Github.Enum.GistOrderField.GistOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the GistOrder input object.
@@ -288,6 +590,15 @@ encodeGistOrder input =
         [ ( "field", Encode.enum Github.Enum.GistOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildIssueOrder : IssueOrderRequiredFields -> IssueOrder
+buildIssueOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias IssueOrderRequiredFields =
+    { field : Github.Enum.IssueOrderField.IssueOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+
+
 {-| Type for the IssueOrder input object.
 -}
 type alias IssueOrder =
@@ -300,6 +611,15 @@ encodeIssueOrder : IssueOrder -> Value
 encodeIssueOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.IssueOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
+
+
+buildLanguageOrder : LanguageOrderRequiredFields -> LanguageOrder
+buildLanguageOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias LanguageOrderRequiredFields =
+    { field : Github.Enum.LanguageOrderField.LanguageOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the LanguageOrder input object.
@@ -316,6 +636,24 @@ encodeLanguageOrder input =
         [ ( "field", Encode.enum Github.Enum.LanguageOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildLockLockableInput : (LockLockableInputOptionalFields -> LockLockableInputOptionalFields) -> LockLockableInputRequiredFields -> LockLockableInput
+buildLockLockableInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, lockReason = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, lockableId = required.lockableId, lockReason = optionals.lockReason }
+
+
+type alias LockLockableInputRequiredFields =
+    { lockableId : Github.Scalar.Id }
+
+
+type alias LockLockableInputOptionalFields =
+    { clientMutationId : OptionalArgument String, lockReason : OptionalArgument Github.Enum.LockReason.LockReason }
+
+
 {-| Type for the LockLockableInput input object.
 -}
 type alias LockLockableInput =
@@ -328,6 +666,15 @@ encodeLockLockableInput : LockLockableInput -> Value
 encodeLockLockableInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "lockableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.lockableId |> Just ), ( "lockReason", Encode.enum Github.Enum.LockReason.toString |> Encode.optional input.lockReason ) ]
+
+
+buildMilestoneOrder : MilestoneOrderRequiredFields -> MilestoneOrder
+buildMilestoneOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias MilestoneOrderRequiredFields =
+    { field : Github.Enum.MilestoneOrderField.MilestoneOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the MilestoneOrder input object.
@@ -344,6 +691,24 @@ encodeMilestoneOrder input =
         [ ( "field", Encode.enum Github.Enum.MilestoneOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildMoveProjectCardInput : (MoveProjectCardInputOptionalFields -> MoveProjectCardInputOptionalFields) -> MoveProjectCardInputRequiredFields -> MoveProjectCardInput
+buildMoveProjectCardInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, afterCardId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, cardId = required.cardId, columnId = required.columnId, afterCardId = optionals.afterCardId }
+
+
+type alias MoveProjectCardInputRequiredFields =
+    { cardId : Github.Scalar.Id, columnId : Github.Scalar.Id }
+
+
+type alias MoveProjectCardInputOptionalFields =
+    { clientMutationId : OptionalArgument String, afterCardId : OptionalArgument Github.Scalar.Id }
+
+
 {-| Type for the MoveProjectCardInput input object.
 -}
 type alias MoveProjectCardInput =
@@ -356,6 +721,24 @@ encodeMoveProjectCardInput : MoveProjectCardInput -> Value
 encodeMoveProjectCardInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.cardId |> Just ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ), ( "afterCardId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.afterCardId ) ]
+
+
+buildMoveProjectColumnInput : (MoveProjectColumnInputOptionalFields -> MoveProjectColumnInputOptionalFields) -> MoveProjectColumnInputRequiredFields -> MoveProjectColumnInput
+buildMoveProjectColumnInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, afterColumnId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, columnId = required.columnId, afterColumnId = optionals.afterColumnId }
+
+
+type alias MoveProjectColumnInputRequiredFields =
+    { columnId : Github.Scalar.Id }
+
+
+type alias MoveProjectColumnInputOptionalFields =
+    { clientMutationId : OptionalArgument String, afterColumnId : OptionalArgument Github.Scalar.Id }
 
 
 {-| Type for the MoveProjectColumnInput input object.
@@ -372,6 +755,15 @@ encodeMoveProjectColumnInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.columnId |> Just ), ( "afterColumnId", (\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.optional input.afterColumnId ) ]
 
 
+buildProjectOrder : ProjectOrderRequiredFields -> ProjectOrder
+buildProjectOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias ProjectOrderRequiredFields =
+    { field : Github.Enum.ProjectOrderField.ProjectOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+
+
 {-| Type for the ProjectOrder input object.
 -}
 type alias ProjectOrder =
@@ -384,6 +776,15 @@ encodeProjectOrder : ProjectOrder -> Value
 encodeProjectOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.ProjectOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
+
+
+buildReactionOrder : ReactionOrderRequiredFields -> ReactionOrder
+buildReactionOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias ReactionOrderRequiredFields =
+    { field : Github.Enum.ReactionOrderField.ReactionOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the ReactionOrder input object.
@@ -400,6 +801,15 @@ encodeReactionOrder input =
         [ ( "field", Encode.enum Github.Enum.ReactionOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildRefOrder : RefOrderRequiredFields -> RefOrder
+buildRefOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias RefOrderRequiredFields =
+    { field : Github.Enum.RefOrderField.RefOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+
+
 {-| Type for the RefOrder input object.
 -}
 type alias RefOrder =
@@ -412,6 +822,15 @@ encodeRefOrder : RefOrder -> Value
 encodeRefOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.RefOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
+
+
+buildReleaseOrder : ReleaseOrderRequiredFields -> ReleaseOrder
+buildReleaseOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias ReleaseOrderRequiredFields =
+    { field : Github.Enum.ReleaseOrderField.ReleaseOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the ReleaseOrder input object.
@@ -428,6 +847,24 @@ encodeReleaseOrder input =
         [ ( "field", Encode.enum Github.Enum.ReleaseOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildRemoveOutsideCollaboratorInput : (RemoveOutsideCollaboratorInputOptionalFields -> RemoveOutsideCollaboratorInputOptionalFields) -> RemoveOutsideCollaboratorInputRequiredFields -> RemoveOutsideCollaboratorInput
+buildRemoveOutsideCollaboratorInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, userId = required.userId, organizationId = required.organizationId }
+
+
+type alias RemoveOutsideCollaboratorInputRequiredFields =
+    { userId : Github.Scalar.Id, organizationId : Github.Scalar.Id }
+
+
+type alias RemoveOutsideCollaboratorInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the RemoveOutsideCollaboratorInput input object.
 -}
 type alias RemoveOutsideCollaboratorInput =
@@ -440,6 +877,24 @@ encodeRemoveOutsideCollaboratorInput : RemoveOutsideCollaboratorInput -> Value
 encodeRemoveOutsideCollaboratorInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "userId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.userId |> Just ), ( "organizationId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.organizationId |> Just ) ]
+
+
+buildRemoveReactionInput : (RemoveReactionInputOptionalFields -> RemoveReactionInputOptionalFields) -> RemoveReactionInputRequiredFields -> RemoveReactionInput
+buildRemoveReactionInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, subjectId = required.subjectId, content = required.content }
+
+
+type alias RemoveReactionInputRequiredFields =
+    { subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+
+
+type alias RemoveReactionInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the RemoveReactionInput input object.
@@ -456,6 +911,24 @@ encodeRemoveReactionInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
+buildRemoveStarInput : (RemoveStarInputOptionalFields -> RemoveStarInputOptionalFields) -> RemoveStarInputRequiredFields -> RemoveStarInput
+buildRemoveStarInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, starrableId = required.starrableId }
+
+
+type alias RemoveStarInputRequiredFields =
+    { starrableId : Github.Scalar.Id }
+
+
+type alias RemoveStarInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the RemoveStarInput input object.
 -}
 type alias RemoveStarInput =
@@ -468,6 +941,15 @@ encodeRemoveStarInput : RemoveStarInput -> Value
 encodeRemoveStarInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.starrableId |> Just ) ]
+
+
+buildRepositoryOrder : RepositoryOrderRequiredFields -> RepositoryOrder
+buildRepositoryOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias RepositoryOrderRequiredFields =
+    { field : Github.Enum.RepositoryOrderField.RepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the RepositoryOrder input object.
@@ -484,6 +966,24 @@ encodeRepositoryOrder input =
         [ ( "field", Encode.enum Github.Enum.RepositoryOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildRequestReviewsInput : (RequestReviewsInputOptionalFields -> RequestReviewsInputOptionalFields) -> RequestReviewsInputRequiredFields -> RequestReviewsInput
+buildRequestReviewsInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, userIds = Absent, teamIds = Absent, union = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestId = required.pullRequestId, userIds = optionals.userIds, teamIds = optionals.teamIds, union = optionals.union }
+
+
+type alias RequestReviewsInputRequiredFields =
+    { pullRequestId : Github.Scalar.Id }
+
+
+type alias RequestReviewsInputOptionalFields =
+    { clientMutationId : OptionalArgument String, userIds : OptionalArgument (List Github.Scalar.Id), teamIds : OptionalArgument (List Github.Scalar.Id), union : OptionalArgument Bool }
+
+
 {-| Type for the RequestReviewsInput input object.
 -}
 type alias RequestReviewsInput =
@@ -496,6 +996,15 @@ encodeRequestReviewsInput : RequestReviewsInput -> Value
 encodeRequestReviewsInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestId |> Just ), ( "userIds", ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) |> Encode.optional input.userIds ), ( "teamIds", ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) |> Encode.optional input.teamIds ), ( "union", Encode.bool |> Encode.optional input.union ) ]
+
+
+buildStarOrder : StarOrderRequiredFields -> StarOrder
+buildStarOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias StarOrderRequiredFields =
+    { field : Github.Enum.StarOrderField.StarOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the StarOrder input object.
@@ -512,6 +1021,24 @@ encodeStarOrder input =
         [ ( "field", Encode.enum Github.Enum.StarOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildSubmitPullRequestReviewInput : (SubmitPullRequestReviewInputOptionalFields -> SubmitPullRequestReviewInputOptionalFields) -> SubmitPullRequestReviewInputRequiredFields -> SubmitPullRequestReviewInput
+buildSubmitPullRequestReviewInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, body = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required.pullRequestReviewId, event = required.event, body = optionals.body }
+
+
+type alias SubmitPullRequestReviewInputRequiredFields =
+    { pullRequestReviewId : Github.Scalar.Id, event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent }
+
+
+type alias SubmitPullRequestReviewInputOptionalFields =
+    { clientMutationId : OptionalArgument String, body : OptionalArgument String }
+
+
 {-| Type for the SubmitPullRequestReviewInput input object.
 -}
 type alias SubmitPullRequestReviewInput =
@@ -524,6 +1051,15 @@ encodeSubmitPullRequestReviewInput : SubmitPullRequestReviewInput -> Value
 encodeSubmitPullRequestReviewInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString input.event |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
+
+
+buildTeamOrder : TeamOrderRequiredFields -> TeamOrder
+buildTeamOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias TeamOrderRequiredFields =
+    { field : Github.Enum.TeamOrderField.TeamOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
 
 
 {-| Type for the TeamOrder input object.
@@ -540,6 +1076,15 @@ encodeTeamOrder input =
         [ ( "field", Encode.enum Github.Enum.TeamOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
+buildTeamRepositoryOrder : TeamRepositoryOrderRequiredFields -> TeamRepositoryOrder
+buildTeamRepositoryOrder required =
+    { field = required.field, direction = required.direction }
+
+
+type alias TeamRepositoryOrderRequiredFields =
+    { field : Github.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+
+
 {-| Type for the TeamRepositoryOrder input object.
 -}
 type alias TeamRepositoryOrder =
@@ -552,6 +1097,24 @@ encodeTeamRepositoryOrder : TeamRepositoryOrder -> Value
 encodeTeamRepositoryOrder input =
     Encode.maybeObject
         [ ( "field", Encode.enum Github.Enum.TeamRepositoryOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
+
+
+buildUpdateProjectCardInput : (UpdateProjectCardInputOptionalFields -> UpdateProjectCardInputOptionalFields) -> UpdateProjectCardInputRequiredFields -> UpdateProjectCardInput
+buildUpdateProjectCardInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, projectCardId = required.projectCardId, note = required.note }
+
+
+type alias UpdateProjectCardInputRequiredFields =
+    { projectCardId : Github.Scalar.Id, note : String }
+
+
+type alias UpdateProjectCardInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the UpdateProjectCardInput input object.
@@ -568,6 +1131,24 @@ encodeUpdateProjectCardInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectCardId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectCardId |> Just ), ( "note", Encode.string input.note |> Just ) ]
 
 
+buildUpdateProjectColumnInput : (UpdateProjectColumnInputOptionalFields -> UpdateProjectColumnInputOptionalFields) -> UpdateProjectColumnInputRequiredFields -> UpdateProjectColumnInput
+buildUpdateProjectColumnInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, projectColumnId = required.projectColumnId, name = required.name }
+
+
+type alias UpdateProjectColumnInputRequiredFields =
+    { projectColumnId : Github.Scalar.Id, name : String }
+
+
+type alias UpdateProjectColumnInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the UpdateProjectColumnInput input object.
 -}
 type alias UpdateProjectColumnInput =
@@ -580,6 +1161,24 @@ encodeUpdateProjectColumnInput : UpdateProjectColumnInput -> Value
 encodeUpdateProjectColumnInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectColumnId |> Just ), ( "name", Encode.string input.name |> Just ) ]
+
+
+buildUpdateProjectInput : (UpdateProjectInputOptionalFields -> UpdateProjectInputOptionalFields) -> UpdateProjectInputRequiredFields -> UpdateProjectInput
+buildUpdateProjectInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent, name = Absent, body = Absent, state = Absent, public = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, projectId = required.projectId, name = optionals.name, body = optionals.body, state = optionals.state, public = optionals.public }
+
+
+type alias UpdateProjectInputRequiredFields =
+    { projectId : Github.Scalar.Id }
+
+
+type alias UpdateProjectInputOptionalFields =
+    { clientMutationId : OptionalArgument String, name : OptionalArgument String, body : OptionalArgument String, state : OptionalArgument Github.Enum.ProjectState.ProjectState, public : OptionalArgument Bool }
 
 
 {-| Type for the UpdateProjectInput input object.
@@ -596,6 +1195,24 @@ encodeUpdateProjectInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.projectId |> Just ), ( "name", Encode.string |> Encode.optional input.name ), ( "body", Encode.string |> Encode.optional input.body ), ( "state", Encode.enum Github.Enum.ProjectState.toString |> Encode.optional input.state ), ( "public", Encode.bool |> Encode.optional input.public ) ]
 
 
+buildUpdatePullRequestReviewCommentInput : (UpdatePullRequestReviewCommentInputOptionalFields -> UpdatePullRequestReviewCommentInputOptionalFields) -> UpdatePullRequestReviewCommentInputRequiredFields -> UpdatePullRequestReviewCommentInput
+buildUpdatePullRequestReviewCommentInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestReviewCommentId = required.pullRequestReviewCommentId, body = required.body }
+
+
+type alias UpdatePullRequestReviewCommentInputRequiredFields =
+    { pullRequestReviewCommentId : Github.Scalar.Id, body : String }
+
+
+type alias UpdatePullRequestReviewCommentInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the UpdatePullRequestReviewCommentInput input object.
 -}
 type alias UpdatePullRequestReviewCommentInput =
@@ -608,6 +1225,24 @@ encodeUpdatePullRequestReviewCommentInput : UpdatePullRequestReviewCommentInput 
 encodeUpdatePullRequestReviewCommentInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewCommentId |> Just ), ( "body", Encode.string input.body |> Just ) ]
+
+
+buildUpdatePullRequestReviewInput : (UpdatePullRequestReviewInputOptionalFields -> UpdatePullRequestReviewInputOptionalFields) -> UpdatePullRequestReviewInputRequiredFields -> UpdatePullRequestReviewInput
+buildUpdatePullRequestReviewInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required.pullRequestReviewId, body = required.body }
+
+
+type alias UpdatePullRequestReviewInputRequiredFields =
+    { pullRequestReviewId : Github.Scalar.Id, body : String }
+
+
+type alias UpdatePullRequestReviewInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the UpdatePullRequestReviewInput input object.
@@ -624,6 +1259,24 @@ encodeUpdatePullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.pullRequestReviewId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
+buildUpdateSubscriptionInput : (UpdateSubscriptionInputOptionalFields -> UpdateSubscriptionInputOptionalFields) -> UpdateSubscriptionInputRequiredFields -> UpdateSubscriptionInput
+buildUpdateSubscriptionInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, subscribableId = required.subscribableId, state = required.state }
+
+
+type alias UpdateSubscriptionInputRequiredFields =
+    { subscribableId : Github.Scalar.Id, state : Github.Enum.SubscriptionState.SubscriptionState }
+
+
+type alias UpdateSubscriptionInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
+
+
 {-| Type for the UpdateSubscriptionInput input object.
 -}
 type alias UpdateSubscriptionInput =
@@ -636,6 +1289,24 @@ encodeUpdateSubscriptionInput : UpdateSubscriptionInput -> Value
 encodeUpdateSubscriptionInput input =
     Encode.maybeObject
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subscribableId", (\(Github.Scalar.Id raw) -> Encode.string raw) input.subscribableId |> Just ), ( "state", Encode.enum Github.Enum.SubscriptionState.toString input.state |> Just ) ]
+
+
+buildUpdateTopicsInput : (UpdateTopicsInputOptionalFields -> UpdateTopicsInputOptionalFields) -> UpdateTopicsInputRequiredFields -> UpdateTopicsInput
+buildUpdateTopicsInput fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { clientMutationId = Absent }
+    in
+    { clientMutationId = optionals.clientMutationId, repositoryId = required.repositoryId, topicNames = required.topicNames }
+
+
+type alias UpdateTopicsInputRequiredFields =
+    { repositoryId : Github.Scalar.Id, topicNames : List String }
+
+
+type alias UpdateTopicsInputOptionalFields =
+    { clientMutationId : OptionalArgument String }
 
 
 {-| Type for the UpdateTopicsInput input object.

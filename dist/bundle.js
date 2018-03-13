@@ -13299,7 +13299,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 						}
 					}),
 				_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9)));
-		var letClause = A2(
+		var letClause = _elm_lang$core$List$isEmpty(optionalFields) ? '' : A2(
 			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'\n    let\n        optionals =\n            fillOptionals\n                { {0} }\n    in',
 			{
