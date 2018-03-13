@@ -18,6 +18,27 @@ import Swapi.Scalar
 import Swapi.Union
 
 
+buildGreeting : (GreetingOptionalFields -> GreetingOptionalFields) -> GreetingRequiredFields -> Greeting
+buildGreeting fillOptionals required =
+    let
+        optionals =
+            fillOptionals
+                { language = Absent, options = Absent }
+    in
+    { language = optionals.language
+    , options = optionals.options
+    , name = required.name
+    }
+
+
+type alias GreetingRequiredFields =
+    { name : String }
+
+
+type alias GreetingOptionalFields =
+    { language : OptionalArgument Swapi.Enum.Language.Language, options : OptionalArgument GreetingOptions }
+
+
 {-| Type for the Greeting input object.
 -}
 type alias Greeting =
