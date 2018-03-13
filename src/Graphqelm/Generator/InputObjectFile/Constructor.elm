@@ -47,11 +47,13 @@ generate context { name, fields, hasLoop } =
                             ]
                     )
                 |> String.join ", "
+
+        annotation =
+            interpolate """build{0} : ({0}OptionalFields -> {0}OptionalFields) -> {0}RequiredFields -> {0}
+build{0} fillOptionals required =""" [ ClassCaseName.normalized name ]
     in
     interpolate
-        """
-build{0} : ({0}OptionalFields -> {0}OptionalFields) -> {0}RequiredFields -> {0}
-build{0} fillOptionals required =
+        """{0}
     let
         optionals =
             fillOptionals
@@ -62,20 +64,23 @@ build{0} fillOptionals required =
 {3}
 {4}
 """
-        [ ClassCaseName.normalized name
+        [ annotation
         , filledOptionalsRecord optionalFields
         , allValues
-        , something (ClassCaseName.normalized name ++ "RequiredFields") context requiredFields
-        , something (ClassCaseName.normalized name ++ "OptionalFields") context optionalFields
+        , constructorFieldsAlias (ClassCaseName.normalized name ++ "RequiredFields") context requiredFields
+        , constructorFieldsAlias (ClassCaseName.normalized name ++ "OptionalFields") context optionalFields
         ]
 
 
-something : String -> Context -> List Type.Field -> String
-something nameThing context fields =
-    interpolate
-        """type alias {0} =
+constructorFieldsAlias : String -> Context -> List Type.Field -> String
+constructorFieldsAlias nameThing context fields =
+    if List.length fields > 0 then
+        interpolate
+            """type alias {0} =
     { {1} }"""
-        [ nameThing, List.map (aliasEntry context) fields |> String.join ", " ]
+            [ nameThing, List.map (aliasEntry context) fields |> String.join ", " ]
+    else
+        ""
 
 
 filledOptionalsRecord : List Type.Field -> String
