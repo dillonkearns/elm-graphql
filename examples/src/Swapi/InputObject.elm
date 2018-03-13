@@ -18,8 +18,8 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-buildGreeting : (GreetingOptionalFields -> GreetingOptionalFields) -> GreetingRequiredFields -> Greeting
-buildGreeting fillOptionals required =
+buildGreeting : GreetingRequiredFields -> (GreetingOptionalFields -> GreetingOptionalFields) -> Greeting
+buildGreeting required fillOptionals =
     let
         optionals =
             fillOptionals

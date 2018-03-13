@@ -52,13 +52,13 @@ generate context { name, fields, hasLoop } =
 
         annotation =
             AnnotatedArg.buildWithArgs
-                ([ when (List.length optionalFields > 0)
-                    ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
-                    , "fillOptionals"
-                    )
-                 , when (List.length requiredFields > 0)
+                ([ when (List.length requiredFields > 0)
                     ( interpolate "{0}RequiredFields" [ ClassCaseName.normalized name ]
                     , "required"
+                    )
+                 , when (List.length optionalFields > 0)
+                    ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
+                    , "fillOptionals"
                     )
                  ]
                     |> compact

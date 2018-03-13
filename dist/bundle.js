@@ -13273,38 +13273,38 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 						_0: A2(
 							_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$when,
 							_elm_lang$core$Native_Utils.cmp(
-								_elm_lang$core$List$length(optionalFields),
+								_elm_lang$core$List$length(requiredFields),
 								0) > 0,
 							{
 								ctor: '_Tuple2',
 								_0: A2(
 									_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-									'({0}OptionalFields -> {0}OptionalFields)',
+									'{0}RequiredFields',
 									{
 										ctor: '::',
 										_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
 										_1: {ctor: '[]'}
 									}),
-								_1: 'fillOptionals'
+								_1: 'required'
 							}),
 						_1: {
 							ctor: '::',
 							_0: A2(
 								_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$when,
 								_elm_lang$core$Native_Utils.cmp(
-									_elm_lang$core$List$length(requiredFields),
+									_elm_lang$core$List$length(optionalFields),
 									0) > 0,
 								{
 									ctor: '_Tuple2',
 									_0: A2(
 										_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-										'{0}RequiredFields',
+										'({0}OptionalFields -> {0}OptionalFields)',
 										{
 											ctor: '::',
 											_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
 											_1: {ctor: '[]'}
 										}),
-									_1: 'required'
+									_1: 'fillOptionals'
 								}),
 							_1: {ctor: '[]'}
 						}

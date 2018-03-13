@@ -82,7 +82,7 @@ query =
             (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
         |> with
             (Query.greet
-                { input = Swapi.InputObject.buildGreeting (\optionals -> { optionals | language = Present Language.Es }) { name = "Chewie" } }
+                { input = Swapi.InputObject.buildGreeting { name = "Chewie" } (\optionals -> { optionals | language = Present Language.Es }) }
             )
 
 
