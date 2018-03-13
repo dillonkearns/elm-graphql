@@ -59,20 +59,23 @@ build{0} fillOptionals required =
     in
     { {2} }
 
-
-type alias {0}RequiredFields =
-    { {3} }
-
-
-type alias {0}OptionalFields =
-    { {4} }
-  """
+{3}
+{4}
+"""
         [ ClassCaseName.normalized name
         , filledOptionalsRecord optionalFields
         , allValues
-        , List.map (aliasEntry context) requiredFields |> String.join ", "
-        , List.map (aliasEntry context) optionalFields |> String.join ", "
+        , something (ClassCaseName.normalized name ++ "RequiredFields") context requiredFields
+        , something (ClassCaseName.normalized name ++ "OptionalFields") context optionalFields
         ]
+
+
+something : String -> Context -> List Type.Field -> String
+something nameThing context fields =
+    interpolate
+        """type alias {0} =
+    { {1} }"""
+        [ nameThing, List.map (aliasEntry context) fields |> String.join ", " ]
 
 
 filledOptionalsRecord : List Type.Field -> String

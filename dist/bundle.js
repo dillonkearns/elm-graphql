@@ -13114,9 +13114,31 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$fill
 				},
 				optionalFields)));
 };
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$something = F3(
+	function (nameThing, context, fields) {
+		return A2(
+			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			'type alias {0} =\n    { {1} }',
+			{
+				ctor: '::',
+				_0: nameThing,
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$String$join,
+						', ',
+						A2(
+							_elm_lang$core$List$map,
+							_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$aliasEntry(context),
+							fields)),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$generate = F2(
 	function (context, _p2) {
 		var _p3 = _p2;
+		var _p9 = _p3.name;
 		var _p8 = _p3.fields;
 		var allValues = A2(
 			_elm_lang$core$String$join,
@@ -13162,10 +13184,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 			_p8);
 		return A2(
 			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'\nbuild{0} : ({0}OptionalFields -> {0}OptionalFields) -> {0}RequiredFields -> {0}\nbuild{0} fillOptionals required =\n    let\n        optionals =\n            fillOptionals\n                { {1} }\n    in\n    { {2} }\n\n\ntype alias {0}RequiredFields =\n    { {3} }\n\n\ntype alias {0}OptionalFields =\n    { {4} }\n  ',
+			'\nbuild{0} : ({0}OptionalFields -> {0}OptionalFields) -> {0}RequiredFields -> {0}\nbuild{0} fillOptionals required =\n    let\n        optionals =\n            fillOptionals\n                { {1} }\n    in\n    { {2} }\n\n{3}\n{4}\n',
 			{
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p3.name),
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
 				_1: {
 					ctor: '::',
 					_0: _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$filledOptionalsRecord(optionalFields),
@@ -13174,22 +13196,24 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 						_0: allValues,
 						_1: {
 							ctor: '::',
-							_0: A2(
-								_elm_lang$core$String$join,
-								', ',
+							_0: A3(
+								_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$something,
 								A2(
-									_elm_lang$core$List$map,
-									_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$aliasEntry(context),
-									requiredFields)),
+									_elm_lang$core$Basics_ops['++'],
+									_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
+									'RequiredFields'),
+								context,
+								requiredFields),
 							_1: {
 								ctor: '::',
-								_0: A2(
-									_elm_lang$core$String$join,
-									', ',
+								_0: A3(
+									_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$something,
 									A2(
-										_elm_lang$core$List$map,
-										_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$aliasEntry(context),
-										optionalFields)),
+										_elm_lang$core$Basics_ops['++'],
+										_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
+										'OptionalFields'),
+									context,
+									optionalFields),
 								_1: {ctor: '[]'}
 							}
 						}
@@ -15084,89 +15108,6 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$filledOptionalsR
 				},
 				optionalFields)));
 };
-var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$constructorFunction = F2(
-	function (context, _p17) {
-		var _p18 = _p17;
-		var _p23 = _p18.fields;
-		var allValues = A2(
-			_elm_lang$core$String$join,
-			', ',
-			A2(
-				_elm_lang$core$List$map,
-				function (field) {
-					return A2(
-						_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-						'{0} = {1}.{0}',
-						{
-							ctor: '::',
-							_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(field.name),
-							_1: {
-								ctor: '::',
-								_0: function () {
-									var _p19 = field.typeRef;
-									var _p20 = _p19._1;
-									if (_p20.ctor === 'Nullable') {
-										return 'optionals';
-									} else {
-										return 'required';
-									}
-								}(),
-								_1: {ctor: '[]'}
-							}
-						});
-				},
-				_p23));
-		var requiredFields = A2(
-			_elm_lang$core$List$filter,
-			function (field) {
-				var _p21 = field.typeRef;
-				return _elm_lang$core$Native_Utils.eq(_p21._1, _dillonkearns$graphqelm$Graphqelm_Parser_Type$NonNullable);
-			},
-			_p23);
-		var optionalFields = A2(
-			_elm_lang$core$List$filter,
-			function (field) {
-				var _p22 = field.typeRef;
-				return _elm_lang$core$Native_Utils.eq(_p22._1, _dillonkearns$graphqelm$Graphqelm_Parser_Type$Nullable);
-			},
-			_p23);
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'\nbuild{0} : ({0}OptionalFields -> {0}OptionalFields) -> {0}RequiredFields -> {0}\nbuild{0} fillOptionals required =\n    let\n        optionals =\n            fillOptionals\n                { {1} }\n    in\n    { {2} }\n\n\ntype alias {0}RequiredFields =\n    { {3} }\n\n\ntype alias {0}OptionalFields =\n    { {4} }\n  ',
-			{
-				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p18.name),
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$filledOptionalsRecord(optionalFields),
-					_1: {
-						ctor: '::',
-						_0: allValues,
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$String$join,
-								', ',
-								A2(
-									_elm_lang$core$List$map,
-									_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$aliasEntry(context),
-									requiredFields)),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$core$String$join,
-									', ',
-									A2(
-										_elm_lang$core$List$map,
-										_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$aliasEntry(context),
-										optionalFields)),
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				}
-			});
-	});
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateEncoderAndAlias = F2(
 	function (context, inputObjectDetails) {
 		return A2(
@@ -15186,11 +15127,11 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateEncoderA
 				}
 			});
 	});
-var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName = function (_p24) {
-	var _p25 = _p24;
+var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName = function (_p17) {
+	var _p18 = _p17;
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		_p25.apiSubmodule,
+		_p18.apiSubmodule,
 		{
 			ctor: '::',
 			_0: 'InputObject',
@@ -15198,9 +15139,9 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName = fun
 		});
 };
 var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateImports = F2(
-	function (_p26, fields) {
-		var _p27 = _p26;
-		var _p28 = _p27.apiSubmodule;
+	function (_p19, fields) {
+		var _p20 = _p19;
+		var _p21 = _p20.apiSubmodule;
 		return A2(
 			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
 			'import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphqelm.Field as Field exposing (Field)\nimport Graphqelm.Internal.Builder.Object as Object\nimport Graphqelm.SelectionSet exposing (SelectionSet)\nimport Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport Json.Decode as Decode\nimport Graphqelm.Internal.Encode as Encode exposing (Value)\n{0}\n',
@@ -15208,12 +15149,12 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$generateImports 
 				ctor: '::',
 				_0: A3(
 					_dillonkearns$graphqelm$Graphqelm_Generator_Imports$importsString,
-					_p28,
-					_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName(_p27),
+					_p21,
+					_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$moduleName(_p20),
 					fields),
 				_1: {
 					ctor: '::',
-					_0: A2(_elm_lang$core$String$join, '.', _p28),
+					_0: A2(_elm_lang$core$String$join, '.', _p21),
 					_1: {ctor: '[]'}
 				}
 			});
