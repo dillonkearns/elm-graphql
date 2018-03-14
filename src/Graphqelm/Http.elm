@@ -140,20 +140,19 @@ type Error parsedData
     | HttpError Http.Error
 
 
-type SuccessOrError parsedData
-    = Success parsedData
-    | ErrorThing (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
+type alias DataResult parsedData =
+    Result ( GraphqlError.PossiblyParsedData parsedData, List GraphqlError.GraphqlError ) parsedData
 
 
-convertResult : Result Http.Error (SuccessOrError decodesTo) -> Result (Error decodesTo) decodesTo
+convertResult : Result Http.Error (DataResult decodesTo) -> Result (Error decodesTo) decodesTo
 convertResult httpResult =
     case httpResult of
         Ok successOrError ->
             case successOrError of
-                Success value ->
+                Ok value ->
                     Ok value
 
-                ErrorThing possiblyParsedData error ->
+                Err ( possiblyParsedData, error ) ->
                     Err (GraphqlError possiblyParsedData error)
 
         Err httpError ->
@@ -194,7 +193,7 @@ send resultToMessage graphqelmRequest =
         |> Http.send (convertResult >> resultToMessage)
 
 
-toRequest : Request decodesTo -> Http.Request (SuccessOrError decodesTo)
+toRequest : Request decodesTo -> Http.Request (DataResult decodesTo)
 toRequest (Request request) =
     (case request.details of
         Query forcedRequestMethod querySelectionSet ->
@@ -262,25 +261,25 @@ toTask request =
         |> Task.andThen failTaskOnHttpSuccessWithErrors
 
 
-failTaskOnHttpSuccessWithErrors : SuccessOrError decodesTo -> Task (Error decodesTo) decodesTo
+failTaskOnHttpSuccessWithErrors : DataResult decodesTo -> Task (Error decodesTo) decodesTo
 failTaskOnHttpSuccessWithErrors successOrError =
     case successOrError of
-        Success value ->
+        Ok value ->
             Task.succeed value
 
-        ErrorThing possiblyParsedData graphqlErrorGraphqlErrorList ->
+        Err ( possiblyParsedData, graphqlErrorGraphqlErrorList ) ->
             Task.fail (GraphqlError possiblyParsedData graphqlErrorGraphqlErrorList)
 
 
-decoderOrError : Json.Decode.Decoder a -> Json.Decode.Decoder (SuccessOrError a)
+decoderOrError : Json.Decode.Decoder a -> Json.Decode.Decoder (DataResult a)
 decoderOrError decoder =
     Json.Decode.oneOf
         [ errorDecoder decoder
-        , decoder |> Json.Decode.map Success
+        , decoder |> Json.Decode.map Ok
         ]
 
 
-errorDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (SuccessOrError a)
+errorDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (DataResult a)
 errorDecoder decoder =
     Json.Decode.oneOf
         [ decoder |> Json.Decode.map GraphqlError.ParsedData |> Json.Decode.andThen decodeErrorWithData
@@ -288,9 +287,9 @@ errorDecoder decoder =
         ]
 
 
-decodeErrorWithData : GraphqlError.PossiblyParsedData a -> Json.Decode.Decoder (SuccessOrError a)
+decodeErrorWithData : GraphqlError.PossiblyParsedData a -> Json.Decode.Decoder (DataResult a)
 decodeErrorWithData data =
-    GraphqlError.decoder |> Json.Decode.map (ErrorThing data)
+    GraphqlError.decoder |> Json.Decode.map ((,) data) |> Json.Decode.map Err
 
 
 {-| Add a header.
