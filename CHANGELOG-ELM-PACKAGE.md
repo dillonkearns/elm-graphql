@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Responses are errors if any data is present in `errors` field in response.
+  The `data` field from the response is also included in `GraphqlError`s now so
+  you can inspect the data upon failure. See discussion in #48.
+
 ## [10.2.0] - 2018-03-09
 
 ### Added

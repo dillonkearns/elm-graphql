@@ -135,17 +135,17 @@ mutationRequest baseUrl mutationSelectionSet =
 {-| Represents the two types of errors you can get, an Http error or a GraphQL error.
 See the `Graphqelm.Http.GraphqlError` module docs for more details.
 -}
-type Error
-    = GraphqlError (List GraphqlError.GraphqlError)
+type Error parsedData
+    = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
     | HttpError Http.Error
 
 
-type SuccessOrError a
-    = Success a
-    | ErrorThing (List GraphqlError.GraphqlError)
+type SuccessOrError parsedData
+    = Success parsedData
+    | ErrorThing (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
 
 
-convertResult : Result Http.Error (SuccessOrError a) -> Result Error a
+convertResult : Result Http.Error (SuccessOrError decodesTo) -> Result (Error decodesTo) decodesTo
 convertResult httpResult =
     case httpResult of
         Ok successOrError ->
@@ -153,8 +153,8 @@ convertResult httpResult =
                 Success value ->
                     Ok value
 
-                ErrorThing error ->
-                    Err (GraphqlError error)
+                ErrorThing possiblyParsedData error ->
+                    Err (GraphqlError possiblyParsedData error)
 
         Err httpError ->
             Err (HttpError httpError)
@@ -181,8 +181,13 @@ You can use it on its own, or with a library like
             -- With remote data, it's as below
             |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
 
+If any errors are present, you will get a `GraphqlError` that includes the details.
+GraphQL allows for partial data to be returned in the case of errors so you can
+inspect the data returned in the `GraphqlError` if you would like to try to recover
+any data that made it through in the response.
+
 -}
-send : (Result Error a -> msg) -> Request a -> Cmd msg
+send : (Result (Error decodesTo) decodesTo -> msg) -> Request decodesTo -> Cmd msg
 send resultToMessage graphqelmRequest =
     graphqelmRequest
         |> toRequest
@@ -248,7 +253,7 @@ toRequest (Request request) =
 {-| Convert a Request to a Task. See `Graphqelm.Http.send` for an example of
 how to build up a Request.
 -}
-toTask : Request decodesTo -> Task Error decodesTo
+toTask : Request decodesTo -> Task (Error decodesTo) decodesTo
 toTask request =
     request
         |> toRequest
@@ -257,22 +262,35 @@ toTask request =
         |> Task.andThen failTaskOnHttpSuccessWithErrors
 
 
-failTaskOnHttpSuccessWithErrors : SuccessOrError decodesTo -> Task Error decodesTo
+failTaskOnHttpSuccessWithErrors : SuccessOrError decodesTo -> Task (Error decodesTo) decodesTo
 failTaskOnHttpSuccessWithErrors successOrError =
     case successOrError of
         Success value ->
             Task.succeed value
 
-        ErrorThing graphqlErrorGraphqlErrorList ->
-            Task.fail (GraphqlError graphqlErrorGraphqlErrorList)
+        ErrorThing possiblyParsedData graphqlErrorGraphqlErrorList ->
+            Task.fail (GraphqlError possiblyParsedData graphqlErrorGraphqlErrorList)
 
 
 decoderOrError : Json.Decode.Decoder a -> Json.Decode.Decoder (SuccessOrError a)
 decoderOrError decoder =
     Json.Decode.oneOf
-        [ decoder |> Json.Decode.map Success
-        , GraphqlError.decoder |> Json.Decode.map ErrorThing
+        [ errorDecoder decoder
+        , decoder |> Json.Decode.map Success
         ]
+
+
+errorDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (SuccessOrError a)
+errorDecoder decoder =
+    Json.Decode.oneOf
+        [ decoder |> Json.Decode.map GraphqlError.ParsedData |> Json.Decode.andThen decodeErrorWithData
+        , Json.Decode.field "data" Json.Decode.value |> Json.Decode.map GraphqlError.UnparsedData |> Json.Decode.andThen decodeErrorWithData
+        ]
+
+
+decodeErrorWithData : GraphqlError.PossiblyParsedData a -> Json.Decode.Decoder (SuccessOrError a)
+decodeErrorWithData data =
+    GraphqlError.decoder |> Json.Decode.map (ErrorThing data)
 
 
 {-| Add a header.

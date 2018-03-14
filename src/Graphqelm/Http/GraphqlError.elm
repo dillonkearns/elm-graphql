@@ -1,8 +1,8 @@
-module Graphqelm.Http.GraphqlError exposing (GraphqlError, Location, decoder)
+module Graphqelm.Http.GraphqlError exposing (GraphqlError, Location, PossiblyParsedData(..), decoder)
 
 {-|
 
-@docs GraphqlError, decoder, Location
+@docs GraphqlError, decoder, Location, PossiblyParsedData
 
 -}
 
@@ -28,6 +28,19 @@ type alias GraphqlError =
     , locations : Maybe (List Location)
     , details : Dict String Decode.Value
     }
+
+
+{-| Represents the `data` field in cases where there is an error present, see
+[the error section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Data).
+If the decoder succeeds you will end up with `ParsedData`. If it fails, you
+will get an `UnparsedData` with a `Json.Decode.Value` containing the raw, undecoded
+`data` field. You're likely to end up with `UnparsedData` since
+[GraphQL will return `null` if there is an error on a non-nullable field](http://facebook.github.io/graphql/October2016/#sec-Errors-and-Non-Nullability)
+, which will cause the decode pipeline to fail and give you `UnparsedData`.
+-}
+type PossiblyParsedData parsed
+    = ParsedData parsed
+    | UnparsedData Decode.Value
 
 
 {-| For internal use only.
