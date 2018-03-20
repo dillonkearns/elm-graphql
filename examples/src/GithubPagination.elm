@@ -119,7 +119,7 @@ type alias Model =
 
 
 type alias RemoteDataResponse =
-    RemoteData Graphqelm.Http.Error Response
+    RemoteData (Graphqelm.Http.Error Response) Response
 
 
 init : ( Model, Cmd Msg )

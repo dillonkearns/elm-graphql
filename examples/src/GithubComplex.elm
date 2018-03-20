@@ -22,12 +22,12 @@ makeRequest sortOrder =
 
 
 type Msg
-    = GotResponse (RemoteData Graphqelm.Http.Error ElmReposRequest.Response)
+    = GotResponse (RemoteData (Graphqelm.Http.Error ElmReposRequest.Response) ElmReposRequest.Response)
     | SetSortOrder ElmReposRequest.SortOrder
 
 
 type alias Model =
-    { githubResponse : RemoteData Graphqelm.Http.Error ElmReposRequest.Response
+    { githubResponse : RemoteData (Graphqelm.Http.Error ElmReposRequest.Response) ElmReposRequest.Response
     , sortOrder : ElmReposRequest.SortOrder
     }
 
