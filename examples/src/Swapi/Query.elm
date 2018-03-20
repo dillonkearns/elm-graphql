@@ -42,6 +42,13 @@ droid requiredArgs object =
     Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object (identity >> Decode.nullable)
 
 
+{-| Getting this field will result in an error.
+-}
+forcedError : Field (Maybe String) RootQuery
+forcedError =
+    Object.fieldDecoder "forcedError" [] (Decode.string |> Decode.nullable)
+
+
 type alias GreetRequiredArguments =
     { input : Swapi.InputObject.Greeting }
 
