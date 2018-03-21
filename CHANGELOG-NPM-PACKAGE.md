@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* Fix code generation for constructors for circular input objects.
+  Previously, `build<InputObject>` returned records without wrapping them in their type constructors
+  when needed. This worked for plain type aliases but not for the types for
+  self-referential input object types. The code generation is now correct for both of these types.
+
+types.
+
 ## [3.1.10] - 2018-03-13
 
 ### Added

@@ -18,6 +18,20 @@ import Normalize.Scalar
 import Normalize.Union
 
 
+buildCircularOne : (CircularOneOptionalFields -> CircularOneOptionalFields) -> CircularOne
+buildCircularOne fillOptionals =
+    let
+        optionals =
+            fillOptionals
+                { circularTwo = Absent }
+    in
+    CircularOne { circularTwo = optionals.circularTwo }
+
+
+type alias CircularOneOptionalFields =
+    { circularTwo : OptionalArgument CircularTwo }
+
+
 {-| Type alias for the `CircularOne` attributes. Note that this type
 needs to use the `CircularOne` type (not just a plain type alias) because it has
 references to itself either directly (recursive) or indirectly (circular). See
@@ -39,6 +53,20 @@ encodeCircularOne : CircularOne -> Value
 encodeCircularOne (CircularOne input) =
     Encode.maybeObject
         [ ( "circularTwo", encodeCircularTwo |> Encode.optional input.circularTwo ) ]
+
+
+buildCircularTwo : (CircularTwoOptionalFields -> CircularTwoOptionalFields) -> CircularTwo
+buildCircularTwo fillOptionals =
+    let
+        optionals =
+            fillOptionals
+                { circularOne = Absent }
+    in
+    CircularTwo { circularOne = optionals.circularOne }
+
+
+type alias CircularTwoOptionalFields =
+    { circularOne : OptionalArgument CircularOne }
 
 
 {-| Type alias for the `CircularTwo` attributes. Note that this type
@@ -64,6 +92,24 @@ encodeCircularTwo (CircularTwo input) =
         [ ( "circularOne", encodeCircularOne |> Encode.optional input.circularOne ) ]
 
 
+buildGreeting : GreetingRequiredFields -> (GreetingOptionalFields -> GreetingOptionalFields) -> Greeting
+buildGreeting required fillOptionals =
+    let
+        optionals =
+            fillOptionals
+                { language = Absent, options = Absent }
+    in
+    { language = optionals.language, name = required.name, options = optionals.options }
+
+
+type alias GreetingRequiredFields =
+    { name : String }
+
+
+type alias GreetingOptionalFields =
+    { language : OptionalArgument Normalize.Enum.Language.Language, options : OptionalArgument GreetingOptions }
+
+
 {-| Type for the Greeting input object.
 -}
 type alias Greeting =
@@ -78,6 +124,20 @@ encodeGreeting input =
         [ ( "language", Encode.enum Normalize.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
 
 
+buildGreetingOptions : (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields) -> GreetingOptions
+buildGreetingOptions fillOptionals =
+    let
+        optionals =
+            fillOptionals
+                { prefix = Absent }
+    in
+    { prefix = optionals.prefix }
+
+
+type alias GreetingOptionsOptionalFields =
+    { prefix : OptionalArgument String }
+
+
 {-| Type for the GreetingOptions input object.
 -}
 type alias GreetingOptions =
@@ -90,6 +150,20 @@ encodeGreetingOptions : GreetingOptions -> Value
 encodeGreetingOptions input =
     Encode.maybeObject
         [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
+
+
+buildRecursive : (RecursiveOptionalFields -> RecursiveOptionalFields) -> Recursive
+buildRecursive fillOptionals =
+    let
+        optionals =
+            fillOptionals
+                { recursive = Absent }
+    in
+    Recursive { recursive = optionals.recursive }
+
+
+type alias RecursiveOptionalFields =
+    { recursive : OptionalArgument Recursive }
 
 
 {-| Type alias for the `Recursive` attributes. Note that this type

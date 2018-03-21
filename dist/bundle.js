@@ -13335,7 +13335,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 				}));
 		return A2(
 			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{0}{1}\n    { {2} }\n\n{3}\n{4}\n',
+			'{0}{1}\n    {2}{ {3} }\n\n{4}\n{5}\n',
 			{
 				ctor: '::',
 				_0: annotation,
@@ -13344,17 +13344,10 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 					_0: letClause,
 					_1: {
 						ctor: '::',
-						_0: returnRecord,
+						_0: _p3.hasLoop ? _dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9) : '',
 						_1: {
 							ctor: '::',
-							_0: A3(
-								_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$constructorFieldsAlias,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
-									'RequiredFields'),
-								context,
-								requiredFields),
+							_0: returnRecord,
 							_1: {
 								ctor: '::',
 								_0: A3(
@@ -13362,10 +13355,21 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$gene
 									A2(
 										_elm_lang$core$Basics_ops['++'],
 										_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
-										'OptionalFields'),
+										'RequiredFields'),
 									context,
-									optionalFields),
-								_1: {ctor: '[]'}
+									requiredFields),
+								_1: {
+									ctor: '::',
+									_0: A3(
+										_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile_Constructor$constructorFieldsAlias,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_dillonkearns$graphqelm$Graphqelm_Parser_ClassCaseName$normalized(_p9),
+											'OptionalFields'),
+										context,
+										optionalFields),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}

@@ -81,13 +81,17 @@ generate context { name, fields, hasLoop } =
     in
     interpolate
         """{0}{1}
-    { {2} }
+    {2}{ {3} }
 
-{3}
 {4}
+{5}
 """
         [ annotation
         , letClause
+        , if hasLoop then
+            ClassCaseName.normalized name
+          else
+            ""
         , returnRecord
         , constructorFieldsAlias (ClassCaseName.normalized name ++ "RequiredFields") context requiredFields
         , constructorFieldsAlias (ClassCaseName.normalized name ++ "OptionalFields") context optionalFields
