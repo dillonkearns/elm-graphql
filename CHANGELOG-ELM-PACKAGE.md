@@ -9,11 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [11.0.0] - 2018-03-21
+
 ### Changed
 
 * Responses are errors if any data is present in `errors` field in response.
   The `data` field from the response is also included in `GraphqlError`s now so
-  you can inspect the data upon failure. See discussion in #48.
+  you can inspect the data upon failure. Here is a summary of how this will effect your code:
+  * Before, Graphqelm always treated responses where it could parse the response as success.
+  * Now, it will treat responses where `errors` are present as an error regardless of whether it is able to parse the response `data`.
+  * Users will need to add a type variable to their error type as errors may contain parsed data now (so `RemoteData (Graphqelm.Http.Error) Response` -> `RemoteData (Graphqelm.Http.Error Response) Response`)
+  * For more context, here's the Github issue: https://github.com/dillonkearns/graphqelm/issues/48#issuecomment-373175596
+  * For an example, see https://github.com/dillonkearns/graphqelm/blob/30be3570f52f5fd73055321e1a998c4082db32cf/examples/src/ErrorHandling.elm#L80-L107
 
 ## [10.2.0] - 2018-03-09
 
