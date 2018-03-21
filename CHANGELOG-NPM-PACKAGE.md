@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.11] - 2018-03-21
+
 ### Fixed
 
 * Fix code generation for constructors for circular input objects.
