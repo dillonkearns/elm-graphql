@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), QueryRequestMethod(..), Request, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
+module Graphqelm.Http exposing (Error(..), QueryRequestMethod(..), Request, ignoreParsedErrorData, mapError, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
@@ -26,6 +26,11 @@ The builder syntax is inspired by Luke Westby's
 ## Perform `Request`
 
 @docs send, toTask
+
+
+## Map `Error`s
+
+@docs mapError, ignoreParsedErrorData
 
 -}
 
@@ -138,6 +143,31 @@ See the `Graphqelm.Http.GraphqlError` module docs for more details.
 type Error parsedData
     = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
     | HttpError Http.Error
+
+
+{-| Map the error data if it is `ParsedData`.
+-}
+mapError : (a -> b) -> Error a -> Error b
+mapError mapFn error =
+    case error of
+        GraphqlError possiblyParsedData graphqlErrorList ->
+            case possiblyParsedData of
+                GraphqlError.ParsedData parsedData ->
+                    GraphqlError (GraphqlError.ParsedData (mapFn parsedData)) graphqlErrorList
+
+                GraphqlError.UnparsedData unparsedData ->
+                    GraphqlError (GraphqlError.UnparsedData unparsedData) graphqlErrorList
+
+        HttpError httpError ->
+            HttpError httpError
+
+
+{-| Useful when you don't want to deal with the recovered data if there is `ParsedData`.
+Just a shorthand for `mapError` that will turn any `ParsedData` into `()`.
+-}
+ignoreParsedErrorData : Error parsedData -> Error ()
+ignoreParsedErrorData error =
+    mapError (\_ -> ()) error
 
 
 type alias DataResult parsedData =

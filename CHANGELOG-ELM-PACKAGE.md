@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `mapError` and `ignoreParsedErrorData` functions to allow you to do more
+  manipulation of `ParsedData` within Error data (fixes #52).
+
 ## [11.0.0] - 2018-03-21
 
 ### Changed
