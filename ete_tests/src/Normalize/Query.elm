@@ -137,6 +137,18 @@ recursiveInput requiredArgs =
     Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
 
 
-type_ : Field String RootQuery
-type_ =
-    Object.fieldDecoder "type" [] Decode.string
+type alias TypeOptionalArguments =
+    { input : OptionalArgument Normalize.InputObject.ReservedWord }
+
+
+type_ : (TypeOptionalArguments -> TypeOptionalArguments) -> Field String RootQuery
+type_ fillInOptionals =
+    let
+        filledInOptionals =
+            fillInOptionals { input = Absent }
+
+        optionalArgs =
+            [ Argument.optional "input" filledInOptionals.input Normalize.InputObject.encodeReservedWord ]
+                |> List.filterMap identity
+    in
+    Object.fieldDecoder "type" optionalArgs Decode.string

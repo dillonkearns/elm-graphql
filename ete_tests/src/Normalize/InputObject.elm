@@ -187,3 +187,26 @@ encodeRecursive : Recursive -> Value
 encodeRecursive (Recursive input) =
     Encode.maybeObject
         [ ( "recursive", encodeRecursive |> Encode.optional input.recursive ) ]
+
+
+buildReservedWord : ReservedWordRequiredFields -> ReservedWord
+buildReservedWord required =
+    { type_ = required.type_ }
+
+
+type alias ReservedWordRequiredFields =
+    { type_ : String }
+
+
+{-| Type for the ReservedWord input object.
+-}
+type alias ReservedWord =
+    { type_ : String }
+
+
+{-| Encode a ReservedWord into a value that can be used as an argument.
+-}
+encodeReservedWord : ReservedWord -> Value
+encodeReservedWord input =
+    Encode.maybeObject
+        [ ( "type_", Encode.string input.type_ |> Just ) ]
