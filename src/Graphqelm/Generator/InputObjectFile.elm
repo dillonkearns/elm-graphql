@@ -143,7 +143,7 @@ encode{0} {1} =
 encoderForField : Context -> Type.Field -> String
 encoderForField context field =
     interpolate """( "{0}", {1} )"""
-        [ CamelCaseName.normalized field.name
+        [ CamelCaseName.raw field.name
         , encoderFunction context field
         ]
 

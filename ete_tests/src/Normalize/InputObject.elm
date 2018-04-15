@@ -209,4 +209,4 @@ type alias ReservedWord =
 encodeReservedWord : ReservedWord -> Value
 encodeReservedWord input =
     Encode.maybeObject
-        [ ( "type_", Encode.string input.type_ |> Just ) ]
+        [ ( "type", Encode.string input.type_ |> Just ) ]

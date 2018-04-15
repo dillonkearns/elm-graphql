@@ -15144,7 +15144,7 @@ var _dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderForField 
 			'( \"{0}\", {1} )',
 			{
 				ctor: '::',
-				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$normalized(field.name),
+				_0: _dillonkearns$graphqelm$Graphqelm_Parser_CamelCaseName$raw(field.name),
 				_1: {
 					ctor: '::',
 					_0: A2(_dillonkearns$graphqelm$Graphqelm_Generator_InputObjectFile$encoderFunction, context, field),
