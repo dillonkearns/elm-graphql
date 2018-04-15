@@ -135,3 +135,8 @@ type alias RecursiveInputRequiredArguments =
 recursiveInput : RecursiveInputRequiredArguments -> Field (Maybe String) RootQuery
 recursiveInput requiredArgs =
     Object.fieldDecoder "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
+
+
+type_ : Field String RootQuery
+type_ =
+    Object.fieldDecoder "type" [] Decode.string
