@@ -40,6 +40,7 @@ build forceMethod url queryParams queryDocument =
         , url = QueryParams.urlWithQueryParams [] url
         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
         }
+
     else
         { method = Get
         , url = urlForGetRequest

@@ -189,6 +189,7 @@ update msg graphqlSubscriptionModel =
                                     (documentRequest (Graphqelm.Document.serializeSubscription model.subscriptionDocument))
                                 )
                                     |> setStatus Connected
+
                             else
                                 ( graphqlSubscriptionModel, Cmd.none )
 

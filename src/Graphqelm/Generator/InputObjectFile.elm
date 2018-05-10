@@ -45,6 +45,7 @@ placeholder =
     ""
 """
             [ moduleName context |> String.join "." ]
+
     else
         interpolate
             """module {0} exposing (..)
@@ -100,6 +101,7 @@ type {0}
             [ ClassCaseName.normalized name
             , List.map (aliasEntry context) fields |> String.join ", "
             ]
+
     else
         interpolate """{-| Type for the {0} input object.
 -}
@@ -125,6 +127,7 @@ encoder context { name, fields, hasLoop } =
         parameter =
             if hasLoop then
                 interpolate "({0} input)" [ ClassCaseName.normalized name ]
+
             else
                 "input"
     in

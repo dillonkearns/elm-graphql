@@ -9,6 +9,7 @@ normalizeIfElmReserved : String -> String
 normalizeIfElmReserved name =
     if List.member name elmReservedWords then
         name ++ "_"
+
     else
         name
 
@@ -55,6 +56,7 @@ capitalized name =
         group.remaining
             |> String.toLower
             |> String.Extra.classify
+
      else
         group.remaining
             |> capitilize

@@ -26,5 +26,6 @@ isBuiltIn : ClassCaseName -> Bool
 isBuiltIn (ClassCaseName rawName) =
     if String.startsWith "__" rawName then
         True
+
     else
         False

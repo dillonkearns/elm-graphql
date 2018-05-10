@@ -25,11 +25,6 @@ type alias OptionalArg =
     }
 
 
-(=>) : a -> b -> ( a, b )
-(=>) =
-    (,)
-
-
 generate : List String -> List Type.Arg -> Maybe Result
 generate apiSubmodule allArgs =
     case List.filterMap optionalArgOrNothing allArgs of
@@ -44,11 +39,11 @@ generate apiSubmodule allArgs =
                         , arg = "fillInOptionals"
                         }
                 , letBindings =
-                    [ "filledInOptionals" => ("fillInOptionals " ++ emptyRecord optionalArgs)
-                    , "optionalArgs"
-                        => (argValues apiSubmodule optionalArgs
-                                ++ "\n                |> List.filterMap identity"
-                           )
+                    [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord optionalArgs )
+                    , ( "optionalArgs"
+                      , argValues apiSubmodule optionalArgs
+                            ++ "\n                |> List.filterMap identity"
+                      )
                     ]
                 , typeAlias = { suffix = "OptionalArguments", body = typeAlias apiSubmodule optionalArgs }
                 }

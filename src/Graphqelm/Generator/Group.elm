@@ -148,12 +148,15 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
             if name == context.query then
                 Graphqelm.Generator.Query.generate context moduleName fields
                     |> Just
+
             else if Just name == context.mutation then
                 Graphqelm.Generator.Mutation.generate context moduleName fields
                     |> Just
+
             else if Just name == context.subscription then
                 Graphqelm.Generator.Subscription.generate context moduleName fields
                     |> Just
+
             else
                 Graphqelm.Generator.Object.generate context name moduleName fields
                     |> Just

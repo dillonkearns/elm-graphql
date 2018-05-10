@@ -12,8 +12,8 @@ import Graphqelm.Document.Field as Field
 import Graphqelm.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphqelm.RawField exposing (RawField)
 import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
-import String.Interpolate exposing (interpolate)
 import Json.Decode as Decode exposing (Decoder)
+import String.Interpolate exposing (interpolate)
 
 
 {-| Serialize a query selection set into a string for a GraphQL endpoint.

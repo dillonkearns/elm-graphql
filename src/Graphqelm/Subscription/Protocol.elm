@@ -73,11 +73,6 @@ type Response a
     | Ignored String
 
 
-(=>) : a -> b -> ( a, b )
-(=>) =
-    (,)
-
-
 {-| `Protocol` for the [Absinthe framework](http://absinthe-graphql.org/)
 with Elixir/Phoenix.
 -}
@@ -127,6 +122,7 @@ subscriptionResponseDecoder decoder =
             (\responseType ->
                 if responseType == "subscription:data" then
                     decoder |> Decode.map SubscriptionDataReceived
+
                 else
                     Decode.succeed HealthStatus
             )
@@ -139,8 +135,8 @@ rails =
     { initMessage =
         \referenceId ->
             Encode.object
-                [ "command" => Encode.string "subscribe"
-                , "identifier" => Encode.string "{\"channel\":\"GraphqlChannel\",\"channelId\":\"ElmGraphql\"}"
+                [ ( "command", Encode.string "subscribe" )
+                , ( "identifier", Encode.string "{\"channel\":\"GraphqlChannel\",\"channelId\":\"ElmGraphql\"}" )
                 ]
     , heartBeatMessage =
         \referenceId ->
@@ -156,19 +152,19 @@ rails =
             -- identifier and data are redundantly JSON encoded as per the Action Cable protocol, see:
             --  https://github.com/NullVoxPopuli/action_cable_client#the-action-cable-protocol
             Encode.object
-                [ "command" => Encode.string "message"
-                , "identifier"
-                    => Encode.string
-                        (Encode.object [ "channel" => Encode.string "GraphqlChannel", "channelId" => Encode.string "ElmGraphql" ] |> Encode.encode 0)
-                , "data"
-                    => (Encode.object
-                            [ "query"
-                                => (operation |> Encode.string)
-                            , "action" => Encode.string "execute"
-                            ]
-                            |> Encode.encode 0
-                            |> Encode.string
-                       )
+                [ ( "command", Encode.string "message" )
+                , ( "identifier"
+                  , Encode.string
+                        (Encode.object [ ( "channel", Encode.string "GraphqlChannel" ), ( "channelId", Encode.string "ElmGraphql" ) ] |> Encode.encode 0)
+                  )
+                , ( "data"
+                  , Encode.object
+                        [ ( "query", operation |> Encode.string )
+                        , ( "action", Encode.string "execute" )
+                        ]
+                        |> Encode.encode 0
+                        |> Encode.string
+                  )
                 ]
     , subscriptionDecoder =
         \decoder ->
@@ -180,8 +176,10 @@ rails =
                         (\type_ ->
                             if type_ == "confirm_subscription" then
                                 Decode.succeed HealthStatus
+
                             else if type_ == "ping" then
                                 Decode.succeed HealthStatus
+
                             else
                                 Decode.succeed (Ignored ("Type was not confirm_subscription: " ++ type_))
                         )

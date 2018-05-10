@@ -23,6 +23,7 @@ alias fieldIndex fields field =
     in
     if indices == [] then
         Nothing
+
     else
         Just (fieldName ++ toString (List.length indices + 1))
 
@@ -49,6 +50,7 @@ serialize alias mIndentationLevel field =
         Composite fieldName args children ->
             if children == [] then
                 Nothing
+
             else
                 case mIndentationLevel of
                     Nothing ->

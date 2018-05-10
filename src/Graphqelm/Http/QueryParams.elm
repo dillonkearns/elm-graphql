@@ -7,6 +7,7 @@ urlWithQueryParams : List ( String, String ) -> String -> String
 urlWithQueryParams queryParams url =
     if List.isEmpty queryParams then
         url
+
     else
         url ++ "?" ++ joinUrlEncoded queryParams
 

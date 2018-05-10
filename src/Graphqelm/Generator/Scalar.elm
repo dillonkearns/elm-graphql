@@ -70,6 +70,7 @@ placeholder =
     ""
 """
             [ moduleName ]
+
     else
         interpolate
             """module {0} exposing (..)

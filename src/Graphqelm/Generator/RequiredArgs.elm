@@ -22,6 +22,7 @@ generate apiSubmodule args =
     in
     if requiredArgs == [] then
         Nothing
+
     else
         Just
             { annotation = \fieldName -> interpolate "{0}RequiredArguments" [ fieldName ]

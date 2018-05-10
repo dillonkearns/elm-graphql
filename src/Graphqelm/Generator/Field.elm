@@ -11,8 +11,8 @@ import Graphqelm.Generator.RequiredArgs
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphqelm.Parser.Type as Type exposing (TypeReference)
-import String.Interpolate exposing (interpolate)
 import String.Extra
+import String.Interpolate exposing (interpolate)
 
 
 type alias FieldGenerator =
@@ -86,6 +86,7 @@ typeAliasesToString : Type.Field -> FieldGenerator -> Maybe String
 typeAliasesToString field fieldGenerator =
     if fieldGenerator.typeAliases == [] then
         Nothing
+
     else
         fieldGenerator.typeAliases
             |> List.map
@@ -106,6 +107,7 @@ argsListString : { fieldGenerator | annotatedArgs : List AnnotatedArg } -> Strin
 argsListString { annotatedArgs } =
     if annotatedArgs == [] then
         ""
+
     else
         (annotatedArgs |> List.map .arg |> String.join " ") ++ " "
 

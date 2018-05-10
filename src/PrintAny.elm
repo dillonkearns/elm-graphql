@@ -19,7 +19,7 @@ string version of the record, which may take long time._
 
 # Basics
 
-@docs view,log
+@docs view, log
 
 
 # Advanced
@@ -31,6 +31,7 @@ string version of the record, which may take long time._
 import Html exposing (Html, p, pre, text)
 import Html.Attributes exposing (class, style)
 import String
+
 
 
 {- Library constants -}
@@ -155,6 +156,7 @@ viewWithConfig (Config config) record =
     pre
         (if config.className == "" then
             []
+
          else
             [ class config.className ]
         )
@@ -290,8 +292,10 @@ addIndent string startList =
                 ( newIndentBefore, newIndentAfter ) =
                     if String.contains firstChar constants.indentChars then
                         ( indentAfter + 1, indentAfter + 1 )
+
                     else if String.contains firstChar constants.outdentChars then
                         ( indentAfter, indentAfter - 1 )
+
                     else
                         ( indentAfter, indentAfter )
             in
@@ -322,6 +326,7 @@ splitUnquotedWithChars stringList =
         splitString string =
             if String.left 1 string == constants.quote then
                 [ string ]
+
             else
                 splitWithChars
                     (constants.indentChars ++ constants.newLineChars ++ constants.outdentChars)
@@ -362,6 +367,7 @@ splitWithChar splitter string =
             (\ind str ->
                 if ind > 0 then
                     splitter ++ str
+
                 else
                     str
             )
@@ -376,8 +382,9 @@ splitWithQuotes string =
     String.split "\"" string
         |> List.indexedMap
             (\i str ->
-                if rem i 2 == 1 then
+                if remainderBy 2 i == 1 then
                     "\"" ++ str ++ "\""
+
                 else
                     str
             )
@@ -403,6 +410,7 @@ mergeOneQuote string startList =
 
             [] ->
                 [ string ]
+
     else
         -- simply add string as line to the list
         startList ++ [ string ]

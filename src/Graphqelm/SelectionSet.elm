@@ -153,6 +153,7 @@ with (Field field fieldDecoder) (SelectionSet objectFields objectDecoder) =
         decodeCamelCaseName =
             if duplicateCount > 0 then
                 fieldName ++ toString (duplicateCount + 1)
+
             else
                 fieldName
     in

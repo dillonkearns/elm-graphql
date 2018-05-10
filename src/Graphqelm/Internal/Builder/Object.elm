@@ -4,6 +4,7 @@ module Graphqelm.Internal.Builder.Object exposing (fieldDecoder, interfaceSelect
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `graphqelm` CLI.
+
 @docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection
 
 -}

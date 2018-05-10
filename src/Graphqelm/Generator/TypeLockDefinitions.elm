@@ -31,6 +31,7 @@ placeholder =
     ""
 """
             [ apiSubmodule ++ [ typeName ] |> String.join "." ]
+
      else
         interpolate
             """module {0} exposing (..)

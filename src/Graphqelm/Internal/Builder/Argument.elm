@@ -4,6 +4,7 @@ module Graphqelm.Internal.Builder.Argument exposing (Argument(Argument), optiona
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `graphqelm` CLI.
+
 @docs Argument, optional, required
 
 -}

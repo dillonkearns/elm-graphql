@@ -30,6 +30,7 @@ generate_ mainDescription itemDescriptions =
 -}
 """
             [ mainDescription |> Maybe.map (\description -> " " ++ description) |> Maybe.withDefault "", argsDoc itemDescriptions ]
+
     else
         ""
 

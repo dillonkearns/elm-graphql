@@ -135,6 +135,7 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
         Type.InputObjectRef inputObjectName ->
             ((if forInputObject then
                 [ "encode" ++ ClassCaseName.normalized inputObjectName ]
+
               else
                 ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
                     ++ [ "encode" ++ ClassCaseName.normalized inputObjectName ]
@@ -205,6 +206,7 @@ generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReferen
         Type.InputObjectRef inputObjectName ->
             (if fromInputObject then
                 [ ClassCaseName.normalized inputObjectName ]
+
              else
                 ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
                     ++ [ ClassCaseName.normalized inputObjectName ]

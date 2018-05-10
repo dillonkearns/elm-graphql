@@ -90,6 +90,7 @@ generate context { name, fields, hasLoop } =
         , letClause
         , if hasLoop then
             ClassCaseName.normalized name
+
           else
             ""
         , returnRecord
@@ -105,6 +106,7 @@ constructorFieldsAlias nameThing context fields =
             """type alias {0} =
     { {1} }"""
             [ nameThing, List.map (aliasEntry context) fields |> String.join ", " ]
+
     else
         ""
 
@@ -129,6 +131,7 @@ when : Bool -> value -> Maybe value
 when condition value =
     if condition then
         Just value
+
     else
         Nothing
 

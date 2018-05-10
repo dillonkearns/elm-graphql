@@ -65,6 +65,7 @@ lookupInputObject typeDefs inputObjectName =
                 InputObjectType fields ->
                     if name == inputObjectName then
                         Just ( name, fields )
+
                     else
                         Nothing
 
