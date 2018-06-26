@@ -1,3 +1,11 @@
+## Why are there so many `Maybe`s in my responses? How do I reduce them?
+If your GraphQL schema has a nullable field, `Graphqelm` will generate a corresponding `Maybe` for that field in the response.
+
+The best way to get rid of these `Maybe`s is to make the fields non-nullable (for example, turn a `string` field into a `string!` field or a `[int]` into a `[int!]!`).
+
+If you are unable to change your schema and make the nullable fields non-nullable, you can use the `Graphqelm.Field.nonNullOrFail` function (see [the `Graphqelm.Field` docs](http://package.elm-lang.org/packages/dillonkearns/graphqelm/latest/Graphqelm-Field#)). Be aware that the entire response will fail to decode if you do get a null back in a field where you used `nonNullOrFail`.
+
+
 ## Why do I get an error when I don't provide an Optional Argument? According to the schema it's optional.
 
 This is very common, if you look at your schema you will probably find that the optional argument is marked as nullable (i.e. it doesn't end with a `!`). And in GraphQL, a nullable argument is exactly what an optional argument is, see http://facebook.github.io/graphql/October2016/#sec-Required-Non-Null-Arguments
