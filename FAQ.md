@@ -5,6 +5,9 @@ The best way to get rid of these `Maybe`s is to make the fields non-nullable (fo
 
 If you are unable to change your schema and make the nullable fields non-nullable, you can use the `Graphqelm.Field.nonNullOrFail` function (see [the `Graphqelm.Field` docs](http://package.elm-lang.org/packages/dillonkearns/graphqelm/latest/Graphqelm-Field#)). Be aware that the entire response will fail to decode if you do get a null back in a field where you used `nonNullOrFail`.
 
+### What if the `Maybe`s are inside of a list?
+Again, ideally you could change your schema (e.g. `[string]!` becomes `[string!]!`). If that's not possible, take a look at the `Graphqelm.Field.nonNullElementsOrFail` function to turn a `List (Maybe something)` into a `List something` (see [the `Graphqelm.Field` docs](http://package.elm-lang.org/packages/dillonkearns/graphqelm/latest/Graphqelm-Field#)).
+
 
 ## Why do I get an error when I don't provide an Optional Argument? According to the schema it's optional.
 
