@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [11.2.0] - 2018-07-02
+
 ### Added
 
 * Add `Selectionset.fieldSelection` function to concisely turn a single `Field`
