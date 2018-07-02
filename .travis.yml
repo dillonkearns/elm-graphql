@@ -2,7 +2,7 @@ sudo: false
 
 language: node_js
 node_js:
-  "node"
+  "9.11.1"
 
 cache:
   directories:
@@ -18,6 +18,8 @@ env:
     - ELM_VERSION=0.18.0
 
 before_install:
+  - npm i -g npm@^5.6.0
+  - npm --version
   - |
     # CI build time workaound
     # https://github.com/elm-lang/elm-compiler/issues/1473#issuecomment-245704142
