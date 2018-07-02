@@ -1,4 +1,4 @@
-module Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet), empty, hardcoded, map, succeed, with)
+module Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet), empty, fieldSelection, hardcoded, map, succeed, with)
 
 {-| The auto-generated code from the `graphqelm` CLI will provide `selection`
 functions for Objects, Interfaces, and Unions in your GraphQL schema.
@@ -47,7 +47,7 @@ the `graphqelm` command line tool.
 The query itself is also a `SelectionSet` so it is built up similarly.
 See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
-@docs with, hardcoded, empty, map, succeed
+@docs with, hardcoded, empty, map, succeed, fieldSelection
 
 
 ## Types
@@ -68,6 +68,23 @@ import List.Extra
 -}
 type SelectionSet decodesTo typeLock
     = SelectionSet (List RawField) (Decoder decodesTo)
+
+
+{-| Create a `SelectionSet` from a single `Field`.
+
+    import Api.Object
+    import Api.Object.Human as Human
+    import Graphqelm.SelectionSet exposing (SelectionSet)
+
+    humanSelection : SelectionSet String Api.Object.Human
+    humanSelection =
+        SelectionSet.fieldSelection Human.name
+
+-}
+fieldSelection : Field response typeLock -> SelectionSet response typeLock
+fieldSelection field =
+    SelectionSet [] (Decode.succeed identity)
+        |> with field
 
 
 {-| Apply a function to change the result of decoding the `SelectionSet`.

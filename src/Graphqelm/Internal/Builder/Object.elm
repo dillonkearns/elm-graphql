@@ -9,9 +9,9 @@ Internal functions for use by auto-generated code from the `graphqelm` CLI.
 -}
 
 import Dict
-import Graphqelm.RawField exposing (RawField)
 import Graphqelm.Field as Field exposing (Field(Field))
 import Graphqelm.Internal.Builder.Argument exposing (Argument)
+import Graphqelm.RawField exposing (RawField)
 import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
 

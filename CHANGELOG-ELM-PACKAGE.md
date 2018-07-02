@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `Selectionset.fieldSelection` function to concisely turn a single `Field`
+  into a `SelectionSet`. Thanks to [anagrius](https://github.com/anagrius)
+  for the suggestion!
+
 ## [11.1.0] - 2018-03-21
 
 ### Added
