@@ -28,6 +28,11 @@ selection constructor =
     Object.selection constructor
 
 
+increment : Field Int RootMutation
+increment =
+    Object.fieldDecoder "increment" [] Decode.int
+
+
 type alias SendMessageRequiredArguments =
     { characterId : Swapi.Scalar.Id, phrase : Swapi.Enum.Phrase.Phrase }
 
