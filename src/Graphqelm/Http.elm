@@ -198,7 +198,7 @@ You can use it on its own, or with a library like
     import RemoteData exposing (RemoteData)
 
     type Msg
-        = GotResponse RemoteData Graphqelm.Http.Error Response
+        = GotResponse RemoteData (Graphqelm.Http.Error Response) Response
 
     makeRequest : Cmd Msg
     makeRequest =
