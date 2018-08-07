@@ -106,6 +106,12 @@ graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src
 
 ## Learning Resources
 
+If you're just starting out, here are some great resources:
+
+* There are a couple of chapters so far in [The Official Graphqelm Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
+* [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
+* [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
+
 If you're wondering why code is generated a certain way, you're likely to find an answer in the [Frequently Asked Questions (FAQ)](https://github.com/dillonkearns/graphqelm/blob/master/FAQ.md).
 
 There's a very helpful group of people in the #graphql channel in [the Elm Slack](http://elmlang.herokuapp.com/). Don't hesitate to ask any questions about getting started, best practices, or just general GraphQL in there!
