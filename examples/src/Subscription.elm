@@ -131,20 +131,15 @@ messageButtons =
         )
 
 
-(=>) : a -> b -> ( a, b )
-(=>) =
-    (,)
-
-
 characters : List ( String, String )
 characters =
-    [ "1000" => "Luke"
-    , "1001" => "Vader"
-    , "1002" => "Han"
-    , "1003" => "Leia"
-    , "1004" => "Tarkin"
-    , "2000" => "Threepio"
-    , "2001" => "Artoo"
+    [ ( "1000", "Luke" )
+    , ( "1001", "Vader" )
+    , ( "1002", "Han" )
+    , ( "1003", "Leia" )
+    , ( "1004", "Tarkin" )
+    , ( "2000", "Threepio" )
+    , ( "2001", "Artoo" )
     ]
 
 
@@ -166,7 +161,7 @@ chatMessagesView model =
                         avatar =
                             character |> Maybe.map .avatarUrl |> Maybe.withDefault ""
                     in
-                    li [] [ img [ style [ "width" => "40px", "padding-right" => "5px" ], src avatar ] [], (characterName ++ ": " ++ (phrase |> phraseToString)) |> text ]
+                    li [] [ img [ style [ ( "width", "40px" ), ( "padding-right", "5px" ) ], src avatar ] [], (characterName ++ ": " ++ (phrase |> phraseToString)) |> text ]
                 )
         )
 

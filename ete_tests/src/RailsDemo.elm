@@ -69,11 +69,6 @@ postView post =
         ]
 
 
-(=>) : a -> b -> ( a, b )
-(=>) =
-    (,)
-
-
 socketUrl : String
 socketUrl =
     "ws://localhost:8080/subscriptions"
