@@ -25,7 +25,19 @@ import Json.Decode
 import Json.Encode as Encode
 import Task
 import Time exposing (Time)
-import WebSocket
+
+
+
+-- TODO
+--import WebSocket
+
+
+webSocketListen _ _ =
+    Debug.todo "WebSocket.listen"
+
+
+webSocketSend _ _ =
+    Debug.todo "WebSocket.send"
 
 
 {-| An opaque type that needs to be passed through to the `Subscription.update` function
@@ -88,7 +100,7 @@ sendMutation (Model model) mutationDocument =
         documentRequest =
             model.protocol.documentRequest model.referenceId >> Encode.encode 0
     in
-    WebSocket.send model.socketUrl (documentRequest (Graphqelm.Document.serializeMutation mutationDocument))
+    webSocketSend model.socketUrl (documentRequest (Graphqelm.Document.serializeMutation mutationDocument))
 
 
 {-| Initialize a Subscription. You will need a `Graphqelm.Subscription.Protocol`
@@ -106,7 +118,7 @@ init protocol socketUrl subscriptionDocument onData =
         , onStatusChanged = Nothing
         , protocol = protocol
         }
-    , WebSocket.send socketUrl (protocol.initMessage 1 |> Encode.encode 0)
+    , webSocketSend socketUrl (protocol.initMessage 1 |> Encode.encode 0)
     )
 
 
@@ -143,7 +155,7 @@ listen toMsg graphqlSubscriptionModel =
     case graphqlSubscriptionModel of
         Model model ->
             Sub.batch
-                [ WebSocket.listen model.socketUrl
+                [ webSocketListen model.socketUrl
                     (Debug.log "raw response"
                         >> Json.Decode.decodeString
                             (model.protocol.subscriptionDecoder
@@ -169,7 +181,7 @@ update msg graphqlSubscriptionModel =
             case msg of
                 SendHeartbeat time ->
                     ( graphqlSubscriptionModel |> incrementRefId
-                    , WebSocket.send model.socketUrl (model.protocol.heartBeatMessage model.referenceId |> Encode.encode 0)
+                    , webSocketSend model.socketUrl (model.protocol.heartBeatMessage model.referenceId |> Encode.encode 0)
                     )
 
                 ResponseReceived response ->
@@ -184,7 +196,7 @@ update msg graphqlSubscriptionModel =
                         Ok Protocol.HealthStatus ->
                             if model.status == Uninitialized then
                                 ( graphqlSubscriptionModel |> incrementRefId
-                                , WebSocket.send
+                                , webSocketSend
                                     model.socketUrl
                                     (documentRequest (Graphqelm.Document.serializeSubscription model.subscriptionDocument))
                                 )
