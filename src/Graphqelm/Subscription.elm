@@ -21,7 +21,7 @@ import Graphqelm.Document
 import Graphqelm.Operation exposing (RootSubscription)
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Graphqelm.Subscription.Protocol as Protocol exposing (Protocol)
-import Json.Decode
+import Json.Decode as Decode
 import Json.Encode as Encode
 import Task
 import Time
@@ -63,7 +63,7 @@ in your program's `update`.
 -}
 type Msg a
     = SendHeartbeat Time.Posix
-    | ResponseReceived (Result String (Protocol.Response a))
+    | ResponseReceived (Result Decode.Error (Protocol.Response a))
 
 
 {-| The Subscription connection status. Use `onStatusChanged` to register a Msg to listen for this.
@@ -157,7 +157,7 @@ listen toMsg graphqlSubscriptionModel =
             Sub.batch
                 [ webSocketListen model.socketUrl
                     (Debug.log "raw response"
-                        >> Json.Decode.decodeString
+                        >> Decode.decodeString
                             (model.protocol.subscriptionDecoder
                                 (Graphqelm.Document.decoder model.subscriptionDocument)
                             )
