@@ -25,7 +25,7 @@ alias fieldIndex fields field =
         Nothing
 
     else
-        Just (fieldName ++ toString (List.length indices + 1))
+        Just (fieldName ++ String.fromInt (List.length indices + 1))
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String

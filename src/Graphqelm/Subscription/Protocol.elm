@@ -82,7 +82,7 @@ phoenixAbsinthe =
         \referenceId ->
             Encode.list identity
                 [ Encode.null
-                , Encode.string (toString referenceId)
+                , Encode.string (String.fromInt referenceId)
                 , Encode.string "__absinthe__:control"
                 , Encode.string "phx_join"
                 , Encode.object []
@@ -91,7 +91,7 @@ phoenixAbsinthe =
         \referenceId ->
             Encode.list identity
                 [ Encode.null
-                , Encode.string (toString referenceId)
+                , Encode.string (String.fromInt referenceId)
                 , Encode.string "phoenix"
                 , Encode.string "heartbeat"
                 , Encode.object []
@@ -100,7 +100,7 @@ phoenixAbsinthe =
         \referenceId operation ->
             Encode.list identity
                 [ Encode.string "1"
-                , Encode.string (toString referenceId)
+                , Encode.string (String.fromInt referenceId)
                 , Encode.string "__absinthe__:control"
                 , Encode.string "doc"
                 , Encode.object [ ( "query", operation |> Encode.string ) ]
@@ -142,7 +142,7 @@ rails =
         \referenceId ->
             Encode.list identity
                 [ Encode.null
-                , Encode.string (toString referenceId)
+                , Encode.string (String.fromInt referenceId)
                 , Encode.string "phoenix"
                 , Encode.string "heartbeat"
                 , Encode.object []
