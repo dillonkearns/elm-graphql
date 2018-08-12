@@ -44,7 +44,6 @@ import Http
 import Json.Decode
 import Json.Encode
 import Task exposing (Task)
-import Time exposing (Time)
 
 
 {-| An internal request as it's built up. Once it's built up, send the
@@ -56,7 +55,7 @@ type Request decodesTo
         , headers : List Http.Header
         , baseUrl : String
         , expect : Json.Decode.Decoder decodesTo
-        , timeout : Maybe Time
+        , timeout : Maybe Float
         , withCredentials : Bool
         , queryParams : List ( String, String )
         }
@@ -354,7 +353,7 @@ withQueryParams additionalQueryParams (Request request) =
 
 {-| Add a timeout.
 -}
-withTimeout : Time -> Request decodesTo -> Request decodesTo
+withTimeout : Float -> Request decodesTo -> Request decodesTo
 withTimeout timeout (Request request) =
     Request { request | timeout = Just timeout }
 
