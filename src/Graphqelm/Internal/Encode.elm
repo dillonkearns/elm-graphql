@@ -92,31 +92,31 @@ null =
 {-| Encode a bool
 -}
 bool : Bool -> Value
-bool bool =
-    Json.Encode.bool bool
+bool value =
+    Json.Encode.bool value
         |> Json
 
 
 {-| Encode a string
 -}
 string : String -> Value
-string string =
-    Json.Encode.string string
+string value =
+    Json.Encode.string value
         |> Json
 
 
 {-| Encode an enum. The first argument is the toString function for that enum.
 -}
 enum : (a -> String) -> a -> Value
-enum enumToString enum =
-    EnumValue (enumToString enum)
+enum enumToString value =
+    EnumValue (enumToString value)
 
 
 {-| Encode a list of Values
 -}
 list : (a -> Value) -> List a -> Value
-list toValue list =
-    list
+list toValue value =
+    value
         |> List.map toValue
         |> List
 

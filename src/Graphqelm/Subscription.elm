@@ -129,8 +129,8 @@ init protocol socketUrl subscriptionDocument onData =
 
 -}
 onStatusChanged : (Status -> msg) -> Model msg decodesTo -> Model msg decodesTo
-onStatusChanged onStatusChanged (Model model) =
-    Model { model | onStatusChanged = Just onStatusChanged }
+onStatusChanged onStatusChanged_ (Model model) =
+    Model { model | onStatusChanged = Just onStatusChanged_ }
 
 
 {-| Add this to your subscriptions.
@@ -225,8 +225,8 @@ setStatus newStatus ( graphqlSubscriptionModel, cmds ) =
                     Nothing ->
                         Cmd.none
 
-                    Just onStatusChanged ->
-                        Task.succeed newStatus |> Task.perform onStatusChanged
+                    Just onStatusChanged_ ->
+                        Task.succeed newStatus |> Task.perform onStatusChanged_
                 ]
             )
 

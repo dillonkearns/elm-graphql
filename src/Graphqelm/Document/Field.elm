@@ -29,12 +29,12 @@ alias fieldIndex fields field =
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
-serialize alias mIndentationLevel field =
+serialize aliasName mIndentationLevel field =
     let
         prefix =
-            case alias of
-                Just aliasName ->
-                    aliasName
+            case aliasName of
+                Just aliasName_ ->
+                    aliasName_
                         ++ (case mIndentationLevel of
                                 Just _ ->
                                     ": "
