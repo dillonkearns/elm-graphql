@@ -1,6 +1,6 @@
 module Graphqelm.Http.QueryParams exposing (urlWithQueryParams)
 
-import Http
+import Url
 
 
 urlWithQueryParams : List ( String, String ) -> String -> String
@@ -24,7 +24,7 @@ queryPair ( key, value ) =
 
 queryEscape : String -> String
 queryEscape =
-    Http.encodeUri >> replace "%20" "+"
+    Url.percentEncode >> replace "%20" "+"
 
 
 replace : String -> String -> String -> String
