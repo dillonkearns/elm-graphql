@@ -24,7 +24,7 @@ import Graphqelm.Subscription.Protocol as Protocol exposing (Protocol)
 import Json.Decode
 import Json.Encode as Encode
 import Task
-import Time exposing (Time)
+import Time
 
 
 
@@ -62,7 +62,7 @@ in your program's `update`.
 
 -}
 type Msg a
-    = SendHeartbeat Time
+    = SendHeartbeat Time.Posix
     | ResponseReceived (Result String (Protocol.Response a))
 
 
@@ -163,7 +163,7 @@ listen toMsg graphqlSubscriptionModel =
                             )
                         >> ResponseReceived
                     )
-                , Time.every (30 * Time.second) SendHeartbeat
+                , Time.every (30 * 1000) SendHeartbeat
                 ]
                 |> Sub.map toMsg
 
