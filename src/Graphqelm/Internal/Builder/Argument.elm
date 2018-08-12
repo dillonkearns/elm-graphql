@@ -1,4 +1,4 @@
-module Graphqelm.Internal.Builder.Argument exposing (Argument(Argument), optional, required)
+module Graphqelm.Internal.Builder.Argument exposing (Argument(..), optional, required)
 
 {-| **WARNING** `Graphqelm.Interal` modules are used by the `graphqelm` command line
 code generator tool. They should not be consumed through hand-written code.

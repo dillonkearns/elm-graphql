@@ -2,7 +2,7 @@ module Graphqelm.Document.Field exposing (serializeChildren)
 
 import Graphqelm.Document.Argument as Argument
 import Graphqelm.Document.Indent as Indent
-import Graphqelm.RawField exposing (RawField(Composite, Leaf))
+import Graphqelm.RawField exposing (RawField(..))
 import List.Extra
 
 

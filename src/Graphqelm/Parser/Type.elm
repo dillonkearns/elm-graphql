@@ -5,10 +5,10 @@ module Graphqelm.Parser.Type
         , EnumValue
         , Field
         , IsNullable(..)
-        , RawTypeRef(RawTypeRef)
+        , RawTypeRef(..)
         , ReferrableType(..)
-        , TypeDefinition(TypeDefinition)
-        , TypeReference(TypeReference)
+        , TypeDefinition(..)
+        , TypeReference(..)
         , decoder
         , parseRef
         , typeDefinition

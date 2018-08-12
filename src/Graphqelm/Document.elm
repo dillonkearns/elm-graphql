@@ -11,7 +11,7 @@ are helpful for debugging and demo purposes.
 import Graphqelm.Document.Field as Field
 import Graphqelm.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphqelm.RawField exposing (RawField)
-import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
+import Graphqelm.SelectionSet exposing (SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
 import String.Interpolate exposing (interpolate)
 

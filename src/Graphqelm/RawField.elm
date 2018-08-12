@@ -1,4 +1,4 @@
-module Graphqelm.RawField exposing (RawField(Composite, Leaf), name)
+module Graphqelm.RawField exposing (RawField(..), name)
 
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 

@@ -2,7 +2,7 @@ module Graphqelm.Generator.ModuleName exposing (enum, enumTypeName, generate, in
 
 import Graphqelm.Generator.Context exposing (Context)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(..))
 
 
 generate : Context -> TypeDefinition -> List String
