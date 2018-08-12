@@ -21,7 +21,7 @@ for Elixir/Phoenix:
         frameworkKnowledge : Graphqelm.Subscription.Protocol subscriptionDecodesTo
         frameworkKnowledge =
         { initMessage =
-        Encode.list
+        Encode.list identity
             [ Encode.string "1"
             , Encode.string "1"
             , Encode.string "__absinthe__:control"
@@ -29,7 +29,7 @@ for Elixir/Phoenix:
             , Encode.object []
             ]
         , heartBeatMessage =
-        Encode.list
+        Encode.list identity
             [ Encode.null
             , Encode.string "1"
             , Encode.string "phoenix"
@@ -38,7 +38,7 @@ for Elixir/Phoenix:
             ]
         , documentRequest =
         \operation ->
-            Encode.list
+            Encode.list identity
                 [ Encode.string "1"
                 , Encode.string "1"
                 , Encode.string "__absinthe__:control"
@@ -80,7 +80,7 @@ phoenixAbsinthe : Protocol subscriptionDecodesTo
 phoenixAbsinthe =
     { initMessage =
         \referenceId ->
-            Encode.list
+            Encode.list identity
                 [ Encode.null
                 , Encode.string (toString referenceId)
                 , Encode.string "__absinthe__:control"
@@ -89,7 +89,7 @@ phoenixAbsinthe =
                 ]
     , heartBeatMessage =
         \referenceId ->
-            Encode.list
+            Encode.list identity
                 [ Encode.null
                 , Encode.string (toString referenceId)
                 , Encode.string "phoenix"
@@ -98,7 +98,7 @@ phoenixAbsinthe =
                 ]
     , documentRequest =
         \referenceId operation ->
-            Encode.list
+            Encode.list identity
                 [ Encode.string "1"
                 , Encode.string (toString referenceId)
                 , Encode.string "__absinthe__:control"
@@ -140,7 +140,7 @@ rails =
                 ]
     , heartBeatMessage =
         \referenceId ->
-            Encode.list
+            Encode.list identity
                 [ Encode.null
                 , Encode.string (toString referenceId)
                 , Encode.string "phoenix"
