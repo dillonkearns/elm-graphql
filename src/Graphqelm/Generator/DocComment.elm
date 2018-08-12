@@ -6,7 +6,11 @@ import Graphqelm.Parser.Type as Type exposing (EnumValue, Field)
 import String.Interpolate exposing (interpolate)
 
 
-hasDocs : Maybe String -> List { item | name : String, description : Maybe String } -> Bool
+type alias ItemDescription =
+    { name : String, description : Maybe String }
+
+
+hasDocs : Maybe String -> List ItemDescription -> Bool
 hasDocs mainDescription itemDescriptions =
     case mainDescription of
         Just string ->
@@ -20,10 +24,10 @@ hasDocs mainDescription itemDescriptions =
 
 generate : Field -> String
 generate { description, args } =
-    generate_ description (args |> List.map (\arg -> { arg | name = arg.name |> CamelCaseName.normalized }))
+    generate_ description (args |> List.map (\arg -> { name = arg.name |> CamelCaseName.normalized, description = arg.description }))
 
 
-generate_ : Maybe String -> List { item | name : String, description : Maybe String } -> String
+generate_ : Maybe String -> List ItemDescription -> String
 generate_ mainDescription itemDescriptions =
     if hasDocs mainDescription itemDescriptions then
         interpolate """{-|{0}{1}
@@ -37,10 +41,10 @@ generate_ mainDescription itemDescriptions =
 
 generateForEnum : Maybe String -> List EnumValue -> String
 generateForEnum description enumValues =
-    generate_ description (enumValues |> List.map (\enumValue -> { enumValue | name = enumValue.name |> ClassCaseName.normalized }))
+    generate_ description (enumValues |> List.map (\enumValue -> { name = enumValue.name |> ClassCaseName.normalized, description = enumValue.description }))
 
 
-argsDoc : List { item | name : String, description : Maybe String } -> String
+argsDoc : List ItemDescription -> String
 argsDoc args =
     case List.filterMap argDoc args of
         [] ->
@@ -50,7 +54,7 @@ argsDoc args =
             interpolate "\n\n{0}\n" [ argDocs |> String.join "\n" ]
 
 
-argDoc : { item | name : String, description : Maybe String } -> Maybe String
+argDoc : ItemDescription -> Maybe String
 argDoc { name, description } =
     Maybe.map
         (\aDescription ->

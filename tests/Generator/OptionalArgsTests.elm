@@ -106,12 +106,10 @@ expectResult :
     -> Expect.Expectation
 expectResult expected actual =
     actual
-        |> Maybe.map (\value -> { value | annotatedArg = value.annotatedArg "Foo" })
-        |> Maybe.map (\value -> { value | typeAlias = value.typeAlias.body })
         |> Maybe.map
             (\value ->
                 { letBindings = value.letBindings
-                , typeAlias = value.typeAlias
+                , typeAlias = value.typeAlias.body
                 }
             )
         |> Expect.equal (Just expected)
