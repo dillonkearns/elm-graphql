@@ -34,7 +34,7 @@ all =
                 Graphqelm.Internal.Encode.object
                     [ ( "number", Graphqelm.Internal.Encode.int 47 )
                     , ( "boolean", Graphqelm.Internal.Encode.bool True )
-                    , ( "enum", Graphqelm.Internal.Encode.enum toString EMPIRE )
+                    , ( "enum", Graphqelm.Internal.Encode.enum Debug.toString EMPIRE )
                     ]
                     |> Graphqelm.Internal.Encode.serialize
                     |> Expect.equal """{number: 47, boolean: true, enum: EMPIRE}"""

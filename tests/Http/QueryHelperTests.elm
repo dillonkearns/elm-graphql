@@ -4,8 +4,8 @@ import Expect
 import Graphqelm.Document as Document
 import Graphqelm.Http.QueryHelper as QueryHelper
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
-import Graphqelm.RawField exposing (RawField(Composite, Leaf))
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(SelectionSet))
+import Graphqelm.RawField exposing (RawField(..))
+import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(..))
 import Http
 import Json.Decode as Decode
 import Json.Encode

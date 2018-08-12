@@ -3,8 +3,8 @@ module DocumentTests exposing (all)
 import Expect
 import Graphqelm.Document
 import Graphqelm.Operation exposing (RootMutation, RootQuery)
-import Graphqelm.RawField exposing (RawField(Composite, Leaf))
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(SelectionSet))
+import Graphqelm.RawField exposing (RawField(..))
+import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(..))
 import Json.Decode as Decode
 import Test exposing (Test, describe, test)
 

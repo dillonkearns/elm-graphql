@@ -4,7 +4,7 @@ import Expect
 import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
 import Graphqelm.Parser.CamelCaseName as CamelCaseName
 import Graphqelm.Parser.ClassCaseName as ClassCaseName
-import Graphqelm.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(NonNullable), ReferrableType(InputObjectRef), TypeDefinition(TypeDefinition), TypeReference(TypeReference))
+import Graphqelm.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(..), ReferrableType(..), TypeDefinition(..), TypeReference(..))
 import Test exposing (Test, describe, only, test)
 
 
