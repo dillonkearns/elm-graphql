@@ -318,7 +318,7 @@ errorDecoder decoder =
 
 decodeErrorWithData : GraphqlError.PossiblyParsedData a -> Json.Decode.Decoder (DataResult a)
 decodeErrorWithData data =
-    GraphqlError.decoder |> Json.Decode.map ((,) data) |> Json.Decode.map Err
+    GraphqlError.decoder |> Json.Decode.map (Tuple.pair data) |> Json.Decode.map Err
 
 
 {-| Add a header.
