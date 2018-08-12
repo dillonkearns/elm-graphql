@@ -16,7 +16,11 @@ normalizeIfElmReserved name =
 
 underscores : String -> { leading : String, trailing : String, remaining : String }
 underscores string =
-    case Regex.find Regex.All (Regex.regex "^(_*)([^_]?.*[^_]?)(_*)$") string |> List.head |> Maybe.map .submatches of
+    let
+        regexFromString =
+            Regex.fromString >> Maybe.withDefault Regex.never
+    in
+    case Regex.find (regexFromString "^(_*)([^_]?.*[^_]?)(_*)$") string |> List.head |> Maybe.map .submatches of
         Just [ Just leading, Just remaining, Just trailing ] ->
             { leading = leading
             , trailing = trailing
