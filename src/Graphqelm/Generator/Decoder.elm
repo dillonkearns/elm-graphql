@@ -56,7 +56,7 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
             ]
 
         Type.InputObjectRef _ ->
-            Debug.crash "Input objects are only for input not responses, shouldn't need decoder."
+            Debug.todo "Input objects are only for input not responses, shouldn't need decoder."
     )
         ++ (case isNullable of
                 Type.Nullable ->
@@ -117,13 +117,13 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
             generateEncoder_ forInputObject apiSubmodule typeRef ++ isNullableString ++ " |> Encode.list"
 
         Type.ObjectRef objectName ->
-            Debug.crash "I don't expect to see object references as argument types."
+            Debug.todo "I don't expect to see object references as argument types."
 
         Type.InterfaceRef interfaceName ->
-            Debug.crash "Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces"
+            Debug.todo "Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces"
 
         Type.UnionRef _ ->
-            Debug.crash "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
+            Debug.todo "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
 
         Type.EnumRef enumName ->
             interpolate ("(Encode.enum {0})" ++ isNullableString)

@@ -24,10 +24,10 @@ underscores string =
             }
 
         Nothing ->
-            Debug.crash "Got nothing"
+            Debug.todo "Got nothing"
 
         _ ->
-            Debug.crash ("Unexpected regex result for name " ++ string)
+            Debug.todo ("Unexpected regex result for name " ++ string)
 
 
 isAllUpper : String -> Bool

@@ -32,7 +32,7 @@ get (TypeReference referrableType isNullable) =
             Enum
 
         Type.InputObjectRef _ ->
-            Debug.crash "TODO"
+            Debug.todo "TODO"
 
         Type.UnionRef _ ->
             Union

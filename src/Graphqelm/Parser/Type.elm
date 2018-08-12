@@ -267,7 +267,7 @@ expectString maybeString =
             string
 
         Nothing ->
-            Debug.crash "Expected string but got Nothing"
+            Debug.todo "Expected string but got Nothing"
 
 
 parseRef : RawTypeRef -> TypeReference
@@ -279,7 +279,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (List (parseRef nestedOfType)) Nullable
 
                 Nothing ->
-                    Debug.crash "Missing nested type for List reference"
+                    Debug.todo "Missing nested type for List reference"
 
         TypeKind.Scalar ->
             case rawTypeRef.name of
@@ -289,7 +289,7 @@ parseRef (RawTypeRef rawTypeRef) =
                         Nullable
 
                 Nothing ->
-                    Debug.crash "Should not get null names for scalar references"
+                    Debug.todo "Should not get null names for scalar references"
 
         TypeKind.Interface ->
             case rawTypeRef.name of
@@ -297,7 +297,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (InterfaceRef interfaceName) Nullable
 
                 Nothing ->
-                    Debug.crash "Should not get null names for interface references"
+                    Debug.todo "Should not get null names for interface references"
 
         TypeKind.Object ->
             case rawTypeRef.name of
@@ -305,7 +305,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (ObjectRef objectName) Nullable
 
                 Nothing ->
-                    Debug.crash "Should not get null names for object references"
+                    Debug.todo "Should not get null names for object references"
 
         TypeKind.NonNull ->
             case rawTypeRef.ofType of
@@ -328,10 +328,10 @@ parseRef (RawTypeRef rawTypeRef) =
                                     TypeReference (List (parseRef nestedOfType)) NonNullable
 
                                 Nothing ->
-                                    Debug.crash ""
+                                    Debug.todo ""
 
                         ( TypeKind.NonNull, _ ) ->
-                            Debug.crash "Can't have nested non-null types"
+                            Debug.todo "Can't have nested non-null types"
 
                         ( TypeKind.Ignore, _ ) ->
                             ignoreRef
@@ -357,7 +357,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (objectName |> ClassCaseName.build |> EnumRef) Nullable
 
                 Nothing ->
-                    Debug.crash "Should not get null names for enum references"
+                    Debug.todo "Should not get null names for enum references"
 
         TypeKind.InputObject ->
             case rawTypeRef.name of
@@ -365,7 +365,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (inputObjectName |> ClassCaseName.build |> InputObjectRef) Nullable
 
                 Nothing ->
-                    Debug.crash "Should not get null names for input object references"
+                    Debug.todo "Should not get null names for input object references"
 
         TypeKind.Union ->
             TypeReference (UnionRef (expectString rawTypeRef.name)) Nullable

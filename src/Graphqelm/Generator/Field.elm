@@ -192,13 +192,13 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
                     ModuleName.interface context (ClassCaseName.build refName) |> String.join "."
 
                 ReferenceLeaf.Enum ->
-                    Debug.crash "TODO"
+                    Debug.todo "TODO"
 
                 ReferenceLeaf.Union ->
                     ModuleName.union context (ClassCaseName.build refName) |> String.join "."
 
                 ReferenceLeaf.Scalar ->
-                    Debug.crash "TODO"
+                    Debug.todo "TODO"
 
         objectArgAnnotation =
             interpolate
@@ -261,7 +261,7 @@ leafType (Type.TypeReference referrableType isNullable) =
             EnumLeaf
 
         Type.InputObjectRef _ ->
-            Debug.crash "Unexpected type"
+            Debug.todo "Unexpected type"
 
 
 init : Context -> CamelCaseName -> TypeReference -> FieldGenerator
