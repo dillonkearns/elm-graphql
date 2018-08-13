@@ -21,9 +21,9 @@ underscores string =
             Regex.fromString >> Maybe.withDefault Regex.never
     in
     case Regex.find (regexFromString "^(_*)([^_]?.*[^_]?)(_*)$") string |> List.head |> Maybe.map .submatches of
-        Just [ Just leading, Just remaining, Just trailing ] ->
-            { leading = leading
-            , trailing = trailing
+        Just [ leading, Just remaining, trailing ] ->
+            { leading = Maybe.withDefault "" leading
+            , trailing = Maybe.withDefault "" trailing
             , remaining = remaining
             }
 
