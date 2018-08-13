@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
-  entry: './src/graphqelm.ts',
+  entry: './generator/src/graphqelm.ts',
   target: 'node',
   resolve: {
     extensions: ['.ts', '.js', '.json']
@@ -23,7 +23,7 @@ module.exports = {
         use: [
           {
             loader: 'elm-webpack-loader',
-            options: {}
+            options: { cwd: './generator' }
           }
         ]
       },

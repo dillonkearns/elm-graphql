@@ -37,12 +37,12 @@ init flags =
             )
 
         Err error ->
-            Debug.crash ("Got error " ++ toString error)
+            Debug.todo ("Got error " ++ Debug.toString error)
 
 
 main : Program Flags Model Never
 main =
-    Platform.programWithFlags
+    Platform.worker
         { init = init
         , update = \msg model -> ( model, Cmd.none )
         , subscriptions = \_ -> Sub.none

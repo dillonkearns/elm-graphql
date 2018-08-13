@@ -1,7 +1,7 @@
 module Graphqelm.Generator.Scalar exposing (generate)
 
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(..))
 import String.Interpolate exposing (interpolate)
 
 

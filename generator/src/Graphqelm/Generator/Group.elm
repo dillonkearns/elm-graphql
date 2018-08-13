@@ -14,7 +14,7 @@ import Graphqelm.Generator.Subscription
 import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphqelm.Generator.Union
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(..))
 
 
 type alias IntrospectionData =

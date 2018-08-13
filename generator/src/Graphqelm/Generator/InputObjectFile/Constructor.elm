@@ -7,7 +7,7 @@ import Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
 import Graphqelm.Generator.Let as Let
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(..))
 import String.Interpolate exposing (interpolate)
 
 

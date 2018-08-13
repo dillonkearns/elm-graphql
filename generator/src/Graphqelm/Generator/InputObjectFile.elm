@@ -8,7 +8,7 @@ import Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
 import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
 import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphqelm.Parser.Type as Type exposing (TypeDefinition(..))
 import String.Interpolate exposing (interpolate)
 
 
@@ -156,7 +156,7 @@ encoderFunction { apiSubmodule } field =
     case field.typeRef of
         Type.TypeReference referrableType isNullable ->
             let
-                filledOptionalsRecord =
+                filledOptionalsRecord_ =
                     case isNullable of
                         Type.NonNullable ->
                             interpolate " input.{0} |> Just" [ CamelCaseName.normalized field.name ]
@@ -166,7 +166,7 @@ encoderFunction { apiSubmodule } field =
             in
             interpolate "({0}) {1}"
                 [ Decoder.generateEncoderLowLevel apiSubmodule referrableType
-                , filledOptionalsRecord
+                , filledOptionalsRecord_
                 ]
 
 

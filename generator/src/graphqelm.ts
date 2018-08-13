@@ -1,4 +1,4 @@
-const Elm = require('./Main.elm')
+const { Elm } = require('./Main.elm')
 import * as fs from 'fs-extra'
 import { GraphQLClient } from 'graphql-request'
 import * as http from 'http'
@@ -8,8 +8,8 @@ import { writeFile } from './formatted-write'
 import { introspectionQuery } from './introspection-query'
 import * as glob from 'glob'
 import * as path from 'path'
-const npmPackageVersion = require('../package.json').version
-const elmPackageVersion = require('../elm-package.json').version
+const npmPackageVersion = require('../../package.json').version
+const elmPackageVersion = require('../../elm.json').version
 
 const usage = `Usage:
   graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
@@ -106,7 +106,7 @@ warnIfContainsNonGenerated(prependBasePath('/'))
 
 const onDataAvailable = (data: {}) => {
   console.log('Generating files...')
-  let app = Elm.Main.worker({ data, baseModule })
+  let app = Elm.Main.init({ flags: { data, baseModule } })
   app.ports.generatedFiles.subscribe(function(generatedFile: any) {
     removeGenerated(prependBasePath('/'))
     fs.mkdirpSync(prependBasePath('InputObject'))
