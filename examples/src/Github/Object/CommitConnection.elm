@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,22 +28,22 @@ selection constructor =
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo Github.Object.CommitEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.CommitConnection
-edges object =
-    Object.selectionField "edges" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+edges object_ =
+    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe (List (Maybe decodesTo))) Github.Object.CommitConnection
-nodes object =
-    Object.selectionField "nodes" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+nodes object_ =
+    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.CommitConnection
-pageInfo object =
-    Object.selectionField "pageInfo" [] object identity
+pageInfo object_ =
+    Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.

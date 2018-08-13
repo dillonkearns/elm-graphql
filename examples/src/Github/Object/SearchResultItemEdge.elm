@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,12 +35,12 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo Github.Union.SearchResultItem -> Field (Maybe decodesTo) Github.Object.SearchResultItemEdge
-node object =
-    Object.selectionField "node" [] object (identity >> Decode.nullable)
+node object_ =
+    Object.selectionField "node" [] object_ (identity >> Decode.nullable)
 
 
 {-| Text matches on the result found.
 -}
 textMatches : SelectionSet decodesTo Github.Object.TextMatch -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemEdge
-textMatches object =
-    Object.selectionField "textMatches" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+textMatches object_ =
+    Object.selectionField "textMatches" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)

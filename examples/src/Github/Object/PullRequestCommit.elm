@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,31 +28,82 @@ selection constructor =
 {-| The Git commit object
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.PullRequestCommit
-commit object =
-    Object.selectionField "commit" [] object identity
+commit object_ =
+    Object.selectionField "commit" [] object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.PullRequestCommit
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The pull request this commit belongs to
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestCommit
-pullRequest object =
-    Object.selectionField "pullRequest" [] object identity
+pullRequest object_ =
+    Object.selectionField "pullRequest" [] object_ identity
 
 
 {-| The HTTP path for this pull request commit
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.PullRequestCommit
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| The HTTP URL for this pull request commit
 -}
 url : Field Github.Scalar.Uri Github.Object.PullRequestCommit
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )

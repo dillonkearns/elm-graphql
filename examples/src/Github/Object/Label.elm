@@ -15,7 +15,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -43,7 +43,24 @@ description =
 
 id : Field Github.Scalar.Id Github.Object.Label
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Indicates whether or not this is a default label.
@@ -69,7 +86,7 @@ type alias IssuesOptionalArguments =
 
 -}
 issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> Field decodesTo Github.Object.Label
-issues fillInOptionals object =
+issues fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
@@ -78,7 +95,7 @@ issues fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "issues" optionalArgs object identity
+    Object.selectionField "issues" optionalArgs object_ identity
 
 
 {-| Identifies the label name.
@@ -106,7 +123,7 @@ type alias PullRequestsOptionalArguments =
 
 -}
 pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Label
-pullRequests fillInOptionals object =
+pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
@@ -115,11 +132,11 @@ pullRequests fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pullRequests" optionalArgs object identity
+    Object.selectionField "pullRequests" optionalArgs object_ identity
 
 
 {-| The repository associated with this label.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Label
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity

@@ -4,7 +4,7 @@ import Browser
 import Graphqelm.Document as Document
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import Normalize.InputObject

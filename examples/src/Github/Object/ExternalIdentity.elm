@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -34,32 +34,49 @@ guid =
 
 id : Field Github.Scalar.Id Github.Object.ExternalIdentity
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Organization invitation for this SCIM-provisioned external identity
 -}
 organizationInvitation : SelectionSet decodesTo Github.Object.OrganizationInvitation -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
-organizationInvitation object =
-    Object.selectionField "organizationInvitation" [] object (identity >> Decode.nullable)
+organizationInvitation object_ =
+    Object.selectionField "organizationInvitation" [] object_ (identity >> Decode.nullable)
 
 
 {-| SAML Identity attributes
 -}
 samlIdentity : SelectionSet decodesTo Github.Object.ExternalIdentitySamlAttributes -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
-samlIdentity object =
-    Object.selectionField "samlIdentity" [] object (identity >> Decode.nullable)
+samlIdentity object_ =
+    Object.selectionField "samlIdentity" [] object_ (identity >> Decode.nullable)
 
 
 {-| SCIM Identity attributes
 -}
 scimIdentity : SelectionSet decodesTo Github.Object.ExternalIdentityScimAttributes -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
-scimIdentity object =
-    Object.selectionField "scimIdentity" [] object (identity >> Decode.nullable)
+scimIdentity object_ =
+    Object.selectionField "scimIdentity" [] object_ (identity >> Decode.nullable)
 
 
 {-| User linked to this external identity
 -}
 user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.ExternalIdentity
-user object =
-    Object.selectionField "user" [] object (identity >> Decode.nullable)
+user object_ =
+    Object.selectionField "user" [] object_ (identity >> Decode.nullable)

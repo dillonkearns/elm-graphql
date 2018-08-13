@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -42,5 +42,5 @@ invalidTopicNames =
 {-| The updated repository.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.UpdateTopicsPayload
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity

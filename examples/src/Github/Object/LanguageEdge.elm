@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -31,8 +31,8 @@ cursor =
 
 
 node : SelectionSet decodesTo Github.Object.Language -> Field decodesTo Github.Object.LanguageEdge
-node object =
-    Object.selectionField "node" [] object identity
+node object_ =
+    Object.selectionField "node" [] object_ identity
 
 
 {-| The number of bytes of code written in the language.

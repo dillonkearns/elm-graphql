@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,8 +35,8 @@ fragment =
 {-| Highlights within the matched fragment.
 -}
 highlights : SelectionSet decodesTo Github.Object.TextMatchHighlight -> Field (List (Maybe decodesTo)) Github.Object.TextMatch
-highlights object =
-    Object.selectionField "highlights" [] object (identity >> Decode.nullable >> Decode.list)
+highlights object_ =
+    Object.selectionField "highlights" [] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 {-| The property matched on.

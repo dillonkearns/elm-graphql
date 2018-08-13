@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -42,5 +42,5 @@ isCommenter =
 {-| Identifies the user suggested to review the pull request.
 -}
 reviewer : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.SuggestedReviewer
-reviewer object =
-    Object.selectionField "reviewer" [] object identity
+reviewer object_ =
+    Object.selectionField "reviewer" [] object_ identity

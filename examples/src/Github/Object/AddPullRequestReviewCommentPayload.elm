@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,12 +35,12 @@ clientMutationId =
 {-| The newly created comment.
 -}
 comment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> Field decodesTo Github.Object.AddPullRequestReviewCommentPayload
-comment object =
-    Object.selectionField "comment" [] object identity
+comment object_ =
+    Object.selectionField "comment" [] object_ identity
 
 
 {-| The edge from the review's comment connection.
 -}
 commentEdge : SelectionSet decodesTo Github.Object.PullRequestReviewCommentEdge -> Field decodesTo Github.Object.AddPullRequestReviewCommentPayload
-commentEdge object =
-    Object.selectionField "commentEdge" [] object identity
+commentEdge object_ =
+    Object.selectionField "commentEdge" [] object_ identity

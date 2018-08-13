@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,5 +28,5 @@ selection constructor =
 {-| The list of ranges from a Git blame.
 -}
 ranges : SelectionSet decodesTo Github.Object.BlameRange -> Field (List decodesTo) Github.Object.Blame
-ranges object =
-    Object.selectionField "ranges" [] object (identity >> Decode.list)
+ranges object_ =
+    Object.selectionField "ranges" [] object_ (identity >> Decode.list)

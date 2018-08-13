@@ -13,8 +13,8 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 
@@ -44,7 +44,24 @@ onRepository (SelectionSet fields decoder) =
 
 id : Field Github.Scalar.Id Github.Interface.Starrable
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 type alias StargazersOptionalArguments =
@@ -61,7 +78,7 @@ type alias StargazersOptionalArguments =
 
 -}
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> Field decodesTo Github.Interface.Starrable
-stargazers fillInOptionals object =
+stargazers fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
@@ -70,7 +87,7 @@ stargazers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "stargazers" optionalArgs object identity
+    Object.selectionField "stargazers" optionalArgs object_ identity
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.

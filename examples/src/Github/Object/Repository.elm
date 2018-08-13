@@ -24,7 +24,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -49,7 +49,7 @@ type alias AssignableUsersOptionalArguments =
 
 -}
 assignableUsers : (AssignableUsersOptionalArguments -> AssignableUsersOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.Repository
-assignableUsers fillInOptionals object =
+assignableUsers fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -58,14 +58,14 @@ assignableUsers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "assignableUsers" optionalArgs object identity
+    Object.selectionField "assignableUsers" optionalArgs object_ identity
 
 
 {-| Returns the code of conduct for this repository
 -}
 codeOfConduct : SelectionSet decodesTo Github.Object.CodeOfConduct -> Field (Maybe decodesTo) Github.Object.Repository
-codeOfConduct object =
-    Object.selectionField "codeOfConduct" [] object (identity >> Decode.nullable)
+codeOfConduct object_ =
+    Object.selectionField "codeOfConduct" [] object_ (identity >> Decode.nullable)
 
 
 type alias CollaboratorsOptionalArguments =
@@ -82,7 +82,7 @@ type alias CollaboratorsOptionalArguments =
 
 -}
 collaborators : (CollaboratorsOptionalArguments -> CollaboratorsOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryCollaboratorConnection -> Field (Maybe decodesTo) Github.Object.Repository
-collaborators fillInOptionals object =
+collaborators fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, affiliation = Absent }
@@ -91,7 +91,7 @@ collaborators fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "affiliation" filledInOptionals.affiliation (Encode.enum Github.Enum.CollaboratorAffiliation.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "collaborators" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "collaborators" optionalArgs object_ (identity >> Decode.nullable)
 
 
 type alias CommitCommentsOptionalArguments =
@@ -107,7 +107,7 @@ type alias CommitCommentsOptionalArguments =
 
 -}
 commitComments : (CommitCommentsOptionalArguments -> CommitCommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.Repository
-commitComments fillInOptionals object =
+commitComments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -116,14 +116,31 @@ commitComments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "commitComments" optionalArgs object identity
+    Object.selectionField "commitComments" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.Repository
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| Identifies the primary key from the database.
@@ -136,8 +153,8 @@ databaseId =
 {-| The Ref associated with the repository's default branch.
 -}
 defaultBranchRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Repository
-defaultBranchRef object =
-    Object.selectionField "defaultBranchRef" [] object (identity >> Decode.nullable)
+defaultBranchRef object_ =
+    Object.selectionField "defaultBranchRef" [] object_ (identity >> Decode.nullable)
 
 
 type alias DeployKeysOptionalArguments =
@@ -153,7 +170,7 @@ type alias DeployKeysOptionalArguments =
 
 -}
 deployKeys : (DeployKeysOptionalArguments -> DeployKeysOptionalArguments) -> SelectionSet decodesTo Github.Object.DeployKeyConnection -> Field decodesTo Github.Object.Repository
-deployKeys fillInOptionals object =
+deployKeys fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -162,7 +179,7 @@ deployKeys fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "deployKeys" optionalArgs object identity
+    Object.selectionField "deployKeys" optionalArgs object_ identity
 
 
 type alias DeploymentsOptionalArguments =
@@ -179,7 +196,7 @@ type alias DeploymentsOptionalArguments =
 
 -}
 deployments : (DeploymentsOptionalArguments -> DeploymentsOptionalArguments) -> SelectionSet decodesTo Github.Object.DeploymentConnection -> Field decodesTo Github.Object.Repository
-deployments fillInOptionals object =
+deployments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, environments = Absent }
@@ -188,7 +205,7 @@ deployments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "environments" filledInOptionals.environments (Encode.string |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "deployments" optionalArgs object identity
+    Object.selectionField "deployments" optionalArgs object_ identity
 
 
 {-| The description of the repository.
@@ -202,7 +219,24 @@ description =
 -}
 descriptionHTML : Field Github.Scalar.Html Github.Object.Repository
 descriptionHTML =
-    Object.fieldDecoder "descriptionHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "descriptionHTML"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Html
+        )
 
 
 {-| The number of kilobytes this repository occupies on disk.
@@ -236,7 +270,7 @@ type alias ForksOptionalArguments =
 
 -}
 forks : (ForksOptionalArguments -> ForksOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.Repository
-forks fillInOptionals object =
+forks fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
@@ -245,7 +279,7 @@ forks fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "forks" optionalArgs object identity
+    Object.selectionField "forks" optionalArgs object_ identity
 
 
 {-| Indicates if the repository has issues feature enabled.
@@ -266,12 +300,47 @@ hasWikiEnabled =
 -}
 homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Object.Repository
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "homepageUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+            |> Decode.nullable
+        )
 
 
 id : Field Github.Scalar.Id Github.Object.Repository
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Indicates if the repository is unmaintained.
@@ -319,8 +388,8 @@ type alias IssueRequiredArguments =
 
 -}
 issue : IssueRequiredArguments -> SelectionSet decodesTo Github.Object.Issue -> Field (Maybe decodesTo) Github.Object.Repository
-issue requiredArgs object =
-    Object.selectionField "issue" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
+issue requiredArgs object_ =
+    Object.selectionField "issue" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias IssueOrPullRequestRequiredArguments =
@@ -333,8 +402,8 @@ type alias IssueOrPullRequestRequiredArguments =
 
 -}
 issueOrPullRequest : IssueOrPullRequestRequiredArguments -> SelectionSet decodesTo Github.Union.IssueOrPullRequest -> Field (Maybe decodesTo) Github.Object.Repository
-issueOrPullRequest requiredArgs object =
-    Object.selectionField "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
+issueOrPullRequest requiredArgs object_ =
+    Object.selectionField "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias IssuesOptionalArguments =
@@ -353,7 +422,7 @@ type alias IssuesOptionalArguments =
 
 -}
 issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> Field decodesTo Github.Object.Repository
-issues fillInOptionals object =
+issues fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
@@ -362,7 +431,7 @@ issues fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "issues" optionalArgs object identity
+    Object.selectionField "issues" optionalArgs object_ identity
 
 
 type alias LabelRequiredArguments =
@@ -375,8 +444,8 @@ type alias LabelRequiredArguments =
 
 -}
 label : LabelRequiredArguments -> SelectionSet decodesTo Github.Object.Label -> Field (Maybe decodesTo) Github.Object.Repository
-label requiredArgs object =
-    Object.selectionField "label" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
+label requiredArgs object_ =
+    Object.selectionField "label" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias LabelsOptionalArguments =
@@ -393,7 +462,7 @@ type alias LabelsOptionalArguments =
 
 -}
 labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> Field (Maybe decodesTo) Github.Object.Repository
-labels fillInOptionals object =
+labels fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent }
@@ -402,7 +471,7 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "labels" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "labels" optionalArgs object_ (identity >> Decode.nullable)
 
 
 type alias LanguagesOptionalArguments =
@@ -419,7 +488,7 @@ type alias LanguagesOptionalArguments =
 
 -}
 languages : (LanguagesOptionalArguments -> LanguagesOptionalArguments) -> SelectionSet decodesTo Github.Object.LanguageConnection -> Field (Maybe decodesTo) Github.Object.Repository
-languages fillInOptionals object =
+languages fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
@@ -428,7 +497,7 @@ languages fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeLanguageOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "languages" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "languages" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| The license associated with the repository
@@ -441,8 +510,8 @@ license =
 {-| The license associated with the repository
 -}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Object.Repository
-licenseInfo object =
-    Object.selectionField "licenseInfo" [] object (identity >> Decode.nullable)
+licenseInfo object_ =
+    Object.selectionField "licenseInfo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -465,7 +534,7 @@ type alias MentionableUsersOptionalArguments =
 
 -}
 mentionableUsers : (MentionableUsersOptionalArguments -> MentionableUsersOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.Repository
-mentionableUsers fillInOptionals object =
+mentionableUsers fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -474,7 +543,7 @@ mentionableUsers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "mentionableUsers" optionalArgs object identity
+    Object.selectionField "mentionableUsers" optionalArgs object_ identity
 
 
 type alias MilestoneRequiredArguments =
@@ -487,8 +556,8 @@ type alias MilestoneRequiredArguments =
 
 -}
 milestone : MilestoneRequiredArguments -> SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe decodesTo) Github.Object.Repository
-milestone requiredArgs object =
-    Object.selectionField "milestone" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
+milestone requiredArgs object_ =
+    Object.selectionField "milestone" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias MilestonesOptionalArguments =
@@ -506,7 +575,7 @@ type alias MilestonesOptionalArguments =
 
 -}
 milestones : (MilestonesOptionalArguments -> MilestonesOptionalArguments) -> SelectionSet decodesTo Github.Object.MilestoneConnection -> Field (Maybe decodesTo) Github.Object.Repository
-milestones fillInOptionals object =
+milestones fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, orderBy = Absent }
@@ -515,14 +584,32 @@ milestones fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.MilestoneState.toString |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeMilestoneOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "milestones" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "milestones" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| The repository's original mirror URL.
 -}
 mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Object.Repository
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "mirrorUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+            |> Decode.nullable
+        )
 
 
 {-| The name of the repository.
@@ -550,7 +637,7 @@ type alias ObjectOptionalArguments =
 
 -}
 object : (ObjectOptionalArguments -> ObjectOptionalArguments) -> SelectionSet decodesTo Github.Interface.GitObject -> Field (Maybe decodesTo) Github.Object.Repository
-object fillInOptionals object =
+object fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { oid = Absent, expression = Absent }
@@ -559,28 +646,28 @@ object fillInOptionals object =
             [ Argument.optional "oid" filledInOptionals.oid (\(Github.Scalar.GitObjectID raw) -> Encode.string raw), Argument.optional "expression" filledInOptionals.expression Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "object" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "object" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| The User owner of the repository.
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field decodesTo Github.Object.Repository
-owner object =
-    Object.selectionField "owner" [] object identity
+owner object_ =
+    Object.selectionField "owner" [] object_ identity
 
 
 {-| The repository parent, if this is a fork.
 -}
 parent : SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.Repository
-parent object =
-    Object.selectionField "parent" [] object (identity >> Decode.nullable)
+parent object_ =
+    Object.selectionField "parent" [] object_ (identity >> Decode.nullable)
 
 
 {-| The primary language of the repository's code.
 -}
 primaryLanguage : SelectionSet decodesTo Github.Object.Language -> Field (Maybe decodesTo) Github.Object.Repository
-primaryLanguage object =
-    Object.selectionField "primaryLanguage" [] object (identity >> Decode.nullable)
+primaryLanguage object_ =
+    Object.selectionField "primaryLanguage" [] object_ (identity >> Decode.nullable)
 
 
 type alias ProjectRequiredArguments =
@@ -593,8 +680,8 @@ type alias ProjectRequiredArguments =
 
 -}
 project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Object.Repository
-project requiredArgs object =
-    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
+project requiredArgs object_ =
+    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -613,7 +700,7 @@ type alias ProjectsOptionalArguments =
 
 -}
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> Field decodesTo Github.Object.Repository
-projects fillInOptionals object =
+projects fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
@@ -622,21 +709,55 @@ projects fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeProjectOrder, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.ProjectState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "projects" optionalArgs object identity
+    Object.selectionField "projects" optionalArgs object_ identity
 
 
 {-| The HTTP path listing repository's projects
 -}
 projectsResourcePath : Field Github.Scalar.Uri Github.Object.Repository
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsResourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| The HTTP URL listing repository's projects
 -}
 projectsUrl : Field Github.Scalar.Uri Github.Object.Repository
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 type alias ProtectedBranchesOptionalArguments =
@@ -652,7 +773,7 @@ type alias ProtectedBranchesOptionalArguments =
 
 -}
 protectedBranches : (ProtectedBranchesOptionalArguments -> ProtectedBranchesOptionalArguments) -> SelectionSet decodesTo Github.Object.ProtectedBranchConnection -> Field decodesTo Github.Object.Repository
-protectedBranches fillInOptionals object =
+protectedBranches fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -661,7 +782,7 @@ protectedBranches fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "protectedBranches" optionalArgs object identity
+    Object.selectionField "protectedBranches" optionalArgs object_ identity
 
 
 type alias PullRequestRequiredArguments =
@@ -674,8 +795,8 @@ type alias PullRequestRequiredArguments =
 
 -}
 pullRequest : PullRequestRequiredArguments -> SelectionSet decodesTo Github.Object.PullRequest -> Field (Maybe decodesTo) Github.Object.Repository
-pullRequest requiredArgs object =
-    Object.selectionField "pullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
+pullRequest requiredArgs object_ =
+    Object.selectionField "pullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias PullRequestsOptionalArguments =
@@ -696,7 +817,7 @@ type alias PullRequestsOptionalArguments =
 
 -}
 pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Repository
-pullRequests fillInOptionals object =
+pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
@@ -705,14 +826,32 @@ pullRequests fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pullRequests" optionalArgs object identity
+    Object.selectionField "pullRequests" optionalArgs object_ identity
 
 
 {-| Identifies when the repository was last pushed to.
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Repository
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "pushedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+            |> Decode.nullable
+        )
 
 
 type alias RefRequiredArguments =
@@ -725,8 +864,8 @@ type alias RefRequiredArguments =
 
 -}
 ref : RefRequiredArguments -> SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Repository
-ref requiredArgs object =
-    Object.selectionField "ref" [ Argument.required "qualifiedName" requiredArgs.qualifiedName Encode.string ] object (identity >> Decode.nullable)
+ref requiredArgs object_ =
+    Object.selectionField "ref" [ Argument.required "qualifiedName" requiredArgs.qualifiedName Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias RefsOptionalArguments =
@@ -749,7 +888,7 @@ type alias RefsRequiredArguments =
 
 -}
 refs : (RefsOptionalArguments -> RefsOptionalArguments) -> RefsRequiredArguments -> SelectionSet decodesTo Github.Object.RefConnection -> Field (Maybe decodesTo) Github.Object.Repository
-refs fillInOptionals requiredArgs object =
+refs fillInOptionals requiredArgs object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, direction = Absent, orderBy = Absent }
@@ -758,7 +897,7 @@ refs fillInOptionals requiredArgs object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "direction" filledInOptionals.direction (Encode.enum Github.Enum.OrderDirection.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRefOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "refs" (optionalArgs ++ [ Argument.required "refPrefix" requiredArgs.refPrefix Encode.string ]) object (identity >> Decode.nullable)
+    Object.selectionField "refs" (optionalArgs ++ [ Argument.required "refPrefix" requiredArgs.refPrefix Encode.string ]) object_ (identity >> Decode.nullable)
 
 
 type alias ReleaseRequiredArguments =
@@ -771,8 +910,8 @@ type alias ReleaseRequiredArguments =
 
 -}
 release : ReleaseRequiredArguments -> SelectionSet decodesTo Github.Object.Release -> Field (Maybe decodesTo) Github.Object.Repository
-release requiredArgs object =
-    Object.selectionField "release" [ Argument.required "tagName" requiredArgs.tagName Encode.string ] object (identity >> Decode.nullable)
+release requiredArgs object_ =
+    Object.selectionField "release" [ Argument.required "tagName" requiredArgs.tagName Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias ReleasesOptionalArguments =
@@ -789,7 +928,7 @@ type alias ReleasesOptionalArguments =
 
 -}
 releases : (ReleasesOptionalArguments -> ReleasesOptionalArguments) -> SelectionSet decodesTo Github.Object.ReleaseConnection -> Field decodesTo Github.Object.Repository
-releases fillInOptionals object =
+releases fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
@@ -798,7 +937,7 @@ releases fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReleaseOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "releases" optionalArgs object identity
+    Object.selectionField "releases" optionalArgs object_ identity
 
 
 type alias RepositoryTopicsOptionalArguments =
@@ -814,7 +953,7 @@ type alias RepositoryTopicsOptionalArguments =
 
 -}
 repositoryTopics : (RepositoryTopicsOptionalArguments -> RepositoryTopicsOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryTopicConnection -> Field decodesTo Github.Object.Repository
-repositoryTopics fillInOptionals object =
+repositoryTopics fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -823,14 +962,31 @@ repositoryTopics fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "repositoryTopics" optionalArgs object identity
+    Object.selectionField "repositoryTopics" optionalArgs object_ identity
 
 
 {-| The HTTP path for this repository
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.Repository
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -852,14 +1008,48 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "shortDescriptionHTML"
+        optionalArgs
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Html
+        )
 
 
 {-| The SSH URL to clone this repository
 -}
 sshUrl : Field Github.Scalar.GitSSHRemote Github.Object.Repository
 sshUrl =
-    Object.fieldDecoder "sshUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.GitSSHRemote)
+    Object.fieldDecoder "sshUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.GitSSHRemote
+        )
 
 
 type alias StargazersOptionalArguments =
@@ -876,7 +1066,7 @@ type alias StargazersOptionalArguments =
 
 -}
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> Field decodesTo Github.Object.Repository
-stargazers fillInOptionals object =
+stargazers fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
@@ -885,21 +1075,55 @@ stargazers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "stargazers" optionalArgs object identity
+    Object.selectionField "stargazers" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.Repository
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| The HTTP URL for this repository
 -}
 url : Field Github.Scalar.Uri Github.Object.Repository
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| Indicates whether the viewer has admin permissions on this repository.
@@ -964,7 +1188,7 @@ type alias WatchersOptionalArguments =
 
 -}
 watchers : (WatchersOptionalArguments -> WatchersOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.Repository
-watchers fillInOptionals object =
+watchers fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -973,4 +1197,4 @@ watchers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "watchers" optionalArgs object identity
+    Object.selectionField "watchers" optionalArgs object_ identity

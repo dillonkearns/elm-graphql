@@ -14,7 +14,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -29,8 +29,8 @@ selection constructor =
 {-| The commit this status is attached to.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Status
-commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.nullable)
+commit object_ =
+    Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
 
 type alias ContextRequiredArguments =
@@ -43,20 +43,37 @@ type alias ContextRequiredArguments =
 
 -}
 context : ContextRequiredArguments -> SelectionSet decodesTo Github.Object.StatusContext -> Field (Maybe decodesTo) Github.Object.Status
-context requiredArgs object =
-    Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
+context requiredArgs object_ =
+    Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.
 -}
 contexts : SelectionSet decodesTo Github.Object.StatusContext -> Field (List decodesTo) Github.Object.Status
-contexts object =
-    Object.selectionField "contexts" [] object (identity >> Decode.list)
+contexts object_ =
+    Object.selectionField "contexts" [] object_ (identity >> Decode.list)
 
 
 id : Field Github.Scalar.Id Github.Object.Status
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The combined commit status.

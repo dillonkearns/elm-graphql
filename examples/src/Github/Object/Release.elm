@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,15 +28,32 @@ selection constructor =
 {-| The author of the release
 -}
 author : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Release
-author object =
-    Object.selectionField "author" [] object (identity >> Decode.nullable)
+author object_ =
+    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.Release
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| Identifies the description of the release.
@@ -48,7 +65,24 @@ description =
 
 id : Field Github.Scalar.Id Github.Object.Release
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Whether or not the release is a draft
@@ -76,7 +110,25 @@ name =
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Release
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "publishedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+            |> Decode.nullable
+        )
 
 
 type alias ReleaseAssetsOptionalArguments =
@@ -93,7 +145,7 @@ type alias ReleaseAssetsOptionalArguments =
 
 -}
 releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection -> Field decodesTo Github.Object.Release
-releaseAssets fillInOptionals object =
+releaseAssets fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
@@ -102,32 +154,83 @@ releaseAssets fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "releaseAssets" optionalArgs object identity
+    Object.selectionField "releaseAssets" optionalArgs object_ identity
 
 
 {-| The HTTP path for this issue
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.Release
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| The Git tag the release points to
 -}
 tag : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Release
-tag object =
-    Object.selectionField "tag" [] object (identity >> Decode.nullable)
+tag object_ =
+    Object.selectionField "tag" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.Release
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| The HTTP URL for this issue
 -}
 url : Field Github.Scalar.Uri Github.Object.Release
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )

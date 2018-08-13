@@ -19,7 +19,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -50,7 +50,24 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "avatarUrl"
+        optionalArgs
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| The user's public profile bio.
@@ -64,7 +81,24 @@ bio =
 -}
 bioHTML : Field Github.Scalar.Html Github.Object.User
 bioHTML =
-    Object.fieldDecoder "bioHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "bioHTML"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Html
+        )
 
 
 type alias CommitCommentsOptionalArguments =
@@ -80,7 +114,7 @@ type alias CommitCommentsOptionalArguments =
 
 -}
 commitComments : (CommitCommentsOptionalArguments -> CommitCommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.User
-commitComments fillInOptionals object =
+commitComments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -89,7 +123,7 @@ commitComments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "commitComments" optionalArgs object identity
+    Object.selectionField "commitComments" optionalArgs object_ identity
 
 
 {-| The user's public profile company.
@@ -103,7 +137,24 @@ company =
 -}
 companyHTML : Field Github.Scalar.Html Github.Object.User
 companyHTML =
-    Object.fieldDecoder "companyHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "companyHTML"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Html
+        )
 
 
 type alias ContributedRepositoriesOptionalArguments =
@@ -123,7 +174,7 @@ type alias ContributedRepositoriesOptionalArguments =
 
 -}
 contributedRepositories : (ContributedRepositoriesOptionalArguments -> ContributedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
-contributedRepositories fillInOptionals object =
+contributedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
@@ -132,14 +183,31 @@ contributedRepositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "contributedRepositories" optionalArgs object identity
+    Object.selectionField "contributedRepositories" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.User
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| Identifies the primary key from the database.
@@ -169,7 +237,7 @@ type alias FollowersOptionalArguments =
 
 -}
 followers : (FollowersOptionalArguments -> FollowersOptionalArguments) -> SelectionSet decodesTo Github.Object.FollowerConnection -> Field decodesTo Github.Object.User
-followers fillInOptionals object =
+followers fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -178,7 +246,7 @@ followers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "followers" optionalArgs object identity
+    Object.selectionField "followers" optionalArgs object_ identity
 
 
 type alias FollowingOptionalArguments =
@@ -194,7 +262,7 @@ type alias FollowingOptionalArguments =
 
 -}
 following : (FollowingOptionalArguments -> FollowingOptionalArguments) -> SelectionSet decodesTo Github.Object.FollowingConnection -> Field decodesTo Github.Object.User
-following fillInOptionals object =
+following fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -203,7 +271,7 @@ following fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "following" optionalArgs object identity
+    Object.selectionField "following" optionalArgs object_ identity
 
 
 type alias GistRequiredArguments =
@@ -216,8 +284,8 @@ type alias GistRequiredArguments =
 
 -}
 gist : GistRequiredArguments -> SelectionSet decodesTo Github.Object.Gist -> Field (Maybe decodesTo) Github.Object.User
-gist requiredArgs object =
-    Object.selectionField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
+gist requiredArgs object_ =
+    Object.selectionField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias GistCommentsOptionalArguments =
@@ -233,7 +301,7 @@ type alias GistCommentsOptionalArguments =
 
 -}
 gistComments : (GistCommentsOptionalArguments -> GistCommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> Field decodesTo Github.Object.User
-gistComments fillInOptionals object =
+gistComments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -242,7 +310,7 @@ gistComments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "gistComments" optionalArgs object identity
+    Object.selectionField "gistComments" optionalArgs object_ identity
 
 
 type alias GistsOptionalArguments =
@@ -260,7 +328,7 @@ type alias GistsOptionalArguments =
 
 -}
 gists : (GistsOptionalArguments -> GistsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistConnection -> Field decodesTo Github.Object.User
-gists fillInOptionals object =
+gists fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent }
@@ -269,12 +337,29 @@ gists fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.GistPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeGistOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "gists" optionalArgs object identity
+    Object.selectionField "gists" optionalArgs object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.User
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Whether or not this user is a participant in the GitHub Security Bug Bounty.
@@ -339,7 +424,7 @@ type alias IssueCommentsOptionalArguments =
 
 -}
 issueComments : (IssueCommentsOptionalArguments -> IssueCommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> Field decodesTo Github.Object.User
-issueComments fillInOptionals object =
+issueComments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -348,7 +433,7 @@ issueComments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "issueComments" optionalArgs object identity
+    Object.selectionField "issueComments" optionalArgs object_ identity
 
 
 type alias IssuesOptionalArguments =
@@ -367,7 +452,7 @@ type alias IssuesOptionalArguments =
 
 -}
 issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> Field decodesTo Github.Object.User
-issues fillInOptionals object =
+issues fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
@@ -376,7 +461,7 @@ issues fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "issues" optionalArgs object identity
+    Object.selectionField "issues" optionalArgs object_ identity
 
 
 {-| The user's public profile location.
@@ -410,8 +495,8 @@ type alias OrganizationRequiredArguments =
 
 -}
 organization : OrganizationRequiredArguments -> SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) Github.Object.User
-organization requiredArgs object =
-    Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object (identity >> Decode.nullable)
+organization requiredArgs object_ =
+    Object.selectionField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias OrganizationsOptionalArguments =
@@ -427,7 +512,7 @@ type alias OrganizationsOptionalArguments =
 
 -}
 organizations : (OrganizationsOptionalArguments -> OrganizationsOptionalArguments) -> SelectionSet decodesTo Github.Object.OrganizationConnection -> Field decodesTo Github.Object.User
-organizations fillInOptionals object =
+organizations fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -436,7 +521,7 @@ organizations fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "organizations" optionalArgs object identity
+    Object.selectionField "organizations" optionalArgs object_ identity
 
 
 type alias PinnedRepositoriesOptionalArguments =
@@ -456,7 +541,7 @@ type alias PinnedRepositoriesOptionalArguments =
 
 -}
 pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
-pinnedRepositories fillInOptionals object =
+pinnedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
@@ -465,7 +550,7 @@ pinnedRepositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pinnedRepositories" optionalArgs object identity
+    Object.selectionField "pinnedRepositories" optionalArgs object_ identity
 
 
 type alias PublicKeysOptionalArguments =
@@ -481,7 +566,7 @@ type alias PublicKeysOptionalArguments =
 
 -}
 publicKeys : (PublicKeysOptionalArguments -> PublicKeysOptionalArguments) -> SelectionSet decodesTo Github.Object.PublicKeyConnection -> Field decodesTo Github.Object.User
-publicKeys fillInOptionals object =
+publicKeys fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -490,7 +575,7 @@ publicKeys fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "publicKeys" optionalArgs object identity
+    Object.selectionField "publicKeys" optionalArgs object_ identity
 
 
 type alias PullRequestsOptionalArguments =
@@ -511,7 +596,7 @@ type alias PullRequestsOptionalArguments =
 
 -}
 pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.User
-pullRequests fillInOptionals object =
+pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
@@ -520,7 +605,7 @@ pullRequests fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pullRequests" optionalArgs object identity
+    Object.selectionField "pullRequests" optionalArgs object_ identity
 
 
 type alias RepositoriesOptionalArguments =
@@ -541,7 +626,7 @@ type alias RepositoriesOptionalArguments =
 
 -}
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
-repositories fillInOptionals object =
+repositories fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent, isFork = Absent }
@@ -550,7 +635,7 @@ repositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals.isFork Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "repositories" optionalArgs object identity
+    Object.selectionField "repositories" optionalArgs object_ identity
 
 
 type alias RepositoriesContributedToOptionalArguments =
@@ -571,7 +656,7 @@ type alias RepositoriesContributedToOptionalArguments =
 
 -}
 repositoriesContributedTo : (RepositoriesContributedToOptionalArguments -> RepositoriesContributedToOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
-repositoriesContributedTo fillInOptionals object =
+repositoriesContributedTo fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, isLocked = Absent, includeUserRepositories = Absent, contributionTypes = Absent }
@@ -580,7 +665,7 @@ repositoriesContributedTo fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "includeUserRepositories" filledInOptionals.includeUserRepositories Encode.bool, Argument.optional "contributionTypes" filledInOptionals.contributionTypes (Encode.enum Github.Enum.RepositoryContributionType.toString |> Encode.maybe |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "repositoriesContributedTo" optionalArgs object identity
+    Object.selectionField "repositoriesContributedTo" optionalArgs object_ identity
 
 
 type alias RepositoryRequiredArguments =
@@ -593,15 +678,32 @@ type alias RepositoryRequiredArguments =
 
 -}
 repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.User
-repository requiredArgs object =
-    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
+repository requiredArgs object_ =
+    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.User
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 type alias StarredRepositoriesOptionalArguments =
@@ -619,7 +721,7 @@ type alias StarredRepositoriesOptionalArguments =
 
 -}
 starredRepositories : (StarredRepositoriesOptionalArguments -> StarredRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.StarredRepositoryConnection -> Field decodesTo Github.Object.User
-starredRepositories fillInOptionals object =
+starredRepositories fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, ownedByViewer = Absent, orderBy = Absent }
@@ -628,21 +730,55 @@ starredRepositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "ownedByViewer" filledInOptionals.ownedByViewer Encode.bool, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "starredRepositories" optionalArgs object identity
+    Object.selectionField "starredRepositories" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.User
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| The HTTP URL for this user
 -}
 url : Field Github.Scalar.Uri Github.Object.User
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| Whether or not the viewer is able to follow the user.
@@ -676,7 +812,7 @@ type alias WatchingOptionalArguments =
 
 -}
 watching : (WatchingOptionalArguments -> WatchingOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User
-watching fillInOptionals object =
+watching fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
@@ -685,11 +821,29 @@ watching fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "watching" optionalArgs object identity
+    Object.selectionField "watching" optionalArgs object_ identity
 
 
 {-| A URL pointing to the user's public website/blog.
 -}
 websiteUrl : Field (Maybe Github.Scalar.Uri) Github.Object.User
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "websiteUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+            |> Decode.nullable
+        )

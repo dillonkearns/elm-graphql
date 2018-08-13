@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,5 +35,5 @@ clientMutationId =
 {-| The user that was removed as an outside collaborator.
 -}
 removedUser : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RemoveOutsideCollaboratorPayload
-removedUser object =
-    Object.selectionField "removedUser" [] object identity
+removedUser object_ =
+    Object.selectionField "removedUser" [] object_ identity

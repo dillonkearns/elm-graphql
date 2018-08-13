@@ -14,7 +14,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -57,8 +57,8 @@ signature =
 {-| GitHub user corresponding to the email signing this commit.
 -}
 signer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.UnknownSignature
-signer object =
-    Object.selectionField "signer" [] object (identity >> Decode.nullable)
+signer object_ =
+    Object.selectionField "signer" [] object_ (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.

@@ -14,7 +14,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -44,7 +44,7 @@ type alias AssociatedPullRequestsOptionalArguments =
 
 -}
 associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Ref
-associatedPullRequests fillInOptionals object =
+associatedPullRequests fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
@@ -53,12 +53,29 @@ associatedPullRequests fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "associatedPullRequests" optionalArgs object identity
+    Object.selectionField "associatedPullRequests" optionalArgs object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.Ref
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The ref name.
@@ -78,12 +95,12 @@ prefix =
 {-| The repository the ref belongs to.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Ref
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity
 
 
 {-| The object the ref points to.
 -}
 target : SelectionSet decodesTo Github.Interface.GitObject -> Field decodesTo Github.Object.Ref
-target object =
-    Object.selectionField "target" [] object identity
+target object_ =
+    Object.selectionField "target" [] object_ identity

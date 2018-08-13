@@ -14,7 +14,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -37,14 +37,32 @@ content =
 -}
 createdAt : Field (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+            |> Decode.nullable
+        )
 
 
 {-| The subject that was reacted to.
 -}
 subject : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.ReactionGroup
-subject object =
-    Object.selectionField "subject" [] object identity
+subject object_ =
+    Object.selectionField "subject" [] object_ identity
 
 
 type alias UsersOptionalArguments =
@@ -60,7 +78,7 @@ type alias UsersOptionalArguments =
 
 -}
 users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> Field decodesTo Github.Object.ReactionGroup
-users fillInOptionals object =
+users fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -69,7 +87,7 @@ users fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "users" optionalArgs object identity
+    Object.selectionField "users" optionalArgs object_ identity
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.

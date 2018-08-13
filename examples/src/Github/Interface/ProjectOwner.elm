@@ -14,8 +14,8 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 
@@ -45,7 +45,24 @@ onRepository (SelectionSet fields decoder) =
 
 id : Field Github.Scalar.Id Github.Interface.ProjectOwner
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 type alias ProjectRequiredArguments =
@@ -58,8 +75,8 @@ type alias ProjectRequiredArguments =
 
 -}
 project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Interface.ProjectOwner
-project requiredArgs object =
-    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object (identity >> Decode.nullable)
+project requiredArgs object_ =
+    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -78,7 +95,7 @@ type alias ProjectsOptionalArguments =
 
 -}
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> Field decodesTo Github.Interface.ProjectOwner
-projects fillInOptionals object =
+projects fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
@@ -87,21 +104,55 @@ projects fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeProjectOrder, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.ProjectState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "projects" optionalArgs object identity
+    Object.selectionField "projects" optionalArgs object_ identity
 
 
 {-| The HTTP path listing owners projects
 -}
 projectsResourcePath : Field Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsResourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| The HTTP URL listing owners projects
 -}
 projectsUrl : Field Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| Can the current viewer create new projects on this owner.

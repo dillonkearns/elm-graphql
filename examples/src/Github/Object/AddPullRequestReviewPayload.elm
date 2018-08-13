@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,12 +35,12 @@ clientMutationId =
 {-| The newly created pull request review.
 -}
 pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> Field decodesTo Github.Object.AddPullRequestReviewPayload
-pullRequestReview object =
-    Object.selectionField "pullRequestReview" [] object identity
+pullRequestReview object_ =
+    Object.selectionField "pullRequestReview" [] object_ identity
 
 
 {-| The edge from the pull request's review connection.
 -}
 reviewEdge : SelectionSet decodesTo Github.Object.PullRequestReviewEdge -> Field decodesTo Github.Object.AddPullRequestReviewPayload
-reviewEdge object =
-    Object.selectionField "reviewEdge" [] object identity
+reviewEdge object_ =
+    Object.selectionField "reviewEdge" [] object_ identity

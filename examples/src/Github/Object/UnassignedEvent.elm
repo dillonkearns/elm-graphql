@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,31 +28,65 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.UnassignedEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the assignable associated with the event.
 -}
 assignable : SelectionSet decodesTo Github.Interface.Assignable -> Field decodesTo Github.Object.UnassignedEvent
-assignable object =
-    Object.selectionField "assignable" [] object identity
+assignable object_ =
+    Object.selectionField "assignable" [] object_ identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.UnassignedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 id : Field Github.Scalar.Id Github.Object.UnassignedEvent
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Identifies the subject (user) who was unassigned.
 -}
 user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.UnassignedEvent
-user object =
-    Object.selectionField "user" [] object (identity >> Decode.nullable)
+user object_ =
+    Object.selectionField "user" [] object_ (identity >> Decode.nullable)

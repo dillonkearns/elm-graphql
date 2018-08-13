@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -38,7 +38,7 @@ type alias CommentsOptionalArguments =
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.CommitCommentThread
-comments fillInOptionals object =
+comments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -47,19 +47,36 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object identity
+    Object.selectionField "comments" optionalArgs object_ identity
 
 
 {-| The commit the comments were made on.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.CommitCommentThread
-commit object =
-    Object.selectionField "commit" [] object identity
+commit object_ =
+    Object.selectionField "commit" [] object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.CommitCommentThread
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The file the comments were made on.
@@ -79,5 +96,5 @@ position =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.CommitCommentThread
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity

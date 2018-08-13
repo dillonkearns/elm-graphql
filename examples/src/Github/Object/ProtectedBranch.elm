@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,8 +28,8 @@ selection constructor =
 {-| The actor who created this protected branch.
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProtectedBranch
-creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.nullable)
+creator object_ =
+    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Will new commits pushed to this branch dismiss pull request review approvals.
@@ -76,7 +76,24 @@ hasStrictRequiredStatusChecks =
 
 id : Field Github.Scalar.Id Github.Object.ProtectedBranch
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Can admins overwrite branch protection.
@@ -106,7 +123,7 @@ type alias PushAllowancesOptionalArguments =
 
 -}
 pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.PushAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
-pushAllowances fillInOptionals object =
+pushAllowances fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -115,14 +132,14 @@ pushAllowances fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pushAllowances" optionalArgs object identity
+    Object.selectionField "pushAllowances" optionalArgs object_ identity
 
 
 {-| The repository associated with this protected branch.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.ProtectedBranch
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity
 
 
 {-| List of required status check contexts that must pass for commits to be accepted to this branch.
@@ -145,7 +162,7 @@ type alias ReviewDismissalAllowancesOptionalArguments =
 
 -}
 reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
-reviewDismissalAllowances fillInOptionals object =
+reviewDismissalAllowances fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -154,4 +171,4 @@ reviewDismissalAllowances fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "reviewDismissalAllowances" optionalArgs object identity
+    Object.selectionField "reviewDismissalAllowances" optionalArgs object_ identity

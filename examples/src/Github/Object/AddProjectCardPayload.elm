@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,8 +28,8 @@ selection constructor =
 {-| The edge from the ProjectColumn's card connection.
 -}
 cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> Field decodesTo Github.Object.AddProjectCardPayload
-cardEdge object =
-    Object.selectionField "cardEdge" [] object identity
+cardEdge object_ =
+    Object.selectionField "cardEdge" [] object_ identity
 
 
 {-| A unique identifier for the client performing the mutation.
@@ -42,5 +42,5 @@ clientMutationId =
 {-| The ProjectColumn
 -}
 projectColumn : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.AddProjectCardPayload
-projectColumn object =
-    Object.selectionField "projectColumn" [] object identity
+projectColumn object_ =
+    Object.selectionField "projectColumn" [] object_ identity

@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,17 +28,34 @@ selection constructor =
 {-| The actor that can push.
 -}
 actor : SelectionSet decodesTo Github.Union.PushAllowanceActor -> Field (Maybe decodesTo) Github.Object.PushAllowance
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.PushAllowance
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
 protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> Field decodesTo Github.Object.PushAllowance
-protectedBranch object =
-    Object.selectionField "protectedBranch" [] object identity
+protectedBranch object_ =
+    Object.selectionField "protectedBranch" [] object_ identity

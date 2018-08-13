@@ -14,7 +14,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -37,7 +37,24 @@ content =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.Reaction
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| Identifies the primary key from the database.
@@ -49,18 +66,35 @@ databaseId =
 
 id : Field Github.Scalar.Id Github.Object.Reaction
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The reactable piece of content
 -}
 reactable : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.Reaction
-reactable object =
-    Object.selectionField "reactable" [] object identity
+reactable object_ =
+    Object.selectionField "reactable" [] object_ identity
 
 
 {-| Identifies the user who created this reaction.
 -}
 user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Reaction
-user object =
-    Object.selectionField "user" [] object (identity >> Decode.nullable)
+user object_ =
+    Object.selectionField "user" [] object_ (identity >> Decode.nullable)

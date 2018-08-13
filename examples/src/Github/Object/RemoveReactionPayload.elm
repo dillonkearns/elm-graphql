@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,12 +35,12 @@ clientMutationId =
 {-| The reaction object.
 -}
 reaction : SelectionSet decodesTo Github.Object.Reaction -> Field decodesTo Github.Object.RemoveReactionPayload
-reaction object =
-    Object.selectionField "reaction" [] object identity
+reaction object_ =
+    Object.selectionField "reaction" [] object_ identity
 
 
 {-| The reactable subject.
 -}
 subject : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.RemoveReactionPayload
-subject object =
-    Object.selectionField "subject" [] object identity
+subject object_ =
+    Object.selectionField "subject" [] object_ identity

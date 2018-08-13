@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,5 +35,5 @@ clientMutationId =
 {-| The updated project column.
 -}
 projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> Field decodesTo Github.Object.UpdateProjectColumnPayload
-projectColumn object =
-    Object.selectionField "projectColumn" [] object identity
+projectColumn object_ =
+    Object.selectionField "projectColumn" [] object_ identity

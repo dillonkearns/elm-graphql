@@ -14,7 +14,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -32,29 +32,46 @@ in a pending state and has yet to be associated with a column. Once cards are
 associated with a column, they will not become pending in the future.
 -}
 column : SelectionSet decodesTo Github.Object.ProjectColumn -> Field (Maybe decodesTo) Github.Object.ProjectCard
-column object =
-    Object.selectionField "column" [] object (identity >> Decode.nullable)
+column object_ =
+    Object.selectionField "column" [] object_ (identity >> Decode.nullable)
 
 
 {-| The card content item
 -}
 content : SelectionSet decodesTo Github.Union.ProjectCardItem -> Field (Maybe decodesTo) Github.Object.ProjectCard
-content object =
-    Object.selectionField "content" [] object (identity >> Decode.nullable)
+content object_ =
+    Object.selectionField "content" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.ProjectCard
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| The actor who created this card
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProjectCard
-creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.nullable)
+creator object_ =
+    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -66,7 +83,24 @@ databaseId =
 
 id : Field Github.Scalar.Id Github.Object.ProjectCard
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The card note
@@ -79,22 +113,39 @@ note =
 {-| The project that contains this card.
 -}
 project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.ProjectCard
-project object =
-    Object.selectionField "project" [] object identity
+project object_ =
+    Object.selectionField "project" [] object_ identity
 
 
 {-| The column that contains this card.
 -}
 projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> Field decodesTo Github.Object.ProjectCard
-projectColumn object =
-    Object.selectionField "projectColumn" [] object identity
+projectColumn object_ =
+    Object.selectionField "projectColumn" [] object_ identity
 
 
 {-| The HTTP path for this card
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.ProjectCard
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| The state of ProjectCard
@@ -108,11 +159,45 @@ state =
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.ProjectCard
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| The HTTP URL for this card
 -}
 url : Field Github.Scalar.Uri Github.Object.ProjectCard
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )

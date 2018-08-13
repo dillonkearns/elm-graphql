@@ -13,7 +13,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -36,19 +36,70 @@ abbreviatedOid =
 -}
 commitResourcePath : Field Github.Scalar.Uri Github.Object.Tag
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "commitResourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : Field Github.Scalar.Uri Github.Object.Tag
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "commitUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 id : Field Github.Scalar.Id Github.Object.Tag
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The Git tag message.
@@ -69,25 +120,42 @@ name =
 -}
 oid : Field Github.Scalar.GitObjectID Github.Object.Tag
 oid =
-    Object.fieldDecoder "oid" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.GitObjectID)
+    Object.fieldDecoder "oid"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.GitObjectID
+        )
 
 
 {-| The Repository the Git object belongs to
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Tag
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity
 
 
 {-| Details about the tag author.
 -}
 tagger : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Tag
-tagger object =
-    Object.selectionField "tagger" [] object (identity >> Decode.nullable)
+tagger object_ =
+    Object.selectionField "tagger" [] object_ (identity >> Decode.nullable)
 
 
 {-| The Git object the tag points to.
 -}
 target : SelectionSet decodesTo Github.Interface.GitObject -> Field decodesTo Github.Object.Tag
-target object =
-    Object.selectionField "target" [] object identity
+target object_ =
+    Object.selectionField "target" [] object_ identity

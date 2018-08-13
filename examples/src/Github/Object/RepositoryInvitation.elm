@@ -14,7 +14,7 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,21 +28,38 @@ selection constructor =
 
 id : Field Github.Scalar.Id Github.Object.RepositoryInvitation
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Id
+        )
 
 
 {-| The user who received the invitation.
 -}
 invitee : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
-invitee object =
-    Object.selectionField "invitee" [] object identity
+invitee object_ =
+    Object.selectionField "invitee" [] object_ identity
 
 
 {-| The user who created the invitation.
 -}
 inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
-inviter object =
-    Object.selectionField "inviter" [] object identity
+inviter object_ =
+    Object.selectionField "inviter" [] object_ identity
 
 
 {-| The permission granted on this repository by this invitation.
@@ -55,5 +72,5 @@ permission =
 {-| The Repository the user is invited to.
 -}
 repository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> Field (Maybe decodesTo) Github.Object.RepositoryInvitation
-repository object =
-    Object.selectionField "repository" [] object (identity >> Decode.nullable)
+repository object_ =
+    Object.selectionField "repository" [] object_ (identity >> Decode.nullable)

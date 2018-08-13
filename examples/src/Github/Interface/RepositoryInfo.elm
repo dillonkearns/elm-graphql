@@ -14,8 +14,8 @@ import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
+import Graphqelm.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 
@@ -47,7 +47,24 @@ onRepositoryInvitationRepository (SelectionSet fields decoder) =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Interface.RepositoryInfo
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| The description of the repository.
@@ -61,7 +78,24 @@ description =
 -}
 descriptionHTML : Field Github.Scalar.Html Github.Interface.RepositoryInfo
 descriptionHTML =
-    Object.fieldDecoder "descriptionHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "descriptionHTML"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Html
+        )
 
 
 {-| Returns how many forks there are of this repository in the whole network.
@@ -89,7 +123,25 @@ hasWikiEnabled =
 -}
 homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "homepageUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+            |> Decode.nullable
+        )
 
 
 {-| Indicates if the repository is unmaintained.
@@ -137,8 +189,8 @@ license =
 {-| The license associated with the repository
 -}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Interface.RepositoryInfo
-licenseInfo object =
-    Object.selectionField "licenseInfo" [] object (identity >> Decode.nullable)
+licenseInfo object_ =
+    Object.selectionField "licenseInfo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -152,7 +204,25 @@ lockReason =
 -}
 mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "mirrorUrl"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+            |> Decode.nullable
+        )
 
 
 {-| The name of the repository.
@@ -172,22 +242,57 @@ nameWithOwner =
 {-| The User owner of the repository.
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field decodesTo Github.Interface.RepositoryInfo
-owner object =
-    Object.selectionField "owner" [] object identity
+owner object_ =
+    Object.selectionField "owner" [] object_ identity
 
 
 {-| Identifies when the repository was last pushed to.
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.RepositoryInfo
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "pushedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+            |> Decode.nullable
+        )
 
 
 {-| The HTTP path for this repository
 -}
 resourcePath : Field Github.Scalar.Uri Github.Interface.RepositoryInfo
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -209,18 +314,69 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "shortDescriptionHTML"
+        optionalArgs
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Html
+        )
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Interface.RepositoryInfo
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.DateTime
+        )
 
 
 {-| The HTTP URL for this repository
 -}
 url : Field Github.Scalar.Uri Github.Interface.RepositoryInfo
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url"
+        []
+        (Decode.oneOf
+            [ Decode.string
+            , Decode.float |> Decode.map String.fromFloat
+            , Decode.int |> Decode.map String.fromInt
+            , Decode.bool
+                |> Decode.map
+                    (\bool ->
+                        if bool then
+                            "True"
+
+                        else
+                            "False"
+                    )
+            ]
+            |> Decode.map Github.Scalar.Uri
+        )
