@@ -47,8 +47,8 @@ me =
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, subscription = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "RootQuery")
                     |> Expect.equal
                         """droid : SelectionSet decodesTo Api.Object.Droid -> Field decodesTo RootQuery
-droid object =
-      Object.selectionField "droid" [] (object) (identity)
+droid object_ =
+      Object.selectionField "droid" [] (object_) (identity)
 """
         , test "simple interface with no args" <|
             \() ->
@@ -72,8 +72,8 @@ droid object =
                         (ClassCaseName.build "RootQuery")
                     |> Expect.equal
                         """hero : SelectionSet decodesTo Swapi.Interface.Character -> Field decodesTo RootQuery
-hero object =
-      Object.selectionField "hero" [] (object) (identity)
+hero object_ =
+      Object.selectionField "hero" [] (object_) (identity)
 """
         , test "simple object with no args for object" <|
             \() ->
@@ -85,8 +85,8 @@ hero object =
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, subscription = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "Foo")
                     |> Expect.equal
                         """droid : SelectionSet decodesTo Api.Object.Droid -> Field decodesTo Api.Object.Foo
-droid object =
-      Object.selectionField "droid" [] (object) (identity)
+droid object_ =
+      Object.selectionField "droid" [] (object_) (identity)
 """
         , test "list of objects with no args" <|
             \() ->
@@ -98,8 +98,8 @@ droid object =
                     |> Field.generateForObject (Context.context { query = "RootQuery", mutation = Nothing, subscription = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }) (ClassCaseName.build "Foo")
                     |> Expect.equal
                         """droid : SelectionSet decodesTo Api.Object.Droid -> Field (List decodesTo) Api.Object.Foo
-droid object =
-      Object.selectionField "droid" [] (object) (identity >> Decode.list)
+droid object_ =
+      Object.selectionField "droid" [] (object_) (identity >> Decode.list)
 """
         , test "with required args" <|
             \() ->
@@ -118,8 +118,8 @@ droid object =
                         """type alias HumanRequiredArguments = { id : String }
 
 human : HumanRequiredArguments -> SelectionSet decodesTo Api.Object.Human -> Field decodesTo RootQuery
-human requiredArgs object =
-      Object.selectionField "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object) (identity)
+human requiredArgs object_ =
+      Object.selectionField "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object_) (identity)
 """
         , test "with optional args" <|
             \() ->
@@ -138,7 +138,7 @@ human requiredArgs object =
                         """type alias MenuItemsOptionalArguments = { contains : OptionalArgument String }
 
 menuItems : (MenuItemsOptionalArguments -> MenuItemsOptionalArguments) -> SelectionSet decodesTo Api.Object.MenuItem -> Field (List decodesTo) RootQuery
-menuItems fillInOptionals object =
+menuItems fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { contains = Absent }
@@ -147,7 +147,7 @@ menuItems fillInOptionals object =
             [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionField "menuItems" optionalArgs (object) (identity >> Decode.list)
+      Object.selectionField "menuItems" optionalArgs (object_) (identity >> Decode.list)
 """
         , test "normalizes reserved names" <|
             \() ->

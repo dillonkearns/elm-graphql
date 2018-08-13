@@ -208,7 +208,7 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
-    , decoder = "object"
+    , decoder = "object_"
     , otherThing = ".selectionField"
     , letBindings = []
     , objectDecoderChain =
@@ -222,7 +222,7 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
     }
         |> prependArg
             { annotation = objectArgAnnotation
-            , arg = "object"
+            , arg = "object_"
             }
 
 
