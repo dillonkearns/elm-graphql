@@ -176,7 +176,7 @@ generateImports ({ apiSubmodule } as context) fields =
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Object as Object
 import Graphqelm.SelectionSet exposing (SelectionSet)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import {1}.Object
 import {1}.Interface
 import {1}.Union
