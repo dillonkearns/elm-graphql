@@ -15,7 +15,7 @@ import Github.Union
 import Github.Union.SearchResultItem
 import Graphqelm.Field as Field
 import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
+import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
 import Graphqelm.SelectionSet exposing (SelectionSet, with)
 
 
@@ -35,7 +35,7 @@ query sortOrder =
     Query.selection Response
         |> with
             (Query.search (\optionals -> { optionals | first = Present 100 })
-                { query = "language:Elm sort:" ++ (sortOrder |> toString |> String.toLower)
+                { query = "language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
                 , type_ = Github.Enum.SearchType.Repository
                 }
                 searchSelection
@@ -50,11 +50,11 @@ expectField =
 expect : Maybe a -> a
 expect maybe =
     case maybe of
-        Just thing ->
-            thing
+        Just thing_ ->
+            thing_
 
         Nothing ->
-            Debug.crash "Expected to get thing, got nothing"
+            Debug.todo "Expected to get thing, got nothing"
 
 
 searchSelection : SelectionSet (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection

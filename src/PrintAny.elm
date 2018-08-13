@@ -142,11 +142,11 @@ view model =
 
 -}
 viewWithConfig : Config -> a -> Html msg
-viewWithConfig (Config config) record =
+viewWithConfig (Config config_) record =
     let
         lines =
             record
-                |> toString
+                |> Debug.toString
                 |> splitWithQuotes
                 |> splitUnquotedWithChars
                 |> List.concat
@@ -154,14 +154,14 @@ viewWithConfig (Config config) record =
                 |> addIndents
     in
     pre
-        (if config.className == "" then
+        (if config_.className == "" then
             []
 
          else
-            [ class config.className ]
+            [ class config_.className ]
         )
     <|
-        List.map (viewLine <| Config config) lines
+        List.map (viewLine <| Config config_) lines
 
 
 
@@ -169,13 +169,11 @@ viewWithConfig (Config config) record =
 
 
 viewLine : Config -> ( Int, String ) -> Html msg
-viewLine (Config config) ( indent, string ) =
+viewLine (Config config_) ( indent, string ) =
     p
-        [ style
-            [ ( "paddingLeft", px (indent * config.increment) )
-            , ( "marginTop", "0px" )
-            , ( "marginBottom", "0px" )
-            ]
+        [ style "paddingLeft" (px (indent * config_.increment))
+        , style "marginTop" "0px"
+        , style "marginBottom" "0px"
         ]
         [ text string ]
 
@@ -219,7 +217,7 @@ log record =
     let
         lines =
             record
-                |> toString
+                |> Debug.toString
                 |> splitWithQuotes
                 |> splitUnquotedWithChars
                 |> List.concat
@@ -255,7 +253,7 @@ logLine ( indent, string ) =
 
 px : Int -> String
 px int =
-    toString int
+    String.fromInt int
         ++ "px"
 
 
@@ -422,7 +420,7 @@ mergeOneQuote string startList =
 
 pad : Int -> String
 pad indent =
-    String.padLeft 5 '0' <| toString indent
+    String.padLeft 5 '0' <| String.fromInt indent
 
 
 splitLine : String -> ( Int, String )
@@ -431,7 +429,7 @@ splitLine line =
         indent =
             String.left 5 line
                 |> String.toInt
-                |> Result.withDefault 0
+                |> Maybe.withDefault 0
 
         newLine =
             String.dropLeft 5 line

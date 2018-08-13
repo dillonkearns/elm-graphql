@@ -1,5 +1,6 @@
 module Starwars exposing (main)
 
+import Browser
 import Graphqelm.Document as Document
 import Graphqelm.Http
 import Graphqelm.Operation exposing (RootQuery)
@@ -66,10 +67,10 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.program
-        { init = init
+    Browser.element
+        { init = \_ -> init
         , update = update
         , subscriptions = \_ -> Sub.none
         , view = view

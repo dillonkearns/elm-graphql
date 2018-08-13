@@ -3,6 +3,7 @@ module Subscription exposing (main)
 import Api.Object
 import Api.Object.Post
 import Api.Subscription
+import Browser
 import Graphqelm.Operation exposing (RootMutation, RootSubscription)
 import Graphqelm.SelectionSet exposing (with)
 import Graphqelm.Subscription
@@ -89,10 +90,10 @@ subscriptions model =
     Graphqelm.Subscription.listen GraphqlSubscriptionMsg model
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.program
-        { init = init
+    Browser.element
+        { init = \_ -> init
         , update = update
         , subscriptions = subscriptions
         , view = view
