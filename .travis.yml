@@ -7,7 +7,6 @@ node_js:
 cache:
   directories:
     - test/elm-stuff/build-artifacts
-    - sysconfcpus
     - node_modules
 
 os:
@@ -15,25 +14,14 @@ os:
 
 env:
   matrix:
-    - ELM_VERSION=0.18.0
+    - ELM_VERSION=0.19.0
 
 before_install:
   - npm i -g npm@^5.6.0
-  - npm --version
-  - |
-    # CI build time workaound
-    # https://github.com/elm-lang/elm-compiler/issues/1473#issuecomment-245704142
-    if [ ! -d $TRAVIS_BUILD_DIR/sysconfcpus/bin ]; then
-      git clone https://github.com/obmarg/libsysconfcpus.git
-      cd libsysconfcpus
-      ./configure --prefix=$TRAVIS_BUILD_DIR/sysconfcpus
-      make && make install
-    fi
 
 install:
-  - export PATH="$TRAVIS_BUILD_DIR/sysconfcpus/bin:$PATH"
   - npm install
 
 script:
-  - sysconfcpus -n 2 npm test
-  - sysconfcpus -n 2 npm run approve
+  - npm test
+  - npm run approve
