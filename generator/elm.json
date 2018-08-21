@@ -10,8 +10,8 @@
             "elm/json": "1.0.0",
             "elm/regex": "1.0.0",
             "elm-community/json-extra": "3.0.0",
-            "elm-community/list-extra": "9.0.0",
-            "xtian/elm-string-interpolate": "1.0.0",
+            "elm-community/list-extra": "8.0.0",
+            "lukewestby/elm-string-interpolate": "1.0.3",
             "xtian/string-extra": "1.1.0"
         },
         "indirect": {}

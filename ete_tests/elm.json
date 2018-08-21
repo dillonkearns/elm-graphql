@@ -16,7 +16,7 @@
             "elm/url": "1.0.0",
             "elm-community/list-extra": "9.0.0",
             "krisajenkins/remotedata": "5.0.0",
-            "xtian/elm-string-interpolate": "1.0.0"
+            "lukewestby/elm-string-interpolate": "1.0.3"
         },
         "indirect": {
             "elm/regex": "1.0.0",
