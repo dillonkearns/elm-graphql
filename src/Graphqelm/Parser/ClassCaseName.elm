@@ -1,6 +1,6 @@
-module Graphqelm.Parser.ClassCaseName exposing (ClassCaseName, build, isBuiltIn, normalized, raw)
+module Graphql.Parser.ClassCaseName exposing (ClassCaseName, build, isBuiltIn, normalized, raw)
 
-import Graphqelm.Generator.Normalize as Normalize
+import Graphql.Generator.Normalize as Normalize
 
 
 build : String -> ClassCaseName

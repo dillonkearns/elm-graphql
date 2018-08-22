@@ -37,8 +37,8 @@ query {
 would look like this in `graphqelm` (the code in this example that is prefixed with `StarWars` is auto-generated)
 
 ```elm
-import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.SelectionSet exposing (SelectionSet, with)
+import Graphql.Operation exposing (RootQuery)
+import Graphql.SelectionSet exposing (SelectionSet, with)
 import StarWars.Object
 import StarWars.Object.Human as Human
 import StarWars.Query as Query
@@ -76,7 +76,7 @@ graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src
 
 If you're just starting out, here are some great resources:
 
-- There are a couple of chapters so far in [The Official Graphqelm Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
+- There are a couple of chapters so far in [The Official `dillonkearns/elm-graphql` Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
 - [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
 - [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
 
@@ -88,10 +88,10 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 
 `graphqelm` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `graphqelm`.
 
-1. Add [the `Graphqelm` elm package](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest)
+1. Add [the `dillonkearns/elm-graphql` elm package](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest)
    as a dependency in your `elm-package.json`.
    ```shell
-   elm package install dillonkearns/graphqelm
+   elm package install dillonkearns/elm-graphql
    ```
 2. Install the `@dillonkearns/elm-graphql` command line tool through npm. This is what you will use to generate Elm code for your API.
    It is recommended that you save the `@dillonkearns/elm-graphql` command line tool as a dev
@@ -110,11 +110,11 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
      "name": "star-wars-graphqelm-project",
      "version": "1.0.0",
      "scripts": {
-       "api": "graphqelm https://graphqelm.herokuapp.com/api --base StarWars"
+       "api": "elm-graphql https://graphqelm.herokuapp.com/api --base StarWars"
      }
    ```
 
-4. With the above in your `package.json`, running `npm run api` will generate Graphqelm code for you to call in `./src/StarWars/`. You can now use the generated code as in this [Ellie example](https://rebrand.ly/graphqelm) or in the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples) folder.
+4. With the above in your `package.json`, running `npm run api` will generate `dillonkearns/elm-graphql` code for you to call in `./src/StarWars/`. You can now use the generated code as in this [Ellie example](https://rebrand.ly/graphqelm) or in the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples) folder.
 
 ## Contributors
 

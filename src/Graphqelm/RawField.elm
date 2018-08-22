@@ -1,6 +1,6 @@
-module Graphqelm.RawField exposing (RawField(Composite, Leaf), name)
+module Graphql.RawField exposing (RawField(Composite, Leaf), name)
 
-import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
+import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 
 
 type RawField

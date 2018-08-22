@@ -2,7 +2,7 @@ module Http.GraphqlErrorTests exposing (all)
 
 import Dict
 import Expect
-import Graphqelm.Http.GraphqlError as GraphqlError
+import Graphql.Http.GraphqlError as GraphqlError
 import Json.Decode
 import Test exposing (Test, describe, test)
 

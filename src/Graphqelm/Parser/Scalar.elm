@@ -1,6 +1,6 @@
-module Graphqelm.Parser.Scalar exposing (Scalar(..), parse)
+module Graphql.Parser.Scalar exposing (Scalar(..), parse)
 
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 
 
 type Scalar

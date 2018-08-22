@@ -1,10 +1,10 @@
-module Graphqelm.Generator.Query exposing (generate)
+module Graphql.Generator.Query exposing (generate)
 
-import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Generator.Field as FieldGenerator
-import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Generator.StaticImports as StaticImports
-import Graphqelm.Parser.Type as Type exposing (Field)
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Field as FieldGenerator
+import Graphql.Generator.Imports as Imports
+import Graphql.Generator.StaticImports as StaticImports
+import Graphql.Parser.Type as Type exposing (Field)
 import String.Interpolate exposing (interpolate)
 
 
@@ -24,7 +24,7 @@ prepend ({ apiSubmodule } as context) moduleName fields =
 
 
 {-| Select fields to build up a top-level query. The request can be sent with
-functions from `Graphqelm.Http`.
+functions from `Graphql.Http`.
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
 selection constructor =

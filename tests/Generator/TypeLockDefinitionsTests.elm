@@ -1,8 +1,8 @@
 module Generator.TypeLockDefinitionsTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
-import Graphqelm.Parser.Type as Type exposing (..)
+import Graphql.Generator.TypeLockDefinitions as TypeLockDefinitions
+import Graphql.Parser.Type as Type exposing (..)
 import Test exposing (..)
 
 

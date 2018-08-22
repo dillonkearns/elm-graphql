@@ -1,7 +1,7 @@
-module Graphqelm.Generator.Imports exposing (imports, importsString, importsWithoutSelf)
+module Graphql.Generator.Imports exposing (imports, importsString, importsWithoutSelf)
 
-import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Parser.Type as Type exposing (TypeReference)
+import Graphql.Generator.ModuleName as ModuleName
+import Graphql.Parser.Type as Type exposing (TypeReference)
 
 
 allRefs : List Type.Field -> List TypeReference

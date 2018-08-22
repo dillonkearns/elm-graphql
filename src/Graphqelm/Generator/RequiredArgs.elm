@@ -1,8 +1,8 @@
-module Graphqelm.Generator.RequiredArgs exposing (Result, generate)
+module Graphql.Generator.RequiredArgs exposing (Result, generate)
 
-import Graphqelm.Generator.Decoder
-import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
-import Graphqelm.Parser.Type as Type
+import Graphql.Generator.Decoder
+import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphql.Parser.Type as Type
 import String.Interpolate exposing (interpolate)
 
 
@@ -66,7 +66,7 @@ requiredArgString apiSubmodule { name, referrableType, typeRef } =
         "Argument.required \"{0}\" requiredArgs.{1} ({2})"
         [ name |> CamelCaseName.raw
         , name |> CamelCaseName.normalized
-        , Graphqelm.Generator.Decoder.generateEncoder apiSubmodule typeRef
+        , Graphql.Generator.Decoder.generateEncoder apiSubmodule typeRef
         ]
 
 
@@ -84,5 +84,5 @@ requiredArgAnnotation apiSubmodule { name, typeRef } =
     interpolate
         "{0} : {1}"
         [ name |> CamelCaseName.normalized
-        , Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
+        , Graphql.Generator.Decoder.generateType apiSubmodule typeRef
         ]

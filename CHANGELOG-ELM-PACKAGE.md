@@ -31,9 +31,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Responses are errors if any data is present in `errors` field in response.
   The `data` field from the response is also included in `GraphqlError`s now so
   you can inspect the data upon failure. Here is a summary of how this will effect your code:
-  - Before, Graphqelm always treated responses where it could parse the response as success.
+  - Before, `dillonkearns/elm-graphql` always treated responses where it could parse the response as success.
   - Now, it will treat responses where `errors` are present as an error regardless of whether it is able to parse the response `data`.
-  - Users will need to add a type variable to their error type as errors may contain parsed data now (so `RemoteData (Graphqelm.Http.Error) Response` -> `RemoteData (Graphqelm.Http.Error Response) Response`)
+  - Users will need to add a type variable to their error type as errors may contain parsed data now (so `RemoteData (Graphql.Http.Error) Response` -> `RemoteData (Graphql.Http.Error Response) Response`)
   - For more context, here's the Github issue: https://github.com/dillonkearns/elm-graphql/issues/48#issuecomment-373175596
   - For an example, see https://github.com/dillonkearns/elm-graphql/blob/30be3570f52f5fd73055321e1a998c4082db32cf/examples/src/ErrorHandling.elm#L80-L107
 
@@ -69,12 +69,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Remove `AlwaysPost` since `Graphqelm.Http.queryRequest` now always uses POST.
+- Remove `AlwaysPost` since `Graphql.Http.queryRequest` now always uses POST.
   Added option to `GetWhenShortEnough`.
 
 ### Added
 
-- Add `Graphqelm.OptionalArgument.fromMaybe`.
+- Add `Graphql.OptionalArgument.fromMaybe`.
 - Add `SelectionSet.map`.
 
 ## [8.0.1] - 2018-01-27
@@ -88,13 +88,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Add `Graphqelm.Http.withQueryParams`.
+- Add `Graphql.Http.withQueryParams`.
 
 ### Changed
 
 - Use GET requests by default when sending a query request, unless the resulting
   url would be over 2000 characters. `queryParamsForceMethod` allows you to specify a method when needed.
-- Rename `Graphqelm.Http` functions from `buildMutationRequest` => `mutationRequest`
+- Rename `Graphql.Http` functions from `buildMutationRequest` => `mutationRequest`
   and `buildQueryRequest` => `queryRequest` to sound more declarative and concise.
 - Extract Subscription.Protocol module which encapsulates the details about
   low-level subscription communication for a given framework. The module includes
@@ -110,8 +110,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Add `Graphqelm.Http.toTask`.
-- Expose `Graphqelm.Http.withCredentials`.
+- Add `Graphql.Http.toTask`.
+- Expose `Graphql.Http.withCredentials`.
 
 ## [7.0.0] - 2018-01-17
 
@@ -146,7 +146,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Modules that are used only by generated code are now under `Graphqelm.Internal`
+- Modules that are used only by generated code are now under `Graphql.Internal`
   to make it more clear in the documentation.
 
 ## [4.1.0] - 2018-01-08

@@ -1,11 +1,11 @@
 module Starwars exposing (main)
 
-import Graphqelm.Document as Document
-import Graphqelm.Field as Field
-import Graphqelm.Http
-import Graphqelm.Http.GraphqlError
-import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.Document as Document
+import Graphql.Field as Field
+import Graphql.Http
+import Graphql.Http.GraphqlError
+import Graphql.Operation exposing (RootQuery)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (RemoteData)
 import Swapi.Object
@@ -44,8 +44,8 @@ human =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.queryRequest "https://graphqelm.herokuapp.com"
-        |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.queryRequest "https://graphqelm.herokuapp.com"
+        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
@@ -53,7 +53,7 @@ type Msg
 
 
 type alias Model =
-    RemoteData (Graphqelm.Http.Error Response) Response
+    RemoteData (Graphql.Http.Error Response) Response
 
 
 init : ( Model, Cmd Msg )
@@ -77,24 +77,24 @@ view model =
         ]
 
 
-responseDetails : RemoteData (Graphqelm.Http.Error Response) Response -> String
+responseDetails : RemoteData (Graphql.Http.Error Response) Response -> String
 responseDetails model =
     case model of
         RemoteData.Failure error ->
             case error of
-                Graphqelm.Http.GraphqlError possiblyParsedData errors ->
+                Graphql.Http.GraphqlError possiblyParsedData errors ->
                     "GraphQL errors: \n"
                         ++ toString errors
                         ++ "\n\n"
                         ++ (case possiblyParsedData of
-                                Graphqelm.Http.GraphqlError.UnparsedData unparsed ->
+                                Graphql.Http.GraphqlError.UnparsedData unparsed ->
                                     "Unable to parse data, got: " ++ toString unparsed
 
-                                Graphqelm.Http.GraphqlError.ParsedData parsedData ->
+                                Graphql.Http.GraphqlError.ParsedData parsedData ->
                                     "Parsed error data, so I can extract the name from the structured data... parsedData.vader.name = " ++ parsedData.vader.name
                            )
 
-                Graphqelm.Http.HttpError httpError ->
+                Graphql.Http.HttpError httpError ->
                     "Http error " ++ toString httpError
 
         RemoteData.Loading ->

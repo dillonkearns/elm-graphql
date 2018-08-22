@@ -1,6 +1,6 @@
-module Graphqelm.Internal.Builder.Argument exposing (Argument(Argument), optional, required)
+module Graphql.Internal.Builder.Argument exposing (Argument(Argument), optional, required)
 
-{-| **WARNING** `Graphqelm.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
+{-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
@@ -8,8 +8,8 @@ Internal functions for use by auto-generated code from the `@dillonkearns/elm-gr
 
 -}
 
-import Graphqelm.Internal.Encode as Encode exposing (Value)
-import Graphqelm.OptionalArgument as OptionalArgument exposing (OptionalArgument)
+import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument)
 
 
 {-| Argument type.

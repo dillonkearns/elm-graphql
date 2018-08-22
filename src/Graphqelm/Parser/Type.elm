@@ -1,4 +1,4 @@
-module Graphqelm.Parser.Type
+module Graphql.Parser.Type
     exposing
         ( Arg
         , DefinableType(..)
@@ -15,10 +15,10 @@ module Graphqelm.Parser.Type
         , typeRefDecoder
         )
 
-import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
-import Graphqelm.Parser.TypeKind as TypeKind exposing (TypeKind)
+import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Scalar as Scalar exposing (Scalar)
+import Graphql.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
 
 

@@ -1,9 +1,9 @@
-module Graphqelm.Generator.OptionalArgs exposing (Result, generate)
+module Graphql.Generator.OptionalArgs exposing (Result, generate)
 
-import Graphqelm.Generator.Decoder
-import Graphqelm.Generator.Let exposing (LetBinding)
-import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
-import Graphqelm.Parser.Type as Type
+import Graphql.Generator.Decoder
+import Graphql.Generator.Let exposing (LetBinding)
+import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphql.Parser.Type as Type
 import String.Interpolate exposing (interpolate)
 
 
@@ -71,7 +71,7 @@ argValue apiSubmodule { name, typeOf } =
         """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
         [ CamelCaseName.raw name
         , CamelCaseName.normalized name
-        , Graphqelm.Generator.Decoder.generateEncoder apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+        , Graphql.Generator.Decoder.generateEncoder apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
         ]
 
 
@@ -97,7 +97,7 @@ typeAlias apiSubmodule optionalArgs =
         (\{ name, typeOf } ->
             CamelCaseName.normalized name
                 ++ " : OptionalArgument "
-                ++ Graphqelm.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+                ++ Graphql.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
         )
         optionalArgs
         |> String.join ", "

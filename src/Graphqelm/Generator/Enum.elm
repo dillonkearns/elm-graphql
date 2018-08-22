@@ -1,8 +1,8 @@
-module Graphqelm.Generator.Enum exposing (enumType, generate)
+module Graphql.Generator.Enum exposing (enumType, generate)
 
-import Graphqelm.Generator.DocComment as DocComment
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type exposing (EnumValue)
+import Graphql.Generator.DocComment as DocComment
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type exposing (EnumValue)
 import String.Interpolate exposing (interpolate)
 
 

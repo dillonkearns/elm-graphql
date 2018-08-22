@@ -1,10 +1,10 @@
 module Starwars exposing (main)
 
-import Graphqelm.Document as Document
-import Graphqelm.Http
-import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.Document as Document
+import Graphql.Http
+import Graphql.Operation exposing (RootQuery)
+import Graphql.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import Normalize.InputObject
 import Normalize.Query as Query
@@ -26,8 +26,8 @@ query =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.queryRequest "http://localhost:4000"
-        |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.queryRequest "http://localhost:4000"
+        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
@@ -35,7 +35,7 @@ type Msg
 
 
 type alias Model =
-    RemoteData (Graphqelm.Http.Error Response) Response
+    RemoteData (Graphql.Http.Error Response) Response
 
 
 init : ( Model, Cmd Msg )

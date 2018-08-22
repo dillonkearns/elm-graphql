@@ -1,7 +1,7 @@
-module Graphqelm.Document.Argument exposing (serialize)
+module Graphql.Document.Argument exposing (serialize)
 
-import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument(Argument))
-import Graphqelm.Internal.Encode as Encode
+import Graphql.Internal.Builder.Argument as Argument exposing (Argument(Argument))
+import Graphql.Internal.Encode as Encode
 
 
 serialize : List Argument -> String

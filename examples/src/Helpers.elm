@@ -1,6 +1,6 @@
 module Helpers exposing (expectField)
 
-import Graphqelm.Field as Field exposing (Field)
+import Graphql.Field as Field exposing (Field)
 
 
 expectField : Field (Maybe a) typeLock -> Field a typeLock

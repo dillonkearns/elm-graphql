@@ -1,7 +1,7 @@
-module Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
+module Graphql.Generator.InputObjectFile.Details exposing (InputObjectDetails)
 
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
 type alias InputObjectDetails =

@@ -1,8 +1,8 @@
-module Graphqelm.Document.Field exposing (serializeChildren)
+module Graphql.Document.Field exposing (serializeChildren)
 
-import Graphqelm.Document.Argument as Argument
-import Graphqelm.Document.Indent as Indent
-import Graphqelm.RawField exposing (RawField(Composite, Leaf))
+import Graphql.Document.Argument as Argument
+import Graphql.Document.Indent as Indent
+import Graphql.RawField exposing (RawField(Composite, Leaf))
 import List.Extra
 
 
@@ -10,13 +10,13 @@ alias : Int -> List RawField -> RawField -> Maybe String
 alias fieldIndex fields field =
     let
         fieldName =
-            Graphqelm.RawField.name field
+            Graphql.RawField.name field
 
         indices =
             fields
                 |> List.Extra.findIndices
                     (\currentField ->
-                        Graphqelm.RawField.name currentField
+                        Graphql.RawField.name currentField
                             == fieldName
                     )
                 |> List.filter (\index -> index < fieldIndex)

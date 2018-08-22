@@ -1,4 +1,4 @@
-module Graphqelm.Generator.AnnotatedArg exposing (build, buildWithArgs, prepend, toString)
+module Graphql.Generator.AnnotatedArg exposing (build, buildWithArgs, prepend, toString)
 
 import String.Interpolate exposing (interpolate)
 

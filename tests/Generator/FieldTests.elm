@@ -2,12 +2,12 @@ module Generator.FieldTests exposing (all)
 
 import Dict
 import Expect
-import Graphqelm.Generator.Context as Context exposing (Context)
-import Graphqelm.Generator.Field as Field
-import Graphqelm.Parser.CamelCaseName as CamelCaseName
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphql.Generator.Context as Context exposing (Context)
+import Graphql.Generator.Field as Field
+import Graphql.Parser.CamelCaseName as CamelCaseName
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Scalar as Scalar exposing (Scalar)
+import Graphql.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 

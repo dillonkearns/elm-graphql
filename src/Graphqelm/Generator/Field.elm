@@ -1,16 +1,16 @@
-module Graphqelm.Generator.Field exposing (generateForInterface, generateForObject)
+module Graphql.Generator.Field exposing (generateForInterface, generateForObject)
 
-import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Generator.Decoder
-import Graphqelm.Generator.DocComment as DocComment
-import Graphqelm.Generator.Let as Let exposing (LetBinding)
-import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Generator.OptionalArgs
-import Graphqelm.Generator.ReferenceLeaf as ReferenceLeaf
-import Graphqelm.Generator.RequiredArgs
-import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeReference)
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Decoder
+import Graphql.Generator.DocComment as DocComment
+import Graphql.Generator.Let as Let exposing (LetBinding)
+import Graphql.Generator.ModuleName as ModuleName
+import Graphql.Generator.OptionalArgs
+import Graphql.Generator.ReferenceLeaf as ReferenceLeaf
+import Graphql.Generator.RequiredArgs
+import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type as Type exposing (TypeReference)
 import String.Interpolate exposing (interpolate)
 import String.Extra
 
@@ -132,7 +132,7 @@ toFieldGenerator ({ apiSubmodule } as context) field =
 
 addRequiredArgs : Type.Field -> List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
 addRequiredArgs field apiSubmodule args fieldGenerator =
-    case Graphqelm.Generator.RequiredArgs.generate apiSubmodule args of
+    case Graphql.Generator.RequiredArgs.generate apiSubmodule args of
         Just { annotation, list, typeAlias } ->
             { fieldGenerator
                 | fieldArgs = [ list ]
@@ -154,7 +154,7 @@ addRequiredArgs field apiSubmodule args fieldGenerator =
 
 addOptionalArgs : Type.Field -> List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
 addOptionalArgs field apiSubmodule args fieldGenerator =
-    case Graphqelm.Generator.OptionalArgs.generate apiSubmodule args of
+    case Graphql.Generator.OptionalArgs.generate apiSubmodule args of
         Just { annotatedArg, letBindings, typeAlias } ->
             { fieldGenerator
                 | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
@@ -205,13 +205,13 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
     in
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
+    , decoderAnnotation = Graphql.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder = "object"
     , otherThing = ".selectionField"
     , letBindings = []
     , objectDecoderChain =
         " ("
-            ++ (Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
+            ++ (Graphql.Generator.Decoder.generateDecoder apiSubmodule typeRef
                     |> String.join " >> "
                )
             ++ ")"
@@ -285,9 +285,9 @@ initScalarField : List String -> TypeReference -> FieldGenerator
 initScalarField apiSubmodule typeRef =
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphqelm.Generator.Decoder.generateType apiSubmodule typeRef
+    , decoderAnnotation = Graphql.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder =
-        Graphqelm.Generator.Decoder.generateDecoder apiSubmodule typeRef
+        Graphql.Generator.Decoder.generateDecoder apiSubmodule typeRef
             |> String.join " |> "
     , otherThing = ".fieldDecoder"
     , letBindings = []

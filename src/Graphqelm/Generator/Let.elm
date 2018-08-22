@@ -1,4 +1,4 @@
-module Graphqelm.Generator.Let exposing (LetBinding, generate)
+module Graphql.Generator.Let exposing (LetBinding, generate)
 
 import String.Interpolate exposing (interpolate)
 

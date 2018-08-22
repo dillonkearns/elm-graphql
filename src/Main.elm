@@ -1,6 +1,6 @@
 port module Main exposing (main)
 
-import Graphqelm.Parser
+import Graphql.Parser
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
@@ -27,7 +27,7 @@ type alias Flags =
 
 init : Flags -> ( Model, Cmd Never )
 init flags =
-    case Decode.decodeValue (Graphqelm.Parser.decoder flags.baseModule) flags.data of
+    case Decode.decodeValue (Graphql.Parser.decoder flags.baseModule) flags.data of
         Ok fields ->
             ( ()
             , fields

@@ -1,7 +1,7 @@
-module Graphqelm.Generator.Context exposing (Context, context)
+module Graphql.Generator.Context exposing (Context, context)
 
 import Dict exposing (Dict)
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 
 
 context :

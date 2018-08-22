@@ -1,13 +1,13 @@
-module Graphqelm.Generator.InputObjectFile.Constructor exposing (generate)
+module Graphql.Generator.InputObjectFile.Constructor exposing (generate)
 
-import Graphqelm.Generator.AnnotatedArg as AnnotatedArg
-import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Generator.Decoder as Decoder
-import Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
-import Graphqelm.Generator.Let as Let
-import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphql.Generator.AnnotatedArg as AnnotatedArg
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Decoder as Decoder
+import Graphql.Generator.InputObjectFile.Details exposing (InputObjectDetails)
+import Graphql.Generator.Let as Let
+import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import String.Interpolate exposing (interpolate)
 
 

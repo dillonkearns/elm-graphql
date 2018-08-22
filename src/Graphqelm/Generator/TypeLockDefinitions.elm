@@ -1,7 +1,7 @@
-module Graphqelm.Generator.TypeLockDefinitions exposing (generate)
+module Graphql.Generator.TypeLockDefinitions exposing (generate)
 
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import String.Interpolate exposing (interpolate)
 
 

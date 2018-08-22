@@ -1,6 +1,6 @@
-module Graphqelm.Generator.ReferenceLeaf exposing (ReferenceLeaf(..), get)
+module Graphql.Generator.ReferenceLeaf exposing (ReferenceLeaf(..), get)
 
-import Graphqelm.Parser.Type as Type exposing (TypeReference(TypeReference))
+import Graphql.Parser.Type as Type exposing (TypeReference(TypeReference))
 
 
 type ReferenceLeaf

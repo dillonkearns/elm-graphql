@@ -1,9 +1,9 @@
-module Graphqelm.Http.QueryHelper exposing (HttpMethod(..), build)
+module Graphql.Http.QueryHelper exposing (HttpMethod(..), build)
 
-import Graphqelm.Document as Document
-import Graphqelm.Http.QueryParams as QueryParams
-import Graphqelm.Operation exposing (RootMutation, RootQuery)
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet)
+import Graphql.Document as Document
+import Graphql.Http.QueryParams as QueryParams
+import Graphql.Operation exposing (RootMutation, RootQuery)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Http
 import Json.Encode
 

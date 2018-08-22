@@ -1,6 +1,6 @@
-module Graphqelm.Document exposing (decoder, serializeMutation, serializeQuery, serializeQueryForUrl, serializeSubscription)
+module Graphql.Document exposing (decoder, serializeMutation, serializeQuery, serializeQueryForUrl, serializeSubscription)
 
-{-| You'll usually want to use `Graphqelm.Http` to perform your queries directly.
+{-| You'll usually want to use `Graphql.Http` to perform your queries directly.
 This package provides low-level functions for generating GraphQL documents that
 are helpful for debugging and demo purposes.
 
@@ -8,10 +8,10 @@ are helpful for debugging and demo purposes.
 
 -}
 
-import Graphqelm.Document.Field as Field
-import Graphqelm.Operation exposing (RootMutation, RootQuery, RootSubscription)
-import Graphqelm.RawField exposing (RawField)
-import Graphqelm.SelectionSet exposing (SelectionSet(SelectionSet))
+import Graphql.Document.Field as Field
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
+import Graphql.RawField exposing (RawField)
+import Graphql.SelectionSet exposing (SelectionSet(SelectionSet))
 import String.Interpolate exposing (interpolate)
 import Json.Decode as Decode exposing (Decoder)
 
@@ -46,7 +46,7 @@ serializeSubscription (SelectionSet fields decoder) =
 
 
 {-| Decoder a response from the server. This low-level function shouldn't be needed
-in the majority of cases. Instead, the high-level functions in `Graphqelm.Http`
+in the majority of cases. Instead, the high-level functions in `Graphql.Http`
 should be used.
 -}
 decoder : SelectionSet decodesTo typeLock -> Decoder decodesTo

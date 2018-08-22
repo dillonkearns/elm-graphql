@@ -1,6 +1,6 @@
-module Graphqelm.Parser.CamelCaseName exposing (CamelCaseName, build, normalized, raw)
+module Graphql.Parser.CamelCaseName exposing (CamelCaseName, build, normalized, raw)
 
-import Graphqelm.Generator.Normalize as Normalize
+import Graphql.Generator.Normalize as Normalize
 
 
 type CamelCaseName

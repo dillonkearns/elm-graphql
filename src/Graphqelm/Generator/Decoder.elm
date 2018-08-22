@@ -1,9 +1,9 @@
-module Graphqelm.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject)
+module Graphql.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject)
 
-import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
-import Graphqelm.Parser.Scalar as Scalar
-import Graphqelm.Parser.Type as Type exposing (TypeReference)
+import Graphql.Generator.ModuleName as ModuleName
+import Graphql.Parser.ClassCaseName as ClassCaseName
+import Graphql.Parser.Scalar as Scalar
+import Graphql.Parser.Type as Type exposing (TypeReference)
 import String.Interpolate exposing (interpolate)
 
 

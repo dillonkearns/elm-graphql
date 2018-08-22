@@ -1,6 +1,6 @@
-module Graphqelm.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionField, unionSelection)
+module Graphql.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionField, unionSelection)
 
-{-| **WARNING** `Graphqelm.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
+{-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
@@ -9,10 +9,10 @@ Internal functions for use by auto-generated code from the `@dillonkearns/elm-gr
 -}
 
 import Dict
-import Graphqelm.Field as Field exposing (Field(Field))
-import Graphqelm.Internal.Builder.Argument exposing (Argument)
-import Graphqelm.RawField exposing (RawField)
-import Graphqelm.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(..))
+import Graphql.Field as Field exposing (Field(Field))
+import Graphql.Internal.Builder.Argument exposing (Argument)
+import Graphql.RawField exposing (RawField)
+import Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -37,12 +37,12 @@ selectionField fieldName args (SelectionSet fields decoder) decoderTransform =
 
 composite : String -> List Argument -> List RawField -> RawField
 composite fieldName args fields =
-    Graphqelm.RawField.Composite fieldName args fields
+    Graphql.RawField.Composite fieldName args fields
 
 
 leaf : String -> List Argument -> RawField
 leaf fieldName args =
-    Graphqelm.RawField.Leaf fieldName args
+    Graphql.RawField.Leaf fieldName args
 
 
 {-| Used to create the `selection` functions in auto-generated code.

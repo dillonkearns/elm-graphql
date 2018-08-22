@@ -1,4 +1,4 @@
-module Graphqelm.Subscription.Protocol exposing (Protocol, Response(..), phoenixAbsinthe, rails)
+module Graphql.Subscription.Protocol exposing (Protocol, Response(..), phoenixAbsinthe, rails)
 
 {-| You will need a Protocol data structure that fills in the low-level details about
 your server's GraphQL Subscription protocol. Ideally these will be published here,
@@ -18,7 +18,7 @@ The low-level details of how to initiate a connection and check that it was succ
 very different between GraphQL server implementations. Here is an example for the Absinthe framework
 for Elixir/Phoenix:
 
-        frameworkKnowledge : Graphqelm.Subscription.Protocol subscriptionDecodesTo
+        frameworkKnowledge : Graphql.Subscription.Protocol subscriptionDecodesTo
         frameworkKnowledge =
         { initMessage =
         Encode.list

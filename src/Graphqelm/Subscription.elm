@@ -1,4 +1,4 @@
-module Graphqelm.Subscription
+module Graphql.Subscription
     exposing
         ( Model
         , Msg
@@ -17,10 +17,10 @@ and may change rapidly or have issues that make it not ready for production code
 
 -}
 
-import Graphqelm.Document
-import Graphqelm.Operation exposing (RootSubscription)
-import Graphqelm.SelectionSet exposing (SelectionSet)
-import Graphqelm.Subscription.Protocol as Protocol exposing (Protocol)
+import Graphql.Document
+import Graphql.Operation exposing (RootSubscription)
+import Graphql.SelectionSet exposing (SelectionSet)
+import Graphql.Subscription.Protocol as Protocol exposing (Protocol)
 import Json.Decode
 import Json.Encode as Encode
 import Task
@@ -32,21 +32,21 @@ import WebSocket
 in your program's `update`.
 
     type Msg
-        = GraphqlSubscriptionMsg (Graphqelm.Subscription.Msg ChatMessage)
+        = GraphqlSubscriptionMsg (Graphql.Subscription.Msg ChatMessage)
         | SubscriptionDataReceived ChatMessage
 
     update : Msg -> Model -> ( Model, Cmd Msg )
     update msg model =
         case msg of
             GraphqlSubscriptionMsg graphqlSubscriptionMsg ->
-                Graphqelm.Subscription.update graphqlSubscriptionMsg model
+                Graphql.Subscription.update graphqlSubscriptionMsg model
 
             SubscriptionDataReceived newData ->
                 ( { model | data = newData :: model.data }, Cmd.none )
 
     subscriptions : Model -> Sub Msg
     subscriptions model =
-        Graphqelm.Subscription.subscription model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl document
+        Graphql.Subscription.subscription model.graphqlSubscriptionModel GraphqlSubscriptionMsg socketUrl document
 
 -}
 type Msg a
@@ -81,17 +81,17 @@ TODO: should it always be queued? Or should it optionally be queued?
 -}
 sendMutation :
     Model msg decodesTo
-    -> SelectionSet mutationDecodesTo Graphqelm.Operation.RootMutation
+    -> SelectionSet mutationDecodesTo Graphql.Operation.RootMutation
     -> Cmd msg
 sendMutation (Model model) mutationDocument =
     let
         documentRequest =
             model.protocol.documentRequest model.referenceId >> Encode.encode 0
     in
-    WebSocket.send model.socketUrl (documentRequest (Graphqelm.Document.serializeMutation mutationDocument))
+    WebSocket.send model.socketUrl (documentRequest (Graphql.Document.serializeMutation mutationDocument))
 
 
-{-| Initialize a Subscription. You will need a `Graphqelm.Subscription.Protocol`
+{-| Initialize a Subscription. You will need a `Graphql.Subscription.Protocol`
 data structure (the `Protocol` module contains `Protocol`s for some
 GraphQL server implementations).
 -}
@@ -116,13 +116,13 @@ init protocol socketUrl subscriptionDocument onData =
     init =
         let
             ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-                Graphqelm.Subscription.init protocol socketUrl subscriptionDocument SubscriptionDataReceived
+                Graphql.Subscription.init protocol socketUrl subscriptionDocument SubscriptionDataReceived
         in
         ( { data = []
-          , subscriptionStatus = Graphqelm.Subscription.Uninitialized
+          , subscriptionStatus = Graphql.Subscription.Uninitialized
           , graphqlSubscriptionModel =
                 graphqlSubscriptionModel
-                    |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
+                    |> Graphql.Subscription.onStatusChanged SubscriptionStatusChanged
           }
         , graphqlSubscriptionCmd
         )
@@ -147,7 +147,7 @@ listen toMsg graphqlSubscriptionModel =
                     (Debug.log "raw response"
                         >> Json.Decode.decodeString
                             (model.protocol.subscriptionDecoder
-                                (Graphqelm.Document.decoder model.subscriptionDocument)
+                                (Graphql.Document.decoder model.subscriptionDocument)
                             )
                         >> ResponseReceived
                     )
@@ -186,7 +186,7 @@ update msg graphqlSubscriptionModel =
                                 ( graphqlSubscriptionModel |> incrementRefId
                                 , WebSocket.send
                                     model.socketUrl
-                                    (documentRequest (Graphqelm.Document.serializeSubscription model.subscriptionDocument))
+                                    (documentRequest (Graphql.Document.serializeSubscription model.subscriptionDocument))
                                 )
                                     |> setStatus Connected
                             else

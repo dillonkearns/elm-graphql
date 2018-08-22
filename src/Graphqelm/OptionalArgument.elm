@@ -1,4 +1,4 @@
-module Graphqelm.OptionalArgument exposing (OptionalArgument(..), fromMaybe)
+module Graphql.OptionalArgument exposing (OptionalArgument(..), fromMaybe)
 
 {-|
 
@@ -12,9 +12,9 @@ module Graphqelm.OptionalArgument exposing (OptionalArgument(..), fromMaybe)
 
       import Api.Enum.Episode as Episode exposing (Episode)
       import Api.Query as Query
-      import Graphqelm.Operation exposing (RootQuery)
-      import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
-      import Graphqelm.SelectionSet exposing (SelectionSet, with)
+      import Graphql.Operation exposing (RootQuery)
+      import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
+      import Graphql.SelectionSet exposing (SelectionSet, with)
 
 
       query : SelectionSet Response RootQuery

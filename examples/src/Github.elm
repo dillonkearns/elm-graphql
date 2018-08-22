@@ -9,12 +9,12 @@ import Github.Object.StargazerConnection
 import Github.Object.Topic
 import Github.Query as Query
 import Github.Scalar exposing (Date)
-import Graphqelm.Document as Document
-import Graphqelm.Field as Field
-import Graphqelm.Http
-import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
-import Graphqelm.SelectionSet exposing (SelectionSet, with)
+import Graphql.Document as Document
+import Graphql.Field as Field
+import Graphql.Http
+import Graphql.Operation exposing (RootQuery)
+import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
+import Graphql.SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -99,9 +99,9 @@ release =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
-        |> Graphqelm.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.queryRequest "https://api.github.com/graphql"
+        |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
+        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
@@ -109,7 +109,7 @@ type Msg
 
 
 type alias Model =
-    RemoteData (Graphqelm.Http.Error Response) Response
+    RemoteData (Graphql.Http.Error Response) Response
 
 
 init : ( Model, Cmd Msg )

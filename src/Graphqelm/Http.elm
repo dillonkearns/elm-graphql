@@ -1,4 +1,4 @@
-module Graphqelm.Http exposing (Error(..), QueryRequestMethod(..), Request, ignoreParsedErrorData, mapError, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
+module GraphQL.Http exposing (Error(..), QueryRequestMethod(..), Request, ignoreParsedErrorData, mapError, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples)
@@ -34,12 +34,12 @@ The builder syntax is inspired by Luke Westby's
 
 -}
 
-import Graphqelm.Document as Document
-import Graphqelm.Http.GraphqlError as GraphqlError
-import Graphqelm.Http.QueryHelper as QueryHelper
-import Graphqelm.Http.QueryParams as QueryParams
-import Graphqelm.Operation exposing (RootMutation, RootQuery)
-import Graphqelm.SelectionSet exposing (SelectionSet)
+import GraphQL.Document as Document
+import GraphQL.Http.GraphqlError as GraphqlError
+import GraphQL.Http.QueryHelper as QueryHelper
+import GraphQL.Http.QueryParams as QueryParams
+import GraphQL.Operation exposing (RootMutation, RootQuery)
+import GraphQL.SelectionSet exposing (SelectionSet)
 import Http
 import Json.Decode
 import Json.Encode
@@ -48,7 +48,7 @@ import Time exposing (Time)
 
 
 {-| An internal request as it's built up. Once it's built up, send the
-request with `Graphqelm.Http.send`.
+request with `GraphQL.Http.send`.
 -}
 type Request decodesTo
     = Request
@@ -76,7 +76,7 @@ type Details decodesTo
 
 
 {-| Initialize a basic request from a Query. You can add on options with `withHeader`,
-`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
+`withTimeout`, `withCredentials`, and send it with `GraphQL.Http.send`.
 -}
 queryRequest : String -> SelectionSet decodesTo RootQuery -> Request decodesTo
 queryRequest baseUrl query =
@@ -122,7 +122,7 @@ queryRequestWithHttpGet baseUrl requestMethod query =
 
 
 {-| Initialize a basic request from a Mutation. You can add on options with `withHeader`,
-`withTimeout`, `withCredentials`, and send it with `Graphqelm.Http.send`.
+`withTimeout`, `withCredentials`, and send it with `GraphQL.Http.send`.
 -}
 mutationRequest : String -> SelectionSet decodesTo RootMutation -> Request decodesTo
 mutationRequest baseUrl mutationSelectionSet =
@@ -138,7 +138,7 @@ mutationRequest baseUrl mutationSelectionSet =
 
 
 {-| Represents the two types of errors you can get, an Http error or a GraphQL error.
-See the `Graphqelm.Http.GraphqlError` module docs for more details.
+See the `GraphQL.Http.GraphqlError` module docs for more details.
 -}
 type Error parsedData
     = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
@@ -189,26 +189,26 @@ convertResult httpResult =
             Err (HttpError httpError)
 
 
-{-| Send the `Graphqelm.Request`
+{-| Send the `GraphQL.Request`
 You can use it on its own, or with a library like
 [RemoteData](http://package.elm-lang.org/packages/krisajenkins/remotedata/latest/).
 
-    import Graphqelm.Http
-    import Graphqelm.OptionalArgument exposing (OptionalArgument(Null, Present))
+    import GraphQL.Http
+    import GraphQL.OptionalArgument exposing (OptionalArgument(Null, Present))
     import RemoteData exposing (RemoteData)
 
     type Msg
-        = GotResponse RemoteData (Graphqelm.Http.Error Response) Response
+        = GotResponse RemoteData (GraphQL.Http.Error Response) Response
 
     makeRequest : Cmd Msg
     makeRequest =
         query
-            |> Graphqelm.Http.queryRequest "https://graphqelm.herokuapp.com/"
-            |> Graphqelm.Http.withHeader "authorization" "Bearer abcdefgh12345678"
+            |> GraphQL.Http.queryRequest "https://graphqelm.herokuapp.com/"
+            |> GraphQL.Http.withHeader "authorization" "Bearer abcdefgh12345678"
             -- If you're not using remote data, it's just
-            -- |> Graphqelm.Http.send GotResponse
+            -- |> GraphQL.Http.send GotResponse
             -- With remote data, it's as below
-            |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+            |> GraphQL.Http.send (RemoteData.fromResult >> GotResponse)
 
 If any errors are present, you will get a `GraphqlError` that includes the details.
 GraphQL allows for partial data to be returned in the case of errors so you can
@@ -279,7 +279,7 @@ toRequest (Request request) =
         |> Http.request
 
 
-{-| Convert a Request to a Task. See `Graphqelm.Http.send` for an example of
+{-| Convert a Request to a Task. See `GraphQL.Http.send` for an example of
 how to build up a Request.
 -}
 toTask : Request decodesTo -> Task (Error decodesTo) decodesTo
@@ -327,9 +327,9 @@ decodeErrorWithData data =
     makeRequest : Cmd Msg
     makeRequest =
         query
-            |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
-            |> Graphqelm.Http.withHeader "authorization" "Bearer <my token>"
-            |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+            |> GraphQL.Http.queryRequest "https://api.github.com/graphql"
+            |> GraphQL.Http.withHeader "authorization" "Bearer <my token>"
+            |> GraphQL.Http.send (RemoteData.fromResult >> GotResponse)
 
 -}
 withHeader : String -> String -> Request decodesTo -> Request decodesTo
@@ -342,9 +342,9 @@ withHeader key value (Request request) =
     makeRequest : Cmd Msg
     makeRequest =
         query
-            |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
-            |> Graphqelm.Http.withQueryParams [ ( "version", "1.2.3" ) ]
-            |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+            |> GraphQL.Http.queryRequest "https://api.github.com/graphql"
+            |> GraphQL.Http.withQueryParams [ ( "version", "1.2.3" ) ]
+            |> GraphQL.Http.send (RemoteData.fromResult >> GotResponse)
 
 -}
 withQueryParams : List ( String, String ) -> Request decodesTo -> Request decodesTo

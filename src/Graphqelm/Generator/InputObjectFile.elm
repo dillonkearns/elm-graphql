@@ -1,14 +1,14 @@
-module Graphqelm.Generator.InputObjectFile exposing (generate)
+module Graphql.Generator.InputObjectFile exposing (generate)
 
-import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Generator.Decoder as Decoder
-import Graphqelm.Generator.Imports as Imports
-import Graphqelm.Generator.InputObjectFile.Constructor as Constructor
-import Graphqelm.Generator.InputObjectFile.Details exposing (InputObjectDetails)
-import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
-import Graphqelm.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Decoder as Decoder
+import Graphql.Generator.Imports as Imports
+import Graphql.Generator.InputObjectFile.Constructor as Constructor
+import Graphql.Generator.InputObjectFile.Details exposing (InputObjectDetails)
+import Graphql.Generator.InputObjectLoops as InputObjectLoops
+import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 import String.Interpolate exposing (interpolate)
 
 
@@ -169,17 +169,17 @@ encoderFunction { apiSubmodule } field =
 
 generateImports : Context -> List Type.Field -> String
 generateImports ({ apiSubmodule } as context) fields =
-    interpolate """import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)
-import Graphqelm.Field as Field exposing (Field)
-import Graphqelm.Internal.Builder.Object as Object
-import Graphqelm.SelectionSet exposing (SelectionSet)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent))
+    interpolate """import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
+import Graphql.Field as Field exposing (Field)
+import Graphql.Internal.Builder.Object as Object
+import Graphql.SelectionSet exposing (SelectionSet)
+import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
 import {1}.Object
 import {1}.Interface
 import {1}.Union
 import {1}.Scalar
 import Json.Decode as Decode
-import Graphqelm.Internal.Encode as Encode exposing (Value)
+import Graphql.Internal.Encode as Encode exposing (Value)
 {0}
 """
         [ Imports.importsString apiSubmodule (moduleName context) fields

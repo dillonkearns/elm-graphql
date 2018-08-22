@@ -2,9 +2,9 @@ module Generator.ModuleNameTests exposing (all)
 
 import Dict
 import Expect
-import Graphqelm.Generator.Context as Context
-import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Generator.Context as Context
+import Graphql.Generator.ModuleName as ModuleName
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Test exposing (..)
 
 

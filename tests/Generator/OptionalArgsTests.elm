@@ -1,12 +1,12 @@
 module Generator.OptionalArgsTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.Let exposing (LetBinding)
-import Graphqelm.Generator.OptionalArgs as OptionalArgs
-import Graphqelm.Parser.CamelCaseName as CamelCaseName
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
-import Graphqelm.Parser.Scalar as Scalar
-import Graphqelm.Parser.Type as Type
+import Graphql.Generator.Let exposing (LetBinding)
+import Graphql.Generator.OptionalArgs as OptionalArgs
+import Graphql.Parser.CamelCaseName as CamelCaseName
+import Graphql.Parser.ClassCaseName as ClassCaseName
+import Graphql.Parser.Scalar as Scalar
+import Graphql.Parser.Type as Type
 import Test exposing (Test, describe, test)
 
 

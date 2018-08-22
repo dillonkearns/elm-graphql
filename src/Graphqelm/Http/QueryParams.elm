@@ -1,4 +1,4 @@
-module Graphqelm.Http.QueryParams exposing (urlWithQueryParams)
+module Graphql.Http.QueryParams exposing (urlWithQueryParams)
 
 import Http
 

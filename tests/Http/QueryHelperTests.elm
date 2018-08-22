@@ -1,11 +1,11 @@
 module Http.QueryHelperTests exposing (all)
 
 import Expect
-import Graphqelm.Document as Document
-import Graphqelm.Http.QueryHelper as QueryHelper
-import Graphqelm.Operation exposing (RootMutation, RootQuery)
-import Graphqelm.RawField exposing (RawField(Composite, Leaf))
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(SelectionSet))
+import Graphql.Document as Document
+import Graphql.Http.QueryHelper as QueryHelper
+import Graphql.Operation exposing (RootMutation, RootQuery)
+import Graphql.RawField exposing (RawField(Composite, Leaf))
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet(SelectionSet))
 import Http
 import Json.Decode as Decode
 import Json.Encode

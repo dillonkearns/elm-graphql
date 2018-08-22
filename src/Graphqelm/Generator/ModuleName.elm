@@ -1,8 +1,8 @@
-module Graphqelm.Generator.ModuleName exposing (enum, enumTypeName, generate, inputObject, interface, mutation, object, query, union)
+module Graphql.Generator.ModuleName exposing (enum, enumTypeName, generate, inputObject, interface, mutation, object, query, union)
 
-import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
 generate : Context -> TypeDefinition -> List String

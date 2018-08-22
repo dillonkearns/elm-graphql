@@ -1,20 +1,20 @@
-module Graphqelm.Generator.Group exposing (IntrospectionData, generateFiles, sortedIntrospectionData)
+module Graphql.Generator.Group exposing (IntrospectionData, generateFiles, sortedIntrospectionData)
 
 import Dict exposing (Dict)
-import Graphqelm.Generator.Context exposing (Context)
-import Graphqelm.Generator.Enum
-import Graphqelm.Generator.InputObjectFile
-import Graphqelm.Generator.Interface
-import Graphqelm.Generator.ModuleName as ModuleName
-import Graphqelm.Generator.Mutation
-import Graphqelm.Generator.Object
-import Graphqelm.Generator.Query
-import Graphqelm.Generator.Scalar as Scalar
-import Graphqelm.Generator.Subscription
-import Graphqelm.Generator.TypeLockDefinitions as TypeLockDefinitions
-import Graphqelm.Generator.Union
-import Graphqelm.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Enum
+import Graphql.Generator.InputObjectFile
+import Graphql.Generator.Interface
+import Graphql.Generator.ModuleName as ModuleName
+import Graphql.Generator.Mutation
+import Graphql.Generator.Object
+import Graphql.Generator.Query
+import Graphql.Generator.Scalar as Scalar
+import Graphql.Generator.Subscription
+import Graphql.Generator.TypeLockDefinitions as TypeLockDefinitions
+import Graphql.Generator.Union
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Type as Type exposing (TypeDefinition(TypeDefinition))
 
 
 type alias IntrospectionData =
@@ -88,7 +88,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
         |> excludeBuiltIns
         |> List.filterMap (toPair context)
         |> List.append typeLockDefinitions
-        |> List.append [ Graphqelm.Generator.InputObjectFile.generate context typeDefinitions ]
+        |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
@@ -146,31 +146,31 @@ toPair context ((Type.TypeDefinition name definableType description) as definiti
     (case definableType of
         Type.ObjectType fields ->
             if name == context.query then
-                Graphqelm.Generator.Query.generate context moduleName fields
+                Graphql.Generator.Query.generate context moduleName fields
                     |> Just
             else if Just name == context.mutation then
-                Graphqelm.Generator.Mutation.generate context moduleName fields
+                Graphql.Generator.Mutation.generate context moduleName fields
                     |> Just
             else if Just name == context.subscription then
-                Graphqelm.Generator.Subscription.generate context moduleName fields
+                Graphql.Generator.Subscription.generate context moduleName fields
                     |> Just
             else
-                Graphqelm.Generator.Object.generate context name moduleName fields
+                Graphql.Generator.Object.generate context name moduleName fields
                     |> Just
 
         Type.ScalarType ->
             Nothing
 
         Type.EnumType enumValues ->
-            Graphqelm.Generator.Enum.generate name moduleName enumValues description
+            Graphql.Generator.Enum.generate name moduleName enumValues description
                 |> Just
 
         Type.InterfaceType fields possibleTypes ->
-            Graphqelm.Generator.Interface.generate context (ClassCaseName.raw name) moduleName fields
+            Graphql.Generator.Interface.generate context (ClassCaseName.raw name) moduleName fields
                 |> Just
 
         Type.UnionType possibleTypes ->
-            Graphqelm.Generator.Union.generate context name moduleName possibleTypes
+            Graphql.Generator.Union.generate context name moduleName possibleTypes
                 |> Just
 
         Type.InputObjectType fields ->

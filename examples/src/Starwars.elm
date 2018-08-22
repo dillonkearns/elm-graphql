@@ -1,11 +1,11 @@
 module Starwars exposing (main)
 
-import Graphqelm.Document as Document
-import Graphqelm.Field as Field
-import Graphqelm.Http
-import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.Document as Document
+import Graphql.Field as Field
+import Graphql.Http
+import Graphql.Operation exposing (RootQuery)
+import Graphql.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -123,8 +123,8 @@ episodeYear episode =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphqelm.Http.queryRequest "https://graphqelm.herokuapp.com"
-        |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.queryRequest "https://graphqelm.herokuapp.com"
+        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
@@ -132,7 +132,7 @@ type Msg
 
 
 type alias Model =
-    RemoteData (Graphqelm.Http.Error Response) Response
+    RemoteData (Graphql.Http.Error Response) Response
 
 
 init : ( Model, Cmd Msg )

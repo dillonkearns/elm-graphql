@@ -1,8 +1,8 @@
-module Graphqelm.Parser exposing (decoder)
+module Graphql.Parser exposing (decoder)
 
 import Dict exposing (Dict)
-import Graphqelm.Generator.Group exposing (IntrospectionData, sortedIntrospectionData)
-import Graphqelm.Parser.Type as Type
+import Graphql.Generator.Group exposing (IntrospectionData, sortedIntrospectionData)
+import Graphql.Parser.Type as Type
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -16,4 +16,4 @@ decoder baseModule =
         (Decode.at [ "__schema", "queryType", "name" ] Decode.string)
         (Decode.maybe (Decode.at [ "__schema", "mutationType", "name" ] Decode.string))
         (Decode.maybe (Decode.at [ "__schema", "subscriptionType", "name" ] Decode.string))
-        |> Decode.map (Graphqelm.Generator.Group.generateFiles baseModule)
+        |> Decode.map (Graphql.Generator.Group.generateFiles baseModule)

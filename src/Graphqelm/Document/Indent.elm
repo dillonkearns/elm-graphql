@@ -1,4 +1,4 @@
-module Graphqelm.Document.Indent exposing (generate)
+module Graphql.Document.Indent exposing (generate)
 
 
 generate : Int -> String
