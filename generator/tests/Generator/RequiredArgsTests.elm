@@ -1,10 +1,10 @@
 module Generator.RequiredArgsTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.RequiredArgs as RequiredArgs
-import Graphqelm.Parser.CamelCaseName as CamelCaseName
-import Graphqelm.Parser.Scalar as Scalar
-import Graphqelm.Parser.Type as Type
+import Graphql.Generator.RequiredArgs as RequiredArgs
+import Graphql.Parser.CamelCaseName as CamelCaseName
+import Graphql.Parser.Scalar as Scalar
+import Graphql.Parser.Type as Type
 import Test exposing (Test, describe, test)
 
 

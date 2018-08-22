@@ -1,10 +1,10 @@
 module DocumentTests exposing (all)
 
 import Expect
-import Graphqelm.Document
-import Graphqelm.Operation exposing (RootMutation, RootQuery)
-import Graphqelm.RawField exposing (RawField(..))
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet(..))
+import Graphql.Document
+import Graphql.Operation exposing (RootMutation, RootQuery)
+import Graphql.RawField exposing (RawField(..))
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet(..))
 import Json.Decode as Decode
 import Test exposing (Test, describe, test)
 
@@ -20,14 +20,14 @@ all =
         [ test "single leaf" <|
             \() ->
                 document [ Leaf "viewer" [] ]
-                    |> Graphqelm.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   viewer
 }"""
         , test "single leaf for GET serializer" <|
             \() ->
                 document [ Leaf "viewer" [] ]
-                    |> Graphqelm.Document.serializeQueryForUrl
+                    |> Graphql.Document.serializeQueryForUrl
                     |> Expect.equal """{viewer}"""
         , test "duplicate nested fields for GET serializer" <|
             \() ->
@@ -38,12 +38,12 @@ all =
                         , Leaf "viewer" []
                         ]
                     ]
-                    |> Graphqelm.Document.serializeQueryForUrl
+                    |> Graphql.Document.serializeQueryForUrl
                     |> Expect.equal "{topLevel{viewer viewer2:viewer}}"
         , test "multiple top-level" <|
             \() ->
                 document [ Leaf "viewer" [], Leaf "labels" [] ]
-                    |> Graphqelm.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   viewer
   labels
@@ -54,7 +54,7 @@ all =
                     [ Leaf "viewer" []
                     , Leaf "viewer" []
                     ]
-                    |> Graphqelm.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   viewer
   viewer2: viewer
@@ -68,7 +68,7 @@ all =
                         , Leaf "viewer" []
                         ]
                     ]
-                    |> Graphqelm.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   topLevel {
     viewer
@@ -83,7 +83,7 @@ all =
                         [ Composite "...on Droid" [] []
                         ]
                     ]
-                    |> Graphqelm.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   topLevel {
 

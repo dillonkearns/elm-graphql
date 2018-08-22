@@ -1,9 +1,9 @@
 module Subscription exposing (main)
 
-import Graphqelm.Operation exposing (RootSubscription)
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, with)
-import Graphqelm.Subscription
-import Graphqelm.Subscription.Protocol as Protocol
+import Graphql.Operation exposing (RootSubscription)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+import Graphql.Subscription
+import Graphql.Subscription.Protocol as Protocol
 import Html exposing (Html, button, div, fieldset, h1, img, input, label, li, p, pre, text, ul)
 import Html.Attributes exposing (name, src, style, type_)
 import Html.Events exposing (onClick)
@@ -17,7 +17,7 @@ import Swapi.Scalar
 import Swapi.Subscription as Subscription
 
 
-sendChatMessage : String -> Phrase -> SelectionSet (Maybe ()) Graphqelm.Operation.RootMutation
+sendChatMessage : String -> Phrase -> SelectionSet (Maybe ()) Graphql.Operation.RootMutation
 sendChatMessage characterId phrase =
     Mutation.selection identity
         |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty)
@@ -57,17 +57,17 @@ characterSelection =
 
 type alias Model =
     { data : List ChatMessage
-    , subscriptionStatus : Graphqelm.Subscription.Status
-    , graphqlSubscriptionModel : Graphqelm.Subscription.Model Msg ChatMessage
+    , subscriptionStatus : Graphql.Subscription.Status
+    , graphqlSubscriptionModel : Graphql.Subscription.Model Msg ChatMessage
     , characterId : String
     }
 
 
 type Msg
     = SendMessage Phrase
-    | GraphqlSubscriptionMsg (Graphqelm.Subscription.Msg ChatMessage)
+    | GraphqlSubscriptionMsg (Graphql.Subscription.Msg ChatMessage)
     | SubscriptionDataReceived ChatMessage
-    | SubscriptionStatusChanged Graphqelm.Subscription.Status
+    | SubscriptionStatusChanged Graphql.Subscription.Status
     | ChangeCharacter String
 
 
@@ -75,13 +75,13 @@ init : ( Model, Cmd Msg )
 init =
     let
         ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-            Graphqelm.Subscription.init Protocol.phoenixAbsinthe socketUrl subscriptionDocument SubscriptionDataReceived
+            Graphql.Subscription.init Protocol.phoenixAbsinthe socketUrl subscriptionDocument SubscriptionDataReceived
     in
     ( { data = []
-      , subscriptionStatus = Graphqelm.Subscription.Uninitialized
+      , subscriptionStatus = Graphql.Subscription.Uninitialized
       , graphqlSubscriptionModel =
             graphqlSubscriptionModel
-                |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
+                |> Graphql.Subscription.onStatusChanged SubscriptionStatusChanged
       , characterId = "1001"
       }
     , graphqlSubscriptionCmd
@@ -199,7 +199,7 @@ phraseToString phrase =
 
 socketUrl : String
 socketUrl =
-    "wss://graphqelm.herokuapp.com/socket/websocket?vsn=2.0.0"
+    "wss://elm-graphql.herokuapp.com/socket/websocket?vsn=2.0.0"
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -208,12 +208,12 @@ update msg model =
         GraphqlSubscriptionMsg graphqlSubscriptionMsg ->
             let
                 ( newModel, cmd ) =
-                    Graphqelm.Subscription.update graphqlSubscriptionMsg model.graphqlSubscriptionModel
+                    Graphql.Subscription.update graphqlSubscriptionMsg model.graphqlSubscriptionModel
             in
             ( { model | graphqlSubscriptionModel = newModel }, cmd )
 
         SendMessage phrase ->
-            ( model, Graphqelm.Subscription.sendMutation model.graphqlSubscriptionModel (sendChatMessage model.characterId phrase) )
+            ( model, Graphql.Subscription.sendMutation model.graphqlSubscriptionModel (sendChatMessage model.characterId phrase) )
 
         SubscriptionDataReceived newData ->
             ( { model | data = newData :: model.data }, Cmd.none )
@@ -227,7 +227,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Graphqelm.Subscription.listen GraphqlSubscriptionMsg model.graphqlSubscriptionModel
+    Graphql.Subscription.listen GraphqlSubscriptionMsg model.graphqlSubscriptionModel
 
 
 main : Program Never Model Msg

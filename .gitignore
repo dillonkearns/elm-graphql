@@ -2,7 +2,7 @@
 build/
 documentation.json
 */elm.js
-*graphqelm-metadata.json
+*elm-graphql-metadata.json
 
 # elm-package generated files
 elm-stuff

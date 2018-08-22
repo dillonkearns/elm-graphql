@@ -2,10 +2,10 @@ module Main exposing (main)
 
 import ElmReposRequest
 import Github.Scalar
-import Graphqelm.Document as Document
-import Graphqelm.Http
-import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.SelectionSet
+import Graphql.Document as Document
+import Graphql.Http
+import Graphql.Operation exposing (RootQuery)
+import Graphql.SelectionSet
 import Html exposing (Html, a, button, div, h1, img, p, pre, text)
 import Html.Attributes exposing (href, src, style, target)
 import Html.Events exposing (onClick)
@@ -16,18 +16,18 @@ import RemoteData exposing (RemoteData)
 makeRequest : ElmReposRequest.SortOrder -> Cmd Msg
 makeRequest sortOrder =
     query sortOrder
-        |> Graphqelm.Http.queryRequest "https://api.github.com/graphql"
-        |> Graphqelm.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.queryRequest "https://api.github.com/graphql"
+        |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
+        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
-    = GotResponse (RemoteData (Graphqelm.Http.Error ElmReposRequest.Response) ElmReposRequest.Response)
+    = GotResponse (RemoteData (Graphql.Http.Error ElmReposRequest.Response) ElmReposRequest.Response)
     | SetSortOrder ElmReposRequest.SortOrder
 
 
 type alias Model =
-    { githubResponse : RemoteData (Graphqelm.Http.Error ElmReposRequest.Response) ElmReposRequest.Response
+    { githubResponse : RemoteData (Graphql.Http.Error ElmReposRequest.Response) ElmReposRequest.Response
     , sortOrder : ElmReposRequest.SortOrder
     }
 
@@ -41,7 +41,7 @@ init =
     )
 
 
-query : ElmReposRequest.SortOrder -> Graphqelm.SelectionSet.SelectionSet ElmReposRequest.Response RootQuery
+query : ElmReposRequest.SortOrder -> Graphql.SelectionSet.SelectionSet ElmReposRequest.Response RootQuery
 query sortOrder =
     ElmReposRequest.query sortOrder
 

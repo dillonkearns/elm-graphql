@@ -1,10 +1,10 @@
 module Generator.DocCommentTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.DocComment as DocComment
-import Graphqelm.Parser.CamelCaseName as CamelCaseName
-import Graphqelm.Parser.Scalar as Scalar exposing (Scalar)
-import Graphqelm.Parser.Type as Type exposing (TypeDefinition, TypeReference)
+import Graphql.Generator.DocComment as DocComment
+import Graphql.Parser.CamelCaseName as CamelCaseName
+import Graphql.Parser.Scalar as Scalar exposing (Scalar)
+import Graphql.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (Test, describe, test)
 
 

@@ -5,18 +5,18 @@
   "license": "BSD-3-Clause",
   "version": "11.2.0",
   "exposed-modules": [
-    "Graphqelm.Operation",
-    "Graphqelm.Http",
-    "Graphqelm.SelectionSet",
-    "Graphqelm.Internal.Encode",
-    "Graphqelm.Document",
-    "Graphqelm.Field",
-    "Graphqelm.Internal.Builder.Argument",
-    "Graphqelm.Internal.Builder.Object",
-    "Graphqelm.OptionalArgument",
-    "Graphqelm.Http.GraphqlError",
-    "Graphqelm.Subscription",
-    "Graphqelm.Subscription.Protocol"
+    "Graphql.Operation",
+    "Graphql.Http",
+    "Graphql.SelectionSet",
+    "Graphql.Internal.Encode",
+    "Graphql.Document",
+    "Graphql.Field",
+    "Graphql.Internal.Builder.Argument",
+    "Graphql.Internal.Builder.Object",
+    "Graphql.OptionalArgument",
+    "Graphql.Http.GraphqlError",
+    "Graphql.Subscription",
+    "Graphql.Subscription.Protocol"
   ],
   "elm-version": "0.19.0 <= v < 0.20.0",
   "dependencies": {
@@ -25,7 +25,7 @@
     "elm/json": "1.0.0 <= v < 2.0.0",
     "elm/time": "1.0.0 <= v < 2.0.0",
     "elm/url": "1.0.0 <= v < 2.0.0",
-    "elm-community/list-extra": "7.0.0 <= v < 9.0.0",
+    "elm-community/list-extra": "8.0.0 <= v < 9.0.0",
     "lukewestby/elm-string-interpolate": "1.0.3 <= v < 2.0.0"
   },
   "test-dependencies": {

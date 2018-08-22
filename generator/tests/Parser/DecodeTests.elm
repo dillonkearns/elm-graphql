@@ -1,10 +1,10 @@
 module Parser.DecodeTests exposing (all)
 
 import Expect
-import Graphqelm.Parser.CamelCaseName as CamelCaseName
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
-import Graphqelm.Parser.Scalar as Scalar
-import Graphqelm.Parser.Type as Type exposing (..)
+import Graphql.Parser.CamelCaseName as CamelCaseName
+import Graphql.Parser.ClassCaseName as ClassCaseName
+import Graphql.Parser.Scalar as Scalar
+import Graphql.Parser.Type as Type exposing (..)
 import Json.Decode as Decode exposing (Decoder)
 import Test exposing (Test, describe, only, test)
 

@@ -1,9 +1,9 @@
 module SimpleMutation exposing (main)
 
-import Graphqelm.Document as Document
-import Graphqelm.Http
-import Graphqelm.Operation exposing (RootMutation)
-import Graphqelm.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.Document as Document
+import Graphql.Http
+import Graphql.Operation exposing (RootMutation)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -24,8 +24,8 @@ mutation =
 makeRequest : Cmd Msg
 makeRequest =
     mutation
-        |> Graphqelm.Http.mutationRequest "https://graphqelm.herokuapp.com"
-        |> Graphqelm.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.mutationRequest "https://elm-graphql.herokuapp.com"
+        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
 type Msg
@@ -33,7 +33,7 @@ type Msg
 
 
 type alias Model =
-    RemoteData (Graphqelm.Http.Error Response) Response
+    RemoteData (Graphql.Http.Error Response) Response
 
 
 init : ( Model, Cmd Msg )

@@ -1,7 +1,7 @@
 module Generator.NormalizeTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.Normalize as Normalize
+import Graphql.Generator.Normalize as Normalize
 import Test exposing (Test, describe, only, test)
 
 

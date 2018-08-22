@@ -1,10 +1,10 @@
 module Generator.InputObjectLoopsTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.InputObjectLoops as InputObjectLoops
-import Graphqelm.Parser.CamelCaseName as CamelCaseName
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
-import Graphqelm.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(..), ReferrableType(..), TypeDefinition(..), TypeReference(..))
+import Graphql.Generator.InputObjectLoops as InputObjectLoops
+import Graphql.Parser.CamelCaseName as CamelCaseName
+import Graphql.Parser.ClassCaseName as ClassCaseName
+import Graphql.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(NonNullable), ReferrableType(InputObjectRef), TypeDefinition(TypeDefinition), TypeReference(TypeReference))
 import Test exposing (Test, describe, only, test)
 
 

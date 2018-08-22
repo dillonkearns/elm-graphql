@@ -13,10 +13,10 @@ import Github.Query as Query
 import Github.Scalar
 import Github.Union
 import Github.Union.SearchResultItem
-import Graphqelm.Field as Field
-import Graphqelm.Operation exposing (RootQuery)
-import Graphqelm.OptionalArgument exposing (OptionalArgument(..))
-import Graphqelm.SelectionSet exposing (SelectionSet, with)
+import Graphql.Field as Field
+import Graphql.Operation exposing (RootQuery)
+import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
+import Graphql.SelectionSet exposing (SelectionSet, with)
 
 
 type alias Response =

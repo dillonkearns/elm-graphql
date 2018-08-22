@@ -3,15 +3,14 @@ module Subscription exposing (main)
 import Api.Object
 import Api.Object.Post
 import Api.Subscription
-import Browser
-import Graphqelm.Operation exposing (RootMutation, RootSubscription)
-import Graphqelm.SelectionSet exposing (with)
-import Graphqelm.Subscription
-import Graphqelm.Subscription.Protocol exposing (Protocol)
+import Graphql.Operation exposing (RootMutation, RootSubscription)
+import Graphql.SelectionSet exposing (with)
+import Graphql.Subscription
+import Graphql.Subscription.Protocol exposing (Protocol)
 import Html exposing (Html, button, div, fieldset, h1, img, input, label, li, p, pre, text, ul)
 
 
-subscriptionDocument : Graphqelm.SelectionSet.SelectionSet Post RootSubscription
+subscriptionDocument : Graphql.SelectionSet.SelectionSet Post RootSubscription
 subscriptionDocument =
     Api.Subscription.selection identity
         |> with (Api.Subscription.postAdded postSelection)
@@ -23,7 +22,7 @@ type alias Post =
     }
 
 
-postSelection : Graphqelm.SelectionSet.SelectionSet Post Api.Object.Post
+postSelection : Graphql.SelectionSet.SelectionSet Post Api.Object.Post
 postSelection =
     Api.Object.Post.selection Post
         |> with Api.Object.Post.title
@@ -31,26 +30,26 @@ postSelection =
 
 
 type alias Model =
-    { graphqlSubscriptionModel : Graphqelm.Subscription.Model Msg Post
+    { graphqlSubscriptionModel : Graphql.Subscription.Model Msg Post
     , data : List Post
     }
 
 
 type Msg
     = SubscriptionDataReceived Post
-    | GraphqlSubscriptionMsg (Graphqelm.Subscription.Msg Post)
+    | GraphqlSubscriptionMsg (Graphql.Subscription.Msg Post)
 
 
 init : ( Model, Cmd Msg )
 init =
     let
         ( graphqlSubscriptionModel, graphqlSubscriptionCmd ) =
-            Graphqelm.Subscription.init Graphqelm.Subscription.Protocol.rails socketUrl subscriptionDocument SubscriptionDataReceived
+            Graphql.Subscription.init Graphql.Subscription.Protocol.rails socketUrl subscriptionDocument SubscriptionDataReceived
     in
     ( { graphqlSubscriptionModel =
             graphqlSubscriptionModel
 
-      -- |> Graphqelm.Subscription.onStatusChanged SubscriptionStatusChanged
+      -- |> Graphql.Subscription.onStatusChanged SubscriptionStatusChanged
       , data = []
       }
     , graphqlSubscriptionCmd
@@ -79,7 +78,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GraphqlSubscriptionMsg graphqlSubscriptionMsg ->
-            Graphqelm.Subscription.update graphqlSubscriptionMsg model
+            Graphql.Subscription.update graphqlSubscriptionMsg model
 
         SubscriptionDataReceived newPost ->
             ( { model | data = newPost :: model.data }, Cmd.none )
@@ -87,7 +86,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Graphqelm.Subscription.listen GraphqlSubscriptionMsg model
+    Graphql.Subscription.listen GraphqlSubscriptionMsg model
 
 
 main : Program () Model Msg

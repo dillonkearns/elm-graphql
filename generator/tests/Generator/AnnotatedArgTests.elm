@@ -1,7 +1,7 @@
 module Generator.AnnotatedArgTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.AnnotatedArg as AnnotatedArg
+import Graphql.Generator.AnnotatedArg as AnnotatedArg
 import Test exposing (Test, describe, test)
 
 

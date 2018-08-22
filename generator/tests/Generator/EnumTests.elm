@@ -1,8 +1,8 @@
 module Generator.EnumTests exposing (all)
 
 import Expect
-import Graphqelm.Generator.Enum as Enum
-import Graphqelm.Parser.ClassCaseName as ClassCaseName
+import Graphql.Generator.Enum as Enum
+import Graphql.Parser.ClassCaseName as ClassCaseName
 import Test exposing (Test, describe, test)
 
 
