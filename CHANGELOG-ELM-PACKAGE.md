@@ -1,7 +1,7 @@
 # Changelog
 
 All notable changes to
-[the `graphqelm` elm package](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest)
+[the `dillonkearns/elm-graphql` elm package](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest)
 will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)

@@ -203,7 +203,7 @@ You can use it on its own, or with a library like
     makeRequest : Cmd Msg
     makeRequest =
         query
-            |> GraphQL.Http.queryRequest "https://graphqelm.herokuapp.com/"
+            |> GraphQL.Http.queryRequest "https://elm-graphql.herokuapp.com/"
             |> GraphQL.Http.withHeader "authorization" "Bearer abcdefgh12345678"
             -- If you're not using remote data, it's just
             -- |> GraphQL.Http.send GotResponse
@@ -217,8 +217,8 @@ any data that made it through in the response.
 
 -}
 send : (Result (Error decodesTo) decodesTo -> msg) -> Request decodesTo -> Cmd msg
-send resultToMessage graphqelmRequest =
-    graphqelmRequest
+send resultToMessage elmGraphqlRequest =
+    elmGraphqlRequest
         |> toRequest
         |> Http.send (convertResult >> resultToMessage)
 

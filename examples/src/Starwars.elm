@@ -123,7 +123,7 @@ episodeYear episode =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphql.Http.queryRequest "https://graphqelm.herokuapp.com"
+        |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

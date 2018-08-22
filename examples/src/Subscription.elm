@@ -204,7 +204,7 @@ phraseToString phrase =
 
 socketUrl : String
 socketUrl =
-    "wss://graphqelm.herokuapp.com/socket/websocket?vsn=2.0.0"
+    "wss://elm-graphql.herokuapp.com/socket/websocket?vsn=2.0.0"
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

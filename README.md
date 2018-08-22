@@ -1,8 +1,8 @@
-<img src="https://cdn.rawgit.com/martimatix/logo-graphqelm/master/logo.svg" alt="graphqelm logo" width="40%" align="right">
+<img src="https://cdn.rawgit.com/martimatix/logo-graphqelm/master/logo.svg" alt="dillonearns/elm-graphql logo" width="40%" align="right">
 
 # dillonkearns/elm-graphql
 
-[![Build Status](https://travis-ci.org/dillonkearns/graphqelm.svg?branch=master)](https://travis-ci.org/dillonkearns/graphqelm)
+[![Build Status](https://travis-ci.org/dillonkearns/elm-graphql.svg?branch=master)](https://travis-ci.org/dillonkearns/elm-graphql)
 
 Why use this package over the other available Elm GraphQL packages? This is the only one that
 generates type-safe code for your entire schema. (It's also the only type-safe
@@ -24,7 +24,7 @@ folder.
 
 ## Overview
 
-`dillonkearns/elm-graphql` is an Elm package and accompanying command-line code generator that creates type-safe Elm code for your GraphQL endpoint. You don't write any decoders for your API with `graphqelm`, instead you simply select which fields you would like, similar to a standard GraphQL query but in Elm. For example, this GraphQL query
+`dillonkearns/elm-graphql` is an Elm package and accompanying command-line code generator that creates type-safe Elm code for your GraphQL endpoint. You don't write any decoders for your API with `dillonkearns/elm-graphql`, instead you simply select which fields you would like, similar to a standard GraphQL query but in Elm. For example, this GraphQL query
 
 ```graphql
 query {
@@ -34,7 +34,7 @@ query {
 }
 ```
 
-would look like this in `graphqelm` (the code in this example that is prefixed with `StarWars` is auto-generated)
+would look like this in `dillonkearns/elm-graphql` (the code in this example that is prefixed with `StarWars` is auto-generated)
 
 ```elm
 import Graphql.Operation exposing (RootQuery)
@@ -69,7 +69,7 @@ GraphQL and Elm are a perfect match because GraphQL is used to enforce the types
 After installing the command line tool and Elm package, running `elm-graphql` just looks like
 
 ```bash
-graphqelm https://graphqelm.herokuapp.com --base Swapi --output examples/src
+elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src
 ```
 
 ## Learning Resources
@@ -86,7 +86,7 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 
 ## Usage
 
-`graphqelm` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `graphqelm`.
+`dillonkearns/elm-graphql` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `dillonkearns/elm-graphql`.
 
 1. Add [the `dillonkearns/elm-graphql` elm package](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest)
    as a dependency in your `elm-package.json`.
@@ -98,8 +98,8 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
    dependency so that everyone on your project is using the same version.
 
    ```shell
-   npm install --save-dev graphqelm
-   # you can now run it locally with the ./node_modules/.bin/graphqelm binary,
+   npm install --save-dev @dillonkearns/elm-graphql
+   # you can now run it locally with the ./node_modules/.bin/elm-graphql binary,
    # or by calling it through an npm script as in this project's package.json
    ```
 
@@ -107,10 +107,10 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 
    ```
    {
-     "name": "star-wars-graphqelm-project",
+     "name": "star-wars-elm-graphql-project",
      "version": "1.0.0",
      "scripts": {
-       "api": "elm-graphql https://graphqelm.herokuapp.com/api --base StarWars"
+       "api": "elm-graphql https://elm-graphql.herokuapp.com/api --base StarWars"
      }
    ```
 
@@ -129,7 +129,7 @@ Thanks for [the reserved words pull request](https://github.com/dillonkearns/elm
 ## Roadmap
 
 All core features are supported. That is, you can build any query or mutation
-with your graphqelm-generated code, and it is guaranteed to be valid according
+with your `dillonkearns/elm-graphql`-generated code, and it is guaranteed to be valid according
 to your server's schema.
 
 I am currently experimenting with subscriptions, checkout

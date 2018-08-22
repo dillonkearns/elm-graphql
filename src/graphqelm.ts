@@ -12,17 +12,17 @@ const npmPackageVersion = require("../package.json").version;
 const elmPackageVersion = require("../elm-package.json").version;
 
 const usage = `Usage:
-  graphqelm url # generate files based on the schema at \`url\` in folder ./src/Api
-  graphqelm url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
-  graphqelm url --output path/to/src # generates code within path/to/src/Api
-  graphqelm url --output path/to/src --base My.Api.Submodule # generates code within path/to/src/My/Api/Submodule
-  graphqelm url --excludeDeprecated # excludes deprecated enums and fields (they are included by default)
+  elm-graphql url # generate files based on the schema at \`url\` in folder ./src/Api
+  elm-graphql url --base My.Api.Submodule # generate files based on the schema at \`url\` in folder ./src/My/Api/Submodule
+  elm-graphql url --output path/to/src # generates code within path/to/src/Api
+  elm-graphql url --output path/to/src --base My.Api.Submodule # generates code within path/to/src/My/Api/Submodule
+  elm-graphql url --excludeDeprecated # excludes deprecated enums and fields (they are included by default)
 
   # Schema file instead of URL
-  graphqelm --introspection-file path/to/introspection-response.json
+  elm-graphql --introspection-file path/to/introspection-response.json
 
-  graphqelm --version # print the current graphqelm version and target elm package version
-  graphqelm url [--header 'headerKey: header value'...] # you can supply multiple header args`;
+  elm-graphql --version # print the current @dillonkearns/elm-graphql version and target elm package version
+  elm-graphql url [--header 'headerKey: header value'...] # you can supply multiple header args`;
 
 function isGenerated(path: string): boolean {
   return (
@@ -55,7 +55,7 @@ const args = minimist(process.argv.slice(2));
 if (args.version) {
   console.log("npm version ", npmPackageVersion);
   console.log(
-    `Targeting elm package dillonkearns/graphqelm@${elmPackageVersion}`
+    `Targeting elm package dillonkearns/elm-graphql@${elmPackageVersion}`
   );
   process.exit(0);
 }

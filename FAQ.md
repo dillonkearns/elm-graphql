@@ -18,7 +18,7 @@ This is very common, if you look at your schema you will probably find that the 
 
 But even though the schema lists the argument as optional (i.e. nullable), it's common to throw a runtime error and say that it's invalid. A common reason for this is that you must pass in "one of the following...", so no individual argument is required, but if you don't provide one it will throw a runtime error. Here's an example from the Github API (you can reporduce it yourself by running this query in [the Github Explorer](https://developer.github.com/v4/explorer/)):
 
-![github optional argument error](https://raw.githubusercontent.com/dillonkearns/graphqelm/master/assets/github-optional-arg-error.png)
+![github optional argument error](https://raw.githubusercontent.com/dillonkearns/elm-graphql/master/assets/github-optional-arg-error.png)
 
 ## Why is the [`OptionalArgument`](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/10.0.0/Graphql-OptionalArgument) union type used instead of `Maybe`?
 
