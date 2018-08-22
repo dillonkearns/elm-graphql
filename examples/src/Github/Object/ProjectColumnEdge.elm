@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ProjectColumnEdge exposing (..)
+module Github.Object.ProjectColumnEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

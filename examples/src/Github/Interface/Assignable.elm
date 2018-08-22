@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Assignable exposing (..)
+module Github.Interface.Assignable exposing (AssigneesOptionalArguments, assignees, commonSelection, onIssue, onPullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

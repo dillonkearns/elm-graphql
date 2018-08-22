@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReleaseAssetEdge exposing (..)
+module Github.Object.ReleaseAssetEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

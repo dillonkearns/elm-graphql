@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.CrossReferencedEvent exposing (..)
+module Github.Object.CrossReferencedEvent exposing (actor, createdAt, id, isCrossRepository, referencedAt, resourcePath, selection, source, target, url, willCloseTarget)
 
 import Github.InputObject
 import Github.Interface

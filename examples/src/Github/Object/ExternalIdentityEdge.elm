@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ExternalIdentityEdge exposing (..)
+module Github.Object.ExternalIdentityEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

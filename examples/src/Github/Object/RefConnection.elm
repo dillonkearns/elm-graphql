@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RefConnection exposing (..)
+module Github.Object.RefConnection exposing (edges, nodes, pageInfo, selection, totalCount)
 
 import Github.InputObject
 import Github.Interface

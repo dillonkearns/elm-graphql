@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.AcceptTopicSuggestionPayload exposing (..)
+module Github.Object.AcceptTopicSuggestionPayload exposing (clientMutationId, selection, topic)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.InputObject exposing (..)
+module Swapi.InputObject exposing (Greeting, GreetingOptionalFields, GreetingOptions, GreetingOptionsOptionalFields, GreetingRequiredFields, buildGreeting, buildGreetingOptions, encodeGreeting, encodeGreetingOptions)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)

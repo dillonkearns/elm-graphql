@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.DeployKey exposing (..)
+module Github.Object.DeployKey exposing (createdAt, id, key, readOnly, selection, title, verified)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.MergedEvent exposing (..)
+module Github.Object.MergedEvent exposing (actor, commit, createdAt, id, mergeRef, mergeRefName, pullRequest, resourcePath, selection, url)
 
 import Github.InputObject
 import Github.Interface

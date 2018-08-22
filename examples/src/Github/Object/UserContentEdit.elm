@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UserContentEdit exposing (..)
+module Github.Object.UserContentEdit exposing (createdAt, editor, id, selection, updatedAt)
 
 import Github.InputObject
 import Github.Interface

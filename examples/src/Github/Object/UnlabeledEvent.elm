@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UnlabeledEvent exposing (..)
+module Github.Object.UnlabeledEvent exposing (actor, createdAt, id, label, labelable, selection)
 
 import Github.InputObject
 import Github.Interface

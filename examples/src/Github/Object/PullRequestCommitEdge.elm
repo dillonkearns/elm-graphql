@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PullRequestCommitEdge exposing (..)
+module Github.Object.PullRequestCommitEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

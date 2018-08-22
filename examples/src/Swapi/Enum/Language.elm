@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Enum.Language exposing (..)
+module Swapi.Enum.Language exposing (Language(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

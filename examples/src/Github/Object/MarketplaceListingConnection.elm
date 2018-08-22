@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.MarketplaceListingConnection exposing (..)
+module Github.Object.MarketplaceListingConnection exposing (edges, nodes, pageInfo, selection, totalCount)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RateLimit exposing (..)
+module Github.Object.RateLimit exposing (cost, limit, nodeCount, remaining, resetAt, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.PullRequestTimelineItem exposing (..)
+module Github.Union.PullRequestTimelineItem exposing (onAssignedEvent, onBaseRefForcePushedEvent, onClosedEvent, onCommit, onCommitCommentThread, onCrossReferencedEvent, onDemilestonedEvent, onDeployedEvent, onHeadRefDeletedEvent, onHeadRefForcePushedEvent, onHeadRefRestoredEvent, onIssueComment, onLabeledEvent, onLockedEvent, onMergedEvent, onMilestonedEvent, onPullRequestReview, onPullRequestReviewComment, onPullRequestReviewThread, onReferencedEvent, onRenamedTitleEvent, onReopenedEvent, onReviewDismissedEvent, onReviewRequestRemovedEvent, onReviewRequestedEvent, onSubscribedEvent, onUnassignedEvent, onUnlabeledEvent, onUnlockedEvent, onUnsubscribedEvent, selection)
 
 import Github.InputObject
 import Github.Interface

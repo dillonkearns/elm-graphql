@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union exposing (..)
+module Github.Union exposing (Closer(..), CollectionItemContent(..), IssueOrPullRequest(..), IssueTimelineItem(..), MilestoneItem(..), ProjectCardItem(..), PullRequestTimelineItem(..), PushAllowanceActor(..), ReferencedSubject(..), RenamedTitleSubject(..), RequestedReviewer(..), ReviewDismissalAllowanceActor(..), SearchResultItem(..))
 
 
 type Closer

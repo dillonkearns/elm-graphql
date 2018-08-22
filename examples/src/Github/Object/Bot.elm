@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Bot exposing (..)
+module Github.Object.Bot exposing (AvatarUrlOptionalArguments, avatarUrl, createdAt, databaseId, id, login, resourcePath, selection, updatedAt, url)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Deletable exposing (..)
+module Github.Interface.Deletable exposing (commonSelection, onCommitComment, onGistComment, onIssueComment, onPullRequestReview, onPullRequestReviewComment, selection, viewerCanDelete)
 
 import Github.InputObject
 import Github.Interface

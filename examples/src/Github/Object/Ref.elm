@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Ref exposing (..)
+module Github.Object.Ref exposing (AssociatedPullRequestsOptionalArguments, associatedPullRequests, id, name, prefix, repository, selection, target)
 
 import Github.Enum.PullRequestState
 import Github.InputObject

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PageInfo exposing (..)
+module Github.Object.PageInfo exposing (endCursor, hasNextPage, hasPreviousPage, selection, startCursor)
 
 import Github.InputObject
 import Github.Interface

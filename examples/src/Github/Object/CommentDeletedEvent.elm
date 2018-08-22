@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.CommentDeletedEvent exposing (..)
+module Github.Object.CommentDeletedEvent exposing (actor, createdAt, databaseId, id, selection)
 
 import Github.InputObject
 import Github.Interface

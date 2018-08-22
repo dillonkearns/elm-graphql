@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RenamedTitleEvent exposing (..)
+module Github.Object.RenamedTitleEvent exposing (actor, createdAt, currentTitle, id, previousTitle, selection, subject)
 
 import Github.InputObject
 import Github.Interface

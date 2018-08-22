@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.ReactionOrderField exposing (..)
+module Github.Enum.ReactionOrderField exposing (ReactionOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

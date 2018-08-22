@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.ReferencedSubject exposing (..)
+module Github.Union.ReferencedSubject exposing (onIssue, onPullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PullRequestReviewCommentConnection exposing (..)
+module Github.Object.PullRequestReviewCommentConnection exposing (edges, nodes, pageInfo, selection, totalCount)
 
 import Github.InputObject
 import Github.Interface

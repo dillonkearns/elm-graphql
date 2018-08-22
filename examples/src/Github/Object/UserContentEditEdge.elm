@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UserContentEditEdge exposing (..)
+module Github.Object.UserContentEditEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

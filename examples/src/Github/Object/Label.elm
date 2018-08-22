@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Label exposing (..)
+module Github.Object.Label exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, color, description, id, isDefault, issues, name, pullRequests, repository, selection)
 
 import Github.Enum.IssueState
 import Github.Enum.PullRequestState

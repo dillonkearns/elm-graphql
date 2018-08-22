@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Release exposing (..)
+module Github.Object.Release exposing (ReleaseAssetsOptionalArguments, author, createdAt, description, id, isDraft, isPrerelease, name, publishedAt, releaseAssets, resourcePath, selection, tag, updatedAt, url)
 
 import Github.InputObject
 import Github.Interface

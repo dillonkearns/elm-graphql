@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.MarketplaceCategory exposing (..)
+module Github.Object.MarketplaceCategory exposing (description, howItWorks, name, primaryListingCount, resourcePath, secondaryListingCount, selection, slug, url)
 
 import Github.InputObject
 import Github.Interface

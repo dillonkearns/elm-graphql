@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Commit exposing (..)
+module Github.Object.Commit exposing (BlameRequiredArguments, CommentsOptionalArguments, HistoryOptionalArguments, ParentsOptionalArguments, abbreviatedOid, additions, author, authoredByCommitter, authoredDate, blame, changedFiles, comments, commitResourcePath, commitUrl, committedDate, committedViaWeb, committer, deletions, history, id, message, messageBody, messageBodyHTML, messageHeadline, messageHeadlineHTML, oid, parents, pushedDate, repository, resourcePath, selection, signature, status, tarballUrl, tree, treeResourcePath, treeUrl, url, viewerCanSubscribe, viewerSubscription, zipballUrl)
 
 import Github.Enum.SubscriptionState
 import Github.InputObject

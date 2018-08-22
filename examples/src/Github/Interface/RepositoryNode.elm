@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.RepositoryNode exposing (..)
+module Github.Interface.RepositoryNode exposing (commonSelection, onCommitComment, onCommitCommentThread, onIssue, onIssueComment, onPullRequest, onPullRequestReview, onPullRequestReviewComment, repository, selection)
 
 import Github.InputObject
 import Github.Interface

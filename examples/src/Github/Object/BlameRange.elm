@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.BlameRange exposing (..)
+module Github.Object.BlameRange exposing (age, commit, endingLine, selection, startingLine)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.HeadRefForcePushedEvent exposing (..)
+module Github.Object.HeadRefForcePushedEvent exposing (actor, afterCommit, beforeCommit, createdAt, id, pullRequest, ref, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -32,14 +32,14 @@ actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
-{-| Identifies the after commit SHA for the 'head_ref_force_pushed' event.
+{-| Identifies the after commit SHA for the 'head\_ref\_force\_pushed' event.
 -}
 afterCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 afterCommit object_ =
     Object.selectionField "afterCommit" [] object_ (identity >> Decode.nullable)
 
 
-{-| Identifies the before commit SHA for the 'head_ref_force_pushed' event.
+{-| Identifies the before commit SHA for the 'head\_ref\_force\_pushed' event.
 -}
 beforeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 beforeCommit object_ =
@@ -99,7 +99,7 @@ pullRequest object_ =
     Object.selectionField "pullRequest" [] object_ identity
 
 
-{-| Identifies the fully qualified ref name for the 'head_ref_force_pushed' event.
+{-| Identifies the fully qualified ref name for the 'head\_ref\_force\_pushed' event.
 -}
 ref : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
 ref object_ =

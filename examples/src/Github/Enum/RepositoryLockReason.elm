@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.RepositoryLockReason exposing (..)
+module Github.Enum.RepositoryLockReason exposing (RepositoryLockReason(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

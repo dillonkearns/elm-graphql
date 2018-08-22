@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Labelable exposing (..)
+module Github.Interface.Labelable exposing (LabelsOptionalArguments, commonSelection, labels, onIssue, onPullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

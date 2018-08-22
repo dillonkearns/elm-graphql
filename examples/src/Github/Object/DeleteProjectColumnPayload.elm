@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.DeleteProjectColumnPayload exposing (..)
+module Github.Object.DeleteProjectColumnPayload exposing (clientMutationId, deletedColumnId, project, selection)
 
 import Github.InputObject
 import Github.Interface

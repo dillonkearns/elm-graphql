@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Closable exposing (..)
+module Github.Interface.Closable exposing (closed, closedAt, commonSelection, onIssue, onMilestone, onProject, onPullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

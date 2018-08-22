@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.SearchResultItemEdge exposing (..)
+module Github.Object.SearchResultItemEdge exposing (cursor, node, selection, textMatches)
 
 import Github.InputObject
 import Github.Interface

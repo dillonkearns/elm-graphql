@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.OrganizationIdentityProvider exposing (..)
+module Github.Object.OrganizationIdentityProvider exposing (ExternalIdentitiesOptionalArguments, digestMethod, externalIdentities, id, idpCertificate, issuer, organization, selection, signatureMethod, ssoUrl)
 
 import Github.InputObject
 import Github.Interface

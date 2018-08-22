@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.CommitCommentThread exposing (..)
+module Github.Object.CommitCommentThread exposing (CommentsOptionalArguments, comments, commit, id, path, position, repository, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ProtectedBranch exposing (..)
+module Github.Object.ProtectedBranch exposing (PushAllowancesOptionalArguments, ReviewDismissalAllowancesOptionalArguments, creator, hasDismissableStaleReviews, hasRequiredReviews, hasRequiredStatusChecks, hasRestrictedPushes, hasRestrictedReviewDismissals, hasStrictRequiredStatusChecks, id, isAdminEnforced, name, pushAllowances, repository, requiredStatusCheckContexts, reviewDismissalAllowances, selection)
 
 import Github.InputObject
 import Github.Interface

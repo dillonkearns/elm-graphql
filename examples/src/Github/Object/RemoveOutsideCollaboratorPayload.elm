@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RemoveOutsideCollaboratorPayload exposing (..)
+module Github.Object.RemoveOutsideCollaboratorPayload exposing (clientMutationId, removedUser, selection)
 
 import Github.InputObject
 import Github.Interface

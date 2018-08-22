@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.AddPullRequestReviewPayload exposing (..)
+module Github.Object.AddPullRequestReviewPayload exposing (clientMutationId, pullRequestReview, reviewEdge, selection)
 
 import Github.InputObject
 import Github.Interface

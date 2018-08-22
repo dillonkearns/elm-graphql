@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Union exposing (..)
+module Swapi.Union exposing (CharacterUnion(..))
 
 
 type CharacterUnion

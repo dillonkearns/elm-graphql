@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Blob exposing (..)
+module Github.Object.Blob exposing (abbreviatedOid, byteSize, commitResourcePath, commitUrl, id, isBinary, isTruncated, oid, repository, selection, text)
 
 import Github.InputObject
 import Github.Interface

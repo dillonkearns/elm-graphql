@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.AddedToProjectEvent exposing (..)
+module Github.Object.AddedToProjectEvent exposing (actor, createdAt, databaseId, id, selection)
 
 import Github.InputObject
 import Github.Interface

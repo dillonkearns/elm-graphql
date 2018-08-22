@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UnknownSignature exposing (..)
+module Github.Object.UnknownSignature exposing (email, isValid, payload, selection, signature, signer, state)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject

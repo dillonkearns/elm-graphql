@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Tree exposing (..)
+module Github.Object.Tree exposing (abbreviatedOid, commitResourcePath, commitUrl, entries, id, oid, repository, selection)
 
 import Github.InputObject
 import Github.Interface

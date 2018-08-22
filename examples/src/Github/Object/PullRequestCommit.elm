@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PullRequestCommit exposing (..)
+module Github.Object.PullRequestCommit exposing (commit, id, pullRequest, resourcePath, selection, url)
 
 import Github.InputObject
 import Github.Interface

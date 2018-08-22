@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReviewRequestEdge exposing (..)
+module Github.Object.ReviewRequestEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

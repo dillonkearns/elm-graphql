@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Object.ChatMessage exposing (..)
+module Swapi.Object.ChatMessage exposing (character, phrase, selection)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)

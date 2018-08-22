@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.RepositoryCollaboratorAffiliation exposing (..)
+module Github.Enum.RepositoryCollaboratorAffiliation exposing (RepositoryCollaboratorAffiliation(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

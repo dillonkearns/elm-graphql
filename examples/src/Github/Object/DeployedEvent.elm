@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.DeployedEvent exposing (..)
+module Github.Object.DeployedEvent exposing (actor, createdAt, databaseId, deployment, id, pullRequest, ref, selection)
 
 import Github.InputObject
 import Github.Interface

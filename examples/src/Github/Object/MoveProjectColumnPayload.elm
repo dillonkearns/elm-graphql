@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.MoveProjectColumnPayload exposing (..)
+module Github.Object.MoveProjectColumnPayload exposing (clientMutationId, columnEdge, selection)
 
 import Github.InputObject
 import Github.Interface

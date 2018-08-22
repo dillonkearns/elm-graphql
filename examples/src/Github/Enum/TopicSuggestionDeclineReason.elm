@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.TopicSuggestionDeclineReason exposing (..)
+module Github.Enum.TopicSuggestionDeclineReason exposing (TopicSuggestionDeclineReason(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

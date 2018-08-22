@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.CommentAuthorAssociation exposing (..)
+module Github.Enum.CommentAuthorAssociation exposing (CommentAuthorAssociation(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

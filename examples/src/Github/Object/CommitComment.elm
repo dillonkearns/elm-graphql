@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.CommitComment exposing (..)
+module Github.Object.CommitComment exposing (ReactionsOptionalArguments, UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, commit, createdAt, createdViaEmail, databaseId, editor, id, lastEditedAt, path, position, publishedAt, reactionGroups, reactions, repository, resourcePath, selection, updatedAt, url, userContentEdits, viewerCanDelete, viewerCanReact, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason

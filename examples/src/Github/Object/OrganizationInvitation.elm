@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.OrganizationInvitation exposing (..)
+module Github.Object.OrganizationInvitation exposing (createdAt, email, id, invitationType, invitee, inviter, organization, role, selection)
 
 import Github.Enum.OrganizationInvitationRole
 import Github.Enum.OrganizationInvitationType

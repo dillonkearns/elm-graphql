@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.PullRequestReviewState exposing (..)
+module Github.Enum.PullRequestReviewState exposing (PullRequestReviewState(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

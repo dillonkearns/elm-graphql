@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.RenamedTitleSubject exposing (..)
+module Github.Union.RenamedTitleSubject exposing (onIssue, onPullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

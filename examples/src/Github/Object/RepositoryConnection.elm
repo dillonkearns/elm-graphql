@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RepositoryConnection exposing (..)
+module Github.Object.RepositoryConnection exposing (edges, nodes, pageInfo, selection, totalCount, totalDiskUsage)
 
 import Github.InputObject
 import Github.Interface

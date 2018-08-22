@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.MilestoneState exposing (..)
+module Github.Enum.MilestoneState exposing (MilestoneState(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

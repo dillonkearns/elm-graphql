@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.SearchType exposing (..)
+module Github.Enum.SearchType exposing (SearchType(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

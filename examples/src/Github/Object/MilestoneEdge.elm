@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.MilestoneEdge exposing (..)
+module Github.Object.MilestoneEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

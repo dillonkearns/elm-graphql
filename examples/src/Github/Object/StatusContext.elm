@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.StatusContext exposing (..)
+module Github.Object.StatusContext exposing (commit, context, createdAt, creator, description, id, selection, state, targetUrl)
 
 import Github.Enum.StatusState
 import Github.InputObject

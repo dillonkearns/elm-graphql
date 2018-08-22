@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.LockLockablePayload exposing (..)
+module Github.Object.LockLockablePayload exposing (clientMutationId, lockedRecord, selection)
 
 import Github.InputObject
 import Github.Interface

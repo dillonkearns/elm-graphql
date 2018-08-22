@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.GitHubMetadata exposing (..)
+module Github.Object.GitHubMetadata exposing (gitHubServicesSha, gitIpAddresses, hookIpAddresses, importerIpAddresses, isPasswordAuthenticationVerifiable, pagesIpAddresses, selection)
 
 import Github.InputObject
 import Github.Interface

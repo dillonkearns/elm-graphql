@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Actor exposing (..)
+module Github.Interface.Actor exposing (AvatarUrlOptionalArguments, avatarUrl, commonSelection, login, onBot, onOrganization, onUser, resourcePath, selection, url)
 
 import Github.InputObject
 import Github.Interface

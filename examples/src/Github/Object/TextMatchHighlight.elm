@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.TextMatchHighlight exposing (..)
+module Github.Object.TextMatchHighlight exposing (beginIndice, endIndice, selection, text)
 
 import Github.InputObject
 import Github.Interface

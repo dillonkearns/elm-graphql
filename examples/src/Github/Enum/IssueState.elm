@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.IssueState exposing (..)
+module Github.Enum.IssueState exposing (IssueState(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

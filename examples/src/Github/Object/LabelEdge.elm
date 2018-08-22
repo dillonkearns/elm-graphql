@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.LabelEdge exposing (..)
+module Github.Object.LabelEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.TeamMemberEdge exposing (..)
+module Github.Object.TeamMemberEdge exposing (cursor, memberAccessResourcePath, memberAccessUrl, node, role, selection)
 
 import Github.Enum.TeamMemberRole
 import Github.InputObject

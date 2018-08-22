@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.SearchResultItemConnection exposing (..)
+module Github.Object.SearchResultItemConnection exposing (codeCount, edges, issueCount, nodes, pageInfo, repositoryCount, selection, userCount, wikiCount)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UpdateTopicsPayload exposing (..)
+module Github.Object.UpdateTopicsPayload exposing (clientMutationId, invalidTopicNames, repository, selection)
 
 import Github.InputObject
 import Github.Interface

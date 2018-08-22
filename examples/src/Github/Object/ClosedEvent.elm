@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ClosedEvent exposing (..)
+module Github.Object.ClosedEvent exposing (actor, closable, closer, commit, createdAt, id, selection)
 
 import Github.InputObject
 import Github.Interface

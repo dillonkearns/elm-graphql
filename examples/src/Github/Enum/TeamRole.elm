@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.TeamRole exposing (..)
+module Github.Enum.TeamRole exposing (TeamRole(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

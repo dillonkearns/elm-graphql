@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.LockedEvent exposing (..)
+module Github.Object.LockedEvent exposing (actor, createdAt, id, lockable, selection)
 
 import Github.InputObject
 import Github.Interface

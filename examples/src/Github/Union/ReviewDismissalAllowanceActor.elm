@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.ReviewDismissalAllowanceActor exposing (..)
+module Github.Union.ReviewDismissalAllowanceActor exposing (onTeam, onUser, selection)
 
 import Github.InputObject
 import Github.Interface

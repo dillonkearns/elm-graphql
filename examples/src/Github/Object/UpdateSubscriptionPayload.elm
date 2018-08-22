@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UpdateSubscriptionPayload exposing (..)
+module Github.Object.UpdateSubscriptionPayload exposing (clientMutationId, selection, subscribable)
 
 import Github.InputObject
 import Github.Interface

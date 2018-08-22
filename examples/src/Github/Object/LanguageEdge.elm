@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.LanguageEdge exposing (..)
+module Github.Object.LanguageEdge exposing (cursor, node, selection, size)
 
 import Github.InputObject
 import Github.Interface

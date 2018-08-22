@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.GitSignatureState exposing (..)
+module Github.Enum.GitSignatureState exposing (GitSignatureState(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

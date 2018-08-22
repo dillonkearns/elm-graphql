@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReviewRequest exposing (..)
+module Github.Object.ReviewRequest exposing (databaseId, id, pullRequest, requestedReviewer, reviewer, selection)
 
 import Github.InputObject
 import Github.Interface

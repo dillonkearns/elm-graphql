@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.CommentCannotUpdateReason exposing (..)
+module Github.Enum.CommentCannotUpdateReason exposing (CommentCannotUpdateReason(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

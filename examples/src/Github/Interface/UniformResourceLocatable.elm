@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.UniformResourceLocatable exposing (..)
+module Github.Interface.UniformResourceLocatable exposing (commonSelection, onBot, onCrossReferencedEvent, onIssue, onMergedEvent, onMilestone, onOrganization, onPullRequest, onPullRequestCommit, onRelease, onRepository, onRepositoryTopic, onReviewDismissedEvent, onUser, resourcePath, selection, url)
 
 import Github.InputObject
 import Github.Interface

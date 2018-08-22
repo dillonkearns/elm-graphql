@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.GitActor exposing (..)
+module Github.Object.GitActor exposing (AvatarUrlOptionalArguments, avatarUrl, date, email, name, selection, user)
 
 import Github.InputObject
 import Github.Interface

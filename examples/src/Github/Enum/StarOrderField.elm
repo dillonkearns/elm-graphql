@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.StarOrderField exposing (..)
+module Github.Enum.StarOrderField exposing (StarOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

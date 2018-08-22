@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface exposing (..)
+module Github.Interface exposing (Actor(..), Assignable(..), Closable(..), Comment(..), Deletable(..), GitObject(..), GitSignature(..), Labelable(..), Lockable(..), Node(..), ProjectOwner(..), Reactable(..), RepositoryInfo(..), RepositoryNode(..), RepositoryOwner(..), Starrable(..), Subscribable(..), UniformResourceLocatable(..), Updatable(..), UpdatableComment(..))
 
 
 type Actor

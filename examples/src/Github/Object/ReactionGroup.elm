@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReactionGroup exposing (..)
+module Github.Object.ReactionGroup exposing (UsersOptionalArguments, content, createdAt, selection, subject, users, viewerHasReacted)
 
 import Github.Enum.ReactionContent
 import Github.InputObject

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PullRequestReviewThread exposing (..)
+module Github.Object.PullRequestReviewThread exposing (CommentsOptionalArguments, comments, id, pullRequest, repository, selection)
 
 import Github.InputObject
 import Github.Interface

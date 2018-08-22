@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ConvertedNoteToIssueEvent exposing (..)
+module Github.Object.ConvertedNoteToIssueEvent exposing (actor, createdAt, databaseId, id, selection)
 
 import Github.InputObject
 import Github.Interface

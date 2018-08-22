@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.GistComment exposing (..)
+module Github.Object.GistComment exposing (UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, createdAt, createdViaEmail, databaseId, editor, gist, id, lastEditedAt, publishedAt, selection, updatedAt, userContentEdits, viewerCanDelete, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason

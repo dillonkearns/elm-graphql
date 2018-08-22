@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.AssignedEvent exposing (..)
+module Github.Object.AssignedEvent exposing (actor, assignable, createdAt, id, selection, user)
 
 import Github.InputObject
 import Github.Interface

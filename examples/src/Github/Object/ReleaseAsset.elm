@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReleaseAsset exposing (..)
+module Github.Object.ReleaseAsset exposing (contentType, createdAt, downloadCount, downloadUrl, id, name, release, selection, size, updatedAt, uploadedBy, url)
 
 import Github.InputObject
 import Github.Interface

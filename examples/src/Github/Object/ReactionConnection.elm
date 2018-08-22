@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReactionConnection exposing (..)
+module Github.Object.ReactionConnection exposing (edges, nodes, pageInfo, selection, totalCount, viewerHasReacted)
 
 import Github.InputObject
 import Github.Interface

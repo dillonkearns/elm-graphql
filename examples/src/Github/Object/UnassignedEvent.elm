@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UnassignedEvent exposing (..)
+module Github.Object.UnassignedEvent exposing (actor, assignable, createdAt, id, selection, user)
 
 import Github.InputObject
 import Github.Interface

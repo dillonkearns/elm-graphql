@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.MilestonedEvent exposing (..)
+module Github.Object.MilestonedEvent exposing (actor, createdAt, id, milestoneTitle, selection, subject)
 
 import Github.InputObject
 import Github.Interface

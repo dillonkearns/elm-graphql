@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Milestone exposing (..)
+module Github.Object.Milestone exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, closed, closedAt, createdAt, creator, description, dueOn, id, issues, number, pullRequests, repository, resourcePath, selection, state, title, updatedAt, url)
 
 import Github.Enum.IssueState
 import Github.Enum.MilestoneState

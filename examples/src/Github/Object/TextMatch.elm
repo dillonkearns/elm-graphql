@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.TextMatch exposing (..)
+module Github.Object.TextMatch exposing (fragment, highlights, property, selection)
 
 import Github.InputObject
 import Github.Interface

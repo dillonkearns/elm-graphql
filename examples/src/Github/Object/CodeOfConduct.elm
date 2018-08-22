@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.CodeOfConduct exposing (..)
+module Github.Object.CodeOfConduct exposing (body, key, name, selection, url)
 
 import Github.InputObject
 import Github.Interface

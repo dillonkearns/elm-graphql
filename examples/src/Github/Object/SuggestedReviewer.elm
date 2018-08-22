@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.SuggestedReviewer exposing (..)
+module Github.Object.SuggestedReviewer exposing (isAuthor, isCommenter, reviewer, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ProtectedBranchEdge exposing (..)
+module Github.Object.ProtectedBranchEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.ProjectOwner exposing (..)
+module Github.Interface.ProjectOwner exposing (ProjectRequiredArguments, ProjectsOptionalArguments, commonSelection, id, onOrganization, onRepository, project, projects, projectsResourcePath, projectsUrl, selection, viewerCanCreateProjects)
 
 import Github.Enum.ProjectState
 import Github.InputObject

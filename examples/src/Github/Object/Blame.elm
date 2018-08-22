@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Blame exposing (..)
+module Github.Object.Blame exposing (ranges, selection)
 
 import Github.InputObject
 import Github.Interface

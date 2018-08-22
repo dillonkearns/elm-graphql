@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReviewDismissalAllowance exposing (..)
+module Github.Object.ReviewDismissalAllowance exposing (actor, id, protectedBranch, selection)
 
 import Github.InputObject
 import Github.Interface

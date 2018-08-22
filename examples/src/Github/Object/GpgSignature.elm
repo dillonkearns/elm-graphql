@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.GpgSignature exposing (..)
+module Github.Object.GpgSignature exposing (email, isValid, keyId, payload, selection, signature, signer, state)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject

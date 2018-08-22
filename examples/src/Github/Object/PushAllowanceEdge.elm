@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PushAllowanceEdge exposing (..)
+module Github.Object.PushAllowanceEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

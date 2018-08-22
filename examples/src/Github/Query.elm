@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Query exposing (..)
+module Github.Query exposing (CodeOfConductRequiredArguments, LicenseRequiredArguments, MarketplaceCategoriesOptionalArguments, MarketplaceCategoryRequiredArguments, MarketplaceListingRequiredArguments, MarketplaceListingsOptionalArguments, NodeRequiredArguments, NodesRequiredArguments, OrganizationRequiredArguments, RateLimitOptionalArguments, RepositoryOwnerRequiredArguments, RepositoryRequiredArguments, ResourceRequiredArguments, SearchOptionalArguments, SearchRequiredArguments, TopicRequiredArguments, UserRequiredArguments, codeOfConduct, codesOfConduct, license, licenses, marketplaceCategories, marketplaceCategory, marketplaceListing, marketplaceListings, meta, node, nodes, organization, rateLimit, relay, repository, repositoryOwner, resource, search, selection, topic, user, viewer)
 
 import Github.Enum.SearchType
 import Github.InputObject
@@ -302,7 +302,7 @@ type alias SearchRequiredArguments =
   - last - Returns the last _n_ elements from the list.
   - before - Returns the elements in the list that come before the specified global ID.
   - query - The search string to look for.
-  - type_ - The types of search items to search within.
+  - type\_ - The types of search items to search within.
 
 -}
 search : (SearchOptionalArguments -> SearchOptionalArguments) -> SearchRequiredArguments -> SelectionSet decodesTo Github.Object.SearchResultItemConnection -> Field decodesTo RootQuery

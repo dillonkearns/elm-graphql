@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.SmimeSignature exposing (..)
+module Github.Object.SmimeSignature exposing (email, isValid, payload, selection, signature, signer, state)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject

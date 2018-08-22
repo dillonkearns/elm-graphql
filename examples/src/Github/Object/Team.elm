@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Team exposing (..)
+module Github.Object.Team exposing (AncestorsOptionalArguments, AvatarUrlOptionalArguments, ChildTeamsOptionalArguments, InvitationsOptionalArguments, MembersOptionalArguments, RepositoriesOptionalArguments, ancestors, avatarUrl, childTeams, combinedSlug, createdAt, description, editTeamResourcePath, editTeamUrl, id, invitations, members, membersResourcePath, membersUrl, name, newTeamResourcePath, newTeamUrl, organization, parentTeam, privacy, repositories, repositoriesResourcePath, repositoriesUrl, resourcePath, selection, slug, teamsResourcePath, teamsUrl, updatedAt, url, viewerCanAdminister, viewerCanSubscribe, viewerSubscription)
 
 import Github.Enum.SubscriptionState
 import Github.Enum.TeamMemberRole

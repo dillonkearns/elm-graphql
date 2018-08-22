@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReviewDismissedEvent exposing (..)
+module Github.Object.ReviewDismissedEvent exposing (actor, createdAt, databaseId, id, message, messageHtml, previousReviewState, pullRequest, pullRequestCommit, resourcePath, review, selection, url)
 
 import Github.Enum.PullRequestReviewState
 import Github.InputObject
@@ -86,7 +86,7 @@ id =
         )
 
 
-{-| Identifies the message associated with the 'review_dismissed' event.
+{-| Identifies the message associated with the 'review\_dismissed' event.
 -}
 message : Field String Github.Object.ReviewDismissedEvent
 message =
@@ -117,7 +117,7 @@ messageHtml =
         )
 
 
-{-| Identifies the previous state of the review with the 'review_dismissed' event.
+{-| Identifies the previous state of the review with the 'review\_dismissed' event.
 -}
 previousReviewState : Field Github.Enum.PullRequestReviewState.PullRequestReviewState Github.Object.ReviewDismissedEvent
 previousReviewState =
@@ -162,7 +162,7 @@ resourcePath =
         )
 
 
-{-| Identifies the review associated with the 'review_dismissed' event.
+{-| Identifies the review associated with the 'review\_dismissed' event.
 -}
 review : SelectionSet decodesTo Github.Object.PullRequestReview -> Field (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 review object_ =

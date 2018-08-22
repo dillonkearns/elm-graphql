@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.IssueOrderField exposing (..)
+module Github.Enum.IssueOrderField exposing (IssueOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

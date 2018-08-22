@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Scalar exposing (..)
+module Github.Scalar exposing (Date(..), DateTime(..), GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..))
 
 
 type Date

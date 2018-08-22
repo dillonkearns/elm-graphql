@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Interface.Character exposing (..)
+module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, friends, id, name, onDroid, onHuman, selection)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)

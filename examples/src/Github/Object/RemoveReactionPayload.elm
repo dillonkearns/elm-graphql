@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RemoveReactionPayload exposing (..)
+module Github.Object.RemoveReactionPayload exposing (clientMutationId, reaction, selection, subject)
 
 import Github.InputObject
 import Github.Interface

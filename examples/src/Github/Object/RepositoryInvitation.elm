@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RepositoryInvitation exposing (..)
+module Github.Object.RepositoryInvitation exposing (id, invitee, inviter, permission, repository, selection)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject

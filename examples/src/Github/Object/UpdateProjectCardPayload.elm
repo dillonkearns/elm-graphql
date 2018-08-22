@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UpdateProjectCardPayload exposing (..)
+module Github.Object.UpdateProjectCardPayload exposing (clientMutationId, projectCard, selection)
 
 import Github.InputObject
 import Github.Interface

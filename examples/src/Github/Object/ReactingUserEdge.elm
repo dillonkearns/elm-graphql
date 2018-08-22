@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReactingUserEdge exposing (..)
+module Github.Object.ReactingUserEdge exposing (cursor, node, reactedAt, selection)
 
 import Github.InputObject
 import Github.Interface

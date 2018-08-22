@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.UpdatableComment exposing (..)
+module Github.Interface.UpdatableComment exposing (commonSelection, onCommitComment, onGistComment, onIssue, onIssueComment, onPullRequest, onPullRequestReview, onPullRequestReviewComment, selection, viewerCannotUpdateReasons)
 
 import Github.Enum.CommentCannotUpdateReason
 import Github.InputObject

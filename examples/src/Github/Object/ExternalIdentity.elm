@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ExternalIdentity exposing (..)
+module Github.Object.ExternalIdentity exposing (guid, id, organizationInvitation, samlIdentity, scimIdentity, selection, user)
 
 import Github.InputObject
 import Github.Interface

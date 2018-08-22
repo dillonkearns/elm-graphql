@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PullRequestTimelineItemEdge exposing (..)
+module Github.Object.PullRequestTimelineItemEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

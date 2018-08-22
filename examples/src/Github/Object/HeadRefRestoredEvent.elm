@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.HeadRefRestoredEvent exposing (..)
+module Github.Object.HeadRefRestoredEvent exposing (actor, createdAt, id, pullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

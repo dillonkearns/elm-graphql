@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.OrganizationEdge exposing (..)
+module Github.Object.OrganizationEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.PullRequestPubSubTopic exposing (..)
+module Github.Enum.PullRequestPubSubTopic exposing (PullRequestPubSubTopic(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

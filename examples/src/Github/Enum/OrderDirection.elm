@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.OrderDirection exposing (..)
+module Github.Enum.OrderDirection exposing (OrderDirection(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Interface exposing (..)
+module Swapi.Interface exposing (Character(..))
 
 
 type Character

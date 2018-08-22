@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.DismissPullRequestReviewPayload exposing (..)
+module Github.Object.DismissPullRequestReviewPayload exposing (clientMutationId, pullRequestReview, selection)
 
 import Github.InputObject
 import Github.Interface

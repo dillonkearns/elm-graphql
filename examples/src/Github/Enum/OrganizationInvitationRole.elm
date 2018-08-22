@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.OrganizationInvitationRole exposing (..)
+module Github.Enum.OrganizationInvitationRole exposing (OrganizationInvitationRole(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

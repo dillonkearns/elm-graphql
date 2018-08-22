@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.IssueTimelineItem exposing (..)
+module Github.Union.IssueTimelineItem exposing (onAssignedEvent, onClosedEvent, onCommit, onCrossReferencedEvent, onDemilestonedEvent, onIssueComment, onLabeledEvent, onLockedEvent, onMilestonedEvent, onReferencedEvent, onRenamedTitleEvent, onReopenedEvent, onSubscribedEvent, onUnassignedEvent, onUnlabeledEvent, onUnlockedEvent, onUnsubscribedEvent, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.GistCommentEdge exposing (..)
+module Github.Object.GistCommentEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

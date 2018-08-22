@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Issue exposing (..)
+module Github.Object.Issue exposing (AssigneesOptionalArguments, CommentsOptionalArguments, LabelsOptionalArguments, ParticipantsOptionalArguments, ProjectCardsOptionalArguments, ReactionsOptionalArguments, TimelineOptionalArguments, UserContentEditsOptionalArguments, activeLockReason, assignees, author, authorAssociation, body, bodyHTML, bodyText, closed, closedAt, comments, createdAt, createdViaEmail, databaseId, editor, id, labels, lastEditedAt, locked, milestone, number, participants, projectCards, publishedAt, reactionGroups, reactions, repository, resourcePath, selection, state, timeline, title, updatedAt, url, userContentEdits, viewerCanReact, viewerCanSubscribe, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor, viewerSubscription)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason

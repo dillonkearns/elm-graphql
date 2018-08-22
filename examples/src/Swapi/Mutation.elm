@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Mutation exposing (..)
+module Swapi.Mutation exposing (SendMessageRequiredArguments, increment, selection, sendMessage)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)

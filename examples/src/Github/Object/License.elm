@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.License exposing (..)
+module Github.Object.License exposing (body, conditions, description, featured, hidden, id, implementation, key, limitations, name, nickname, permissions, selection, spdxId, url)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.RemoveStarPayload exposing (..)
+module Github.Object.RemoveStarPayload exposing (clientMutationId, selection, starrable)
 
 import Github.InputObject
 import Github.Interface

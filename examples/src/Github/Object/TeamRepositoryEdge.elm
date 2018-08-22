@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.TeamRepositoryEdge exposing (..)
+module Github.Object.TeamRepositoryEdge exposing (cursor, node, permission, selection)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject

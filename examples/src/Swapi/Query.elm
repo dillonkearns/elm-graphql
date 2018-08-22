@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Query exposing (..)
+module Swapi.Query exposing (DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, droid, forcedError, greet, hero, heroUnion, human, selection)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)

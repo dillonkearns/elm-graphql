@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PullRequestReview exposing (..)
+module Github.Object.PullRequestReview exposing (CommentsOptionalArguments, UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, bodyText, comments, commit, createdAt, createdViaEmail, databaseId, editor, id, lastEditedAt, publishedAt, pullRequest, repository, resourcePath, selection, state, submittedAt, updatedAt, url, userContentEdits, viewerCanDelete, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason

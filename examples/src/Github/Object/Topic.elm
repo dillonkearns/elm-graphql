@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Topic exposing (..)
+module Github.Object.Topic exposing (id, name, relatedTopics, selection)
 
 import Github.InputObject
 import Github.Interface

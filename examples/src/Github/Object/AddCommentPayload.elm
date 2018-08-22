@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.AddCommentPayload exposing (..)
+module Github.Object.AddCommentPayload exposing (clientMutationId, commentEdge, selection, subject, timelineEdge)
 
 import Github.InputObject
 import Github.Interface

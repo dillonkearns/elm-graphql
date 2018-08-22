@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.User exposing (..)
+module Github.Object.User exposing (AvatarUrlOptionalArguments, CommitCommentsOptionalArguments, ContributedRepositoriesOptionalArguments, FollowersOptionalArguments, FollowingOptionalArguments, GistCommentsOptionalArguments, GistRequiredArguments, GistsOptionalArguments, IssueCommentsOptionalArguments, IssuesOptionalArguments, OrganizationRequiredArguments, OrganizationsOptionalArguments, PinnedRepositoriesOptionalArguments, PublicKeysOptionalArguments, PullRequestsOptionalArguments, RepositoriesContributedToOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, StarredRepositoriesOptionalArguments, WatchingOptionalArguments, avatarUrl, bio, bioHTML, commitComments, company, companyHTML, contributedRepositories, createdAt, databaseId, email, followers, following, gist, gistComments, gists, id, isBountyHunter, isCampusExpert, isDeveloperProgramMember, isEmployee, isHireable, isSiteAdmin, isViewer, issueComments, issues, location, login, name, organization, organizations, pinnedRepositories, publicKeys, pullRequests, repositories, repositoriesContributedTo, repository, resourcePath, selection, starredRepositories, updatedAt, url, viewerCanFollow, viewerIsFollowing, watching, websiteUrl)
 
 import Github.Enum.GistPrivacy
 import Github.Enum.IssueState
@@ -652,7 +652,7 @@ type alias RepositoriesContributedToOptionalArguments =
   - orderBy - Ordering options for repositories returned from the connection
   - isLocked - If non-null, filters repositories according to whether they have been locked
   - includeUserRepositories - If true, include user repositories
-  - contributionTypes - If non-null, include only the specified types of contributions. The GitHub.com UI uses [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
+  - contributionTypes - If non-null, include only the specified types of contributions. The GitHub.com UI uses [COMMIT, ISSUE, PULL\_REQUEST, REPOSITORY][COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
 
 -}
 repositoriesContributedTo : (RepositoriesContributedToOptionalArguments -> RepositoriesContributedToOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Object.User

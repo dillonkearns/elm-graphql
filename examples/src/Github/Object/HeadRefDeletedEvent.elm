@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.HeadRefDeletedEvent exposing (..)
+module Github.Object.HeadRefDeletedEvent exposing (actor, createdAt, headRef, headRefName, id, pullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

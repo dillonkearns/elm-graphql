@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.StarredRepositoryEdge exposing (..)
+module Github.Object.StarredRepositoryEdge exposing (cursor, node, selection, starredAt)
 
 import Github.InputObject
 import Github.Interface

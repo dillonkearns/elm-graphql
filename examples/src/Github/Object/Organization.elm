@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Organization exposing (..)
+module Github.Object.Organization exposing (AvatarUrlOptionalArguments, MembersOptionalArguments, PinnedRepositoriesOptionalArguments, ProjectRequiredArguments, ProjectsOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, TeamRequiredArguments, TeamsOptionalArguments, avatarUrl, databaseId, description, email, id, location, login, members, name, newTeamResourcePath, newTeamUrl, organizationBillingEmail, pinnedRepositories, project, projects, projectsResourcePath, projectsUrl, repositories, repository, resourcePath, samlIdentityProvider, selection, team, teams, teamsResourcePath, teamsUrl, url, viewerCanAdminister, viewerCanCreateProjects, viewerCanCreateRepositories, viewerCanCreateTeams, viewerIsAMember, websiteUrl)
 
 import Github.Enum.ProjectState
 import Github.Enum.RepositoryAffiliation

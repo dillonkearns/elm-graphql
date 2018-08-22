@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.PushAllowanceActor exposing (..)
+module Github.Union.PushAllowanceActor exposing (onTeam, onUser, selection)
 
 import Github.InputObject
 import Github.Interface

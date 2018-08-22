@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Lockable exposing (..)
+module Github.Interface.Lockable exposing (activeLockReason, commonSelection, locked, onIssue, onPullRequest, selection)
 
 import Github.Enum.LockReason
 import Github.InputObject

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Scalar exposing (..)
+module Swapi.Scalar exposing (Id(..))
 
 
 type Id

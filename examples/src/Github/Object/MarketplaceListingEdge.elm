@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.MarketplaceListingEdge exposing (..)
+module Github.Object.MarketplaceListingEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

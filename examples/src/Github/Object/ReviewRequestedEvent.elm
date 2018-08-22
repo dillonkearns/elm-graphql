@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReviewRequestedEvent exposing (..)
+module Github.Object.ReviewRequestedEvent exposing (actor, createdAt, id, pullRequest, requestedReviewer, selection, subject)
 
 import Github.InputObject
 import Github.Interface

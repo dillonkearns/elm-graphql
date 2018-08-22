@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.SearchResultItem exposing (..)
+module Github.Union.SearchResultItem exposing (onIssue, onMarketplaceListing, onOrganization, onPullRequest, onRepository, onUser, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PublicKey exposing (..)
+module Github.Object.PublicKey exposing (id, key, selection)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Union.CharacterUnion exposing (..)
+module Swapi.Union.CharacterUnion exposing (onDroid, onHuman, selection)
 
 import Graphqelm.Field as Field exposing (Field)
 import Graphqelm.Internal.Builder.Argument as Argument exposing (Argument)

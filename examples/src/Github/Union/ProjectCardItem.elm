@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.ProjectCardItem exposing (..)
+module Github.Union.ProjectCardItem exposing (onIssue, onPullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

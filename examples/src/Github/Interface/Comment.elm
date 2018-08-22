@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Comment exposing (..)
+module Github.Interface.Comment exposing (UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, commonSelection, createdAt, createdViaEmail, editor, id, lastEditedAt, onCommitComment, onGistComment, onIssue, onIssueComment, onPullRequest, onPullRequestReview, onPullRequestReviewComment, publishedAt, selection, updatedAt, userContentEdits, viewerDidAuthor)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.InputObject

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.RepositoryContributionType exposing (..)
+module Github.Enum.RepositoryContributionType exposing (RepositoryContributionType(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

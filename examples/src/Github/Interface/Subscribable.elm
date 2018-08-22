@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Subscribable exposing (..)
+module Github.Interface.Subscribable exposing (commonSelection, id, onCommit, onIssue, onPullRequest, onRepository, onTeam, selection, viewerCanSubscribe, viewerSubscription)
 
 import Github.Enum.SubscriptionState
 import Github.InputObject

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.Closer exposing (..)
+module Github.Union.Closer exposing (onCommit, onPullRequest, selection)
 
 import Github.InputObject
 import Github.Interface

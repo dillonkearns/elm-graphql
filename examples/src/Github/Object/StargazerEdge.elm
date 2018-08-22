@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.StargazerEdge exposing (..)
+module Github.Object.StargazerEdge exposing (cursor, node, selection, starredAt)
 
 import Github.InputObject
 import Github.Interface

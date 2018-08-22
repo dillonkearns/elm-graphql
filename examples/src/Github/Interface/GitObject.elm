@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.GitObject exposing (..)
+module Github.Interface.GitObject exposing (abbreviatedOid, commitResourcePath, commitUrl, commonSelection, id, oid, onBlob, onCommit, onTag, onTree, repository, selection)
 
 import Github.InputObject
 import Github.Interface

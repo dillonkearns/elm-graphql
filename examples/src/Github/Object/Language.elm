@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Language exposing (..)
+module Github.Object.Language exposing (color, id, name, selection)
 
 import Github.InputObject
 import Github.Interface

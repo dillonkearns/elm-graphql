@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.RepositoryPrivacy exposing (..)
+module Github.Enum.RepositoryPrivacy exposing (RepositoryPrivacy(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ProjectCard exposing (..)
+module Github.Object.ProjectCard exposing (column, content, createdAt, creator, databaseId, id, note, project, projectColumn, resourcePath, selection, state, updatedAt, url)
 
 import Github.Enum.ProjectCardState
 import Github.InputObject

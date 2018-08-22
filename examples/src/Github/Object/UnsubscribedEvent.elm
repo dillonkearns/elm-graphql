@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.UnsubscribedEvent exposing (..)
+module Github.Object.UnsubscribedEvent exposing (actor, createdAt, id, selection, subscribable)
 
 import Github.InputObject
 import Github.Interface

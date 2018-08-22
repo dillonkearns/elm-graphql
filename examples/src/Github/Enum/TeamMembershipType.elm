@@ -2,12 +2,12 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.TeamMembershipType exposing (..)
+module Github.Enum.TeamMembershipType exposing (TeamMembershipType(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
 
-{-| Defines which types of team members are included in the returned list. Can be one of IMMEDIATE, CHILD_TEAM or ALL.
+{-| Defines which types of team members are included in the returned list. Can be one of IMMEDIATE, CHILD\_TEAM or ALL.
 
   - Immediate - Includes only immediate members of the team.
   - ChildTeam - Includes only child team members for the team.

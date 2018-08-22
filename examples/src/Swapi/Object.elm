@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Swapi.Object exposing (..)
+module Swapi.Object exposing (ChatMessage(..), Droid(..), Human(..))
 
 
 type ChatMessage

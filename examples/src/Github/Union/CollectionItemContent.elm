@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Union.CollectionItemContent exposing (..)
+module Github.Union.CollectionItemContent exposing (onOrganization, onRepository, onUser, selection)
 
 import Github.InputObject
 import Github.Interface

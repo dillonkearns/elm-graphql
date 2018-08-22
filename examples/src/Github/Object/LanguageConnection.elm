@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.LanguageConnection exposing (..)
+module Github.Object.LanguageConnection exposing (edges, nodes, pageInfo, selection, totalCount, totalSize)
 
 import Github.InputObject
 import Github.Interface

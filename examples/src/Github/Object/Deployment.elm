@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Deployment exposing (..)
+module Github.Object.Deployment exposing (StatusesOptionalArguments, commit, createdAt, creator, databaseId, environment, id, latestStatus, payload, repository, selection, state, statuses)
 
 import Github.Enum.DeploymentState
 import Github.InputObject

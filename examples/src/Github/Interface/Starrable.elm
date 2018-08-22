@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Starrable exposing (..)
+module Github.Interface.Starrable exposing (StargazersOptionalArguments, commonSelection, id, onGist, onRepository, selection, stargazers, viewerHasStarred)
 
 import Github.InputObject
 import Github.Interface

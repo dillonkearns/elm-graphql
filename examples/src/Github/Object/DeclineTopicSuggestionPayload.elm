@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.DeclineTopicSuggestionPayload exposing (..)
+module Github.Object.DeclineTopicSuggestionPayload exposing (clientMutationId, selection, topic)
 
 import Github.InputObject
 import Github.Interface

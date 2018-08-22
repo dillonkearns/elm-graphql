@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Tag exposing (..)
+module Github.Object.Tag exposing (abbreviatedOid, commitResourcePath, commitUrl, id, message, name, oid, repository, selection, tagger, target)
 
 import Github.InputObject
 import Github.Interface

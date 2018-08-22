@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.DeployKeyEdge exposing (..)
+module Github.Object.DeployKeyEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

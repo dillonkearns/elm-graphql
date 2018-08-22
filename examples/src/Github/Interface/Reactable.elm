@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.Reactable exposing (..)
+module Github.Interface.Reactable exposing (ReactionsOptionalArguments, commonSelection, databaseId, id, onCommitComment, onIssue, onIssueComment, onPullRequest, onPullRequestReviewComment, reactionGroups, reactions, selection, viewerCanReact)
 
 import Github.Enum.ReactionContent
 import Github.InputObject

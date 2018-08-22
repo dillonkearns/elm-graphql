@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Reaction exposing (..)
+module Github.Object.Reaction exposing (content, createdAt, databaseId, id, reactable, selection, user)
 
 import Github.Enum.ReactionContent
 import Github.InputObject

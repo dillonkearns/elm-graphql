@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.Gist exposing (..)
+module Github.Object.Gist exposing (CommentsOptionalArguments, StargazersOptionalArguments, comments, createdAt, description, id, isPublic, name, owner, pushedAt, selection, stargazers, updatedAt, viewerHasStarred)
 
 import Github.InputObject
 import Github.Interface

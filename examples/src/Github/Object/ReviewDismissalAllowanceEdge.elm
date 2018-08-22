@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ReviewDismissalAllowanceEdge exposing (..)
+module Github.Object.ReviewDismissalAllowanceEdge exposing (cursor, node, selection)
 
 import Github.InputObject
 import Github.Interface

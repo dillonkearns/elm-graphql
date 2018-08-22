@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.ExternalIdentityScimAttributes exposing (..)
+module Github.Object.ExternalIdentityScimAttributes exposing (selection, username)
 
 import Github.InputObject
 import Github.Interface

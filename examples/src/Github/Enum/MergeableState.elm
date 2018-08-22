@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.MergeableState exposing (..)
+module Github.Enum.MergeableState exposing (MergeableState(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

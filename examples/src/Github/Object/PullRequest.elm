@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Object.PullRequest exposing (..)
+module Github.Object.PullRequest exposing (AssigneesOptionalArguments, CommentsOptionalArguments, CommitsOptionalArguments, LabelsOptionalArguments, ParticipantsOptionalArguments, ProjectCardsOptionalArguments, ReactionsOptionalArguments, ReviewRequestsOptionalArguments, ReviewsOptionalArguments, TimelineOptionalArguments, UserContentEditsOptionalArguments, activeLockReason, additions, assignees, author, authorAssociation, baseRef, baseRefName, baseRefOid, body, bodyHTML, bodyText, changedFiles, closed, closedAt, comments, commits, createdAt, createdViaEmail, databaseId, deletions, editor, headRef, headRefName, headRefOid, headRepository, headRepositoryOwner, id, isCrossRepository, labels, lastEditedAt, locked, mergeCommit, mergeable, merged, mergedAt, milestone, number, participants, potentialMergeCommit, projectCards, publishedAt, reactionGroups, reactions, repository, resourcePath, revertResourcePath, revertUrl, reviewRequests, reviews, selection, state, suggestedReviewers, timeline, title, updatedAt, url, userContentEdits, viewerCanReact, viewerCanSubscribe, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor, viewerSubscription)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason

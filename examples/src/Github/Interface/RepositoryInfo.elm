@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.RepositoryInfo exposing (..)
+module Github.Interface.RepositoryInfo exposing (ShortDescriptionHTMLOptionalArguments, commonSelection, createdAt, description, descriptionHTML, forkCount, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, mirrorUrl, name, nameWithOwner, onRepository, onRepositoryInvitationRepository, owner, pushedAt, resourcePath, selection, shortDescriptionHTML, updatedAt, url)
 
 import Github.Enum.RepositoryLockReason
 import Github.InputObject

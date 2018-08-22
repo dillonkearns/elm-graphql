@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Interface.RepositoryOwner exposing (..)
+module Github.Interface.RepositoryOwner exposing (AvatarUrlOptionalArguments, PinnedRepositoriesOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, avatarUrl, commonSelection, id, login, onOrganization, onUser, pinnedRepositories, repositories, repository, resourcePath, selection, url)
 
 import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryPrivacy

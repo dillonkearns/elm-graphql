@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/graphqelm
 
 
-module Github.Enum.OrganizationInvitationType exposing (..)
+module Github.Enum.OrganizationInvitationType exposing (OrganizationInvitationType(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
