@@ -86,7 +86,7 @@ typeAlias context { name, fields, hasLoop } =
         interpolate """{-| Type alias for the `{0}` attributes. Note that this type
 needs to use the `{0}` type (not just a plain type alias) because it has
 references to itself either directly (recursive) or indirectly (circular). See
-<https://github.com/dillonkearns/graphqelm/issues/33>.
+<https://github.com/dillonkearns/elm-graphql/issues/33>.
 -}
 type alias {0}Raw =
     { {1} }

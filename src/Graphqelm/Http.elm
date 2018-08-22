@@ -1,7 +1,7 @@
 module Graphqelm.Http exposing (Error(..), QueryRequestMethod(..), Request, ignoreParsedErrorData, mapError, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
-or the [`examples/`](https://github.com/dillonkearns/graphqelm/tree/master/examples)
+or the [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples)
 folder for some end-to-end examples.
 The builder syntax is inspired by Luke Westby's
 [elm-http-builder package](http://package.elm-lang.org/packages/lukewestby/elm-http-builder/latest).

@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-* Fix [#55](https://github.com/dillonkearns/graphqelm/issues/55). Encoding was incorrect
+* Fix [#55](https://github.com/dillonkearns/elm-graphql/issues/55). Encoding was incorrect
   for Elm reserved words because it was incorrectly normalizing input object keys when
   it should have used the raw keys.
 

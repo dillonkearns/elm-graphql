@@ -1,9 +1,9 @@
 module Graphqelm.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionField, unionSelection)
 
-{-| **WARNING** `Graphqelm.Interal` modules are used by the `graphqelm` command line
+{-| **WARNING** `Graphqelm.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
-Internal functions for use by auto-generated code from the `graphqelm` CLI.
+Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 @docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection
 
 -}

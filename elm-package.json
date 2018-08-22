@@ -1,7 +1,7 @@
 {
     "version": "11.2.0",
     "summary": "Type-safe GraphQL queries in Elm.",
-    "repository": "https://github.com/dillonkearns/graphqelm.git",
+    "repository": "https://github.com/dillonkearns/elm-graphql.git",
     "license": "BSD3",
     "source-directories": [
         "src"

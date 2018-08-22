@@ -98,6 +98,6 @@ decoder =
                     _ ->
                         Decode.fail ("Invalid """
         ++ ClassCaseName.normalized enumName
-        ++ """ type, " ++ string ++ " try re-running the graphqelm CLI ")
+        ++ """ type, " ++ string ++ " try re-running the @dillonkearns/elm-graphql CLI ")
         )
         """
