@@ -10,7 +10,7 @@ Looking to upgrade to Elm 0.19? Take a look at the [`dillonkearns/elm-graphql` E
 
 Why use this package over the other available Elm GraphQL packages? This is the only one that
 generates type-safe code for your entire schema. (It's also the only type-safe
-library with Elm 0.18 support, see
+library with Elm 0.18 or 0.19 support, see
 [this discourse thread](https://discourse.elm-lang.org/t/introducing-graphqelm-a-tool-for-type-safe-graphql-queries/472/5?u=dillonkearns)
 ).
 
