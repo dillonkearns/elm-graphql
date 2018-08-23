@@ -7869,10 +7869,10 @@ var author$project$Graphql$Generator$Field$objectThing = F4(
 				[typeLock]));
 		return A2(
 			author$project$Graphql$Generator$Field$prependArg,
-			{annotation: objectArgAnnotation, arg: 'object'},
+			{annotation: objectArgAnnotation, arg: 'object_'},
 			{
 				annotatedArgs: _List_Nil,
-				decoder: 'object',
+				decoder: 'object_',
 				decoderAnnotation: A2(author$project$Graphql$Generator$Decoder$generateType, apiSubmodule, typeRef),
 				fieldArgs: _List_Nil,
 				letBindings: _List_Nil,

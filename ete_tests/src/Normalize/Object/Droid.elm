@@ -36,8 +36,8 @@ appearsIn =
 {-| The friends of the droid, or an empty list if they have none.
 -}
 friends : SelectionSet decodesTo Normalize.Interface.Character -> Field (List decodesTo) Normalize.Object.Droid
-friends object =
-    Object.selectionField "friends" [] object (identity >> Decode.list)
+friends object_ =
+    Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the droid.

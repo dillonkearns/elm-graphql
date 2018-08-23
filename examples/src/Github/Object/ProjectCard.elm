@@ -32,15 +32,15 @@ in a pending state and has yet to be associated with a column. Once cards are
 associated with a column, they will not become pending in the future.
 -}
 column : SelectionSet decodesTo Github.Object.ProjectColumn -> Field (Maybe decodesTo) Github.Object.ProjectCard
-column object =
-    Object.selectionField "column" [] object (identity >> Decode.nullable)
+column object_ =
+    Object.selectionField "column" [] object_ (identity >> Decode.nullable)
 
 
 {-| The card content item
 -}
 content : SelectionSet decodesTo Github.Union.ProjectCardItem -> Field (Maybe decodesTo) Github.Object.ProjectCard
-content object =
-    Object.selectionField "content" [] object (identity >> Decode.nullable)
+content object_ =
+    Object.selectionField "content" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -53,8 +53,8 @@ createdAt =
 {-| The actor who created this card
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProjectCard
-creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.nullable)
+creator object_ =
+    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -79,15 +79,15 @@ note =
 {-| The project that contains this card.
 -}
 project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.ProjectCard
-project object =
-    Object.selectionField "project" [] object identity
+project object_ =
+    Object.selectionField "project" [] object_ identity
 
 
 {-| The column that contains this card.
 -}
 projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> Field decodesTo Github.Object.ProjectCard
-projectColumn object =
-    Object.selectionField "projectColumn" [] object identity
+projectColumn object_ =
+    Object.selectionField "projectColumn" [] object_ identity
 
 
 {-| The HTTP path for this card

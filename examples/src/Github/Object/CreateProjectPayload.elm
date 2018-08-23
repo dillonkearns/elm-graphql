@@ -35,5 +35,5 @@ clientMutationId =
 {-| The new project.
 -}
 project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.CreateProjectPayload
-project object =
-    Object.selectionField "project" [] object identity
+project object_ =
+    Object.selectionField "project" [] object_ identity

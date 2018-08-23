@@ -35,5 +35,5 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Object.RepositoryEdge
-node object =
-    Object.selectionField "node" [] object (identity >> Decode.nullable)
+node object_ =
+    Object.selectionField "node" [] object_ (identity >> Decode.nullable)

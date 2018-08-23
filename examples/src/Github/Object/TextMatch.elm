@@ -35,8 +35,8 @@ fragment =
 {-| Highlights within the matched fragment.
 -}
 highlights : SelectionSet decodesTo Github.Object.TextMatchHighlight -> Field (List (Maybe decodesTo)) Github.Object.TextMatch
-highlights object =
-    Object.selectionField "highlights" [] object (identity >> Decode.nullable >> Decode.list)
+highlights object_ =
+    Object.selectionField "highlights" [] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 {-| The property matched on.

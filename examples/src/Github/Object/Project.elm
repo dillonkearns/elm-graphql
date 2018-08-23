@@ -67,7 +67,7 @@ type alias ColumnsOptionalArguments =
 
 -}
 columns : (ColumnsOptionalArguments -> ColumnsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectColumnConnection -> Field decodesTo Github.Object.Project
-columns fillInOptionals object =
+columns fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -76,7 +76,7 @@ columns fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "columns" optionalArgs object identity
+    Object.selectionField "columns" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -89,8 +89,8 @@ createdAt =
 {-| The actor who originally created the project.
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Project
-creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.nullable)
+creator object_ =
+    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -122,8 +122,8 @@ number =
 {-| The project's owner. Currently limited to repositories and organizations.
 -}
 owner : SelectionSet decodesTo Github.Interface.ProjectOwner -> Field decodesTo Github.Object.Project
-owner object =
-    Object.selectionField "owner" [] object identity
+owner object_ =
+    Object.selectionField "owner" [] object_ identity
 
 
 type alias PendingCardsOptionalArguments =
@@ -139,7 +139,7 @@ type alias PendingCardsOptionalArguments =
 
 -}
 pendingCards : (PendingCardsOptionalArguments -> PendingCardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.Project
-pendingCards fillInOptionals object =
+pendingCards fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -148,7 +148,7 @@ pendingCards fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pendingCards" optionalArgs object identity
+    Object.selectionField "pendingCards" optionalArgs object_ identity
 
 
 {-| The HTTP path for this project

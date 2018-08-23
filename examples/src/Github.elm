@@ -1,6 +1,6 @@
 module Github exposing (main)
 
-import Date
+import Browser
 import Github.Object
 import Github.Object.Release
 import Github.Object.ReleaseConnection
@@ -27,7 +27,7 @@ type alias Response =
 
 
 type alias RepositoryInfo =
-    { createdAt : Date.Date
+    { createdAt : Github.Scalar.DateTime
     , earlyReleases : ReleaseInfo
     , lateReleases : ReleaseInfo
     , stargazersCount : Int
@@ -49,19 +49,10 @@ topicId =
 repo : SelectionSet RepositoryInfo Github.Object.Repository
 repo =
     Repository.selection RepositoryInfo
-        |> with createdAt
+        |> with Repository.createdAt
         |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
         |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
         |> with (Repository.stargazers identity stargazers)
-
-
-createdAt : Field.Field Date.Date Github.Object.Repository
-createdAt =
-    Repository.createdAt
-        |> Field.mapOrFail
-            (\(Github.Scalar.DateTime rawDateTime) ->
-                Date.fromString rawDateTime
-            )
 
 
 stargazers : SelectionSet Int Github.Object.StargazerConnection
@@ -112,8 +103,8 @@ type alias Model =
     RemoteData (Graphql.Http.Error Response) Response
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( RemoteData.Loading
     , makeRequest
     )
@@ -140,7 +131,7 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
     Browser.element
         { init = init

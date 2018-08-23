@@ -35,8 +35,8 @@ createdAt =
 {-| The actor who edited this content,
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.UserContentEdit
-editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.nullable)
+editor object_ =
+    Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.UserContentEdit

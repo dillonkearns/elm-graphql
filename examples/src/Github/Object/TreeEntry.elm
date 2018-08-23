@@ -42,8 +42,8 @@ name =
 {-| Entry file object.
 -}
 object : SelectionSet decodesTo Github.Interface.GitObject -> Field (Maybe decodesTo) Github.Object.TreeEntry
-object object =
-    Object.selectionField "object" [] object (identity >> Decode.nullable)
+object object_ =
+    Object.selectionField "object" [] object_ (identity >> Decode.nullable)
 
 
 {-| Entry file Git object ID.
@@ -56,8 +56,8 @@ oid =
 {-| The Repository the tree entry belongs to
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.TreeEntry
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity
 
 
 {-| Entry file type.

@@ -35,5 +35,5 @@ clientMutationId =
 {-| The submitted pull request review.
 -}
 pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> Field decodesTo Github.Object.SubmitPullRequestReviewPayload
-pullRequestReview object =
-    Object.selectionField "pullRequestReview" [] object identity
+pullRequestReview object_ =
+    Object.selectionField "pullRequestReview" [] object_ identity

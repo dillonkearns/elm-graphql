@@ -30,8 +30,8 @@ selection constructor =
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
-author object =
-    Object.selectionField "author" [] object (identity >> Decode.nullable)
+author object_ =
+    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Author's association with the gist.
@@ -79,15 +79,15 @@ databaseId =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
-editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.nullable)
+editor object_ =
+    Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
 
 
 {-| The associated gist.
 -}
 gist : SelectionSet decodesTo Github.Object.Gist -> Field decodesTo Github.Object.GistComment
-gist object =
-    Object.selectionField "gist" [] object identity
+gist object_ =
+    Object.selectionField "gist" [] object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.GistComment
@@ -129,7 +129,7 @@ type alias UserContentEditsOptionalArguments =
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Object.GistComment
-userContentEdits fillInOptionals object =
+userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -138,7 +138,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

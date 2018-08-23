@@ -31,8 +31,8 @@ selection constructor =
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReview
-author object =
-    Object.selectionField "author" [] object (identity >> Decode.nullable)
+author object_ =
+    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -76,7 +76,7 @@ type alias CommentsOptionalArguments =
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection -> Field decodesTo Github.Object.PullRequestReview
-comments fillInOptionals object =
+comments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -85,14 +85,14 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object identity
+    Object.selectionField "comments" optionalArgs object_ identity
 
 
 {-| Identifies the commit associated with this pull request review.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.PullRequestReview
-commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.nullable)
+commit object_ =
+    Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -119,8 +119,8 @@ databaseId =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.PullRequestReview
-editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.nullable)
+editor object_ =
+    Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.PullRequestReview
@@ -145,15 +145,15 @@ publishedAt =
 {-| Identifies the pull request associated with this pull request review.
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestReview
-pullRequest object =
-    Object.selectionField "pullRequest" [] object identity
+pullRequest object_ =
+    Object.selectionField "pullRequest" [] object_ identity
 
 
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.PullRequestReview
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity
 
 
 {-| The HTTP path permalink for this PullRequestReview.
@@ -204,7 +204,7 @@ type alias UserContentEditsOptionalArguments =
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Object.PullRequestReview
-userContentEdits fillInOptionals object =
+userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -213,7 +213,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

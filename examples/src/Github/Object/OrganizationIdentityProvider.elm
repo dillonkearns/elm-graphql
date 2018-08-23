@@ -45,7 +45,7 @@ type alias ExternalIdentitiesOptionalArguments =
 
 -}
 externalIdentities : (ExternalIdentitiesOptionalArguments -> ExternalIdentitiesOptionalArguments) -> SelectionSet decodesTo Github.Object.ExternalIdentityConnection -> Field decodesTo Github.Object.OrganizationIdentityProvider
-externalIdentities fillInOptionals object =
+externalIdentities fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -54,7 +54,7 @@ externalIdentities fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "externalIdentities" optionalArgs object identity
+    Object.selectionField "externalIdentities" optionalArgs object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.OrganizationIdentityProvider
@@ -79,8 +79,8 @@ issuer =
 {-| Organization this Identity Provider belongs to
 -}
 organization : SelectionSet decodesTo Github.Object.Organization -> Field (Maybe decodesTo) Github.Object.OrganizationIdentityProvider
-organization object =
-    Object.selectionField "organization" [] object (identity >> Decode.nullable)
+organization object_ =
+    Object.selectionField "organization" [] object_ (identity >> Decode.nullable)
 
 
 {-| The signature algorithm used to sign SAML requests for the Identity Provider.

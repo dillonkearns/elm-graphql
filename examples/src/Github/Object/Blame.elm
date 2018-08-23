@@ -28,5 +28,5 @@ selection constructor =
 {-| The list of ranges from a Git blame.
 -}
 ranges : SelectionSet decodesTo Github.Object.BlameRange -> Field (List decodesTo) Github.Object.Blame
-ranges object =
-    Object.selectionField "ranges" [] object (identity >> Decode.list)
+ranges object_ =
+    Object.selectionField "ranges" [] object_ (identity >> Decode.list)

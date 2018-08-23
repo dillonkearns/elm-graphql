@@ -43,8 +43,8 @@ avatarUrl =
 {-| The friends of the human, or an empty list if they have none.
 -}
 friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Object.Human
-friends object =
-    Object.selectionField "friends" [] object (identity >> Decode.list)
+friends object_ =
+    Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.

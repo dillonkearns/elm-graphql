@@ -68,8 +68,8 @@ name =
 {-| Release that the asset is associated with
 -}
 release : SelectionSet decodesTo Github.Object.Release -> Field (Maybe decodesTo) Github.Object.ReleaseAsset
-release object =
-    Object.selectionField "release" [] object (identity >> Decode.nullable)
+release object_ =
+    Object.selectionField "release" [] object_ (identity >> Decode.nullable)
 
 
 {-| The size (in bytes) of the asset
@@ -89,8 +89,8 @@ updatedAt =
 {-| The user that performed the upload
 -}
 uploadedBy : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.ReleaseAsset
-uploadedBy object =
-    Object.selectionField "uploadedBy" [] object identity
+uploadedBy object_ =
+    Object.selectionField "uploadedBy" [] object_ identity
 
 
 {-| Identifies the URL of the release asset.

@@ -71,8 +71,8 @@ onPullRequestReviewComment (SelectionSet fields decoder) =
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Interface.Comment
-author object =
-    Object.selectionField "author" [] object (identity >> Decode.nullable)
+author object_ =
+    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -113,8 +113,8 @@ createdViaEmail =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Interface.Comment
-editor object =
-    Object.selectionField "editor" [] object (identity >> Decode.nullable)
+editor object_ =
+    Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Interface.Comment
@@ -156,7 +156,7 @@ type alias UserContentEditsOptionalArguments =
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Interface.Comment
-userContentEdits fillInOptionals object =
+userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -165,7 +165,7 @@ userContentEdits fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| Did the viewer author this comment.

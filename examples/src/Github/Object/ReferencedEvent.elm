@@ -28,22 +28,22 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReferencedEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'referenced' event.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.ReferencedEvent
-commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.nullable)
+commit object_ =
+    Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the repository associated with the 'referenced' event.
 -}
 commitRepository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.ReferencedEvent
-commitRepository object =
-    Object.selectionField "commitRepository" [] object identity
+commitRepository object_ =
+    Object.selectionField "commitRepository" [] object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -82,5 +82,5 @@ isDirectReference =
 {-| Object referenced by event.
 -}
 subject : SelectionSet decodesTo Github.Union.ReferencedSubject -> Field decodesTo Github.Object.ReferencedEvent
-subject object =
-    Object.selectionField "subject" [] object identity
+subject object_ =
+    Object.selectionField "subject" [] object_ identity

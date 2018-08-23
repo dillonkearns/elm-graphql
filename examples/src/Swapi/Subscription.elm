@@ -28,5 +28,5 @@ selection constructor =
 
 
 newMessage : SelectionSet decodesTo Swapi.Object.ChatMessage -> Field decodesTo RootSubscription
-newMessage object =
-    Object.selectionField "newMessage" [] object identity
+newMessage object_ =
+    Object.selectionField "newMessage" [] object_ identity

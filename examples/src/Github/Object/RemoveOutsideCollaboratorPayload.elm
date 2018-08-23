@@ -35,5 +35,5 @@ clientMutationId =
 {-| The user that was removed as an outside collaborator.
 -}
 removedUser : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RemoveOutsideCollaboratorPayload
-removedUser object =
-    Object.selectionField "removedUser" [] object identity
+removedUser object_ =
+    Object.selectionField "removedUser" [] object_ identity

@@ -42,5 +42,5 @@ deletedColumnId =
 {-| The project the deleted column was in.
 -}
 project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.DeleteProjectColumnPayload
-project object =
-    Object.selectionField "project" [] object identity
+project object_ =
+    Object.selectionField "project" [] object_ identity

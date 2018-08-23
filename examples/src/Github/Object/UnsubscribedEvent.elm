@@ -28,8 +28,8 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.UnsubscribedEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -47,5 +47,5 @@ id =
 {-| Object referenced by event.
 -}
 subscribable : SelectionSet decodesTo Github.Interface.Subscribable -> Field decodesTo Github.Object.UnsubscribedEvent
-subscribable object =
-    Object.selectionField "subscribable" [] object identity
+subscribable object_ =
+    Object.selectionField "subscribable" [] object_ identity

@@ -28,8 +28,8 @@ selection constructor =
 {-| The new edge of the moved card.
 -}
 cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> Field decodesTo Github.Object.MoveProjectCardPayload
-cardEdge object =
-    Object.selectionField "cardEdge" [] object identity
+cardEdge object_ =
+    Object.selectionField "cardEdge" [] object_ identity
 
 
 {-| A unique identifier for the client performing the mutation.

@@ -120,8 +120,8 @@ license =
 {-| The license associated with the repository
 -}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Object.RepositoryInvitationRepository
-licenseInfo object =
-    Object.selectionField "licenseInfo" [] object (identity >> Decode.nullable)
+licenseInfo object_ =
+    Object.selectionField "licenseInfo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -155,8 +155,8 @@ nameWithOwner =
 {-| The owner of the repository associated with this invitation repository.
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field decodesTo Github.Object.RepositoryInvitationRepository
-owner object =
-    Object.selectionField "owner" [] object identity
+owner object_ =
+    Object.selectionField "owner" [] object_ identity
 
 
 {-| Identifies when the repository was last pushed to.

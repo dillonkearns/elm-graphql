@@ -43,8 +43,8 @@ createdAt =
 {-| The subject that was reacted to.
 -}
 subject : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.ReactionGroup
-subject object =
-    Object.selectionField "subject" [] object identity
+subject object_ =
+    Object.selectionField "subject" [] object_ identity
 
 
 type alias UsersOptionalArguments =
@@ -60,7 +60,7 @@ type alias UsersOptionalArguments =
 
 -}
 users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> Field decodesTo Github.Object.ReactionGroup
-users fillInOptionals object =
+users fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -69,7 +69,7 @@ users fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "users" optionalArgs object identity
+    Object.selectionField "users" optionalArgs object_ identity
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.

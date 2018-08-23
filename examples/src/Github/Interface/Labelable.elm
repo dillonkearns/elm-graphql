@@ -55,7 +55,7 @@ type alias LabelsOptionalArguments =
 
 -}
 labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> Field (Maybe decodesTo) Github.Interface.Labelable
-labels fillInOptionals object =
+labels fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -64,4 +64,4 @@ labels fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "labels" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "labels" optionalArgs object_ (identity >> Decode.nullable)

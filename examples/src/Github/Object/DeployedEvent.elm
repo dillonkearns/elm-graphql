@@ -28,8 +28,8 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.DeployedEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -49,8 +49,8 @@ databaseId =
 {-| The deployment associated with the 'deployed' event.
 -}
 deployment : SelectionSet decodesTo Github.Object.Deployment -> Field decodesTo Github.Object.DeployedEvent
-deployment object =
-    Object.selectionField "deployment" [] object identity
+deployment object_ =
+    Object.selectionField "deployment" [] object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.DeployedEvent
@@ -61,12 +61,12 @@ id =
 {-| PullRequest referenced by event.
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.DeployedEvent
-pullRequest object =
-    Object.selectionField "pullRequest" [] object identity
+pullRequest object_ =
+    Object.selectionField "pullRequest" [] object_ identity
 
 
 {-| The ref associated with the 'deployed' event.
 -}
 ref : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.DeployedEvent
-ref object =
-    Object.selectionField "ref" [] object (identity >> Decode.nullable)
+ref object_ =
+    Object.selectionField "ref" [] object_ (identity >> Decode.nullable)

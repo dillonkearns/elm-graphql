@@ -28,8 +28,8 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.UnlabeledEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -47,12 +47,12 @@ id =
 {-| Identifies the label associated with the 'unlabeled' event.
 -}
 label : SelectionSet decodesTo Github.Object.Label -> Field decodesTo Github.Object.UnlabeledEvent
-label object =
-    Object.selectionField "label" [] object identity
+label object_ =
+    Object.selectionField "label" [] object_ identity
 
 
 {-| Identifies the `Labelable` associated with the event.
 -}
 labelable : SelectionSet decodesTo Github.Interface.Labelable -> Field decodesTo Github.Object.UnlabeledEvent
-labelable object =
-    Object.selectionField "labelable" [] object identity
+labelable object_ =
+    Object.selectionField "labelable" [] object_ identity

@@ -28,22 +28,22 @@ selection constructor =
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo Github.Object.RepositoryCollaboratorEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryCollaboratorConnection
-edges object =
-    Object.selectionField "edges" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+edges object_ =
+    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo Github.Object.User -> Field (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryCollaboratorConnection
-nodes object =
-    Object.selectionField "nodes" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+nodes object_ =
+    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.RepositoryCollaboratorConnection
-pageInfo object =
-    Object.selectionField "pageInfo" [] object identity
+pageInfo object_ =
+    Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.

@@ -41,5 +41,5 @@ name =
 first.
 -}
 relatedTopics : SelectionSet decodesTo Github.Object.Topic -> Field (List decodesTo) Github.Object.Topic
-relatedTopics object =
-    Object.selectionField "relatedTopics" [] object (identity >> Decode.list)
+relatedTopics object_ =
+    Object.selectionField "relatedTopics" [] object_ (identity >> Decode.list)

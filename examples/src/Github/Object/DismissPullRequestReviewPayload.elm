@@ -35,5 +35,5 @@ clientMutationId =
 {-| The dismissed pull request review.
 -}
 pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> Field decodesTo Github.Object.DismissPullRequestReviewPayload
-pullRequestReview object =
-    Object.selectionField "pullRequestReview" [] object identity
+pullRequestReview object_ =
+    Object.selectionField "pullRequestReview" [] object_ identity

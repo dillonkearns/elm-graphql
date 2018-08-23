@@ -35,5 +35,5 @@ clientMutationId =
 {-| The starrable.
 -}
 starrable : SelectionSet decodesTo Github.Interface.Starrable -> Field decodesTo Github.Object.AddStarPayload
-starrable object =
-    Object.selectionField "starrable" [] object identity
+starrable object_ =
+    Object.selectionField "starrable" [] object_ identity

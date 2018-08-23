@@ -28,15 +28,15 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.AssignedEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the assignable associated with the event.
 -}
 assignable : SelectionSet decodesTo Github.Interface.Assignable -> Field decodesTo Github.Object.AssignedEvent
-assignable object =
-    Object.selectionField "assignable" [] object identity
+assignable object_ =
+    Object.selectionField "assignable" [] object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -54,5 +54,5 @@ id =
 {-| Identifies the user who was assigned.
 -}
 user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.AssignedEvent
-user object =
-    Object.selectionField "user" [] object (identity >> Decode.nullable)
+user object_ =
+    Object.selectionField "user" [] object_ (identity >> Decode.nullable)

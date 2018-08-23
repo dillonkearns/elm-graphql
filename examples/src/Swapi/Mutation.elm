@@ -38,5 +38,5 @@ type alias SendMessageRequiredArguments =
 
 
 sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Swapi.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
-sendMessage requiredArgs object =
-    Object.selectionField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(Swapi.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object (identity >> Decode.nullable)
+sendMessage requiredArgs object_ =
+    Object.selectionField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(Swapi.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object_ (identity >> Decode.nullable)

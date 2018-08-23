@@ -35,8 +35,8 @@ age =
 {-| Identifies the line author
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.BlameRange
-commit object =
-    Object.selectionField "commit" [] object identity
+commit object_ =
+    Object.selectionField "commit" [] object_ identity
 
 
 {-| The ending line for the range

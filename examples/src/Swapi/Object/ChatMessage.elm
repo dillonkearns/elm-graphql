@@ -27,8 +27,8 @@ selection constructor =
 
 
 character : SelectionSet decodesTo Swapi.Interface.Character -> Field (Maybe decodesTo) Swapi.Object.ChatMessage
-character object =
-    Object.selectionField "character" [] object (identity >> Decode.nullable)
+character object_ =
+    Object.selectionField "character" [] object_ (identity >> Decode.nullable)
 
 
 phrase : Field Swapi.Enum.Phrase.Phrase Swapi.Object.ChatMessage

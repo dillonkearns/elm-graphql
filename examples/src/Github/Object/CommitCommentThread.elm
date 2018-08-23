@@ -38,7 +38,7 @@ type alias CommentsOptionalArguments =
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.CommitCommentThread
-comments fillInOptionals object =
+comments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -47,14 +47,14 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object identity
+    Object.selectionField "comments" optionalArgs object_ identity
 
 
 {-| The commit the comments were made on.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.CommitCommentThread
-commit object =
-    Object.selectionField "commit" [] object identity
+commit object_ =
+    Object.selectionField "commit" [] object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.CommitCommentThread
@@ -79,5 +79,5 @@ position =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.CommitCommentThread
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity

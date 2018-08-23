@@ -28,22 +28,22 @@ selection constructor =
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo Github.Object.MilestoneEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.MilestoneConnection
-edges object =
-    Object.selectionField "edges" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+edges object_ =
+    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe (List (Maybe decodesTo))) Github.Object.MilestoneConnection
-nodes object =
-    Object.selectionField "nodes" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+nodes object_ =
+    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.MilestoneConnection
-pageInfo object =
-    Object.selectionField "pageInfo" [] object identity
+pageInfo object_ =
+    Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.

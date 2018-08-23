@@ -28,8 +28,8 @@ selection constructor =
 {-| The Git commit object
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.PullRequestCommit
-commit object =
-    Object.selectionField "commit" [] object identity
+commit object_ =
+    Object.selectionField "commit" [] object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.PullRequestCommit
@@ -40,8 +40,8 @@ id =
 {-| The pull request this commit belongs to
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestCommit
-pullRequest object =
-    Object.selectionField "pullRequest" [] object identity
+pullRequest object_ =
+    Object.selectionField "pullRequest" [] object_ identity
 
 
 {-| The HTTP path for this pull request commit

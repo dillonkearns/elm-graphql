@@ -42,7 +42,7 @@ type alias AncestorsOptionalArguments =
 
 -}
 ancestors : (AncestorsOptionalArguments -> AncestorsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> Field decodesTo Github.Object.Team
-ancestors fillInOptionals object =
+ancestors fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -51,7 +51,7 @@ ancestors fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "ancestors" optionalArgs object identity
+    Object.selectionField "ancestors" optionalArgs object_ identity
 
 
 type alias AvatarUrlOptionalArguments =
@@ -92,7 +92,7 @@ type alias ChildTeamsOptionalArguments =
 
 -}
 childTeams : (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> Field decodesTo Github.Object.Team
-childTeams fillInOptionals object =
+childTeams fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, userLogins = Absent, immediateOnly = Absent }
@@ -101,7 +101,7 @@ childTeams fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeTeamOrder, Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "childTeams" optionalArgs object identity
+    Object.selectionField "childTeams" optionalArgs object_ identity
 
 
 {-| The slug corresponding to the organization and team.
@@ -157,7 +157,7 @@ type alias InvitationsOptionalArguments =
 
 -}
 invitations : (InvitationsOptionalArguments -> InvitationsOptionalArguments) -> SelectionSet decodesTo Github.Object.OrganizationInvitationConnection -> Field (Maybe decodesTo) Github.Object.Team
-invitations fillInOptionals object =
+invitations fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -166,7 +166,7 @@ invitations fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "invitations" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "invitations" optionalArgs object_ (identity >> Decode.nullable)
 
 
 type alias MembersOptionalArguments =
@@ -185,7 +185,7 @@ type alias MembersOptionalArguments =
 
 -}
 members : (MembersOptionalArguments -> MembersOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamMemberConnection -> Field decodesTo Github.Object.Team
-members fillInOptionals object =
+members fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, membership = Absent, role = Absent }
@@ -194,7 +194,7 @@ members fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "membership" filledInOptionals.membership (Encode.enum Github.Enum.TeamMembershipType.toString), Argument.optional "role" filledInOptionals.role (Encode.enum Github.Enum.TeamMemberRole.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "members" optionalArgs object identity
+    Object.selectionField "members" optionalArgs object_ identity
 
 
 {-| The HTTP path for the team' members
@@ -235,15 +235,15 @@ newTeamUrl =
 {-| The organization that owns this team.
 -}
 organization : SelectionSet decodesTo Github.Object.Organization -> Field decodesTo Github.Object.Team
-organization object =
-    Object.selectionField "organization" [] object identity
+organization object_ =
+    Object.selectionField "organization" [] object_ identity
 
 
 {-| The parent team of the team.
 -}
 parentTeam : SelectionSet decodesTo Github.Object.Team -> Field (Maybe decodesTo) Github.Object.Team
-parentTeam object =
-    Object.selectionField "parentTeam" [] object (identity >> Decode.nullable)
+parentTeam object_ =
+    Object.selectionField "parentTeam" [] object_ (identity >> Decode.nullable)
 
 
 {-| The level of privacy the team has.
@@ -268,7 +268,7 @@ type alias RepositoriesOptionalArguments =
 
 -}
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamRepositoryConnection -> Field decodesTo Github.Object.Team
-repositories fillInOptionals object =
+repositories fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, orderBy = Absent }
@@ -277,7 +277,7 @@ repositories fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeTeamRepositoryOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "repositories" optionalArgs object identity
+    Object.selectionField "repositories" optionalArgs object_ identity
 
 
 {-| The HTTP path for this team's repositories

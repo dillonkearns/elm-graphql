@@ -28,8 +28,8 @@ selection constructor =
 {-| The author of the release
 -}
 author : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Release
-author object =
-    Object.selectionField "author" [] object (identity >> Decode.nullable)
+author object_ =
+    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -93,7 +93,7 @@ type alias ReleaseAssetsOptionalArguments =
 
 -}
 releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection -> Field decodesTo Github.Object.Release
-releaseAssets fillInOptionals object =
+releaseAssets fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
@@ -102,7 +102,7 @@ releaseAssets fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "releaseAssets" optionalArgs object identity
+    Object.selectionField "releaseAssets" optionalArgs object_ identity
 
 
 {-| The HTTP path for this issue
@@ -115,8 +115,8 @@ resourcePath =
 {-| The Git tag the release points to
 -}
 tag : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Release
-tag object =
-    Object.selectionField "tag" [] object (identity >> Decode.nullable)
+tag object_ =
+    Object.selectionField "tag" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.

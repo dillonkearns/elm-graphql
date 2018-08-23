@@ -38,7 +38,7 @@ type alias CommentsOptionalArguments =
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> Field decodesTo Github.Object.Gist
-comments fillInOptionals object =
+comments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -47,7 +47,7 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object identity
+    Object.selectionField "comments" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -86,8 +86,8 @@ name =
 {-| The gist owner.
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) Github.Object.Gist
-owner object =
-    Object.selectionField "owner" [] object (identity >> Decode.nullable)
+owner object_ =
+    Object.selectionField "owner" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies when the gist was last pushed to.
@@ -111,7 +111,7 @@ type alias StargazersOptionalArguments =
 
 -}
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> Field decodesTo Github.Object.Gist
-stargazers fillInOptionals object =
+stargazers fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
@@ -120,7 +120,7 @@ stargazers fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "stargazers" optionalArgs object identity
+    Object.selectionField "stargazers" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was last updated.

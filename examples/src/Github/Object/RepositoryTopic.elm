@@ -40,8 +40,8 @@ resourcePath =
 {-| The topic.
 -}
 topic : SelectionSet decodesTo Github.Object.Topic -> Field decodesTo Github.Object.RepositoryTopic
-topic object =
-    Object.selectionField "topic" [] object identity
+topic object_ =
+    Object.selectionField "topic" [] object_ identity
 
 
 {-| The HTTP URL for this repository-topic.

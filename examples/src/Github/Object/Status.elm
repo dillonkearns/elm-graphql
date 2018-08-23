@@ -29,8 +29,8 @@ selection constructor =
 {-| The commit this status is attached to.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Status
-commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.nullable)
+commit object_ =
+    Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
 
 type alias ContextRequiredArguments =
@@ -43,15 +43,15 @@ type alias ContextRequiredArguments =
 
 -}
 context : ContextRequiredArguments -> SelectionSet decodesTo Github.Object.StatusContext -> Field (Maybe decodesTo) Github.Object.Status
-context requiredArgs object =
-    Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object (identity >> Decode.nullable)
+context requiredArgs object_ =
+    Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.
 -}
 contexts : SelectionSet decodesTo Github.Object.StatusContext -> Field (List decodesTo) Github.Object.Status
-contexts object =
-    Object.selectionField "contexts" [] object (identity >> Decode.list)
+contexts object_ =
+    Object.selectionField "contexts" [] object_ (identity >> Decode.list)
 
 
 id : Field Github.Scalar.Id Github.Object.Status

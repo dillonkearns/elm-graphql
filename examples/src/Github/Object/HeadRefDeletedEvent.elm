@@ -28,8 +28,8 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -42,8 +42,8 @@ createdAt =
 {-| Identifies the Ref associated with the `head_ref_deleted` event.
 -}
 headRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
-headRef object =
-    Object.selectionField "headRef" [] object (identity >> Decode.nullable)
+headRef object_ =
+    Object.selectionField "headRef" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the name of the Ref associated with the `head_ref_deleted` event.
@@ -61,5 +61,5 @@ id =
 {-| PullRequest referenced by event.
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.HeadRefDeletedEvent
-pullRequest object =
-    Object.selectionField "pullRequest" [] object identity
+pullRequest object_ =
+    Object.selectionField "pullRequest" [] object_ identity

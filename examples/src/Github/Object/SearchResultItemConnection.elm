@@ -35,8 +35,8 @@ codeCount =
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo Github.Object.SearchResultItemEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
-edges object =
-    Object.selectionField "edges" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+edges object_ =
+    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| The number of issues that matched the search query.
@@ -49,15 +49,15 @@ issueCount =
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo Github.Union.SearchResultItem -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
-nodes object =
-    Object.selectionField "nodes" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+nodes object_ =
+    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.SearchResultItemConnection
-pageInfo object =
-    Object.selectionField "pageInfo" [] object identity
+pageInfo object_ =
+    Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| The number of repositories that matched the search query.

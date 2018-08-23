@@ -29,8 +29,8 @@ selection constructor =
 {-| Identifies the commit sha of the deployment.
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Deployment
-commit object =
-    Object.selectionField "commit" [] object (identity >> Decode.nullable)
+commit object_ =
+    Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -43,8 +43,8 @@ createdAt =
 {-| Identifies the actor who triggered the deployment.
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Deployment
-creator object =
-    Object.selectionField "creator" [] object (identity >> Decode.nullable)
+creator object_ =
+    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -69,8 +69,8 @@ id =
 {-| The latest status of this deployment.
 -}
 latestStatus : SelectionSet decodesTo Github.Object.DeploymentStatus -> Field (Maybe decodesTo) Github.Object.Deployment
-latestStatus object =
-    Object.selectionField "latestStatus" [] object (identity >> Decode.nullable)
+latestStatus object_ =
+    Object.selectionField "latestStatus" [] object_ (identity >> Decode.nullable)
 
 
 {-| Extra information that a deployment system might need.
@@ -83,8 +83,8 @@ payload =
 {-| Identifies the repository associated with the deployment.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Deployment
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity
 
 
 {-| The current state of the deployment.
@@ -107,7 +107,7 @@ type alias StatusesOptionalArguments =
 
 -}
 statuses : (StatusesOptionalArguments -> StatusesOptionalArguments) -> SelectionSet decodesTo Github.Object.DeploymentStatusConnection -> Field (Maybe decodesTo) Github.Object.Deployment
-statuses fillInOptionals object =
+statuses fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -116,4 +116,4 @@ statuses fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "statuses" optionalArgs object (identity >> Decode.nullable)
+    Object.selectionField "statuses" optionalArgs object_ (identity >> Decode.nullable)

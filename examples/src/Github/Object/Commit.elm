@@ -43,8 +43,8 @@ additions =
 {-| Authorship details of the commit.
 -}
 author : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Commit
-author object =
-    Object.selectionField "author" [] object (identity >> Decode.nullable)
+author object_ =
+    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Check if the committer and the author match.
@@ -71,8 +71,8 @@ type alias BlameRequiredArguments =
 
 -}
 blame : BlameRequiredArguments -> SelectionSet decodesTo Github.Object.Blame -> Field decodesTo Github.Object.Commit
-blame requiredArgs object =
-    Object.selectionField "blame" [ Argument.required "path" requiredArgs.path Encode.string ] object identity
+blame requiredArgs object_ =
+    Object.selectionField "blame" [ Argument.required "path" requiredArgs.path Encode.string ] object_ identity
 
 
 {-| The number of changed files in this commit.
@@ -95,7 +95,7 @@ type alias CommentsOptionalArguments =
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.Commit
-comments fillInOptionals object =
+comments fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -104,7 +104,7 @@ comments fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object identity
+    Object.selectionField "comments" optionalArgs object_ identity
 
 
 {-| The HTTP path for this Git object
@@ -138,8 +138,8 @@ committedViaWeb =
 {-| Committership details of the commit.
 -}
 committer : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Commit
-committer object =
-    Object.selectionField "committer" [] object (identity >> Decode.nullable)
+committer object_ =
+    Object.selectionField "committer" [] object_ (identity >> Decode.nullable)
 
 
 {-| The number of deletions in this commit.
@@ -166,7 +166,7 @@ type alias HistoryOptionalArguments =
 
 -}
 history : (HistoryOptionalArguments -> HistoryOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitHistoryConnection -> Field decodesTo Github.Object.Commit
-history fillInOptionals object =
+history fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
@@ -175,7 +175,7 @@ history fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author Github.InputObject.encodeCommitAuthor, Argument.optional "since" filledInOptionals.since (\(Github.Scalar.GitTimestamp raw) -> Encode.string raw), Argument.optional "until" filledInOptionals.until (\(Github.Scalar.GitTimestamp raw) -> Encode.string raw) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "history" optionalArgs object identity
+    Object.selectionField "history" optionalArgs object_ identity
 
 
 id : Field Github.Scalar.Id Github.Object.Commit
@@ -238,7 +238,7 @@ type alias ParentsOptionalArguments =
 
 -}
 parents : (ParentsOptionalArguments -> ParentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitConnection -> Field decodesTo Github.Object.Commit
-parents fillInOptionals object =
+parents fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -247,7 +247,7 @@ parents fillInOptionals object =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "parents" optionalArgs object identity
+    Object.selectionField "parents" optionalArgs object_ identity
 
 
 {-| The datetime when this commit was pushed.
@@ -260,8 +260,8 @@ pushedDate =
 {-| The Repository this commit belongs to
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Commit
-repository object =
-    Object.selectionField "repository" [] object identity
+repository object_ =
+    Object.selectionField "repository" [] object_ identity
 
 
 {-| The HTTP path for this commit
@@ -274,15 +274,15 @@ resourcePath =
 {-| Commit signing information, if present.
 -}
 signature : SelectionSet decodesTo Github.Interface.GitSignature -> Field (Maybe decodesTo) Github.Object.Commit
-signature object =
-    Object.selectionField "signature" [] object (identity >> Decode.nullable)
+signature object_ =
+    Object.selectionField "signature" [] object_ (identity >> Decode.nullable)
 
 
 {-| Status information for this commit
 -}
 status : SelectionSet decodesTo Github.Object.Status -> Field (Maybe decodesTo) Github.Object.Commit
-status object =
-    Object.selectionField "status" [] object (identity >> Decode.nullable)
+status object_ =
+    Object.selectionField "status" [] object_ (identity >> Decode.nullable)
 
 
 {-| Returns a URL to download a tarball archive for a repository. Note: For private repositories, these links are temporary and expire after five minutes.
@@ -295,8 +295,8 @@ tarballUrl =
 {-| Commit's root Tree
 -}
 tree : SelectionSet decodesTo Github.Object.Tree -> Field decodesTo Github.Object.Commit
-tree object =
-    Object.selectionField "tree" [] object identity
+tree object_ =
+    Object.selectionField "tree" [] object_ identity
 
 
 {-| The HTTP path for the tree of this commit
