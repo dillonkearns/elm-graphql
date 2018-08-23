@@ -1,5 +1,6 @@
 module Main exposing (main)
 
+import Browser
 import ElmReposRequest
 import Github.Scalar
 import Graphql.Document as Document
@@ -32,8 +33,8 @@ type alias Model =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( { githubResponse = RemoteData.Loading
       , sortOrder = ElmReposRequest.Stars
       }
@@ -73,7 +74,7 @@ sortOrderView model =
 
 sortButtonView : ElmReposRequest.SortOrder -> Html Msg
 sortButtonView sortOrder =
-    button [ onClick (SetSortOrder sortOrder) ] [ sortOrder |> toString |> text ]
+    button [ onClick (SetSortOrder sortOrder) ] [ sortOrder |> Debug.toString |> text ]
 
 
 elmProjectsView : Model -> Html Msg
@@ -101,11 +102,15 @@ resultView result =
     div []
         [ avatarView result.owner.avatarUrl
         , repoLink result.name result.url
-        , text ("⭐️" ++ toString result.stargazerCount)
-        , text ("🍴" ++ toString result.forkCount)
-        , text (" Created: " ++ toString result.createdAt)
-        , text (" Updated: " ++ toString result.updatedAt)
+        , text ("⭐️" ++ String.fromInt result.stargazerCount)
+        , text ("🍴" ++ String.fromInt result.forkCount)
+        , text (" Created: " ++ dateTimeToString result.createdAt)
+        , text (" Updated: " ++ dateTimeToString result.updatedAt)
         ]
+
+
+dateTimeToString (Github.Scalar.DateTime dateTimeString) =
+    dateTimeString
 
 
 avatarView : Github.Scalar.Uri -> Html Msg
@@ -128,7 +133,7 @@ update msg model =
             ( { model | sortOrder = sortOrder, githubResponse = RemoteData.Loading }, makeRequest sortOrder )
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
