@@ -110,7 +110,7 @@ resultView result =
 
 avatarView : Github.Scalar.Uri -> Html Msg
 avatarView (Github.Scalar.Uri avatarUrl) =
-    img [ src avatarUrl, style [ ( "width", "35px" ) ] ] []
+    img [ src avatarUrl, style "width" "35px" ] []
 
 
 repoLink : String -> Github.Scalar.Uri -> Html Msg

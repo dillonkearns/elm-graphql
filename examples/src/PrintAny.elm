@@ -2,7 +2,10 @@
 -- Copy pasted from https://github.com/wintvelt/elm-print-any since it hasn't been updated for 0.18
 
 
-module PrintAny exposing (config, log, view, viewWithConfig)
+module PrintAny exposing
+    ( view, log
+    , config, viewWithConfig
+    )
 
 {-| A tiny library for debugging purposes.
 It prints any record to the console or to the DOM.

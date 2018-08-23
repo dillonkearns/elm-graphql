@@ -1,4 +1,4 @@
-module Graphql.Document exposing (decoder, serializeMutation, serializeQuery, serializeQueryForUrl, serializeSubscription)
+module Graphql.Document exposing (serializeQuery, serializeMutation, serializeSubscription, serializeQueryForUrl, decoder)
 
 {-| You'll usually want to use `Graphql.Http` to perform your queries directly.
 This package provides low-level functions for generating GraphQL documents that

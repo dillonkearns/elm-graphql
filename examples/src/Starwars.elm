@@ -4,7 +4,7 @@ import Graphql.Document as Document
 import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny

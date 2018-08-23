@@ -15,7 +15,7 @@ import Github.Union
 import Github.Union.SearchResultItem
 import Graphql.Field as Field
 import Graphql.Operation exposing (RootQuery)
-import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet, with)
 
 
