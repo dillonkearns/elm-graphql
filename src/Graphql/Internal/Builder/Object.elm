@@ -1,4 +1,4 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionField, unionSelection)
+module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.

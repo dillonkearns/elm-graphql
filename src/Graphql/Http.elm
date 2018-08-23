@@ -1,4 +1,11 @@
-module Graphql.Http exposing (Error(..), QueryRequestMethod(..), Request, ignoreParsedErrorData, mapError, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
+module Graphql.Http exposing
+    ( Request, Error(..)
+    , queryRequest, mutationRequest, queryRequestWithHttpGet
+    , QueryRequestMethod(..)
+    , withHeader, withTimeout, withCredentials, withQueryParams
+    , send, toTask
+    , mapError, ignoreParsedErrorData
+    )
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples)
@@ -193,7 +200,7 @@ You can use it on its own, or with a library like
 [RemoteData](http://package.elm-lang.org/packages/krisajenkins/remotedata/latest/).
 
     import Graphql.Http
-    import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
+    import Graphql.OptionalArgument exposing (OptionalArgument(..))
     import RemoteData exposing (RemoteData)
 
     type Msg

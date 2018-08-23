@@ -1,4 +1,8 @@
-module Graphql.Internal.Encode exposing (Value, bool, enum, float, int, list, maybe, maybeObject, null, object, optional, serialize, string)
+module Graphql.Internal.Encode exposing
+    ( null, bool, enum, int, list, string, object, maybe, maybeObject, optional, float
+    , serialize
+    , Value
+    )
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.

@@ -1,4 +1,7 @@
-module Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..), empty, fieldSelection, hardcoded, map, succeed, with)
+module Graphql.SelectionSet exposing
+    ( with, hardcoded, empty, map, succeed, fieldSelection
+    , SelectionSet(..), FragmentSelectionSet(..)
+    )
 
 {-| The auto-generated code from the `@dillonkearns/elm-graphql` CLI will provide `selection`
 functions for Objects, Interfaces, and Unions in your GraphQL schema.
