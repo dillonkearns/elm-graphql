@@ -6,6 +6,8 @@
 
 (Formerly Graphqelm, [read about why the name changed.](https://github.com/dillonkearns/elm-graphql/issues/23))
 
+Looking to upgrade to Elm 0.19? Take a look at the [`dillonkearns/elm-graphql` Elm 0.19 upgrade guide](https://github.com/dillonkearns/elm-graphql/blob/master/docs/elm-19-upgrade.md).
+
 Why use this package over the other available Elm GraphQL packages? This is the only one that
 generates type-safe code for your entire schema. (It's also the only type-safe
 library with Elm 0.18 support, see
