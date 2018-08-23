@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Interface.Character exposing (..)
+module Normalize.Interface.Character exposing (appearsIn, commonSelection, friends, id, name, onDroid, onHuman_, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

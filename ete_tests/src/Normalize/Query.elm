@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Query exposing (..)
+module Normalize.Query exposing (CircularInputRequiredArguments, DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, RecursiveInputRequiredArguments, TypeOptionalArguments, circularInput, droid_, greet, hero, heroUnion, human, recursiveInput, selection, type_)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -48,7 +48,7 @@ type alias DroidRequiredArguments =
 
 {-|
 
-  - iD_ - ID of the droid.
+  - iD\_ - ID of the droid.
 
 -}
 droid_ : DroidRequiredArguments -> SelectionSet decodesTo Normalize.Object.Droid -> Field (Maybe decodesTo) RootQuery

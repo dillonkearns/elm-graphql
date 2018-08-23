@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Scalar exposing (..)
+module Normalize.Scalar exposing (Id(..))
 
 
 type Id

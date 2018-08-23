@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Interface exposing (..)
+module Normalize.Interface exposing (Character(..))
 
 
 type Character

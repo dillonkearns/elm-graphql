@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Enum.Language exposing (..)
+module Normalize.Enum.Language exposing (Language(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

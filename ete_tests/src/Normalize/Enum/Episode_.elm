@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Enum.Episode_ exposing (..)
+module Normalize.Enum.Episode_ exposing (Episode_(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -10,8 +10,8 @@ import Json.Decode as Decode exposing (Decoder)
 {-| One of the films in the Star Wars Trilogy
 
   - Empire - Released in 1980.
-  - Jedi_ - Released in 1983.
-  - Newhope_ - Released in 1977.
+  - Jedi\_ - Released in 1983.
+  - Newhope\_ - Released in 1977.
 
 -}
 type Episode_

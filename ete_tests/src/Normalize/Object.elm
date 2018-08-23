@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Object exposing (..)
+module Normalize.Object exposing (Droid(..), Human_(..))
 
 
 type Droid
