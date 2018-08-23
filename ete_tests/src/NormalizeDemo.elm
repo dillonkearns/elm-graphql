@@ -1,9 +1,10 @@
 module Starwars exposing (main)
 
+import Browser
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import Normalize.InputObject
@@ -26,7 +27,7 @@ query =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphql.Http.queryRequest "http://localhost:4000"
+        |> Graphql.Http.queryRequest "http://elm-graphql-normalize.herokuapp.com"
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
