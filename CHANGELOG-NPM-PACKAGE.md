@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.0] - 2018-08-23
+
+### Changed
+
+- Generate code for `dillonkearns/elm-graphql`. This requires Elm version 0.19.
+- If you are upgrading to Elm 0.19 follow [the `dillonkearns/elm-graphql` 0.19 upgrade guide](https://github.com/dillonkearns/elm-graphql/blob/master/docs/elm-19-upgrade.md).
+  You can see more details of what's changed in [the Elm package changelog](https://github.com/dillonkearns/elm-graphql/blob/master/CHANGELOG-ELM-PACKAGE.md#100---2018-08-23).
+
+## BELOW THIS IS FOR the npm `graphqelm` package (elm package`dillonkearns/graphqelm`). Read more about [the rename to `dillonkearns/elm-graphql`](https://github.com/dillonkearns/elm-graphql/issues/23).
+
 ## [3.1.12] - 2018-04-15
 
 ### Fixed
