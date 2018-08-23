@@ -128,6 +128,9 @@ setting up Travis CI!
 
 Thanks for [the reserved words pull request](https://github.com/dillonkearns/elm-graphql/pull/41) @madsflensted!
 
+A huge thanks to [@xtian](https://github.com/xtian) for doing the vast majority
+of the [0.19 upgrade work](https://github.com/dillonkearns/elm-graphql/pull/60)! :tada:
+
 ## Roadmap
 
 All core features are supported. That is, you can build any query or mutation
