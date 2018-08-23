@@ -132,10 +132,21 @@ All core features are supported. That is, you can build any query or mutation
 with your `dillonkearns/elm-graphql`-generated code, and it is guaranteed to be valid according
 to your server's schema.
 
-I am currently experimenting with subscriptions, checkout
-[this live demo](https://rebrand.ly/graphqelm-subscriptions) or
-[`examples/src/Subscription.elm`](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Subscription.elm)
-for an example using Phoenix/Absinthe as a backend.
+`dillonkearns/elm-graphql` will generate code for you to generate subscriptions
+and decode the responses, but it doesn't deal with the low-level details for
+how to send them over web sockets. To do that, you will need to use
+custom code or a package that knows how to communicate over websockets (or whichever
+protocol) to setup a subscription with your particular framework. See
+[this discussion](https://github.com/dillonkearns/elm-graphql/issues/43) for why
+those details are not handled by this library directly.
+
+I would love to hear feedback if you are using GraphQL Subscriptions. In particular,
+I'd love to see live code examples to drive any improvements to the Subscriptions
+design. Please ping me on Slack, drop a message in the
+[#graphql](https://elmlang.slack.com/channels/graphql) channel, or open up a
+Github issue to discuss!
+
+[this live demo](https://rebrand.ly/graphqelm-subscriptions).
 
 I would like to investigate generating helpers to make pagination simpler
 for Connections (based on the
