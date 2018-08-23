@@ -23,6 +23,7 @@ generate letBindings =
     in
     if letBindings == [] then
         ""
+
     else
         interpolate
             """

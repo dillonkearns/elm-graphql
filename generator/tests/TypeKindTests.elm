@@ -1,4 +1,4 @@
-module TypeKindTests exposing (..)
+module TypeKindTests exposing (all)
 
 import Expect
 import Graphql.Parser.TypeKind as TypeKind exposing (TypeKind(..))

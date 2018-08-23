@@ -1,19 +1,18 @@
-module Graphql.Parser.Type
-    exposing
-        ( Arg
-        , DefinableType(..)
-        , EnumValue
-        , Field
-        , IsNullable(..)
-        , RawTypeRef(..)
-        , ReferrableType(..)
-        , TypeDefinition(..)
-        , TypeReference(..)
-        , decoder
-        , parseRef
-        , typeDefinition
-        , typeRefDecoder
-        )
+module Graphql.Parser.Type exposing
+    ( Arg
+    , DefinableType(..)
+    , EnumValue
+    , Field
+    , IsNullable(..)
+    , RawTypeRef(..)
+    , ReferrableType(..)
+    , TypeDefinition(..)
+    , TypeReference(..)
+    , decoder
+    , parseRef
+    , typeDefinition
+    , typeRefDecoder
+    )
 
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)

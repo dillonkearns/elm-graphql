@@ -4,7 +4,7 @@ import Expect
 import Graphql.Generator.InputObjectLoops as InputObjectLoops
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
-import Graphql.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(NonNullable), ReferrableType(InputObjectRef), TypeDefinition(TypeDefinition), TypeReference(TypeReference))
+import Graphql.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(..), ReferrableType(..), TypeDefinition(..), TypeReference(..))
 import Test exposing (Test, describe, only, test)
 
 
