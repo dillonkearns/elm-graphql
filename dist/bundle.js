@@ -3274,7 +3274,7 @@ function onceStrict (fn) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Elm = __webpack_require__(30);
+var Elm = __webpack_require__(30).Elm;
 var fs = __webpack_require__(13);
 var graphql_request_1 = __webpack_require__(55);
 var minimist = __webpack_require__(61);
@@ -3351,7 +3351,7 @@ if (!(graphqlUrl || introspectionFile)) {
 warnIfContainsNonGenerated(prependBasePath("/"));
 var onDataAvailable = function (data) {
     console.log("Generating files...");
-    var app = Elm.Main.worker({ data: data, baseModule: baseModule });
+    var app = Elm.Main.init({ flags: { data: data, baseModule: baseModule } });
     app.ports.generatedFiles.subscribe(function (generatedFile) {
         removeGenerated(prependBasePath("/"));
         fs.mkdirpSync(prependBasePath("InputObject"));
@@ -3391,664 +3391,543 @@ else {
 
 /***/ }),
 /* 30 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
-(function() {
+(function(scope){
 'use strict';
 
-function F2(fun)
-{
-  function wrapper(a) { return function(b) { return fun(a,b); }; }
-  wrapper.arity = 2;
-  wrapper.func = fun;
+function F(arity, fun, wrapper) {
+  wrapper.a = arity;
+  wrapper.f = fun;
   return wrapper;
 }
 
-function F3(fun)
-{
-  function wrapper(a) {
+function F2(fun) {
+  return F(2, fun, function(a) { return function(b) { return fun(a,b); }; })
+}
+function F3(fun) {
+  return F(3, fun, function(a) {
     return function(b) { return function(c) { return fun(a, b, c); }; };
-  }
-  wrapper.arity = 3;
-  wrapper.func = fun;
-  return wrapper;
+  });
 }
-
-function F4(fun)
-{
-  function wrapper(a) { return function(b) { return function(c) {
+function F4(fun) {
+  return F(4, fun, function(a) { return function(b) { return function(c) {
     return function(d) { return fun(a, b, c, d); }; }; };
-  }
-  wrapper.arity = 4;
-  wrapper.func = fun;
-  return wrapper;
+  });
 }
-
-function F5(fun)
-{
-  function wrapper(a) { return function(b) { return function(c) {
+function F5(fun) {
+  return F(5, fun, function(a) { return function(b) { return function(c) {
     return function(d) { return function(e) { return fun(a, b, c, d, e); }; }; }; };
-  }
-  wrapper.arity = 5;
-  wrapper.func = fun;
-  return wrapper;
+  });
 }
-
-function F6(fun)
-{
-  function wrapper(a) { return function(b) { return function(c) {
+function F6(fun) {
+  return F(6, fun, function(a) { return function(b) { return function(c) {
     return function(d) { return function(e) { return function(f) {
     return fun(a, b, c, d, e, f); }; }; }; }; };
-  }
-  wrapper.arity = 6;
-  wrapper.func = fun;
-  return wrapper;
+  });
 }
-
-function F7(fun)
-{
-  function wrapper(a) { return function(b) { return function(c) {
+function F7(fun) {
+  return F(7, fun, function(a) { return function(b) { return function(c) {
     return function(d) { return function(e) { return function(f) {
     return function(g) { return fun(a, b, c, d, e, f, g); }; }; }; }; }; };
-  }
-  wrapper.arity = 7;
-  wrapper.func = fun;
-  return wrapper;
+  });
 }
-
-function F8(fun)
-{
-  function wrapper(a) { return function(b) { return function(c) {
+function F8(fun) {
+  return F(8, fun, function(a) { return function(b) { return function(c) {
     return function(d) { return function(e) { return function(f) {
     return function(g) { return function(h) {
     return fun(a, b, c, d, e, f, g, h); }; }; }; }; }; }; };
-  }
-  wrapper.arity = 8;
-  wrapper.func = fun;
-  return wrapper;
+  });
 }
-
-function F9(fun)
-{
-  function wrapper(a) { return function(b) { return function(c) {
+function F9(fun) {
+  return F(9, fun, function(a) { return function(b) { return function(c) {
     return function(d) { return function(e) { return function(f) {
     return function(g) { return function(h) { return function(i) {
     return fun(a, b, c, d, e, f, g, h, i); }; }; }; }; }; }; }; };
-  }
-  wrapper.arity = 9;
-  wrapper.func = fun;
-  return wrapper;
+  });
 }
 
-function A2(fun, a, b)
-{
-  return fun.arity === 2
-    ? fun.func(a, b)
-    : fun(a)(b);
+function A2(fun, a, b) {
+  return fun.a === 2 ? fun.f(a, b) : fun(a)(b);
 }
-function A3(fun, a, b, c)
-{
-  return fun.arity === 3
-    ? fun.func(a, b, c)
-    : fun(a)(b)(c);
+function A3(fun, a, b, c) {
+  return fun.a === 3 ? fun.f(a, b, c) : fun(a)(b)(c);
 }
-function A4(fun, a, b, c, d)
-{
-  return fun.arity === 4
-    ? fun.func(a, b, c, d)
-    : fun(a)(b)(c)(d);
+function A4(fun, a, b, c, d) {
+  return fun.a === 4 ? fun.f(a, b, c, d) : fun(a)(b)(c)(d);
 }
-function A5(fun, a, b, c, d, e)
-{
-  return fun.arity === 5
-    ? fun.func(a, b, c, d, e)
-    : fun(a)(b)(c)(d)(e);
+function A5(fun, a, b, c, d, e) {
+  return fun.a === 5 ? fun.f(a, b, c, d, e) : fun(a)(b)(c)(d)(e);
 }
-function A6(fun, a, b, c, d, e, f)
-{
-  return fun.arity === 6
-    ? fun.func(a, b, c, d, e, f)
-    : fun(a)(b)(c)(d)(e)(f);
+function A6(fun, a, b, c, d, e, f) {
+  return fun.a === 6 ? fun.f(a, b, c, d, e, f) : fun(a)(b)(c)(d)(e)(f);
 }
-function A7(fun, a, b, c, d, e, f, g)
-{
-  return fun.arity === 7
-    ? fun.func(a, b, c, d, e, f, g)
-    : fun(a)(b)(c)(d)(e)(f)(g);
+function A7(fun, a, b, c, d, e, f, g) {
+  return fun.a === 7 ? fun.f(a, b, c, d, e, f, g) : fun(a)(b)(c)(d)(e)(f)(g);
 }
-function A8(fun, a, b, c, d, e, f, g, h)
-{
-  return fun.arity === 8
-    ? fun.func(a, b, c, d, e, f, g, h)
-    : fun(a)(b)(c)(d)(e)(f)(g)(h);
+function A8(fun, a, b, c, d, e, f, g, h) {
+  return fun.a === 8 ? fun.f(a, b, c, d, e, f, g, h) : fun(a)(b)(c)(d)(e)(f)(g)(h);
 }
-function A9(fun, a, b, c, d, e, f, g, h, i)
-{
-  return fun.arity === 9
-    ? fun.func(a, b, c, d, e, f, g, h, i)
-    : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
+function A9(fun, a, b, c, d, e, f, g, h, i) {
+  return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-//import Maybe, Native.List, Native.Utils, Result //
+console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.0/optimize for better performance and smaller assets.');
 
-var _elm_lang$core$Native_String = function() {
 
-function isEmpty(str)
+var _JsArray_empty = [];
+
+function _JsArray_singleton(value)
 {
-	return str.length === 0;
+    return [value];
 }
-function cons(chr, str)
+
+function _JsArray_length(array)
 {
-	return chr + str;
+    return array.length;
 }
-function uncons(str)
+
+var _JsArray_initialize = F3(function(size, offset, func)
 {
-	var hd = str[0];
-	if (hd)
+    var result = new Array(size);
+
+    for (var i = 0; i < size; i++)
+    {
+        result[i] = func(offset + i);
+    }
+
+    return result;
+});
+
+var _JsArray_initializeFromList = F2(function (max, ls)
+{
+    var result = new Array(max);
+
+    for (var i = 0; i < max && ls.b; i++)
+    {
+        result[i] = ls.a;
+        ls = ls.b;
+    }
+
+    result.length = i;
+    return _Utils_Tuple2(result, ls);
+});
+
+var _JsArray_unsafeGet = F2(function(index, array)
+{
+    return array[index];
+});
+
+var _JsArray_unsafeSet = F3(function(index, value, array)
+{
+    var length = array.length;
+    var result = new Array(length);
+
+    for (var i = 0; i < length; i++)
+    {
+        result[i] = array[i];
+    }
+
+    result[index] = value;
+    return result;
+});
+
+var _JsArray_push = F2(function(value, array)
+{
+    var length = array.length;
+    var result = new Array(length + 1);
+
+    for (var i = 0; i < length; i++)
+    {
+        result[i] = array[i];
+    }
+
+    result[length] = value;
+    return result;
+});
+
+var _JsArray_foldl = F3(function(func, acc, array)
+{
+    var length = array.length;
+
+    for (var i = 0; i < length; i++)
+    {
+        acc = A2(func, array[i], acc);
+    }
+
+    return acc;
+});
+
+var _JsArray_foldr = F3(function(func, acc, array)
+{
+    for (var i = array.length - 1; i >= 0; i--)
+    {
+        acc = A2(func, array[i], acc);
+    }
+
+    return acc;
+});
+
+var _JsArray_map = F2(function(func, array)
+{
+    var length = array.length;
+    var result = new Array(length);
+
+    for (var i = 0; i < length; i++)
+    {
+        result[i] = func(array[i]);
+    }
+
+    return result;
+});
+
+var _JsArray_indexedMap = F3(function(func, offset, array)
+{
+    var length = array.length;
+    var result = new Array(length);
+
+    for (var i = 0; i < length; i++)
+    {
+        result[i] = A2(func, offset + i, array[i]);
+    }
+
+    return result;
+});
+
+var _JsArray_slice = F3(function(from, to, array)
+{
+    return array.slice(from, to);
+});
+
+var _JsArray_appendN = F3(function(n, dest, source)
+{
+    var destLen = dest.length;
+    var itemsToCopy = n - destLen;
+
+    if (itemsToCopy > source.length)
+    {
+        itemsToCopy = source.length;
+    }
+
+    var size = destLen + itemsToCopy;
+    var result = new Array(size);
+
+    for (var i = 0; i < destLen; i++)
+    {
+        result[i] = dest[i];
+    }
+
+    for (var i = 0; i < itemsToCopy; i++)
+    {
+        result[i + destLen] = source[i];
+    }
+
+    return result;
+});
+
+
+
+// LOG
+
+var _Debug_log_UNUSED = F2(function(tag, value)
+{
+	return value;
+});
+
+var _Debug_log = F2(function(tag, value)
+{
+	console.log(tag + ': ' + _Debug_toString(value));
+	return value;
+});
+
+
+// TODOS
+
+function _Debug_todo(moduleName, region)
+{
+	return function(message) {
+		_Debug_crash(8, moduleName, region, message);
+	};
+}
+
+function _Debug_todoCase(moduleName, region, value)
+{
+	return function(message) {
+		_Debug_crash(9, moduleName, region, value, message);
+	};
+}
+
+
+// TO STRING
+
+function _Debug_toString_UNUSED(value)
+{
+	return '<internals>';
+}
+
+function _Debug_toString(value)
+{
+	return _Debug_toAnsiString(false, value);
+}
+
+function _Debug_toAnsiString(ansi, value)
+{
+	if (typeof value === 'function')
 	{
-		return _elm_lang$core$Maybe$Just(_elm_lang$core$Native_Utils.Tuple2(_elm_lang$core$Native_Utils.chr(hd), str.slice(1)));
+		return _Debug_internalColor(ansi, '<function>');
 	}
-	return _elm_lang$core$Maybe$Nothing;
-}
-function append(a, b)
-{
-	return a + b;
-}
-function concat(strs)
-{
-	return _elm_lang$core$Native_List.toArray(strs).join('');
-}
-function length(str)
-{
-	return str.length;
-}
-function map(f, str)
-{
-	var out = str.split('');
-	for (var i = out.length; i--; )
+
+	if (typeof value === 'boolean')
 	{
-		out[i] = f(_elm_lang$core$Native_Utils.chr(out[i]));
+		return _Debug_ctorColor(ansi, value ? 'True' : 'False');
 	}
-	return out.join('');
-}
-function filter(pred, str)
-{
-	return str.split('').map(_elm_lang$core$Native_Utils.chr).filter(pred).join('');
-}
-function reverse(str)
-{
-	return str.split('').reverse().join('');
-}
-function foldl(f, b, str)
-{
-	var len = str.length;
-	for (var i = 0; i < len; ++i)
+
+	if (typeof value === 'number')
 	{
-		b = A2(f, _elm_lang$core$Native_Utils.chr(str[i]), b);
+		return _Debug_numberColor(ansi, value + '');
 	}
-	return b;
-}
-function foldr(f, b, str)
-{
-	for (var i = str.length; i--; )
+
+	if (value instanceof String)
 	{
-		b = A2(f, _elm_lang$core$Native_Utils.chr(str[i]), b);
+		return _Debug_charColor(ansi, "'" + _Debug_addSlashes(value, true) + "'");
 	}
-	return b;
-}
-function split(sep, str)
-{
-	return _elm_lang$core$Native_List.fromArray(str.split(sep));
-}
-function join(sep, strs)
-{
-	return _elm_lang$core$Native_List.toArray(strs).join(sep);
-}
-function repeat(n, str)
-{
-	var result = '';
-	while (n > 0)
+
+	if (typeof value === 'string')
 	{
-		if (n & 1)
+		return _Debug_stringColor(ansi, '"' + _Debug_addSlashes(value, false) + '"');
+	}
+
+	if (typeof value === 'object' && '$' in value)
+	{
+		var tag = value.$;
+
+		if (typeof tag === 'number')
 		{
-			result += str;
+			return _Debug_internalColor(ansi, '<internals>');
 		}
-		n >>= 1, str += str;
-	}
-	return result;
-}
-function slice(start, end, str)
-{
-	return str.slice(start, end);
-}
-function left(n, str)
-{
-	return n < 1 ? '' : str.slice(0, n);
-}
-function right(n, str)
-{
-	return n < 1 ? '' : str.slice(-n);
-}
-function dropLeft(n, str)
-{
-	return n < 1 ? str : str.slice(n);
-}
-function dropRight(n, str)
-{
-	return n < 1 ? str : str.slice(0, -n);
-}
-function pad(n, chr, str)
-{
-	var half = (n - str.length) / 2;
-	return repeat(Math.ceil(half), chr) + str + repeat(half | 0, chr);
-}
-function padRight(n, chr, str)
-{
-	return str + repeat(n - str.length, chr);
-}
-function padLeft(n, chr, str)
-{
-	return repeat(n - str.length, chr) + str;
-}
 
-function trim(str)
-{
-	return str.trim();
-}
-function trimLeft(str)
-{
-	return str.replace(/^\s+/, '');
-}
-function trimRight(str)
-{
-	return str.replace(/\s+$/, '');
-}
-
-function words(str)
-{
-	return _elm_lang$core$Native_List.fromArray(str.trim().split(/\s+/g));
-}
-function lines(str)
-{
-	return _elm_lang$core$Native_List.fromArray(str.split(/\r\n|\r|\n/g));
-}
-
-function toUpper(str)
-{
-	return str.toUpperCase();
-}
-function toLower(str)
-{
-	return str.toLowerCase();
-}
-
-function any(pred, str)
-{
-	for (var i = str.length; i--; )
-	{
-		if (pred(_elm_lang$core$Native_Utils.chr(str[i])))
+		if (tag[0] === '#')
 		{
-			return true;
-		}
-	}
-	return false;
-}
-function all(pred, str)
-{
-	for (var i = str.length; i--; )
-	{
-		if (!pred(_elm_lang$core$Native_Utils.chr(str[i])))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-function contains(sub, str)
-{
-	return str.indexOf(sub) > -1;
-}
-function startsWith(sub, str)
-{
-	return str.indexOf(sub) === 0;
-}
-function endsWith(sub, str)
-{
-	return str.length >= sub.length &&
-		str.lastIndexOf(sub) === str.length - sub.length;
-}
-function indexes(sub, str)
-{
-	var subLen = sub.length;
-
-	if (subLen < 1)
-	{
-		return _elm_lang$core$Native_List.Nil;
-	}
-
-	var i = 0;
-	var is = [];
-
-	while ((i = str.indexOf(sub, i)) > -1)
-	{
-		is.push(i);
-		i = i + subLen;
-	}
-
-	return _elm_lang$core$Native_List.fromArray(is);
-}
-
-
-function toInt(s)
-{
-	var len = s.length;
-
-	// if empty
-	if (len === 0)
-	{
-		return intErr(s);
-	}
-
-	// if hex
-	var c = s[0];
-	if (c === '0' && s[1] === 'x')
-	{
-		for (var i = 2; i < len; ++i)
-		{
-			var c = s[i];
-			if (('0' <= c && c <= '9') || ('A' <= c && c <= 'F') || ('a' <= c && c <= 'f'))
+			var output = [];
+			for (var k in value)
 			{
-				continue;
+				if (k === '$') continue;
+				output.push(_Debug_toAnsiString(ansi, value[k]));
 			}
-			return intErr(s);
+			return '(' + output.join(',') + ')';
 		}
-		return _elm_lang$core$Result$Ok(parseInt(s, 16));
-	}
 
-	// is decimal
-	if (c > '9' || (c < '0' && c !== '-' && c !== '+'))
-	{
-		return intErr(s);
-	}
-	for (var i = 1; i < len; ++i)
-	{
-		var c = s[i];
-		if (c < '0' || '9' < c)
+		if (tag === 'Set_elm_builtin')
 		{
-			return intErr(s);
+			return _Debug_ctorColor(ansi, 'Set')
+				+ _Debug_fadeColor(ansi, '.fromList') + ' '
+				+ _Debug_toAnsiString(ansi, elm$core$Set$toList(value));
 		}
+
+		if (tag === 'RBNode_elm_builtin' || tag === 'RBEmpty_elm_builtin')
+		{
+			return _Debug_ctorColor(ansi, 'Dict')
+				+ _Debug_fadeColor(ansi, '.fromList') + ' '
+				+ _Debug_toAnsiString(ansi, elm$core$Dict$toList(value));
+		}
+
+		if (tag === 'Array_elm_builtin')
+		{
+			return _Debug_ctorColor(ansi, 'Array')
+				+ _Debug_fadeColor(ansi, '.fromList') + ' '
+				+ _Debug_toAnsiString(ansi, elm$core$Array$toList(value));
+		}
+
+		if (tag === '::' || tag === '[]')
+		{
+			var output = '[';
+
+			value.b && (output += _Debug_toAnsiString(ansi, value.a), value = value.b)
+
+			for (; value.b; value = value.b) // WHILE_CONS
+			{
+				output += ',' + _Debug_toAnsiString(ansi, value.a);
+			}
+			return output + ']';
+		}
+
+		var output = '';
+		for (var i in value)
+		{
+			if (i === '$') continue;
+			var str = _Debug_toAnsiString(ansi, value[i]);
+			var c0 = str[0];
+			var parenless = c0 === '{' || c0 === '(' || c0 === '[' || c0 === '<' || c0 === '"' || str.indexOf(' ') < 0;
+			output += ' ' + (parenless ? str : '(' + str + ')');
+		}
+		return _Debug_ctorColor(ansi, tag) + output;
 	}
 
-	return _elm_lang$core$Result$Ok(parseInt(s, 10));
-}
-
-function intErr(s)
-{
-	return _elm_lang$core$Result$Err("could not convert string '" + s + "' to an Int");
-}
-
-
-function toFloat(s)
-{
-	// check if it is a hex, octal, or binary number
-	if (s.length === 0 || /[\sxbo]/.test(s))
+	if (typeof value === 'object')
 	{
-		return floatErr(s);
+		var output = [];
+		for (var key in value)
+		{
+			var field = key[0] === '_' ? key.slice(1) : key;
+			output.push(_Debug_fadeColor(ansi, field) + ' = ' + _Debug_toAnsiString(ansi, value[key]));
+		}
+		if (output.length === 0)
+		{
+			return '{}';
+		}
+		return '{ ' + output.join(', ') + ' }';
 	}
-	var n = +s;
-	// faster isNaN check
-	return n === n ? _elm_lang$core$Result$Ok(n) : floatErr(s);
+
+	return _Debug_internalColor(ansi, '<internals>');
 }
 
-function floatErr(s)
+function _Debug_addSlashes(str, isChar)
 {
-	return _elm_lang$core$Result$Err("could not convert string '" + s + "' to a Float");
-}
+	var s = str
+		.replace(/\\/g, '\\\\')
+		.replace(/\n/g, '\\n')
+		.replace(/\t/g, '\\t')
+		.replace(/\r/g, '\\r')
+		.replace(/\v/g, '\\v')
+		.replace(/\0/g, '\\0');
 
-
-function toList(str)
-{
-	return _elm_lang$core$Native_List.fromArray(str.split('').map(_elm_lang$core$Native_Utils.chr));
-}
-function fromList(chars)
-{
-	return _elm_lang$core$Native_List.toArray(chars).join('');
-}
-
-return {
-	isEmpty: isEmpty,
-	cons: F2(cons),
-	uncons: uncons,
-	append: F2(append),
-	concat: concat,
-	length: length,
-	map: F2(map),
-	filter: F2(filter),
-	reverse: reverse,
-	foldl: F3(foldl),
-	foldr: F3(foldr),
-
-	split: F2(split),
-	join: F2(join),
-	repeat: F2(repeat),
-
-	slice: F3(slice),
-	left: F2(left),
-	right: F2(right),
-	dropLeft: F2(dropLeft),
-	dropRight: F2(dropRight),
-
-	pad: F3(pad),
-	padLeft: F3(padLeft),
-	padRight: F3(padRight),
-
-	trim: trim,
-	trimLeft: trimLeft,
-	trimRight: trimRight,
-
-	words: words,
-	lines: lines,
-
-	toUpper: toUpper,
-	toLower: toLower,
-
-	any: F2(any),
-	all: F2(all),
-
-	contains: F2(contains),
-	startsWith: F2(startsWith),
-	endsWith: F2(endsWith),
-	indexes: F2(indexes),
-
-	toInt: toInt,
-	toFloat: toFloat,
-	toList: toList,
-	fromList: fromList
-};
-
-}();
-
-//import Native.Utils //
-
-var _elm_lang$core$Native_Char = function() {
-
-return {
-	fromCode: function(c) { return _elm_lang$core$Native_Utils.chr(String.fromCharCode(c)); },
-	toCode: function(c) { return c.charCodeAt(0); },
-	toUpper: function(c) { return _elm_lang$core$Native_Utils.chr(c.toUpperCase()); },
-	toLower: function(c) { return _elm_lang$core$Native_Utils.chr(c.toLowerCase()); },
-	toLocaleUpper: function(c) { return _elm_lang$core$Native_Utils.chr(c.toLocaleUpperCase()); },
-	toLocaleLower: function(c) { return _elm_lang$core$Native_Utils.chr(c.toLocaleLowerCase()); }
-};
-
-}();
-//import Native.Utils //
-
-var _elm_lang$core$Native_Basics = function() {
-
-function div(a, b)
-{
-	return (a / b) | 0;
-}
-function rem(a, b)
-{
-	return a % b;
-}
-function mod(a, b)
-{
-	if (b === 0)
+	if (isChar)
 	{
-		throw new Error('Cannot perform mod 0. Division by zero error.');
+		return s.replace(/\'/g, '\\\'');
 	}
-	var r = a % b;
-	var m = a === 0 ? 0 : (b > 0 ? (a >= 0 ? r : r + b) : -mod(-a, -b));
-
-	return m === b ? 0 : m;
-}
-function logBase(base, n)
-{
-	return Math.log(n) / Math.log(base);
-}
-function negate(n)
-{
-	return -n;
-}
-function abs(n)
-{
-	return n < 0 ? -n : n;
-}
-
-function min(a, b)
-{
-	return _elm_lang$core$Native_Utils.cmp(a, b) < 0 ? a : b;
-}
-function max(a, b)
-{
-	return _elm_lang$core$Native_Utils.cmp(a, b) > 0 ? a : b;
-}
-function clamp(lo, hi, n)
-{
-	return _elm_lang$core$Native_Utils.cmp(n, lo) < 0
-		? lo
-		: _elm_lang$core$Native_Utils.cmp(n, hi) > 0
-			? hi
-			: n;
-}
-
-var ord = ['LT', 'EQ', 'GT'];
-
-function compare(x, y)
-{
-	return { ctor: ord[_elm_lang$core$Native_Utils.cmp(x, y) + 1] };
-}
-
-function xor(a, b)
-{
-	return a !== b;
-}
-function not(b)
-{
-	return !b;
-}
-function isInfinite(n)
-{
-	return n === Infinity || n === -Infinity;
-}
-
-function truncate(n)
-{
-	return n | 0;
-}
-
-function degrees(d)
-{
-	return d * Math.PI / 180;
-}
-function turns(t)
-{
-	return 2 * Math.PI * t;
-}
-function fromPolar(point)
-{
-	var r = point._0;
-	var t = point._1;
-	return _elm_lang$core$Native_Utils.Tuple2(r * Math.cos(t), r * Math.sin(t));
-}
-function toPolar(point)
-{
-	var x = point._0;
-	var y = point._1;
-	return _elm_lang$core$Native_Utils.Tuple2(Math.sqrt(x * x + y * y), Math.atan2(y, x));
-}
-
-return {
-	div: F2(div),
-	rem: F2(rem),
-	mod: F2(mod),
-
-	pi: Math.PI,
-	e: Math.E,
-	cos: Math.cos,
-	sin: Math.sin,
-	tan: Math.tan,
-	acos: Math.acos,
-	asin: Math.asin,
-	atan: Math.atan,
-	atan2: F2(Math.atan2),
-
-	degrees: degrees,
-	turns: turns,
-	fromPolar: fromPolar,
-	toPolar: toPolar,
-
-	sqrt: Math.sqrt,
-	logBase: F2(logBase),
-	negate: negate,
-	abs: abs,
-	min: F2(min),
-	max: F2(max),
-	clamp: F3(clamp),
-	compare: F2(compare),
-
-	xor: F2(xor),
-	not: not,
-
-	truncate: truncate,
-	ceiling: Math.ceil,
-	floor: Math.floor,
-	round: Math.round,
-	toFloat: function(x) { return x; },
-	isNaN: isNaN,
-	isInfinite: isInfinite
-};
-
-}();
-//import //
-
-var _elm_lang$core$Native_Utils = function() {
-
-// COMPARISONS
-
-function eq(x, y)
-{
-	var stack = [];
-	var isEqual = eqHelp(x, y, 0, stack);
-	var pair;
-	while (isEqual && (pair = stack.pop()))
+	else
 	{
-		isEqual = eqHelp(pair.x, pair.y, 0, stack);
+		return s.replace(/\"/g, '\\"');
 	}
+}
+
+function _Debug_ctorColor(ansi, string)
+{
+	return ansi ? '\x1b[96m' + string + '\x1b[0m' : string;
+}
+
+function _Debug_numberColor(ansi, string)
+{
+	return ansi ? '\x1b[95m' + string + '\x1b[0m' : string;
+}
+
+function _Debug_stringColor(ansi, string)
+{
+	return ansi ? '\x1b[93m' + string + '\x1b[0m' : string;
+}
+
+function _Debug_charColor(ansi, string)
+{
+	return ansi ? '\x1b[92m' + string + '\x1b[0m' : string;
+}
+
+function _Debug_fadeColor(ansi, string)
+{
+	return ansi ? '\x1b[37m' + string + '\x1b[0m' : string;
+}
+
+function _Debug_internalColor(ansi, string)
+{
+	return ansi ? '\x1b[94m' + string + '\x1b[0m' : string;
+}
+
+
+
+// CRASH
+
+
+function _Debug_crash_UNUSED(identifier)
+{
+	throw new Error('https://github.com/elm/core/blob/1.0.0/hints/' + identifier + '.md');
+}
+
+
+function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
+{
+	switch(identifier)
+	{
+		case 0:
+			throw new Error('What node should I take over? In JavaScript I need something like:\n\n    Elm.Main.init({\n        node: document.getElementById("elm-node")\n    })\n\nYou need to do this with any Browser.sandbox or Browser.element program.');
+
+		case 1:
+			throw new Error('Browser.application programs cannot handle URLs like this:\n\n    ' + document.location.href + '\n\nWhat is the root? The root of your file system? Try looking at this program with `elm reactor` or some other server.');
+
+		case 2:
+			var message = fact1;
+			throw new Error('Problem with the flags given to your Elm program on initialization.\n\n' + message);
+
+		case 3:
+			var portName = fact1;
+			throw new Error('There can only be one port named `' + portName + '`, but your program has multiple.');
+
+		case 4:
+			var portName = fact1;
+			var problem = fact2;
+			throw new Error('Trying to send an unexpected type of value through port `' + portName + '`:\n' + problem);
+
+		case 5:
+			throw new Error('Trying to use `(==)` on functions.\nThere is no way to know if functions are "the same" in the Elm sense.\nRead more about this at https://package.elm-lang.org/packages/elm/core/latest/Basics#== which describes why it is this way and what the better version will look like.');
+
+		case 6:
+			var moduleName = fact1;
+			throw new Error('Your page is loading multiple Elm scripts with a module named ' + moduleName + '. Maybe a duplicate script is getting loaded accidentally? If not, rename one of them so I know which is which!');
+
+		case 8:
+			var moduleName = fact1;
+			var region = fact2;
+			var message = fact3;
+			throw new Error('TODO in module `' + moduleName + '` ' + _Debug_regionToString(region) + '\n\n' + message);
+
+		case 9:
+			var moduleName = fact1;
+			var region = fact2;
+			var value = fact3;
+			var message = fact4;
+			throw new Error(
+				'TODO in module `' + moduleName + '` from the `case` expression '
+				+ _Debug_regionToString(region) + '\n\nIt received the following value:\n\n    '
+				+ _Debug_toString(value).replace('\n', '\n    ')
+				+ '\n\nBut the branch that handles it says:\n\n    ' + message.replace('\n', '\n    ')
+			);
+
+		case 10:
+			throw new Error('Bug in https://github.com/elm/virtual-dom/issues');
+
+		case 11:
+			throw new Error('Cannot perform mod 0. Division by zero error.');
+	}
+}
+
+function _Debug_regionToString(region)
+{
+	if (region.start.line === region.end.line)
+	{
+		return 'on line ' + region.start.line;
+	}
+	return 'on lines ' + region.start.line + ' through ' + region.end.line;
+}
+
+
+
+// EQUALITY
+
+function _Utils_eq(x, y)
+{
+	for (
+		var pair, stack = [], isEqual = _Utils_eqHelp(x, y, 0, stack);
+		isEqual && (pair = stack.pop());
+		isEqual = _Utils_eqHelp(pair.a, pair.b, 0, stack)
+		)
+	{}
+
 	return isEqual;
 }
 
-
-function eqHelp(x, y, depth, stack)
+function _Utils_eqHelp(x, y, depth, stack)
 {
 	if (depth > 100)
 	{
-		stack.push({ x: x, y: y });
+		stack.push(_Utils_Tuple2(x,y));
 		return true;
 	}
 
@@ -4057,97 +3936,36 @@ function eqHelp(x, y, depth, stack)
 		return true;
 	}
 
-	if (typeof x !== 'object')
+	if (typeof x !== 'object' || x === null || y === null)
 	{
-		if (typeof x === 'function')
-		{
-			throw new Error(
-				'Trying to use `(==)` on functions. There is no way to know if functions are "the same" in the Elm sense.'
-				+ ' Read more about this at http://package.elm-lang.org/packages/elm-lang/core/latest/Basics#=='
-				+ ' which describes why it is this way and what the better version will look like.'
-			);
-		}
+		typeof x === 'function' && _Debug_crash(5);
 		return false;
 	}
 
-	if (x === null || y === null)
+	/**/
+	if (x.$ === 'Set_elm_builtin')
 	{
-		return false
+		x = elm$core$Set$toList(x);
+		y = elm$core$Set$toList(y);
 	}
+	if (x.$ === 'RBNode_elm_builtin' || x.$ === 'RBEmpty_elm_builtin')
+	{
+		x = elm$core$Dict$toList(x);
+		y = elm$core$Dict$toList(y);
+	}
+	//*/
 
-	if (x instanceof Date)
+	/**_UNUSED/
+	if (x.$ < 0)
 	{
-		return x.getTime() === y.getTime();
+		x = elm$core$Dict$toList(x);
+		y = elm$core$Dict$toList(y);
 	}
-
-	if (!('ctor' in x))
-	{
-		for (var key in x)
-		{
-			if (!eqHelp(x[key], y[key], depth + 1, stack))
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	// convert Dicts and Sets to lists
-	if (x.ctor === 'RBNode_elm_builtin' || x.ctor === 'RBEmpty_elm_builtin')
-	{
-		x = _elm_lang$core$Dict$toList(x);
-		y = _elm_lang$core$Dict$toList(y);
-	}
-	if (x.ctor === 'Set_elm_builtin')
-	{
-		x = _elm_lang$core$Set$toList(x);
-		y = _elm_lang$core$Set$toList(y);
-	}
-
-	// check if lists are equal without recursion
-	if (x.ctor === '::')
-	{
-		var a = x;
-		var b = y;
-		while (a.ctor === '::' && b.ctor === '::')
-		{
-			if (!eqHelp(a._0, b._0, depth + 1, stack))
-			{
-				return false;
-			}
-			a = a._1;
-			b = b._1;
-		}
-		return a.ctor === b.ctor;
-	}
-
-	// check if Arrays are equal
-	if (x.ctor === '_Array')
-	{
-		var xs = _elm_lang$core$Native_Array.toJSArray(x);
-		var ys = _elm_lang$core$Native_Array.toJSArray(y);
-		if (xs.length !== ys.length)
-		{
-			return false;
-		}
-		for (var i = 0; i < xs.length; i++)
-		{
-			if (!eqHelp(xs[i], ys[i], depth + 1, stack))
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	if (!eqHelp(x.ctor, y.ctor, depth + 1, stack))
-	{
-		return false;
-	}
+	//*/
 
 	for (var key in x)
 	{
-		if (!eqHelp(x[key], y[key], depth + 1, stack))
+		if (!_Utils_eqHelp(x[key], y[key], depth + 1, stack))
 		{
 			return false;
 		}
@@ -4155,97 +3973,81 @@ function eqHelp(x, y, depth, stack)
 	return true;
 }
 
+var _Utils_equal = F2(_Utils_eq);
+var _Utils_notEqual = F2(function(a, b) { return !_Utils_eq(a,b); });
+
+
+
+// COMPARISONS
+
 // Code in Generate/JavaScript.hs, Basics.js, and List.js depends on
 // the particular integer values assigned to LT, EQ, and GT.
 
-var LT = -1, EQ = 0, GT = 1;
-
-function cmp(x, y)
+function _Utils_cmp(x, y, ord)
 {
 	if (typeof x !== 'object')
 	{
-		return x === y ? EQ : x < y ? LT : GT;
+		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
 	}
 
+	/**/
 	if (x instanceof String)
 	{
 		var a = x.valueOf();
 		var b = y.valueOf();
-		return a === b ? EQ : a < b ? LT : GT;
+		return a === b ? 0 : a < b ? -1 : 1;
 	}
+	//*/
 
-	if (x.ctor === '::' || x.ctor === '[]')
+	/**_UNUSED/
+	if (!x.$)
+	//*/
+	/**/
+	if (x.$[0] === '#')
+	//*/
 	{
-		while (x.ctor === '::' && y.ctor === '::')
-		{
-			var ord = cmp(x._0, y._0);
-			if (ord !== EQ)
-			{
-				return ord;
-			}
-			x = x._1;
-			y = y._1;
-		}
-		return x.ctor === y.ctor ? EQ : x.ctor === '[]' ? LT : GT;
+		return (ord = _Utils_cmp(x.a, y.a))
+			? ord
+			: (ord = _Utils_cmp(x.b, y.b))
+				? ord
+				: _Utils_cmp(x.c, y.c);
 	}
 
-	if (x.ctor.slice(0, 6) === '_Tuple')
-	{
-		var ord;
-		var n = x.ctor.slice(6) - 0;
-		var err = 'cannot compare tuples with more than 6 elements.';
-		if (n === 0) return EQ;
-		if (n >= 1) { ord = cmp(x._0, y._0); if (ord !== EQ) return ord;
-		if (n >= 2) { ord = cmp(x._1, y._1); if (ord !== EQ) return ord;
-		if (n >= 3) { ord = cmp(x._2, y._2); if (ord !== EQ) return ord;
-		if (n >= 4) { ord = cmp(x._3, y._3); if (ord !== EQ) return ord;
-		if (n >= 5) { ord = cmp(x._4, y._4); if (ord !== EQ) return ord;
-		if (n >= 6) { ord = cmp(x._5, y._5); if (ord !== EQ) return ord;
-		if (n >= 7) throw new Error('Comparison error: ' + err); } } } } } }
-		return EQ;
-	}
-
-	throw new Error(
-		'Comparison error: comparison is only defined on ints, '
-		+ 'floats, times, chars, strings, lists of comparable values, '
-		+ 'and tuples of comparable values.'
-	);
+	// traverse conses until end of a list or a mismatch
+	for (; x.b && y.b && !(ord = _Utils_cmp(x.a, y.a)); x = x.b, y = y.b) {} // WHILE_CONSES
+	return ord || (x.b ? /*GT*/ 1 : y.b ? /*LT*/ -1 : /*EQ*/ 0);
 }
+
+var _Utils_lt = F2(function(a, b) { return _Utils_cmp(a, b) < 0; });
+var _Utils_le = F2(function(a, b) { return _Utils_cmp(a, b) < 1; });
+var _Utils_gt = F2(function(a, b) { return _Utils_cmp(a, b) > 0; });
+var _Utils_ge = F2(function(a, b) { return _Utils_cmp(a, b) >= 0; });
+
+var _Utils_compare = F2(function(x, y)
+{
+	var n = _Utils_cmp(x, y);
+	return n < 0 ? elm$core$Basics$LT : n ? elm$core$Basics$GT : elm$core$Basics$EQ;
+});
 
 
 // COMMON VALUES
 
-var Tuple0 = {
-	ctor: '_Tuple0'
-};
+var _Utils_Tuple0_UNUSED = 0;
+var _Utils_Tuple0 = { $: '#0' };
 
-function Tuple2(x, y)
-{
-	return {
-		ctor: '_Tuple2',
-		_0: x,
-		_1: y
-	};
-}
+function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
 
-function chr(c)
-{
-	return new String(c);
-}
+function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
 
-
-// GUID
-
-var count = 0;
-function guid(_)
-{
-	return count++;
-}
+function _Utils_chr_UNUSED(c) { return c; }
+function _Utils_chr(c) { return new String(c); }
 
 
 // RECORDS
 
-function update(oldRecord, updatedFields)
+function _Utils_update(oldRecord, updatedFields)
 {
 	var newRecord = {};
 
@@ -4263,20 +4065,11 @@ function update(oldRecord, updatedFields)
 }
 
 
-//// LIST STUFF ////
+// APPEND
 
-var Nil = { ctor: '[]' };
+var _Utils_append = F2(_Utils_ap);
 
-function Cons(hd, tl)
-{
-	return {
-		ctor: '::',
-		_0: hd,
-		_1: tl
-	};
-}
-
-function append(xs, ys)
+function _Utils_ap(xs, ys)
 {
 	// append Strings
 	if (typeof xs === 'string')
@@ -4285,2399 +4078,504 @@ function append(xs, ys)
 	}
 
 	// append Lists
-	if (xs.ctor === '[]')
+	if (!xs.b)
 	{
 		return ys;
 	}
-	var root = Cons(xs._0, Nil);
-	var curr = root;
-	xs = xs._1;
-	while (xs.ctor !== '[]')
+	var root = _List_Cons(xs.a, ys);
+	xs = xs.b
+	for (var curr = root; xs.b; xs = xs.b) // WHILE_CONS
 	{
-		curr._1 = Cons(xs._0, Nil);
-		xs = xs._1;
-		curr = curr._1;
+		curr = curr.b = _List_Cons(xs.a, ys);
 	}
-	curr._1 = ys;
 	return root;
 }
 
 
-// CRASHES
 
-function crash(moduleName, region)
-{
-	return function(message) {
-		throw new Error(
-			'Ran into a `Debug.crash` in module `' + moduleName + '` ' + regionToString(region) + '\n'
-			+ 'The message provided by the code author is:\n\n    '
-			+ message
-		);
-	};
-}
+var _List_Nil_UNUSED = { $: 0 };
+var _List_Nil = { $: '[]' };
 
-function crashCase(moduleName, region, value)
-{
-	return function(message) {
-		throw new Error(
-			'Ran into a `Debug.crash` in module `' + moduleName + '`\n\n'
-			+ 'This was caused by the `case` expression ' + regionToString(region) + '.\n'
-			+ 'One of the branches ended with a crash and the following value got through:\n\n    ' + toString(value) + '\n\n'
-			+ 'The message provided by the code author is:\n\n    '
-			+ message
-		);
-	};
-}
+function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
 
-function regionToString(region)
+
+var _List_cons = F2(_List_Cons);
+
+function _List_fromArray(arr)
 {
-	if (region.start.line == region.end.line)
+	var out = _List_Nil;
+	for (var i = arr.length; i--; )
 	{
-		return 'on line ' + region.start.line;
+		out = _List_Cons(arr[i], out);
 	}
-	return 'between lines ' + region.start.line + ' and ' + region.end.line;
+	return out;
 }
+
+function _List_toArray(xs)
+{
+	for (var out = []; xs.b; xs = xs.b) // WHILE_CONS
+	{
+		out.push(xs.a);
+	}
+	return out;
+}
+
+var _List_map2 = F3(function(f, xs, ys)
+{
+	for (var arr = []; xs.b && ys.b; xs = xs.b, ys = ys.b) // WHILE_CONSES
+	{
+		arr.push(A2(f, xs.a, ys.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map3 = F4(function(f, xs, ys, zs)
+{
+	for (var arr = []; xs.b && ys.b && zs.b; xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A3(f, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map4 = F5(function(f, ws, xs, ys, zs)
+{
+	for (var arr = []; ws.b && xs.b && ys.b && zs.b; ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A4(f, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map5 = F6(function(f, vs, ws, xs, ys, zs)
+{
+	for (var arr = []; vs.b && ws.b && xs.b && ys.b && zs.b; vs = vs.b, ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A5(f, vs.a, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_sortBy = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		return _Utils_cmp(f(a), f(b));
+	}));
+});
+
+var _List_sortWith = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		var ord = A2(f, a, b);
+		return ord === elm$core$Basics$EQ ? 0 : ord === elm$core$Basics$LT ? -1 : 1;
+	}));
+});
+
+
+
+var _String_cons = F2(function(chr, str)
+{
+	return chr + str;
+});
+
+function _String_uncons(string)
+{
+	var word = string.charCodeAt(0);
+	return word
+		? elm$core$Maybe$Just(
+			0xD800 <= word && word <= 0xDBFF
+				? _Utils_Tuple2(_Utils_chr(string[0] + string[1]), string.slice(2))
+				: _Utils_Tuple2(_Utils_chr(string[0]), string.slice(1))
+		)
+		: elm$core$Maybe$Nothing;
+}
+
+var _String_append = F2(function(a, b)
+{
+	return a + b;
+});
+
+function _String_length(str)
+{
+	return str.length;
+}
+
+var _String_map = F2(function(func, string)
+{
+	var len = string.length;
+	var array = new Array(len);
+	var i = 0;
+	while (i < len)
+	{
+		var word = string.charCodeAt(i);
+		if (0xD800 <= word && word <= 0xDBFF)
+		{
+			array[i] = func(_Utils_chr(string[i] + string[i+1]));
+			i += 2;
+			continue;
+		}
+		array[i] = func(_Utils_chr(string[i]));
+		i++;
+	}
+	return array.join('');
+});
+
+var _String_filter = F2(function(isGood, str)
+{
+	var arr = [];
+	var len = str.length;
+	var i = 0;
+	while (i < len)
+	{
+		var char = str[i];
+		var word = str.charCodeAt(i);
+		i++;
+		if (0xD800 <= word && word <= 0xDBFF)
+		{
+			char += str[i];
+			i++;
+		}
+
+		if (isGood(_Utils_chr(char)))
+		{
+			arr.push(char);
+		}
+	}
+	return arr.join('');
+});
+
+function _String_reverse(str)
+{
+	var len = str.length;
+	var arr = new Array(len);
+	var i = 0;
+	while (i < len)
+	{
+		var word = str.charCodeAt(i);
+		if (0xD800 <= word && word <= 0xDBFF)
+		{
+			arr[len - i] = str[i + 1];
+			i++;
+			arr[len - i] = str[i - 1];
+			i++;
+		}
+		else
+		{
+			arr[len - i] = str[i];
+			i++;
+		}
+	}
+	return arr.join('');
+}
+
+var _String_foldl = F3(function(func, state, string)
+{
+	var len = string.length;
+	var i = 0;
+	while (i < len)
+	{
+		var char = string[i];
+		var word = string.charCodeAt(i);
+		i++;
+		if (0xD800 <= word && word <= 0xDBFF)
+		{
+			char += string[i];
+			i++;
+		}
+		state = A2(func, _Utils_chr(char), state);
+	}
+	return state;
+});
+
+var _String_foldr = F3(function(func, state, string)
+{
+	var i = string.length;
+	while (i--)
+	{
+		var char = string[i];
+		var word = string.charCodeAt(i);
+		if (0xDC00 <= word && word <= 0xDFFF)
+		{
+			i--;
+			char = string[i] + char;
+		}
+		state = A2(func, _Utils_chr(char), state);
+	}
+	return state;
+});
+
+var _String_split = F2(function(sep, str)
+{
+	return str.split(sep);
+});
+
+var _String_join = F2(function(sep, strs)
+{
+	return strs.join(sep);
+});
+
+var _String_slice = F3(function(start, end, str) {
+	return str.slice(start, end);
+});
+
+function _String_trim(str)
+{
+	return str.trim();
+}
+
+function _String_trimLeft(str)
+{
+	return str.replace(/^\s+/, '');
+}
+
+function _String_trimRight(str)
+{
+	return str.replace(/\s+$/, '');
+}
+
+function _String_words(str)
+{
+	return _List_fromArray(str.trim().split(/\s+/g));
+}
+
+function _String_lines(str)
+{
+	return _List_fromArray(str.split(/\r\n|\r|\n/g));
+}
+
+function _String_toUpper(str)
+{
+	return str.toUpperCase();
+}
+
+function _String_toLower(str)
+{
+	return str.toLowerCase();
+}
+
+var _String_any = F2(function(isGood, string)
+{
+	var i = string.length;
+	while (i--)
+	{
+		var char = string[i];
+		var word = string.charCodeAt(i);
+		if (0xDC00 <= word && word <= 0xDFFF)
+		{
+			i--;
+			char = string[i] + char;
+		}
+		if (isGood(_Utils_chr(char)))
+		{
+			return true;
+		}
+	}
+	return false;
+});
+
+var _String_all = F2(function(isGood, string)
+{
+	var i = string.length;
+	while (i--)
+	{
+		var char = string[i];
+		var word = string.charCodeAt(i);
+		if (0xDC00 <= word && word <= 0xDFFF)
+		{
+			i--;
+			char = string[i] + char;
+		}
+		if (!isGood(_Utils_chr(char)))
+		{
+			return false;
+		}
+	}
+	return true;
+});
+
+var _String_contains = F2(function(sub, str)
+{
+	return str.indexOf(sub) > -1;
+});
+
+var _String_startsWith = F2(function(sub, str)
+{
+	return str.indexOf(sub) === 0;
+});
+
+var _String_endsWith = F2(function(sub, str)
+{
+	return str.length >= sub.length &&
+		str.lastIndexOf(sub) === str.length - sub.length;
+});
+
+var _String_indexes = F2(function(sub, str)
+{
+	var subLen = sub.length;
+
+	if (subLen < 1)
+	{
+		return _List_Nil;
+	}
+
+	var i = 0;
+	var is = [];
+
+	while ((i = str.indexOf(sub, i)) > -1)
+	{
+		is.push(i);
+		i = i + subLen;
+	}
+
+	return _List_fromArray(is);
+});
 
 
 // TO STRING
 
-function toString(v)
+function _String_fromNumber(number)
 {
-	var type = typeof v;
-	if (type === 'function')
-	{
-		return '<function>';
-	}
+	return number + '';
+}
 
-	if (type === 'boolean')
-	{
-		return v ? 'True' : 'False';
-	}
 
-	if (type === 'number')
-	{
-		return v + '';
-	}
+// INT CONVERSIONS
 
-	if (v instanceof String)
-	{
-		return '\'' + addSlashes(v, true) + '\'';
-	}
+function _String_toInt(str)
+{
+	var total = 0;
+	var code0 = str.charCodeAt(0);
+	var start = code0 == 0x2B /* + */ || code0 == 0x2D /* - */ ? 1 : 0;
 
-	if (type === 'string')
+	for (var i = start; i < str.length; ++i)
 	{
-		return '"' + addSlashes(v, false) + '"';
-	}
-
-	if (v === null)
-	{
-		return 'null';
-	}
-
-	if (type === 'object' && 'ctor' in v)
-	{
-		var ctorStarter = v.ctor.substring(0, 5);
-
-		if (ctorStarter === '_Tupl')
+		var code = str.charCodeAt(i);
+		if (code < 0x30 || 0x39 < code)
 		{
-			var output = [];
-			for (var k in v)
-			{
-				if (k === 'ctor') continue;
-				output.push(toString(v[k]));
-			}
-			return '(' + output.join(',') + ')';
+			return elm$core$Maybe$Nothing;
 		}
-
-		if (ctorStarter === '_Task')
-		{
-			return '<task>'
-		}
-
-		if (v.ctor === '_Array')
-		{
-			var list = _elm_lang$core$Array$toList(v);
-			return 'Array.fromList ' + toString(list);
-		}
-
-		if (v.ctor === '<decoder>')
-		{
-			return '<decoder>';
-		}
-
-		if (v.ctor === '_Process')
-		{
-			return '<process:' + v.id + '>';
-		}
-
-		if (v.ctor === '::')
-		{
-			var output = '[' + toString(v._0);
-			v = v._1;
-			while (v.ctor === '::')
-			{
-				output += ',' + toString(v._0);
-				v = v._1;
-			}
-			return output + ']';
-		}
-
-		if (v.ctor === '[]')
-		{
-			return '[]';
-		}
-
-		if (v.ctor === 'Set_elm_builtin')
-		{
-			return 'Set.fromList ' + toString(_elm_lang$core$Set$toList(v));
-		}
-
-		if (v.ctor === 'RBNode_elm_builtin' || v.ctor === 'RBEmpty_elm_builtin')
-		{
-			return 'Dict.fromList ' + toString(_elm_lang$core$Dict$toList(v));
-		}
-
-		var output = '';
-		for (var i in v)
-		{
-			if (i === 'ctor') continue;
-			var str = toString(v[i]);
-			var c0 = str[0];
-			var parenless = c0 === '{' || c0 === '(' || c0 === '<' || c0 === '"' || str.indexOf(' ') < 0;
-			output += ' ' + (parenless ? str : '(' + str + ')');
-		}
-		return v.ctor + output;
+		total = 10 * total + code - 0x30;
 	}
 
-	if (type === 'object')
-	{
-		if (v instanceof Date)
-		{
-			return '<' + v.toString() + '>';
-		}
-
-		if (v.elm_web_socket)
-		{
-			return '<websocket>';
-		}
-
-		var output = [];
-		for (var k in v)
-		{
-			output.push(k + ' = ' + toString(v[k]));
-		}
-		if (output.length === 0)
-		{
-			return '{}';
-		}
-		return '{ ' + output.join(', ') + ' }';
-	}
-
-	return '<internal structure>';
+	return i == start
+		? elm$core$Maybe$Nothing
+		: elm$core$Maybe$Just(code0 == 0x2D ? -total : total);
 }
 
-function addSlashes(str, isChar)
+
+// FLOAT CONVERSIONS
+
+function _String_toFloat(s)
 {
-	var s = str.replace(/\\/g, '\\\\')
-			  .replace(/\n/g, '\\n')
-			  .replace(/\t/g, '\\t')
-			  .replace(/\r/g, '\\r')
-			  .replace(/\v/g, '\\v')
-			  .replace(/\0/g, '\\0');
-	if (isChar)
+	// check if it is a hex, octal, or binary number
+	if (s.length === 0 || /[\sxbo]/.test(s))
 	{
-		return s.replace(/\'/g, '\\\'');
+		return elm$core$Maybe$Nothing;
 	}
-	else
-	{
-		return s.replace(/\"/g, '\\"');
-	}
+	var n = +s;
+	// faster isNaN check
+	return n === n ? elm$core$Maybe$Just(n) : elm$core$Maybe$Nothing;
 }
 
-
-return {
-	eq: eq,
-	cmp: cmp,
-	Tuple0: Tuple0,
-	Tuple2: Tuple2,
-	chr: chr,
-	update: update,
-	guid: guid,
-
-	append: F2(append),
-
-	crash: crash,
-	crashCase: crashCase,
-
-	toString: toString
-};
-
-}();
-var _elm_lang$core$Basics$never = function (_p0) {
-	never:
-	while (true) {
-		var _p1 = _p0;
-		var _v1 = _p1._0;
-		_p0 = _v1;
-		continue never;
-	}
-};
-var _elm_lang$core$Basics$uncurry = F2(
-	function (f, _p2) {
-		var _p3 = _p2;
-		return A2(f, _p3._0, _p3._1);
-	});
-var _elm_lang$core$Basics$curry = F3(
-	function (f, a, b) {
-		return f(
-			{ctor: '_Tuple2', _0: a, _1: b});
-	});
-var _elm_lang$core$Basics$flip = F3(
-	function (f, b, a) {
-		return A2(f, a, b);
-	});
-var _elm_lang$core$Basics$always = F2(
-	function (a, _p4) {
-		return a;
-	});
-var _elm_lang$core$Basics$identity = function (x) {
-	return x;
-};
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['<|'] = F2(
-	function (f, x) {
-		return f(x);
-	});
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['|>'] = F2(
-	function (x, f) {
-		return f(x);
-	});
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['>>'] = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
-	});
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['<<'] = F3(
-	function (g, f, x) {
-		return g(
-			f(x));
-	});
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['++'] = _elm_lang$core$Native_Utils.append;
-var _elm_lang$core$Basics$toString = _elm_lang$core$Native_Utils.toString;
-var _elm_lang$core$Basics$isInfinite = _elm_lang$core$Native_Basics.isInfinite;
-var _elm_lang$core$Basics$isNaN = _elm_lang$core$Native_Basics.isNaN;
-var _elm_lang$core$Basics$toFloat = _elm_lang$core$Native_Basics.toFloat;
-var _elm_lang$core$Basics$ceiling = _elm_lang$core$Native_Basics.ceiling;
-var _elm_lang$core$Basics$floor = _elm_lang$core$Native_Basics.floor;
-var _elm_lang$core$Basics$truncate = _elm_lang$core$Native_Basics.truncate;
-var _elm_lang$core$Basics$round = _elm_lang$core$Native_Basics.round;
-var _elm_lang$core$Basics$not = _elm_lang$core$Native_Basics.not;
-var _elm_lang$core$Basics$xor = _elm_lang$core$Native_Basics.xor;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['||'] = _elm_lang$core$Native_Basics.or;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['&&'] = _elm_lang$core$Native_Basics.and;
-var _elm_lang$core$Basics$max = _elm_lang$core$Native_Basics.max;
-var _elm_lang$core$Basics$min = _elm_lang$core$Native_Basics.min;
-var _elm_lang$core$Basics$compare = _elm_lang$core$Native_Basics.compare;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['>='] = _elm_lang$core$Native_Basics.ge;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['<='] = _elm_lang$core$Native_Basics.le;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['>'] = _elm_lang$core$Native_Basics.gt;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['<'] = _elm_lang$core$Native_Basics.lt;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['/='] = _elm_lang$core$Native_Basics.neq;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['=='] = _elm_lang$core$Native_Basics.eq;
-var _elm_lang$core$Basics$e = _elm_lang$core$Native_Basics.e;
-var _elm_lang$core$Basics$pi = _elm_lang$core$Native_Basics.pi;
-var _elm_lang$core$Basics$clamp = _elm_lang$core$Native_Basics.clamp;
-var _elm_lang$core$Basics$logBase = _elm_lang$core$Native_Basics.logBase;
-var _elm_lang$core$Basics$abs = _elm_lang$core$Native_Basics.abs;
-var _elm_lang$core$Basics$negate = _elm_lang$core$Native_Basics.negate;
-var _elm_lang$core$Basics$sqrt = _elm_lang$core$Native_Basics.sqrt;
-var _elm_lang$core$Basics$atan2 = _elm_lang$core$Native_Basics.atan2;
-var _elm_lang$core$Basics$atan = _elm_lang$core$Native_Basics.atan;
-var _elm_lang$core$Basics$asin = _elm_lang$core$Native_Basics.asin;
-var _elm_lang$core$Basics$acos = _elm_lang$core$Native_Basics.acos;
-var _elm_lang$core$Basics$tan = _elm_lang$core$Native_Basics.tan;
-var _elm_lang$core$Basics$sin = _elm_lang$core$Native_Basics.sin;
-var _elm_lang$core$Basics$cos = _elm_lang$core$Native_Basics.cos;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['^'] = _elm_lang$core$Native_Basics.exp;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['%'] = _elm_lang$core$Native_Basics.mod;
-var _elm_lang$core$Basics$rem = _elm_lang$core$Native_Basics.rem;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['//'] = _elm_lang$core$Native_Basics.div;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['/'] = _elm_lang$core$Native_Basics.floatDiv;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['*'] = _elm_lang$core$Native_Basics.mul;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['-'] = _elm_lang$core$Native_Basics.sub;
-var _elm_lang$core$Basics_ops = _elm_lang$core$Basics_ops || {};
-_elm_lang$core$Basics_ops['+'] = _elm_lang$core$Native_Basics.add;
-var _elm_lang$core$Basics$toPolar = _elm_lang$core$Native_Basics.toPolar;
-var _elm_lang$core$Basics$fromPolar = _elm_lang$core$Native_Basics.fromPolar;
-var _elm_lang$core$Basics$turns = _elm_lang$core$Native_Basics.turns;
-var _elm_lang$core$Basics$degrees = _elm_lang$core$Native_Basics.degrees;
-var _elm_lang$core$Basics$radians = function (t) {
-	return t;
-};
-var _elm_lang$core$Basics$GT = {ctor: 'GT'};
-var _elm_lang$core$Basics$EQ = {ctor: 'EQ'};
-var _elm_lang$core$Basics$LT = {ctor: 'LT'};
-var _elm_lang$core$Basics$JustOneMore = function (a) {
-	return {ctor: 'JustOneMore', _0: a};
-};
-
-var _elm_lang$core$Char$fromCode = _elm_lang$core$Native_Char.fromCode;
-var _elm_lang$core$Char$toCode = _elm_lang$core$Native_Char.toCode;
-var _elm_lang$core$Char$toLocaleLower = _elm_lang$core$Native_Char.toLocaleLower;
-var _elm_lang$core$Char$toLocaleUpper = _elm_lang$core$Native_Char.toLocaleUpper;
-var _elm_lang$core$Char$toLower = _elm_lang$core$Native_Char.toLower;
-var _elm_lang$core$Char$toUpper = _elm_lang$core$Native_Char.toUpper;
-var _elm_lang$core$Char$isBetween = F3(
-	function (low, high, $char) {
-		var code = _elm_lang$core$Char$toCode($char);
-		return (_elm_lang$core$Native_Utils.cmp(
-			code,
-			_elm_lang$core$Char$toCode(low)) > -1) && (_elm_lang$core$Native_Utils.cmp(
-			code,
-			_elm_lang$core$Char$toCode(high)) < 1);
-	});
-var _elm_lang$core$Char$isUpper = A2(
-	_elm_lang$core$Char$isBetween,
-	_elm_lang$core$Native_Utils.chr('A'),
-	_elm_lang$core$Native_Utils.chr('Z'));
-var _elm_lang$core$Char$isLower = A2(
-	_elm_lang$core$Char$isBetween,
-	_elm_lang$core$Native_Utils.chr('a'),
-	_elm_lang$core$Native_Utils.chr('z'));
-var _elm_lang$core$Char$isDigit = A2(
-	_elm_lang$core$Char$isBetween,
-	_elm_lang$core$Native_Utils.chr('0'),
-	_elm_lang$core$Native_Utils.chr('9'));
-var _elm_lang$core$Char$isOctDigit = A2(
-	_elm_lang$core$Char$isBetween,
-	_elm_lang$core$Native_Utils.chr('0'),
-	_elm_lang$core$Native_Utils.chr('7'));
-var _elm_lang$core$Char$isHexDigit = function ($char) {
-	return _elm_lang$core$Char$isDigit($char) || (A3(
-		_elm_lang$core$Char$isBetween,
-		_elm_lang$core$Native_Utils.chr('a'),
-		_elm_lang$core$Native_Utils.chr('f'),
-		$char) || A3(
-		_elm_lang$core$Char$isBetween,
-		_elm_lang$core$Native_Utils.chr('A'),
-		_elm_lang$core$Native_Utils.chr('F'),
-		$char));
-};
-
-var _elm_lang$core$Maybe$withDefault = F2(
-	function ($default, maybe) {
-		var _p0 = maybe;
-		if (_p0.ctor === 'Just') {
-			return _p0._0;
-		} else {
-			return $default;
-		}
-	});
-var _elm_lang$core$Maybe$Nothing = {ctor: 'Nothing'};
-var _elm_lang$core$Maybe$andThen = F2(
-	function (callback, maybeValue) {
-		var _p1 = maybeValue;
-		if (_p1.ctor === 'Just') {
-			return callback(_p1._0);
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _elm_lang$core$Maybe$Just = function (a) {
-	return {ctor: 'Just', _0: a};
-};
-var _elm_lang$core$Maybe$map = F2(
-	function (f, maybe) {
-		var _p2 = maybe;
-		if (_p2.ctor === 'Just') {
-			return _elm_lang$core$Maybe$Just(
-				f(_p2._0));
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _elm_lang$core$Maybe$map2 = F3(
-	function (func, ma, mb) {
-		var _p3 = {ctor: '_Tuple2', _0: ma, _1: mb};
-		if (((_p3.ctor === '_Tuple2') && (_p3._0.ctor === 'Just')) && (_p3._1.ctor === 'Just')) {
-			return _elm_lang$core$Maybe$Just(
-				A2(func, _p3._0._0, _p3._1._0));
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _elm_lang$core$Maybe$map3 = F4(
-	function (func, ma, mb, mc) {
-		var _p4 = {ctor: '_Tuple3', _0: ma, _1: mb, _2: mc};
-		if ((((_p4.ctor === '_Tuple3') && (_p4._0.ctor === 'Just')) && (_p4._1.ctor === 'Just')) && (_p4._2.ctor === 'Just')) {
-			return _elm_lang$core$Maybe$Just(
-				A3(func, _p4._0._0, _p4._1._0, _p4._2._0));
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _elm_lang$core$Maybe$map4 = F5(
-	function (func, ma, mb, mc, md) {
-		var _p5 = {ctor: '_Tuple4', _0: ma, _1: mb, _2: mc, _3: md};
-		if (((((_p5.ctor === '_Tuple4') && (_p5._0.ctor === 'Just')) && (_p5._1.ctor === 'Just')) && (_p5._2.ctor === 'Just')) && (_p5._3.ctor === 'Just')) {
-			return _elm_lang$core$Maybe$Just(
-				A4(func, _p5._0._0, _p5._1._0, _p5._2._0, _p5._3._0));
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _elm_lang$core$Maybe$map5 = F6(
-	function (func, ma, mb, mc, md, me) {
-		var _p6 = {ctor: '_Tuple5', _0: ma, _1: mb, _2: mc, _3: md, _4: me};
-		if ((((((_p6.ctor === '_Tuple5') && (_p6._0.ctor === 'Just')) && (_p6._1.ctor === 'Just')) && (_p6._2.ctor === 'Just')) && (_p6._3.ctor === 'Just')) && (_p6._4.ctor === 'Just')) {
-			return _elm_lang$core$Maybe$Just(
-				A5(func, _p6._0._0, _p6._1._0, _p6._2._0, _p6._3._0, _p6._4._0));
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-
-var _elm_lang$core$Result$toMaybe = function (result) {
-	var _p0 = result;
-	if (_p0.ctor === 'Ok') {
-		return _elm_lang$core$Maybe$Just(_p0._0);
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
-};
-var _elm_lang$core$Result$withDefault = F2(
-	function (def, result) {
-		var _p1 = result;
-		if (_p1.ctor === 'Ok') {
-			return _p1._0;
-		} else {
-			return def;
-		}
-	});
-var _elm_lang$core$Result$Err = function (a) {
-	return {ctor: 'Err', _0: a};
-};
-var _elm_lang$core$Result$andThen = F2(
-	function (callback, result) {
-		var _p2 = result;
-		if (_p2.ctor === 'Ok') {
-			return callback(_p2._0);
-		} else {
-			return _elm_lang$core$Result$Err(_p2._0);
-		}
-	});
-var _elm_lang$core$Result$Ok = function (a) {
-	return {ctor: 'Ok', _0: a};
-};
-var _elm_lang$core$Result$map = F2(
-	function (func, ra) {
-		var _p3 = ra;
-		if (_p3.ctor === 'Ok') {
-			return _elm_lang$core$Result$Ok(
-				func(_p3._0));
-		} else {
-			return _elm_lang$core$Result$Err(_p3._0);
-		}
-	});
-var _elm_lang$core$Result$map2 = F3(
-	function (func, ra, rb) {
-		var _p4 = {ctor: '_Tuple2', _0: ra, _1: rb};
-		if (_p4._0.ctor === 'Ok') {
-			if (_p4._1.ctor === 'Ok') {
-				return _elm_lang$core$Result$Ok(
-					A2(func, _p4._0._0, _p4._1._0));
-			} else {
-				return _elm_lang$core$Result$Err(_p4._1._0);
-			}
-		} else {
-			return _elm_lang$core$Result$Err(_p4._0._0);
-		}
-	});
-var _elm_lang$core$Result$map3 = F4(
-	function (func, ra, rb, rc) {
-		var _p5 = {ctor: '_Tuple3', _0: ra, _1: rb, _2: rc};
-		if (_p5._0.ctor === 'Ok') {
-			if (_p5._1.ctor === 'Ok') {
-				if (_p5._2.ctor === 'Ok') {
-					return _elm_lang$core$Result$Ok(
-						A3(func, _p5._0._0, _p5._1._0, _p5._2._0));
-				} else {
-					return _elm_lang$core$Result$Err(_p5._2._0);
-				}
-			} else {
-				return _elm_lang$core$Result$Err(_p5._1._0);
-			}
-		} else {
-			return _elm_lang$core$Result$Err(_p5._0._0);
-		}
-	});
-var _elm_lang$core$Result$map4 = F5(
-	function (func, ra, rb, rc, rd) {
-		var _p6 = {ctor: '_Tuple4', _0: ra, _1: rb, _2: rc, _3: rd};
-		if (_p6._0.ctor === 'Ok') {
-			if (_p6._1.ctor === 'Ok') {
-				if (_p6._2.ctor === 'Ok') {
-					if (_p6._3.ctor === 'Ok') {
-						return _elm_lang$core$Result$Ok(
-							A4(func, _p6._0._0, _p6._1._0, _p6._2._0, _p6._3._0));
-					} else {
-						return _elm_lang$core$Result$Err(_p6._3._0);
-					}
-				} else {
-					return _elm_lang$core$Result$Err(_p6._2._0);
-				}
-			} else {
-				return _elm_lang$core$Result$Err(_p6._1._0);
-			}
-		} else {
-			return _elm_lang$core$Result$Err(_p6._0._0);
-		}
-	});
-var _elm_lang$core$Result$map5 = F6(
-	function (func, ra, rb, rc, rd, re) {
-		var _p7 = {ctor: '_Tuple5', _0: ra, _1: rb, _2: rc, _3: rd, _4: re};
-		if (_p7._0.ctor === 'Ok') {
-			if (_p7._1.ctor === 'Ok') {
-				if (_p7._2.ctor === 'Ok') {
-					if (_p7._3.ctor === 'Ok') {
-						if (_p7._4.ctor === 'Ok') {
-							return _elm_lang$core$Result$Ok(
-								A5(func, _p7._0._0, _p7._1._0, _p7._2._0, _p7._3._0, _p7._4._0));
-						} else {
-							return _elm_lang$core$Result$Err(_p7._4._0);
-						}
-					} else {
-						return _elm_lang$core$Result$Err(_p7._3._0);
-					}
-				} else {
-					return _elm_lang$core$Result$Err(_p7._2._0);
-				}
-			} else {
-				return _elm_lang$core$Result$Err(_p7._1._0);
-			}
-		} else {
-			return _elm_lang$core$Result$Err(_p7._0._0);
-		}
-	});
-var _elm_lang$core$Result$mapError = F2(
-	function (f, result) {
-		var _p8 = result;
-		if (_p8.ctor === 'Ok') {
-			return _elm_lang$core$Result$Ok(_p8._0);
-		} else {
-			return _elm_lang$core$Result$Err(
-				f(_p8._0));
-		}
-	});
-var _elm_lang$core$Result$fromMaybe = F2(
-	function (err, maybe) {
-		var _p9 = maybe;
-		if (_p9.ctor === 'Just') {
-			return _elm_lang$core$Result$Ok(_p9._0);
-		} else {
-			return _elm_lang$core$Result$Err(err);
-		}
-	});
-
-var _elm_lang$core$String$fromList = _elm_lang$core$Native_String.fromList;
-var _elm_lang$core$String$toList = _elm_lang$core$Native_String.toList;
-var _elm_lang$core$String$toFloat = _elm_lang$core$Native_String.toFloat;
-var _elm_lang$core$String$toInt = _elm_lang$core$Native_String.toInt;
-var _elm_lang$core$String$indices = _elm_lang$core$Native_String.indexes;
-var _elm_lang$core$String$indexes = _elm_lang$core$Native_String.indexes;
-var _elm_lang$core$String$endsWith = _elm_lang$core$Native_String.endsWith;
-var _elm_lang$core$String$startsWith = _elm_lang$core$Native_String.startsWith;
-var _elm_lang$core$String$contains = _elm_lang$core$Native_String.contains;
-var _elm_lang$core$String$all = _elm_lang$core$Native_String.all;
-var _elm_lang$core$String$any = _elm_lang$core$Native_String.any;
-var _elm_lang$core$String$toLower = _elm_lang$core$Native_String.toLower;
-var _elm_lang$core$String$toUpper = _elm_lang$core$Native_String.toUpper;
-var _elm_lang$core$String$lines = _elm_lang$core$Native_String.lines;
-var _elm_lang$core$String$words = _elm_lang$core$Native_String.words;
-var _elm_lang$core$String$trimRight = _elm_lang$core$Native_String.trimRight;
-var _elm_lang$core$String$trimLeft = _elm_lang$core$Native_String.trimLeft;
-var _elm_lang$core$String$trim = _elm_lang$core$Native_String.trim;
-var _elm_lang$core$String$padRight = _elm_lang$core$Native_String.padRight;
-var _elm_lang$core$String$padLeft = _elm_lang$core$Native_String.padLeft;
-var _elm_lang$core$String$pad = _elm_lang$core$Native_String.pad;
-var _elm_lang$core$String$dropRight = _elm_lang$core$Native_String.dropRight;
-var _elm_lang$core$String$dropLeft = _elm_lang$core$Native_String.dropLeft;
-var _elm_lang$core$String$right = _elm_lang$core$Native_String.right;
-var _elm_lang$core$String$left = _elm_lang$core$Native_String.left;
-var _elm_lang$core$String$slice = _elm_lang$core$Native_String.slice;
-var _elm_lang$core$String$repeat = _elm_lang$core$Native_String.repeat;
-var _elm_lang$core$String$join = _elm_lang$core$Native_String.join;
-var _elm_lang$core$String$split = _elm_lang$core$Native_String.split;
-var _elm_lang$core$String$foldr = _elm_lang$core$Native_String.foldr;
-var _elm_lang$core$String$foldl = _elm_lang$core$Native_String.foldl;
-var _elm_lang$core$String$reverse = _elm_lang$core$Native_String.reverse;
-var _elm_lang$core$String$filter = _elm_lang$core$Native_String.filter;
-var _elm_lang$core$String$map = _elm_lang$core$Native_String.map;
-var _elm_lang$core$String$length = _elm_lang$core$Native_String.length;
-var _elm_lang$core$String$concat = _elm_lang$core$Native_String.concat;
-var _elm_lang$core$String$append = _elm_lang$core$Native_String.append;
-var _elm_lang$core$String$uncons = _elm_lang$core$Native_String.uncons;
-var _elm_lang$core$String$cons = _elm_lang$core$Native_String.cons;
-var _elm_lang$core$String$fromChar = function ($char) {
-	return A2(_elm_lang$core$String$cons, $char, '');
-};
-var _elm_lang$core$String$isEmpty = _elm_lang$core$Native_String.isEmpty;
-
-//import Native.List //
-
-var _elm_lang$core$Native_Array = function() {
-
-// A RRB-Tree has two distinct data types.
-// Leaf -> "height"  is always 0
-//         "table"   is an array of elements
-// Node -> "height"  is always greater than 0
-//         "table"   is an array of child nodes
-//         "lengths" is an array of accumulated lengths of the child nodes
-
-// M is the maximal table size. 32 seems fast. E is the allowed increase
-// of search steps when concatting to find an index. Lower values will
-// decrease balancing, but will increase search steps.
-var M = 32;
-var E = 2;
-
-// An empty array.
-var empty = {
-	ctor: '_Array',
-	height: 0,
-	table: []
-};
-
-
-function get(i, array)
+function _String_fromList(chars)
 {
-	if (i < 0 || i >= length(array))
-	{
-		throw new Error(
-			'Index ' + i + ' is out of range. Check the length of ' +
-			'your array first or use getMaybe or getWithDefault.');
-	}
-	return unsafeGet(i, array);
+	return _List_toArray(chars).join('');
 }
 
 
-function unsafeGet(i, array)
+
+
+// MATH
+
+var _Basics_add = F2(function(a, b) { return a + b; });
+var _Basics_sub = F2(function(a, b) { return a - b; });
+var _Basics_mul = F2(function(a, b) { return a * b; });
+var _Basics_fdiv = F2(function(a, b) { return a / b; });
+var _Basics_idiv = F2(function(a, b) { return (a / b) | 0; });
+var _Basics_pow = F2(Math.pow);
+
+var _Basics_remainderBy = F2(function(b, a) { return a % b; });
+
+// https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/divmodnote-letter.pdf
+var _Basics_modBy = F2(function(modulus, x)
 {
-	for (var x = array.height; x > 0; x--)
-	{
-		var slot = i >> (x * 5);
-		while (array.lengths[slot] <= i)
-		{
-			slot++;
-		}
-		if (slot > 0)
-		{
-			i -= array.lengths[slot - 1];
-		}
-		array = array.table[slot];
-	}
-	return array.table[i];
-}
+	var answer = x % modulus;
+	return modulus === 0
+		? _Debug_crash(11)
+		:
+	((answer > 0 && modulus < 0) || (answer < 0 && modulus > 0))
+		? answer + modulus
+		: answer;
+});
 
 
-// Sets the value at the index i. Only the nodes leading to i will get
-// copied and updated.
-function set(i, item, array)
+// TRIGONOMETRY
+
+var _Basics_pi = Math.PI;
+var _Basics_e = Math.E;
+var _Basics_cos = Math.cos;
+var _Basics_sin = Math.sin;
+var _Basics_tan = Math.tan;
+var _Basics_acos = Math.acos;
+var _Basics_asin = Math.asin;
+var _Basics_atan = Math.atan;
+var _Basics_atan2 = F2(Math.atan2);
+
+
+// MORE MATH
+
+function _Basics_toFloat(x) { return x; }
+function _Basics_truncate(n) { return n | 0; }
+function _Basics_isInfinite(n) { return n === Infinity || n === -Infinity; }
+
+var _Basics_ceiling = Math.ceil;
+var _Basics_floor = Math.floor;
+var _Basics_round = Math.round;
+var _Basics_sqrt = Math.sqrt;
+var _Basics_log = Math.log;
+var _Basics_isNaN = isNaN;
+
+
+// BOOLEANS
+
+function _Basics_not(bool) { return !bool; }
+var _Basics_and = F2(function(a, b) { return a && b; });
+var _Basics_or  = F2(function(a, b) { return a || b; });
+var _Basics_xor = F2(function(a, b) { return a !== b; });
+
+
+// CREATE
+
+var _Regex_never = /.^/;
+
+var _Regex_fromStringWith = F2(function(options, string)
 {
-	if (i < 0 || length(array) <= i)
-	{
-		return array;
-	}
-	return unsafeSet(i, item, array);
-}
-
-
-function unsafeSet(i, item, array)
-{
-	array = nodeCopy(array);
-
-	if (array.height === 0)
-	{
-		array.table[i] = item;
-	}
-	else
-	{
-		var slot = getSlot(i, array);
-		if (slot > 0)
-		{
-			i -= array.lengths[slot - 1];
-		}
-		array.table[slot] = unsafeSet(i, item, array.table[slot]);
-	}
-	return array;
-}
-
-
-function initialize(len, f)
-{
-	if (len <= 0)
-	{
-		return empty;
-	}
-	var h = Math.floor( Math.log(len) / Math.log(M) );
-	return initialize_(f, h, 0, len);
-}
-
-function initialize_(f, h, from, to)
-{
-	if (h === 0)
-	{
-		var table = new Array((to - from) % (M + 1));
-		for (var i = 0; i < table.length; i++)
-		{
-		  table[i] = f(from + i);
-		}
-		return {
-			ctor: '_Array',
-			height: 0,
-			table: table
-		};
-	}
-
-	var step = Math.pow(M, h);
-	var table = new Array(Math.ceil((to - from) / step));
-	var lengths = new Array(table.length);
-	for (var i = 0; i < table.length; i++)
-	{
-		table[i] = initialize_(f, h - 1, from + (i * step), Math.min(from + ((i + 1) * step), to));
-		lengths[i] = length(table[i]) + (i > 0 ? lengths[i-1] : 0);
-	}
-	return {
-		ctor: '_Array',
-		height: h,
-		table: table,
-		lengths: lengths
-	};
-}
-
-function fromList(list)
-{
-	if (list.ctor === '[]')
-	{
-		return empty;
-	}
-
-	// Allocate M sized blocks (table) and write list elements to it.
-	var table = new Array(M);
-	var nodes = [];
-	var i = 0;
-
-	while (list.ctor !== '[]')
-	{
-		table[i] = list._0;
-		list = list._1;
-		i++;
-
-		// table is full, so we can push a leaf containing it into the
-		// next node.
-		if (i === M)
-		{
-			var leaf = {
-				ctor: '_Array',
-				height: 0,
-				table: table
-			};
-			fromListPush(leaf, nodes);
-			table = new Array(M);
-			i = 0;
-		}
-	}
-
-	// Maybe there is something left on the table.
-	if (i > 0)
-	{
-		var leaf = {
-			ctor: '_Array',
-			height: 0,
-			table: table.splice(0, i)
-		};
-		fromListPush(leaf, nodes);
-	}
-
-	// Go through all of the nodes and eventually push them into higher nodes.
-	for (var h = 0; h < nodes.length - 1; h++)
-	{
-		if (nodes[h].table.length > 0)
-		{
-			fromListPush(nodes[h], nodes);
-		}
-	}
-
-	var head = nodes[nodes.length - 1];
-	if (head.height > 0 && head.table.length === 1)
-	{
-		return head.table[0];
-	}
-	else
-	{
-		return head;
-	}
-}
-
-// Push a node into a higher node as a child.
-function fromListPush(toPush, nodes)
-{
-	var h = toPush.height;
-
-	// Maybe the node on this height does not exist.
-	if (nodes.length === h)
-	{
-		var node = {
-			ctor: '_Array',
-			height: h + 1,
-			table: [],
-			lengths: []
-		};
-		nodes.push(node);
-	}
-
-	nodes[h].table.push(toPush);
-	var len = length(toPush);
-	if (nodes[h].lengths.length > 0)
-	{
-		len += nodes[h].lengths[nodes[h].lengths.length - 1];
-	}
-	nodes[h].lengths.push(len);
-
-	if (nodes[h].table.length === M)
-	{
-		fromListPush(nodes[h], nodes);
-		nodes[h] = {
-			ctor: '_Array',
-			height: h + 1,
-			table: [],
-			lengths: []
-		};
-	}
-}
-
-// Pushes an item via push_ to the bottom right of a tree.
-function push(item, a)
-{
-	var pushed = push_(item, a);
-	if (pushed !== null)
-	{
-		return pushed;
-	}
-
-	var newTree = create(item, a.height);
-	return siblise(a, newTree);
-}
-
-// Recursively tries to push an item to the bottom-right most
-// tree possible. If there is no space left for the item,
-// null will be returned.
-function push_(item, a)
-{
-	// Handle resursion stop at leaf level.
-	if (a.height === 0)
-	{
-		if (a.table.length < M)
-		{
-			var newA = {
-				ctor: '_Array',
-				height: 0,
-				table: a.table.slice()
-			};
-			newA.table.push(item);
-			return newA;
-		}
-		else
-		{
-		  return null;
-		}
-	}
-
-	// Recursively push
-	var pushed = push_(item, botRight(a));
-
-	// There was space in the bottom right tree, so the slot will
-	// be updated.
-	if (pushed !== null)
-	{
-		var newA = nodeCopy(a);
-		newA.table[newA.table.length - 1] = pushed;
-		newA.lengths[newA.lengths.length - 1]++;
-		return newA;
-	}
-
-	// When there was no space left, check if there is space left
-	// for a new slot with a tree which contains only the item
-	// at the bottom.
-	if (a.table.length < M)
-	{
-		var newSlot = create(item, a.height - 1);
-		var newA = nodeCopy(a);
-		newA.table.push(newSlot);
-		newA.lengths.push(newA.lengths[newA.lengths.length - 1] + length(newSlot));
-		return newA;
-	}
-	else
-	{
-		return null;
-	}
-}
-
-// Converts an array into a list of elements.
-function toList(a)
-{
-	return toList_(_elm_lang$core$Native_List.Nil, a);
-}
-
-function toList_(list, a)
-{
-	for (var i = a.table.length - 1; i >= 0; i--)
-	{
-		list =
-			a.height === 0
-				? _elm_lang$core$Native_List.Cons(a.table[i], list)
-				: toList_(list, a.table[i]);
-	}
-	return list;
-}
-
-// Maps a function over the elements of an array.
-function map(f, a)
-{
-	var newA = {
-		ctor: '_Array',
-		height: a.height,
-		table: new Array(a.table.length)
-	};
-	if (a.height > 0)
-	{
-		newA.lengths = a.lengths;
-	}
-	for (var i = 0; i < a.table.length; i++)
-	{
-		newA.table[i] =
-			a.height === 0
-				? f(a.table[i])
-				: map(f, a.table[i]);
-	}
-	return newA;
-}
-
-// Maps a function over the elements with their index as first argument.
-function indexedMap(f, a)
-{
-	return indexedMap_(f, a, 0);
-}
-
-function indexedMap_(f, a, from)
-{
-	var newA = {
-		ctor: '_Array',
-		height: a.height,
-		table: new Array(a.table.length)
-	};
-	if (a.height > 0)
-	{
-		newA.lengths = a.lengths;
-	}
-	for (var i = 0; i < a.table.length; i++)
-	{
-		newA.table[i] =
-			a.height === 0
-				? A2(f, from + i, a.table[i])
-				: indexedMap_(f, a.table[i], i == 0 ? from : from + a.lengths[i - 1]);
-	}
-	return newA;
-}
-
-function foldl(f, b, a)
-{
-	if (a.height === 0)
-	{
-		for (var i = 0; i < a.table.length; i++)
-		{
-			b = A2(f, a.table[i], b);
-		}
-	}
-	else
-	{
-		for (var i = 0; i < a.table.length; i++)
-		{
-			b = foldl(f, b, a.table[i]);
-		}
-	}
-	return b;
-}
-
-function foldr(f, b, a)
-{
-	if (a.height === 0)
-	{
-		for (var i = a.table.length; i--; )
-		{
-			b = A2(f, a.table[i], b);
-		}
-	}
-	else
-	{
-		for (var i = a.table.length; i--; )
-		{
-			b = foldr(f, b, a.table[i]);
-		}
-	}
-	return b;
-}
-
-// TODO: currently, it slices the right, then the left. This can be
-// optimized.
-function slice(from, to, a)
-{
-	if (from < 0)
-	{
-		from += length(a);
-	}
-	if (to < 0)
-	{
-		to += length(a);
-	}
-	return sliceLeft(from, sliceRight(to, a));
-}
-
-function sliceRight(to, a)
-{
-	if (to === length(a))
-	{
-		return a;
-	}
-
-	// Handle leaf level.
-	if (a.height === 0)
-	{
-		var newA = { ctor:'_Array', height:0 };
-		newA.table = a.table.slice(0, to);
-		return newA;
-	}
-
-	// Slice the right recursively.
-	var right = getSlot(to, a);
-	var sliced = sliceRight(to - (right > 0 ? a.lengths[right - 1] : 0), a.table[right]);
-
-	// Maybe the a node is not even needed, as sliced contains the whole slice.
-	if (right === 0)
-	{
-		return sliced;
-	}
-
-	// Create new node.
-	var newA = {
-		ctor: '_Array',
-		height: a.height,
-		table: a.table.slice(0, right),
-		lengths: a.lengths.slice(0, right)
-	};
-	if (sliced.table.length > 0)
-	{
-		newA.table[right] = sliced;
-		newA.lengths[right] = length(sliced) + (right > 0 ? newA.lengths[right - 1] : 0);
-	}
-	return newA;
-}
-
-function sliceLeft(from, a)
-{
-	if (from === 0)
-	{
-		return a;
-	}
-
-	// Handle leaf level.
-	if (a.height === 0)
-	{
-		var newA = { ctor:'_Array', height:0 };
-		newA.table = a.table.slice(from, a.table.length + 1);
-		return newA;
-	}
-
-	// Slice the left recursively.
-	var left = getSlot(from, a);
-	var sliced = sliceLeft(from - (left > 0 ? a.lengths[left - 1] : 0), a.table[left]);
-
-	// Maybe the a node is not even needed, as sliced contains the whole slice.
-	if (left === a.table.length - 1)
-	{
-		return sliced;
-	}
-
-	// Create new node.
-	var newA = {
-		ctor: '_Array',
-		height: a.height,
-		table: a.table.slice(left, a.table.length + 1),
-		lengths: new Array(a.table.length - left)
-	};
-	newA.table[0] = sliced;
-	var len = 0;
-	for (var i = 0; i < newA.table.length; i++)
-	{
-		len += length(newA.table[i]);
-		newA.lengths[i] = len;
-	}
-
-	return newA;
-}
-
-// Appends two trees.
-function append(a,b)
-{
-	if (a.table.length === 0)
-	{
-		return b;
-	}
-	if (b.table.length === 0)
-	{
-		return a;
-	}
-
-	var c = append_(a, b);
-
-	// Check if both nodes can be crunshed together.
-	if (c[0].table.length + c[1].table.length <= M)
-	{
-		if (c[0].table.length === 0)
-		{
-			return c[1];
-		}
-		if (c[1].table.length === 0)
-		{
-			return c[0];
-		}
-
-		// Adjust .table and .lengths
-		c[0].table = c[0].table.concat(c[1].table);
-		if (c[0].height > 0)
-		{
-			var len = length(c[0]);
-			for (var i = 0; i < c[1].lengths.length; i++)
-			{
-				c[1].lengths[i] += len;
-			}
-			c[0].lengths = c[0].lengths.concat(c[1].lengths);
-		}
-
-		return c[0];
-	}
+	var flags = 'g';
+	if (options.multiline) { flags += 'm'; }
+	if (options.caseInsensitive) { flags += 'i'; }
 
-	if (c[0].height > 0)
+	try
 	{
-		var toRemove = calcToRemove(a, b);
-		if (toRemove > E)
-		{
-			c = shuffle(c[0], c[1], toRemove);
-		}
+		return elm$core$Maybe$Just(new RegExp(string, flags));
 	}
-
-	return siblise(c[0], c[1]);
-}
-
-// Returns an array of two nodes; right and left. One node _may_ be empty.
-function append_(a, b)
-{
-	if (a.height === 0 && b.height === 0)
-	{
-		return [a, b];
-	}
-
-	if (a.height !== 1 || b.height !== 1)
-	{
-		if (a.height === b.height)
-		{
-			a = nodeCopy(a);
-			b = nodeCopy(b);
-			var appended = append_(botRight(a), botLeft(b));
-
-			insertRight(a, appended[1]);
-			insertLeft(b, appended[0]);
-		}
-		else if (a.height > b.height)
-		{
-			a = nodeCopy(a);
-			var appended = append_(botRight(a), b);
-
-			insertRight(a, appended[0]);
-			b = parentise(appended[1], appended[1].height + 1);
-		}
-		else
-		{
-			b = nodeCopy(b);
-			var appended = append_(a, botLeft(b));
-
-			var left = appended[0].table.length === 0 ? 0 : 1;
-			var right = left === 0 ? 1 : 0;
-			insertLeft(b, appended[left]);
-			a = parentise(appended[right], appended[right].height + 1);
-		}
-	}
-
-	// Check if balancing is needed and return based on that.
-	if (a.table.length === 0 || b.table.length === 0)
-	{
-		return [a, b];
-	}
-
-	var toRemove = calcToRemove(a, b);
-	if (toRemove <= E)
-	{
-		return [a, b];
-	}
-	return shuffle(a, b, toRemove);
-}
-
-// Helperfunctions for append_. Replaces a child node at the side of the parent.
-function insertRight(parent, node)
-{
-	var index = parent.table.length - 1;
-	parent.table[index] = node;
-	parent.lengths[index] = length(node);
-	parent.lengths[index] += index > 0 ? parent.lengths[index - 1] : 0;
-}
-
-function insertLeft(parent, node)
-{
-	if (node.table.length > 0)
-	{
-		parent.table[0] = node;
-		parent.lengths[0] = length(node);
-
-		var len = length(parent.table[0]);
-		for (var i = 1; i < parent.lengths.length; i++)
-		{
-			len += length(parent.table[i]);
-			parent.lengths[i] = len;
-		}
-	}
-	else
-	{
-		parent.table.shift();
-		for (var i = 1; i < parent.lengths.length; i++)
-		{
-			parent.lengths[i] = parent.lengths[i] - parent.lengths[0];
-		}
-		parent.lengths.shift();
-	}
-}
-
-// Returns the extra search steps for E. Refer to the paper.
-function calcToRemove(a, b)
-{
-	var subLengths = 0;
-	for (var i = 0; i < a.table.length; i++)
-	{
-		subLengths += a.table[i].table.length;
-	}
-	for (var i = 0; i < b.table.length; i++)
-	{
-		subLengths += b.table[i].table.length;
-	}
-
-	var toRemove = a.table.length + b.table.length;
-	return toRemove - (Math.floor((subLengths - 1) / M) + 1);
-}
-
-// get2, set2 and saveSlot are helpers for accessing elements over two arrays.
-function get2(a, b, index)
-{
-	return index < a.length
-		? a[index]
-		: b[index - a.length];
-}
-
-function set2(a, b, index, value)
-{
-	if (index < a.length)
-	{
-		a[index] = value;
-	}
-	else
-	{
-		b[index - a.length] = value;
-	}
-}
-
-function saveSlot(a, b, index, slot)
-{
-	set2(a.table, b.table, index, slot);
-
-	var l = (index === 0 || index === a.lengths.length)
-		? 0
-		: get2(a.lengths, a.lengths, index - 1);
-
-	set2(a.lengths, b.lengths, index, l + length(slot));
-}
-
-// Creates a node or leaf with a given length at their arrays for perfomance.
-// Is only used by shuffle.
-function createNode(h, length)
-{
-	if (length < 0)
-	{
-		length = 0;
-	}
-	var a = {
-		ctor: '_Array',
-		height: h,
-		table: new Array(length)
-	};
-	if (h > 0)
-	{
-		a.lengths = new Array(length);
-	}
-	return a;
-}
-
-// Returns an array of two balanced nodes.
-function shuffle(a, b, toRemove)
-{
-	var newA = createNode(a.height, Math.min(M, a.table.length + b.table.length - toRemove));
-	var newB = createNode(a.height, newA.table.length - (a.table.length + b.table.length - toRemove));
-
-	// Skip the slots with size M. More precise: copy the slot references
-	// to the new node
-	var read = 0;
-	while (get2(a.table, b.table, read).table.length % M === 0)
-	{
-		set2(newA.table, newB.table, read, get2(a.table, b.table, read));
-		set2(newA.lengths, newB.lengths, read, get2(a.lengths, b.lengths, read));
-		read++;
-	}
-
-	// Pulling items from left to right, caching in a slot before writing
-	// it into the new nodes.
-	var write = read;
-	var slot = new createNode(a.height - 1, 0);
-	var from = 0;
-
-	// If the current slot is still containing data, then there will be at
-	// least one more write, so we do not break this loop yet.
-	while (read - write - (slot.table.length > 0 ? 1 : 0) < toRemove)
-	{
-		// Find out the max possible items for copying.
-		var source = get2(a.table, b.table, read);
-		var to = Math.min(M - slot.table.length, source.table.length);
-
-		// Copy and adjust size table.
-		slot.table = slot.table.concat(source.table.slice(from, to));
-		if (slot.height > 0)
-		{
-			var len = slot.lengths.length;
-			for (var i = len; i < len + to - from; i++)
-			{
-				slot.lengths[i] = length(slot.table[i]);
-				slot.lengths[i] += (i > 0 ? slot.lengths[i - 1] : 0);
-			}
-		}
-
-		from += to;
-
-		// Only proceed to next slots[i] if the current one was
-		// fully copied.
-		if (source.table.length <= to)
-		{
-			read++; from = 0;
-		}
-
-		// Only create a new slot if the current one is filled up.
-		if (slot.table.length === M)
-		{
-			saveSlot(newA, newB, write, slot);
-			slot = createNode(a.height - 1, 0);
-			write++;
-		}
-	}
-
-	// Cleanup after the loop. Copy the last slot into the new nodes.
-	if (slot.table.length > 0)
-	{
-		saveSlot(newA, newB, write, slot);
-		write++;
-	}
-
-	// Shift the untouched slots to the left
-	while (read < a.table.length + b.table.length )
-	{
-		saveSlot(newA, newB, write, get2(a.table, b.table, read));
-		read++;
-		write++;
-	}
-
-	return [newA, newB];
-}
-
-// Navigation functions
-function botRight(a)
-{
-	return a.table[a.table.length - 1];
-}
-function botLeft(a)
-{
-	return a.table[0];
-}
-
-// Copies a node for updating. Note that you should not use this if
-// only updating only one of "table" or "lengths" for performance reasons.
-function nodeCopy(a)
-{
-	var newA = {
-		ctor: '_Array',
-		height: a.height,
-		table: a.table.slice()
-	};
-	if (a.height > 0)
-	{
-		newA.lengths = a.lengths.slice();
-	}
-	return newA;
-}
-
-// Returns how many items are in the tree.
-function length(array)
-{
-	if (array.height === 0)
-	{
-		return array.table.length;
-	}
-	else
-	{
-		return array.lengths[array.lengths.length - 1];
-	}
-}
-
-// Calculates in which slot of "table" the item probably is, then
-// find the exact slot via forward searching in  "lengths". Returns the index.
-function getSlot(i, a)
-{
-	var slot = i >> (5 * a.height);
-	while (a.lengths[slot] <= i)
-	{
-		slot++;
-	}
-	return slot;
-}
-
-// Recursively creates a tree with a given height containing
-// only the given item.
-function create(item, h)
-{
-	if (h === 0)
-	{
-		return {
-			ctor: '_Array',
-			height: 0,
-			table: [item]
-		};
-	}
-	return {
-		ctor: '_Array',
-		height: h,
-		table: [create(item, h - 1)],
-		lengths: [1]
-	};
-}
-
-// Recursively creates a tree that contains the given tree.
-function parentise(tree, h)
-{
-	if (h === tree.height)
-	{
-		return tree;
-	}
-
-	return {
-		ctor: '_Array',
-		height: h,
-		table: [parentise(tree, h - 1)],
-		lengths: [length(tree)]
-	};
-}
-
-// Emphasizes blood brotherhood beneath two trees.
-function siblise(a, b)
-{
-	return {
-		ctor: '_Array',
-		height: a.height + 1,
-		table: [a, b],
-		lengths: [length(a), length(a) + length(b)]
-	};
-}
-
-function toJSArray(a)
-{
-	var jsArray = new Array(length(a));
-	toJSArray_(jsArray, 0, a);
-	return jsArray;
-}
-
-function toJSArray_(jsArray, i, a)
-{
-	for (var t = 0; t < a.table.length; t++)
-	{
-		if (a.height === 0)
-		{
-			jsArray[i + t] = a.table[t];
-		}
-		else
-		{
-			var inc = t === 0 ? 0 : a.lengths[t - 1];
-			toJSArray_(jsArray, i + inc, a.table[t]);
-		}
-	}
-}
-
-function fromJSArray(jsArray)
-{
-	if (jsArray.length === 0)
-	{
-		return empty;
-	}
-	var h = Math.floor(Math.log(jsArray.length) / Math.log(M));
-	return fromJSArray_(jsArray, h, 0, jsArray.length);
-}
-
-function fromJSArray_(jsArray, h, from, to)
-{
-	if (h === 0)
-	{
-		return {
-			ctor: '_Array',
-			height: 0,
-			table: jsArray.slice(from, to)
-		};
-	}
-
-	var step = Math.pow(M, h);
-	var table = new Array(Math.ceil((to - from) / step));
-	var lengths = new Array(table.length);
-	for (var i = 0; i < table.length; i++)
-	{
-		table[i] = fromJSArray_(jsArray, h - 1, from + (i * step), Math.min(from + ((i + 1) * step), to));
-		lengths[i] = length(table[i]) + (i > 0 ? lengths[i - 1] : 0);
-	}
-	return {
-		ctor: '_Array',
-		height: h,
-		table: table,
-		lengths: lengths
-	};
-}
-
-return {
-	empty: empty,
-	fromList: fromList,
-	toList: toList,
-	initialize: F2(initialize),
-	append: F2(append),
-	push: F2(push),
-	slice: F3(slice),
-	get: F2(get),
-	set: F3(set),
-	map: F2(map),
-	indexedMap: F2(indexedMap),
-	foldl: F3(foldl),
-	foldr: F3(foldr),
-	length: length,
-
-	toJSArray: toJSArray,
-	fromJSArray: fromJSArray
-};
-
-}();
-//import Native.Utils //
-
-var _elm_lang$core$Native_List = function() {
-
-var Nil = { ctor: '[]' };
-
-function Cons(hd, tl)
-{
-	return { ctor: '::', _0: hd, _1: tl };
-}
-
-function fromArray(arr)
-{
-	var out = Nil;
-	for (var i = arr.length; i--; )
-	{
-		out = Cons(arr[i], out);
-	}
-	return out;
-}
-
-function toArray(xs)
-{
-	var out = [];
-	while (xs.ctor !== '[]')
-	{
-		out.push(xs._0);
-		xs = xs._1;
-	}
-	return out;
-}
-
-function foldr(f, b, xs)
-{
-	var arr = toArray(xs);
-	var acc = b;
-	for (var i = arr.length; i--; )
-	{
-		acc = A2(f, arr[i], acc);
-	}
-	return acc;
-}
-
-function map2(f, xs, ys)
-{
-	var arr = [];
-	while (xs.ctor !== '[]' && ys.ctor !== '[]')
-	{
-		arr.push(A2(f, xs._0, ys._0));
-		xs = xs._1;
-		ys = ys._1;
-	}
-	return fromArray(arr);
-}
-
-function map3(f, xs, ys, zs)
-{
-	var arr = [];
-	while (xs.ctor !== '[]' && ys.ctor !== '[]' && zs.ctor !== '[]')
-	{
-		arr.push(A3(f, xs._0, ys._0, zs._0));
-		xs = xs._1;
-		ys = ys._1;
-		zs = zs._1;
-	}
-	return fromArray(arr);
-}
-
-function map4(f, ws, xs, ys, zs)
-{
-	var arr = [];
-	while (   ws.ctor !== '[]'
-		   && xs.ctor !== '[]'
-		   && ys.ctor !== '[]'
-		   && zs.ctor !== '[]')
-	{
-		arr.push(A4(f, ws._0, xs._0, ys._0, zs._0));
-		ws = ws._1;
-		xs = xs._1;
-		ys = ys._1;
-		zs = zs._1;
-	}
-	return fromArray(arr);
-}
-
-function map5(f, vs, ws, xs, ys, zs)
-{
-	var arr = [];
-	while (   vs.ctor !== '[]'
-		   && ws.ctor !== '[]'
-		   && xs.ctor !== '[]'
-		   && ys.ctor !== '[]'
-		   && zs.ctor !== '[]')
+	catch(error)
 	{
-		arr.push(A5(f, vs._0, ws._0, xs._0, ys._0, zs._0));
-		vs = vs._1;
-		ws = ws._1;
-		xs = xs._1;
-		ys = ys._1;
-		zs = zs._1;
-	}
-	return fromArray(arr);
-}
-
-function sortBy(f, xs)
-{
-	return fromArray(toArray(xs).sort(function(a, b) {
-		return _elm_lang$core$Native_Utils.cmp(f(a), f(b));
-	}));
-}
-
-function sortWith(f, xs)
-{
-	return fromArray(toArray(xs).sort(function(a, b) {
-		var ord = f(a)(b).ctor;
-		return ord === 'EQ' ? 0 : ord === 'LT' ? -1 : 1;
-	}));
-}
-
-return {
-	Nil: Nil,
-	Cons: Cons,
-	cons: F2(Cons),
-	toArray: toArray,
-	fromArray: fromArray,
-
-	foldr: F3(foldr),
-
-	map2: F3(map2),
-	map3: F4(map3),
-	map4: F5(map4),
-	map5: F6(map5),
-	sortBy: F2(sortBy),
-	sortWith: F2(sortWith)
-};
-
-}();
-var _elm_lang$core$List$sortWith = _elm_lang$core$Native_List.sortWith;
-var _elm_lang$core$List$sortBy = _elm_lang$core$Native_List.sortBy;
-var _elm_lang$core$List$sort = function (xs) {
-	return A2(_elm_lang$core$List$sortBy, _elm_lang$core$Basics$identity, xs);
-};
-var _elm_lang$core$List$singleton = function (value) {
-	return {
-		ctor: '::',
-		_0: value,
-		_1: {ctor: '[]'}
-	};
-};
-var _elm_lang$core$List$drop = F2(
-	function (n, list) {
-		drop:
-		while (true) {
-			if (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) {
-				return list;
-			} else {
-				var _p0 = list;
-				if (_p0.ctor === '[]') {
-					return list;
-				} else {
-					var _v1 = n - 1,
-						_v2 = _p0._1;
-					n = _v1;
-					list = _v2;
-					continue drop;
-				}
-			}
-		}
-	});
-var _elm_lang$core$List$map5 = _elm_lang$core$Native_List.map5;
-var _elm_lang$core$List$map4 = _elm_lang$core$Native_List.map4;
-var _elm_lang$core$List$map3 = _elm_lang$core$Native_List.map3;
-var _elm_lang$core$List$map2 = _elm_lang$core$Native_List.map2;
-var _elm_lang$core$List$any = F2(
-	function (isOkay, list) {
-		any:
-		while (true) {
-			var _p1 = list;
-			if (_p1.ctor === '[]') {
-				return false;
-			} else {
-				if (isOkay(_p1._0)) {
-					return true;
-				} else {
-					var _v4 = isOkay,
-						_v5 = _p1._1;
-					isOkay = _v4;
-					list = _v5;
-					continue any;
-				}
-			}
-		}
-	});
-var _elm_lang$core$List$all = F2(
-	function (isOkay, list) {
-		return !A2(
-			_elm_lang$core$List$any,
-			function (_p2) {
-				return !isOkay(_p2);
-			},
-			list);
-	});
-var _elm_lang$core$List$foldr = _elm_lang$core$Native_List.foldr;
-var _elm_lang$core$List$foldl = F3(
-	function (func, acc, list) {
-		foldl:
-		while (true) {
-			var _p3 = list;
-			if (_p3.ctor === '[]') {
-				return acc;
-			} else {
-				var _v7 = func,
-					_v8 = A2(func, _p3._0, acc),
-					_v9 = _p3._1;
-				func = _v7;
-				acc = _v8;
-				list = _v9;
-				continue foldl;
-			}
-		}
-	});
-var _elm_lang$core$List$length = function (xs) {
-	return A3(
-		_elm_lang$core$List$foldl,
-		F2(
-			function (_p4, i) {
-				return i + 1;
-			}),
-		0,
-		xs);
-};
-var _elm_lang$core$List$sum = function (numbers) {
-	return A3(
-		_elm_lang$core$List$foldl,
-		F2(
-			function (x, y) {
-				return x + y;
-			}),
-		0,
-		numbers);
-};
-var _elm_lang$core$List$product = function (numbers) {
-	return A3(
-		_elm_lang$core$List$foldl,
-		F2(
-			function (x, y) {
-				return x * y;
-			}),
-		1,
-		numbers);
-};
-var _elm_lang$core$List$maximum = function (list) {
-	var _p5 = list;
-	if (_p5.ctor === '::') {
-		return _elm_lang$core$Maybe$Just(
-			A3(_elm_lang$core$List$foldl, _elm_lang$core$Basics$max, _p5._0, _p5._1));
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
-};
-var _elm_lang$core$List$minimum = function (list) {
-	var _p6 = list;
-	if (_p6.ctor === '::') {
-		return _elm_lang$core$Maybe$Just(
-			A3(_elm_lang$core$List$foldl, _elm_lang$core$Basics$min, _p6._0, _p6._1));
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
+		return elm$core$Maybe$Nothing;
 	}
-};
-var _elm_lang$core$List$member = F2(
-	function (x, xs) {
-		return A2(
-			_elm_lang$core$List$any,
-			function (a) {
-				return _elm_lang$core$Native_Utils.eq(a, x);
-			},
-			xs);
-	});
-var _elm_lang$core$List$isEmpty = function (xs) {
-	var _p7 = xs;
-	if (_p7.ctor === '[]') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _elm_lang$core$List$tail = function (list) {
-	var _p8 = list;
-	if (_p8.ctor === '::') {
-		return _elm_lang$core$Maybe$Just(_p8._1);
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
-};
-var _elm_lang$core$List$head = function (list) {
-	var _p9 = list;
-	if (_p9.ctor === '::') {
-		return _elm_lang$core$Maybe$Just(_p9._0);
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
-};
-var _elm_lang$core$List_ops = _elm_lang$core$List_ops || {};
-_elm_lang$core$List_ops['::'] = _elm_lang$core$Native_List.cons;
-var _elm_lang$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			_elm_lang$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return {
-						ctor: '::',
-						_0: f(x),
-						_1: acc
-					};
-				}),
-			{ctor: '[]'},
-			xs);
-	});
-var _elm_lang$core$List$filter = F2(
-	function (pred, xs) {
-		var conditionalCons = F2(
-			function (front, back) {
-				return pred(front) ? {ctor: '::', _0: front, _1: back} : back;
-			});
-		return A3(
-			_elm_lang$core$List$foldr,
-			conditionalCons,
-			{ctor: '[]'},
-			xs);
-	});
-var _elm_lang$core$List$maybeCons = F3(
-	function (f, mx, xs) {
-		var _p10 = f(mx);
-		if (_p10.ctor === 'Just') {
-			return {ctor: '::', _0: _p10._0, _1: xs};
-		} else {
-			return xs;
-		}
-	});
-var _elm_lang$core$List$filterMap = F2(
-	function (f, xs) {
-		return A3(
-			_elm_lang$core$List$foldr,
-			_elm_lang$core$List$maybeCons(f),
-			{ctor: '[]'},
-			xs);
-	});
-var _elm_lang$core$List$reverse = function (list) {
-	return A3(
-		_elm_lang$core$List$foldl,
-		F2(
-			function (x, y) {
-				return {ctor: '::', _0: x, _1: y};
-			}),
-		{ctor: '[]'},
-		list);
-};
-var _elm_lang$core$List$scanl = F3(
-	function (f, b, xs) {
-		var scan1 = F2(
-			function (x, accAcc) {
-				var _p11 = accAcc;
-				if (_p11.ctor === '::') {
-					return {
-						ctor: '::',
-						_0: A2(f, x, _p11._0),
-						_1: accAcc
-					};
-				} else {
-					return {ctor: '[]'};
-				}
-			});
-		return _elm_lang$core$List$reverse(
-			A3(
-				_elm_lang$core$List$foldl,
-				scan1,
-				{
-					ctor: '::',
-					_0: b,
-					_1: {ctor: '[]'}
-				},
-				xs));
-	});
-var _elm_lang$core$List$append = F2(
-	function (xs, ys) {
-		var _p12 = ys;
-		if (_p12.ctor === '[]') {
-			return xs;
-		} else {
-			return A3(
-				_elm_lang$core$List$foldr,
-				F2(
-					function (x, y) {
-						return {ctor: '::', _0: x, _1: y};
-					}),
-				ys,
-				xs);
-		}
-	});
-var _elm_lang$core$List$concat = function (lists) {
-	return A3(
-		_elm_lang$core$List$foldr,
-		_elm_lang$core$List$append,
-		{ctor: '[]'},
-		lists);
-};
-var _elm_lang$core$List$concatMap = F2(
-	function (f, list) {
-		return _elm_lang$core$List$concat(
-			A2(_elm_lang$core$List$map, f, list));
-	});
-var _elm_lang$core$List$partition = F2(
-	function (pred, list) {
-		var step = F2(
-			function (x, _p13) {
-				var _p14 = _p13;
-				var _p16 = _p14._0;
-				var _p15 = _p14._1;
-				return pred(x) ? {
-					ctor: '_Tuple2',
-					_0: {ctor: '::', _0: x, _1: _p16},
-					_1: _p15
-				} : {
-					ctor: '_Tuple2',
-					_0: _p16,
-					_1: {ctor: '::', _0: x, _1: _p15}
-				};
-			});
-		return A3(
-			_elm_lang$core$List$foldr,
-			step,
-			{
-				ctor: '_Tuple2',
-				_0: {ctor: '[]'},
-				_1: {ctor: '[]'}
-			},
-			list);
-	});
-var _elm_lang$core$List$unzip = function (pairs) {
-	var step = F2(
-		function (_p18, _p17) {
-			var _p19 = _p18;
-			var _p20 = _p17;
-			return {
-				ctor: '_Tuple2',
-				_0: {ctor: '::', _0: _p19._0, _1: _p20._0},
-				_1: {ctor: '::', _0: _p19._1, _1: _p20._1}
-			};
-		});
-	return A3(
-		_elm_lang$core$List$foldr,
-		step,
-		{
-			ctor: '_Tuple2',
-			_0: {ctor: '[]'},
-			_1: {ctor: '[]'}
-		},
-		pairs);
-};
-var _elm_lang$core$List$intersperse = F2(
-	function (sep, xs) {
-		var _p21 = xs;
-		if (_p21.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			var step = F2(
-				function (x, rest) {
-					return {
-						ctor: '::',
-						_0: sep,
-						_1: {ctor: '::', _0: x, _1: rest}
-					};
-				});
-			var spersed = A3(
-				_elm_lang$core$List$foldr,
-				step,
-				{ctor: '[]'},
-				_p21._1);
-			return {ctor: '::', _0: _p21._0, _1: spersed};
-		}
-	});
-var _elm_lang$core$List$takeReverse = F3(
-	function (n, list, taken) {
-		takeReverse:
-		while (true) {
-			if (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) {
-				return taken;
-			} else {
-				var _p22 = list;
-				if (_p22.ctor === '[]') {
-					return taken;
-				} else {
-					var _v23 = n - 1,
-						_v24 = _p22._1,
-						_v25 = {ctor: '::', _0: _p22._0, _1: taken};
-					n = _v23;
-					list = _v24;
-					taken = _v25;
-					continue takeReverse;
-				}
-			}
-		}
-	});
-var _elm_lang$core$List$takeTailRec = F2(
-	function (n, list) {
-		return _elm_lang$core$List$reverse(
-			A3(
-				_elm_lang$core$List$takeReverse,
-				n,
-				list,
-				{ctor: '[]'}));
-	});
-var _elm_lang$core$List$takeFast = F3(
-	function (ctr, n, list) {
-		if (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) {
-			return {ctor: '[]'};
-		} else {
-			var _p23 = {ctor: '_Tuple2', _0: n, _1: list};
-			_v26_5:
-			do {
-				_v26_1:
-				do {
-					if (_p23.ctor === '_Tuple2') {
-						if (_p23._1.ctor === '[]') {
-							return list;
-						} else {
-							if (_p23._1._1.ctor === '::') {
-								switch (_p23._0) {
-									case 1:
-										break _v26_1;
-									case 2:
-										return {
-											ctor: '::',
-											_0: _p23._1._0,
-											_1: {
-												ctor: '::',
-												_0: _p23._1._1._0,
-												_1: {ctor: '[]'}
-											}
-										};
-									case 3:
-										if (_p23._1._1._1.ctor === '::') {
-											return {
-												ctor: '::',
-												_0: _p23._1._0,
-												_1: {
-													ctor: '::',
-													_0: _p23._1._1._0,
-													_1: {
-														ctor: '::',
-														_0: _p23._1._1._1._0,
-														_1: {ctor: '[]'}
-													}
-												}
-											};
-										} else {
-											break _v26_5;
-										}
-									default:
-										if ((_p23._1._1._1.ctor === '::') && (_p23._1._1._1._1.ctor === '::')) {
-											var _p28 = _p23._1._1._1._0;
-											var _p27 = _p23._1._1._0;
-											var _p26 = _p23._1._0;
-											var _p25 = _p23._1._1._1._1._0;
-											var _p24 = _p23._1._1._1._1._1;
-											return (_elm_lang$core$Native_Utils.cmp(ctr, 1000) > 0) ? {
-												ctor: '::',
-												_0: _p26,
-												_1: {
-													ctor: '::',
-													_0: _p27,
-													_1: {
-														ctor: '::',
-														_0: _p28,
-														_1: {
-															ctor: '::',
-															_0: _p25,
-															_1: A2(_elm_lang$core$List$takeTailRec, n - 4, _p24)
-														}
-													}
-												}
-											} : {
-												ctor: '::',
-												_0: _p26,
-												_1: {
-													ctor: '::',
-													_0: _p27,
-													_1: {
-														ctor: '::',
-														_0: _p28,
-														_1: {
-															ctor: '::',
-															_0: _p25,
-															_1: A3(_elm_lang$core$List$takeFast, ctr + 1, n - 4, _p24)
-														}
-													}
-												}
-											};
-										} else {
-											break _v26_5;
-										}
-								}
-							} else {
-								if (_p23._0 === 1) {
-									break _v26_1;
-								} else {
-									break _v26_5;
-								}
-							}
-						}
-					} else {
-						break _v26_5;
-					}
-				} while(false);
-				return {
-					ctor: '::',
-					_0: _p23._1._0,
-					_1: {ctor: '[]'}
-				};
-			} while(false);
-			return list;
-		}
-	});
-var _elm_lang$core$List$take = F2(
-	function (n, list) {
-		return A3(_elm_lang$core$List$takeFast, 0, n, list);
-	});
-var _elm_lang$core$List$repeatHelp = F3(
-	function (result, n, value) {
-		repeatHelp:
-		while (true) {
-			if (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) {
-				return result;
-			} else {
-				var _v27 = {ctor: '::', _0: value, _1: result},
-					_v28 = n - 1,
-					_v29 = value;
-				result = _v27;
-				n = _v28;
-				value = _v29;
-				continue repeatHelp;
-			}
-		}
-	});
-var _elm_lang$core$List$repeat = F2(
-	function (n, value) {
-		return A3(
-			_elm_lang$core$List$repeatHelp,
-			{ctor: '[]'},
-			n,
-			value);
-	});
-var _elm_lang$core$List$rangeHelp = F3(
-	function (lo, hi, list) {
-		rangeHelp:
-		while (true) {
-			if (_elm_lang$core$Native_Utils.cmp(lo, hi) < 1) {
-				var _v30 = lo,
-					_v31 = hi - 1,
-					_v32 = {ctor: '::', _0: hi, _1: list};
-				lo = _v30;
-				hi = _v31;
-				list = _v32;
-				continue rangeHelp;
-			} else {
-				return list;
-			}
-		}
-	});
-var _elm_lang$core$List$range = F2(
-	function (lo, hi) {
-		return A3(
-			_elm_lang$core$List$rangeHelp,
-			lo,
-			hi,
-			{ctor: '[]'});
-	});
-var _elm_lang$core$List$indexedMap = F2(
-	function (f, xs) {
-		return A3(
-			_elm_lang$core$List$map2,
-			f,
-			A2(
-				_elm_lang$core$List$range,
-				0,
-				_elm_lang$core$List$length(xs) - 1),
-			xs);
-	});
-
-var _elm_lang$core$Array$append = _elm_lang$core$Native_Array.append;
-var _elm_lang$core$Array$length = _elm_lang$core$Native_Array.length;
-var _elm_lang$core$Array$isEmpty = function (array) {
-	return _elm_lang$core$Native_Utils.eq(
-		_elm_lang$core$Array$length(array),
-		0);
-};
-var _elm_lang$core$Array$slice = _elm_lang$core$Native_Array.slice;
-var _elm_lang$core$Array$set = _elm_lang$core$Native_Array.set;
-var _elm_lang$core$Array$get = F2(
-	function (i, array) {
-		return ((_elm_lang$core$Native_Utils.cmp(0, i) < 1) && (_elm_lang$core$Native_Utils.cmp(
-			i,
-			_elm_lang$core$Native_Array.length(array)) < 0)) ? _elm_lang$core$Maybe$Just(
-			A2(_elm_lang$core$Native_Array.get, i, array)) : _elm_lang$core$Maybe$Nothing;
-	});
-var _elm_lang$core$Array$push = _elm_lang$core$Native_Array.push;
-var _elm_lang$core$Array$empty = _elm_lang$core$Native_Array.empty;
-var _elm_lang$core$Array$filter = F2(
-	function (isOkay, arr) {
-		var update = F2(
-			function (x, xs) {
-				return isOkay(x) ? A2(_elm_lang$core$Native_Array.push, x, xs) : xs;
-			});
-		return A3(_elm_lang$core$Native_Array.foldl, update, _elm_lang$core$Native_Array.empty, arr);
-	});
-var _elm_lang$core$Array$foldr = _elm_lang$core$Native_Array.foldr;
-var _elm_lang$core$Array$foldl = _elm_lang$core$Native_Array.foldl;
-var _elm_lang$core$Array$indexedMap = _elm_lang$core$Native_Array.indexedMap;
-var _elm_lang$core$Array$map = _elm_lang$core$Native_Array.map;
-var _elm_lang$core$Array$toIndexedList = function (array) {
-	return A3(
-		_elm_lang$core$List$map2,
-		F2(
-			function (v0, v1) {
-				return {ctor: '_Tuple2', _0: v0, _1: v1};
-			}),
-		A2(
-			_elm_lang$core$List$range,
-			0,
-			_elm_lang$core$Native_Array.length(array) - 1),
-		_elm_lang$core$Native_Array.toList(array));
-};
-var _elm_lang$core$Array$toList = _elm_lang$core$Native_Array.toList;
-var _elm_lang$core$Array$fromList = _elm_lang$core$Native_Array.fromList;
-var _elm_lang$core$Array$initialize = _elm_lang$core$Native_Array.initialize;
-var _elm_lang$core$Array$repeat = F2(
-	function (n, e) {
-		return A2(
-			_elm_lang$core$Array$initialize,
-			n,
-			_elm_lang$core$Basics$always(e));
-	});
-var _elm_lang$core$Array$Array = {ctor: 'Array'};
-
-//import Maybe, Native.List //
+});
 
-var _elm_lang$core$Native_Regex = function() {
 
-function escape(str)
-{
-	return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-}
-function caseInsensitive(re)
-{
-	return new RegExp(re.source, 'gi');
-}
-function regex(raw)
-{
-	return new RegExp(raw, 'g');
-}
+// USE
 
-function contains(re, string)
+var _Regex_contains = F2(function(re, string)
 {
 	return string.match(re) !== null;
-}
+});
 
-function find(n, re, str)
+
+var _Regex_findAtMost = F3(function(n, re, str)
 {
-	n = n.ctor === 'All' ? Infinity : n._0;
 	var out = [];
 	var number = 0;
 	var string = str;
@@ -6686,31 +4584,26 @@ function find(n, re, str)
 	var result;
 	while (number++ < n && (result = re.exec(string)))
 	{
-		if (prevLastIndex === re.lastIndex) break;
+		if (prevLastIndex == re.lastIndex) break;
 		var i = result.length - 1;
 		var subs = new Array(i);
 		while (i > 0)
 		{
 			var submatch = result[i];
-			subs[--i] = submatch === undefined
-				? _elm_lang$core$Maybe$Nothing
-				: _elm_lang$core$Maybe$Just(submatch);
+			subs[--i] = submatch
+				? elm$core$Maybe$Just(submatch)
+				: elm$core$Maybe$Nothing;
 		}
-		out.push({
-			match: result[0],
-			submatches: _elm_lang$core$Native_List.fromArray(subs),
-			index: result.index,
-			number: number
-		});
+		out.push(A4(elm$regex$Regex$Match, result[0], result.index, number, _List_fromArray(subs)));
 		prevLastIndex = re.lastIndex;
 	}
 	re.lastIndex = lastIndex;
-	return _elm_lang$core$Native_List.fromArray(out);
-}
+	return _List_fromArray(out);
+});
 
-function replace(n, re, replacer, string)
+
+var _Regex_replaceAtMost = F4(function(n, re, replacer, string)
 {
-	n = n.ctor === 'All' ? Infinity : n._0;
 	var count = 0;
 	function jsReplacer(match)
 	{
@@ -6723,549 +4616,1075 @@ function replace(n, re, replacer, string)
 		while (i > 0)
 		{
 			var submatch = arguments[i];
-			submatches[--i] = submatch === undefined
-				? _elm_lang$core$Maybe$Nothing
-				: _elm_lang$core$Maybe$Just(submatch);
+			submatches[--i] = submatch
+				? elm$core$Maybe$Just(submatch)
+				: elm$core$Maybe$Nothing;
 		}
-		return replacer({
-			match: match,
-			submatches: _elm_lang$core$Native_List.fromArray(submatches),
-			index: arguments[arguments.length - 2],
-			number: count
-		});
+		return replacer(A4(elm$regex$Regex$Match, match, arguments[arguments.length - 2], count, _List_fromArray(submatches)));
 	}
 	return string.replace(re, jsReplacer);
-}
+});
 
-function split(n, re, str)
+var _Regex_splitAtMost = F3(function(n, re, str)
 {
-	n = n.ctor === 'All' ? Infinity : n._0;
-	if (n === Infinity)
-	{
-		return _elm_lang$core$Native_List.fromArray(str.split(re));
-	}
 	var string = str;
-	var result;
 	var out = [];
 	var start = re.lastIndex;
 	var restoreLastIndex = re.lastIndex;
 	while (n--)
 	{
-		if (!(result = re.exec(string))) break;
+		var result = re.exec(string);
+		if (!result) break;
 		out.push(string.slice(start, result.index));
 		start = re.lastIndex;
 	}
 	out.push(string.slice(start));
 	re.lastIndex = restoreLastIndex;
-	return _elm_lang$core$Native_List.fromArray(out);
-}
+	return _List_fromArray(out);
+});
 
-return {
-	regex: regex,
-	caseInsensitive: caseInsensitive,
-	escape: escape,
+var _Regex_infinity = Infinity;
 
-	contains: F2(contains),
-	find: F3(find),
-	replace: F4(replace),
-	split: F3(split)
-};
 
-}();
 
-var _elm_lang$core$Regex$split = _elm_lang$core$Native_Regex.split;
-var _elm_lang$core$Regex$replace = _elm_lang$core$Native_Regex.replace;
-var _elm_lang$core$Regex$find = _elm_lang$core$Native_Regex.find;
-var _elm_lang$core$Regex$contains = _elm_lang$core$Native_Regex.contains;
-var _elm_lang$core$Regex$caseInsensitive = _elm_lang$core$Native_Regex.caseInsensitive;
-var _elm_lang$core$Regex$regex = _elm_lang$core$Native_Regex.regex;
-var _elm_lang$core$Regex$escape = _elm_lang$core$Native_Regex.escape;
-var _elm_lang$core$Regex$Match = F4(
-	function (a, b, c, d) {
-		return {match: a, submatches: b, index: c, number: d};
-	});
-var _elm_lang$core$Regex$Regex = {ctor: 'Regex'};
-var _elm_lang$core$Regex$AtMost = function (a) {
-	return {ctor: 'AtMost', _0: a};
-};
-var _elm_lang$core$Regex$All = {ctor: 'All'};
-
-//import Native.Utils //
-
-var _elm_lang$core$Native_Debug = function() {
-
-function log(tag, value)
+var _Bitwise_and = F2(function(a, b)
 {
-	var msg = tag + ': ' + _elm_lang$core$Native_Utils.toString(value);
-	var process = process || {};
-	if (process.stdout)
-	{
-		process.stdout.write(msg);
-	}
-	else
-	{
-		console.log(msg);
-	}
-	return value;
-}
+	return a & b;
+});
 
-function crash(message)
+var _Bitwise_or = F2(function(a, b)
 {
-	throw new Error(message);
+	return a | b;
+});
+
+var _Bitwise_xor = F2(function(a, b)
+{
+	return a ^ b;
+});
+
+function _Bitwise_complement(a)
+{
+	return ~a;
+};
+
+var _Bitwise_shiftLeftBy = F2(function(offset, a)
+{
+	return a << offset;
+});
+
+var _Bitwise_shiftRightBy = F2(function(offset, a)
+{
+	return a >> offset;
+});
+
+var _Bitwise_shiftRightZfBy = F2(function(offset, a)
+{
+	return a >>> offset;
+});
+
+
+
+function _Char_toCode(char)
+{
+	var code = char.charCodeAt(0);
+	if (0xD800 <= code && code <= 0xDBFF)
+	{
+		return (code - 0xD800) * 0x400 + char.charCodeAt(1) - 0xDC00 + 0x10000
+	}
+	return code;
 }
 
-return {
-	crash: crash,
-	log: F2(log)
-};
+function _Char_fromCode(code)
+{
+	return _Utils_chr(
+		(code < 0 || 0x10FFFF < code)
+			? '\uFFFD'
+			:
+		(code <= 0xFFFF)
+			? String.fromCharCode(code)
+			:
+		(code -= 0x10000,
+			String.fromCharCode(Math.floor(code / 0x400) + 0xD800)
+			+
+			String.fromCharCode(code % 0x400 + 0xDC00)
+		)
+	);
+}
 
-}();
-var _elm_lang$core$Debug$crash = _elm_lang$core$Native_Debug.crash;
-var _elm_lang$core$Debug$log = _elm_lang$core$Native_Debug.log;
+function _Char_toUpper(char)
+{
+	return _Utils_chr(char.toUpperCase());
+}
 
-var _elm_lang$core$Tuple$mapSecond = F2(
-	function (func, _p0) {
-		var _p1 = _p0;
-		return {
-			ctor: '_Tuple2',
-			_0: _p1._0,
-			_1: func(_p1._1)
-		};
+function _Char_toLower(char)
+{
+	return _Utils_chr(char.toLowerCase());
+}
+
+function _Char_toLocaleUpper(char)
+{
+	return _Utils_chr(char.toLocaleUpperCase());
+}
+
+function _Char_toLocaleLower(char)
+{
+	return _Utils_chr(char.toLocaleLowerCase());
+}
+
+
+
+// CORE DECODERS
+
+function _Json_succeed(msg)
+{
+	return {
+		$: 0,
+		a: msg
+	};
+}
+
+function _Json_fail(msg)
+{
+	return {
+		$: 1,
+		a: msg
+	};
+}
+
+var _Json_decodeInt = { $: 2 };
+var _Json_decodeBool = { $: 3 };
+var _Json_decodeFloat = { $: 4 };
+var _Json_decodeValue = { $: 5 };
+var _Json_decodeString = { $: 6 };
+
+function _Json_decodeList(decoder) { return { $: 7, b: decoder }; }
+function _Json_decodeArray(decoder) { return { $: 8, b: decoder }; }
+
+function _Json_decodeNull(value) { return { $: 9, c: value }; }
+
+var _Json_decodeField = F2(function(field, decoder)
+{
+	return {
+		$: 10,
+		d: field,
+		b: decoder
+	};
+});
+
+var _Json_decodeIndex = F2(function(index, decoder)
+{
+	return {
+		$: 11,
+		e: index,
+		b: decoder
+	};
+});
+
+function _Json_decodeKeyValuePairs(decoder)
+{
+	return {
+		$: 12,
+		b: decoder
+	};
+}
+
+function _Json_mapMany(f, decoders)
+{
+	return {
+		$: 13,
+		f: f,
+		g: decoders
+	};
+}
+
+var _Json_andThen = F2(function(callback, decoder)
+{
+	return {
+		$: 14,
+		b: decoder,
+		h: callback
+	};
+});
+
+function _Json_oneOf(decoders)
+{
+	return {
+		$: 15,
+		g: decoders
+	};
+}
+
+
+// DECODING OBJECTS
+
+var _Json_map1 = F2(function(f, d1)
+{
+	return _Json_mapMany(f, [d1]);
+});
+
+var _Json_map2 = F3(function(f, d1, d2)
+{
+	return _Json_mapMany(f, [d1, d2]);
+});
+
+var _Json_map3 = F4(function(f, d1, d2, d3)
+{
+	return _Json_mapMany(f, [d1, d2, d3]);
+});
+
+var _Json_map4 = F5(function(f, d1, d2, d3, d4)
+{
+	return _Json_mapMany(f, [d1, d2, d3, d4]);
+});
+
+var _Json_map5 = F6(function(f, d1, d2, d3, d4, d5)
+{
+	return _Json_mapMany(f, [d1, d2, d3, d4, d5]);
+});
+
+var _Json_map6 = F7(function(f, d1, d2, d3, d4, d5, d6)
+{
+	return _Json_mapMany(f, [d1, d2, d3, d4, d5, d6]);
+});
+
+var _Json_map7 = F8(function(f, d1, d2, d3, d4, d5, d6, d7)
+{
+	return _Json_mapMany(f, [d1, d2, d3, d4, d5, d6, d7]);
+});
+
+var _Json_map8 = F9(function(f, d1, d2, d3, d4, d5, d6, d7, d8)
+{
+	return _Json_mapMany(f, [d1, d2, d3, d4, d5, d6, d7, d8]);
+});
+
+
+// DECODE
+
+var _Json_runOnString = F2(function(decoder, string)
+{
+	try
+	{
+		var value = JSON.parse(string);
+		return _Json_runHelp(decoder, value);
+	}
+	catch (e)
+	{
+		return elm$core$Result$Err(A2(elm$json$Json$Decode$Failure, 'This is not valid JSON! ' + e.message, _Json_wrap(string)));
+	}
+});
+
+var _Json_run = F2(function(decoder, value)
+{
+	return _Json_runHelp(decoder, _Json_unwrap(value));
+});
+
+function _Json_runHelp(decoder, value)
+{
+	switch (decoder.$)
+	{
+		case 3:
+			return (typeof value === 'boolean')
+				? elm$core$Result$Ok(value)
+				: _Json_expecting('a BOOL', value);
+
+		case 2:
+			if (typeof value !== 'number') {
+				return _Json_expecting('an INT', value);
+			}
+
+			if (-2147483647 < value && value < 2147483647 && (value | 0) === value) {
+				return elm$core$Result$Ok(value);
+			}
+
+			if (isFinite(value) && !(value % 1)) {
+				return elm$core$Result$Ok(value);
+			}
+
+			return _Json_expecting('an INT', value);
+
+		case 4:
+			return (typeof value === 'number')
+				? elm$core$Result$Ok(value)
+				: _Json_expecting('a FLOAT', value);
+
+		case 6:
+			return (typeof value === 'string')
+				? elm$core$Result$Ok(value)
+				: (value instanceof String)
+					? elm$core$Result$Ok(value + '')
+					: _Json_expecting('a STRING', value);
+
+		case 9:
+			return (value === null)
+				? elm$core$Result$Ok(decoder.c)
+				: _Json_expecting('null', value);
+
+		case 5:
+			return elm$core$Result$Ok(_Json_wrap(value));
+
+		case 7:
+			if (!Array.isArray(value))
+			{
+				return _Json_expecting('a LIST', value);
+			}
+			return _Json_runArrayDecoder(decoder.b, value, _List_fromArray);
+
+		case 8:
+			if (!Array.isArray(value))
+			{
+				return _Json_expecting('an ARRAY', value);
+			}
+			return _Json_runArrayDecoder(decoder.b, value, _Json_toElmArray);
+
+		case 10:
+			var field = decoder.d;
+			if (typeof value !== 'object' || value === null || !(field in value))
+			{
+				return _Json_expecting('an OBJECT with a field named `' + field + '`', value);
+			}
+			var result = _Json_runHelp(decoder.b, value[field]);
+			return (elm$core$Result$isOk(result)) ? result : elm$core$Result$Err(A2(elm$json$Json$Decode$Field, field, result.a));
+
+		case 11:
+			var index = decoder.e;
+			if (!Array.isArray(value))
+			{
+				return _Json_expecting('an ARRAY', value);
+			}
+			if (index >= value.length)
+			{
+				return _Json_expecting('a LONGER array. Need index ' + index + ' but only see ' + value.length + ' entries', value);
+			}
+			var result = _Json_runHelp(decoder.b, value[index]);
+			return (elm$core$Result$isOk(result)) ? result : elm$core$Result$Err(A2(elm$json$Json$Decode$Index, index, result.a));
+
+		case 12:
+			if (typeof value !== 'object' || value === null || Array.isArray(value))
+			{
+				return _Json_expecting('an OBJECT', value);
+			}
+
+			var keyValuePairs = _List_Nil;
+			// TODO test perf of Object.keys and switch when support is good enough
+			for (var key in value)
+			{
+				if (value.hasOwnProperty(key))
+				{
+					var result = _Json_runHelp(decoder.b, value[key]);
+					if (!elm$core$Result$isOk(result))
+					{
+						return elm$core$Result$Err(A2(elm$json$Json$Decode$Field, key, result.a));
+					}
+					keyValuePairs = _List_Cons(_Utils_Tuple2(key, result.a), keyValuePairs);
+				}
+			}
+			return elm$core$Result$Ok(elm$core$List$reverse(keyValuePairs));
+
+		case 13:
+			var answer = decoder.f;
+			var decoders = decoder.g;
+			for (var i = 0; i < decoders.length; i++)
+			{
+				var result = _Json_runHelp(decoders[i], value);
+				if (!elm$core$Result$isOk(result))
+				{
+					return result;
+				}
+				answer = answer(result.a);
+			}
+			return elm$core$Result$Ok(answer);
+
+		case 14:
+			var result = _Json_runHelp(decoder.b, value);
+			return (!elm$core$Result$isOk(result))
+				? result
+				: _Json_runHelp(decoder.h(result.a), value);
+
+		case 15:
+			var errors = _List_Nil;
+			for (var temp = decoder.g; temp.b; temp = temp.b) // WHILE_CONS
+			{
+				var result = _Json_runHelp(temp.a, value);
+				if (elm$core$Result$isOk(result))
+				{
+					return result;
+				}
+				errors = _List_Cons(result.a, errors);
+			}
+			return elm$core$Result$Err(elm$json$Json$Decode$OneOf(elm$core$List$reverse(errors)));
+
+		case 1:
+			return elm$core$Result$Err(A2(elm$json$Json$Decode$Failure, decoder.a, _Json_wrap(value)));
+
+		case 0:
+			return elm$core$Result$Ok(decoder.a);
+	}
+}
+
+function _Json_runArrayDecoder(decoder, value, toElmValue)
+{
+	var len = value.length;
+	var array = new Array(len);
+	for (var i = 0; i < len; i++)
+	{
+		var result = _Json_runHelp(decoder, value[i]);
+		if (!elm$core$Result$isOk(result))
+		{
+			return elm$core$Result$Err(A2(elm$json$Json$Decode$Index, i, result.a));
+		}
+		array[i] = result.a;
+	}
+	return elm$core$Result$Ok(toElmValue(array));
+}
+
+function _Json_toElmArray(array)
+{
+	return A2(elm$core$Array$initialize, array.length, function(i) { return array[i]; });
+}
+
+function _Json_expecting(type, value)
+{
+	return elm$core$Result$Err(A2(elm$json$Json$Decode$Failure, 'Expecting ' + type, _Json_wrap(value)));
+}
+
+
+// EQUALITY
+
+function _Json_equality(x, y)
+{
+	if (x === y)
+	{
+		return true;
+	}
+
+	if (x.$ !== y.$)
+	{
+		return false;
+	}
+
+	switch (x.$)
+	{
+		case 0:
+		case 1:
+			return x.a === y.a;
+
+		case 3:
+		case 2:
+		case 4:
+		case 6:
+		case 5:
+			return true;
+
+		case 9:
+			return x.c === y.c;
+
+		case 7:
+		case 8:
+		case 12:
+			return _Json_equality(x.b, y.b);
+
+		case 10:
+			return x.d === y.d && _Json_equality(x.b, y.b);
+
+		case 11:
+			return x.e === y.e && _Json_equality(x.b, y.b);
+
+		case 13:
+			return x.f === y.f && _Json_listEquality(x.g, y.g);
+
+		case 14:
+			return x.h === y.h && _Json_equality(x.b, y.b);
+
+		case 15:
+			return _Json_listEquality(x.g, y.g);
+	}
+}
+
+function _Json_listEquality(aDecoders, bDecoders)
+{
+	var len = aDecoders.length;
+	if (len !== bDecoders.length)
+	{
+		return false;
+	}
+	for (var i = 0; i < len; i++)
+	{
+		if (!_Json_equality(aDecoders[i], bDecoders[i]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+
+// ENCODE
+
+var _Json_encode = F2(function(indentLevel, value)
+{
+	return JSON.stringify(_Json_unwrap(value), null, indentLevel);
+});
+
+function _Json_wrap(value) { return { $: 0, a: value }; }
+function _Json_unwrap(value) { return value.a; }
+
+function _Json_wrap_UNUSED(value) { return value; }
+function _Json_unwrap_UNUSED(value) { return value; }
+
+function _Json_emptyArray() { return []; }
+function _Json_emptyObject() { return {}; }
+
+var _Json_addField = F3(function(key, value, object)
+{
+	object[key] = _Json_unwrap(value);
+	return object;
+});
+
+function _Json_addEntry(func)
+{
+	return F2(function(entry, array)
+	{
+		array.push(_Json_unwrap(func(entry)));
+		return array;
 	});
-var _elm_lang$core$Tuple$mapFirst = F2(
-	function (func, _p2) {
-		var _p3 = _p2;
-		return {
-			ctor: '_Tuple2',
-			_0: func(_p3._0),
-			_1: _p3._1
-		};
+}
+
+var _Json_encodeNull = _Json_wrap(null);
+
+
+
+// TASKS
+
+function _Scheduler_succeed(value)
+{
+	return {
+		$: 0,
+		a: value
+	};
+}
+
+function _Scheduler_fail(error)
+{
+	return {
+		$: 1,
+		a: error
+	};
+}
+
+function _Scheduler_binding(callback)
+{
+	return {
+		$: 2,
+		b: callback,
+		c: null
+	};
+}
+
+var _Scheduler_andThen = F2(function(callback, task)
+{
+	return {
+		$: 3,
+		b: callback,
+		d: task
+	};
+});
+
+var _Scheduler_onError = F2(function(callback, task)
+{
+	return {
+		$: 4,
+		b: callback,
+		d: task
+	};
+});
+
+function _Scheduler_receive(callback)
+{
+	return {
+		$: 5,
+		b: callback
+	};
+}
+
+
+// PROCESSES
+
+var _Scheduler_guid = 0;
+
+function _Scheduler_rawSpawn(task)
+{
+	var proc = {
+		$: 0,
+		e: _Scheduler_guid++,
+		f: task,
+		g: null,
+		h: []
+	};
+
+	_Scheduler_enqueue(proc);
+
+	return proc;
+}
+
+function _Scheduler_spawn(task)
+{
+	return _Scheduler_binding(function(callback) {
+		callback(_Scheduler_succeed(_Scheduler_rawSpawn(task)));
 	});
-var _elm_lang$core$Tuple$second = function (_p4) {
-	var _p5 = _p4;
-	return _p5._1;
-};
-var _elm_lang$core$Tuple$first = function (_p6) {
-	var _p7 = _p6;
-	return _p7._0;
-};
+}
 
-//import //
+function _Scheduler_rawSend(proc, msg)
+{
+	proc.h.push(msg);
+	_Scheduler_enqueue(proc);
+}
 
-var _elm_lang$core$Native_Platform = function() {
+var _Scheduler_send = F2(function(proc, msg)
+{
+	return _Scheduler_binding(function(callback) {
+		_Scheduler_rawSend(proc, msg);
+		callback(_Scheduler_succeed(_Utils_Tuple0));
+	});
+});
+
+function _Scheduler_kill(proc)
+{
+	return _Scheduler_binding(function(callback) {
+		var task = proc.f;
+		if (task.$ === 2 && task.c)
+		{
+			task.c();
+		}
+
+		proc.f = null;
+
+		callback(_Scheduler_succeed(_Utils_Tuple0));
+	});
+}
+
+
+/* STEP PROCESSES
+
+type alias Process =
+  { $ : tag
+  , id : unique_id
+  , root : Task
+  , stack : null | { $: SUCCEED | FAIL, a: callback, b: stack }
+  , mailbox : [msg]
+  }
+
+*/
+
+
+var _Scheduler_working = false;
+var _Scheduler_queue = [];
+
+
+function _Scheduler_enqueue(proc)
+{
+	_Scheduler_queue.push(proc);
+	if (_Scheduler_working)
+	{
+		return;
+	}
+	_Scheduler_working = true;
+	while (proc = _Scheduler_queue.shift())
+	{
+		_Scheduler_step(proc);
+	}
+	_Scheduler_working = false;
+}
+
+
+function _Scheduler_step(proc)
+{
+	while (proc.f)
+	{
+		var rootTag = proc.f.$;
+		if (rootTag === 0 || rootTag === 1)
+		{
+			while (proc.g && proc.g.$ !== rootTag)
+			{
+				proc.g = proc.g.i;
+			}
+			if (!proc.g)
+			{
+				return;
+			}
+			proc.f = proc.g.b(proc.f.a);
+			proc.g = proc.g.i;
+		}
+		else if (rootTag === 2)
+		{
+			proc.f.c = proc.f.b(function(newRoot) {
+				proc.f = newRoot;
+				_Scheduler_enqueue(proc);
+			});
+			return;
+		}
+		else if (rootTag === 5)
+		{
+			if (proc.h.length === 0)
+			{
+				return;
+			}
+			proc.f = proc.f.b(proc.h.shift());
+		}
+		else // if (rootTag === 3 || rootTag === 4)
+		{
+			proc.g = {
+				$: rootTag === 3 ? 0 : 1,
+				b: proc.f.b,
+				i: proc.g
+			};
+			proc.f = proc.f.d;
+		}
+	}
+}
+
+
+
+function _Process_sleep(time)
+{
+	return _Scheduler_binding(function(callback) {
+		var id = setTimeout(function() {
+			callback(_Scheduler_succeed(_Utils_Tuple0));
+		}, time);
+
+		return function() { clearTimeout(id); };
+	});
+}
+
+
 
 
 // PROGRAMS
 
-function program(impl)
+
+var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 {
-	return function(flagDecoder)
-	{
-		return function(object, moduleName)
-		{
-			object['worker'] = function worker(flags)
-			{
-				if (typeof flags !== 'undefined')
-				{
-					throw new Error(
-						'The `' + moduleName + '` module does not need flags.\n'
-						+ 'Call ' + moduleName + '.worker() with no arguments and you should be all set!'
-					);
-				}
-
-				return initialize(
-					impl.init,
-					impl.update,
-					impl.subscriptions,
-					renderer
-				);
-			};
-		};
-	};
-}
-
-function programWithFlags(impl)
-{
-	return function(flagDecoder)
-	{
-		return function(object, moduleName)
-		{
-			object['worker'] = function worker(flags)
-			{
-				if (typeof flagDecoder === 'undefined')
-				{
-					throw new Error(
-						'Are you trying to sneak a Never value into Elm? Trickster!\n'
-						+ 'It looks like ' + moduleName + '.main is defined with `programWithFlags` but has type `Program Never`.\n'
-						+ 'Use `program` instead if you do not want flags.'
-					);
-				}
-
-				var result = A2(_elm_lang$core$Native_Json.run, flagDecoder, flags);
-				if (result.ctor === 'Err')
-				{
-					throw new Error(
-						moduleName + '.worker(...) was called with an unexpected argument.\n'
-						+ 'I tried to convert it to an Elm value, but ran into this problem:\n\n'
-						+ result._0
-					);
-				}
-
-				return initialize(
-					impl.init(result._0),
-					impl.update,
-					impl.subscriptions,
-					renderer
-				);
-			};
-		};
-	};
-}
-
-function renderer(enqueue, _)
-{
-	return function(_) {};
-}
-
-
-// HTML TO PROGRAM
-
-function htmlToProgram(vnode)
-{
-	var emptyBag = batch(_elm_lang$core$Native_List.Nil);
-	var noChange = _elm_lang$core$Native_Utils.Tuple2(
-		_elm_lang$core$Native_Utils.Tuple0,
-		emptyBag
+	return _Platform_initialize(
+		flagDecoder,
+		args,
+		impl.init,
+		impl.update,
+		impl.subscriptions,
+		function() { return function() {} }
 	);
+});
 
-	return _elm_lang$virtual_dom$VirtualDom$program({
-		init: noChange,
-		view: function(model) { return main; },
-		update: F2(function(msg, model) { return noChange; }),
-		subscriptions: function (model) { return emptyBag; }
-	});
-}
 
 
 // INITIALIZE A PROGRAM
 
-function initialize(init, update, subscriptions, renderer)
+
+function _Platform_initialize(flagDecoder, args, init, update, subscriptions, stepperBuilder)
 {
-	// ambient state
+	var result = A2(_Json_run, flagDecoder, _Json_wrap(args ? args['flags'] : undefined));
+	elm$core$Result$isOk(result) || _Debug_crash(2, result.a);
 	var managers = {};
-	var updateView;
+	result = init(result.a);
+	var model = result.a;
+	var stepper = stepperBuilder(sendToApp, model);
+	var ports = _Platform_setupEffects(managers, sendToApp);
 
-	// init and update state in main process
-	var initApp = _elm_lang$core$Native_Scheduler.nativeBinding(function(callback) {
-		var model = init._0;
-		updateView = renderer(enqueue, model);
-		var cmds = init._1;
-		var subs = subscriptions(model);
-		dispatchEffects(managers, cmds, subs);
-		callback(_elm_lang$core$Native_Scheduler.succeed(model));
-	});
-
-	function onMessage(msg, model)
+	function sendToApp(msg, viewMetadata)
 	{
-		return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback) {
-			var results = A2(update, msg, model);
-			model = results._0;
-			updateView(model);
-			var cmds = results._1;
-			var subs = subscriptions(model);
-			dispatchEffects(managers, cmds, subs);
-			callback(_elm_lang$core$Native_Scheduler.succeed(model));
-		});
+		result = A2(update, msg, model);
+		stepper(model = result.a, viewMetadata);
+		_Platform_dispatchEffects(managers, result.b, subscriptions(model));
 	}
 
-	var mainProcess = spawnLoop(initApp, onMessage);
-
-	function enqueue(msg)
-	{
-		_elm_lang$core$Native_Scheduler.rawSend(mainProcess, msg);
-	}
-
-	var ports = setupEffects(managers, enqueue);
+	_Platform_dispatchEffects(managers, result.b, subscriptions(model));
 
 	return ports ? { ports: ports } : {};
 }
 
 
+
+// TRACK PRELOADS
+//
+// This is used by code in elm/browser and elm/http
+// to register any HTTP requests that are triggered by init.
+//
+
+
+var _Platform_preload;
+
+
+function _Platform_registerPreload(url)
+{
+	_Platform_preload.add(url);
+}
+
+
+
 // EFFECT MANAGERS
 
-var effectManagers = {};
 
-function setupEffects(managers, callback)
+var _Platform_effectManagers = {};
+
+
+function _Platform_setupEffects(managers, sendToApp)
 {
 	var ports;
 
 	// setup all necessary effect managers
-	for (var key in effectManagers)
+	for (var key in _Platform_effectManagers)
 	{
-		var manager = effectManagers[key];
+		var manager = _Platform_effectManagers[key];
 
-		if (manager.isForeign)
+		if (manager.a)
 		{
 			ports = ports || {};
-			ports[key] = manager.tag === 'cmd'
-				? setupOutgoingPort(key)
-				: setupIncomingPort(key, callback);
+			ports[key] = manager.a(key, sendToApp);
 		}
 
-		managers[key] = makeManager(manager, callback);
+		managers[key] = _Platform_instantiateManager(manager, sendToApp);
 	}
 
 	return ports;
 }
 
-function makeManager(info, callback)
+
+function _Platform_createManager(init, onEffects, onSelfMsg, cmdMap, subMap)
+{
+	return {
+		b: init,
+		c: onEffects,
+		d: onSelfMsg,
+		e: cmdMap,
+		f: subMap
+	};
+}
+
+
+function _Platform_instantiateManager(info, sendToApp)
 {
 	var router = {
-		main: callback,
-		self: undefined
+		g: sendToApp,
+		h: undefined
 	};
 
-	var tag = info.tag;
-	var onEffects = info.onEffects;
-	var onSelfMsg = info.onSelfMsg;
-
-	function onMessage(msg, state)
-	{
-		if (msg.ctor === 'self')
-		{
-			return A3(onSelfMsg, router, msg._0, state);
-		}
-
-		var fx = msg._0;
-		switch (tag)
-		{
-			case 'cmd':
-				return A3(onEffects, router, fx.cmds, state);
-
-			case 'sub':
-				return A3(onEffects, router, fx.subs, state);
-
-			case 'fx':
-				return A4(onEffects, router, fx.cmds, fx.subs, state);
-		}
-	}
-
-	var process = spawnLoop(info.init, onMessage);
-	router.self = process;
-	return process;
-}
-
-function sendToApp(router, msg)
-{
-	return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
-	{
-		router.main(msg);
-		callback(_elm_lang$core$Native_Scheduler.succeed(_elm_lang$core$Native_Utils.Tuple0));
-	});
-}
-
-function sendToSelf(router, msg)
-{
-	return A2(_elm_lang$core$Native_Scheduler.send, router.self, {
-		ctor: 'self',
-		_0: msg
-	});
-}
-
-
-// HELPER for STATEFUL LOOPS
-
-function spawnLoop(init, onMessage)
-{
-	var andThen = _elm_lang$core$Native_Scheduler.andThen;
+	var onEffects = info.c;
+	var onSelfMsg = info.d;
+	var cmdMap = info.e;
+	var subMap = info.f;
 
 	function loop(state)
 	{
-		var handleMsg = _elm_lang$core$Native_Scheduler.receive(function(msg) {
-			return onMessage(msg, state);
-		});
-		return A2(andThen, loop, handleMsg);
+		return A2(_Scheduler_andThen, loop, _Scheduler_receive(function(msg)
+		{
+			var value = msg.a;
+
+			if (msg.$ === 0)
+			{
+				return A3(onSelfMsg, router, value, state);
+			}
+
+			return cmdMap && subMap
+				? A4(onEffects, router, value.i, value.j, state)
+				: A3(onEffects, router, cmdMap ? value.i : value.j, state);
+		}));
 	}
 
-	var task = A2(andThen, loop, init);
-
-	return _elm_lang$core$Native_Scheduler.rawSpawn(task);
+	return router.h = _Scheduler_rawSpawn(A2(_Scheduler_andThen, loop, info.b));
 }
+
+
+
+// ROUTING
+
+
+var _Platform_sendToApp = F2(function(router, msg)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		router.g(msg);
+		callback(_Scheduler_succeed(_Utils_Tuple0));
+	});
+});
+
+
+var _Platform_sendToSelf = F2(function(router, msg)
+{
+	return A2(_Scheduler_send, router.h, {
+		$: 0,
+		a: msg
+	});
+});
+
 
 
 // BAGS
 
-function leaf(home)
+
+function _Platform_leaf(home)
 {
 	return function(value)
 	{
 		return {
-			type: 'leaf',
-			home: home,
-			value: value
+			$: 1,
+			k: home,
+			l: value
 		};
 	};
 }
 
-function batch(list)
+
+function _Platform_batch(list)
 {
 	return {
-		type: 'node',
-		branches: list
+		$: 2,
+		m: list
 	};
 }
 
-function map(tagger, bag)
+
+var _Platform_map = F2(function(tagger, bag)
 {
 	return {
-		type: 'map',
-		tagger: tagger,
-		tree: bag
+		$: 3,
+		n: tagger,
+		o: bag
 	}
-}
+});
+
 
 
 // PIPE BAGS INTO EFFECT MANAGERS
 
-function dispatchEffects(managers, cmdBag, subBag)
+
+function _Platform_dispatchEffects(managers, cmdBag, subBag)
 {
 	var effectsDict = {};
-	gatherEffects(true, cmdBag, effectsDict, null);
-	gatherEffects(false, subBag, effectsDict, null);
+	_Platform_gatherEffects(true, cmdBag, effectsDict, null);
+	_Platform_gatherEffects(false, subBag, effectsDict, null);
 
 	for (var home in managers)
 	{
-		var fx = home in effectsDict
-			? effectsDict[home]
-			: {
-				cmds: _elm_lang$core$Native_List.Nil,
-				subs: _elm_lang$core$Native_List.Nil
-			};
-
-		_elm_lang$core$Native_Scheduler.rawSend(managers[home], { ctor: 'fx', _0: fx });
+		_Scheduler_rawSend(managers[home], {
+			$: 'fx',
+			a: effectsDict[home] || { i: _List_Nil, j: _List_Nil }
+		});
 	}
 }
 
-function gatherEffects(isCmd, bag, effectsDict, taggers)
+
+function _Platform_gatherEffects(isCmd, bag, effectsDict, taggers)
 {
-	switch (bag.type)
+	switch (bag.$)
 	{
-		case 'leaf':
-			var home = bag.home;
-			var effect = toEffect(isCmd, home, taggers, bag.value);
-			effectsDict[home] = insert(isCmd, effect, effectsDict[home]);
+		case 1:
+			var home = bag.k;
+			var effect = _Platform_toEffect(isCmd, home, taggers, bag.l);
+			effectsDict[home] = _Platform_insert(isCmd, effect, effectsDict[home]);
 			return;
 
-		case 'node':
-			var list = bag.branches;
-			while (list.ctor !== '[]')
+		case 2:
+			for (var list = bag.m; list.b; list = list.b) // WHILE_CONS
 			{
-				gatherEffects(isCmd, list._0, effectsDict, taggers);
-				list = list._1;
+				_Platform_gatherEffects(isCmd, list.a, effectsDict, taggers);
 			}
 			return;
 
-		case 'map':
-			gatherEffects(isCmd, bag.tree, effectsDict, {
-				tagger: bag.tagger,
-				rest: taggers
+		case 3:
+			_Platform_gatherEffects(isCmd, bag.o, effectsDict, {
+				p: bag.n,
+				q: taggers
 			});
 			return;
 	}
 }
 
-function toEffect(isCmd, home, taggers, value)
+
+function _Platform_toEffect(isCmd, home, taggers, value)
 {
 	function applyTaggers(x)
 	{
-		var temp = taggers;
-		while (temp)
+		for (var temp = taggers; temp; temp = temp.q)
 		{
-			x = temp.tagger(x);
-			temp = temp.rest;
+			x = temp.p(x);
 		}
 		return x;
 	}
 
 	var map = isCmd
-		? effectManagers[home].cmdMap
-		: effectManagers[home].subMap;
+		? _Platform_effectManagers[home].e
+		: _Platform_effectManagers[home].f;
 
 	return A2(map, applyTaggers, value)
 }
 
-function insert(isCmd, newEffect, effects)
+
+function _Platform_insert(isCmd, newEffect, effects)
 {
-	effects = effects || {
-		cmds: _elm_lang$core$Native_List.Nil,
-		subs: _elm_lang$core$Native_List.Nil
-	};
-	if (isCmd)
-	{
-		effects.cmds = _elm_lang$core$Native_List.Cons(newEffect, effects.cmds);
-		return effects;
-	}
-	effects.subs = _elm_lang$core$Native_List.Cons(newEffect, effects.subs);
+	effects = effects || { i: _List_Nil, j: _List_Nil };
+
+	isCmd
+		? (effects.i = _List_Cons(newEffect, effects.i))
+		: (effects.j = _List_Cons(newEffect, effects.j));
+
 	return effects;
 }
 
 
+
 // PORTS
 
-function checkPortName(name)
+
+function _Platform_checkPortName(name)
 {
-	if (name in effectManagers)
+	if (_Platform_effectManagers[name])
 	{
-		throw new Error('There can only be one port named `' + name + '`, but your program has multiple.');
+		_Debug_crash(3, name)
 	}
 }
+
 
 
 // OUTGOING PORTS
 
-function outgoingPort(name, converter)
+
+function _Platform_outgoingPort(name, converter)
 {
-	checkPortName(name);
-	effectManagers[name] = {
-		tag: 'cmd',
-		cmdMap: outgoingPortMap,
-		converter: converter,
-		isForeign: true
+	_Platform_checkPortName(name);
+	_Platform_effectManagers[name] = {
+		e: _Platform_outgoingPortMap,
+		r: converter,
+		a: _Platform_setupOutgoingPort
 	};
-	return leaf(name);
+	return _Platform_leaf(name);
 }
 
-var outgoingPortMap = F2(function cmdMap(tagger, value) {
-	return value;
-});
 
-function setupOutgoingPort(name)
+var _Platform_outgoingPortMap = F2(function(tagger, value) { return value; });
+
+
+function _Platform_setupOutgoingPort(name)
 {
 	var subs = [];
-	var converter = effectManagers[name].converter;
+	var converter = _Platform_effectManagers[name].r;
 
 	// CREATE MANAGER
 
-	var init = _elm_lang$core$Native_Scheduler.succeed(null);
+	var init = _Process_sleep(0);
 
-	function onEffects(router, cmdList, state)
+	_Platform_effectManagers[name].b = init;
+	_Platform_effectManagers[name].c = F3(function(router, cmdList, state)
 	{
-		while (cmdList.ctor !== '[]')
+		for ( ; cmdList.b; cmdList = cmdList.b) // WHILE_CONS
 		{
 			// grab a separate reference to subs in case unsubscribe is called
 			var currentSubs = subs;
-			var value = converter(cmdList._0);
+			var value = _Json_unwrap(converter(cmdList.a));
 			for (var i = 0; i < currentSubs.length; i++)
 			{
 				currentSubs[i](value);
 			}
-			cmdList = cmdList._1;
 		}
 		return init;
-	}
-
-	effectManagers[name].init = init;
-	effectManagers[name].onEffects = F3(onEffects);
+	});
 
 	// PUBLIC API
 
@@ -7293,21 +5712,23 @@ function setupOutgoingPort(name)
 }
 
 
+
 // INCOMING PORTS
 
-function incomingPort(name, converter)
+
+function _Platform_incomingPort(name, converter)
 {
-	checkPortName(name);
-	effectManagers[name] = {
-		tag: 'sub',
-		subMap: incomingPortMap,
-		converter: converter,
-		isForeign: true
+	_Platform_checkPortName(name);
+	_Platform_effectManagers[name] = {
+		f: _Platform_incomingPortMap,
+		r: converter,
+		a: _Platform_setupIncomingPort
 	};
-	return leaf(name);
+	return _Platform_leaf(name);
 }
 
-var incomingPortMap = F2(function subMap(tagger, finalTagger)
+
+var _Platform_incomingPortMap = F2(function(tagger, finalTagger)
 {
 	return function(value)
 	{
@@ -7315,3876 +5736,1592 @@ var incomingPortMap = F2(function subMap(tagger, finalTagger)
 	};
 });
 
-function setupIncomingPort(name, callback)
+
+function _Platform_setupIncomingPort(name, sendToApp)
 {
-	var sentBeforeInit = [];
-	var subs = _elm_lang$core$Native_List.Nil;
-	var converter = effectManagers[name].converter;
-	var currentOnEffects = preInitOnEffects;
-	var currentSend = preInitSend;
+	var subs = _List_Nil;
+	var converter = _Platform_effectManagers[name].r;
 
 	// CREATE MANAGER
 
-	var init = _elm_lang$core$Native_Scheduler.succeed(null);
+	var init = _Scheduler_succeed(null);
 
-	function preInitOnEffects(router, subList, state)
-	{
-		var postInitResult = postInitOnEffects(router, subList, state);
-
-		for(var i = 0; i < sentBeforeInit.length; i++)
-		{
-			postInitSend(sentBeforeInit[i]);
-		}
-
-		sentBeforeInit = null; // to release objects held in queue
-		currentSend = postInitSend;
-		currentOnEffects = postInitOnEffects;
-		return postInitResult;
-	}
-
-	function postInitOnEffects(router, subList, state)
+	_Platform_effectManagers[name].b = init;
+	_Platform_effectManagers[name].c = F3(function(router, subList, state)
 	{
 		subs = subList;
 		return init;
-	}
-
-	function onEffects(router, subList, state)
-	{
-		return currentOnEffects(router, subList, state);
-	}
-
-	effectManagers[name].init = init;
-	effectManagers[name].onEffects = F3(onEffects);
+	});
 
 	// PUBLIC API
 
-	function preInitSend(value)
-	{
-		sentBeforeInit.push(value);
-	}
-
-	function postInitSend(value)
-	{
-		var temp = subs;
-		while (temp.ctor !== '[]')
-		{
-			callback(temp._0(value));
-			temp = temp._1;
-		}
-	}
-
 	function send(incomingValue)
 	{
-		var result = A2(_elm_lang$core$Json_Decode$decodeValue, converter, incomingValue);
-		if (result.ctor === 'Err')
-		{
-			throw new Error('Trying to send an unexpected type of value through port `' + name + '`:\n' + result._0);
-		}
+		var result = A2(_Json_run, converter, _Json_wrap(incomingValue));
 
-		currentSend(result._0);
+		elm$core$Result$isOk(result) || _Debug_crash(4, name, result.a);
+
+		var value = result.a;
+		for (var temp = subs; temp.b; temp = temp.b) // WHILE_CONS
+		{
+			sendToApp(temp.a(value));
+		}
 	}
 
 	return { send: send };
 }
 
-return {
-	// routers
-	sendToApp: F2(sendToApp),
-	sendToSelf: F2(sendToSelf),
 
-	// global setup
-	effectManagers: effectManagers,
-	outgoingPort: outgoingPort,
-	incomingPort: incomingPort,
 
-	htmlToProgram: htmlToProgram,
-	program: program,
-	programWithFlags: programWithFlags,
-	initialize: initialize,
+// EXPORT ELM MODULES
+//
+// Have DEBUG and PROD versions so that we can (1) give nicer errors in
+// debug mode and (2) not pay for the bits needed for that in prod mode.
+//
 
-	// effect bags
-	leaf: leaf,
-	batch: batch,
-	map: F2(map)
+
+function _Platform_export_UNUSED(exports)
+{
+	scope['Elm']
+		? _Platform_mergeExportsProd(scope['Elm'], exports)
+		: scope['Elm'] = exports;
+}
+
+
+function _Platform_mergeExportsProd(obj, exports)
+{
+	for (var name in exports)
+	{
+		(name in obj)
+			? (name == 'init')
+				? _Debug_crash(6)
+				: _Platform_mergeExportsProd(obj[name], exports[name])
+			: (obj[name] = exports[name]);
+	}
+}
+
+
+function _Platform_export(exports)
+{
+	scope['Elm']
+		? _Platform_mergeExportsDebug('Elm', scope['Elm'], exports)
+		: scope['Elm'] = exports;
+}
+
+
+function _Platform_mergeExportsDebug(moduleName, obj, exports)
+{
+	for (var name in exports)
+	{
+		(name in obj)
+			? (name == 'init')
+				? _Debug_crash(6, moduleName)
+				: _Platform_mergeExportsDebug(moduleName + '.' + name, obj[name], exports[name])
+			: (obj[name] = exports[name]);
+	}
+}
+var elm$core$Basics$False = {$: 'False'};
+var elm$core$Basics$True = {$: 'True'};
+var elm$core$Maybe$Just = function (a) {
+	return {$: 'Just', a: a};
 };
-
-}();
-
-//import Native.Utils //
-
-var _elm_lang$core$Native_Scheduler = function() {
-
-var MAX_STEPS = 10000;
-
-
-// TASKS
-
-function succeed(value)
-{
-	return {
-		ctor: '_Task_succeed',
-		value: value
-	};
-}
-
-function fail(error)
-{
-	return {
-		ctor: '_Task_fail',
-		value: error
-	};
-}
-
-function nativeBinding(callback)
-{
-	return {
-		ctor: '_Task_nativeBinding',
-		callback: callback,
-		cancel: null
-	};
-}
-
-function andThen(callback, task)
-{
-	return {
-		ctor: '_Task_andThen',
-		callback: callback,
-		task: task
-	};
-}
-
-function onError(callback, task)
-{
-	return {
-		ctor: '_Task_onError',
-		callback: callback,
-		task: task
-	};
-}
-
-function receive(callback)
-{
-	return {
-		ctor: '_Task_receive',
-		callback: callback
-	};
-}
-
-
-// PROCESSES
-
-function rawSpawn(task)
-{
-	var process = {
-		ctor: '_Process',
-		id: _elm_lang$core$Native_Utils.guid(),
-		root: task,
-		stack: null,
-		mailbox: []
-	};
-
-	enqueue(process);
-
-	return process;
-}
-
-function spawn(task)
-{
-	return nativeBinding(function(callback) {
-		var process = rawSpawn(task);
-		callback(succeed(process));
-	});
-}
-
-function rawSend(process, msg)
-{
-	process.mailbox.push(msg);
-	enqueue(process);
-}
-
-function send(process, msg)
-{
-	return nativeBinding(function(callback) {
-		rawSend(process, msg);
-		callback(succeed(_elm_lang$core$Native_Utils.Tuple0));
-	});
-}
-
-function kill(process)
-{
-	return nativeBinding(function(callback) {
-		var root = process.root;
-		if (root.ctor === '_Task_nativeBinding' && root.cancel)
-		{
-			root.cancel();
-		}
-
-		process.root = null;
-
-		callback(succeed(_elm_lang$core$Native_Utils.Tuple0));
-	});
-}
-
-function sleep(time)
-{
-	return nativeBinding(function(callback) {
-		var id = setTimeout(function() {
-			callback(succeed(_elm_lang$core$Native_Utils.Tuple0));
-		}, time);
-
-		return function() { clearTimeout(id); };
-	});
-}
-
-
-// STEP PROCESSES
-
-function step(numSteps, process)
-{
-	while (numSteps < MAX_STEPS)
-	{
-		var ctor = process.root.ctor;
-
-		if (ctor === '_Task_succeed')
-		{
-			while (process.stack && process.stack.ctor === '_Task_onError')
-			{
-				process.stack = process.stack.rest;
-			}
-			if (process.stack === null)
-			{
-				break;
-			}
-			process.root = process.stack.callback(process.root.value);
-			process.stack = process.stack.rest;
-			++numSteps;
-			continue;
-		}
-
-		if (ctor === '_Task_fail')
-		{
-			while (process.stack && process.stack.ctor === '_Task_andThen')
-			{
-				process.stack = process.stack.rest;
-			}
-			if (process.stack === null)
-			{
-				break;
-			}
-			process.root = process.stack.callback(process.root.value);
-			process.stack = process.stack.rest;
-			++numSteps;
-			continue;
-		}
-
-		if (ctor === '_Task_andThen')
-		{
-			process.stack = {
-				ctor: '_Task_andThen',
-				callback: process.root.callback,
-				rest: process.stack
-			};
-			process.root = process.root.task;
-			++numSteps;
-			continue;
-		}
-
-		if (ctor === '_Task_onError')
-		{
-			process.stack = {
-				ctor: '_Task_onError',
-				callback: process.root.callback,
-				rest: process.stack
-			};
-			process.root = process.root.task;
-			++numSteps;
-			continue;
-		}
-
-		if (ctor === '_Task_nativeBinding')
-		{
-			process.root.cancel = process.root.callback(function(newRoot) {
-				process.root = newRoot;
-				enqueue(process);
-			});
-
-			break;
-		}
-
-		if (ctor === '_Task_receive')
-		{
-			var mailbox = process.mailbox;
-			if (mailbox.length === 0)
-			{
-				break;
-			}
-
-			process.root = process.root.callback(mailbox.shift());
-			++numSteps;
-			continue;
-		}
-
-		throw new Error(ctor);
-	}
-
-	if (numSteps < MAX_STEPS)
-	{
-		return numSteps + 1;
-	}
-	enqueue(process);
-
-	return numSteps;
-}
-
-
-// WORK QUEUE
-
-var working = false;
-var workQueue = [];
-
-function enqueue(process)
-{
-	workQueue.push(process);
-
-	if (!working)
-	{
-		setTimeout(work, 0);
-		working = true;
-	}
-}
-
-function work()
-{
-	var numSteps = 0;
-	var process;
-	while (numSteps < MAX_STEPS && (process = workQueue.shift()))
-	{
-		if (process.root)
-		{
-			numSteps = step(numSteps, process);
-		}
-	}
-	if (!process)
-	{
-		working = false;
-		return;
-	}
-	setTimeout(work, 0);
-}
-
-
-return {
-	succeed: succeed,
-	fail: fail,
-	nativeBinding: nativeBinding,
-	andThen: F2(andThen),
-	onError: F2(onError),
-	receive: receive,
-
-	spawn: spawn,
-	kill: kill,
-	sleep: sleep,
-	send: F2(send),
-
-	rawSpawn: rawSpawn,
-	rawSend: rawSend
-};
-
-}();
-var _elm_lang$core$Platform_Cmd$batch = _elm_lang$core$Native_Platform.batch;
-var _elm_lang$core$Platform_Cmd$none = _elm_lang$core$Platform_Cmd$batch(
-	{ctor: '[]'});
-var _elm_lang$core$Platform_Cmd_ops = _elm_lang$core$Platform_Cmd_ops || {};
-_elm_lang$core$Platform_Cmd_ops['!'] = F2(
-	function (model, commands) {
-		return {
-			ctor: '_Tuple2',
-			_0: model,
-			_1: _elm_lang$core$Platform_Cmd$batch(commands)
-		};
-	});
-var _elm_lang$core$Platform_Cmd$map = _elm_lang$core$Native_Platform.map;
-var _elm_lang$core$Platform_Cmd$Cmd = {ctor: 'Cmd'};
-
-var _elm_lang$core$Platform_Sub$batch = _elm_lang$core$Native_Platform.batch;
-var _elm_lang$core$Platform_Sub$none = _elm_lang$core$Platform_Sub$batch(
-	{ctor: '[]'});
-var _elm_lang$core$Platform_Sub$map = _elm_lang$core$Native_Platform.map;
-var _elm_lang$core$Platform_Sub$Sub = {ctor: 'Sub'};
-
-var _elm_lang$core$Platform$hack = _elm_lang$core$Native_Scheduler.succeed;
-var _elm_lang$core$Platform$sendToSelf = _elm_lang$core$Native_Platform.sendToSelf;
-var _elm_lang$core$Platform$sendToApp = _elm_lang$core$Native_Platform.sendToApp;
-var _elm_lang$core$Platform$programWithFlags = _elm_lang$core$Native_Platform.programWithFlags;
-var _elm_lang$core$Platform$program = _elm_lang$core$Native_Platform.program;
-var _elm_lang$core$Platform$Program = {ctor: 'Program'};
-var _elm_lang$core$Platform$Task = {ctor: 'Task'};
-var _elm_lang$core$Platform$ProcessId = {ctor: 'ProcessId'};
-var _elm_lang$core$Platform$Router = {ctor: 'Router'};
-
-var _lukewestby$elm_string_interpolate$String_Interpolate$applyInterpolation = F2(
-	function (replacements, match) {
-		var ordinalString = function (_p0) {
-			return A2(
-				_elm_lang$core$String$dropLeft,
-				1,
-				A2(_elm_lang$core$String$dropRight, 1, _p0));
-		}(match.match);
-		var ordinal = _elm_lang$core$String$toInt(ordinalString);
-		var _p1 = ordinal;
-		if (_p1.ctor === 'Err') {
-			return '';
-		} else {
-			var _p2 = A2(_elm_lang$core$Array$get, _p1._0, replacements);
-			if (_p2.ctor === 'Nothing') {
-				return '';
-			} else {
-				return _p2._0;
-			}
-		}
-	});
-var _lukewestby$elm_string_interpolate$String_Interpolate$interpolationRegex = _elm_lang$core$Regex$regex('\\{\\d+\\}');
-var _lukewestby$elm_string_interpolate$String_Interpolate$interpolate = F2(
-	function (string, args) {
-		var asArray = _elm_lang$core$Array$fromList(args);
-		return A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolationRegex,
-			_lukewestby$elm_string_interpolate$String_Interpolate$applyInterpolation(asArray),
-			string);
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$toString = F2(
-	function (functionName, _p0) {
-		var _p1 = _p0;
-		var _p2 = _p1.args;
-		var parameterNames = A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, _p2);
-		var annotations = A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, _p2),
-			{
-				ctor: '::',
-				_0: _p1.returnAnnotation,
-				_1: {ctor: '[]'}
-			});
-		var typeAnnotation = A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{0} : {1}',
-			{
-				ctor: '::',
-				_0: functionName,
-				_1: {
-					ctor: '::',
-					_0: A2(_elm_lang$core$String$join, ' -> ', annotations),
-					_1: {ctor: '[]'}
+var elm$core$Maybe$Nothing = {$: 'Nothing'};
+var elm$core$Basics$EQ = {$: 'EQ'};
+var elm$core$Basics$LT = {$: 'LT'};
+var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
+var elm$core$Array$foldr = F3(
+	function (func, baseCase, _n0) {
+		var tree = _n0.c;
+		var tail = _n0.d;
+		var helper = F2(
+			function (node, acc) {
+				if (node.$ === 'SubTree') {
+					var subTree = node.a;
+					return A3(elm$core$Elm$JsArray$foldr, helper, acc, subTree);
+				} else {
+					var values = node.a;
+					return A3(elm$core$Elm$JsArray$foldr, func, acc, values);
 				}
 			});
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{0}\n{1} {2} =\n',
-			{
-				ctor: '::',
-				_0: typeAnnotation,
-				_1: {
-					ctor: '::',
-					_0: functionName,
-					_1: {
-						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, ' ', parameterNames),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
+		return A3(
+			elm$core$Elm$JsArray$foldr,
+			helper,
+			A3(elm$core$Elm$JsArray$foldr, func, baseCase, tail),
+			tree);
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$prepend = F2(
-	function (_p3, annotatedArgs) {
-		var _p4 = _p3;
-		return _elm_lang$core$Native_Utils.update(
-			annotatedArgs,
-			{
-				args: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _p4._0, _1: _p4._1},
-					_1: annotatedArgs.args
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$AnnotatedArgs = F2(
-	function (a, b) {
-		return {args: a, returnAnnotation: b};
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$build = function (returnAnnotation) {
-	return A2(
-		_dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$AnnotatedArgs,
-		{ctor: '[]'},
-		returnAnnotation);
+var elm$core$List$cons = _List_cons;
+var elm$core$Array$toList = function (array) {
+	return A3(elm$core$Array$foldr, elm$core$List$cons, _List_Nil, array);
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$buildWithArgs = F2(
-	function (args, returnAnnotation) {
-		return A2(_dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$AnnotatedArgs, args, returnAnnotation);
-	});
-
-var _elm_lang$core$Dict$foldr = F3(
-	function (f, acc, t) {
+var elm$core$Basics$GT = {$: 'GT'};
+var elm$core$Dict$foldr = F3(
+	function (func, acc, t) {
 		foldr:
 		while (true) {
-			var _p0 = t;
-			if (_p0.ctor === 'RBEmpty_elm_builtin') {
+			if (t.$ === 'RBEmpty_elm_builtin') {
 				return acc;
 			} else {
-				var _v1 = f,
-					_v2 = A3(
-					f,
-					_p0._1,
-					_p0._2,
-					A3(_elm_lang$core$Dict$foldr, f, acc, _p0._4)),
-					_v3 = _p0._3;
-				f = _v1;
-				acc = _v2;
-				t = _v3;
+				var key = t.b;
+				var value = t.c;
+				var left = t.d;
+				var right = t.e;
+				var $temp$func = func,
+					$temp$acc = A3(
+					func,
+					key,
+					value,
+					A3(elm$core$Dict$foldr, func, acc, right)),
+					$temp$t = left;
+				func = $temp$func;
+				acc = $temp$acc;
+				t = $temp$t;
 				continue foldr;
 			}
 		}
 	});
-var _elm_lang$core$Dict$keys = function (dict) {
+var elm$core$Dict$toList = function (dict) {
 	return A3(
-		_elm_lang$core$Dict$foldr,
-		F3(
-			function (key, value, keyList) {
-				return {ctor: '::', _0: key, _1: keyList};
-			}),
-		{ctor: '[]'},
-		dict);
-};
-var _elm_lang$core$Dict$values = function (dict) {
-	return A3(
-		_elm_lang$core$Dict$foldr,
-		F3(
-			function (key, value, valueList) {
-				return {ctor: '::', _0: value, _1: valueList};
-			}),
-		{ctor: '[]'},
-		dict);
-};
-var _elm_lang$core$Dict$toList = function (dict) {
-	return A3(
-		_elm_lang$core$Dict$foldr,
+		elm$core$Dict$foldr,
 		F3(
 			function (key, value, list) {
-				return {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: key, _1: value},
-					_1: list
-				};
+				return A2(
+					elm$core$List$cons,
+					_Utils_Tuple2(key, value),
+					list);
 			}),
-		{ctor: '[]'},
+		_List_Nil,
 		dict);
 };
-var _elm_lang$core$Dict$foldl = F3(
-	function (f, acc, dict) {
+var elm$core$Dict$keys = function (dict) {
+	return A3(
+		elm$core$Dict$foldr,
+		F3(
+			function (key, value, keyList) {
+				return A2(elm$core$List$cons, key, keyList);
+			}),
+		_List_Nil,
+		dict);
+};
+var elm$core$Set$toList = function (_n0) {
+	var dict = _n0.a;
+	return elm$core$Dict$keys(dict);
+};
+var elm$core$String$startsWith = _String_startsWith;
+var author$project$Graphql$Parser$ClassCaseName$isBuiltIn = function (_n0) {
+	var rawName = _n0.a;
+	return A2(elm$core$String$startsWith, '__', rawName) ? true : false;
+};
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
+	});
+var elm$core$Basics$not = _Basics_not;
+var elm$core$Basics$add = _Basics_add;
+var elm$core$Basics$gt = _Utils_gt;
+var elm$core$List$foldl = F3(
+	function (func, acc, list) {
 		foldl:
 		while (true) {
-			var _p1 = dict;
-			if (_p1.ctor === 'RBEmpty_elm_builtin') {
+			if (!list.b) {
 				return acc;
 			} else {
-				var _v5 = f,
-					_v6 = A3(
-					f,
-					_p1._1,
-					_p1._2,
-					A3(_elm_lang$core$Dict$foldl, f, acc, _p1._3)),
-					_v7 = _p1._4;
-				f = _v5;
-				acc = _v6;
-				dict = _v7;
+				var x = list.a;
+				var xs = list.b;
+				var $temp$func = func,
+					$temp$acc = A2(func, x, acc),
+					$temp$list = xs;
+				func = $temp$func;
+				acc = $temp$acc;
+				list = $temp$list;
 				continue foldl;
 			}
 		}
 	});
-var _elm_lang$core$Dict$merge = F6(
-	function (leftStep, bothStep, rightStep, leftDict, rightDict, initialResult) {
-		var stepState = F3(
-			function (rKey, rValue, _p2) {
-				stepState:
-				while (true) {
-					var _p3 = _p2;
-					var _p9 = _p3._1;
-					var _p8 = _p3._0;
-					var _p4 = _p8;
-					if (_p4.ctor === '[]') {
-						return {
-							ctor: '_Tuple2',
-							_0: _p8,
-							_1: A3(rightStep, rKey, rValue, _p9)
-						};
+var elm$core$List$reverse = function (list) {
+	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
+};
+var elm$core$List$foldrHelper = F4(
+	function (fn, acc, ctr, ls) {
+		if (!ls.b) {
+			return acc;
+		} else {
+			var a = ls.a;
+			var r1 = ls.b;
+			if (!r1.b) {
+				return A2(fn, a, acc);
+			} else {
+				var b = r1.a;
+				var r2 = r1.b;
+				if (!r2.b) {
+					return A2(
+						fn,
+						a,
+						A2(fn, b, acc));
+				} else {
+					var c = r2.a;
+					var r3 = r2.b;
+					if (!r3.b) {
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(fn, c, acc)));
 					} else {
-						var _p7 = _p4._1;
-						var _p6 = _p4._0._1;
-						var _p5 = _p4._0._0;
-						if (_elm_lang$core$Native_Utils.cmp(_p5, rKey) < 0) {
-							var _v10 = rKey,
-								_v11 = rValue,
-								_v12 = {
-								ctor: '_Tuple2',
-								_0: _p7,
-								_1: A3(leftStep, _p5, _p6, _p9)
-							};
-							rKey = _v10;
-							rValue = _v11;
-							_p2 = _v12;
-							continue stepState;
-						} else {
-							if (_elm_lang$core$Native_Utils.cmp(_p5, rKey) > 0) {
-								return {
-									ctor: '_Tuple2',
-									_0: _p8,
-									_1: A3(rightStep, rKey, rValue, _p9)
-								};
-							} else {
-								return {
-									ctor: '_Tuple2',
-									_0: _p7,
-									_1: A4(bothStep, _p5, _p6, rValue, _p9)
-								};
-							}
-						}
+						var d = r3.a;
+						var r4 = r3.b;
+						var res = (ctr > 500) ? A3(
+							elm$core$List$foldl,
+							fn,
+							acc,
+							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(
+									fn,
+									c,
+									A2(fn, d, res))));
 					}
 				}
-			});
-		var _p10 = A3(
-			_elm_lang$core$Dict$foldl,
-			stepState,
-			{
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Dict$toList(leftDict),
-				_1: initialResult
-			},
-			rightDict);
-		var leftovers = _p10._0;
-		var intermediateResult = _p10._1;
+			}
+		}
+	});
+var elm$core$List$foldr = F3(
+	function (fn, acc, ls) {
+		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
+	});
+var elm$core$List$filter = F2(
+	function (isGood, list) {
 		return A3(
-			_elm_lang$core$List$foldl,
+			elm$core$List$foldr,
 			F2(
-				function (_p11, result) {
-					var _p12 = _p11;
-					return A3(leftStep, _p12._0, _p12._1, result);
+				function (x, xs) {
+					return isGood(x) ? A2(elm$core$List$cons, x, xs) : xs;
 				}),
-			intermediateResult,
-			leftovers);
+			_List_Nil,
+			list);
 	});
-var _elm_lang$core$Dict$reportRemBug = F4(
-	function (msg, c, lgot, rgot) {
-		return _elm_lang$core$Native_Debug.crash(
-			_elm_lang$core$String$concat(
-				{
-					ctor: '::',
-					_0: 'Internal red-black tree invariant violated, expected ',
-					_1: {
-						ctor: '::',
-						_0: msg,
-						_1: {
-							ctor: '::',
-							_0: ' and got ',
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$core$Basics$toString(c),
-								_1: {
-									ctor: '::',
-									_0: '/',
-									_1: {
-										ctor: '::',
-										_0: lgot,
-										_1: {
-											ctor: '::',
-											_0: '/',
-											_1: {
-												ctor: '::',
-												_0: rgot,
-												_1: {
-													ctor: '::',
-													_0: '\nPlease report this bug to <https://github.com/elm-lang/core/issues>',
-													_1: {ctor: '[]'}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}));
-	});
-var _elm_lang$core$Dict$isBBlack = function (dict) {
-	var _p13 = dict;
-	_v14_2:
-	do {
-		if (_p13.ctor === 'RBNode_elm_builtin') {
-			if (_p13._0.ctor === 'BBlack') {
-				return true;
-			} else {
-				break _v14_2;
-			}
+var author$project$Graphql$Generator$Group$excludeBuiltIns = function (typeDefinitions) {
+	return A2(
+		elm$core$List$filter,
+		function (_n0) {
+			var name = _n0.a;
+			var definableType = _n0.b;
+			var description = _n0.c;
+			return !author$project$Graphql$Parser$ClassCaseName$isBuiltIn(name);
+		},
+		typeDefinitions);
+};
+var elm$core$Basics$neq = _Utils_notEqual;
+var author$project$Graphql$Generator$Group$excludeMutation = F2(
+	function (_n0, typeDefinitions) {
+		var mutation = _n0.mutation;
+		if (mutation.$ === 'Just') {
+			var mutationObjectName = mutation.a;
+			return A2(
+				elm$core$List$filter,
+				function (_n2) {
+					var name = _n2.a;
+					var definableType = _n2.b;
+					var description = _n2.c;
+					return !_Utils_eq(name, mutationObjectName);
+				},
+				typeDefinitions);
 		} else {
-			if (_p13._0.ctor === 'LBBlack') {
-				return true;
-			} else {
-				break _v14_2;
-			}
-		}
-	} while(false);
-	return false;
-};
-var _elm_lang$core$Dict$sizeHelp = F2(
-	function (n, dict) {
-		sizeHelp:
-		while (true) {
-			var _p14 = dict;
-			if (_p14.ctor === 'RBEmpty_elm_builtin') {
-				return n;
-			} else {
-				var _v16 = A2(_elm_lang$core$Dict$sizeHelp, n + 1, _p14._4),
-					_v17 = _p14._3;
-				n = _v16;
-				dict = _v17;
-				continue sizeHelp;
-			}
+			return typeDefinitions;
 		}
 	});
-var _elm_lang$core$Dict$size = function (dict) {
-	return A2(_elm_lang$core$Dict$sizeHelp, 0, dict);
-};
-var _elm_lang$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			var _p15 = dict;
-			if (_p15.ctor === 'RBEmpty_elm_builtin') {
-				return _elm_lang$core$Maybe$Nothing;
-			} else {
-				var _p16 = A2(_elm_lang$core$Basics$compare, targetKey, _p15._1);
-				switch (_p16.ctor) {
-					case 'LT':
-						var _v20 = targetKey,
-							_v21 = _p15._3;
-						targetKey = _v20;
-						dict = _v21;
-						continue get;
-					case 'EQ':
-						return _elm_lang$core$Maybe$Just(_p15._2);
-					default:
-						var _v22 = targetKey,
-							_v23 = _p15._4;
-						targetKey = _v22;
-						dict = _v23;
-						continue get;
-				}
-			}
-		}
-	});
-var _elm_lang$core$Dict$member = F2(
-	function (key, dict) {
-		var _p17 = A2(_elm_lang$core$Dict$get, key, dict);
-		if (_p17.ctor === 'Just') {
-			return true;
-		} else {
-			return false;
-		}
-	});
-var _elm_lang$core$Dict$maxWithDefault = F3(
-	function (k, v, r) {
-		maxWithDefault:
-		while (true) {
-			var _p18 = r;
-			if (_p18.ctor === 'RBEmpty_elm_builtin') {
-				return {ctor: '_Tuple2', _0: k, _1: v};
-			} else {
-				var _v26 = _p18._1,
-					_v27 = _p18._2,
-					_v28 = _p18._4;
-				k = _v26;
-				v = _v27;
-				r = _v28;
-				continue maxWithDefault;
-			}
-		}
-	});
-var _elm_lang$core$Dict$NBlack = {ctor: 'NBlack'};
-var _elm_lang$core$Dict$BBlack = {ctor: 'BBlack'};
-var _elm_lang$core$Dict$Black = {ctor: 'Black'};
-var _elm_lang$core$Dict$blackish = function (t) {
-	var _p19 = t;
-	if (_p19.ctor === 'RBNode_elm_builtin') {
-		var _p20 = _p19._0;
-		return _elm_lang$core$Native_Utils.eq(_p20, _elm_lang$core$Dict$Black) || _elm_lang$core$Native_Utils.eq(_p20, _elm_lang$core$Dict$BBlack);
-	} else {
-		return true;
-	}
-};
-var _elm_lang$core$Dict$Red = {ctor: 'Red'};
-var _elm_lang$core$Dict$moreBlack = function (color) {
-	var _p21 = color;
-	switch (_p21.ctor) {
-		case 'Black':
-			return _elm_lang$core$Dict$BBlack;
-		case 'Red':
-			return _elm_lang$core$Dict$Black;
-		case 'NBlack':
-			return _elm_lang$core$Dict$Red;
-		default:
-			return _elm_lang$core$Native_Debug.crash('Can\'t make a double black node more black!');
-	}
-};
-var _elm_lang$core$Dict$lessBlack = function (color) {
-	var _p22 = color;
-	switch (_p22.ctor) {
-		case 'BBlack':
-			return _elm_lang$core$Dict$Black;
-		case 'Black':
-			return _elm_lang$core$Dict$Red;
-		case 'Red':
-			return _elm_lang$core$Dict$NBlack;
-		default:
-			return _elm_lang$core$Native_Debug.crash('Can\'t make a negative black node less black!');
-	}
-};
-var _elm_lang$core$Dict$LBBlack = {ctor: 'LBBlack'};
-var _elm_lang$core$Dict$LBlack = {ctor: 'LBlack'};
-var _elm_lang$core$Dict$RBEmpty_elm_builtin = function (a) {
-	return {ctor: 'RBEmpty_elm_builtin', _0: a};
-};
-var _elm_lang$core$Dict$empty = _elm_lang$core$Dict$RBEmpty_elm_builtin(_elm_lang$core$Dict$LBlack);
-var _elm_lang$core$Dict$isEmpty = function (dict) {
-	return _elm_lang$core$Native_Utils.eq(dict, _elm_lang$core$Dict$empty);
-};
-var _elm_lang$core$Dict$RBNode_elm_builtin = F5(
-	function (a, b, c, d, e) {
-		return {ctor: 'RBNode_elm_builtin', _0: a, _1: b, _2: c, _3: d, _4: e};
-	});
-var _elm_lang$core$Dict$ensureBlackRoot = function (dict) {
-	var _p23 = dict;
-	if ((_p23.ctor === 'RBNode_elm_builtin') && (_p23._0.ctor === 'Red')) {
-		return A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, _p23._1, _p23._2, _p23._3, _p23._4);
-	} else {
-		return dict;
-	}
-};
-var _elm_lang$core$Dict$lessBlackTree = function (dict) {
-	var _p24 = dict;
-	if (_p24.ctor === 'RBNode_elm_builtin') {
-		return A5(
-			_elm_lang$core$Dict$RBNode_elm_builtin,
-			_elm_lang$core$Dict$lessBlack(_p24._0),
-			_p24._1,
-			_p24._2,
-			_p24._3,
-			_p24._4);
-	} else {
-		return _elm_lang$core$Dict$RBEmpty_elm_builtin(_elm_lang$core$Dict$LBlack);
-	}
-};
-var _elm_lang$core$Dict$balancedTree = function (col) {
-	return function (xk) {
-		return function (xv) {
-			return function (yk) {
-				return function (yv) {
-					return function (zk) {
-						return function (zv) {
-							return function (a) {
-								return function (b) {
-									return function (c) {
-										return function (d) {
-											return A5(
-												_elm_lang$core$Dict$RBNode_elm_builtin,
-												_elm_lang$core$Dict$lessBlack(col),
-												yk,
-												yv,
-												A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, xk, xv, a, b),
-												A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, zk, zv, c, d));
-										};
-									};
-								};
-							};
-						};
-					};
-				};
-			};
-		};
-	};
-};
-var _elm_lang$core$Dict$blacken = function (t) {
-	var _p25 = t;
-	if (_p25.ctor === 'RBEmpty_elm_builtin') {
-		return _elm_lang$core$Dict$RBEmpty_elm_builtin(_elm_lang$core$Dict$LBlack);
-	} else {
-		return A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, _p25._1, _p25._2, _p25._3, _p25._4);
-	}
-};
-var _elm_lang$core$Dict$redden = function (t) {
-	var _p26 = t;
-	if (_p26.ctor === 'RBEmpty_elm_builtin') {
-		return _elm_lang$core$Native_Debug.crash('can\'t make a Leaf red');
-	} else {
-		return A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Red, _p26._1, _p26._2, _p26._3, _p26._4);
-	}
-};
-var _elm_lang$core$Dict$balanceHelp = function (tree) {
-	var _p27 = tree;
-	_v36_6:
-	do {
-		_v36_5:
-		do {
-			_v36_4:
-			do {
-				_v36_3:
-				do {
-					_v36_2:
-					do {
-						_v36_1:
-						do {
-							_v36_0:
-							do {
-								if (_p27.ctor === 'RBNode_elm_builtin') {
-									if (_p27._3.ctor === 'RBNode_elm_builtin') {
-										if (_p27._4.ctor === 'RBNode_elm_builtin') {
-											switch (_p27._3._0.ctor) {
-												case 'Red':
-													switch (_p27._4._0.ctor) {
-														case 'Red':
-															if ((_p27._3._3.ctor === 'RBNode_elm_builtin') && (_p27._3._3._0.ctor === 'Red')) {
-																break _v36_0;
-															} else {
-																if ((_p27._3._4.ctor === 'RBNode_elm_builtin') && (_p27._3._4._0.ctor === 'Red')) {
-																	break _v36_1;
-																} else {
-																	if ((_p27._4._3.ctor === 'RBNode_elm_builtin') && (_p27._4._3._0.ctor === 'Red')) {
-																		break _v36_2;
-																	} else {
-																		if ((_p27._4._4.ctor === 'RBNode_elm_builtin') && (_p27._4._4._0.ctor === 'Red')) {
-																			break _v36_3;
-																		} else {
-																			break _v36_6;
-																		}
-																	}
-																}
-															}
-														case 'NBlack':
-															if ((_p27._3._3.ctor === 'RBNode_elm_builtin') && (_p27._3._3._0.ctor === 'Red')) {
-																break _v36_0;
-															} else {
-																if ((_p27._3._4.ctor === 'RBNode_elm_builtin') && (_p27._3._4._0.ctor === 'Red')) {
-																	break _v36_1;
-																} else {
-																	if (((((_p27._0.ctor === 'BBlack') && (_p27._4._3.ctor === 'RBNode_elm_builtin')) && (_p27._4._3._0.ctor === 'Black')) && (_p27._4._4.ctor === 'RBNode_elm_builtin')) && (_p27._4._4._0.ctor === 'Black')) {
-																		break _v36_4;
-																	} else {
-																		break _v36_6;
-																	}
-																}
-															}
-														default:
-															if ((_p27._3._3.ctor === 'RBNode_elm_builtin') && (_p27._3._3._0.ctor === 'Red')) {
-																break _v36_0;
-															} else {
-																if ((_p27._3._4.ctor === 'RBNode_elm_builtin') && (_p27._3._4._0.ctor === 'Red')) {
-																	break _v36_1;
-																} else {
-																	break _v36_6;
-																}
-															}
-													}
-												case 'NBlack':
-													switch (_p27._4._0.ctor) {
-														case 'Red':
-															if ((_p27._4._3.ctor === 'RBNode_elm_builtin') && (_p27._4._3._0.ctor === 'Red')) {
-																break _v36_2;
-															} else {
-																if ((_p27._4._4.ctor === 'RBNode_elm_builtin') && (_p27._4._4._0.ctor === 'Red')) {
-																	break _v36_3;
-																} else {
-																	if (((((_p27._0.ctor === 'BBlack') && (_p27._3._3.ctor === 'RBNode_elm_builtin')) && (_p27._3._3._0.ctor === 'Black')) && (_p27._3._4.ctor === 'RBNode_elm_builtin')) && (_p27._3._4._0.ctor === 'Black')) {
-																		break _v36_5;
-																	} else {
-																		break _v36_6;
-																	}
-																}
-															}
-														case 'NBlack':
-															if (_p27._0.ctor === 'BBlack') {
-																if ((((_p27._4._3.ctor === 'RBNode_elm_builtin') && (_p27._4._3._0.ctor === 'Black')) && (_p27._4._4.ctor === 'RBNode_elm_builtin')) && (_p27._4._4._0.ctor === 'Black')) {
-																	break _v36_4;
-																} else {
-																	if ((((_p27._3._3.ctor === 'RBNode_elm_builtin') && (_p27._3._3._0.ctor === 'Black')) && (_p27._3._4.ctor === 'RBNode_elm_builtin')) && (_p27._3._4._0.ctor === 'Black')) {
-																		break _v36_5;
-																	} else {
-																		break _v36_6;
-																	}
-																}
-															} else {
-																break _v36_6;
-															}
-														default:
-															if (((((_p27._0.ctor === 'BBlack') && (_p27._3._3.ctor === 'RBNode_elm_builtin')) && (_p27._3._3._0.ctor === 'Black')) && (_p27._3._4.ctor === 'RBNode_elm_builtin')) && (_p27._3._4._0.ctor === 'Black')) {
-																break _v36_5;
-															} else {
-																break _v36_6;
-															}
-													}
-												default:
-													switch (_p27._4._0.ctor) {
-														case 'Red':
-															if ((_p27._4._3.ctor === 'RBNode_elm_builtin') && (_p27._4._3._0.ctor === 'Red')) {
-																break _v36_2;
-															} else {
-																if ((_p27._4._4.ctor === 'RBNode_elm_builtin') && (_p27._4._4._0.ctor === 'Red')) {
-																	break _v36_3;
-																} else {
-																	break _v36_6;
-																}
-															}
-														case 'NBlack':
-															if (((((_p27._0.ctor === 'BBlack') && (_p27._4._3.ctor === 'RBNode_elm_builtin')) && (_p27._4._3._0.ctor === 'Black')) && (_p27._4._4.ctor === 'RBNode_elm_builtin')) && (_p27._4._4._0.ctor === 'Black')) {
-																break _v36_4;
-															} else {
-																break _v36_6;
-															}
-														default:
-															break _v36_6;
-													}
-											}
-										} else {
-											switch (_p27._3._0.ctor) {
-												case 'Red':
-													if ((_p27._3._3.ctor === 'RBNode_elm_builtin') && (_p27._3._3._0.ctor === 'Red')) {
-														break _v36_0;
-													} else {
-														if ((_p27._3._4.ctor === 'RBNode_elm_builtin') && (_p27._3._4._0.ctor === 'Red')) {
-															break _v36_1;
-														} else {
-															break _v36_6;
-														}
-													}
-												case 'NBlack':
-													if (((((_p27._0.ctor === 'BBlack') && (_p27._3._3.ctor === 'RBNode_elm_builtin')) && (_p27._3._3._0.ctor === 'Black')) && (_p27._3._4.ctor === 'RBNode_elm_builtin')) && (_p27._3._4._0.ctor === 'Black')) {
-														break _v36_5;
-													} else {
-														break _v36_6;
-													}
-												default:
-													break _v36_6;
-											}
-										}
-									} else {
-										if (_p27._4.ctor === 'RBNode_elm_builtin') {
-											switch (_p27._4._0.ctor) {
-												case 'Red':
-													if ((_p27._4._3.ctor === 'RBNode_elm_builtin') && (_p27._4._3._0.ctor === 'Red')) {
-														break _v36_2;
-													} else {
-														if ((_p27._4._4.ctor === 'RBNode_elm_builtin') && (_p27._4._4._0.ctor === 'Red')) {
-															break _v36_3;
-														} else {
-															break _v36_6;
-														}
-													}
-												case 'NBlack':
-													if (((((_p27._0.ctor === 'BBlack') && (_p27._4._3.ctor === 'RBNode_elm_builtin')) && (_p27._4._3._0.ctor === 'Black')) && (_p27._4._4.ctor === 'RBNode_elm_builtin')) && (_p27._4._4._0.ctor === 'Black')) {
-														break _v36_4;
-													} else {
-														break _v36_6;
-													}
-												default:
-													break _v36_6;
-											}
-										} else {
-											break _v36_6;
-										}
-									}
-								} else {
-									break _v36_6;
-								}
-							} while(false);
-							return _elm_lang$core$Dict$balancedTree(_p27._0)(_p27._3._3._1)(_p27._3._3._2)(_p27._3._1)(_p27._3._2)(_p27._1)(_p27._2)(_p27._3._3._3)(_p27._3._3._4)(_p27._3._4)(_p27._4);
-						} while(false);
-						return _elm_lang$core$Dict$balancedTree(_p27._0)(_p27._3._1)(_p27._3._2)(_p27._3._4._1)(_p27._3._4._2)(_p27._1)(_p27._2)(_p27._3._3)(_p27._3._4._3)(_p27._3._4._4)(_p27._4);
-					} while(false);
-					return _elm_lang$core$Dict$balancedTree(_p27._0)(_p27._1)(_p27._2)(_p27._4._3._1)(_p27._4._3._2)(_p27._4._1)(_p27._4._2)(_p27._3)(_p27._4._3._3)(_p27._4._3._4)(_p27._4._4);
-				} while(false);
-				return _elm_lang$core$Dict$balancedTree(_p27._0)(_p27._1)(_p27._2)(_p27._4._1)(_p27._4._2)(_p27._4._4._1)(_p27._4._4._2)(_p27._3)(_p27._4._3)(_p27._4._4._3)(_p27._4._4._4);
-			} while(false);
-			return A5(
-				_elm_lang$core$Dict$RBNode_elm_builtin,
-				_elm_lang$core$Dict$Black,
-				_p27._4._3._1,
-				_p27._4._3._2,
-				A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, _p27._1, _p27._2, _p27._3, _p27._4._3._3),
-				A5(
-					_elm_lang$core$Dict$balance,
-					_elm_lang$core$Dict$Black,
-					_p27._4._1,
-					_p27._4._2,
-					_p27._4._3._4,
-					_elm_lang$core$Dict$redden(_p27._4._4)));
-		} while(false);
-		return A5(
-			_elm_lang$core$Dict$RBNode_elm_builtin,
-			_elm_lang$core$Dict$Black,
-			_p27._3._4._1,
-			_p27._3._4._2,
-			A5(
-				_elm_lang$core$Dict$balance,
-				_elm_lang$core$Dict$Black,
-				_p27._3._1,
-				_p27._3._2,
-				_elm_lang$core$Dict$redden(_p27._3._3),
-				_p27._3._4._3),
-			A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, _p27._1, _p27._2, _p27._3._4._4, _p27._4));
-	} while(false);
-	return tree;
-};
-var _elm_lang$core$Dict$balance = F5(
-	function (c, k, v, l, r) {
-		var tree = A5(_elm_lang$core$Dict$RBNode_elm_builtin, c, k, v, l, r);
-		return _elm_lang$core$Dict$blackish(tree) ? _elm_lang$core$Dict$balanceHelp(tree) : tree;
-	});
-var _elm_lang$core$Dict$bubble = F5(
-	function (c, k, v, l, r) {
-		return (_elm_lang$core$Dict$isBBlack(l) || _elm_lang$core$Dict$isBBlack(r)) ? A5(
-			_elm_lang$core$Dict$balance,
-			_elm_lang$core$Dict$moreBlack(c),
-			k,
-			v,
-			_elm_lang$core$Dict$lessBlackTree(l),
-			_elm_lang$core$Dict$lessBlackTree(r)) : A5(_elm_lang$core$Dict$RBNode_elm_builtin, c, k, v, l, r);
-	});
-var _elm_lang$core$Dict$removeMax = F5(
-	function (c, k, v, l, r) {
-		var _p28 = r;
-		if (_p28.ctor === 'RBEmpty_elm_builtin') {
-			return A3(_elm_lang$core$Dict$rem, c, l, r);
-		} else {
-			return A5(
-				_elm_lang$core$Dict$bubble,
-				c,
-				k,
-				v,
-				l,
-				A5(_elm_lang$core$Dict$removeMax, _p28._0, _p28._1, _p28._2, _p28._3, _p28._4));
-		}
-	});
-var _elm_lang$core$Dict$rem = F3(
-	function (color, left, right) {
-		var _p29 = {ctor: '_Tuple2', _0: left, _1: right};
-		if (_p29._0.ctor === 'RBEmpty_elm_builtin') {
-			if (_p29._1.ctor === 'RBEmpty_elm_builtin') {
-				var _p30 = color;
-				switch (_p30.ctor) {
-					case 'Red':
-						return _elm_lang$core$Dict$RBEmpty_elm_builtin(_elm_lang$core$Dict$LBlack);
-					case 'Black':
-						return _elm_lang$core$Dict$RBEmpty_elm_builtin(_elm_lang$core$Dict$LBBlack);
-					default:
-						return _elm_lang$core$Native_Debug.crash('cannot have bblack or nblack nodes at this point');
-				}
-			} else {
-				var _p33 = _p29._1._0;
-				var _p32 = _p29._0._0;
-				var _p31 = {ctor: '_Tuple3', _0: color, _1: _p32, _2: _p33};
-				if ((((_p31.ctor === '_Tuple3') && (_p31._0.ctor === 'Black')) && (_p31._1.ctor === 'LBlack')) && (_p31._2.ctor === 'Red')) {
-					return A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, _p29._1._1, _p29._1._2, _p29._1._3, _p29._1._4);
-				} else {
-					return A4(
-						_elm_lang$core$Dict$reportRemBug,
-						'Black/LBlack/Red',
-						color,
-						_elm_lang$core$Basics$toString(_p32),
-						_elm_lang$core$Basics$toString(_p33));
-				}
-			}
-		} else {
-			if (_p29._1.ctor === 'RBEmpty_elm_builtin') {
-				var _p36 = _p29._1._0;
-				var _p35 = _p29._0._0;
-				var _p34 = {ctor: '_Tuple3', _0: color, _1: _p35, _2: _p36};
-				if ((((_p34.ctor === '_Tuple3') && (_p34._0.ctor === 'Black')) && (_p34._1.ctor === 'Red')) && (_p34._2.ctor === 'LBlack')) {
-					return A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Black, _p29._0._1, _p29._0._2, _p29._0._3, _p29._0._4);
-				} else {
-					return A4(
-						_elm_lang$core$Dict$reportRemBug,
-						'Black/Red/LBlack',
-						color,
-						_elm_lang$core$Basics$toString(_p35),
-						_elm_lang$core$Basics$toString(_p36));
-				}
-			} else {
-				var _p40 = _p29._0._2;
-				var _p39 = _p29._0._4;
-				var _p38 = _p29._0._1;
-				var newLeft = A5(_elm_lang$core$Dict$removeMax, _p29._0._0, _p38, _p40, _p29._0._3, _p39);
-				var _p37 = A3(_elm_lang$core$Dict$maxWithDefault, _p38, _p40, _p39);
-				var k = _p37._0;
-				var v = _p37._1;
-				return A5(_elm_lang$core$Dict$bubble, color, k, v, newLeft, right);
-			}
-		}
-	});
-var _elm_lang$core$Dict$map = F2(
-	function (f, dict) {
-		var _p41 = dict;
-		if (_p41.ctor === 'RBEmpty_elm_builtin') {
-			return _elm_lang$core$Dict$RBEmpty_elm_builtin(_elm_lang$core$Dict$LBlack);
-		} else {
-			var _p42 = _p41._1;
-			return A5(
-				_elm_lang$core$Dict$RBNode_elm_builtin,
-				_p41._0,
-				_p42,
-				A2(f, _p42, _p41._2),
-				A2(_elm_lang$core$Dict$map, f, _p41._3),
-				A2(_elm_lang$core$Dict$map, f, _p41._4));
-		}
-	});
-var _elm_lang$core$Dict$Same = {ctor: 'Same'};
-var _elm_lang$core$Dict$Remove = {ctor: 'Remove'};
-var _elm_lang$core$Dict$Insert = {ctor: 'Insert'};
-var _elm_lang$core$Dict$update = F3(
-	function (k, alter, dict) {
-		var up = function (dict) {
-			var _p43 = dict;
-			if (_p43.ctor === 'RBEmpty_elm_builtin') {
-				var _p44 = alter(_elm_lang$core$Maybe$Nothing);
-				if (_p44.ctor === 'Nothing') {
-					return {ctor: '_Tuple2', _0: _elm_lang$core$Dict$Same, _1: _elm_lang$core$Dict$empty};
-				} else {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Dict$Insert,
-						_1: A5(_elm_lang$core$Dict$RBNode_elm_builtin, _elm_lang$core$Dict$Red, k, _p44._0, _elm_lang$core$Dict$empty, _elm_lang$core$Dict$empty)
-					};
-				}
-			} else {
-				var _p55 = _p43._2;
-				var _p54 = _p43._4;
-				var _p53 = _p43._3;
-				var _p52 = _p43._1;
-				var _p51 = _p43._0;
-				var _p45 = A2(_elm_lang$core$Basics$compare, k, _p52);
-				switch (_p45.ctor) {
-					case 'EQ':
-						var _p46 = alter(
-							_elm_lang$core$Maybe$Just(_p55));
-						if (_p46.ctor === 'Nothing') {
-							return {
-								ctor: '_Tuple2',
-								_0: _elm_lang$core$Dict$Remove,
-								_1: A3(_elm_lang$core$Dict$rem, _p51, _p53, _p54)
-							};
-						} else {
-							return {
-								ctor: '_Tuple2',
-								_0: _elm_lang$core$Dict$Same,
-								_1: A5(_elm_lang$core$Dict$RBNode_elm_builtin, _p51, _p52, _p46._0, _p53, _p54)
-							};
-						}
-					case 'LT':
-						var _p47 = up(_p53);
-						var flag = _p47._0;
-						var newLeft = _p47._1;
-						var _p48 = flag;
-						switch (_p48.ctor) {
-							case 'Same':
-								return {
-									ctor: '_Tuple2',
-									_0: _elm_lang$core$Dict$Same,
-									_1: A5(_elm_lang$core$Dict$RBNode_elm_builtin, _p51, _p52, _p55, newLeft, _p54)
-								};
-							case 'Insert':
-								return {
-									ctor: '_Tuple2',
-									_0: _elm_lang$core$Dict$Insert,
-									_1: A5(_elm_lang$core$Dict$balance, _p51, _p52, _p55, newLeft, _p54)
-								};
-							default:
-								return {
-									ctor: '_Tuple2',
-									_0: _elm_lang$core$Dict$Remove,
-									_1: A5(_elm_lang$core$Dict$bubble, _p51, _p52, _p55, newLeft, _p54)
-								};
-						}
-					default:
-						var _p49 = up(_p54);
-						var flag = _p49._0;
-						var newRight = _p49._1;
-						var _p50 = flag;
-						switch (_p50.ctor) {
-							case 'Same':
-								return {
-									ctor: '_Tuple2',
-									_0: _elm_lang$core$Dict$Same,
-									_1: A5(_elm_lang$core$Dict$RBNode_elm_builtin, _p51, _p52, _p55, _p53, newRight)
-								};
-							case 'Insert':
-								return {
-									ctor: '_Tuple2',
-									_0: _elm_lang$core$Dict$Insert,
-									_1: A5(_elm_lang$core$Dict$balance, _p51, _p52, _p55, _p53, newRight)
-								};
-							default:
-								return {
-									ctor: '_Tuple2',
-									_0: _elm_lang$core$Dict$Remove,
-									_1: A5(_elm_lang$core$Dict$bubble, _p51, _p52, _p55, _p53, newRight)
-								};
-						}
-				}
-			}
-		};
-		var _p56 = up(dict);
-		var flag = _p56._0;
-		var updatedDict = _p56._1;
-		var _p57 = flag;
-		switch (_p57.ctor) {
-			case 'Same':
-				return updatedDict;
-			case 'Insert':
-				return _elm_lang$core$Dict$ensureBlackRoot(updatedDict);
-			default:
-				return _elm_lang$core$Dict$blacken(updatedDict);
-		}
-	});
-var _elm_lang$core$Dict$insert = F3(
-	function (key, value, dict) {
-		return A3(
-			_elm_lang$core$Dict$update,
-			key,
-			_elm_lang$core$Basics$always(
-				_elm_lang$core$Maybe$Just(value)),
-			dict);
-	});
-var _elm_lang$core$Dict$singleton = F2(
-	function (key, value) {
-		return A3(_elm_lang$core$Dict$insert, key, value, _elm_lang$core$Dict$empty);
-	});
-var _elm_lang$core$Dict$union = F2(
-	function (t1, t2) {
-		return A3(_elm_lang$core$Dict$foldl, _elm_lang$core$Dict$insert, t2, t1);
-	});
-var _elm_lang$core$Dict$filter = F2(
-	function (predicate, dictionary) {
-		var add = F3(
-			function (key, value, dict) {
-				return A2(predicate, key, value) ? A3(_elm_lang$core$Dict$insert, key, value, dict) : dict;
-			});
-		return A3(_elm_lang$core$Dict$foldl, add, _elm_lang$core$Dict$empty, dictionary);
-	});
-var _elm_lang$core$Dict$intersect = F2(
-	function (t1, t2) {
+var author$project$Graphql$Generator$Group$excludeQuery = F2(
+	function (_n0, typeDefinitions) {
+		var query = _n0.query;
 		return A2(
-			_elm_lang$core$Dict$filter,
-			F2(
-				function (k, _p58) {
-					return A2(_elm_lang$core$Dict$member, k, t2);
-				}),
-			t1);
+			elm$core$List$filter,
+			function (_n1) {
+				var name = _n1.a;
+				var definableType = _n1.b;
+				var description = _n1.c;
+				return !_Utils_eq(name, query);
+			},
+			typeDefinitions);
 	});
-var _elm_lang$core$Dict$partition = F2(
-	function (predicate, dict) {
-		var add = F3(
-			function (key, value, _p59) {
-				var _p60 = _p59;
-				var _p62 = _p60._1;
-				var _p61 = _p60._0;
-				return A2(predicate, key, value) ? {
-					ctor: '_Tuple2',
-					_0: A3(_elm_lang$core$Dict$insert, key, value, _p61),
-					_1: _p62
-				} : {
-					ctor: '_Tuple2',
-					_0: _p61,
-					_1: A3(_elm_lang$core$Dict$insert, key, value, _p62)
-				};
-			});
-		return A3(
-			_elm_lang$core$Dict$foldl,
-			add,
-			{ctor: '_Tuple2', _0: _elm_lang$core$Dict$empty, _1: _elm_lang$core$Dict$empty},
-			dict);
+var author$project$Graphql$Generator$Group$excludeSubscription = F2(
+	function (_n0, typeDefinitions) {
+		var subscription = _n0.subscription;
+		if (subscription.$ === 'Just') {
+			var subscriptionObjectName = subscription.a;
+			return A2(
+				elm$core$List$filter,
+				function (_n2) {
+					var name = _n2.a;
+					var definableType = _n2.b;
+					var description = _n2.c;
+					return !_Utils_eq(name, subscriptionObjectName);
+				},
+				typeDefinitions);
+		} else {
+			return typeDefinitions;
+		}
 	});
-var _elm_lang$core$Dict$fromList = function (assocs) {
+var author$project$Graphql$Parser$ClassCaseName$raw = function (_n0) {
+	var rawName = _n0.a;
+	return rawName;
+};
+var elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
+var elm$core$Dict$empty = elm$core$Dict$RBEmpty_elm_builtin;
+var elm$core$Dict$Black = {$: 'Black'};
+var elm$core$Dict$RBNode_elm_builtin = F5(
+	function (a, b, c, d, e) {
+		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
+	});
+var elm$core$Basics$compare = _Utils_compare;
+var elm$core$Dict$Red = {$: 'Red'};
+var elm$core$Dict$balance = F5(
+	function (color, key, value, left, right) {
+		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
+			var _n1 = right.a;
+			var rK = right.b;
+			var rV = right.c;
+			var rLeft = right.d;
+			var rRight = right.e;
+			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+				var _n3 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var lLeft = left.d;
+				var lRight = left.e;
+				return A5(
+					elm$core$Dict$RBNode_elm_builtin,
+					elm$core$Dict$Red,
+					key,
+					value,
+					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, lK, lV, lLeft, lRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					elm$core$Dict$RBNode_elm_builtin,
+					color,
+					rK,
+					rV,
+					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, left, rLeft),
+					rRight);
+			}
+		} else {
+			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
+				var _n5 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var _n6 = left.d;
+				var _n7 = _n6.a;
+				var llK = _n6.b;
+				var llV = _n6.c;
+				var llLeft = _n6.d;
+				var llRight = _n6.e;
+				var lRight = left.e;
+				return A5(
+					elm$core$Dict$RBNode_elm_builtin,
+					elm$core$Dict$Red,
+					lK,
+					lV,
+					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, llK, llV, llLeft, llRight),
+					A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, key, value, lRight, right));
+			} else {
+				return A5(elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
+			}
+		}
+	});
+var elm$core$Dict$insertHelp = F3(
+	function (key, value, dict) {
+		if (dict.$ === 'RBEmpty_elm_builtin') {
+			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Red, key, value, elm$core$Dict$RBEmpty_elm_builtin, elm$core$Dict$RBEmpty_elm_builtin);
+		} else {
+			var nColor = dict.a;
+			var nKey = dict.b;
+			var nValue = dict.c;
+			var nLeft = dict.d;
+			var nRight = dict.e;
+			var _n1 = A2(elm$core$Basics$compare, key, nKey);
+			switch (_n1.$) {
+				case 'LT':
+					return A5(
+						elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						A3(elm$core$Dict$insertHelp, key, value, nLeft),
+						nRight);
+				case 'EQ':
+					return A5(elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
+				default:
+					return A5(
+						elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						nLeft,
+						A3(elm$core$Dict$insertHelp, key, value, nRight));
+			}
+		}
+	});
+var elm$core$Dict$insert = F3(
+	function (key, value, dict) {
+		var _n0 = A3(elm$core$Dict$insertHelp, key, value, dict);
+		if ((_n0.$ === 'RBNode_elm_builtin') && (_n0.a.$ === 'Red')) {
+			var _n1 = _n0.a;
+			var k = _n0.b;
+			var v = _n0.c;
+			var l = _n0.d;
+			var r = _n0.e;
+			return A5(elm$core$Dict$RBNode_elm_builtin, elm$core$Dict$Black, k, v, l, r);
+		} else {
+			var x = _n0;
+			return x;
+		}
+	});
+var elm$core$Dict$fromList = function (assocs) {
 	return A3(
-		_elm_lang$core$List$foldl,
+		elm$core$List$foldl,
 		F2(
-			function (_p63, dict) {
-				var _p64 = _p63;
-				return A3(_elm_lang$core$Dict$insert, _p64._0, _p64._1, dict);
+			function (_n0, dict) {
+				var key = _n0.a;
+				var value = _n0.b;
+				return A3(elm$core$Dict$insert, key, value, dict);
 			}),
-		_elm_lang$core$Dict$empty,
+		elm$core$Dict$empty,
 		assocs);
 };
-var _elm_lang$core$Dict$remove = F2(
-	function (key, dict) {
-		return A3(
-			_elm_lang$core$Dict$update,
-			key,
-			_elm_lang$core$Basics$always(_elm_lang$core$Maybe$Nothing),
-			dict);
-	});
-var _elm_lang$core$Dict$diff = F2(
-	function (t1, t2) {
-		return A3(
-			_elm_lang$core$Dict$foldl,
-			F3(
-				function (k, v, t) {
-					return A2(_elm_lang$core$Dict$remove, k, t);
-				}),
-			t1,
-			t2);
-	});
-
-var _elm_lang$core$Native_Bitwise = function() {
-
-return {
-	and: F2(function and(a, b) { return a & b; }),
-	or: F2(function or(a, b) { return a | b; }),
-	xor: F2(function xor(a, b) { return a ^ b; }),
-	complement: function complement(a) { return ~a; },
-	shiftLeftBy: F2(function(offset, a) { return a << offset; }),
-	shiftRightBy: F2(function(offset, a) { return a >> offset; }),
-	shiftRightZfBy: F2(function(offset, a) { return a >>> offset; })
-};
-
-}();
-
-var _elm_lang$core$Bitwise$shiftRightZfBy = _elm_lang$core$Native_Bitwise.shiftRightZfBy;
-var _elm_lang$core$Bitwise$shiftRightBy = _elm_lang$core$Native_Bitwise.shiftRightBy;
-var _elm_lang$core$Bitwise$shiftLeftBy = _elm_lang$core$Native_Bitwise.shiftLeftBy;
-var _elm_lang$core$Bitwise$complement = _elm_lang$core$Native_Bitwise.complement;
-var _elm_lang$core$Bitwise$xor = _elm_lang$core$Native_Bitwise.xor;
-var _elm_lang$core$Bitwise$or = _elm_lang$core$Native_Bitwise.or;
-var _elm_lang$core$Bitwise$and = _elm_lang$core$Native_Bitwise.and;
-
-var _elm_community$string_extra$String_Extra$accentRegex = function () {
-	var matches = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: '[à-æ]', _1: 'a'},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: '[À-Æ]', _1: 'A'},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'ç', _1: 'c'},
-				_1: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'Ç', _1: 'C'},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: '[è-ë]', _1: 'e'},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: '[È-Ë]', _1: 'E'},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: '[ì-ï]', _1: 'i'},
-								_1: {
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: '[Ì-Ï]', _1: 'I'},
-									_1: {
-										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'ñ', _1: 'n'},
-										_1: {
-											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'Ñ', _1: 'N'},
-											_1: {
-												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: '[ò-ö]', _1: 'o'},
-												_1: {
-													ctor: '::',
-													_0: {ctor: '_Tuple2', _0: '[Ò-Ö]', _1: 'O'},
-													_1: {
-														ctor: '::',
-														_0: {ctor: '_Tuple2', _0: '[ù-ü]', _1: 'u'},
-														_1: {
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: '[Ù-Ü]', _1: 'U'},
-															_1: {
-																ctor: '::',
-																_0: {ctor: '_Tuple2', _0: 'ý', _1: 'y'},
-																_1: {
-																	ctor: '::',
-																	_0: {ctor: '_Tuple2', _0: 'ÿ', _1: 'y'},
-																	_1: {
-																		ctor: '::',
-																		_0: {ctor: '_Tuple2', _0: 'Ý', _1: 'Y'},
-																		_1: {ctor: '[]'}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	};
-	return A2(
-		_elm_lang$core$List$map,
-		function (_p0) {
-			var _p1 = _p0;
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Regex$regex(_p1._0),
-				_1: _p1._1
-			};
-		},
-		matches);
-}();
-var _elm_community$string_extra$String_Extra$removeAccents = function (string) {
-	if (_elm_lang$core$String$isEmpty(string)) {
-		return string;
-	} else {
-		var do_regex_to_remove_acents = function (_p2) {
-			var _p3 = _p2;
-			return A3(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_p3._0,
-				function (_p4) {
-					return _p3._1;
-				});
-		};
-		return A3(_elm_lang$core$List$foldl, do_regex_to_remove_acents, string, _elm_community$string_extra$String_Extra$accentRegex);
-	}
-};
-var _elm_community$string_extra$String_Extra$nonEmpty = function (string) {
-	return _elm_lang$core$String$isEmpty(string) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(string);
-};
-var _elm_community$string_extra$String_Extra$replacementCodePoint = 65533;
-var _elm_community$string_extra$String_Extra$toCodePoints = function (string) {
-	var allCodeUnits = A2(
-		_elm_lang$core$List$map,
-		_elm_lang$core$Char$toCode,
-		_elm_lang$core$String$toList(string));
-	var combineAndReverse = F2(
-		function (codeUnits, accumulated) {
-			combineAndReverse:
-			while (true) {
-				var _p5 = codeUnits;
-				if (_p5.ctor === '[]') {
-					return accumulated;
-				} else {
-					var _p9 = _p5._0;
-					var _p8 = _p5._1;
-					if ((_elm_lang$core$Native_Utils.cmp(_p9, 0) > -1) && (_elm_lang$core$Native_Utils.cmp(_p9, 55295) < 1)) {
-						var _v3 = _p8,
-							_v4 = {ctor: '::', _0: _p9, _1: accumulated};
-						codeUnits = _v3;
-						accumulated = _v4;
-						continue combineAndReverse;
-					} else {
-						if ((_elm_lang$core$Native_Utils.cmp(_p9, 55296) > -1) && (_elm_lang$core$Native_Utils.cmp(_p9, 56319) < 1)) {
-							var _p6 = _p8;
-							if (_p6.ctor === '[]') {
-								return {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-							} else {
-								var _p7 = _p6._0;
-								if ((_elm_lang$core$Native_Utils.cmp(_p7, 56320) > -1) && (_elm_lang$core$Native_Utils.cmp(_p7, 57343) < 1)) {
-									var codePoint = (65536 + ((_p9 - 55296) * 1024)) + (_p7 - 56320);
-									var _v6 = _p6._1,
-										_v7 = {ctor: '::', _0: codePoint, _1: accumulated};
-									codeUnits = _v6;
-									accumulated = _v7;
-									continue combineAndReverse;
-								} else {
-									var _v8 = _p8,
-										_v9 = {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-									codeUnits = _v8;
-									accumulated = _v9;
-									continue combineAndReverse;
-								}
-							}
-						} else {
-							if ((_elm_lang$core$Native_Utils.cmp(_p9, 57344) > -1) && (_elm_lang$core$Native_Utils.cmp(_p9, 65535) < 1)) {
-								var _v10 = _p8,
-									_v11 = {ctor: '::', _0: _p9, _1: accumulated};
-								codeUnits = _v10;
-								accumulated = _v11;
-								continue combineAndReverse;
-							} else {
-								var _v12 = _p8,
-									_v13 = {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-								codeUnits = _v12;
-								accumulated = _v13;
-								continue combineAndReverse;
-							}
-						}
-					}
-				}
-			}
-		});
-	return _elm_lang$core$List$reverse(
-		A2(
-			combineAndReverse,
-			allCodeUnits,
-			{ctor: '[]'}));
-};
-var _elm_community$string_extra$String_Extra$fromCodePoints = function (allCodePoints) {
-	var splitAndReverse = F2(
-		function (codePoints, accumulated) {
-			splitAndReverse:
-			while (true) {
-				var _p10 = codePoints;
-				if (_p10.ctor === '[]') {
-					return accumulated;
-				} else {
-					var _p12 = _p10._1;
-					var _p11 = _p10._0;
-					if ((_elm_lang$core$Native_Utils.cmp(_p11, 0) > -1) && (_elm_lang$core$Native_Utils.cmp(_p11, 55295) < 1)) {
-						var _v15 = _p12,
-							_v16 = {ctor: '::', _0: _p11, _1: accumulated};
-						codePoints = _v15;
-						accumulated = _v16;
-						continue splitAndReverse;
-					} else {
-						if ((_elm_lang$core$Native_Utils.cmp(_p11, 65536) > -1) && (_elm_lang$core$Native_Utils.cmp(_p11, 1114111) < 1)) {
-							var subtracted = _p11 - 65536;
-							var leading = (subtracted >> 10) + 55296;
-							var trailing = (subtracted & 1023) + 56320;
-							var _v17 = _p12,
-								_v18 = {
-								ctor: '::',
-								_0: trailing,
-								_1: {ctor: '::', _0: leading, _1: accumulated}
-							};
-							codePoints = _v17;
-							accumulated = _v18;
-							continue splitAndReverse;
-						} else {
-							if ((_elm_lang$core$Native_Utils.cmp(_p11, 57344) > -1) && (_elm_lang$core$Native_Utils.cmp(_p11, 65535) < 1)) {
-								var _v19 = _p12,
-									_v20 = {ctor: '::', _0: _p11, _1: accumulated};
-								codePoints = _v19;
-								accumulated = _v20;
-								continue splitAndReverse;
-							} else {
-								var _v21 = _p12,
-									_v22 = {ctor: '::', _0: _elm_community$string_extra$String_Extra$replacementCodePoint, _1: accumulated};
-								codePoints = _v21;
-								accumulated = _v22;
-								continue splitAndReverse;
-							}
-						}
-					}
-				}
-			}
-		});
-	var allCodeUnits = _elm_lang$core$List$reverse(
-		A2(
-			splitAndReverse,
-			allCodePoints,
-			{ctor: '[]'}));
-	return _elm_lang$core$String$fromList(
-		A2(_elm_lang$core$List$map, _elm_lang$core$Char$fromCode, allCodeUnits));
-};
-var _elm_community$string_extra$String_Extra$fromFloat = _elm_lang$core$Basics$toString;
-var _elm_community$string_extra$String_Extra$fromInt = _elm_lang$core$Basics$toString;
-var _elm_community$string_extra$String_Extra$leftOfBack = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(
-				_elm_lang$core$Maybe$map,
-				A2(_elm_lang$core$Basics$flip, _elm_lang$core$String$left, string),
-				_elm_lang$core$List$head(
-					_elm_lang$core$List$reverse(
-						A2(_elm_lang$core$String$indexes, pattern, string)))));
-	});
-var _elm_community$string_extra$String_Extra$rightOfBack = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(
-				_elm_lang$core$Maybe$map,
-				function (_p13) {
-					return A3(
-						_elm_lang$core$Basics$flip,
-						_elm_lang$core$String$dropLeft,
-						string,
-						A2(
-							F2(
-								function (x, y) {
-									return x + y;
-								}),
-							_elm_lang$core$String$length(pattern),
-							_p13));
-				},
-				_elm_lang$core$List$head(
-					_elm_lang$core$List$reverse(
-						A2(_elm_lang$core$String$indexes, pattern, string)))));
-	});
-var _elm_community$string_extra$String_Extra$firstResultHelp = F2(
-	function ($default, list) {
-		firstResultHelp:
-		while (true) {
-			var _p14 = list;
-			if (_p14.ctor === '[]') {
-				return $default;
-			} else {
-				if (_p14._0.ctor === 'Just') {
-					return _p14._0._0;
-				} else {
-					var _v24 = $default,
-						_v25 = _p14._1;
-					$default = _v24;
-					list = _v25;
-					continue firstResultHelp;
-				}
-			}
-		}
-	});
-var _elm_community$string_extra$String_Extra$firstResult = function (list) {
-	return A2(_elm_community$string_extra$String_Extra$firstResultHelp, '', list);
-};
-var _elm_community$string_extra$String_Extra$leftOf = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			'',
-			A2(
-				_elm_lang$core$List$map,
-				function (_p15) {
-					return _elm_community$string_extra$String_Extra$firstResult(
-						function (_) {
-							return _.submatches;
-						}(_p15));
-				},
-				A3(
-					_elm_lang$core$Regex$find,
-					_elm_lang$core$Regex$AtMost(1),
-					_elm_lang$core$Regex$regex(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'^(.*?)',
-							_elm_lang$core$Regex$escape(pattern))),
-					string)));
-	});
-var _elm_community$string_extra$String_Extra$rightOf = F2(
-	function (pattern, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			'',
-			A2(
-				_elm_lang$core$List$map,
-				function (_p16) {
-					return _elm_community$string_extra$String_Extra$firstResult(
-						function (_) {
-							return _.submatches;
-						}(_p16));
-				},
-				A3(
-					_elm_lang$core$Regex$find,
-					_elm_lang$core$Regex$AtMost(1),
-					_elm_lang$core$Regex$regex(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Regex$escape(pattern),
-							'(.*)$')),
-					string)));
-	});
-var _elm_community$string_extra$String_Extra$pluralize = F3(
-	function (singular, plural, count) {
-		return _elm_lang$core$Native_Utils.eq(count, 1) ? A2(_elm_lang$core$Basics_ops['++'], '1 ', singular) : A2(
-			_elm_lang$core$Basics_ops['++'],
-			_elm_lang$core$Basics$toString(count),
-			A2(_elm_lang$core$Basics_ops['++'], ' ', plural));
-	});
-var _elm_community$string_extra$String_Extra$stripTags = function (string) {
-	return A4(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('<\\/?[^>]+>'),
-		_elm_lang$core$Basics$always(''),
-		string);
-};
-var _elm_community$string_extra$String_Extra$toSentenceHelper = F3(
-	function (lastPart, sentence, list) {
-		toSentenceHelper:
-		while (true) {
-			var _p17 = list;
-			if (_p17.ctor === '[]') {
-				return sentence;
-			} else {
-				if (_p17._1.ctor === '[]') {
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						sentence,
-						A2(_elm_lang$core$Basics_ops['++'], lastPart, _p17._0));
-				} else {
-					var _v27 = lastPart,
-						_v28 = A2(
-						_elm_lang$core$Basics_ops['++'],
-						sentence,
-						A2(_elm_lang$core$Basics_ops['++'], ', ', _p17._0)),
-						_v29 = _p17._1;
-					lastPart = _v27;
-					sentence = _v28;
-					list = _v29;
-					continue toSentenceHelper;
-				}
-			}
-		}
-	});
-var _elm_community$string_extra$String_Extra$toSentenceBaseCase = function (list) {
-	var _p18 = list;
-	_v30_2:
-	do {
-		if (_p18.ctor === '::') {
-			if (_p18._1.ctor === '[]') {
-				return _p18._0;
-			} else {
-				if (_p18._1._1.ctor === '[]') {
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						_p18._0,
-						A2(_elm_lang$core$Basics_ops['++'], ' and ', _p18._1._0));
-				} else {
-					break _v30_2;
-				}
-			}
+var elm$core$List$maybeCons = F3(
+	function (f, mx, xs) {
+		var _n0 = f(mx);
+		if (_n0.$ === 'Just') {
+			var x = _n0.a;
+			return A2(elm$core$List$cons, x, xs);
 		} else {
-			break _v30_2;
+			return xs;
 		}
-	} while(false);
-	return '';
-};
-var _elm_community$string_extra$String_Extra$toSentenceOxford = function (list) {
-	var _p19 = list;
-	if (((_p19.ctor === '::') && (_p19._1.ctor === '::')) && (_p19._1._1.ctor === '::')) {
+	});
+var elm$core$List$filterMap = F2(
+	function (f, xs) {
 		return A3(
-			_elm_community$string_extra$String_Extra$toSentenceHelper,
-			', and ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_p19._0,
-				A2(_elm_lang$core$Basics_ops['++'], ', ', _p19._1._0)),
-			{ctor: '::', _0: _p19._1._1._0, _1: _p19._1._1._1});
-	} else {
-		return _elm_community$string_extra$String_Extra$toSentenceBaseCase(list);
-	}
-};
-var _elm_community$string_extra$String_Extra$toSentence = function (list) {
-	var _p20 = list;
-	if (((_p20.ctor === '::') && (_p20._1.ctor === '::')) && (_p20._1._1.ctor === '::')) {
-		return A3(
-			_elm_community$string_extra$String_Extra$toSentenceHelper,
-			' and ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_p20._0,
-				A2(_elm_lang$core$Basics_ops['++'], ', ', _p20._1._0)),
-			{ctor: '::', _0: _p20._1._1._0, _1: _p20._1._1._1});
-	} else {
-		return _elm_community$string_extra$String_Extra$toSentenceBaseCase(list);
-	}
-};
-var _elm_community$string_extra$String_Extra$ellipsisWith = F3(
-	function (howLong, append, string) {
-		return (_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$String$length(string),
-			howLong) < 1) ? string : A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_elm_lang$core$String$left,
-				howLong - _elm_lang$core$String$length(append),
-				string),
-			append);
+			elm$core$List$foldr,
+			elm$core$List$maybeCons(f),
+			_List_Nil,
+			xs);
 	});
-var _elm_community$string_extra$String_Extra$ellipsis = F2(
-	function (howLong, string) {
-		return A3(_elm_community$string_extra$String_Extra$ellipsisWith, howLong, '...', string);
-	});
-var _elm_community$string_extra$String_Extra$countOccurrences = F2(
-	function (needle, haystack) {
-		return (_elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$String$length(needle),
-			0) || _elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$String$length(haystack),
-			0)) ? 0 : _elm_lang$core$List$length(
-			A2(_elm_lang$core$String$indexes, needle, haystack));
-	});
-var _elm_community$string_extra$String_Extra$unindent = function (multilineSting) {
-	var isNotWhitespace = function ($char) {
-		return (!_elm_lang$core$Native_Utils.eq(
-			$char,
-			_elm_lang$core$Native_Utils.chr(' '))) && (!_elm_lang$core$Native_Utils.eq(
-			$char,
-			_elm_lang$core$Native_Utils.chr('\t')));
-	};
-	var countLeadingWhitespace = F2(
-		function (count, line) {
-			countLeadingWhitespace:
-			while (true) {
-				var _p21 = _elm_lang$core$String$uncons(line);
-				if (_p21.ctor === 'Nothing') {
-					return count;
+var author$project$Graphql$Generator$Group$interfacePossibleTypesDict = function (typeDefs) {
+	return elm$core$Dict$fromList(
+		A2(
+			elm$core$List$filterMap,
+			function (_n0) {
+				var typeName = _n0.a;
+				var definableType = _n0.b;
+				var description = _n0.c;
+				if (definableType.$ === 'InterfaceType') {
+					var fields = definableType.a;
+					var possibleTypes = definableType.b;
+					return elm$core$Maybe$Just(
+						_Utils_Tuple2(
+							author$project$Graphql$Parser$ClassCaseName$raw(typeName),
+							possibleTypes));
 				} else {
-					var _p23 = _p21._0._1;
-					var _p22 = _p21._0._0;
-					switch (_p22.valueOf()) {
-						case ' ':
-							var _v35 = count + 1,
-								_v36 = _p23;
-							count = _v35;
-							line = _v36;
-							continue countLeadingWhitespace;
-						case '\t':
-							var _v37 = count + 1,
-								_v38 = _p23;
-							count = _v37;
-							line = _v38;
-							continue countLeadingWhitespace;
-						default:
-							return count;
-					}
+					return elm$core$Maybe$Nothing;
 				}
-			}
-		});
-	var lines = _elm_lang$core$String$lines(multilineSting);
-	var minLead = A2(
-		_elm_lang$core$Maybe$withDefault,
-		0,
-		_elm_lang$core$List$minimum(
-			A2(
-				_elm_lang$core$List$map,
-				countLeadingWhitespace(0),
-				A2(
-					_elm_lang$core$List$filter,
-					_elm_lang$core$String$any(isNotWhitespace),
-					lines))));
-	return A2(
-		_elm_lang$core$String$join,
-		'\n',
-		A2(
-			_elm_lang$core$List$map,
-			_elm_lang$core$String$dropLeft(minLead),
-			lines));
+			},
+			typeDefs));
 };
-var _elm_community$string_extra$String_Extra$dasherize = function (string) {
-	return _elm_lang$core$String$toLower(
-		A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex('[_-\\s]+'),
-			_elm_lang$core$Basics$always('-'),
-			A4(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('([A-Z])'),
-				function (_p24) {
-					return A2(
-						_elm_lang$core$String$append,
-						'-',
-						function (_) {
-							return _.match;
-						}(_p24));
-				},
-				_elm_lang$core$String$trim(string))));
+var elm$core$Basics$append = _Utils_append;
+var elm$core$String$join = F2(
+	function (sep, chunks) {
+		return A2(
+			_String_join,
+			sep,
+			_List_toArray(chunks));
+	});
+var author$project$Graphql$Generator$Group$moduleToFileName = function (modulePath) {
+	return A2(elm$core$String$join, '/', modulePath) + '.elm';
 };
-var _elm_community$string_extra$String_Extra$underscored = function (string) {
-	return _elm_lang$core$String$toLower(
-		A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex('[_-\\s]+'),
-			_elm_lang$core$Basics$always('_'),
-			A4(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('([a-z\\d])([A-Z]+)'),
-				function (_p25) {
-					return A2(
-						_elm_lang$core$String$join,
-						'_',
-						A2(
-							_elm_lang$core$List$filterMap,
-							_elm_lang$core$Basics$identity,
-							function (_) {
-								return _.submatches;
-							}(_p25)));
-				},
-				_elm_lang$core$String$trim(string))));
-};
-var _elm_community$string_extra$String_Extra$unsurround = F2(
-	function (wrap, string) {
-		if (A2(_elm_lang$core$String$startsWith, wrap, string) && A2(_elm_lang$core$String$endsWith, wrap, string)) {
-			var length = _elm_lang$core$String$length(wrap);
-			return A2(
-				_elm_lang$core$String$dropRight,
-				length,
-				A2(_elm_lang$core$String$dropLeft, length, string));
+var elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return elm$core$Maybe$Just(
+				f(value));
 		} else {
-			return string;
+			return elm$core$Maybe$Nothing;
 		}
 	});
-var _elm_community$string_extra$String_Extra$unquote = function (string) {
-	return A2(_elm_community$string_extra$String_Extra$unsurround, '\"', string);
-};
-var _elm_community$string_extra$String_Extra$surround = F2(
-	function (wrap, string) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			wrap,
-			A2(_elm_lang$core$Basics_ops['++'], string, wrap));
+var elm$core$Array$Array_elm_builtin = F4(
+	function (a, b, c, d) {
+		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
 	});
-var _elm_community$string_extra$String_Extra$quote = function (string) {
-	return A2(_elm_community$string_extra$String_Extra$surround, '\"', string);
-};
-var _elm_community$string_extra$String_Extra$camelize = function (string) {
-	return A4(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('[-_\\s]+(.)?'),
-		function (_p26) {
-			var _p27 = _p26;
-			var _p28 = _p27.submatches;
-			if ((_p28.ctor === '::') && (_p28._0.ctor === 'Just')) {
-				return _elm_lang$core$String$toUpper(_p28._0._0);
-			} else {
-				return '';
-			}
-		},
-		_elm_lang$core$String$trim(string));
-};
-var _elm_community$string_extra$String_Extra$isBlank = function (string) {
-	return A2(
-		_elm_lang$core$Regex$contains,
-		_elm_lang$core$Regex$regex('^\\s*$'),
-		string);
-};
-var _elm_community$string_extra$String_Extra$nonBlank = function (string) {
-	return _elm_community$string_extra$String_Extra$isBlank(string) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(string);
-};
-var _elm_community$string_extra$String_Extra$clean = function (string) {
-	return _elm_lang$core$String$trim(
-		A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex('\\s\\s+'),
-			_elm_lang$core$Basics$always(' '),
-			string));
-};
-var _elm_community$string_extra$String_Extra$softBreakRegexp = function (width) {
-	return _elm_lang$core$Regex$regex(
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			'.{1,',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_elm_lang$core$Basics$toString(width),
-				'}(\\s+|$)|\\S+?(\\s+|$)')));
-};
-var _elm_community$string_extra$String_Extra$softEllipsis = F2(
-	function (howLong, string) {
-		return (_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$String$length(string),
-			howLong) < 1) ? string : A3(
-			_elm_lang$core$Basics$flip,
-			_elm_lang$core$String$append,
-			'...',
-			A4(
-				_elm_lang$core$Regex$replace,
-				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('([\\.,;:\\s])+$'),
-				_elm_lang$core$Basics$always(''),
-				A2(
-					_elm_lang$core$String$join,
-					'',
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.match;
-						},
-						A3(
-							_elm_lang$core$Regex$find,
-							_elm_lang$core$Regex$AtMost(1),
-							_elm_community$string_extra$String_Extra$softBreakRegexp(howLong),
-							string)))));
+var elm$core$Array$branchFactor = 32;
+var elm$core$Basics$ceiling = _Basics_ceiling;
+var elm$core$Basics$fdiv = _Basics_fdiv;
+var elm$core$Basics$logBase = F2(
+	function (base, number) {
+		return _Basics_log(number) / _Basics_log(base);
 	});
-var _elm_community$string_extra$String_Extra$softBreak = F2(
-	function (width, string) {
-		return (_elm_lang$core$Native_Utils.cmp(width, 0) < 1) ? {ctor: '[]'} : A2(
-			_elm_lang$core$List$map,
-			function (_) {
-				return _.match;
-			},
-			A3(
-				_elm_lang$core$Regex$find,
-				_elm_lang$core$Regex$All,
-				_elm_community$string_extra$String_Extra$softBreakRegexp(width),
-				string));
-	});
-var _elm_community$string_extra$String_Extra$softWrapWith = F3(
-	function (width, separator, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			separator,
-			A2(_elm_community$string_extra$String_Extra$softBreak, width, string));
-	});
-var _elm_community$string_extra$String_Extra$softWrap = F2(
-	function (width, string) {
-		return A3(_elm_community$string_extra$String_Extra$softWrapWith, width, '\n', string);
-	});
-var _elm_community$string_extra$String_Extra$breaker = F3(
-	function (width, string, acc) {
-		breaker:
+var elm$core$Basics$toFloat = _Basics_toFloat;
+var elm$core$Array$shiftStep = elm$core$Basics$ceiling(
+	A2(elm$core$Basics$logBase, 2, elm$core$Array$branchFactor));
+var elm$core$Elm$JsArray$empty = _JsArray_empty;
+var elm$core$Array$empty = A4(elm$core$Array$Array_elm_builtin, 0, elm$core$Array$shiftStep, elm$core$Elm$JsArray$empty, elm$core$Elm$JsArray$empty);
+var elm$core$Array$Leaf = function (a) {
+	return {$: 'Leaf', a: a};
+};
+var elm$core$Array$SubTree = function (a) {
+	return {$: 'SubTree', a: a};
+};
+var elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
+var elm$core$Array$compressNodes = F2(
+	function (nodes, acc) {
+		compressNodes:
 		while (true) {
-			var _p29 = string;
-			if (_p29 === '') {
-				return _elm_lang$core$List$reverse(acc);
+			var _n0 = A2(elm$core$Elm$JsArray$initializeFromList, elm$core$Array$branchFactor, nodes);
+			var node = _n0.a;
+			var remainingNodes = _n0.b;
+			var newAcc = A2(
+				elm$core$List$cons,
+				elm$core$Array$SubTree(node),
+				acc);
+			if (!remainingNodes.b) {
+				return elm$core$List$reverse(newAcc);
 			} else {
-				var _v42 = width,
-					_v43 = A2(_elm_lang$core$String$dropLeft, width, string),
-					_v44 = {
-					ctor: '::',
-					_0: A3(_elm_lang$core$String$slice, 0, width, string),
-					_1: acc
-				};
-				width = _v42;
-				string = _v43;
-				acc = _v44;
-				continue breaker;
+				var $temp$nodes = remainingNodes,
+					$temp$acc = newAcc;
+				nodes = $temp$nodes;
+				acc = $temp$acc;
+				continue compressNodes;
 			}
 		}
 	});
-var _elm_community$string_extra$String_Extra$break = F2(
-	function (width, string) {
-		return (_elm_lang$core$Native_Utils.eq(width, 0) || _elm_lang$core$Native_Utils.eq(string, '')) ? {
-			ctor: '::',
-			_0: string,
-			_1: {ctor: '[]'}
-		} : A3(
-			_elm_community$string_extra$String_Extra$breaker,
-			width,
-			string,
-			{ctor: '[]'});
+var elm$core$Basics$eq = _Utils_equal;
+var elm$core$Tuple$first = function (_n0) {
+	var x = _n0.a;
+	return x;
+};
+var elm$core$Array$treeFromBuilder = F2(
+	function (nodeList, nodeListSize) {
+		treeFromBuilder:
+		while (true) {
+			var newNodeSize = elm$core$Basics$ceiling(nodeListSize / elm$core$Array$branchFactor);
+			if (newNodeSize === 1) {
+				return A2(elm$core$Elm$JsArray$initializeFromList, elm$core$Array$branchFactor, nodeList).a;
+			} else {
+				var $temp$nodeList = A2(elm$core$Array$compressNodes, nodeList, _List_Nil),
+					$temp$nodeListSize = newNodeSize;
+				nodeList = $temp$nodeList;
+				nodeListSize = $temp$nodeListSize;
+				continue treeFromBuilder;
+			}
+		}
 	});
-var _elm_community$string_extra$String_Extra$wrapWith = F3(
-	function (width, separator, string) {
-		return A2(
-			_elm_lang$core$String$join,
-			separator,
-			A2(_elm_community$string_extra$String_Extra$break, width, string));
+var elm$core$Basics$apL = F2(
+	function (f, x) {
+		return f(x);
 	});
-var _elm_community$string_extra$String_Extra$wrap = F2(
-	function (width, string) {
-		return A3(_elm_community$string_extra$String_Extra$wrapWith, width, '\n', string);
+var elm$core$Basics$floor = _Basics_floor;
+var elm$core$Basics$max = F2(
+	function (x, y) {
+		return (_Utils_cmp(x, y) > 0) ? x : y;
 	});
-var _elm_community$string_extra$String_Extra$replaceSlice = F4(
-	function (substitution, start, end, string) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(_elm_lang$core$String$slice, 0, start, string),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				substitution,
-				A3(
-					_elm_lang$core$String$slice,
-					end,
-					_elm_lang$core$String$length(string),
-					string)));
+var elm$core$Basics$mul = _Basics_mul;
+var elm$core$Basics$sub = _Basics_sub;
+var elm$core$Elm$JsArray$length = _JsArray_length;
+var elm$core$Array$builderToArray = F2(
+	function (reverseNodeList, builder) {
+		if (!builder.nodeListSize) {
+			return A4(
+				elm$core$Array$Array_elm_builtin,
+				elm$core$Elm$JsArray$length(builder.tail),
+				elm$core$Array$shiftStep,
+				elm$core$Elm$JsArray$empty,
+				builder.tail);
+		} else {
+			var treeLen = builder.nodeListSize * elm$core$Array$branchFactor;
+			var depth = elm$core$Basics$floor(
+				A2(elm$core$Basics$logBase, elm$core$Array$branchFactor, treeLen - 1));
+			var correctNodeList = reverseNodeList ? elm$core$List$reverse(builder.nodeList) : builder.nodeList;
+			var tree = A2(elm$core$Array$treeFromBuilder, correctNodeList, builder.nodeListSize);
+			return A4(
+				elm$core$Array$Array_elm_builtin,
+				elm$core$Elm$JsArray$length(builder.tail) + treeLen,
+				A2(elm$core$Basics$max, 5, depth * elm$core$Array$shiftStep),
+				tree,
+				builder.tail);
+		}
 	});
-var _elm_community$string_extra$String_Extra$insertAt = F3(
-	function (insert, pos, string) {
-		return A4(_elm_community$string_extra$String_Extra$replaceSlice, insert, pos, pos, string);
+var elm$core$Basics$lt = _Utils_lt;
+var elm$core$Array$fromListHelp = F3(
+	function (list, nodeList, nodeListSize) {
+		fromListHelp:
+		while (true) {
+			var _n0 = A2(elm$core$Elm$JsArray$initializeFromList, elm$core$Array$branchFactor, list);
+			var jsArray = _n0.a;
+			var remainingItems = _n0.b;
+			if (_Utils_cmp(
+				elm$core$Elm$JsArray$length(jsArray),
+				elm$core$Array$branchFactor) < 0) {
+				return A2(
+					elm$core$Array$builderToArray,
+					true,
+					{nodeList: nodeList, nodeListSize: nodeListSize, tail: jsArray});
+			} else {
+				var $temp$list = remainingItems,
+					$temp$nodeList = A2(
+					elm$core$List$cons,
+					elm$core$Array$Leaf(jsArray),
+					nodeList),
+					$temp$nodeListSize = nodeListSize + 1;
+				list = $temp$list;
+				nodeList = $temp$nodeList;
+				nodeListSize = $temp$nodeListSize;
+				continue fromListHelp;
+			}
+		}
 	});
-var _elm_community$string_extra$String_Extra$replace = F3(
-	function (search, substitution, string) {
-		return A4(
-			_elm_lang$core$Regex$replace,
-			_elm_lang$core$Regex$All,
-			_elm_lang$core$Regex$regex(
-				_elm_lang$core$Regex$escape(search)),
-			function (_p30) {
-				return substitution;
-			},
+var elm$core$Array$fromList = function (list) {
+	if (!list.b) {
+		return elm$core$Array$empty;
+	} else {
+		return A3(elm$core$Array$fromListHelp, list, _List_Nil, 0);
+	}
+};
+var elm$regex$Regex$Match = F4(
+	function (match, index, number, submatches) {
+		return {index: index, match: match, number: number, submatches: submatches};
+	});
+var elm$regex$Regex$replace = _Regex_replaceAtMost(_Regex_infinity);
+var elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
+var elm$core$Array$bitMask = 4294967295 >>> (32 - elm$core$Array$shiftStep);
+var elm$core$Bitwise$and = _Bitwise_and;
+var elm$core$Elm$JsArray$unsafeGet = _JsArray_unsafeGet;
+var elm$core$Array$getHelp = F3(
+	function (shift, index, tree) {
+		getHelp:
+		while (true) {
+			var pos = elm$core$Array$bitMask & (index >>> shift);
+			var _n0 = A2(elm$core$Elm$JsArray$unsafeGet, pos, tree);
+			if (_n0.$ === 'SubTree') {
+				var subTree = _n0.a;
+				var $temp$shift = shift - elm$core$Array$shiftStep,
+					$temp$index = index,
+					$temp$tree = subTree;
+				shift = $temp$shift;
+				index = $temp$index;
+				tree = $temp$tree;
+				continue getHelp;
+			} else {
+				var values = _n0.a;
+				return A2(elm$core$Elm$JsArray$unsafeGet, elm$core$Array$bitMask & index, values);
+			}
+		}
+	});
+var elm$core$Bitwise$shiftLeftBy = _Bitwise_shiftLeftBy;
+var elm$core$Array$tailIndex = function (len) {
+	return (len >>> 5) << 5;
+};
+var elm$core$Basics$ge = _Utils_ge;
+var elm$core$Basics$or = _Basics_or;
+var elm$core$Array$get = F2(
+	function (index, _n0) {
+		var len = _n0.a;
+		var startShift = _n0.b;
+		var tree = _n0.c;
+		var tail = _n0.d;
+		return ((index < 0) || (_Utils_cmp(index, len) > -1)) ? elm$core$Maybe$Nothing : ((_Utils_cmp(
+			index,
+			elm$core$Array$tailIndex(len)) > -1) ? elm$core$Maybe$Just(
+			A2(elm$core$Elm$JsArray$unsafeGet, elm$core$Array$bitMask & index, tail)) : elm$core$Maybe$Just(
+			A3(elm$core$Array$getHelp, startShift, index, tree)));
+	});
+var elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
+var elm$core$Maybe$andThen = F2(
+	function (callback, maybeValue) {
+		if (maybeValue.$ === 'Just') {
+			var value = maybeValue.a;
+			return callback(value);
+		} else {
+			return elm$core$Maybe$Nothing;
+		}
+	});
+var elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var elm$core$String$length = _String_length;
+var elm$core$String$slice = _String_slice;
+var elm$core$String$dropLeft = F2(
+	function (n, string) {
+		return (n < 1) ? string : A3(
+			elm$core$String$slice,
+			n,
+			elm$core$String$length(string),
 			string);
 	});
-var _elm_community$string_extra$String_Extra$changeCase = F2(
-	function (mutator, word) {
+var elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var elm$core$String$dropRight = F2(
+	function (n, string) {
+		return (n < 1) ? string : A3(elm$core$String$slice, 0, -n, string);
+	});
+var elm$core$String$toInt = _String_toInt;
+var lukewestby$elm_string_interpolate$String$Interpolate$applyInterpolation = F2(
+	function (replacements, _n0) {
+		var match = _n0.match;
+		var ordinalString = A2(
+			elm$core$Basics$composeL,
+			elm$core$String$dropLeft(1),
+			elm$core$String$dropRight(1))(match);
 		return A2(
-			_elm_lang$core$Maybe$withDefault,
+			elm$core$Maybe$withDefault,
 			'',
 			A2(
-				_elm_lang$core$Maybe$map,
-				function (_p31) {
-					var _p32 = _p31;
-					return A2(
-						_elm_lang$core$String$cons,
-						mutator(_p32._0),
-						_p32._1);
+				elm$core$Maybe$andThen,
+				function (value) {
+					return A2(elm$core$Array$get, value, replacements);
 				},
-				_elm_lang$core$String$uncons(word)));
+				elm$core$String$toInt(ordinalString)));
 	});
-var _elm_community$string_extra$String_Extra$toSentenceCase = function (word) {
-	return A2(_elm_community$string_extra$String_Extra$changeCase, _elm_lang$core$Char$toUpper, word);
+var elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
+var elm$regex$Regex$fromString = function (string) {
+	return A2(
+		elm$regex$Regex$fromStringWith,
+		{caseInsensitive: false, multiline: false},
+		string);
 };
-var _elm_community$string_extra$String_Extra$toTitleCase = function (ws) {
-	var uppercaseMatch = A3(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('\\w+'),
-		function (_p33) {
-			return _elm_community$string_extra$String_Extra$toSentenceCase(
-				function (_) {
-					return _.match;
-				}(_p33));
-		});
-	return A4(
-		_elm_lang$core$Regex$replace,
-		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('^([a-z])|\\s+([a-z])'),
-		function (_p34) {
-			return uppercaseMatch(
-				function (_) {
-					return _.match;
-				}(_p34));
+var elm$regex$Regex$never = _Regex_never;
+var lukewestby$elm_string_interpolate$String$Interpolate$interpolationRegex = A2(
+	elm$core$Maybe$withDefault,
+	elm$regex$Regex$never,
+	elm$regex$Regex$fromString('\\{\\d+\\}'));
+var lukewestby$elm_string_interpolate$String$Interpolate$interpolate = F2(
+	function (string, args) {
+		var asArray = elm$core$Array$fromList(args);
+		return A3(
+			elm$regex$Regex$replace,
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolationRegex,
+			lukewestby$elm_string_interpolate$String$Interpolate$applyInterpolation(asArray),
+			string);
+	});
+var author$project$Graphql$Generator$DocComment$argDoc = function (_n0) {
+	var name = _n0.name;
+	var description = _n0.description;
+	return A2(
+		elm$core$Maybe$map,
+		function (aDescription) {
+			return A2(
+				lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+				'  - {0} - {1}',
+				_List_fromArray(
+					[name, aDescription]));
 		},
-		ws);
+		description);
 };
-var _elm_community$string_extra$String_Extra$classify = function (string) {
-	return _elm_community$string_extra$String_Extra$toSentenceCase(
-		A3(
-			_elm_community$string_extra$String_Extra$replace,
-			' ',
-			'',
-			_elm_community$string_extra$String_Extra$camelize(
-				A4(
-					_elm_lang$core$Regex$replace,
-					_elm_lang$core$Regex$All,
-					_elm_lang$core$Regex$regex('[\\W_]'),
-					_elm_lang$core$Basics$always(' '),
-					string))));
-};
-var _elm_community$string_extra$String_Extra$humanize = function (string) {
-	return _elm_community$string_extra$String_Extra$toSentenceCase(
-		_elm_lang$core$String$toLower(
-			_elm_lang$core$String$trim(
-				A4(
-					_elm_lang$core$Regex$replace,
-					_elm_lang$core$Regex$All,
-					_elm_lang$core$Regex$regex('_id$|[-_\\s]+'),
-					_elm_lang$core$Basics$always(' '),
-					A4(
-						_elm_lang$core$Regex$replace,
-						_elm_lang$core$Regex$All,
-						_elm_lang$core$Regex$regex('[A-Z]'),
-						function (_p35) {
-							return A2(
-								_elm_lang$core$String$append,
-								'-',
-								function (_) {
-									return _.match;
-								}(_p35));
-						},
-						string)))));
-};
-var _elm_community$string_extra$String_Extra$decapitalize = function (word) {
-	return A2(_elm_community$string_extra$String_Extra$changeCase, _elm_lang$core$Char$toLower, word);
-};
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Normalize$elmReservedWords = {
-	ctor: '::',
-	_0: 'as',
-	_1: {
-		ctor: '::',
-		_0: 'case',
-		_1: {
-			ctor: '::',
-			_0: 'else',
-			_1: {
-				ctor: '::',
-				_0: 'exposing',
-				_1: {
-					ctor: '::',
-					_0: 'if',
-					_1: {
-						ctor: '::',
-						_0: 'import',
-						_1: {
-							ctor: '::',
-							_0: 'in',
-							_1: {
-								ctor: '::',
-								_0: 'infix',
-								_1: {
-									ctor: '::',
-									_0: 'let',
-									_1: {
-										ctor: '::',
-										_0: 'module',
-										_1: {
-											ctor: '::',
-											_0: 'of',
-											_1: {
-												ctor: '::',
-												_0: 'port',
-												_1: {
-													ctor: '::',
-													_0: 'then',
-													_1: {
-														ctor: '::',
-														_0: 'type',
-														_1: {
-															ctor: '::',
-															_0: 'where',
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+var author$project$Graphql$Generator$DocComment$argsDoc = function (args) {
+	var _n0 = A2(elm$core$List$filterMap, author$project$Graphql$Generator$DocComment$argDoc, args);
+	if (!_n0.b) {
+		return '';
+	} else {
+		var argDocs = _n0;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'\n\n{0}\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '\n', argDocs)
+				]));
 	}
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Normalize$capitilize = function (string) {
-	var _p0 = _elm_lang$core$String$toList(string);
-	if (_p0.ctor === '::') {
-		return _elm_lang$core$String$fromList(
-			{
-				ctor: '::',
-				_0: _elm_lang$core$Char$toUpper(_p0._0),
-				_1: _p0._1
-			});
+var elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
+var author$project$Graphql$Generator$DocComment$hasDocs = F2(
+	function (mainDescription, itemDescriptions) {
+		if (mainDescription.$ === 'Just') {
+			var string = mainDescription.a;
+			return true;
+		} else {
+			return !elm$core$List$isEmpty(
+				A2(
+					elm$core$List$filterMap,
+					function ($) {
+						return $.description;
+					},
+					itemDescriptions));
+		}
+	});
+var author$project$Graphql$Generator$DocComment$generate_ = F2(
+	function (mainDescription, itemDescriptions) {
+		return A2(author$project$Graphql$Generator$DocComment$hasDocs, mainDescription, itemDescriptions) ? A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{-|{0}{1}\n-}\n',
+			_List_fromArray(
+				[
+					A2(
+					elm$core$Maybe$withDefault,
+					'',
+					A2(
+						elm$core$Maybe$map,
+						function (description) {
+							return ' ' + description;
+						},
+						mainDescription)),
+					author$project$Graphql$Generator$DocComment$argsDoc(itemDescriptions)
+				])) : '';
+	});
+var elm$core$Char$toUpper = _Char_toUpper;
+var elm$core$String$fromList = _String_fromList;
+var elm$core$String$foldr = _String_foldr;
+var elm$core$String$toList = function (string) {
+	return A3(elm$core$String$foldr, elm$core$List$cons, _List_Nil, string);
+};
+var author$project$Graphql$Generator$Normalize$capitilize = function (string) {
+	var _n0 = elm$core$String$toList(string);
+	if (_n0.b) {
+		var firstChar = _n0.a;
+		var rest = _n0.b;
+		return elm$core$String$fromList(
+			A2(
+				elm$core$List$cons,
+				elm$core$Char$toUpper(firstChar),
+				rest));
 	} else {
 		return '';
 	}
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Normalize$isAllUpper = function (string) {
-	return _elm_lang$core$Native_Utils.eq(
-		_elm_lang$core$String$toUpper(string),
+var elm$core$String$toUpper = _String_toUpper;
+var author$project$Graphql$Generator$Normalize$isAllUpper = function (string) {
+	return _Utils_eq(
+		elm$core$String$toUpper(string),
 		string);
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Normalize$underscores = function (string) {
-	var _p1 = A2(
-		_elm_lang$core$Maybe$map,
-		function (_) {
-			return _.submatches;
+var elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
+	});
+var elm$core$Debug$todo = _Debug_todo;
+var elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return elm$core$Maybe$Just(x);
+	} else {
+		return elm$core$Maybe$Nothing;
+	}
+};
+var elm$regex$Regex$find = _Regex_findAtMost(_Regex_infinity);
+var author$project$Graphql$Generator$Normalize$underscores = function (string) {
+	var regexFromString = A2(
+		elm$core$Basics$composeR,
+		elm$regex$Regex$fromString,
+		elm$core$Maybe$withDefault(elm$regex$Regex$never));
+	var _n0 = A2(
+		elm$core$Maybe$map,
+		function ($) {
+			return $.submatches;
 		},
-		_elm_lang$core$List$head(
-			A3(
-				_elm_lang$core$Regex$find,
-				_elm_lang$core$Regex$All,
-				_elm_lang$core$Regex$regex('^(_*)([^_]?.*[^_]?)(_*)$'),
+		elm$core$List$head(
+			A2(
+				elm$regex$Regex$find,
+				regexFromString('^(_*)([^_]?.*[^_]?)(_*)$'),
 				string)));
-	if (_p1.ctor === 'Just') {
-		if (((((((_p1._0.ctor === '::') && (_p1._0._0.ctor === 'Just')) && (_p1._0._1.ctor === '::')) && (_p1._0._1._0.ctor === 'Just')) && (_p1._0._1._1.ctor === '::')) && (_p1._0._1._1._0.ctor === 'Just')) && (_p1._0._1._1._1.ctor === '[]')) {
-			return {leading: _p1._0._0._0, trailing: _p1._0._1._1._0._0, remaining: _p1._0._1._0._0};
+	if (_n0.$ === 'Just') {
+		if ((((_n0.a.b && _n0.a.b.b) && (_n0.a.b.a.$ === 'Just')) && _n0.a.b.b.b) && (!_n0.a.b.b.b.b)) {
+			var _n1 = _n0.a;
+			var leading = _n1.a;
+			var _n2 = _n1.b;
+			var remaining = _n2.a.a;
+			var _n3 = _n2.b;
+			var trailing = _n3.a;
+			return {
+				leading: A2(elm$core$Maybe$withDefault, '', leading),
+				remaining: remaining,
+				trailing: A2(elm$core$Maybe$withDefault, '', trailing)
+			};
 		} else {
-			return _elm_lang$core$Native_Utils.crashCase(
+			return _Debug_todo(
 				'Graphql.Generator.Normalize',
 				{
-					start: {line: 18, column: 5},
-					end: {line: 29, column: 72}
-				},
-				_p1)(
-				A2(_elm_lang$core$Basics_ops['++'], 'Unexpected regex result for name ', string));
+					start: {line: 34, column: 13},
+					end: {line: 34, column: 23}
+				})('Unexpected regex result for name ' + string);
 		}
 	} else {
-		return _elm_lang$core$Native_Utils.crashCase(
+		return _Debug_todo(
 			'Graphql.Generator.Normalize',
 			{
-				start: {line: 18, column: 5},
-				end: {line: 29, column: 72}
+				start: {line: 31, column: 13},
+				end: {line: 31, column: 23}
+			})('Got nothing');
+	}
+};
+var elm$core$String$toLower = _String_toLower;
+var elm$core$Basics$always = F2(
+	function (a, _n0) {
+		return a;
+	});
+var elm$core$String$trim = _String_trim;
+var elm_community$string_extra$String$Extra$regexFromString = A2(
+	elm$core$Basics$composeR,
+	elm$regex$Regex$fromString,
+	elm$core$Maybe$withDefault(elm$regex$Regex$never));
+var elm_community$string_extra$String$Extra$camelize = function (string) {
+	return A3(
+		elm$regex$Regex$replace,
+		elm_community$string_extra$String$Extra$regexFromString('[-_\\s]+(.)?'),
+		function (_n0) {
+			var submatches = _n0.submatches;
+			if (submatches.b && (submatches.a.$ === 'Just')) {
+				var match = submatches.a.a;
+				return elm$core$String$toUpper(match);
+			} else {
+				return '';
+			}
+		},
+		elm$core$String$trim(string));
+};
+var elm_community$string_extra$String$Extra$regexEscape = A2(
+	elm$regex$Regex$replace,
+	elm_community$string_extra$String$Extra$regexFromString('[-/\\^$*+?.()|[\\]{}]'),
+	function (_n0) {
+		var match = _n0.match;
+		return '\\' + match;
+	});
+var elm_community$string_extra$String$Extra$replace = F3(
+	function (search, substitution, string) {
+		return A3(
+			elm$regex$Regex$replace,
+			elm_community$string_extra$String$Extra$regexFromString(
+				elm_community$string_extra$String$Extra$regexEscape(search)),
+			function (_n0) {
+				return substitution;
 			},
-			_p1)('Got nothing');
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Normalize$capitalized = function (name) {
-	var group = _dillonkearns$elm_graphql$Graphql_Generator_Normalize$underscores(name);
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_dillonkearns$elm_graphql$Graphql_Generator_Normalize$isAllUpper(group.remaining) ? _elm_community$string_extra$String_Extra$classify(
-			_elm_lang$core$String$toLower(group.remaining)) : _dillonkearns$elm_graphql$Graphql_Generator_Normalize$capitilize(group.remaining),
-		A2(_elm_lang$core$Basics_ops['++'], group.leading, group.trailing));
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Normalize$normalizeIfElmReserved = function (name) {
-	return A2(_elm_lang$core$List$member, name, _dillonkearns$elm_graphql$Graphql_Generator_Normalize$elmReservedWords) ? A2(_elm_lang$core$Basics_ops['++'], name, '_') : name;
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Normalize$decapitalized = function (name) {
-	return _dillonkearns$elm_graphql$Graphql_Generator_Normalize$normalizeIfElmReserved(
-		_elm_community$string_extra$String_Extra$decapitalize(
-			_dillonkearns$elm_graphql$Graphql_Generator_Normalize$capitalized(name)));
-};
-
-var _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$isBuiltIn = function (_p0) {
-	var _p1 = _p0;
-	return A2(_elm_lang$core$String$startsWith, '__', _p1._0) ? true : false;
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized = function (_p2) {
-	var _p3 = _p2;
-	return _dillonkearns$elm_graphql$Graphql_Generator_Normalize$capitalized(_p3._0);
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw = function (_p4) {
-	var _p5 = _p4;
-	return _p5._0;
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$ClassCaseName = function (a) {
-	return {ctor: 'ClassCaseName', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build = _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$ClassCaseName;
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Context$context = function (_p0) {
-	var _p1 = _p0;
-	return {
-		query: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(_p1.query),
-		mutation: A2(_elm_lang$core$Maybe$map, _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build, _p1.mutation),
-		subscription: A2(_elm_lang$core$Maybe$map, _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build, _p1.subscription),
-		apiSubmodule: _p1.apiSubmodule,
-		interfaces: _p1.interfaces
-	};
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Context$Context = F5(
-	function (a, b, c, d, e) {
-		return {query: a, mutation: b, subscription: c, apiSubmodule: d, interfaces: e};
+			string);
 	});
-
-var _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized = function (_p0) {
-	var _p1 = _p0;
-	return _dillonkearns$elm_graphql$Graphql_Generator_Normalize$decapitalized(_p1._0);
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw = function (_p2) {
-	var _p3 = _p2;
-	return _p3._0;
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$CamelCaseName = function (a) {
-	return {ctor: 'CamelCaseName', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$build = _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$CamelCaseName;
-
-var _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Custom = function (a) {
-	return {ctor: 'Custom', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Float = {ctor: 'Float'};
-var _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Int = {ctor: 'Int'};
-var _dillonkearns$elm_graphql$Graphql_Parser_Scalar$String = {ctor: 'String'};
-var _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Boolean = {ctor: 'Boolean'};
-var _dillonkearns$elm_graphql$Graphql_Parser_Scalar$parse = function (scalarName) {
-	var _p0 = scalarName;
-	switch (_p0) {
-		case 'String':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Scalar$String;
-		case 'Boolean':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Boolean;
-		case 'Int':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Int;
-		case 'Float':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Float;
-		default:
-			return _dillonkearns$elm_graphql$Graphql_Parser_Scalar$Custom(
-				_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(scalarName));
-	}
-};
-
-//import Maybe, Native.Array, Native.List, Native.Utils, Result //
-
-var _elm_lang$core$Native_Json = function() {
-
-
-// CORE DECODERS
-
-function succeed(msg)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'succeed',
-		msg: msg
-	};
-}
-
-function fail(msg)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'fail',
-		msg: msg
-	};
-}
-
-function decodePrimitive(tag)
-{
-	return {
-		ctor: '<decoder>',
-		tag: tag
-	};
-}
-
-function decodeContainer(tag, decoder)
-{
-	return {
-		ctor: '<decoder>',
-		tag: tag,
-		decoder: decoder
-	};
-}
-
-function decodeNull(value)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'null',
-		value: value
-	};
-}
-
-function decodeField(field, decoder)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'field',
-		field: field,
-		decoder: decoder
-	};
-}
-
-function decodeIndex(index, decoder)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'index',
-		index: index,
-		decoder: decoder
-	};
-}
-
-function decodeKeyValuePairs(decoder)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'key-value',
-		decoder: decoder
-	};
-}
-
-function mapMany(f, decoders)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'map-many',
-		func: f,
-		decoders: decoders
-	};
-}
-
-function andThen(callback, decoder)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'andThen',
-		decoder: decoder,
-		callback: callback
-	};
-}
-
-function oneOf(decoders)
-{
-	return {
-		ctor: '<decoder>',
-		tag: 'oneOf',
-		decoders: decoders
-	};
-}
-
-
-// DECODING OBJECTS
-
-function map1(f, d1)
-{
-	return mapMany(f, [d1]);
-}
-
-function map2(f, d1, d2)
-{
-	return mapMany(f, [d1, d2]);
-}
-
-function map3(f, d1, d2, d3)
-{
-	return mapMany(f, [d1, d2, d3]);
-}
-
-function map4(f, d1, d2, d3, d4)
-{
-	return mapMany(f, [d1, d2, d3, d4]);
-}
-
-function map5(f, d1, d2, d3, d4, d5)
-{
-	return mapMany(f, [d1, d2, d3, d4, d5]);
-}
-
-function map6(f, d1, d2, d3, d4, d5, d6)
-{
-	return mapMany(f, [d1, d2, d3, d4, d5, d6]);
-}
-
-function map7(f, d1, d2, d3, d4, d5, d6, d7)
-{
-	return mapMany(f, [d1, d2, d3, d4, d5, d6, d7]);
-}
-
-function map8(f, d1, d2, d3, d4, d5, d6, d7, d8)
-{
-	return mapMany(f, [d1, d2, d3, d4, d5, d6, d7, d8]);
-}
-
-
-// DECODE HELPERS
-
-function ok(value)
-{
-	return { tag: 'ok', value: value };
-}
-
-function badPrimitive(type, value)
-{
-	return { tag: 'primitive', type: type, value: value };
-}
-
-function badIndex(index, nestedProblems)
-{
-	return { tag: 'index', index: index, rest: nestedProblems };
-}
-
-function badField(field, nestedProblems)
-{
-	return { tag: 'field', field: field, rest: nestedProblems };
-}
-
-function badIndex(index, nestedProblems)
-{
-	return { tag: 'index', index: index, rest: nestedProblems };
-}
-
-function badOneOf(problems)
-{
-	return { tag: 'oneOf', problems: problems };
-}
-
-function bad(msg)
-{
-	return { tag: 'fail', msg: msg };
-}
-
-function badToString(problem)
-{
-	var context = '_';
-	while (problem)
-	{
-		switch (problem.tag)
-		{
-			case 'primitive':
-				return 'Expecting ' + problem.type
-					+ (context === '_' ? '' : ' at ' + context)
-					+ ' but instead got: ' + jsToString(problem.value);
-
-			case 'index':
-				context += '[' + problem.index + ']';
-				problem = problem.rest;
-				break;
-
-			case 'field':
-				context += '.' + problem.field;
-				problem = problem.rest;
-				break;
-
-			case 'oneOf':
-				var problems = problem.problems;
-				for (var i = 0; i < problems.length; i++)
-				{
-					problems[i] = badToString(problems[i]);
-				}
-				return 'I ran into the following problems'
-					+ (context === '_' ? '' : ' at ' + context)
-					+ ':\n\n' + problems.join('\n');
-
-			case 'fail':
-				return 'I ran into a `fail` decoder'
-					+ (context === '_' ? '' : ' at ' + context)
-					+ ': ' + problem.msg;
-		}
-	}
-}
-
-function jsToString(value)
-{
-	return value === undefined
-		? 'undefined'
-		: JSON.stringify(value);
-}
-
-
-// DECODE
-
-function runOnString(decoder, string)
-{
-	var json;
-	try
-	{
-		json = JSON.parse(string);
-	}
-	catch (e)
-	{
-		return _elm_lang$core$Result$Err('Given an invalid JSON: ' + e.message);
-	}
-	return run(decoder, json);
-}
-
-function run(decoder, value)
-{
-	var result = runHelp(decoder, value);
-	return (result.tag === 'ok')
-		? _elm_lang$core$Result$Ok(result.value)
-		: _elm_lang$core$Result$Err(badToString(result));
-}
-
-function runHelp(decoder, value)
-{
-	switch (decoder.tag)
-	{
-		case 'bool':
-			return (typeof value === 'boolean')
-				? ok(value)
-				: badPrimitive('a Bool', value);
-
-		case 'int':
-			if (typeof value !== 'number') {
-				return badPrimitive('an Int', value);
-			}
-
-			if (-2147483647 < value && value < 2147483647 && (value | 0) === value) {
-				return ok(value);
-			}
-
-			if (isFinite(value) && !(value % 1)) {
-				return ok(value);
-			}
-
-			return badPrimitive('an Int', value);
-
-		case 'float':
-			return (typeof value === 'number')
-				? ok(value)
-				: badPrimitive('a Float', value);
-
-		case 'string':
-			return (typeof value === 'string')
-				? ok(value)
-				: (value instanceof String)
-					? ok(value + '')
-					: badPrimitive('a String', value);
-
-		case 'null':
-			return (value === null)
-				? ok(decoder.value)
-				: badPrimitive('null', value);
-
-		case 'value':
-			return ok(value);
-
-		case 'list':
-			if (!(value instanceof Array))
-			{
-				return badPrimitive('a List', value);
-			}
-
-			var list = _elm_lang$core$Native_List.Nil;
-			for (var i = value.length; i--; )
-			{
-				var result = runHelp(decoder.decoder, value[i]);
-				if (result.tag !== 'ok')
-				{
-					return badIndex(i, result)
-				}
-				list = _elm_lang$core$Native_List.Cons(result.value, list);
-			}
-			return ok(list);
-
-		case 'array':
-			if (!(value instanceof Array))
-			{
-				return badPrimitive('an Array', value);
-			}
-
-			var len = value.length;
-			var array = new Array(len);
-			for (var i = len; i--; )
-			{
-				var result = runHelp(decoder.decoder, value[i]);
-				if (result.tag !== 'ok')
-				{
-					return badIndex(i, result);
-				}
-				array[i] = result.value;
-			}
-			return ok(_elm_lang$core$Native_Array.fromJSArray(array));
-
-		case 'maybe':
-			var result = runHelp(decoder.decoder, value);
-			return (result.tag === 'ok')
-				? ok(_elm_lang$core$Maybe$Just(result.value))
-				: ok(_elm_lang$core$Maybe$Nothing);
-
-		case 'field':
-			var field = decoder.field;
-			if (typeof value !== 'object' || value === null || !(field in value))
-			{
-				return badPrimitive('an object with a field named `' + field + '`', value);
-			}
-
-			var result = runHelp(decoder.decoder, value[field]);
-			return (result.tag === 'ok') ? result : badField(field, result);
-
-		case 'index':
-			var index = decoder.index;
-			if (!(value instanceof Array))
-			{
-				return badPrimitive('an array', value);
-			}
-			if (index >= value.length)
-			{
-				return badPrimitive('a longer array. Need index ' + index + ' but there are only ' + value.length + ' entries', value);
-			}
-
-			var result = runHelp(decoder.decoder, value[index]);
-			return (result.tag === 'ok') ? result : badIndex(index, result);
-
-		case 'key-value':
-			if (typeof value !== 'object' || value === null || value instanceof Array)
-			{
-				return badPrimitive('an object', value);
-			}
-
-			var keyValuePairs = _elm_lang$core$Native_List.Nil;
-			for (var key in value)
-			{
-				var result = runHelp(decoder.decoder, value[key]);
-				if (result.tag !== 'ok')
-				{
-					return badField(key, result);
-				}
-				var pair = _elm_lang$core$Native_Utils.Tuple2(key, result.value);
-				keyValuePairs = _elm_lang$core$Native_List.Cons(pair, keyValuePairs);
-			}
-			return ok(keyValuePairs);
-
-		case 'map-many':
-			var answer = decoder.func;
-			var decoders = decoder.decoders;
-			for (var i = 0; i < decoders.length; i++)
-			{
-				var result = runHelp(decoders[i], value);
-				if (result.tag !== 'ok')
-				{
-					return result;
-				}
-				answer = answer(result.value);
-			}
-			return ok(answer);
-
-		case 'andThen':
-			var result = runHelp(decoder.decoder, value);
-			return (result.tag !== 'ok')
-				? result
-				: runHelp(decoder.callback(result.value), value);
-
-		case 'oneOf':
-			var errors = [];
-			var temp = decoder.decoders;
-			while (temp.ctor !== '[]')
-			{
-				var result = runHelp(temp._0, value);
-
-				if (result.tag === 'ok')
-				{
-					return result;
-				}
-
-				errors.push(result);
-
-				temp = temp._1;
-			}
-			return badOneOf(errors);
-
-		case 'fail':
-			return bad(decoder.msg);
-
-		case 'succeed':
-			return ok(decoder.msg);
-	}
-}
-
-
-// EQUALITY
-
-function equality(a, b)
-{
-	if (a === b)
-	{
-		return true;
-	}
-
-	if (a.tag !== b.tag)
-	{
-		return false;
-	}
-
-	switch (a.tag)
-	{
-		case 'succeed':
-		case 'fail':
-			return a.msg === b.msg;
-
-		case 'bool':
-		case 'int':
-		case 'float':
-		case 'string':
-		case 'value':
-			return true;
-
-		case 'null':
-			return a.value === b.value;
-
-		case 'list':
-		case 'array':
-		case 'maybe':
-		case 'key-value':
-			return equality(a.decoder, b.decoder);
-
-		case 'field':
-			return a.field === b.field && equality(a.decoder, b.decoder);
-
-		case 'index':
-			return a.index === b.index && equality(a.decoder, b.decoder);
-
-		case 'map-many':
-			if (a.func !== b.func)
-			{
-				return false;
-			}
-			return listEquality(a.decoders, b.decoders);
-
-		case 'andThen':
-			return a.callback === b.callback && equality(a.decoder, b.decoder);
-
-		case 'oneOf':
-			return listEquality(a.decoders, b.decoders);
-	}
-}
-
-function listEquality(aDecoders, bDecoders)
-{
-	var len = aDecoders.length;
-	if (len !== bDecoders.length)
-	{
-		return false;
-	}
-	for (var i = 0; i < len; i++)
-	{
-		if (!equality(aDecoders[i], bDecoders[i]))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-
-// ENCODE
-
-function encode(indentLevel, value)
-{
-	return JSON.stringify(value, null, indentLevel);
-}
-
-function identity(value)
-{
-	return value;
-}
-
-function encodeObject(keyValuePairs)
-{
-	var obj = {};
-	while (keyValuePairs.ctor !== '[]')
-	{
-		var pair = keyValuePairs._0;
-		obj[pair._0] = pair._1;
-		keyValuePairs = keyValuePairs._1;
-	}
-	return obj;
-}
-
-return {
-	encode: F2(encode),
-	runOnString: F2(runOnString),
-	run: F2(run),
-
-	decodeNull: decodeNull,
-	decodePrimitive: decodePrimitive,
-	decodeContainer: F2(decodeContainer),
-
-	decodeField: F2(decodeField),
-	decodeIndex: F2(decodeIndex),
-
-	map1: F2(map1),
-	map2: F3(map2),
-	map3: F4(map3),
-	map4: F5(map4),
-	map5: F6(map5),
-	map6: F7(map6),
-	map7: F8(map7),
-	map8: F9(map8),
-	decodeKeyValuePairs: decodeKeyValuePairs,
-
-	andThen: F2(andThen),
-	fail: fail,
-	succeed: succeed,
-	oneOf: oneOf,
-
-	identity: identity,
-	encodeNull: null,
-	encodeArray: _elm_lang$core$Native_Array.toJSArray,
-	encodeList: _elm_lang$core$Native_List.toArray,
-	encodeObject: encodeObject,
-
-	equality: equality
-};
-
-}();
-
-var _elm_lang$core$Json_Encode$list = _elm_lang$core$Native_Json.encodeList;
-var _elm_lang$core$Json_Encode$array = _elm_lang$core$Native_Json.encodeArray;
-var _elm_lang$core$Json_Encode$object = _elm_lang$core$Native_Json.encodeObject;
-var _elm_lang$core$Json_Encode$null = _elm_lang$core$Native_Json.encodeNull;
-var _elm_lang$core$Json_Encode$bool = _elm_lang$core$Native_Json.identity;
-var _elm_lang$core$Json_Encode$float = _elm_lang$core$Native_Json.identity;
-var _elm_lang$core$Json_Encode$int = _elm_lang$core$Native_Json.identity;
-var _elm_lang$core$Json_Encode$string = _elm_lang$core$Native_Json.identity;
-var _elm_lang$core$Json_Encode$encode = _elm_lang$core$Native_Json.encode;
-var _elm_lang$core$Json_Encode$Value = {ctor: 'Value'};
-
-var _elm_lang$core$Json_Decode$null = _elm_lang$core$Native_Json.decodeNull;
-var _elm_lang$core$Json_Decode$value = _elm_lang$core$Native_Json.decodePrimitive('value');
-var _elm_lang$core$Json_Decode$andThen = _elm_lang$core$Native_Json.andThen;
-var _elm_lang$core$Json_Decode$fail = _elm_lang$core$Native_Json.fail;
-var _elm_lang$core$Json_Decode$succeed = _elm_lang$core$Native_Json.succeed;
-var _elm_lang$core$Json_Decode$lazy = function (thunk) {
-	return A2(
-		_elm_lang$core$Json_Decode$andThen,
-		thunk,
-		_elm_lang$core$Json_Decode$succeed(
-			{ctor: '_Tuple0'}));
-};
-var _elm_lang$core$Json_Decode$decodeValue = _elm_lang$core$Native_Json.run;
-var _elm_lang$core$Json_Decode$decodeString = _elm_lang$core$Native_Json.runOnString;
-var _elm_lang$core$Json_Decode$map8 = _elm_lang$core$Native_Json.map8;
-var _elm_lang$core$Json_Decode$map7 = _elm_lang$core$Native_Json.map7;
-var _elm_lang$core$Json_Decode$map6 = _elm_lang$core$Native_Json.map6;
-var _elm_lang$core$Json_Decode$map5 = _elm_lang$core$Native_Json.map5;
-var _elm_lang$core$Json_Decode$map4 = _elm_lang$core$Native_Json.map4;
-var _elm_lang$core$Json_Decode$map3 = _elm_lang$core$Native_Json.map3;
-var _elm_lang$core$Json_Decode$map2 = _elm_lang$core$Native_Json.map2;
-var _elm_lang$core$Json_Decode$map = _elm_lang$core$Native_Json.map1;
-var _elm_lang$core$Json_Decode$oneOf = _elm_lang$core$Native_Json.oneOf;
-var _elm_lang$core$Json_Decode$maybe = function (decoder) {
-	return A2(_elm_lang$core$Native_Json.decodeContainer, 'maybe', decoder);
-};
-var _elm_lang$core$Json_Decode$index = _elm_lang$core$Native_Json.decodeIndex;
-var _elm_lang$core$Json_Decode$field = _elm_lang$core$Native_Json.decodeField;
-var _elm_lang$core$Json_Decode$at = F2(
-	function (fields, decoder) {
-		return A3(_elm_lang$core$List$foldr, _elm_lang$core$Json_Decode$field, decoder, fields);
-	});
-var _elm_lang$core$Json_Decode$keyValuePairs = _elm_lang$core$Native_Json.decodeKeyValuePairs;
-var _elm_lang$core$Json_Decode$dict = function (decoder) {
-	return A2(
-		_elm_lang$core$Json_Decode$map,
-		_elm_lang$core$Dict$fromList,
-		_elm_lang$core$Json_Decode$keyValuePairs(decoder));
-};
-var _elm_lang$core$Json_Decode$array = function (decoder) {
-	return A2(_elm_lang$core$Native_Json.decodeContainer, 'array', decoder);
-};
-var _elm_lang$core$Json_Decode$list = function (decoder) {
-	return A2(_elm_lang$core$Native_Json.decodeContainer, 'list', decoder);
-};
-var _elm_lang$core$Json_Decode$nullable = function (decoder) {
-	return _elm_lang$core$Json_Decode$oneOf(
-		{
-			ctor: '::',
-			_0: _elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
-			_1: {
-				ctor: '::',
-				_0: A2(_elm_lang$core$Json_Decode$map, _elm_lang$core$Maybe$Just, decoder),
-				_1: {ctor: '[]'}
-			}
-		});
-};
-var _elm_lang$core$Json_Decode$float = _elm_lang$core$Native_Json.decodePrimitive('float');
-var _elm_lang$core$Json_Decode$int = _elm_lang$core$Native_Json.decodePrimitive('int');
-var _elm_lang$core$Json_Decode$bool = _elm_lang$core$Native_Json.decodePrimitive('bool');
-var _elm_lang$core$Json_Decode$string = _elm_lang$core$Native_Json.decodePrimitive('string');
-var _elm_lang$core$Json_Decode$Decoder = {ctor: 'Decoder'};
-
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Union = {ctor: 'Union'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$InputObject = {ctor: 'InputObject'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Interface = {ctor: 'Interface'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Enum = {ctor: 'Enum'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Ignore = {ctor: 'Ignore'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$NonNull = {ctor: 'NonNull'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$List = {ctor: 'List'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Object = {ctor: 'Object'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Scalar = {ctor: 'Scalar'};
-var _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$decoder = A2(
-	_elm_lang$core$Json_Decode$andThen,
-	function (string) {
-		var _p0 = string;
-		switch (_p0) {
-			case 'SCALAR':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Scalar);
-			case 'OBJECT':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Object);
-			case 'LIST':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$List);
-			case 'NON_NULL':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$NonNull);
-			case 'ENUM':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Enum);
-			case 'INTERFACE':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Interface);
-			case 'INPUT_OBJECT':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$InputObject);
-			case 'UNION':
-				return _elm_lang$core$Json_Decode$succeed(_dillonkearns$elm_graphql$Graphql_Parser_TypeKind$Union);
-			default:
-				return _elm_lang$core$Json_Decode$fail(
-					A2(_elm_lang$core$Basics_ops['++'], 'Invalid TypeKind', string));
-		}
-	},
-	_elm_lang$core$Json_Decode$string);
-
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$expectString = function (maybeString) {
-	var _p0 = maybeString;
-	if (_p0.ctor === 'Just') {
-		return _p0._0;
-	} else {
-		return _elm_lang$core$Native_Utils.crashCase(
-			'Graphql.Parser.Type',
-			{
-				start: {line: 265, column: 5},
-				end: {line: 270, column: 58}
-			},
-			_p0)('Expected string but got Nothing');
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$EnumValue = F2(
-	function (a, b) {
-		return {name: a, description: b};
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$enumValueDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$EnumValue,
-	A2(
-		_elm_lang$core$Json_Decode$map,
-		_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build,
-		A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string)),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'description',
-		_elm_lang$core$Json_Decode$maybe(_elm_lang$core$Json_Decode$string)));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$Arg = F3(
-	function (a, b, c) {
-		return {name: a, description: b, typeRef: c};
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$Field = F4(
-	function (a, b, c, d) {
-		return {name: a, description: b, typeRef: c, args: d};
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$RawField = F4(
-	function (a, b, c, d) {
-		return {name: a, description: b, ofType: c, args: d};
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$RawArg = F3(
-	function (a, b, c) {
-		return {name: a, description: b, ofType: c};
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$TypeDefinition = F3(
-	function (a, b, c) {
-		return {ctor: 'TypeDefinition', _0: a, _1: b, _2: c};
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$typeDefinition = F3(
-	function (name, definableType, description) {
-		return A3(
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeDefinition,
-			_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(name),
-			definableType,
-			description);
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$InputObjectType = function (a) {
-	return {ctor: 'InputObjectType', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$createInputObject = F2(
-	function (inputObjectName, fields) {
-		return A3(
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$typeDefinition,
-			inputObjectName,
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$InputObjectType(fields),
-			_elm_lang$core$Maybe$Nothing);
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$EnumType = function (a) {
-	return {ctor: 'EnumType', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$createEnum = F3(
-	function (enumName, description, enumValues) {
-		return A3(
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$typeDefinition,
-			enumName,
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$EnumType(enumValues),
-			description);
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$enumDecoder = A4(
-	_elm_lang$core$Json_Decode$map3,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$createEnum,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	_elm_lang$core$Json_Decode$maybe(
-		A2(_elm_lang$core$Json_Decode$field, 'description', _elm_lang$core$Json_Decode$string)),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'enumValues',
-		_elm_lang$core$Json_Decode$list(_dillonkearns$elm_graphql$Graphql_Parser_Type$enumValueDecoder)));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$UnionType = function (a) {
-	return {ctor: 'UnionType', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$createUnion = F2(
-	function (interfaceName, possibleTypes) {
-		return A3(
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$typeDefinition,
-			interfaceName,
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$UnionType(
-				A2(_elm_lang$core$List$map, _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build, possibleTypes)),
-			_elm_lang$core$Maybe$Nothing);
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$unionDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$createUnion,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'possibleTypes',
-		_elm_lang$core$Json_Decode$list(
-			A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string))));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$InterfaceType = F2(
-	function (a, b) {
-		return {ctor: 'InterfaceType', _0: a, _1: b};
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$createInterface = F3(
-	function (interfaceName, fields, possibleTypes) {
-		return A3(
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$typeDefinition,
-			interfaceName,
+var elm$core$String$cons = _String_cons;
+var elm$core$String$uncons = _String_uncons;
+var elm_community$string_extra$String$Extra$changeCase = F2(
+	function (mutator, word) {
+		return A2(
+			elm$core$Maybe$withDefault,
+			'',
 			A2(
-				_dillonkearns$elm_graphql$Graphql_Parser_Type$InterfaceType,
-				fields,
-				A2(_elm_lang$core$List$map, _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build, possibleTypes)),
-			_elm_lang$core$Maybe$Nothing);
+				elm$core$Maybe$map,
+				function (_n0) {
+					var head = _n0.a;
+					var tail = _n0.b;
+					return A2(
+						elm$core$String$cons,
+						mutator(head),
+						tail);
+				},
+				elm$core$String$uncons(word)));
 	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$ObjectType = function (a) {
-	return {ctor: 'ObjectType', _0: a};
+var elm_community$string_extra$String$Extra$toSentenceCase = function (word) {
+	return A2(elm_community$string_extra$String$Extra$changeCase, elm$core$Char$toUpper, word);
 };
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$createObject = F2(
-	function (objectName, fields) {
+var elm_community$string_extra$String$Extra$classify = function (string) {
+	return elm_community$string_extra$String$Extra$toSentenceCase(
+		A3(
+			elm_community$string_extra$String$Extra$replace,
+			' ',
+			'',
+			elm_community$string_extra$String$Extra$camelize(
+				A3(
+					elm$regex$Regex$replace,
+					elm_community$string_extra$String$Extra$regexFromString('[\\W_]'),
+					elm$core$Basics$always(' '),
+					string))));
+};
+var author$project$Graphql$Generator$Normalize$capitalized = function (name) {
+	var group = author$project$Graphql$Generator$Normalize$underscores(name);
+	return _Utils_ap(
+		author$project$Graphql$Generator$Normalize$isAllUpper(group.remaining) ? elm_community$string_extra$String$Extra$classify(
+			elm$core$String$toLower(group.remaining)) : author$project$Graphql$Generator$Normalize$capitilize(group.remaining),
+		_Utils_ap(group.leading, group.trailing));
+};
+var author$project$Graphql$Parser$ClassCaseName$normalized = function (_n0) {
+	var rawName = _n0.a;
+	return author$project$Graphql$Generator$Normalize$capitalized(rawName);
+};
+var elm$core$List$map = F2(
+	function (f, xs) {
 		return A3(
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$typeDefinition,
-			objectName,
-			_dillonkearns$elm_graphql$Graphql_Parser_Type$ObjectType(fields),
-			_elm_lang$core$Maybe$Nothing);
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
 	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$ScalarType = {ctor: 'ScalarType'};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$scalarDecoder = A2(
-	_elm_lang$core$Json_Decode$map,
-	function (scalarName) {
-		return A3(_dillonkearns$elm_graphql$Graphql_Parser_Type$typeDefinition, scalarName, _dillonkearns$elm_graphql$Graphql_Parser_Type$ScalarType, _elm_lang$core$Maybe$Nothing);
-	},
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference = F2(
-	function (a, b) {
-		return {ctor: 'TypeReference', _0: a, _1: b};
+var author$project$Graphql$Generator$DocComment$generateForEnum = F2(
+	function (description, enumValues) {
+		return A2(
+			author$project$Graphql$Generator$DocComment$generate_,
+			description,
+			A2(
+				elm$core$List$map,
+				function (enumValue) {
+					return {
+						description: enumValue.description,
+						name: author$project$Graphql$Parser$ClassCaseName$normalized(enumValue.name)
+					};
+				},
+				enumValues));
 	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$InterfaceRef = function (a) {
-	return {ctor: 'InterfaceRef', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$UnionRef = function (a) {
-	return {ctor: 'UnionRef', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$InputObjectRef = function (a) {
-	return {ctor: 'InputObjectRef', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$ObjectRef = function (a) {
-	return {ctor: 'ObjectRef', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$EnumRef = function (a) {
-	return {ctor: 'EnumRef', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$List = function (a) {
-	return {ctor: 'List', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$Scalar = function (a) {
-	return {ctor: 'Scalar', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable = {ctor: 'NonNullable'};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable = {ctor: 'Nullable'};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$ignoreRef = A2(
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$Scalar(_dillonkearns$elm_graphql$Graphql_Parser_Scalar$String),
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$parseRef = function (_p2) {
-	var _p3 = _p2;
-	var _p23 = _p3._0;
-	var _p4 = _p23.kind;
-	switch (_p4.ctor) {
-		case 'List':
-			var _p5 = _p23.ofType;
-			if (_p5.ctor === 'Just') {
-				return A2(
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$List(
-						_dillonkearns$elm_graphql$Graphql_Parser_Type$parseRef(_p5._0)),
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Parser.Type',
-					{
-						start: {line: 277, column: 13},
-						end: {line: 282, column: 73}
+var author$project$Graphql$Generator$Enum$enumDocs = F2(
+	function (enumDescription, enumValues) {
+		return A2(author$project$Graphql$Generator$DocComment$generateForEnum, enumDescription, enumValues);
+	});
+var author$project$Graphql$Generator$Enum$enumDecoder = F2(
+	function (enumName, enumValues) {
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'decoder : Decoder {0}\ndecoder =\n    Decode.string\n        |> Decode.andThen\n            (\\string ->\n                case string of\n',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(enumName)
+				])) + (A2(
+			elm$core$String$join,
+			'\n\n',
+			A2(
+				elm$core$List$map,
+				function (enumValue) {
+					return '                    \"' + (author$project$Graphql$Parser$ClassCaseName$raw(enumValue) + ('\" ->\n                        Decode.succeed ' + author$project$Graphql$Parser$ClassCaseName$normalized(enumValue)));
+				},
+				A2(
+					elm$core$List$map,
+					function ($) {
+						return $.name;
 					},
-					_p5)('Missing nested type for List reference');
-			}
-		case 'Scalar':
-			var _p7 = _p23.name;
-			if (_p7.ctor === 'Just') {
-				return A2(
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$Scalar(
-						_dillonkearns$elm_graphql$Graphql_Parser_Scalar$parse(_p7._0)),
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Parser.Type',
-					{
-						start: {line: 285, column: 13},
-						end: {line: 292, column: 82}
+					enumValues))) + ('\n\n                    _ ->\n                        Decode.fail ("Invalid ' + (author$project$Graphql$Parser$ClassCaseName$normalized(enumName) + ' type, " ++ string ++ " try re-running the @dillonkearns/elm-graphql CLI ")\n        )\n        ')));
+	});
+var author$project$Graphql$Generator$Enum$toStringCase = function (enumValue) {
+	return A2(
+		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+		'        {0} ->\n                "{1}"\n',
+		_List_fromArray(
+			[
+				author$project$Graphql$Parser$ClassCaseName$normalized(enumValue.name),
+				author$project$Graphql$Parser$ClassCaseName$raw(enumValue.name)
+			]));
+};
+var author$project$Graphql$Generator$Enum$enumToString = F2(
+	function (enumName, enumValues) {
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.\n-}\ntoString : {0} -> String\ntoString enum =\n    case enum of\n{1}',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(enumName),
+					A2(
+					elm$core$String$join,
+					'\n\n',
+					A2(elm$core$List$map, author$project$Graphql$Generator$Enum$toStringCase, enumValues))
+				]));
+	});
+var author$project$Graphql$Generator$Enum$enumType = F2(
+	function (enumName, enumValues) {
+		return 'type ' + (author$project$Graphql$Parser$ClassCaseName$normalized(enumName) + ('\n    = ' + (A2(
+			elm$core$String$join,
+			'\n    | ',
+			A2(
+				elm$core$List$map,
+				author$project$Graphql$Parser$ClassCaseName$normalized,
+				A2(
+					elm$core$List$map,
+					function ($) {
+						return $.name;
 					},
-					_p7)('Should not get null names for scalar references');
-			}
-		case 'Interface':
-			var _p9 = _p23.name;
-			if (_p9.ctor === 'Just') {
-				return A2(
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$InterfaceRef(_p9._0),
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
+					enumValues))) + '\n')));
+	});
+var author$project$Graphql$Generator$Enum$prepend = F4(
+	function (moduleName, enumName, enumValues, docComment) {
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\nimport Json.Decode as Decode exposing (Decoder)\n\n\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '.', moduleName)
+				])) + (docComment + (A2(author$project$Graphql$Generator$Enum$enumType, enumName, enumValues) + (A2(author$project$Graphql$Generator$Enum$enumDecoder, enumName, enumValues) + ('\n\n' + A2(author$project$Graphql$Generator$Enum$enumToString, enumName, enumValues)))));
+	});
+var author$project$Graphql$Generator$Enum$generate = F4(
+	function (enumName, moduleName, enumValues, description) {
+		return A4(
+			author$project$Graphql$Generator$Enum$prepend,
+			moduleName,
+			enumName,
+			enumValues,
+			A2(author$project$Graphql$Generator$Enum$enumDocs, description, enumValues));
+	});
+var author$project$Graphql$Generator$Normalize$elmReservedWords = _List_fromArray(
+	['as', 'case', 'else', 'exposing', 'if', 'import', 'in', 'infix', 'let', 'module', 'of', 'port', 'then', 'type', 'where']);
+var elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
+		while (true) {
+			if (!list.b) {
+				return false;
 			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Parser.Type',
-					{
-						start: {line: 295, column: 13},
-						end: {line: 300, column: 85}
-					},
-					_p9)('Should not get null names for interface references');
-			}
-		case 'Object':
-			var _p11 = _p23.name;
-			if (_p11.ctor === 'Just') {
-				return A2(
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$ObjectRef(_p11._0),
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Parser.Type',
-					{
-						start: {line: 303, column: 13},
-						end: {line: 308, column: 82}
-					},
-					_p11)('Should not get null names for object references');
-			}
-		case 'NonNull':
-			var _p13 = _p23.ofType;
-			if (_p13.ctor === 'Just') {
-				var _p18 = _p13._0._0;
-				var _p14 = {ctor: '_Tuple2', _0: _p18.kind, _1: _p18.name};
-				switch (_p14._0.ctor) {
-					case 'Scalar':
-						return A2(
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$Scalar(
-								_dillonkearns$elm_graphql$Graphql_Parser_Scalar$parse(
-									_dillonkearns$elm_graphql$Graphql_Parser_Type$expectString(_p14._1))),
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
-					case 'Object':
-						return A2(
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$ObjectRef(
-								_dillonkearns$elm_graphql$Graphql_Parser_Type$expectString(_p14._1)),
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
-					case 'Interface':
-						return A2(
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$InterfaceRef(
-								_dillonkearns$elm_graphql$Graphql_Parser_Type$expectString(_p14._1)),
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
-					case 'List':
-						var _p15 = _p18.ofType;
-						if (_p15.ctor === 'Just') {
-							return A2(
-								_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-								_dillonkearns$elm_graphql$Graphql_Parser_Type$List(
-									_dillonkearns$elm_graphql$Graphql_Parser_Type$parseRef(_p15._0)),
-								_dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
-						} else {
-							return _elm_lang$core$Native_Utils.crashCase(
-								'Graphql.Parser.Type',
-								{
-									start: {line: 326, column: 29},
-									end: {line: 331, column: 51}
-								},
-								_p15)('');
-						}
-					case 'NonNull':
-						return _elm_lang$core$Native_Utils.crashCase(
-							'Graphql.Parser.Type',
-							{
-								start: {line: 313, column: 21},
-								end: {line: 346, column: 102}
-							},
-							_p14)('Can\'t have nested non-null types');
-					case 'Ignore':
-						return _dillonkearns$elm_graphql$Graphql_Parser_Type$ignoreRef;
-					case 'Enum':
-						return A2(
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$EnumRef(
-								_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(
-									_dillonkearns$elm_graphql$Graphql_Parser_Type$expectString(_p14._1))),
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
-					case 'InputObject':
-						return A2(
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$InputObjectRef(
-								_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(
-									_dillonkearns$elm_graphql$Graphql_Parser_Type$expectString(_p14._1))),
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
-					default:
-						return A2(
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$UnionRef(
-								_dillonkearns$elm_graphql$Graphql_Parser_Type$expectString(_p18.name)),
-							_dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
+				var x = list.a;
+				var xs = list.b;
+				if (isOkay(x)) {
+					return true;
+				} else {
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
 				}
-			} else {
-				return _dillonkearns$elm_graphql$Graphql_Parser_Type$ignoreRef;
 			}
-		case 'Ignore':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Type$ignoreRef;
-		case 'Enum':
-			var _p19 = _p23.name;
-			if (_p19.ctor === 'Just') {
-				return A2(
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$EnumRef(
-						_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(_p19._0)),
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Parser.Type',
-					{
-						start: {line: 355, column: 13},
-						end: {line: 360, column: 80}
-					},
-					_p19)('Should not get null names for enum references');
-			}
-		case 'InputObject':
-			var _p21 = _p23.name;
-			if (_p21.ctor === 'Just') {
-				return A2(
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$InputObjectRef(
-						_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(_p21._0)),
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Parser.Type',
-					{
-						start: {line: 363, column: 13},
-						end: {line: 368, column: 88}
-					},
-					_p21)('Should not get null names for input object references');
-			}
-		default:
-			return A2(
-				_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference,
-				_dillonkearns$elm_graphql$Graphql_Parser_Type$UnionRef(
-					_dillonkearns$elm_graphql$Graphql_Parser_Type$expectString(_p23.name)),
-				_dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
-	}
+		}
+	});
+var elm$core$List$member = F2(
+	function (x, xs) {
+		return A2(
+			elm$core$List$any,
+			function (a) {
+				return _Utils_eq(a, x);
+			},
+			xs);
+	});
+var author$project$Graphql$Generator$Normalize$normalizeIfElmReserved = function (name) {
+	return A2(elm$core$List$member, name, author$project$Graphql$Generator$Normalize$elmReservedWords) ? (name + '_') : name;
 };
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$parseField = function (_p24) {
-	var _p25 = _p24;
-	return {
-		name: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$build(_p25.name),
-		description: _p25.description,
-		typeRef: _dillonkearns$elm_graphql$Graphql_Parser_Type$parseRef(_p25.ofType),
-		args: A2(
-			_elm_lang$core$List$map,
+var elm$core$Char$toLower = _Char_toLower;
+var elm_community$string_extra$String$Extra$decapitalize = function (word) {
+	return A2(elm_community$string_extra$String$Extra$changeCase, elm$core$Char$toLower, word);
+};
+var author$project$Graphql$Generator$Normalize$decapitalized = function (name) {
+	return author$project$Graphql$Generator$Normalize$normalizeIfElmReserved(
+		elm_community$string_extra$String$Extra$decapitalize(
+			author$project$Graphql$Generator$Normalize$capitalized(name)));
+};
+var author$project$Graphql$Parser$CamelCaseName$normalized = function (_n0) {
+	var name = _n0.a;
+	return author$project$Graphql$Generator$Normalize$decapitalized(name);
+};
+var author$project$Graphql$Generator$DocComment$generate = function (_n0) {
+	var description = _n0.description;
+	var args = _n0.args;
+	return A2(
+		author$project$Graphql$Generator$DocComment$generate_,
+		description,
+		A2(
+			elm$core$List$map,
 			function (arg) {
 				return {
-					name: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$build(arg.name),
 					description: arg.description,
-					typeRef: _dillonkearns$elm_graphql$Graphql_Parser_Type$parseRef(arg.ofType)
+					name: author$project$Graphql$Parser$CamelCaseName$normalized(arg.name)
 				};
 			},
-			_p25.args)
-	};
+			args));
 };
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$RawTypeRef = function (a) {
-	return {ctor: 'RawTypeRef', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$createRawTypeRef = F3(
-	function (stringMaybe, typeKind, rawTypeRefMaybe) {
-		return _dillonkearns$elm_graphql$Graphql_Parser_Type$RawTypeRef(
-			{name: stringMaybe, kind: typeKind, ofType: rawTypeRefMaybe});
-	});
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$typeRefDecoder = A4(
-	_elm_lang$core$Json_Decode$map3,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$createRawTypeRef,
-	_elm_lang$core$Json_Decode$maybe(
-		A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string)),
-	A2(_elm_lang$core$Json_Decode$field, 'kind', _dillonkearns$elm_graphql$Graphql_Parser_TypeKind$decoder),
-	_elm_lang$core$Json_Decode$maybe(
+var author$project$Graphql$Generator$Field$argsListString = function (_n0) {
+	var annotatedArgs = _n0.annotatedArgs;
+	return _Utils_eq(annotatedArgs, _List_Nil) ? '' : (A2(
+		elm$core$String$join,
+		' ',
 		A2(
-			_elm_lang$core$Json_Decode$field,
-			'ofType',
-			_elm_lang$core$Json_Decode$lazy(
-				function (_p26) {
-					return _dillonkearns$elm_graphql$Graphql_Parser_Type$typeRefDecoder;
-				}))));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$inputField = A5(
-	_elm_lang$core$Json_Decode$map4,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$RawField,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'description',
-		_elm_lang$core$Json_Decode$maybe(_elm_lang$core$Json_Decode$string)),
-	A2(_elm_lang$core$Json_Decode$field, 'type', _dillonkearns$elm_graphql$Graphql_Parser_Type$typeRefDecoder),
-	_elm_lang$core$Json_Decode$succeed(
-		{ctor: '[]'}));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$inputObjectDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$createInputObject,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'inputFields',
-		_elm_lang$core$Json_Decode$list(
-			A2(_elm_lang$core$Json_Decode$map, _dillonkearns$elm_graphql$Graphql_Parser_Type$parseField, _dillonkearns$elm_graphql$Graphql_Parser_Type$inputField))));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$argDecoder = A4(
-	_elm_lang$core$Json_Decode$map3,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$RawArg,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'description',
-		_elm_lang$core$Json_Decode$maybe(_elm_lang$core$Json_Decode$string)),
-	A2(_elm_lang$core$Json_Decode$field, 'type', _dillonkearns$elm_graphql$Graphql_Parser_Type$typeRefDecoder));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$fieldDecoder = A5(
-	_elm_lang$core$Json_Decode$map4,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$RawField,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'description',
-		_elm_lang$core$Json_Decode$maybe(_elm_lang$core$Json_Decode$string)),
-	A2(_elm_lang$core$Json_Decode$field, 'type', _dillonkearns$elm_graphql$Graphql_Parser_Type$typeRefDecoder),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'args',
-		_elm_lang$core$Json_Decode$list(_dillonkearns$elm_graphql$Graphql_Parser_Type$argDecoder)));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$interfaceDecoder = A4(
-	_elm_lang$core$Json_Decode$map3,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$createInterface,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'fields',
-		_elm_lang$core$Json_Decode$list(
-			A2(_elm_lang$core$Json_Decode$map, _dillonkearns$elm_graphql$Graphql_Parser_Type$parseField, _dillonkearns$elm_graphql$Graphql_Parser_Type$fieldDecoder))),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'possibleTypes',
-		_elm_lang$core$Json_Decode$list(
-			A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string))));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$objectDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$createObject,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'fields',
-		_elm_lang$core$Json_Decode$list(
-			A2(_elm_lang$core$Json_Decode$map, _dillonkearns$elm_graphql$Graphql_Parser_Type$parseField, _dillonkearns$elm_graphql$Graphql_Parser_Type$fieldDecoder))));
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$decodeKind = function (kind) {
-	var _p27 = kind;
-	switch (_p27) {
-		case 'OBJECT':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Type$objectDecoder;
-		case 'ENUM':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Type$enumDecoder;
-		case 'SCALAR':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Type$scalarDecoder;
-		case 'INTERFACE':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Type$interfaceDecoder;
-		case 'UNION':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Type$unionDecoder;
-		case 'INPUT_OBJECT':
-			return _dillonkearns$elm_graphql$Graphql_Parser_Type$inputObjectDecoder;
-		default:
-			return _elm_lang$core$Json_Decode$fail(
-				A2(_elm_lang$core$Basics_ops['++'], 'Unexpected kind ', kind));
+			elm$core$List$map,
+			function ($) {
+				return $.arg;
+			},
+			annotatedArgs)) + ' ');
+};
+var author$project$Graphql$Generator$Field$fieldArgsString = function (_n0) {
+	var fieldArgs = _n0.fieldArgs;
+	if (!fieldArgs.b) {
+		return '[]';
+	} else {
+		if (!fieldArgs.b.b) {
+			var single = fieldArgs.a;
+			return single;
+		} else {
+			return '(' + (A2(elm$core$String$join, ' ++ ', fieldArgs) + ')');
+		}
 	}
 };
-var _dillonkearns$elm_graphql$Graphql_Parser_Type$decoder = A2(
-	_elm_lang$core$Json_Decode$andThen,
-	_dillonkearns$elm_graphql$Graphql_Parser_Type$decodeKind,
-	A2(_elm_lang$core$Json_Decode$field, 'kind', _elm_lang$core$Json_Decode$string));
-
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$subscription = function (_p0) {
-	var _p1 = _p0;
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_p1.apiSubmodule,
-		{
-			ctor: '::',
-			_0: 'Subscription',
-			_1: {ctor: '[]'}
-		});
+var author$project$Graphql$Parser$CamelCaseName$raw = function (_n0) {
+	var name = _n0.a;
+	return name;
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$mutation = function (_p2) {
-	var _p3 = _p2;
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_p3.apiSubmodule,
-		{
-			ctor: '::',
-			_0: 'Mutation',
-			_1: {ctor: '[]'}
-		});
+var author$project$Graphql$Generator$Field$typeAliasesToString = F2(
+	function (field, fieldGenerator) {
+		return _Utils_eq(fieldGenerator.typeAliases, _List_Nil) ? elm$core$Maybe$Nothing : elm$core$Maybe$Just(
+			A2(
+				elm$core$String$join,
+				'\n\n',
+				A2(
+					elm$core$List$map,
+					function (_n0) {
+						var suffix = _n0.suffix;
+						var body = _n0.body;
+						return A2(
+							lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+							'type alias {0}{1} = {2}',
+							_List_fromArray(
+								[
+									elm_community$string_extra$String$Extra$classify(
+									author$project$Graphql$Parser$CamelCaseName$raw(field.name)),
+									suffix,
+									body
+								]));
+					},
+					fieldGenerator.typeAliases)));
+	});
+var author$project$Graphql$Generator$Let$generate = function (letBindings) {
+	var toLetString = function (_n0) {
+		var name = _n0.a;
+		var value = _n0.b;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'        {0} =\n            {1}',
+			_List_fromArray(
+				[name, value]));
+	};
+	var letString = A2(
+		elm$core$String$join,
+		'\n\n',
+		A2(elm$core$List$map, toLetString, letBindings));
+	return _Utils_eq(letBindings, _List_Nil) ? '' : A2(
+		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+		'\n    let\n{0}\n    in',
+		_List_fromArray(
+			[letString]));
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$query = function (_p4) {
-	var _p5 = _p4;
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_p5.apiSubmodule,
-		{
-			ctor: '::',
-			_0: 'Query',
-			_1: {ctor: '[]'}
-		});
+var elm$core$Basics$identity = function (x) {
+	return x;
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$enumTypeName = F2(
-	function (_p6, name) {
-		var _p7 = _p6;
+var author$project$Graphql$Generator$Field$fieldGeneratorToString = F3(
+	function (returnAnnotation, field, fieldGenerator) {
+		var fieldTypeAnnotation = A2(
+			elm$core$String$join,
+			' -> ',
+			_Utils_ap(
+				A2(
+					elm$core$List$map,
+					function ($) {
+						return $.annotation;
+					},
+					fieldGenerator.annotatedArgs),
+				_List_fromArray(
+					[returnAnnotation])));
 		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			_p7.apiSubmodule,
+			elm$core$String$join,
+			'\n\n',
+			A2(
+				elm$core$List$filterMap,
+				elm$core$Basics$identity,
+				_List_fromArray(
+					[
+						A2(author$project$Graphql$Generator$Field$typeAliasesToString, field, fieldGenerator),
+						elm$core$Maybe$Just(
+						A2(
+							lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+							'{9}{6} : {3}\n{6} {4}={7}\n      {5} "{0}" {1} ({2}){8}\n',
+							_List_fromArray(
+								[
+									author$project$Graphql$Parser$CamelCaseName$raw(field.name),
+									author$project$Graphql$Generator$Field$fieldArgsString(fieldGenerator),
+									fieldGenerator.decoder,
+									fieldTypeAnnotation,
+									author$project$Graphql$Generator$Field$argsListString(fieldGenerator),
+									'Object' + fieldGenerator.otherThing,
+									author$project$Graphql$Parser$CamelCaseName$normalized(field.name),
+									author$project$Graphql$Generator$Let$generate(fieldGenerator.letBindings),
+									A2(elm$core$Maybe$withDefault, '', fieldGenerator.objectDecoderChain),
+									author$project$Graphql$Generator$DocComment$generate(field)
+								])))
+					])));
+	});
+var author$project$Graphql$Generator$Field$forObject_ = F4(
+	function (context, thisObjectName, field, fieldGenerator) {
+		return A3(
+			author$project$Graphql$Generator$Field$fieldGeneratorToString,
+			A2(
+				lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+				'Field {0} {1}',
+				_List_fromArray(
+					[
+						fieldGenerator.decoderAnnotation,
+						A2(elm$core$String$join, '.', thisObjectName)
+					])),
+			field,
+			fieldGenerator);
+	});
+var author$project$Graphql$Generator$Field$prependArg = F2(
+	function (annotatedArg, fieldGenerator) {
+		var annotation = annotatedArg.annotation;
+		var arg = annotatedArg.arg;
+		return _Utils_update(
+			fieldGenerator,
 			{
-				ctor: '::',
-				_0: 'Enum',
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-					_1: {
-						ctor: '::',
-						_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-						_1: {ctor: '[]'}
-					}
-				}
+				annotatedArgs: A2(elm$core$List$cons, annotatedArg, fieldGenerator.annotatedArgs)
 			});
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$enum = F2(
-	function (_p8, name) {
-		var _p9 = _p8;
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			_p9.apiSubmodule,
-			{
-				ctor: '::',
-				_0: 'Enum',
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-					_1: {ctor: '[]'}
+var author$project$Graphql$Generator$OptionalArgs$annotation = function (fieldName) {
+	return A2(
+		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+		'({0}OptionalArguments -> {0}OptionalArguments)',
+		_List_fromArray(
+			[fieldName]));
+};
+var author$project$Graphql$Generator$ModuleName$enum = F2(
+	function (_n0, name) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return _Utils_ap(
+			apiSubmodule,
+			_List_fromArray(
+				[
+					'Enum',
+					author$project$Graphql$Parser$ClassCaseName$normalized(name)
+				]));
+	});
+var author$project$Graphql$Generator$ModuleName$inputObject = F2(
+	function (_n0, name) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return _Utils_ap(
+			apiSubmodule,
+			_List_fromArray(
+				['InputObject']));
+	});
+var author$project$Graphql$Generator$Decoder$generateEncoder_ = F3(
+	function (forInputObject, apiSubmodule, _n0) {
+		var referrableType = _n0.a;
+		var isNullable = _n0.b;
+		var isNullableString = function () {
+			if (isNullable.$ === 'Nullable') {
+				return ' |> Encode.maybe';
+			} else {
+				return '';
+			}
+		}();
+		switch (referrableType.$) {
+			case 'Scalar':
+				var scalar = referrableType.a;
+				switch (scalar.$) {
+					case 'String':
+						return 'Encode.string' + isNullableString;
+					case 'Boolean':
+						return 'Encode.bool' + isNullableString;
+					case 'Int':
+						return 'Encode.int' + isNullableString;
+					case 'Float':
+						return 'Encode.float' + isNullableString;
+					default:
+						var customScalarName = scalar.a;
+						var constructor = A2(
+							elm$core$String$join,
+							'.',
+							_Utils_ap(
+								apiSubmodule,
+								_Utils_ap(
+									_List_fromArray(
+										['Scalar']),
+									_List_fromArray(
+										[
+											author$project$Graphql$Parser$ClassCaseName$normalized(customScalarName)
+										]))));
+						return _Utils_ap(
+							A2(
+								lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+								'(\\({0} raw) -> Encode.string raw)',
+								_List_fromArray(
+									[constructor])),
+							isNullableString);
 				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$union = F2(
-	function (_p10, name) {
-		var _p11 = _p10;
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			_p11.apiSubmodule,
-			{
-				ctor: '::',
-				_0: 'Union',
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$interface = F2(
-	function (_p12, name) {
-		var _p13 = _p12;
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			_p13.apiSubmodule,
-			{
-				ctor: '::',
-				_0: 'Interface',
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$inputObject = F2(
-	function (_p14, name) {
-		var _p15 = _p14;
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			_p15.apiSubmodule,
-			{
-				ctor: '::',
-				_0: 'InputObject',
-				_1: {ctor: '[]'}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$object = F2(
-	function (_p16, name) {
-		var _p17 = _p16;
-		return _elm_lang$core$Native_Utils.eq(name, _p17.query) ? {
-			ctor: '::',
-			_0: 'RootQuery',
-			_1: {ctor: '[]'}
-		} : (_elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$Maybe$Just(name),
-			_p17.mutation) ? {
-			ctor: '::',
-			_0: 'RootMutation',
-			_1: {ctor: '[]'}
-		} : (_elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$Maybe$Just(name),
-			_p17.subscription) ? {
-			ctor: '::',
-			_0: 'RootSubscription',
-			_1: {ctor: '[]'}
-		} : A2(
-			_elm_lang$core$Basics_ops['++'],
-			_p17.apiSubmodule,
-			{
-				ctor: '::',
-				_0: 'Object',
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-					_1: {ctor: '[]'}
-				}
-			})));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$generate = F2(
-	function (context, _p18) {
-		var _p19 = _p18;
-		var _p21 = _p19._0;
-		var _p20 = _p19._1;
-		switch (_p20.ctor) {
-			case 'ObjectType':
-				return _elm_lang$core$Native_Utils.eq(_p21, context.query) ? _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$query(context) : (_elm_lang$core$Native_Utils.eq(
-					_elm_lang$core$Maybe$Just(_p21),
-					context.mutation) ? _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$mutation(context) : (_elm_lang$core$Native_Utils.eq(
-					_elm_lang$core$Maybe$Just(_p21),
-					context.subscription) ? _dillonkearns$elm_graphql$Graphql_Generator_ModuleName$subscription(context) : A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$object, context, _p21)));
-			case 'ScalarType':
-				return {ctor: '[]'};
-			case 'EnumType':
-				return A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$enum, context, _p21);
-			case 'InterfaceType':
-				return A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$interface, context, _p21);
-			case 'UnionType':
-				return A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$union, context, _p21);
+			case 'List':
+				var typeRef = referrableType.a;
+				return A3(author$project$Graphql$Generator$Decoder$generateEncoder_, forInputObject, apiSubmodule, typeRef) + (isNullableString + ' |> Encode.list');
+			case 'ObjectRef':
+				var objectName = referrableType.a;
+				return _Debug_todo(
+					'Graphql.Generator.Decoder',
+					{
+						start: {line: 120, column: 13},
+						end: {line: 120, column: 23}
+					})('I don\'t expect to see object references as argument types.');
+			case 'InterfaceRef':
+				var interfaceName = referrableType.a;
+				return _Debug_todo(
+					'Graphql.Generator.Decoder',
+					{
+						start: {line: 123, column: 13},
+						end: {line: 123, column: 23}
+					})('Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces');
+			case 'UnionRef':
+				return _Debug_todo(
+					'Graphql.Generator.Decoder',
+					{
+						start: {line: 126, column: 13},
+						end: {line: 126, column: 23}
+					})('Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions');
+			case 'EnumRef':
+				var enumName = referrableType.a;
+				return A2(
+					lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+					'(Encode.enum {0})' + isNullableString,
+					_List_fromArray(
+						[
+							A2(
+							elm$core$String$join,
+							'.',
+							_Utils_ap(
+								A2(
+									author$project$Graphql$Generator$ModuleName$enum,
+									{apiSubmodule: apiSubmodule},
+									enumName),
+								_List_fromArray(
+									['toString'])))
+						]));
 			default:
-				return A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$inputObject, context, _p21);
+				var inputObjectName = referrableType.a;
+				return _Utils_ap(
+					A2(
+						elm$core$String$join,
+						'.',
+						forInputObject ? _List_fromArray(
+							[
+								'encode' + author$project$Graphql$Parser$ClassCaseName$normalized(inputObjectName)
+							]) : _Utils_ap(
+							A2(
+								author$project$Graphql$Generator$ModuleName$inputObject,
+								{apiSubmodule: apiSubmodule},
+								inputObjectName),
+							_List_fromArray(
+								[
+									'encode' + author$project$Graphql$Parser$ClassCaseName$normalized(inputObjectName)
+								]))),
+					isNullableString);
 		}
 	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateType_ = F3(
-	function (fromInputObject, apiSubmodule, typeRef) {
-		return A4(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeCommon, fromInputObject, 'Maybe', apiSubmodule, typeRef);
+var author$project$Graphql$Generator$Decoder$generateEncoder = author$project$Graphql$Generator$Decoder$generateEncoder_(false);
+var author$project$Graphql$Parser$Type$NonNullable = {$: 'NonNullable'};
+var author$project$Graphql$Parser$Type$TypeReference = F2(
+	function (a, b) {
+		return {$: 'TypeReference', a: a, b: b};
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeCommon = F4(
-	function (fromInputObject, nullableString, apiSubmodule, _p0) {
-		var _p1 = _p0;
+var author$project$Graphql$Generator$OptionalArgs$argValue = F2(
+	function (apiSubmodule, _n0) {
+		var name = _n0.name;
+		var typeOf = _n0.typeOf;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'Argument.optional "{0}" filledInOptionals.{1} ({2})',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$CamelCaseName$raw(name),
+					author$project$Graphql$Parser$CamelCaseName$normalized(name),
+					A2(
+					author$project$Graphql$Generator$Decoder$generateEncoder,
+					apiSubmodule,
+					A2(author$project$Graphql$Parser$Type$TypeReference, typeOf, author$project$Graphql$Parser$Type$NonNullable))
+				]));
+	});
+var author$project$Graphql$Generator$OptionalArgs$argValues = F2(
+	function (apiSubmodule, optionalArgs) {
+		var values = A2(
+			elm$core$String$join,
+			', ',
+			A2(
+				elm$core$List$map,
+				author$project$Graphql$Generator$OptionalArgs$argValue(apiSubmodule),
+				optionalArgs));
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'[ {0} ]',
+			_List_fromArray(
+				[values]));
+	});
+var author$project$Graphql$Generator$OptionalArgs$emptyRecord = function (optionalArgs) {
+	var recordEntries = A2(
+		elm$core$String$join,
+		', ',
+		A2(
+			elm$core$List$map,
+			function (_n0) {
+				var name = _n0.name;
+				return author$project$Graphql$Parser$CamelCaseName$normalized(name) + ' = Absent';
+			},
+			optionalArgs));
+	return A2(
+		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+		'{ {0} }',
+		_List_fromArray(
+			[recordEntries]));
+};
+var author$project$Graphql$Generator$OptionalArgs$optionalArgOrNothing = function (_n0) {
+	var name = _n0.name;
+	var typeRef = _n0.typeRef;
+	if (typeRef.b.$ === 'NonNullable') {
+		var referrableType = typeRef.a;
+		var _n2 = typeRef.b;
+		return elm$core$Maybe$Nothing;
+	} else {
+		var referrableType = typeRef.a;
+		var _n3 = typeRef.b;
+		return elm$core$Maybe$Just(
+			{name: name, typeOf: referrableType});
+	}
+};
+var author$project$Graphql$Generator$ModuleName$enumTypeName = F2(
+	function (_n0, name) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return _Utils_ap(
+			apiSubmodule,
+			_List_fromArray(
+				[
+					'Enum',
+					author$project$Graphql$Parser$ClassCaseName$normalized(name),
+					author$project$Graphql$Parser$ClassCaseName$normalized(name)
+				]));
+	});
+var author$project$Graphql$Generator$Decoder$generateTypeCommon = F4(
+	function (fromInputObject, nullableString, apiSubmodule, _n0) {
+		var referrableType = _n0.a;
+		var isNullable = _n0.b;
 		return function (typeString) {
-			var _p2 = _p1._1;
-			if (_p2.ctor === 'Nullable') {
+			if (isNullable.$ === 'Nullable') {
 				return A2(
-					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+					lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 					'({0} {1})',
-					{
-						ctor: '::',
-						_0: nullableString,
-						_1: {
-							ctor: '::',
-							_0: typeString,
-							_1: {ctor: '[]'}
-						}
-					});
+					_List_fromArray(
+						[nullableString, typeString]));
 			} else {
 				return typeString;
 			}
 		}(
 			function () {
-				var _p3 = _p1._0;
-				switch (_p3.ctor) {
+				switch (referrableType.$) {
 					case 'Scalar':
-						var _p4 = _p3._0;
-						switch (_p4.ctor) {
+						var scalar = referrableType.a;
+						switch (scalar.$) {
 							case 'String':
 								return 'String';
 							case 'Boolean':
@@ -11194,3297 +7331,1485 @@ var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeCommon = F4(
 							case 'Float':
 								return 'Float';
 							default:
+								var customScalarName = scalar.a;
 								var constructor = A2(
-									_elm_lang$core$String$join,
+									elm$core$String$join,
 									'.',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
+									_Utils_ap(
 										apiSubmodule,
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											{
-												ctor: '::',
-												_0: 'Scalar',
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p4._0),
-												_1: {ctor: '[]'}
-											})));
+										_Utils_ap(
+											_List_fromArray(
+												['Scalar']),
+											_List_fromArray(
+												[
+													author$project$Graphql$Parser$ClassCaseName$normalized(customScalarName)
+												]))));
 								return constructor;
 						}
 					case 'List':
-						return A2(
-							_elm_lang$core$Basics_ops['++'],
-							'(List ',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								A3(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateType_, fromInputObject, apiSubmodule, _p3._0),
-								')'));
+						var typeRef = referrableType.a;
+						return '(List ' + (A3(author$project$Graphql$Generator$Decoder$generateType_, fromInputObject, apiSubmodule, typeRef) + ')');
 					case 'ObjectRef':
+						var objectName = referrableType.a;
 						return 'decodesTo';
 					case 'InterfaceRef':
+						var interfaceName = referrableType.a;
 						return 'decodesTo';
 					case 'UnionRef':
+						var unionName = referrableType.a;
 						return 'decodesTo';
 					case 'EnumRef':
+						var enumName = referrableType.a;
 						return A2(
-							_elm_lang$core$String$join,
+							elm$core$String$join,
 							'.',
 							A2(
-								_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$enumTypeName,
+								author$project$Graphql$Generator$ModuleName$enumTypeName,
 								{apiSubmodule: apiSubmodule},
-								_p3._0));
+								enumName));
 					default:
-						var _p5 = _p3._0;
+						var inputObjectName = referrableType.a;
 						return A2(
-							_elm_lang$core$String$join,
+							elm$core$String$join,
 							'.',
-							fromInputObject ? {
-								ctor: '::',
-								_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p5),
-								_1: {ctor: '[]'}
-							} : A2(
-								_elm_lang$core$Basics_ops['++'],
+							fromInputObject ? _List_fromArray(
+								[
+									author$project$Graphql$Parser$ClassCaseName$normalized(inputObjectName)
+								]) : _Utils_ap(
 								A2(
-									_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$inputObject,
+									author$project$Graphql$Generator$ModuleName$inputObject,
 									{apiSubmodule: apiSubmodule},
-									_p5),
-								{
-									ctor: '::',
-									_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p5),
-									_1: {ctor: '[]'}
-								}));
+									inputObjectName),
+								_List_fromArray(
+									[
+										author$project$Graphql$Parser$ClassCaseName$normalized(inputObjectName)
+									])));
 				}
 			}());
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeForInputObject = F2(
+var author$project$Graphql$Generator$Decoder$generateType_ = F3(
+	function (fromInputObject, apiSubmodule, typeRef) {
+		return A4(author$project$Graphql$Generator$Decoder$generateTypeCommon, fromInputObject, 'Maybe', apiSubmodule, typeRef);
+	});
+var author$project$Graphql$Generator$Decoder$generateType = F2(
 	function (apiSubmodule, typeRef) {
-		return A4(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeCommon, true, 'OptionalArgument', apiSubmodule, typeRef);
+		return A4(author$project$Graphql$Generator$Decoder$generateTypeCommon, false, 'Maybe', apiSubmodule, typeRef);
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateType = F2(
-	function (apiSubmodule, typeRef) {
-		return A4(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeCommon, false, 'Maybe', apiSubmodule, typeRef);
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoder_ = F3(
-	function (forInputObject, apiSubmodule, _p6) {
-		var _p7 = _p6;
-		var isNullableString = function () {
-			var _p8 = _p7._1;
-			if (_p8.ctor === 'Nullable') {
-				return ' |> Encode.maybe';
-			} else {
-				return '';
-			}
-		}();
-		var _p9 = _p7._0;
-		switch (_p9.ctor) {
-			case 'Scalar':
-				var _p10 = _p9._0;
-				switch (_p10.ctor) {
-					case 'String':
-						return A2(_elm_lang$core$Basics_ops['++'], 'Encode.string', isNullableString);
-					case 'Boolean':
-						return A2(_elm_lang$core$Basics_ops['++'], 'Encode.bool', isNullableString);
-					case 'Int':
-						return A2(_elm_lang$core$Basics_ops['++'], 'Encode.int', isNullableString);
-					case 'Float':
-						return A2(_elm_lang$core$Basics_ops['++'], 'Encode.float', isNullableString);
-					default:
-						var constructor = A2(
-							_elm_lang$core$String$join,
-							'.',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								apiSubmodule,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									{
-										ctor: '::',
-										_0: 'Scalar',
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p10._0),
-										_1: {ctor: '[]'}
-									})));
-						return A2(
-							_elm_lang$core$Basics_ops['++'],
-							A2(
-								_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-								'(\\({0} raw) -> Encode.string raw)',
-								{
-									ctor: '::',
-									_0: constructor,
-									_1: {ctor: '[]'}
-								}),
-							isNullableString);
-				}
-			case 'List':
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					A3(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoder_, forInputObject, apiSubmodule, _p9._0),
-					A2(_elm_lang$core$Basics_ops['++'], isNullableString, ' |> Encode.list'));
-			case 'ObjectRef':
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Generator.Decoder',
-					{
-						start: {line: 91, column: 5},
-						end: {line: 144, column: 36}
-					},
-					_p9)('I don\'t expect to see object references as argument types.');
-			case 'InterfaceRef':
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Generator.Decoder',
-					{
-						start: {line: 91, column: 5},
-						end: {line: 144, column: 36}
-					},
-					_p9)('Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces');
-			case 'UnionRef':
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Generator.Decoder',
-					{
-						start: {line: 91, column: 5},
-						end: {line: 144, column: 36}
-					},
-					_p9)('Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions');
-			case 'EnumRef':
-				return A2(
-					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-					A2(_elm_lang$core$Basics_ops['++'], '(Encode.enum {0})', isNullableString),
-					{
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$String$join,
-							'.',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								A2(
-									_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$enum,
-									{apiSubmodule: apiSubmodule},
-									_p9._0),
-								{
-									ctor: '::',
-									_0: 'toString',
-									_1: {ctor: '[]'}
-								})),
-						_1: {ctor: '[]'}
-					});
-			default:
-				var _p14 = _p9._0;
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(
-						_elm_lang$core$String$join,
-						'.',
-						forInputObject ? {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$Basics_ops['++'],
-								'encode',
-								_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p14)),
-							_1: {ctor: '[]'}
-						} : A2(
-							_elm_lang$core$Basics_ops['++'],
-							A2(
-								_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$inputObject,
-								{apiSubmodule: apiSubmodule},
-								_p14),
-							{
-								ctor: '::',
-								_0: A2(
-									_elm_lang$core$Basics_ops['++'],
-									'encode',
-									_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p14)),
-								_1: {ctor: '[]'}
-							})),
-					isNullableString);
-		}
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoder = _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoder_(false);
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoderLowLevel = F2(
-	function (apiSubmodule, referrableType) {
-		return A3(
-			_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoder_,
-			true,
-			apiSubmodule,
-			A2(_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference, referrableType, _dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateDecoder = F2(
-	function (apiSubmodule, _p15) {
-		var _p16 = _p15;
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			function () {
-				var _p17 = _p16._0;
-				switch (_p17.ctor) {
-					case 'Scalar':
-						var _p18 = _p17._0;
-						switch (_p18.ctor) {
-							case 'String':
-								return {
-									ctor: '::',
-									_0: 'Decode.string',
-									_1: {ctor: '[]'}
-								};
-							case 'Boolean':
-								return {
-									ctor: '::',
-									_0: 'Decode.bool',
-									_1: {ctor: '[]'}
-								};
-							case 'Int':
-								return {
-									ctor: '::',
-									_0: 'Decode.int',
-									_1: {ctor: '[]'}
-								};
-							case 'Float':
-								return {
-									ctor: '::',
-									_0: 'Decode.float',
-									_1: {ctor: '[]'}
-								};
-							default:
-								var constructor = A2(
-									_elm_lang$core$String$join,
-									'.',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										apiSubmodule,
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											{
-												ctor: '::',
-												_0: 'Scalar',
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p18._0),
-												_1: {ctor: '[]'}
-											})));
-								return {
-									ctor: '::',
-									_0: 'Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ]',
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-											'Decode.map {0}',
-											{
-												ctor: '::',
-												_0: constructor,
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
-									}
-								};
-						}
-					case 'List':
-						return A2(
-							_elm_lang$core$Basics_ops['++'],
-							A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateDecoder, apiSubmodule, _p17._0),
-							{
-								ctor: '::',
-								_0: 'Decode.list',
-								_1: {ctor: '[]'}
-							});
-					case 'ObjectRef':
-						return {
-							ctor: '::',
-							_0: 'identity',
-							_1: {ctor: '[]'}
-						};
-					case 'InterfaceRef':
-						return {
-							ctor: '::',
-							_0: 'identity',
-							_1: {ctor: '[]'}
-						};
-					case 'UnionRef':
-						return {
-							ctor: '::',
-							_0: 'identity',
-							_1: {ctor: '[]'}
-						};
-					case 'EnumRef':
-						return {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$String$join,
-								'.',
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									A2(
-										_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$enum,
-										{apiSubmodule: apiSubmodule},
-										_p17._0),
-									{
-										ctor: '::',
-										_0: 'decoder',
-										_1: {ctor: '[]'}
-									})),
-							_1: {ctor: '[]'}
-						};
-					default:
-						return _elm_lang$core$Native_Utils.crashCase(
-							'Graphql.Generator.Decoder',
-							{
-								start: {line: 12, column: 6},
-								end: {line: 59, column: 98}
-							},
-							_p17)('Input objects are only for input not responses, shouldn\'t need decoder.');
-				}
-			}(),
-			function () {
-				var _p20 = _p16._1;
-				if (_p20.ctor === 'Nullable') {
-					return {
-						ctor: '::',
-						_0: 'Decode.nullable',
-						_1: {ctor: '[]'}
-					};
-				} else {
-					return {ctor: '[]'};
-				}
-			}());
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_DocComment$argDoc = function (_p0) {
-	var _p1 = _p0;
-	return A2(
-		_elm_lang$core$Maybe$map,
-		function (aDescription) {
-			return A2(
-				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-				'  - {0} - {1}',
-				{
-					ctor: '::',
-					_0: _p1.name,
-					_1: {
-						ctor: '::',
-						_0: aDescription,
-						_1: {ctor: '[]'}
-					}
-				});
-		},
-		_p1.description);
+var elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_DocComment$argsDoc = function (args) {
-	var _p2 = A2(_elm_lang$core$List$filterMap, _dillonkearns$elm_graphql$Graphql_Generator_DocComment$argDoc, args);
-	if (_p2.ctor === '[]') {
-		return '';
-	} else {
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'\n\n{0}\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '\n', _p2),
-				_1: {ctor: '[]'}
-			});
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_DocComment$hasDocs = F2(
-	function (mainDescription, itemDescriptions) {
-		var _p3 = mainDescription;
-		if (_p3.ctor === 'Just') {
-			return true;
-		} else {
-			return !_elm_lang$core$List$isEmpty(
-				A2(
-					_elm_lang$core$List$filterMap,
-					function (_) {
-						return _.description;
-					},
-					itemDescriptions));
-		}
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_DocComment$generate_ = F2(
-	function (mainDescription, itemDescriptions) {
-		return A2(_dillonkearns$elm_graphql$Graphql_Generator_DocComment$hasDocs, mainDescription, itemDescriptions) ? A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{-|{0}{1}\n-}\n',
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$Maybe$withDefault,
-					'',
-					A2(
-						_elm_lang$core$Maybe$map,
-						function (description) {
-							return A2(_elm_lang$core$Basics_ops['++'], ' ', description);
-						},
-						mainDescription)),
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Generator_DocComment$argsDoc(itemDescriptions),
-					_1: {ctor: '[]'}
-				}
-			}) : '';
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_DocComment$generate = function (_p4) {
-	var _p5 = _p4;
-	return A2(
-		_dillonkearns$elm_graphql$Graphql_Generator_DocComment$generate_,
-		_p5.description,
-		A2(
-			_elm_lang$core$List$map,
-			function (arg) {
-				return _elm_lang$core$Native_Utils.update(
-					arg,
-					{
-						name: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(arg.name)
-					});
-			},
-			_p5.args));
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_DocComment$generateForEnum = F2(
-	function (description, enumValues) {
-		return A2(
-			_dillonkearns$elm_graphql$Graphql_Generator_DocComment$generate_,
-			description,
-			A2(
-				_elm_lang$core$List$map,
-				function (enumValue) {
-					return _elm_lang$core$Native_Utils.update(
-						enumValue,
-						{
-							name: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(enumValue.name)
-						});
-				},
-				enumValues));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Enum$enumDecoder = F2(
-	function (enumName, enumValues) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-				'decoder : Decoder {0}\ndecoder =\n    Decode.string\n        |> Decode.andThen\n            (\\string ->\n                case string of\n',
-				{
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(enumName),
-					_1: {ctor: '[]'}
-				}),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				A2(
-					_elm_lang$core$String$join,
-					'\n\n',
-					A2(
-						_elm_lang$core$List$map,
-						function (enumValue) {
-							return A2(
-								_elm_lang$core$Basics_ops['++'],
-								'                    \"',
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw(enumValue),
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										'\" ->\n                        Decode.succeed ',
-										_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(enumValue))));
-						},
-						A2(
-							_elm_lang$core$List$map,
-							function (_) {
-								return _.name;
-							},
-							enumValues))),
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					'\n\n                    _ ->\n                        Decode.fail (\"Invalid ',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(enumName),
-						' type, \" ++ string ++ \" try re-running the @dillonkearns/elm-graphql CLI \")\n        )\n        '))));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Enum$toStringCase = function (enumValue) {
-	return A2(
-		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-		'        {0} ->\n                \"{1}\"\n',
-		{
-			ctor: '::',
-			_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(enumValue.name),
-			_1: {
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw(enumValue.name),
-				_1: {ctor: '[]'}
-			}
-		});
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Enum$enumToString = F2(
-	function (enumName, enumValues) {
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.\n-}\ntoString : {0} -> String\ntoString enum =\n    case enum of\n{1}',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(enumName),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						'\n\n',
-						A2(_elm_lang$core$List$map, _dillonkearns$elm_graphql$Graphql_Generator_Enum$toStringCase, enumValues)),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Enum$enumType = F2(
-	function (enumName, enumValues) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			'type ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(enumName),
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					'\n    = ',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						A2(
-							_elm_lang$core$String$join,
-							'\n    | ',
-							A2(
-								_elm_lang$core$List$map,
-								_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized,
-								A2(
-									_elm_lang$core$List$map,
-									function (_) {
-										return _.name;
-									},
-									enumValues))),
-						'\n'))));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Enum$prepend = F4(
-	function (moduleName, enumName, enumValues, docComment) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-				'module {0} exposing (..)\n\nimport Json.Decode as Decode exposing (Decoder)\n\n\n',
-				{
-					ctor: '::',
-					_0: A2(_elm_lang$core$String$join, '.', moduleName),
-					_1: {ctor: '[]'}
-				}),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				docComment,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_dillonkearns$elm_graphql$Graphql_Generator_Enum$enumType, enumName, enumValues),
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						A2(_dillonkearns$elm_graphql$Graphql_Generator_Enum$enumDecoder, enumName, enumValues),
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'\n\n',
-							A2(_dillonkearns$elm_graphql$Graphql_Generator_Enum$enumToString, enumName, enumValues))))));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Enum$enumDocs = F2(
-	function (enumDescription, enumValues) {
-		return A2(_dillonkearns$elm_graphql$Graphql_Generator_DocComment$generateForEnum, enumDescription, enumValues);
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Enum$generate = F4(
-	function (enumName, moduleName, enumValues, description) {
-		return A4(
-			_dillonkearns$elm_graphql$Graphql_Generator_Enum$prepend,
-			moduleName,
-			enumName,
-			enumValues,
-			A2(_dillonkearns$elm_graphql$Graphql_Generator_Enum$enumDocs, description, enumValues));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Let$generate = function (letBindings) {
-	var toLetString = function (_p0) {
-		var _p1 = _p0;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'        {0} =\n            {1}',
-			{
-				ctor: '::',
-				_0: _p1._0,
-				_1: {
-					ctor: '::',
-					_0: _p1._1,
-					_1: {ctor: '[]'}
-				}
-			});
-	};
-	var letString = A2(
-		_elm_lang$core$String$join,
-		'\n\n',
-		A2(_elm_lang$core$List$map, toLetString, letBindings));
-	return _elm_lang$core$Native_Utils.eq(
-		letBindings,
-		{ctor: '[]'}) ? '' : A2(
-		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-		'\n    let\n{0}\n    in',
-		{
-			ctor: '::',
-			_0: letString,
-			_1: {ctor: '[]'}
-		});
-};
-
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$optionalArgOrNothing = function (_p0) {
-	var _p1 = _p0;
-	var _p2 = _p1.typeRef;
-	if (_p2._1.ctor === 'NonNullable') {
-		return _elm_lang$core$Maybe$Nothing;
-	} else {
-		return _elm_lang$core$Maybe$Just(
-			{name: _p1.name, typeOf: _p2._0});
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$typeAlias = F2(
+var author$project$Graphql$Generator$OptionalArgs$typeAlias = F2(
 	function (apiSubmodule, optionalArgs) {
 		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 			'{ {0} }',
-			_elm_lang$core$List$singleton(
+			elm$core$List$singleton(
 				A2(
-					_elm_lang$core$String$join,
+					elm$core$String$join,
 					', ',
 					A2(
-						_elm_lang$core$List$map,
-						function (_p3) {
-							var _p4 = _p3;
-							return A2(
-								_elm_lang$core$Basics_ops['++'],
-								_dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(_p4.name),
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									' : OptionalArgument ',
-									A2(
-										_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateType,
-										apiSubmodule,
-										A2(_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference, _p4.typeOf, _dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable))));
+						elm$core$List$map,
+						function (_n0) {
+							var name = _n0.name;
+							var typeOf = _n0.typeOf;
+							return author$project$Graphql$Parser$CamelCaseName$normalized(name) + (' : OptionalArgument ' + A2(
+								author$project$Graphql$Generator$Decoder$generateType,
+								apiSubmodule,
+								A2(author$project$Graphql$Parser$Type$TypeReference, typeOf, author$project$Graphql$Parser$Type$NonNullable)));
 						},
 						optionalArgs))));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$annotation = function (fieldName) {
-	return A2(
-		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-		'({0}OptionalArguments -> {0}OptionalArguments)',
-		{
-			ctor: '::',
-			_0: fieldName,
-			_1: {ctor: '[]'}
-		});
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$emptyRecord = function (optionalArgs) {
-	var recordEntries = A2(
-		_elm_lang$core$String$join,
-		', ',
-		A2(
-			_elm_lang$core$List$map,
-			function (_p5) {
-				var _p6 = _p5;
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					_dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(_p6.name),
-					' = Absent');
-			},
-			optionalArgs));
-	return A2(
-		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-		'{ {0} }',
-		{
-			ctor: '::',
-			_0: recordEntries,
-			_1: {ctor: '[]'}
-		});
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$argValue = F2(
-	function (apiSubmodule, _p7) {
-		var _p8 = _p7;
-		var _p9 = _p8.name;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'Argument.optional \"{0}\" filledInOptionals.{1} ({2})',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw(_p9),
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(_p9),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoder,
-							apiSubmodule,
-							A2(_dillonkearns$elm_graphql$Graphql_Parser_Type$TypeReference, _p8.typeOf, _dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable)),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$argValues = F2(
-	function (apiSubmodule, optionalArgs) {
-		var values = A2(
-			_elm_lang$core$String$join,
-			', ',
-			A2(
-				_elm_lang$core$List$map,
-				_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$argValue(apiSubmodule),
-				optionalArgs));
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'[ {0} ]',
-			{
-				ctor: '::',
-				_0: values,
-				_1: {ctor: '[]'}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs_ops = _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs_ops || {};
-_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs_ops['=>'] = F2(
-	function (v0, v1) {
-		return {ctor: '_Tuple2', _0: v0, _1: v1};
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$generate = F2(
+var author$project$Graphql$Generator$OptionalArgs$generate = F2(
 	function (apiSubmodule, allArgs) {
-		var _p10 = A2(_elm_lang$core$List$filterMap, _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$optionalArgOrNothing, allArgs);
-		if (_p10.ctor === '[]') {
-			return _elm_lang$core$Maybe$Nothing;
+		var _n0 = A2(elm$core$List$filterMap, author$project$Graphql$Generator$OptionalArgs$optionalArgOrNothing, allArgs);
+		if (!_n0.b) {
+			return elm$core$Maybe$Nothing;
 		} else {
-			var _p11 = _p10;
-			return _elm_lang$core$Maybe$Just(
+			var optionalArgs = _n0;
+			return elm$core$Maybe$Just(
 				{
 					annotatedArg: function (fieldName) {
 						return {
-							annotation: _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$annotation(fieldName),
+							annotation: author$project$Graphql$Generator$OptionalArgs$annotation(fieldName),
 							arg: 'fillInOptionals'
 						};
 					},
-					letBindings: {
-						ctor: '::',
-						_0: A2(
-							_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs_ops['=>'],
+					letBindings: _List_fromArray(
+						[
+							_Utils_Tuple2(
 							'filledInOptionals',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'fillInOptionals ',
-								_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$emptyRecord(_p11))),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs_ops['=>'],
-								'optionalArgs',
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									A2(_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$argValues, apiSubmodule, _p11),
-									'\n                |> List.filterMap identity')),
-							_1: {ctor: '[]'}
-						}
-					},
+							'fillInOptionals ' + author$project$Graphql$Generator$OptionalArgs$emptyRecord(optionalArgs)),
+							_Utils_Tuple2(
+							'optionalArgs',
+							A2(author$project$Graphql$Generator$OptionalArgs$argValues, apiSubmodule, optionalArgs) + '\n                |> List.filterMap identity')
+						]),
 					typeAlias: {
-						suffix: 'OptionalArguments',
-						body: A2(_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$typeAlias, apiSubmodule, _p11)
+						body: A2(author$project$Graphql$Generator$OptionalArgs$typeAlias, apiSubmodule, optionalArgs),
+						suffix: 'OptionalArguments'
 					}
 				});
 		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$Result = F3(
-	function (a, b, c) {
-		return {annotatedArg: a, letBindings: b, typeAlias: c};
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$OptionalArg = F2(
-	function (a, b) {
-		return {name: a, typeOf: b};
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Scalar = {ctor: 'Scalar'};
-var _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Interface = {ctor: 'Interface'};
-var _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Union = {ctor: 'Union'};
-var _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Enum = {ctor: 'Enum'};
-var _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Object = {ctor: 'Object'};
-var _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$get = function (_p0) {
-	get:
-	while (true) {
-		var _p1 = _p0;
-		var _p2 = _p1._0;
-		switch (_p2.ctor) {
-			case 'ObjectRef':
-				return _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Object;
-			case 'Scalar':
-				return _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Scalar;
-			case 'List':
-				var _v2 = _p2._0;
-				_p0 = _v2;
-				continue get;
-			case 'EnumRef':
-				return _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Enum;
-			case 'InputObjectRef':
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Generator.ReferenceLeaf',
+var author$project$Graphql$Generator$Field$addOptionalArgs = F4(
+	function (field, apiSubmodule, args, fieldGenerator) {
+		var _n0 = A2(author$project$Graphql$Generator$OptionalArgs$generate, apiSubmodule, args);
+		if (_n0.$ === 'Just') {
+			var annotatedArg = _n0.a.annotatedArg;
+			var letBindings = _n0.a.letBindings;
+			var typeAlias = _n0.a.typeAlias;
+			return A2(
+				author$project$Graphql$Generator$Field$prependArg,
+				annotatedArg(
+					elm_community$string_extra$String$Extra$classify(
+						author$project$Graphql$Parser$CamelCaseName$raw(field.name))),
+				_Utils_update(
+					fieldGenerator,
 					{
-						start: {line: 21, column: 5},
-						end: {line: 41, column: 22}
-					},
-					_p2)('TODO');
-			case 'UnionRef':
-				return _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Union;
-			default:
-				return _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$Interface;
+						fieldArgs: A2(elm$core$List$cons, 'optionalArgs', fieldGenerator.fieldArgs),
+						letBindings: _Utils_ap(fieldGenerator.letBindings, letBindings),
+						typeAliases: A2(elm$core$List$cons, typeAlias, fieldGenerator.typeAliases)
+					}));
+		} else {
+			return fieldGenerator;
 		}
+	});
+var author$project$Graphql$Generator$RequiredArgs$requiredArgOrNothing = function (_n0) {
+	var name = _n0.name;
+	var typeRef = _n0.typeRef;
+	if (typeRef.b.$ === 'NonNullable') {
+		var referrableType = typeRef.a;
+		var _n2 = typeRef.b;
+		return elm$core$Maybe$Just(
+			{name: name, referrableType: referrableType, typeRef: typeRef});
+	} else {
+		var referrableType = typeRef.a;
+		var _n3 = typeRef.b;
+		return elm$core$Maybe$Nothing;
 	}
 };
-
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgAnnotation = F2(
-	function (apiSubmodule, _p0) {
-		var _p1 = _p0;
+var author$project$Graphql$Generator$RequiredArgs$requiredArgAnnotation = F2(
+	function (apiSubmodule, _n0) {
+		var name = _n0.name;
+		var typeRef = _n0.typeRef;
 		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 			'{0} : {1}',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(_p1.name),
-				_1: {
-					ctor: '::',
-					_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateType, apiSubmodule, _p1.typeRef),
-					_1: {ctor: '[]'}
-				}
-			});
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$CamelCaseName$normalized(name),
+					A2(author$project$Graphql$Generator$Decoder$generateType, apiSubmodule, typeRef)
+				]));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgsAnnotation = F2(
+var author$project$Graphql$Generator$RequiredArgs$requiredArgsAnnotation = F2(
 	function (apiSubmodule, requiredArgs) {
 		var annotations = A2(
-			_elm_lang$core$List$map,
-			_dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgAnnotation(apiSubmodule),
+			elm$core$List$map,
+			author$project$Graphql$Generator$RequiredArgs$requiredArgAnnotation(apiSubmodule),
 			requiredArgs);
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			'{ ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				A2(_elm_lang$core$String$join, ', ', annotations),
-				' }'));
+		return '{ ' + (A2(elm$core$String$join, ', ', annotations) + ' }');
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgString = F2(
-	function (apiSubmodule, _p2) {
-		var _p3 = _p2;
-		var _p4 = _p3.name;
+var author$project$Graphql$Generator$RequiredArgs$requiredArgString = F2(
+	function (apiSubmodule, _n0) {
+		var name = _n0.name;
+		var referrableType = _n0.referrableType;
+		var typeRef = _n0.typeRef;
 		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 			'Argument.required \"{0}\" requiredArgs.{1} ({2})',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw(_p4),
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(_p4),
-					_1: {
-						ctor: '::',
-						_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoder, apiSubmodule, _p3.typeRef),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$CamelCaseName$raw(name),
+					author$project$Graphql$Parser$CamelCaseName$normalized(name),
+					A2(author$project$Graphql$Generator$Decoder$generateEncoder, apiSubmodule, typeRef)
+				]));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgsString = F2(
+var author$project$Graphql$Generator$RequiredArgs$requiredArgsString = F2(
 	function (apiSubmodule, requiredArgs) {
 		var requiredArgContents = A2(
-			_elm_lang$core$List$map,
-			_dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgString(apiSubmodule),
+			elm$core$List$map,
+			author$project$Graphql$Generator$RequiredArgs$requiredArgString(apiSubmodule),
 			requiredArgs);
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			'[ ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				A2(_elm_lang$core$String$join, ', ', requiredArgContents),
-				' ]'));
+		return '[ ' + (A2(elm$core$String$join, ', ', requiredArgContents) + ' ]');
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgOrNothing = function (_p5) {
-	var _p6 = _p5;
-	var _p8 = _p6.typeRef;
-	var _p7 = _p8;
-	if (_p7._1.ctor === 'NonNullable') {
-		return _elm_lang$core$Maybe$Just(
-			{name: _p6.name, referrableType: _p7._0, typeRef: _p8});
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$generate = F2(
+var author$project$Graphql$Generator$RequiredArgs$generate = F2(
 	function (apiSubmodule, args) {
-		var requiredArgs = A2(_elm_lang$core$List$filterMap, _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgOrNothing, args);
-		return _elm_lang$core$Native_Utils.eq(
-			requiredArgs,
-			{ctor: '[]'}) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+		var requiredArgs = A2(elm$core$List$filterMap, author$project$Graphql$Generator$RequiredArgs$requiredArgOrNothing, args);
+		return _Utils_eq(requiredArgs, _List_Nil) ? elm$core$Maybe$Nothing : elm$core$Maybe$Just(
 			{
 				annotation: function (fieldName) {
 					return A2(
-						_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+						lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 						'{0}RequiredArguments',
-						{
-							ctor: '::',
-							_0: fieldName,
-							_1: {ctor: '[]'}
-						});
+						_List_fromArray(
+							[fieldName]));
 				},
-				list: A2(_dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgsString, apiSubmodule, requiredArgs),
+				list: A2(author$project$Graphql$Generator$RequiredArgs$requiredArgsString, apiSubmodule, requiredArgs),
 				typeAlias: {
-					body: A2(_dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$requiredArgsAnnotation, apiSubmodule, requiredArgs),
+					body: A2(author$project$Graphql$Generator$RequiredArgs$requiredArgsAnnotation, apiSubmodule, requiredArgs),
 					suffix: 'RequiredArguments'
 				}
 			});
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$Result = F3(
-	function (a, b, c) {
-		return {annotation: a, list: b, typeAlias: c};
+var author$project$Graphql$Generator$Field$addRequiredArgs = F4(
+	function (field, apiSubmodule, args, fieldGenerator) {
+		var _n0 = A2(author$project$Graphql$Generator$RequiredArgs$generate, apiSubmodule, args);
+		if (_n0.$ === 'Just') {
+			var annotation = _n0.a.annotation;
+			var list = _n0.a.list;
+			var typeAlias = _n0.a.typeAlias;
+			return A2(
+				author$project$Graphql$Generator$Field$prependArg,
+				{
+					annotation: annotation(
+						elm_community$string_extra$String$Extra$classify(
+							author$project$Graphql$Parser$CamelCaseName$raw(field.name))),
+					arg: 'requiredArgs'
+				},
+				_Utils_update(
+					fieldGenerator,
+					{
+						fieldArgs: _List_fromArray(
+							[list]),
+						typeAliases: A2(elm$core$List$cons, typeAlias, fieldGenerator.typeAliases)
+					}));
+		} else {
+			return fieldGenerator;
+		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$RequiredArg = F3(
-	function (a, b, c) {
-		return {name: a, referrableType: b, typeRef: c};
+var author$project$Graphql$Generator$Field$Interface = {$: 'Interface'};
+var author$project$Graphql$Generator$Field$Object = {$: 'Object'};
+var author$project$Graphql$Generator$Decoder$generateDecoder = F2(
+	function (apiSubmodule, _n0) {
+		var referrableType = _n0.a;
+		var isNullable = _n0.b;
+		return _Utils_ap(
+			function () {
+				switch (referrableType.$) {
+					case 'Scalar':
+						var scalar = referrableType.a;
+						switch (scalar.$) {
+							case 'String':
+								return _List_fromArray(
+									['Decode.string']);
+							case 'Boolean':
+								return _List_fromArray(
+									['Decode.bool']);
+							case 'Int':
+								return _List_fromArray(
+									['Decode.int']);
+							case 'Float':
+								return _List_fromArray(
+									['Decode.float']);
+							default:
+								var customScalarName = scalar.a;
+								var constructor = A2(
+									elm$core$String$join,
+									'.',
+									_Utils_ap(
+										apiSubmodule,
+										_Utils_ap(
+											_List_fromArray(
+												['Scalar']),
+											_List_fromArray(
+												[
+													author$project$Graphql$Parser$ClassCaseName$normalized(customScalarName)
+												]))));
+								return _List_fromArray(
+									[
+										'Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ]',
+										A2(
+										lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+										'Decode.map {0}',
+										_List_fromArray(
+											[constructor]))
+									]);
+						}
+					case 'List':
+						var listTypeRef = referrableType.a;
+						return _Utils_ap(
+							A2(author$project$Graphql$Generator$Decoder$generateDecoder, apiSubmodule, listTypeRef),
+							_List_fromArray(
+								['Decode.list']));
+					case 'ObjectRef':
+						var objectName = referrableType.a;
+						return _List_fromArray(
+							['identity']);
+					case 'InterfaceRef':
+						var interfaceName = referrableType.a;
+						return _List_fromArray(
+							['identity']);
+					case 'UnionRef':
+						var unionName = referrableType.a;
+						return _List_fromArray(
+							['identity']);
+					case 'EnumRef':
+						var enumName = referrableType.a;
+						return _List_fromArray(
+							[
+								A2(
+								elm$core$String$join,
+								'.',
+								_Utils_ap(
+									A2(
+										author$project$Graphql$Generator$ModuleName$enum,
+										{apiSubmodule: apiSubmodule},
+										enumName),
+									_List_fromArray(
+										['decoder'])))
+							]);
+					default:
+						return _Debug_todo(
+							'Graphql.Generator.Decoder',
+							{
+								start: {line: 59, column: 13},
+								end: {line: 59, column: 23}
+							})('Input objects are only for input not responses, shouldn\'t need decoder.');
+				}
+			}(),
+			function () {
+				if (isNullable.$ === 'Nullable') {
+					return _List_fromArray(
+						['Decode.nullable']);
+				} else {
+					return _List_Nil;
+				}
+			}());
 	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$initScalarField = F2(
+var author$project$Graphql$Generator$Field$initScalarField = F2(
 	function (apiSubmodule, typeRef) {
 		return {
-			annotatedArgs: {ctor: '[]'},
-			fieldArgs: {ctor: '[]'},
-			decoderAnnotation: A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateType, apiSubmodule, typeRef),
+			annotatedArgs: _List_Nil,
 			decoder: A2(
-				_elm_lang$core$String$join,
+				elm$core$String$join,
 				' |> ',
-				A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateDecoder, apiSubmodule, typeRef)),
+				A2(author$project$Graphql$Generator$Decoder$generateDecoder, apiSubmodule, typeRef)),
+			decoderAnnotation: A2(author$project$Graphql$Generator$Decoder$generateType, apiSubmodule, typeRef),
+			fieldArgs: _List_Nil,
+			letBindings: _List_Nil,
+			objectDecoderChain: elm$core$Maybe$Nothing,
 			otherThing: '.fieldDecoder',
-			letBindings: {ctor: '[]'},
-			objectDecoderChain: _elm_lang$core$Maybe$Nothing,
-			typeAliases: {ctor: '[]'}
+			typeAliases: _List_Nil
 		};
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$prependArg = F2(
-	function (_p0, fieldGenerator) {
-		var _p1 = _p0;
-		return _elm_lang$core$Native_Utils.update(
-			fieldGenerator,
-			{
-				annotatedArgs: {ctor: '::', _0: _p1, _1: fieldGenerator.annotatedArgs}
-			});
+var author$project$Graphql$Generator$Field$EnumLeaf = {$: 'EnumLeaf'};
+var author$project$Graphql$Generator$Field$InterfaceLeaf = function (a) {
+	return {$: 'InterfaceLeaf', a: a};
+};
+var author$project$Graphql$Generator$Field$ObjectLeaf = function (a) {
+	return {$: 'ObjectLeaf', a: a};
+};
+var author$project$Graphql$Generator$Field$ScalarLeaf = {$: 'ScalarLeaf'};
+var author$project$Graphql$Generator$Field$UnionLeaf = function (a) {
+	return {$: 'UnionLeaf', a: a};
+};
+var author$project$Graphql$Generator$Field$leafType = function (_n0) {
+	leafType:
+	while (true) {
+		var referrableType = _n0.a;
+		var isNullable = _n0.b;
+		switch (referrableType.$) {
+			case 'ObjectRef':
+				var refName = referrableType.a;
+				return author$project$Graphql$Generator$Field$ObjectLeaf(refName);
+			case 'InterfaceRef':
+				var refName = referrableType.a;
+				return author$project$Graphql$Generator$Field$InterfaceLeaf(refName);
+			case 'UnionRef':
+				var refName = referrableType.a;
+				return author$project$Graphql$Generator$Field$UnionLeaf(refName);
+			case 'Scalar':
+				return author$project$Graphql$Generator$Field$ScalarLeaf;
+			case 'List':
+				var nestedReferrableType = referrableType.a;
+				var $temp$_n0 = nestedReferrableType;
+				_n0 = $temp$_n0;
+				continue leafType;
+			case 'EnumRef':
+				return author$project$Graphql$Generator$Field$EnumLeaf;
+			default:
+				return _Debug_todo(
+					'Graphql.Generator.Field',
+					{
+						start: {line: 264, column: 13},
+						end: {line: 264, column: 23}
+					})('Unexpected type');
+		}
+	}
+};
+var author$project$Graphql$Generator$ModuleName$interface = F2(
+	function (_n0, name) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return _Utils_ap(
+			apiSubmodule,
+			_List_fromArray(
+				[
+					'Interface',
+					author$project$Graphql$Parser$ClassCaseName$normalized(name)
+				]));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$objectThing = F4(
-	function (_p2, typeRef, refName, objectOrInterface) {
-		var _p3 = _p2;
-		var _p8 = _p3;
-		var _p7 = _p3.apiSubmodule;
+var author$project$Graphql$Generator$ModuleName$object = F2(
+	function (context, name) {
+		return _Utils_eq(name, context.query) ? _List_fromArray(
+			['RootQuery']) : (_Utils_eq(
+			elm$core$Maybe$Just(name),
+			context.mutation) ? _List_fromArray(
+			['RootMutation']) : (_Utils_eq(
+			elm$core$Maybe$Just(name),
+			context.subscription) ? _List_fromArray(
+			['RootSubscription']) : _Utils_ap(
+			context.apiSubmodule,
+			_List_fromArray(
+				[
+					'Object',
+					author$project$Graphql$Parser$ClassCaseName$normalized(name)
+				]))));
+	});
+var author$project$Graphql$Generator$ModuleName$union = F2(
+	function (_n0, name) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return _Utils_ap(
+			apiSubmodule,
+			_List_fromArray(
+				[
+					'Union',
+					author$project$Graphql$Parser$ClassCaseName$normalized(name)
+				]));
+	});
+var author$project$Graphql$Generator$ReferenceLeaf$Enum = {$: 'Enum'};
+var author$project$Graphql$Generator$ReferenceLeaf$Interface = {$: 'Interface'};
+var author$project$Graphql$Generator$ReferenceLeaf$Object = {$: 'Object'};
+var author$project$Graphql$Generator$ReferenceLeaf$Scalar = {$: 'Scalar'};
+var author$project$Graphql$Generator$ReferenceLeaf$Union = {$: 'Union'};
+var author$project$Graphql$Generator$ReferenceLeaf$get = function (_n0) {
+	get:
+	while (true) {
+		var referrableType = _n0.a;
+		var isNullable = _n0.b;
+		switch (referrableType.$) {
+			case 'ObjectRef':
+				return author$project$Graphql$Generator$ReferenceLeaf$Object;
+			case 'Scalar':
+				return author$project$Graphql$Generator$ReferenceLeaf$Scalar;
+			case 'List':
+				var nestedType = referrableType.a;
+				var $temp$_n0 = nestedType;
+				_n0 = $temp$_n0;
+				continue get;
+			case 'EnumRef':
+				return author$project$Graphql$Generator$ReferenceLeaf$Enum;
+			case 'InputObjectRef':
+				return _Debug_todo(
+					'Graphql.Generator.ReferenceLeaf',
+					{
+						start: {line: 35, column: 13},
+						end: {line: 35, column: 23}
+					})('TODO');
+			case 'UnionRef':
+				return author$project$Graphql$Generator$ReferenceLeaf$Union;
+			default:
+				return author$project$Graphql$Generator$ReferenceLeaf$Interface;
+		}
+	}
+};
+var author$project$Graphql$Parser$ClassCaseName$ClassCaseName = function (a) {
+	return {$: 'ClassCaseName', a: a};
+};
+var author$project$Graphql$Parser$ClassCaseName$build = author$project$Graphql$Parser$ClassCaseName$ClassCaseName;
+var author$project$Graphql$Generator$Field$objectThing = F4(
+	function (context, typeRef, refName, objectOrInterface) {
+		var apiSubmodule = context.apiSubmodule;
 		var typeLock = function () {
-			var _p4 = _dillonkearns$elm_graphql$Graphql_Generator_ReferenceLeaf$get(typeRef);
-			switch (_p4.ctor) {
+			var _n0 = author$project$Graphql$Generator$ReferenceLeaf$get(typeRef);
+			switch (_n0.$) {
 				case 'Object':
 					return A2(
-						_elm_lang$core$String$join,
+						elm$core$String$join,
 						'.',
 						A2(
-							_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$object,
-							_p8,
-							_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(refName)));
+							author$project$Graphql$Generator$ModuleName$object,
+							context,
+							author$project$Graphql$Parser$ClassCaseName$build(refName)));
 				case 'Interface':
 					return A2(
-						_elm_lang$core$String$join,
+						elm$core$String$join,
 						'.',
 						A2(
-							_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$interface,
-							_p8,
-							_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(refName)));
+							author$project$Graphql$Generator$ModuleName$interface,
+							context,
+							author$project$Graphql$Parser$ClassCaseName$build(refName)));
 				case 'Enum':
-					return _elm_lang$core$Native_Utils.crashCase(
+					return _Debug_todo(
 						'Graphql.Generator.Field',
 						{
-							start: {line: 185, column: 13},
-							end: {line: 199, column: 39}
-						},
-						_p4)('TODO');
+							start: {line: 195, column: 21},
+							end: {line: 195, column: 31}
+						})('TODO');
 				case 'Union':
 					return A2(
-						_elm_lang$core$String$join,
+						elm$core$String$join,
 						'.',
 						A2(
-							_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$union,
-							_p8,
-							_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(refName)));
+							author$project$Graphql$Generator$ModuleName$union,
+							context,
+							author$project$Graphql$Parser$ClassCaseName$build(refName)));
 				default:
-					return _elm_lang$core$Native_Utils.crashCase(
+					return _Debug_todo(
 						'Graphql.Generator.Field',
 						{
-							start: {line: 185, column: 13},
-							end: {line: 199, column: 39}
-						},
-						_p4)('TODO');
+							start: {line: 201, column: 21},
+							end: {line: 201, column: 31}
+						})('TODO');
 			}
 		}();
 		var objectArgAnnotation = A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 			'SelectionSet decodesTo {0}',
-			{
-				ctor: '::',
-				_0: typeLock,
-				_1: {ctor: '[]'}
-			});
+			_List_fromArray(
+				[typeLock]));
 		return A2(
-			_dillonkearns$elm_graphql$Graphql_Generator_Field$prependArg,
-			{annotation: objectArgAnnotation, arg: 'object'},
+			author$project$Graphql$Generator$Field$prependArg,
+			{annotation: objectArgAnnotation, arg: 'object_'},
 			{
-				annotatedArgs: {ctor: '[]'},
-				fieldArgs: {ctor: '[]'},
-				decoderAnnotation: A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateType, _p7, typeRef),
-				decoder: 'object',
+				annotatedArgs: _List_Nil,
+				decoder: 'object_',
+				decoderAnnotation: A2(author$project$Graphql$Generator$Decoder$generateType, apiSubmodule, typeRef),
+				fieldArgs: _List_Nil,
+				letBindings: _List_Nil,
+				objectDecoderChain: elm$core$Maybe$Just(
+					' (' + (A2(
+						elm$core$String$join,
+						' >> ',
+						A2(author$project$Graphql$Generator$Decoder$generateDecoder, apiSubmodule, typeRef)) + ')')),
 				otherThing: '.selectionField',
-				letBindings: {ctor: '[]'},
-				objectDecoderChain: _elm_lang$core$Maybe$Just(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						' (',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							A2(
-								_elm_lang$core$String$join,
-								' >> ',
-								A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateDecoder, _p7, typeRef)),
-							')'))),
-				typeAliases: {ctor: '[]'}
+				typeAliases: _List_Nil
 			});
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$addOptionalArgs = F4(
-	function (field, apiSubmodule, args, fieldGenerator) {
-		var _p9 = A2(_dillonkearns$elm_graphql$Graphql_Generator_OptionalArgs$generate, apiSubmodule, args);
-		if (_p9.ctor === 'Just') {
-			return A2(
-				_dillonkearns$elm_graphql$Graphql_Generator_Field$prependArg,
-				_p9._0.annotatedArg(
-					_elm_community$string_extra$String_Extra$classify(
-						_dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw(field.name))),
-				_elm_lang$core$Native_Utils.update(
-					fieldGenerator,
-					{
-						fieldArgs: {ctor: '::', _0: 'optionalArgs', _1: fieldGenerator.fieldArgs},
-						letBindings: A2(_elm_lang$core$Basics_ops['++'], fieldGenerator.letBindings, _p9._0.letBindings),
-						typeAliases: {ctor: '::', _0: _p9._0.typeAlias, _1: fieldGenerator.typeAliases}
-					}));
-		} else {
-			return fieldGenerator;
-		}
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$addRequiredArgs = F4(
-	function (field, apiSubmodule, args, fieldGenerator) {
-		var _p10 = A2(_dillonkearns$elm_graphql$Graphql_Generator_RequiredArgs$generate, apiSubmodule, args);
-		if (_p10.ctor === 'Just') {
-			return A2(
-				_dillonkearns$elm_graphql$Graphql_Generator_Field$prependArg,
-				{
-					annotation: _p10._0.annotation(
-						_elm_community$string_extra$String_Extra$classify(
-							_dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw(field.name))),
-					arg: 'requiredArgs'
-				},
-				_elm_lang$core$Native_Utils.update(
-					fieldGenerator,
-					{
-						fieldArgs: {
-							ctor: '::',
-							_0: _p10._0.list,
-							_1: {ctor: '[]'}
-						},
-						typeAliases: {ctor: '::', _0: _p10._0.typeAlias, _1: fieldGenerator.typeAliases}
-					}));
-		} else {
-			return fieldGenerator;
-		}
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$fieldArgsString = function (_p11) {
-	var _p12 = _p11;
-	var _p14 = _p12.fieldArgs;
-	var _p13 = _p14;
-	if (_p13.ctor === '[]') {
-		return '[]';
-	} else {
-		if (_p13._1.ctor === '[]') {
-			return _p13._0;
-		} else {
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				'(',
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$String$join, ' ++ ', _p14),
-					')'));
-		}
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$argsListString = function (_p15) {
-	var _p16 = _p15;
-	var _p17 = _p16.annotatedArgs;
-	return _elm_lang$core$Native_Utils.eq(
-		_p17,
-		{ctor: '[]'}) ? '' : A2(
-		_elm_lang$core$Basics_ops['++'],
-		A2(
-			_elm_lang$core$String$join,
-			' ',
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.arg;
-				},
-				_p17)),
-		' ');
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$typeAliasesToString = F2(
-	function (field, fieldGenerator) {
-		return _elm_lang$core$Native_Utils.eq(
-			fieldGenerator.typeAliases,
-			{ctor: '[]'}) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
-			A2(
-				_elm_lang$core$String$join,
-				'\n\n',
-				A2(
-					_elm_lang$core$List$map,
-					function (_p18) {
-						var _p19 = _p18;
-						return A2(
-							_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-							'type alias {0}{1} = {2}',
-							{
-								ctor: '::',
-								_0: _elm_community$string_extra$String_Extra$classify(
-									_dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw(field.name)),
-								_1: {
-									ctor: '::',
-									_0: _p19.suffix,
-									_1: {
-										ctor: '::',
-										_0: _p19.body,
-										_1: {ctor: '[]'}
-									}
-								}
-							});
-					},
-					fieldGenerator.typeAliases)));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$fieldGeneratorToString = F3(
-	function (returnAnnotation, field, fieldGenerator) {
-		var fieldTypeAnnotation = A2(
-			_elm_lang$core$String$join,
-			' -> ',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				A2(
-					_elm_lang$core$List$map,
-					function (_) {
-						return _.annotation;
-					},
-					fieldGenerator.annotatedArgs),
-				{
-					ctor: '::',
-					_0: returnAnnotation,
-					_1: {ctor: '[]'}
-				}));
-		return A2(
-			_elm_lang$core$String$join,
-			'\n\n',
-			A2(
-				_elm_lang$core$List$filterMap,
-				_elm_lang$core$Basics$identity,
-				{
-					ctor: '::',
-					_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$typeAliasesToString, field, fieldGenerator),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$core$Maybe$Just(
-							A2(
-								_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-								'{9}{6} : {3}\n{6} {4}={7}\n      {5} \"{0}\" {1} ({2}){8}\n',
-								{
-									ctor: '::',
-									_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw(field.name),
-									_1: {
-										ctor: '::',
-										_0: _dillonkearns$elm_graphql$Graphql_Generator_Field$fieldArgsString(fieldGenerator),
-										_1: {
-											ctor: '::',
-											_0: fieldGenerator.decoder,
-											_1: {
-												ctor: '::',
-												_0: fieldTypeAnnotation,
-												_1: {
-													ctor: '::',
-													_0: _dillonkearns$elm_graphql$Graphql_Generator_Field$argsListString(fieldGenerator),
-													_1: {
-														ctor: '::',
-														_0: A2(_elm_lang$core$Basics_ops['++'], 'Object', fieldGenerator.otherThing),
-														_1: {
-															ctor: '::',
-															_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(field.name),
-															_1: {
-																ctor: '::',
-																_0: _dillonkearns$elm_graphql$Graphql_Generator_Let$generate(fieldGenerator.letBindings),
-																_1: {
-																	ctor: '::',
-																	_0: A2(_elm_lang$core$Maybe$withDefault, '', fieldGenerator.objectDecoderChain),
-																	_1: {
-																		ctor: '::',
-																		_0: _dillonkearns$elm_graphql$Graphql_Generator_DocComment$generate(field),
-																		_1: {ctor: '[]'}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								})),
-						_1: {ctor: '[]'}
-					}
-				}));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$forObject_ = F4(
-	function (context, thisObjectName, field, fieldGenerator) {
-		return A3(
-			_dillonkearns$elm_graphql$Graphql_Generator_Field$fieldGeneratorToString,
-			A2(
-				_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-				'Field {0} {1}',
-				{
-					ctor: '::',
-					_0: fieldGenerator.decoderAnnotation,
-					_1: {
-						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, '.', thisObjectName),
-						_1: {ctor: '[]'}
-					}
-				}),
-			field,
-			fieldGenerator);
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$FieldGenerator = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {annotatedArgs: a, decoderAnnotation: b, decoder: c, fieldArgs: d, otherThing: e, letBindings: f, objectDecoderChain: g, typeAliases: h};
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$AnnotatedArg = F2(
-	function (a, b) {
-		return {annotation: a, arg: b};
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$Interface = {ctor: 'Interface'};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$Object = {ctor: 'Object'};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$ScalarLeaf = {ctor: 'ScalarLeaf'};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$EnumLeaf = {ctor: 'EnumLeaf'};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$UnionLeaf = function (a) {
-	return {ctor: 'UnionLeaf', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$InterfaceLeaf = function (a) {
-	return {ctor: 'InterfaceLeaf', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$ObjectLeaf = function (a) {
-	return {ctor: 'ObjectLeaf', _0: a};
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$leafType = function (_p20) {
-	leafType:
-	while (true) {
-		var _p21 = _p20;
-		var _p22 = _p21._0;
-		switch (_p22.ctor) {
-			case 'ObjectRef':
-				return _dillonkearns$elm_graphql$Graphql_Generator_Field$ObjectLeaf(_p22._0);
-			case 'InterfaceRef':
-				return _dillonkearns$elm_graphql$Graphql_Generator_Field$InterfaceLeaf(_p22._0);
-			case 'UnionRef':
-				return _dillonkearns$elm_graphql$Graphql_Generator_Field$UnionLeaf(_p22._0);
-			case 'Scalar':
-				return _dillonkearns$elm_graphql$Graphql_Generator_Field$ScalarLeaf;
-			case 'List':
-				var _v11 = _p22._0;
-				_p20 = _v11;
-				continue leafType;
-			case 'EnumRef':
-				return _dillonkearns$elm_graphql$Graphql_Generator_Field$EnumLeaf;
-			default:
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Graphql.Generator.Field',
-					{
-						start: {line: 242, column: 5},
-						end: {line: 262, column: 42}
-					},
-					_p22)('Unexpected type');
-		}
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$init = F3(
-	function (_p25, fieldName, _p24) {
-		var _p26 = _p25;
-		var _p31 = _p26;
-		var _p30 = _p26.apiSubmodule;
-		var _p27 = _p24;
-		var _p29 = _p27;
-		var _p28 = _dillonkearns$elm_graphql$Graphql_Generator_Field$leafType(_p29);
-		switch (_p28.ctor) {
+var author$project$Graphql$Generator$Field$init = F3(
+	function (context, fieldName, typeRef) {
+		var apiSubmodule = context.apiSubmodule;
+		var referrableType = typeRef.a;
+		var isNullable = typeRef.b;
+		var _n0 = author$project$Graphql$Generator$Field$leafType(typeRef);
+		switch (_n0.$) {
 			case 'ObjectLeaf':
-				return A4(_dillonkearns$elm_graphql$Graphql_Generator_Field$objectThing, _p31, _p29, _p28._0, _dillonkearns$elm_graphql$Graphql_Generator_Field$Object);
+				var refName = _n0.a;
+				return A4(author$project$Graphql$Generator$Field$objectThing, context, typeRef, refName, author$project$Graphql$Generator$Field$Object);
 			case 'InterfaceLeaf':
-				return A4(_dillonkearns$elm_graphql$Graphql_Generator_Field$objectThing, _p31, _p29, _p28._0, _dillonkearns$elm_graphql$Graphql_Generator_Field$Interface);
+				var refName = _n0.a;
+				return A4(author$project$Graphql$Generator$Field$objectThing, context, typeRef, refName, author$project$Graphql$Generator$Field$Interface);
 			case 'UnionLeaf':
-				return A4(_dillonkearns$elm_graphql$Graphql_Generator_Field$objectThing, _p31, _p29, _p28._0, _dillonkearns$elm_graphql$Graphql_Generator_Field$Interface);
+				var refName = _n0.a;
+				return A4(author$project$Graphql$Generator$Field$objectThing, context, typeRef, refName, author$project$Graphql$Generator$Field$Interface);
 			case 'EnumLeaf':
-				return A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$initScalarField, _p30, _p29);
+				return A2(author$project$Graphql$Generator$Field$initScalarField, apiSubmodule, typeRef);
 			default:
-				return A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$initScalarField, _p30, _p29);
+				return A2(author$project$Graphql$Generator$Field$initScalarField, apiSubmodule, typeRef);
 		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$toFieldGenerator = F2(
-	function (_p32, field) {
-		var _p33 = _p32;
-		var _p34 = _p33.apiSubmodule;
+var author$project$Graphql$Generator$Field$toFieldGenerator = F2(
+	function (context, field) {
+		var apiSubmodule = context.apiSubmodule;
 		return A4(
-			_dillonkearns$elm_graphql$Graphql_Generator_Field$addOptionalArgs,
+			author$project$Graphql$Generator$Field$addOptionalArgs,
 			field,
-			_p34,
+			apiSubmodule,
 			field.args,
 			A4(
-				_dillonkearns$elm_graphql$Graphql_Generator_Field$addRequiredArgs,
+				author$project$Graphql$Generator$Field$addRequiredArgs,
 				field,
-				_p34,
+				apiSubmodule,
 				field.args,
-				A3(_dillonkearns$elm_graphql$Graphql_Generator_Field$init, _p33, field.name, field.typeRef)));
+				A3(author$project$Graphql$Generator$Field$init, context, field.name, field.typeRef)));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$generateForObject = F3(
+var author$project$Graphql$Generator$Field$generateForInterface = F3(
 	function (context, thisObjectName, field) {
 		return A4(
-			_dillonkearns$elm_graphql$Graphql_Generator_Field$forObject_,
-			context,
-			A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$object, context, thisObjectName),
-			field,
-			A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$toFieldGenerator, context, field));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Field$generateForInterface = F3(
-	function (context, thisObjectName, field) {
-		return A4(
-			_dillonkearns$elm_graphql$Graphql_Generator_Field$forObject_,
+			author$project$Graphql$Generator$Field$forObject_,
 			context,
 			A2(
-				_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$interface,
+				author$project$Graphql$Generator$ModuleName$interface,
 				context,
-				_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(thisObjectName)),
+				author$project$Graphql$Parser$ClassCaseName$build(thisObjectName)),
 			field,
-			A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$toFieldGenerator, context, field));
+			A2(author$project$Graphql$Generator$Field$toFieldGenerator, context, field));
 	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Imports$imports = F2(
-	function (apiSubmodule, _p0) {
-		imports:
-		while (true) {
-			var _p1 = _p0;
-			var _p2 = _p1._0;
-			switch (_p2.ctor) {
-				case 'Scalar':
-					return _elm_lang$core$Maybe$Nothing;
-				case 'List':
-					var _v2 = apiSubmodule,
-						_v3 = _p2._0;
-					apiSubmodule = _v2;
-					_p0 = _v3;
-					continue imports;
-				case 'ObjectRef':
-					return _elm_lang$core$Maybe$Nothing;
-				case 'InterfaceRef':
-					return _elm_lang$core$Maybe$Nothing;
-				case 'EnumRef':
-					return _elm_lang$core$Maybe$Just(
-						A2(
-							_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$enum,
-							{apiSubmodule: apiSubmodule},
-							_p2._0));
-				case 'InputObjectRef':
-					return _elm_lang$core$Maybe$Nothing;
-				default:
-					return _elm_lang$core$Maybe$Nothing;
-			}
+var author$project$Graphql$Generator$Interface$fragment = F3(
+	function (context, moduleName, interfaceImplementor) {
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet "{1}" fields decoder\n',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(interfaceImplementor),
+					author$project$Graphql$Parser$ClassCaseName$raw(interfaceImplementor),
+					A2(
+					elm$core$String$join,
+					'.',
+					A2(author$project$Graphql$Generator$ModuleName$object, context, interfaceImplementor)),
+					A2(elm$core$String$join, '.', moduleName)
+				]));
+	});
+var author$project$Graphql$Generator$Interface$fragments = F3(
+	function (context, implementors, moduleName) {
+		return A2(
+			elm$core$String$join,
+			'\n\n',
+			A2(
+				elm$core$List$map,
+				A2(author$project$Graphql$Generator$Interface$fragment, context, moduleName),
+				implementors));
+	});
+var author$project$Graphql$Generator$Imports$getArgRefs = function (_n0) {
+	var args = _n0.args;
+	return A2(
+		elm$core$List$map,
+		function ($) {
+			return $.typeRef;
+		},
+		args);
+};
+var elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3(elm$core$List$foldr, elm$core$List$cons, ys, xs);
 		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Imports$toImportString = function (moduleName) {
-	return A2(_elm_lang$core$Basics_ops['++'], 'import ', moduleName);
+var elm$core$List$concat = function (lists) {
+	return A3(elm$core$List$foldr, elm$core$List$append, _List_Nil, lists);
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Imports$toModuleName = function (modulePath) {
-	return A2(_elm_lang$core$String$join, '.', modulePath);
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Imports$importsWithoutSelf = F3(
-	function (apiSubmodule, importingFrom, typeRefs) {
-		return A2(
-			_elm_lang$core$List$filter,
-			function (moduleName) {
-				return !_elm_lang$core$Native_Utils.eq(moduleName, importingFrom);
-			},
-			A2(
-				_elm_lang$core$List$filterMap,
-				_dillonkearns$elm_graphql$Graphql_Generator_Imports$imports(apiSubmodule),
-				typeRefs));
+var elm$core$List$concatMap = F2(
+	function (f, list) {
+		return elm$core$List$concat(
+			A2(elm$core$List$map, f, list));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Imports$getArgRefs = function (_p3) {
-	var _p4 = _p3;
-	return A2(
-		_elm_lang$core$List$map,
-		function (_) {
-			return _.typeRef;
-		},
-		_p4.args);
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Imports$allRefs = function (fields) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		A2(_elm_lang$core$List$concatMap, _dillonkearns$elm_graphql$Graphql_Generator_Imports$getArgRefs, fields),
+var author$project$Graphql$Generator$Imports$allRefs = function (fields) {
+	return _Utils_ap(
+		A2(elm$core$List$concatMap, author$project$Graphql$Generator$Imports$getArgRefs, fields),
 		A2(
-			_elm_lang$core$List$map,
-			function (_p5) {
-				var _p6 = _p5;
-				return _p6.typeRef;
+			elm$core$List$map,
+			function (_n0) {
+				var typeRef = _n0.typeRef;
+				return typeRef;
 			},
 			fields));
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Imports$importsString = F3(
+var author$project$Graphql$Generator$Imports$imports = F2(
+	function (apiSubmodule, _n0) {
+		imports:
+		while (true) {
+			var referrableType = _n0.a;
+			var isNullable = _n0.b;
+			switch (referrableType.$) {
+				case 'Scalar':
+					return elm$core$Maybe$Nothing;
+				case 'List':
+					var typeRef = referrableType.a;
+					var $temp$apiSubmodule = apiSubmodule,
+						$temp$_n0 = typeRef;
+					apiSubmodule = $temp$apiSubmodule;
+					_n0 = $temp$_n0;
+					continue imports;
+				case 'ObjectRef':
+					var objectName = referrableType.a;
+					return elm$core$Maybe$Nothing;
+				case 'InterfaceRef':
+					var interfaceName = referrableType.a;
+					return elm$core$Maybe$Nothing;
+				case 'EnumRef':
+					var enumName = referrableType.a;
+					return elm$core$Maybe$Just(
+						A2(
+							author$project$Graphql$Generator$ModuleName$enum,
+							{apiSubmodule: apiSubmodule},
+							enumName));
+				case 'InputObjectRef':
+					var inputObjectName = referrableType.a;
+					return elm$core$Maybe$Nothing;
+				default:
+					var unionName = referrableType.a;
+					return elm$core$Maybe$Nothing;
+			}
+		}
+	});
+var author$project$Graphql$Generator$Imports$importsWithoutSelf = F3(
 	function (apiSubmodule, importingFrom, typeRefs) {
 		return A2(
-			_elm_lang$core$String$join,
-			'\n',
-			A2(
-				_elm_lang$core$List$map,
-				_dillonkearns$elm_graphql$Graphql_Generator_Imports$toImportString,
-				A2(
-					_elm_lang$core$List$map,
-					_dillonkearns$elm_graphql$Graphql_Generator_Imports$toModuleName,
-					A3(
-						_dillonkearns$elm_graphql$Graphql_Generator_Imports$importsWithoutSelf,
-						apiSubmodule,
-						importingFrom,
-						_dillonkearns$elm_graphql$Graphql_Generator_Imports$allRefs(typeRefs)))));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Details$InputObjectDetails = F4(
-	function (a, b, c, d) {
-		return {definableType: a, fields: b, name: c, hasLoop: d};
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$compact = _elm_lang$core$List$filterMap(_elm_lang$core$Basics$identity);
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$when = F2(
-	function (condition, value) {
-		return condition ? _elm_lang$core$Maybe$Just(value) : _elm_lang$core$Maybe$Nothing;
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$aliasEntry = F2(
-	function (_p0, field) {
-		var _p1 = _p0;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{0} : {1}',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(field.name),
-				_1: {
-					ctor: '::',
-					_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeForInputObject, _p1.apiSubmodule, field.typeRef),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$filledOptionalsRecord = function (optionalFields) {
-	return A2(
-		_elm_lang$core$String$join,
-		', ',
-		A2(
-			_elm_lang$core$List$map,
-			function (fieldName) {
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					_dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(fieldName),
-					' = Absent');
+			elm$core$List$filter,
+			function (moduleName) {
+				return !_Utils_eq(moduleName, importingFrom);
 			},
 			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.name;
+				elm$core$List$filterMap,
+				author$project$Graphql$Generator$Imports$imports(apiSubmodule),
+				typeRefs));
+	});
+var author$project$Graphql$Generator$Imports$toImportString = function (moduleName) {
+	return 'import ' + moduleName;
+};
+var author$project$Graphql$Generator$Imports$toModuleName = function (modulePath) {
+	return A2(elm$core$String$join, '.', modulePath);
+};
+var author$project$Graphql$Generator$Imports$importsString = F3(
+	function (apiSubmodule, importingFrom, typeRefs) {
+		return A2(
+			elm$core$String$join,
+			'\n',
+			A2(
+				elm$core$List$map,
+				author$project$Graphql$Generator$Imports$toImportString,
+				A2(
+					elm$core$List$map,
+					author$project$Graphql$Generator$Imports$toModuleName,
+					A3(
+						author$project$Graphql$Generator$Imports$importsWithoutSelf,
+						apiSubmodule,
+						importingFrom,
+						author$project$Graphql$Generator$Imports$allRefs(typeRefs)))));
+	});
+var author$project$Graphql$Generator$Interface$prepend = F3(
+	function (_n0, moduleName, fields) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n{-| Select only common fields from the interface.\n-}\ncommonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\ncommonSelection constructor =\n    Object.selection constructor\n\n\n{-| Select both common and type-specific fields from the interface.\n-}\nselection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}\nselection constructor typeSpecificDecoders =\n    Object.interfaceSelection typeSpecificDecoders constructor\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '.', moduleName),
+					A3(author$project$Graphql$Generator$Imports$importsString, apiSubmodule, moduleName, fields),
+					A2(elm$core$String$join, '.', apiSubmodule)
+				]));
+	});
+var elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _n1 = A2(elm$core$Basics$compare, targetKey, key);
+				switch (_n1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
+var author$project$Graphql$Generator$Interface$generate = F4(
+	function (context, name, moduleName, fields) {
+		return _Utils_ap(
+			A3(author$project$Graphql$Generator$Interface$prepend, context, moduleName, fields),
+			_Utils_ap(
+				A3(
+					author$project$Graphql$Generator$Interface$fragments,
+					context,
+					A2(
+						elm$core$Maybe$withDefault,
+						_List_Nil,
+						A2(elm$core$Dict$get, name, context.interfaces)),
+					moduleName),
+				A2(
+					elm$core$String$join,
+					'\n\n',
+					A2(
+						elm$core$List$map,
+						A2(author$project$Graphql$Generator$Field$generateForInterface, context, name),
+						fields))));
+	});
+var author$project$Graphql$Generator$ModuleName$mutation = function (_n0) {
+	var apiSubmodule = _n0.apiSubmodule;
+	return _Utils_ap(
+		apiSubmodule,
+		_List_fromArray(
+			['Mutation']));
+};
+var author$project$Graphql$Generator$ModuleName$query = function (_n0) {
+	var apiSubmodule = _n0.apiSubmodule;
+	return _Utils_ap(
+		apiSubmodule,
+		_List_fromArray(
+			['Query']));
+};
+var author$project$Graphql$Generator$ModuleName$subscription = function (_n0) {
+	var apiSubmodule = _n0.apiSubmodule;
+	return _Utils_ap(
+		apiSubmodule,
+		_List_fromArray(
+			['Subscription']));
+};
+var author$project$Graphql$Generator$ModuleName$generate = F2(
+	function (context, _n0) {
+		var name = _n0.a;
+		var definableType = _n0.b;
+		var description = _n0.c;
+		switch (definableType.$) {
+			case 'ObjectType':
+				var fields = definableType.a;
+				return _Utils_eq(name, context.query) ? author$project$Graphql$Generator$ModuleName$query(context) : (_Utils_eq(
+					elm$core$Maybe$Just(name),
+					context.mutation) ? author$project$Graphql$Generator$ModuleName$mutation(context) : (_Utils_eq(
+					elm$core$Maybe$Just(name),
+					context.subscription) ? author$project$Graphql$Generator$ModuleName$subscription(context) : A2(author$project$Graphql$Generator$ModuleName$object, context, name)));
+			case 'ScalarType':
+				return _List_Nil;
+			case 'EnumType':
+				var enumValues = definableType.a;
+				return A2(author$project$Graphql$Generator$ModuleName$enum, context, name);
+			case 'InterfaceType':
+				var fields = definableType.a;
+				var possibleTypes = definableType.b;
+				return A2(author$project$Graphql$Generator$ModuleName$interface, context, name);
+			case 'UnionType':
+				var possibleTypes = definableType.a;
+				return A2(author$project$Graphql$Generator$ModuleName$union, context, name);
+			default:
+				return A2(author$project$Graphql$Generator$ModuleName$inputObject, context, name);
+		}
+	});
+var author$project$Graphql$Generator$Field$generateForObject = F3(
+	function (context, thisObjectName, field) {
+		return A4(
+			author$project$Graphql$Generator$Field$forObject_,
+			context,
+			A2(author$project$Graphql$Generator$ModuleName$object, context, thisObjectName),
+			field,
+			A2(author$project$Graphql$Generator$Field$toFieldGenerator, context, field));
+	});
+var author$project$Graphql$Generator$StaticImports$all = function (_n0) {
+	var apiSubmodule = _n0.apiSubmodule;
+	return A2(
+		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+		'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.Internal.Encode as Encode exposing (Value)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Json.Decode as Decode exposing (Decoder)\nimport {0}.Object\nimport {0}.Interface\nimport {0}.Union\nimport {0}.Scalar\nimport {0}.InputObject\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphql.Internal.Encode as Encode exposing (Value)',
+		_List_fromArray(
+			[
+				A2(elm$core$String$join, '.', apiSubmodule)
+			]));
+};
+var author$project$Graphql$Generator$Mutation$prepend = F3(
+	function (context, moduleName, fields) {
+		var apiSubmodule = context.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphql.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation\nselection constructor =\n    Object.selection constructor\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '.', moduleName),
+					A3(author$project$Graphql$Generator$Imports$importsString, apiSubmodule, moduleName, fields),
+					author$project$Graphql$Generator$StaticImports$all(context)
+				]));
+	});
+var author$project$Graphql$Generator$Mutation$generate = F3(
+	function (context, moduleName, fields) {
+		return _Utils_ap(
+			A3(author$project$Graphql$Generator$Mutation$prepend, context, moduleName, fields),
+			A2(
+				elm$core$String$join,
+				'\n\n',
+				A2(
+					elm$core$List$map,
+					A2(
+						author$project$Graphql$Generator$Field$generateForObject,
+						context,
+						A2(
+							elm$core$Maybe$withDefault,
+							author$project$Graphql$Parser$ClassCaseName$build(''),
+							context.mutation)),
+					fields)));
+	});
+var author$project$Graphql$Generator$Object$prepend = F3(
+	function (_n0, moduleName, fields) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a SelectionSet for this object.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.selection constructor\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '.', moduleName),
+					A3(author$project$Graphql$Generator$Imports$importsString, apiSubmodule, moduleName, fields),
+					A2(elm$core$String$join, '.', apiSubmodule)
+				]));
+	});
+var author$project$Graphql$Generator$Object$generate = F4(
+	function (context, name, moduleName, fields) {
+		return _Utils_ap(
+			A3(author$project$Graphql$Generator$Object$prepend, context, moduleName, fields),
+			A2(
+				elm$core$String$join,
+				'\n\n',
+				A2(
+					elm$core$List$map,
+					A2(author$project$Graphql$Generator$Field$generateForObject, context, name),
+					fields)));
+	});
+var author$project$Graphql$Generator$Query$prepend = F3(
+	function (context, moduleName, fields) {
+		var apiSubmodule = context.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level query. The request can be sent with\nfunctions from `Graphql.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.selection constructor\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '.', moduleName),
+					A3(author$project$Graphql$Generator$Imports$importsString, apiSubmodule, moduleName, fields),
+					author$project$Graphql$Generator$StaticImports$all(context)
+				]));
+	});
+var author$project$Graphql$Generator$Query$generate = F3(
+	function (context, moduleName, fields) {
+		return _Utils_ap(
+			A3(author$project$Graphql$Generator$Query$prepend, context, moduleName, fields),
+			A2(
+				elm$core$String$join,
+				'\n\n',
+				A2(
+					elm$core$List$map,
+					A2(author$project$Graphql$Generator$Field$generateForObject, context, context.query),
+					fields)));
+	});
+var author$project$Graphql$Generator$Subscription$prepend = F3(
+	function (context, moduleName, fields) {
+		var apiSubmodule = context.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphql.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootSubscription\nselection constructor =\n    Object.selection constructor\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '.', moduleName),
+					A3(author$project$Graphql$Generator$Imports$importsString, apiSubmodule, moduleName, fields),
+					author$project$Graphql$Generator$StaticImports$all(context)
+				]));
+	});
+var author$project$Graphql$Generator$Subscription$generate = F3(
+	function (context, moduleName, fields) {
+		return _Utils_ap(
+			A3(author$project$Graphql$Generator$Subscription$prepend, context, moduleName, fields),
+			A2(
+				elm$core$String$join,
+				'\n\n',
+				A2(
+					elm$core$List$map,
+					A2(
+						author$project$Graphql$Generator$Field$generateForObject,
+						context,
+						A2(
+							elm$core$Maybe$withDefault,
+							author$project$Graphql$Parser$ClassCaseName$build(''),
+							context.subscription)),
+					fields)));
+	});
+var author$project$Graphql$Generator$Union$fragment = F3(
+	function (context, moduleName, interfaceImplementor) {
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet "{1}" fields decoder\n',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(interfaceImplementor),
+					author$project$Graphql$Parser$ClassCaseName$raw(interfaceImplementor),
+					A2(
+					elm$core$String$join,
+					'.',
+					A2(author$project$Graphql$Generator$ModuleName$object, context, interfaceImplementor)),
+					A2(elm$core$String$join, '.', moduleName)
+				]));
+	});
+var author$project$Graphql$Generator$Union$fragments = F3(
+	function (context, implementors, moduleName) {
+		return A2(
+			elm$core$String$join,
+			'\n\n',
+			A2(
+				elm$core$List$map,
+				A2(author$project$Graphql$Generator$Union$fragment, context, moduleName),
+				implementors));
+	});
+var author$project$Graphql$Generator$Union$prepend = F2(
+	function (_n0, moduleName) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport {1}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n\n\nselection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}\nselection constructor typeSpecificDecoders =\n    Object.unionSelection typeSpecificDecoders constructor\n',
+			_List_fromArray(
+				[
+					A2(elm$core$String$join, '.', moduleName),
+					A2(elm$core$String$join, '.', apiSubmodule)
+				]));
+	});
+var author$project$Graphql$Generator$Union$generate = F4(
+	function (context, name, moduleName, possibleTypes) {
+		return _Utils_ap(
+			A2(author$project$Graphql$Generator$Union$prepend, context, moduleName),
+			A3(author$project$Graphql$Generator$Union$fragments, context, possibleTypes, moduleName));
+	});
+var author$project$Graphql$Generator$Group$toPair = F2(
+	function (context, definition) {
+		var name = definition.a;
+		var definableType = definition.b;
+		var description = definition.c;
+		var moduleName = A2(author$project$Graphql$Generator$ModuleName$generate, context, definition);
+		return A2(
+			elm$core$Maybe$map,
+			function (fileContents) {
+				return _Utils_Tuple2(moduleName, fileContents);
+			},
+			function () {
+				switch (definableType.$) {
+					case 'ObjectType':
+						var fields = definableType.a;
+						return _Utils_eq(name, context.query) ? elm$core$Maybe$Just(
+							A3(author$project$Graphql$Generator$Query$generate, context, moduleName, fields)) : (_Utils_eq(
+							elm$core$Maybe$Just(name),
+							context.mutation) ? elm$core$Maybe$Just(
+							A3(author$project$Graphql$Generator$Mutation$generate, context, moduleName, fields)) : (_Utils_eq(
+							elm$core$Maybe$Just(name),
+							context.subscription) ? elm$core$Maybe$Just(
+							A3(author$project$Graphql$Generator$Subscription$generate, context, moduleName, fields)) : elm$core$Maybe$Just(
+							A4(author$project$Graphql$Generator$Object$generate, context, name, moduleName, fields))));
+					case 'ScalarType':
+						return elm$core$Maybe$Nothing;
+					case 'EnumType':
+						var enumValues = definableType.a;
+						return elm$core$Maybe$Just(
+							A4(author$project$Graphql$Generator$Enum$generate, name, moduleName, enumValues, description));
+					case 'InterfaceType':
+						var fields = definableType.a;
+						var possibleTypes = definableType.b;
+						return elm$core$Maybe$Just(
+							A4(
+								author$project$Graphql$Generator$Interface$generate,
+								context,
+								author$project$Graphql$Parser$ClassCaseName$raw(name),
+								moduleName,
+								fields));
+					case 'UnionType':
+						var possibleTypes = definableType.a;
+						return elm$core$Maybe$Just(
+							A4(author$project$Graphql$Generator$Union$generate, context, name, moduleName, possibleTypes));
+					default:
+						var fields = definableType.a;
+						return elm$core$Maybe$Nothing;
+				}
+			}());
+	});
+var author$project$Graphql$Generator$Decoder$generateEncoderLowLevel = F2(
+	function (apiSubmodule, referrableType) {
+		return A3(
+			author$project$Graphql$Generator$Decoder$generateEncoder_,
+			true,
+			apiSubmodule,
+			A2(author$project$Graphql$Parser$Type$TypeReference, referrableType, author$project$Graphql$Parser$Type$NonNullable));
+	});
+var author$project$Graphql$Generator$InputObjectFile$encoderFunction = F2(
+	function (_n0, field) {
+		var apiSubmodule = _n0.apiSubmodule;
+		var _n1 = field.typeRef;
+		var referrableType = _n1.a;
+		var isNullable = _n1.b;
+		var filledOptionalsRecord_ = function () {
+			if (isNullable.$ === 'NonNullable') {
+				return A2(
+					lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+					' input.{0} |> Just',
+					_List_fromArray(
+						[
+							author$project$Graphql$Parser$CamelCaseName$normalized(field.name)
+						]));
+			} else {
+				return A2(
+					lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+					' |> Encode.optional input.{0}',
+					_List_fromArray(
+						[
+							author$project$Graphql$Parser$CamelCaseName$normalized(field.name)
+						]));
+			}
+		}();
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'({0}) {1}',
+			_List_fromArray(
+				[
+					A2(author$project$Graphql$Generator$Decoder$generateEncoderLowLevel, apiSubmodule, referrableType),
+					filledOptionalsRecord_
+				]));
+	});
+var author$project$Graphql$Generator$InputObjectFile$encoderForField = F2(
+	function (context, field) {
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'( "{0}", {1} )',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$CamelCaseName$raw(field.name),
+					A2(author$project$Graphql$Generator$InputObjectFile$encoderFunction, context, field)
+				]));
+	});
+var author$project$Graphql$Generator$InputObjectFile$encoder = F2(
+	function (context, _n0) {
+		var name = _n0.name;
+		var fields = _n0.fields;
+		var hasLoop = _n0.hasLoop;
+		var parameter = hasLoop ? A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'({0} input)',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(name)
+				])) : 'input';
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{-| Encode a {0} into a value that can be used as an argument.\n-}\nencode{0} : {0} -> Value\nencode{0} {1} =\n    Encode.maybeObject\n        [ {2} ]',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(name),
+					parameter,
+					A2(
+					elm$core$String$join,
+					', ',
+					A2(
+						elm$core$List$map,
+						author$project$Graphql$Generator$InputObjectFile$encoderForField(context),
+						fields))
+				]));
+	});
+var author$project$Graphql$Generator$Decoder$generateTypeForInputObject = F2(
+	function (apiSubmodule, typeRef) {
+		return A4(author$project$Graphql$Generator$Decoder$generateTypeCommon, true, 'OptionalArgument', apiSubmodule, typeRef);
+	});
+var author$project$Graphql$Generator$InputObjectFile$aliasEntry = F2(
+	function (_n0, field) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{0} : {1}',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$CamelCaseName$normalized(field.name),
+					A2(author$project$Graphql$Generator$Decoder$generateTypeForInputObject, apiSubmodule, field.typeRef)
+				]));
+	});
+var author$project$Graphql$Generator$InputObjectFile$typeAlias = F2(
+	function (context, _n0) {
+		var name = _n0.name;
+		var fields = _n0.fields;
+		var hasLoop = _n0.hasLoop;
+		return hasLoop ? A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{-| Type alias for the `{0}` attributes. Note that this type\nneeds to use the `{0}` type (not just a plain type alias) because it has\nreferences to itself either directly (recursive) or indirectly (circular). See\n<https://github.com/dillonkearns/elm-graphql/issues/33>.\n-}\ntype alias {0}Raw =\n    { {1} }\n\n\n{-| Type for the {0} input object.\n-}\ntype {0}\n    = {0} {0}Raw\n    ',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(name),
+					A2(
+					elm$core$String$join,
+					', ',
+					A2(
+						elm$core$List$map,
+						author$project$Graphql$Generator$InputObjectFile$aliasEntry(context),
+						fields))
+				])) : A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{-| Type for the {0} input object.\n-}\ntype alias {0} =\n    { {1} }\n    ',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$ClassCaseName$normalized(name),
+					A2(
+					elm$core$String$join,
+					', ',
+					A2(
+						elm$core$List$map,
+						author$project$Graphql$Generator$InputObjectFile$aliasEntry(context),
+						fields))
+				]));
+	});
+var author$project$Graphql$Generator$AnnotatedArg$AnnotatedArgs = F2(
+	function (args, returnAnnotation) {
+		return {args: args, returnAnnotation: returnAnnotation};
+	});
+var author$project$Graphql$Generator$AnnotatedArg$buildWithArgs = F2(
+	function (args, returnAnnotation) {
+		return A2(author$project$Graphql$Generator$AnnotatedArg$AnnotatedArgs, args, returnAnnotation);
+	});
+var elm$core$Tuple$second = function (_n0) {
+	var y = _n0.b;
+	return y;
+};
+var author$project$Graphql$Generator$AnnotatedArg$toString = F2(
+	function (functionName, _n0) {
+		var args = _n0.args;
+		var returnAnnotation = _n0.returnAnnotation;
+		var parameterNames = A2(elm$core$List$map, elm$core$Tuple$second, args);
+		var annotations = _Utils_ap(
+			A2(elm$core$List$map, elm$core$Tuple$first, args),
+			_List_fromArray(
+				[returnAnnotation]));
+		var typeAnnotation = A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{0} : {1}',
+			_List_fromArray(
+				[
+					functionName,
+					A2(elm$core$String$join, ' -> ', annotations)
+				]));
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{0}\n{1} {2} =\n',
+			_List_fromArray(
+				[
+					typeAnnotation,
+					functionName,
+					A2(elm$core$String$join, ' ', parameterNames)
+				]));
+	});
+var author$project$Graphql$Generator$InputObjectFile$Constructor$compact = elm$core$List$filterMap(elm$core$Basics$identity);
+var author$project$Graphql$Generator$InputObjectFile$Constructor$aliasEntry = F2(
+	function (_n0, field) {
+		var apiSubmodule = _n0.apiSubmodule;
+		return A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'{0} : {1}',
+			_List_fromArray(
+				[
+					author$project$Graphql$Parser$CamelCaseName$normalized(field.name),
+					A2(author$project$Graphql$Generator$Decoder$generateTypeForInputObject, apiSubmodule, field.typeRef)
+				]));
+	});
+var elm$core$List$length = function (xs) {
+	return A3(
+		elm$core$List$foldl,
+		F2(
+			function (_n0, i) {
+				return i + 1;
+			}),
+		0,
+		xs);
+};
+var author$project$Graphql$Generator$InputObjectFile$Constructor$constructorFieldsAlias = F3(
+	function (nameThing, context, fields) {
+		return (elm$core$List$length(fields) > 0) ? A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'type alias {0} =\n    { {1} }',
+			_List_fromArray(
+				[
+					nameThing,
+					A2(
+					elm$core$String$join,
+					', ',
+					A2(
+						elm$core$List$map,
+						author$project$Graphql$Generator$InputObjectFile$Constructor$aliasEntry(context),
+						fields))
+				])) : '';
+	});
+var author$project$Graphql$Generator$InputObjectFile$Constructor$filledOptionalsRecord = function (optionalFields) {
+	return A2(
+		elm$core$String$join,
+		', ',
+		A2(
+			elm$core$List$map,
+			function (fieldName) {
+				return author$project$Graphql$Parser$CamelCaseName$normalized(fieldName) + ' = Absent';
+			},
+			A2(
+				elm$core$List$map,
+				function ($) {
+					return $.name;
 				},
 				optionalFields)));
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$constructorFieldsAlias = F3(
-	function (nameThing, context, fields) {
-		return (_elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$List$length(fields),
-			0) > 0) ? A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'type alias {0} =\n    { {1} }',
-			{
-				ctor: '::',
-				_0: nameThing,
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						', ',
-						A2(
-							_elm_lang$core$List$map,
-							_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$aliasEntry(context),
-							fields)),
-					_1: {ctor: '[]'}
-				}
-			}) : '';
+var author$project$Graphql$Generator$InputObjectFile$Constructor$when = F2(
+	function (condition, value) {
+		return condition ? elm$core$Maybe$Just(value) : elm$core$Maybe$Nothing;
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$generate = F2(
-	function (context, _p2) {
-		var _p3 = _p2;
-		var _p9 = _p3.name;
-		var _p8 = _p3.fields;
+var author$project$Graphql$Parser$Type$Nullable = {$: 'Nullable'};
+var author$project$Graphql$Generator$InputObjectFile$Constructor$generate = F2(
+	function (context, _n0) {
+		var name = _n0.name;
+		var fields = _n0.fields;
+		var hasLoop = _n0.hasLoop;
 		var returnRecord = A2(
-			_elm_lang$core$String$join,
+			elm$core$String$join,
 			', ',
 			A2(
-				_elm_lang$core$List$map,
+				elm$core$List$map,
 				function (field) {
 					return A2(
-						_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+						lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 						'{0} = {1}.{0}',
-						{
-							ctor: '::',
-							_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(field.name),
-							_1: {
-								ctor: '::',
-								_0: function () {
-									var _p4 = field.typeRef;
-									var _p5 = _p4._1;
-									if (_p5.ctor === 'Nullable') {
-										return 'optionals';
-									} else {
-										return 'required';
-									}
-								}(),
-								_1: {ctor: '[]'}
-							}
-						});
+						_List_fromArray(
+							[
+								author$project$Graphql$Parser$CamelCaseName$normalized(field.name),
+								function () {
+								var _n3 = field.typeRef;
+								var referrableType = _n3.a;
+								var isNullable = _n3.b;
+								if (isNullable.$ === 'Nullable') {
+									return 'optionals';
+								} else {
+									return 'required';
+								}
+							}()
+							]));
 				},
-				_p8));
+				fields));
 		var requiredFields = A2(
-			_elm_lang$core$List$filter,
+			elm$core$List$filter,
 			function (field) {
-				var _p6 = field.typeRef;
-				return _elm_lang$core$Native_Utils.eq(_p6._1, _dillonkearns$elm_graphql$Graphql_Parser_Type$NonNullable);
+				var _n2 = field.typeRef;
+				var referrableType = _n2.a;
+				var isNullable = _n2.b;
+				return _Utils_eq(isNullable, author$project$Graphql$Parser$Type$NonNullable);
 			},
-			_p8);
+			fields);
 		var optionalFields = A2(
-			_elm_lang$core$List$filter,
+			elm$core$List$filter,
 			function (field) {
-				var _p7 = field.typeRef;
-				return _elm_lang$core$Native_Utils.eq(_p7._1, _dillonkearns$elm_graphql$Graphql_Parser_Type$Nullable);
+				var _n1 = field.typeRef;
+				var referrableType = _n1.a;
+				var isNullable = _n1.b;
+				return _Utils_eq(isNullable, author$project$Graphql$Parser$Type$Nullable);
 			},
-			_p8);
-		var annotation = A2(
-			_dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$toString,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'build',
-				_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p9)),
-			A2(
-				_dillonkearns$elm_graphql$Graphql_Generator_AnnotatedArg$buildWithArgs,
-				_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$compact(
-					{
-						ctor: '::',
-						_0: A2(
-							_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$when,
-							_elm_lang$core$Native_Utils.cmp(
-								_elm_lang$core$List$length(requiredFields),
-								0) > 0,
-							{
-								ctor: '_Tuple2',
-								_0: A2(
-									_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-									'{0}RequiredFields',
-									{
-										ctor: '::',
-										_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p9),
-										_1: {ctor: '[]'}
-									}),
-								_1: 'required'
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$when,
-								_elm_lang$core$Native_Utils.cmp(
-									_elm_lang$core$List$length(optionalFields),
-									0) > 0,
-								{
-									ctor: '_Tuple2',
-									_0: A2(
-										_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-										'({0}OptionalFields -> {0}OptionalFields)',
-										{
-											ctor: '::',
-											_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p9),
-											_1: {ctor: '[]'}
-										}),
-									_1: 'fillOptionals'
-								}),
-							_1: {ctor: '[]'}
-						}
-					}),
-				_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p9)));
-		var letClause = _dillonkearns$elm_graphql$Graphql_Generator_Let$generate(
-			_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$compact(
-				{
-					ctor: '::',
-					_0: A2(
-						_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$when,
-						_elm_lang$core$Native_Utils.cmp(
-							_elm_lang$core$List$length(optionalFields),
-							0) > 0,
-						{
-							ctor: '_Tuple2',
-							_0: 'optionals',
-							_1: A2(
-								_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			fields);
+		var letClause = author$project$Graphql$Generator$Let$generate(
+			author$project$Graphql$Generator$InputObjectFile$Constructor$compact(
+				_List_fromArray(
+					[
+						A2(
+						author$project$Graphql$Generator$InputObjectFile$Constructor$when,
+						elm$core$List$length(optionalFields) > 0,
+						_Utils_Tuple2(
+							'optionals',
+							A2(
+								lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 								'\n            fillOptionals\n                { {0} }',
-								{
-									ctor: '::',
-									_0: _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$filledOptionalsRecord(optionalFields),
-									_1: {ctor: '[]'}
-								})
-						}),
-					_1: {ctor: '[]'}
-				}));
+								_List_fromArray(
+									[
+										author$project$Graphql$Generator$InputObjectFile$Constructor$filledOptionalsRecord(optionalFields)
+									]))))
+					])));
+		var annotation = A2(
+			author$project$Graphql$Generator$AnnotatedArg$toString,
+			'build' + author$project$Graphql$Parser$ClassCaseName$normalized(name),
+			A2(
+				author$project$Graphql$Generator$AnnotatedArg$buildWithArgs,
+				author$project$Graphql$Generator$InputObjectFile$Constructor$compact(
+					_List_fromArray(
+						[
+							A2(
+							author$project$Graphql$Generator$InputObjectFile$Constructor$when,
+							elm$core$List$length(requiredFields) > 0,
+							_Utils_Tuple2(
+								A2(
+									lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+									'{0}RequiredFields',
+									_List_fromArray(
+										[
+											author$project$Graphql$Parser$ClassCaseName$normalized(name)
+										])),
+								'required')),
+							A2(
+							author$project$Graphql$Generator$InputObjectFile$Constructor$when,
+							elm$core$List$length(optionalFields) > 0,
+							_Utils_Tuple2(
+								A2(
+									lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+									'({0}OptionalFields -> {0}OptionalFields)',
+									_List_fromArray(
+										[
+											author$project$Graphql$Parser$ClassCaseName$normalized(name)
+										])),
+								'fillOptionals'))
+						])),
+				author$project$Graphql$Parser$ClassCaseName$normalized(name)));
 		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 			'{0}{1}\n    {2}{ {3} }\n\n{4}\n{5}\n',
-			{
-				ctor: '::',
-				_0: annotation,
-				_1: {
-					ctor: '::',
-					_0: letClause,
-					_1: {
-						ctor: '::',
-						_0: _p3.hasLoop ? _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p9) : '',
-						_1: {
-							ctor: '::',
-							_0: returnRecord,
-							_1: {
-								ctor: '::',
-								_0: A3(
-									_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$constructorFieldsAlias,
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p9),
-										'RequiredFields'),
-									context,
-									requiredFields),
-								_1: {
-									ctor: '::',
-									_0: A3(
-										_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$constructorFieldsAlias,
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p9),
-											'OptionalFields'),
-										context,
-										optionalFields),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}
-			});
+			_List_fromArray(
+				[
+					annotation,
+					letClause,
+					hasLoop ? author$project$Graphql$Parser$ClassCaseName$normalized(name) : '',
+					returnRecord,
+					A3(
+					author$project$Graphql$Generator$InputObjectFile$Constructor$constructorFieldsAlias,
+					author$project$Graphql$Parser$ClassCaseName$normalized(name) + 'RequiredFields',
+					context,
+					requiredFields),
+					A3(
+					author$project$Graphql$Generator$InputObjectFile$Constructor$constructorFieldsAlias,
+					author$project$Graphql$Parser$ClassCaseName$normalized(name) + 'OptionalFields',
+					context,
+					optionalFields)
+				]));
 	});
-
-var _elm_lang$core$Set$foldr = F3(
-	function (f, b, _p0) {
-		var _p1 = _p0;
-		return A3(
-			_elm_lang$core$Dict$foldr,
-			F3(
-				function (k, _p2, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p1._0);
-	});
-var _elm_lang$core$Set$foldl = F3(
-	function (f, b, _p3) {
-		var _p4 = _p3;
-		return A3(
-			_elm_lang$core$Dict$foldl,
-			F3(
-				function (k, _p5, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p4._0);
-	});
-var _elm_lang$core$Set$toList = function (_p6) {
-	var _p7 = _p6;
-	return _elm_lang$core$Dict$keys(_p7._0);
-};
-var _elm_lang$core$Set$size = function (_p8) {
-	var _p9 = _p8;
-	return _elm_lang$core$Dict$size(_p9._0);
-};
-var _elm_lang$core$Set$member = F2(
-	function (k, _p10) {
-		var _p11 = _p10;
-		return A2(_elm_lang$core$Dict$member, k, _p11._0);
-	});
-var _elm_lang$core$Set$isEmpty = function (_p12) {
-	var _p13 = _p12;
-	return _elm_lang$core$Dict$isEmpty(_p13._0);
-};
-var _elm_lang$core$Set$Set_elm_builtin = function (a) {
-	return {ctor: 'Set_elm_builtin', _0: a};
-};
-var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
-var _elm_lang$core$Set$singleton = function (k) {
-	return _elm_lang$core$Set$Set_elm_builtin(
-		A2(
-			_elm_lang$core$Dict$singleton,
-			k,
-			{ctor: '_Tuple0'}));
-};
-var _elm_lang$core$Set$insert = F2(
-	function (k, _p14) {
-		var _p15 = _p14;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A3(
-				_elm_lang$core$Dict$insert,
-				k,
-				{ctor: '_Tuple0'},
-				_p15._0));
-	});
-var _elm_lang$core$Set$fromList = function (xs) {
-	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
-};
-var _elm_lang$core$Set$map = F2(
-	function (f, s) {
-		return _elm_lang$core$Set$fromList(
-			A2(
-				_elm_lang$core$List$map,
-				f,
-				_elm_lang$core$Set$toList(s)));
-	});
-var _elm_lang$core$Set$remove = F2(
-	function (k, _p16) {
-		var _p17 = _p16;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$remove, k, _p17._0));
-	});
-var _elm_lang$core$Set$union = F2(
-	function (_p19, _p18) {
-		var _p20 = _p19;
-		var _p21 = _p18;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
-	});
-var _elm_lang$core$Set$intersect = F2(
-	function (_p23, _p22) {
-		var _p24 = _p23;
-		var _p25 = _p22;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
-	});
-var _elm_lang$core$Set$diff = F2(
-	function (_p27, _p26) {
-		var _p28 = _p27;
-		var _p29 = _p26;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
-	});
-var _elm_lang$core$Set$filter = F2(
-	function (p, _p30) {
-		var _p31 = _p30;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(
-				_elm_lang$core$Dict$filter,
-				F2(
-					function (k, _p32) {
-						return p(k);
-					}),
-				_p31._0));
-	});
-var _elm_lang$core$Set$partition = F2(
-	function (p, _p33) {
-		var _p34 = _p33;
-		var _p35 = A2(
-			_elm_lang$core$Dict$partition,
-			F2(
-				function (k, _p36) {
-					return p(k);
-				}),
-			_p34._0);
-		var p1 = _p35._0;
-		var p2 = _p35._1;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
-			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
-		};
-	});
-
-var _elm_community$list_extra$List_Extra$greedyGroupsOfWithStep = F3(
-	function (size, step, xs) {
-		var okayXs = _elm_lang$core$Native_Utils.cmp(
-			_elm_lang$core$List$length(xs),
-			0) > 0;
-		var okayArgs = (_elm_lang$core$Native_Utils.cmp(size, 0) > 0) && (_elm_lang$core$Native_Utils.cmp(step, 0) > 0);
-		var xs_ = A2(_elm_lang$core$List$drop, step, xs);
-		var group = A2(_elm_lang$core$List$take, size, xs);
-		return (okayArgs && okayXs) ? {
-			ctor: '::',
-			_0: group,
-			_1: A3(_elm_community$list_extra$List_Extra$greedyGroupsOfWithStep, size, step, xs_)
-		} : {ctor: '[]'};
-	});
-var _elm_community$list_extra$List_Extra$greedyGroupsOf = F2(
-	function (size, xs) {
-		return A3(_elm_community$list_extra$List_Extra$greedyGroupsOfWithStep, size, size, xs);
-	});
-var _elm_community$list_extra$List_Extra$groupsOfWithStep = F3(
-	function (size, step, xs) {
-		var okayArgs = (_elm_lang$core$Native_Utils.cmp(size, 0) > 0) && (_elm_lang$core$Native_Utils.cmp(step, 0) > 0);
-		var xs_ = A2(_elm_lang$core$List$drop, step, xs);
-		var group = A2(_elm_lang$core$List$take, size, xs);
-		var okayLength = _elm_lang$core$Native_Utils.eq(
-			size,
-			_elm_lang$core$List$length(group));
-		return (okayArgs && okayLength) ? {
-			ctor: '::',
-			_0: group,
-			_1: A3(_elm_community$list_extra$List_Extra$groupsOfWithStep, size, step, xs_)
-		} : {ctor: '[]'};
-	});
-var _elm_community$list_extra$List_Extra$groupsOf = F2(
-	function (size, xs) {
-		return A3(_elm_community$list_extra$List_Extra$groupsOfWithStep, size, size, xs);
-	});
-var _elm_community$list_extra$List_Extra$zip5 = _elm_lang$core$List$map5(
-	F5(
-		function (v0, v1, v2, v3, v4) {
-			return {ctor: '_Tuple5', _0: v0, _1: v1, _2: v2, _3: v3, _4: v4};
-		}));
-var _elm_community$list_extra$List_Extra$zip4 = _elm_lang$core$List$map4(
-	F4(
-		function (v0, v1, v2, v3) {
-			return {ctor: '_Tuple4', _0: v0, _1: v1, _2: v2, _3: v3};
-		}));
-var _elm_community$list_extra$List_Extra$zip3 = _elm_lang$core$List$map3(
-	F3(
-		function (v0, v1, v2) {
-			return {ctor: '_Tuple3', _0: v0, _1: v1, _2: v2};
-		}));
-var _elm_community$list_extra$List_Extra$zip = _elm_lang$core$List$map2(
-	F2(
-		function (v0, v1) {
-			return {ctor: '_Tuple2', _0: v0, _1: v1};
-		}));
-var _elm_community$list_extra$List_Extra$isSubsequenceOf = F2(
-	function (subseq, list) {
-		isSubsequenceOf:
-		while (true) {
-			var _p0 = {ctor: '_Tuple2', _0: subseq, _1: list};
-			if (_p0._0.ctor === '[]') {
-				return true;
-			} else {
-				if (_p0._1.ctor === '[]') {
-					return false;
-				} else {
-					var _p1 = _p0._1._1;
-					if (_elm_lang$core$Native_Utils.eq(_p0._0._0, _p0._1._0)) {
-						var _v1 = _p0._0._1,
-							_v2 = _p1;
-						subseq = _v1;
-						list = _v2;
-						continue isSubsequenceOf;
-					} else {
-						var _v3 = subseq,
-							_v4 = _p1;
-						subseq = _v3;
-						list = _v4;
-						continue isSubsequenceOf;
-					}
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$isPrefixOf = F2(
-	function (prefix, xs) {
-		var _p2 = {ctor: '_Tuple2', _0: prefix, _1: xs};
-		if (_p2._0.ctor === '[]') {
-			return true;
-		} else {
-			if (_p2._1.ctor === '[]') {
-				return false;
-			} else {
-				return _elm_lang$core$Native_Utils.eq(_p2._0._0, _p2._1._0) && A2(_elm_community$list_extra$List_Extra$isPrefixOf, _p2._0._1, _p2._1._1);
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$isSuffixOf = F2(
-	function (suffix, xs) {
+var author$project$Graphql$Generator$InputObjectFile$generateEncoderAndAlias = F2(
+	function (context, inputObjectDetails) {
 		return A2(
-			_elm_community$list_extra$List_Extra$isPrefixOf,
-			_elm_lang$core$List$reverse(suffix),
-			_elm_lang$core$List$reverse(xs));
+			elm$core$String$join,
+			'\n\n',
+			_List_fromArray(
+				[
+					A2(author$project$Graphql$Generator$InputObjectFile$Constructor$generate, context, inputObjectDetails),
+					A2(author$project$Graphql$Generator$InputObjectFile$typeAlias, context, inputObjectDetails),
+					A2(author$project$Graphql$Generator$InputObjectFile$encoder, context, inputObjectDetails)
+				]));
 	});
-var _elm_community$list_extra$List_Extra$isInfixOfHelp = F3(
-	function (infixHead, infixTail, list) {
-		isInfixOfHelp:
-		while (true) {
-			var _p3 = list;
-			if (_p3.ctor === '[]') {
-				return false;
-			} else {
-				var _p4 = _p3._1;
-				if (_elm_lang$core$Native_Utils.eq(_p3._0, infixHead)) {
-					return A2(_elm_community$list_extra$List_Extra$isPrefixOf, infixTail, _p4);
-				} else {
-					var _v7 = infixHead,
-						_v8 = infixTail,
-						_v9 = _p4;
-					infixHead = _v7;
-					infixTail = _v8;
-					list = _v9;
-					continue isInfixOfHelp;
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$isInfixOf = F2(
-	function (infixList, list) {
-		var _p5 = infixList;
-		if (_p5.ctor === '[]') {
-			return true;
-		} else {
-			return A3(_elm_community$list_extra$List_Extra$isInfixOfHelp, _p5._0, _p5._1, list);
-		}
-	});
-var _elm_community$list_extra$List_Extra$selectSplit = function (xs) {
-	var _p6 = xs;
-	if (_p6.ctor === '[]') {
-		return {ctor: '[]'};
-	} else {
-		var _p10 = _p6._1;
-		var _p9 = _p6._0;
-		return {
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple3',
-				_0: {ctor: '[]'},
-				_1: _p9,
-				_2: _p10
-			},
-			_1: A2(
-				_elm_lang$core$List$map,
-				function (_p7) {
-					var _p8 = _p7;
-					return {
-						ctor: '_Tuple3',
-						_0: {ctor: '::', _0: _p9, _1: _p8._0},
-						_1: _p8._1,
-						_2: _p8._2
-					};
-				},
-				_elm_community$list_extra$List_Extra$selectSplit(_p10))
-		};
-	}
+var author$project$Graphql$Generator$InputObjectFile$moduleName = function (_n0) {
+	var apiSubmodule = _n0.apiSubmodule;
+	return _Utils_ap(
+		apiSubmodule,
+		_List_fromArray(
+			['InputObject']));
 };
-var _elm_community$list_extra$List_Extra$select = function (xs) {
-	var _p11 = xs;
-	if (_p11.ctor === '[]') {
-		return {ctor: '[]'};
-	} else {
-		var _p15 = _p11._1;
-		var _p14 = _p11._0;
-		return {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _p14, _1: _p15},
-			_1: A2(
-				_elm_lang$core$List$map,
-				function (_p12) {
-					var _p13 = _p12;
-					return {
-						ctor: '_Tuple2',
-						_0: _p13._0,
-						_1: {ctor: '::', _0: _p14, _1: _p13._1}
-					};
-				},
-				_elm_community$list_extra$List_Extra$select(_p15))
-		};
-	}
-};
-var _elm_community$list_extra$List_Extra$tailsHelp = F2(
-	function (e, list) {
-		var _p16 = list;
-		if (_p16.ctor === '::') {
-			var _p17 = _p16._0;
-			return {
-				ctor: '::',
-				_0: {ctor: '::', _0: e, _1: _p17},
-				_1: {ctor: '::', _0: _p17, _1: _p16._1}
-			};
-		} else {
-			return {ctor: '[]'};
-		}
-	});
-var _elm_community$list_extra$List_Extra$tails = A2(
-	_elm_lang$core$List$foldr,
-	_elm_community$list_extra$List_Extra$tailsHelp,
-	{
-		ctor: '::',
-		_0: {ctor: '[]'},
-		_1: {ctor: '[]'}
-	});
-var _elm_community$list_extra$List_Extra$inits = A2(
-	_elm_lang$core$List$foldr,
-	F2(
-		function (e, acc) {
-			return {
-				ctor: '::',
-				_0: {ctor: '[]'},
-				_1: A2(
-					_elm_lang$core$List$map,
-					F2(
-						function (x, y) {
-							return {ctor: '::', _0: x, _1: y};
-						})(e),
-					acc)
-			};
-		}),
-	{
-		ctor: '::',
-		_0: {ctor: '[]'},
-		_1: {ctor: '[]'}
-	});
-var _elm_community$list_extra$List_Extra$groupWhileTransitivelyHelp = F4(
-	function (result, currentGroup, compare, list) {
-		groupWhileTransitivelyHelp:
-		while (true) {
-			var _p18 = list;
-			if (_p18.ctor === '[]') {
-				return _elm_lang$core$List$reverse(
-					_elm_lang$core$List$isEmpty(currentGroup) ? result : _elm_lang$core$List$reverse(
-						{ctor: '::', _0: currentGroup, _1: result}));
-			} else {
-				if (_p18._1.ctor === '[]') {
-					return _elm_lang$core$List$reverse(
-						{
-							ctor: '::',
-							_0: _elm_lang$core$List$reverse(
-								{ctor: '::', _0: _p18._0, _1: currentGroup}),
-							_1: result
-						});
-				} else {
-					var _p20 = _p18._1;
-					var _p19 = _p18._0;
-					if (A2(compare, _p19, _p18._1._0)) {
-						var _v17 = result,
-							_v18 = {ctor: '::', _0: _p19, _1: currentGroup},
-							_v19 = compare,
-							_v20 = _p20;
-						result = _v17;
-						currentGroup = _v18;
-						compare = _v19;
-						list = _v20;
-						continue groupWhileTransitivelyHelp;
-					} else {
-						var _v21 = {
-							ctor: '::',
-							_0: _elm_lang$core$List$reverse(
-								{ctor: '::', _0: _p19, _1: currentGroup}),
-							_1: result
-						},
-							_v22 = {ctor: '[]'},
-							_v23 = compare,
-							_v24 = _p20;
-						result = _v21;
-						currentGroup = _v22;
-						compare = _v23;
-						list = _v24;
-						continue groupWhileTransitivelyHelp;
-					}
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$groupWhileTransitively = F2(
-	function (compare, list) {
-		return A4(
-			_elm_community$list_extra$List_Extra$groupWhileTransitivelyHelp,
-			{ctor: '[]'},
-			{ctor: '[]'},
-			compare,
-			list);
-	});
-var _elm_community$list_extra$List_Extra$stripPrefix = F2(
-	function (prefix, xs) {
-		var step = F2(
-			function (e, m) {
-				var _p21 = m;
-				if (_p21.ctor === 'Nothing') {
-					return _elm_lang$core$Maybe$Nothing;
-				} else {
-					if (_p21._0.ctor === '[]') {
-						return _elm_lang$core$Maybe$Nothing;
-					} else {
-						return _elm_lang$core$Native_Utils.eq(e, _p21._0._0) ? _elm_lang$core$Maybe$Just(_p21._0._1) : _elm_lang$core$Maybe$Nothing;
-					}
-				}
-			});
-		return A3(
-			_elm_lang$core$List$foldl,
-			step,
-			_elm_lang$core$Maybe$Just(xs),
-			prefix);
-	});
-var _elm_community$list_extra$List_Extra$dropWhileRight = function (p) {
-	return A2(
-		_elm_lang$core$List$foldr,
-		F2(
-			function (x, xs) {
-				return (p(x) && _elm_lang$core$List$isEmpty(xs)) ? {ctor: '[]'} : {ctor: '::', _0: x, _1: xs};
-			}),
-		{ctor: '[]'});
-};
-var _elm_community$list_extra$List_Extra$takeWhileRight = function (p) {
-	var step = F2(
-		function (x, _p22) {
-			var _p23 = _p22;
-			var _p24 = _p23._0;
-			return (p(x) && _p23._1) ? {
-				ctor: '_Tuple2',
-				_0: {ctor: '::', _0: x, _1: _p24},
-				_1: true
-			} : {ctor: '_Tuple2', _0: _p24, _1: false};
-		});
-	return function (_p25) {
-		return _elm_lang$core$Tuple$first(
-			A3(
-				_elm_lang$core$List$foldr,
-				step,
-				{
-					ctor: '_Tuple2',
-					_0: {ctor: '[]'},
-					_1: true
-				},
-				_p25));
-	};
-};
-var _elm_community$list_extra$List_Extra$splitAt = F2(
-	function (n, xs) {
-		return {
-			ctor: '_Tuple2',
-			_0: A2(_elm_lang$core$List$take, n, xs),
-			_1: A2(_elm_lang$core$List$drop, n, xs)
-		};
-	});
-var _elm_community$list_extra$List_Extra$groupsOfVarying_ = F3(
-	function (listOflengths, list, accu) {
-		groupsOfVarying_:
-		while (true) {
-			var _p26 = {ctor: '_Tuple2', _0: listOflengths, _1: list};
-			if (((_p26.ctor === '_Tuple2') && (_p26._0.ctor === '::')) && (_p26._1.ctor === '::')) {
-				var _p27 = A2(_elm_community$list_extra$List_Extra$splitAt, _p26._0._0, list);
-				var head = _p27._0;
-				var tail = _p27._1;
-				var _v28 = _p26._0._1,
-					_v29 = tail,
-					_v30 = {ctor: '::', _0: head, _1: accu};
-				listOflengths = _v28;
-				list = _v29;
-				accu = _v30;
-				continue groupsOfVarying_;
-			} else {
-				return _elm_lang$core$List$reverse(accu);
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$groupsOfVarying = F2(
-	function (listOflengths, list) {
-		return A3(
-			_elm_community$list_extra$List_Extra$groupsOfVarying_,
-			listOflengths,
-			list,
-			{ctor: '[]'});
-	});
-var _elm_community$list_extra$List_Extra$unfoldr = F2(
-	function (f, seed) {
-		var _p28 = f(seed);
-		if (_p28.ctor === 'Nothing') {
-			return {ctor: '[]'};
-		} else {
-			return {
-				ctor: '::',
-				_0: _p28._0._0,
-				_1: A2(_elm_community$list_extra$List_Extra$unfoldr, f, _p28._0._1)
-			};
-		}
-	});
-var _elm_community$list_extra$List_Extra$mapAccumr = F3(
-	function (f, acc0, list) {
-		return A3(
-			_elm_lang$core$List$foldr,
-			F2(
-				function (x, _p29) {
-					var _p30 = _p29;
-					var _p31 = A2(f, _p30._0, x);
-					var acc2 = _p31._0;
-					var y = _p31._1;
-					return {
-						ctor: '_Tuple2',
-						_0: acc2,
-						_1: {ctor: '::', _0: y, _1: _p30._1}
-					};
-				}),
-			{
-				ctor: '_Tuple2',
-				_0: acc0,
-				_1: {ctor: '[]'}
-			},
-			list);
-	});
-var _elm_community$list_extra$List_Extra$mapAccuml = F3(
-	function (f, acc0, list) {
-		var _p32 = A3(
-			_elm_lang$core$List$foldl,
-			F2(
-				function (x, _p33) {
-					var _p34 = _p33;
-					var _p35 = A2(f, _p34._0, x);
-					var acc2 = _p35._0;
-					var y = _p35._1;
-					return {
-						ctor: '_Tuple2',
-						_0: acc2,
-						_1: {ctor: '::', _0: y, _1: _p34._1}
-					};
-				}),
-			{
-				ctor: '_Tuple2',
-				_0: acc0,
-				_1: {ctor: '[]'}
-			},
-			list);
-		var accFinal = _p32._0;
-		var generatedList = _p32._1;
-		return {
-			ctor: '_Tuple2',
-			_0: accFinal,
-			_1: _elm_lang$core$List$reverse(generatedList)
-		};
-	});
-var _elm_community$list_extra$List_Extra$scanr1 = F2(
-	function (f, xs_) {
-		var _p36 = xs_;
-		if (_p36.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			if (_p36._1.ctor === '[]') {
-				return {
-					ctor: '::',
-					_0: _p36._0,
-					_1: {ctor: '[]'}
-				};
-			} else {
-				var _p37 = A2(_elm_community$list_extra$List_Extra$scanr1, f, _p36._1);
-				if (_p37.ctor === '::') {
-					return {
-						ctor: '::',
-						_0: A2(f, _p36._0, _p37._0),
-						_1: _p37
-					};
-				} else {
-					return {ctor: '[]'};
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$scanr = F3(
-	function (f, acc, xs_) {
-		var _p38 = xs_;
-		if (_p38.ctor === '[]') {
-			return {
-				ctor: '::',
-				_0: acc,
-				_1: {ctor: '[]'}
-			};
-		} else {
-			var _p39 = A3(_elm_community$list_extra$List_Extra$scanr, f, acc, _p38._1);
-			if (_p39.ctor === '::') {
-				return {
-					ctor: '::',
-					_0: A2(f, _p38._0, _p39._0),
-					_1: _p39
-				};
-			} else {
-				return {ctor: '[]'};
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$scanl1 = F2(
-	function (f, xs_) {
-		var _p40 = xs_;
-		if (_p40.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			return A3(_elm_lang$core$List$scanl, f, _p40._0, _p40._1);
-		}
-	});
-var _elm_community$list_extra$List_Extra$indexedFoldr = F3(
-	function (func, acc, list) {
-		var step = F2(
-			function (x, _p41) {
-				var _p42 = _p41;
-				var _p43 = _p42._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _p43 - 1,
-					_1: A3(func, _p43, x, _p42._1)
-				};
-			});
-		return _elm_lang$core$Tuple$second(
-			A3(
-				_elm_lang$core$List$foldr,
-				step,
-				{
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$List$length(list) - 1,
-					_1: acc
-				},
-				list));
-	});
-var _elm_community$list_extra$List_Extra$indexedFoldl = F3(
-	function (func, acc, list) {
-		var step = F2(
-			function (x, _p44) {
-				var _p45 = _p44;
-				var _p46 = _p45._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _p46 + 1,
-					_1: A3(func, _p46, x, _p45._1)
-				};
-			});
-		return _elm_lang$core$Tuple$second(
-			A3(
-				_elm_lang$core$List$foldl,
-				step,
-				{ctor: '_Tuple2', _0: 0, _1: acc},
-				list));
-	});
-var _elm_community$list_extra$List_Extra$foldr1 = F2(
-	function (f, xs) {
-		var mf = F2(
-			function (x, m) {
-				return _elm_lang$core$Maybe$Just(
-					function () {
-						var _p47 = m;
-						if (_p47.ctor === 'Nothing') {
-							return x;
-						} else {
-							return A2(f, x, _p47._0);
-						}
-					}());
-			});
-		return A3(_elm_lang$core$List$foldr, mf, _elm_lang$core$Maybe$Nothing, xs);
-	});
-var _elm_community$list_extra$List_Extra$foldl1 = F2(
-	function (f, xs) {
-		var mf = F2(
-			function (x, m) {
-				return _elm_lang$core$Maybe$Just(
-					function () {
-						var _p48 = m;
-						if (_p48.ctor === 'Nothing') {
-							return x;
-						} else {
-							return A2(f, _p48._0, x);
-						}
-					}());
-			});
-		return A3(_elm_lang$core$List$foldl, mf, _elm_lang$core$Maybe$Nothing, xs);
-	});
-var _elm_community$list_extra$List_Extra$reverseAppend = F2(
-	function (list1, list2) {
-		return A3(
-			_elm_lang$core$List$foldl,
-			F2(
-				function (x, y) {
-					return {ctor: '::', _0: x, _1: y};
-				}),
-			list2,
-			list1);
-	});
-var _elm_community$list_extra$List_Extra$interweaveHelp = F3(
-	function (acc, list1, list2) {
-		interweaveHelp:
-		while (true) {
-			var _p49 = {ctor: '_Tuple2', _0: list1, _1: list2};
-			if (_p49._0.ctor === '::') {
-				if (_p49._1.ctor === '::') {
-					var _v44 = {
-						ctor: '::',
-						_0: _p49._1._0,
-						_1: {ctor: '::', _0: _p49._0._0, _1: acc}
-					},
-						_v45 = _p49._0._1,
-						_v46 = _p49._1._1;
-					acc = _v44;
-					list1 = _v45;
-					list2 = _v46;
-					continue interweaveHelp;
-				} else {
-					return A2(_elm_community$list_extra$List_Extra$reverseAppend, acc, list1);
-				}
-			} else {
-				return A2(_elm_community$list_extra$List_Extra$reverseAppend, acc, list2);
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$interweave = _elm_community$list_extra$List_Extra$interweaveHelp(
-	{ctor: '[]'});
-var _elm_community$list_extra$List_Extra$permutations = function (xs_) {
-	var _p50 = xs_;
-	if (_p50.ctor === '[]') {
-		return {
-			ctor: '::',
-			_0: {ctor: '[]'},
-			_1: {ctor: '[]'}
-		};
-	} else {
-		var f = function (_p51) {
-			var _p52 = _p51;
-			return A2(
-				_elm_lang$core$List$map,
-				F2(
-					function (x, y) {
-						return {ctor: '::', _0: x, _1: y};
-					})(_p52._0),
-				_elm_community$list_extra$List_Extra$permutations(_p52._1));
-		};
+var author$project$Graphql$Generator$InputObjectFile$generateImports = F2(
+	function (context, fields) {
+		var apiSubmodule = context.apiSubmodule;
 		return A2(
-			_elm_lang$core$List$concatMap,
-			f,
-			_elm_community$list_extra$List_Extra$select(_p50));
-	}
-};
-var _elm_community$list_extra$List_Extra$isPermutationOf = F2(
-	function (permut, xs) {
-		return A2(
-			_elm_lang$core$List$member,
-			permut,
-			_elm_community$list_extra$List_Extra$permutations(xs));
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{0}\n',
+			_List_fromArray(
+				[
+					A3(
+					author$project$Graphql$Generator$Imports$importsString,
+					apiSubmodule,
+					author$project$Graphql$Generator$InputObjectFile$moduleName(context),
+					fields),
+					A2(elm$core$String$join, '.', apiSubmodule)
+				]));
 	});
-var _elm_community$list_extra$List_Extra$subsequencesNonEmpty = function (xs) {
-	var _p53 = xs;
-	if (_p53.ctor === '[]') {
-		return {ctor: '[]'};
-	} else {
-		var _p54 = _p53._0;
-		var f = F2(
-			function (ys, r) {
-				return {
-					ctor: '::',
-					_0: ys,
-					_1: {
-						ctor: '::',
-						_0: {ctor: '::', _0: _p54, _1: ys},
-						_1: r
-					}
-				};
-			});
-		return {
-			ctor: '::',
-			_0: {
-				ctor: '::',
-				_0: _p54,
-				_1: {ctor: '[]'}
-			},
-			_1: A3(
-				_elm_lang$core$List$foldr,
-				f,
-				{ctor: '[]'},
-				_elm_community$list_extra$List_Extra$subsequencesNonEmpty(_p53._1))
-		};
-	}
-};
-var _elm_community$list_extra$List_Extra$subsequences = function (xs) {
-	return {
-		ctor: '::',
-		_0: {ctor: '[]'},
-		_1: _elm_community$list_extra$List_Extra$subsequencesNonEmpty(xs)
-	};
-};
-var _elm_community$list_extra$List_Extra$rowsLength = function (listOfLists) {
-	var _p55 = listOfLists;
-	if (_p55.ctor === '[]') {
-		return 0;
-	} else {
-		return _elm_lang$core$List$length(_p55._0);
-	}
-};
-var _elm_community$list_extra$List_Extra$transpose = function (listOfLists) {
-	return A3(
-		_elm_lang$core$List$foldr,
-		_elm_lang$core$List$map2(
-			F2(
-				function (x, y) {
-					return {ctor: '::', _0: x, _1: y};
-				})),
-		A2(
-			_elm_lang$core$List$repeat,
-			_elm_community$list_extra$List_Extra$rowsLength(listOfLists),
-			{ctor: '[]'}),
-		listOfLists);
-};
-var _elm_community$list_extra$List_Extra$intercalate = function (xs) {
-	return function (_p56) {
-		return _elm_lang$core$List$concat(
-			A2(_elm_lang$core$List$intersperse, xs, _p56));
-	};
-};
-var _elm_community$list_extra$List_Extra$filterNot = F2(
-	function (pred, list) {
-		return A2(
-			_elm_lang$core$List$filter,
-			function (_p57) {
-				return !pred(_p57);
-			},
-			list);
-	});
-var _elm_community$list_extra$List_Extra$removeIfIndex = function (predicate) {
-	return A2(
-		_elm_community$list_extra$List_Extra$indexedFoldr,
-		F3(
-			function (index, item, acc) {
-				return predicate(index) ? acc : {ctor: '::', _0: item, _1: acc};
-			}),
-		{ctor: '[]'});
-};
-var _elm_community$list_extra$List_Extra$removeAt = F2(
-	function (index, l) {
-		if (_elm_lang$core$Native_Utils.cmp(index, 0) < 0) {
-			return l;
-		} else {
-			var tail = _elm_lang$core$List$tail(
-				A2(_elm_lang$core$List$drop, index, l));
-			var head = A2(_elm_lang$core$List$take, index, l);
-			var _p58 = tail;
-			if (_p58.ctor === 'Nothing') {
-				return l;
-			} else {
-				return A2(_elm_lang$core$List$append, head, _p58._0);
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$stableSortWith = F2(
-	function (pred, list) {
-		var predWithIndex = F2(
-			function (_p60, _p59) {
-				var _p61 = _p60;
-				var _p62 = _p59;
-				var result = A2(pred, _p61._0, _p62._0);
-				var _p63 = result;
-				if (_p63.ctor === 'EQ') {
-					return A2(_elm_lang$core$Basics$compare, _p61._1, _p62._1);
-				} else {
-					return result;
-				}
-			});
-		var listWithIndex = A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (i, a) {
-					return {ctor: '_Tuple2', _0: a, _1: i};
-				}),
-			list);
-		return A2(
-			_elm_lang$core$List$map,
-			_elm_lang$core$Tuple$first,
-			A2(_elm_lang$core$List$sortWith, predWithIndex, listWithIndex));
-	});
-var _elm_community$list_extra$List_Extra$remove = F2(
-	function (x, xs) {
-		var _p64 = xs;
-		if (_p64.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			var _p66 = _p64._1;
-			var _p65 = _p64._0;
-			return _elm_lang$core$Native_Utils.eq(x, _p65) ? _p66 : {
-				ctor: '::',
-				_0: _p65,
-				_1: A2(_elm_community$list_extra$List_Extra$remove, x, _p66)
-			};
-		}
-	});
-var _elm_community$list_extra$List_Extra$updateIfIndex = F3(
-	function (predicate, update, list) {
-		return A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (i, x) {
-					return predicate(i) ? update(x) : x;
-				}),
-			list);
-	});
-var _elm_community$list_extra$List_Extra$updateAt = F3(
-	function (index, fn, list) {
-		if (_elm_lang$core$Native_Utils.cmp(index, 0) < 0) {
-			return list;
-		} else {
-			var tail = A2(_elm_lang$core$List$drop, index, list);
-			var head = A2(_elm_lang$core$List$take, index, list);
-			var _p67 = tail;
-			if (_p67.ctor === '::') {
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					head,
-					{
-						ctor: '::',
-						_0: fn(_p67._0),
-						_1: _p67._1
-					});
-			} else {
-				return list;
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$setAt = F2(
-	function (index, value) {
-		return A2(
-			_elm_community$list_extra$List_Extra$updateAt,
-			index,
-			_elm_lang$core$Basics$always(value));
-	});
-var _elm_community$list_extra$List_Extra$updateIf = F3(
-	function (predicate, update, list) {
-		return A2(
-			_elm_lang$core$List$map,
-			function (item) {
-				return predicate(item) ? update(item) : item;
-			},
-			list);
-	});
-var _elm_community$list_extra$List_Extra$replaceIf = F3(
-	function (predicate, replacement, list) {
-		return A3(
-			_elm_community$list_extra$List_Extra$updateIf,
-			predicate,
-			_elm_lang$core$Basics$always(replacement),
-			list);
-	});
-var _elm_community$list_extra$List_Extra$count = function (predicate) {
-	return A2(
-		_elm_lang$core$List$foldl,
-		F2(
-			function (x, acc) {
-				return predicate(x) ? (acc + 1) : acc;
-			}),
-		0);
-};
-var _elm_community$list_extra$List_Extra$findIndices = function (predicate) {
-	var consIndexIf = F3(
-		function (index, x, acc) {
-			return predicate(x) ? {ctor: '::', _0: index, _1: acc} : acc;
-		});
-	return A2(
-		_elm_community$list_extra$List_Extra$indexedFoldr,
-		consIndexIf,
-		{ctor: '[]'});
-};
-var _elm_community$list_extra$List_Extra$findIndexHelp = F3(
-	function (index, predicate, list) {
-		findIndexHelp:
-		while (true) {
-			var _p68 = list;
-			if (_p68.ctor === '[]') {
-				return _elm_lang$core$Maybe$Nothing;
-			} else {
-				if (predicate(_p68._0)) {
-					return _elm_lang$core$Maybe$Just(index);
-				} else {
-					var _v58 = index + 1,
-						_v59 = predicate,
-						_v60 = _p68._1;
-					index = _v58;
-					predicate = _v59;
-					list = _v60;
-					continue findIndexHelp;
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$findIndex = _elm_community$list_extra$List_Extra$findIndexHelp(0);
-var _elm_community$list_extra$List_Extra$splitWhen = F2(
-	function (predicate, list) {
-		return A2(
-			_elm_lang$core$Maybe$map,
-			function (i) {
-				return A2(_elm_community$list_extra$List_Extra$splitAt, i, list);
-			},
-			A2(_elm_community$list_extra$List_Extra$findIndex, predicate, list));
-	});
-var _elm_community$list_extra$List_Extra$elemIndices = function (x) {
-	return _elm_community$list_extra$List_Extra$findIndices(
-		F2(
-			function (x, y) {
-				return _elm_lang$core$Native_Utils.eq(x, y);
-			})(x));
-};
-var _elm_community$list_extra$List_Extra$elemIndex = function (x) {
-	return _elm_community$list_extra$List_Extra$findIndex(
-		F2(
-			function (x, y) {
-				return _elm_lang$core$Native_Utils.eq(x, y);
-			})(x));
-};
-var _elm_community$list_extra$List_Extra$find = F2(
-	function (predicate, list) {
-		find:
-		while (true) {
-			var _p69 = list;
-			if (_p69.ctor === '[]') {
-				return _elm_lang$core$Maybe$Nothing;
-			} else {
-				var _p70 = _p69._0;
-				if (predicate(_p70)) {
-					return _elm_lang$core$Maybe$Just(_p70);
-				} else {
-					var _v62 = predicate,
-						_v63 = _p69._1;
-					predicate = _v62;
-					list = _v63;
-					continue find;
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$notMember = function (x) {
-	return function (_p71) {
-		return !A2(_elm_lang$core$List$member, x, _p71);
-	};
-};
-var _elm_community$list_extra$List_Extra$reverseMap = F2(
-	function (f, xs) {
-		return A3(
-			_elm_lang$core$List$foldl,
-			F2(
-				function (x, acc) {
-					return {
-						ctor: '::',
-						_0: f(x),
-						_1: acc
-					};
-				}),
-			{ctor: '[]'},
-			xs);
-	});
-var _elm_community$list_extra$List_Extra$andThen = _elm_lang$core$List$concatMap;
-var _elm_community$list_extra$List_Extra$lift2 = F3(
-	function (f, la, lb) {
-		return A2(
-			_elm_community$list_extra$List_Extra$andThen,
-			function (a) {
-				return A2(
-					_elm_community$list_extra$List_Extra$andThen,
-					function (b) {
-						return {
-							ctor: '::',
-							_0: A2(f, a, b),
-							_1: {ctor: '[]'}
-						};
-					},
-					lb);
-			},
-			la);
-	});
-var _elm_community$list_extra$List_Extra$cartesianProduct = function (ll) {
-	var _p72 = ll;
-	if (_p72.ctor === '[]') {
-		return {
-			ctor: '::',
-			_0: {ctor: '[]'},
-			_1: {ctor: '[]'}
-		};
-	} else {
-		return A3(
-			_elm_community$list_extra$List_Extra$lift2,
-			F2(
-				function (x, y) {
-					return {ctor: '::', _0: x, _1: y};
-				}),
-			_p72._0,
-			_elm_community$list_extra$List_Extra$cartesianProduct(_p72._1));
-	}
-};
-var _elm_community$list_extra$List_Extra$lift3 = F4(
-	function (f, la, lb, lc) {
-		return A2(
-			_elm_community$list_extra$List_Extra$andThen,
-			function (a) {
-				return A2(
-					_elm_community$list_extra$List_Extra$andThen,
-					function (b) {
-						return A2(
-							_elm_community$list_extra$List_Extra$andThen,
-							function (c) {
-								return {
-									ctor: '::',
-									_0: A3(f, a, b, c),
-									_1: {ctor: '[]'}
-								};
-							},
-							lc);
-					},
-					lb);
-			},
-			la);
-	});
-var _elm_community$list_extra$List_Extra$lift4 = F5(
-	function (f, la, lb, lc, ld) {
-		return A2(
-			_elm_community$list_extra$List_Extra$andThen,
-			function (a) {
-				return A2(
-					_elm_community$list_extra$List_Extra$andThen,
-					function (b) {
-						return A2(
-							_elm_community$list_extra$List_Extra$andThen,
-							function (c) {
-								return A2(
-									_elm_community$list_extra$List_Extra$andThen,
-									function (d) {
-										return {
-											ctor: '::',
-											_0: A4(f, a, b, c, d),
-											_1: {ctor: '[]'}
-										};
-									},
-									ld);
-							},
-							lc);
-					},
-					lb);
-			},
-			la);
-	});
-var _elm_community$list_extra$List_Extra$andMap = F2(
-	function (l, fl) {
-		return A3(
-			_elm_lang$core$List$map2,
-			F2(
-				function (x, y) {
-					return x(y);
-				}),
-			fl,
-			l);
-	});
-var _elm_community$list_extra$List_Extra$uniqueHelp = F4(
-	function (f, existing, remaining, accumulator) {
-		uniqueHelp:
-		while (true) {
-			var _p73 = remaining;
-			if (_p73.ctor === '[]') {
-				return _elm_lang$core$List$reverse(accumulator);
-			} else {
-				var _p75 = _p73._1;
-				var _p74 = _p73._0;
-				var computedFirst = f(_p74);
-				if (A2(_elm_lang$core$Set$member, computedFirst, existing)) {
-					var _v66 = f,
-						_v67 = existing,
-						_v68 = _p75,
-						_v69 = accumulator;
-					f = _v66;
-					existing = _v67;
-					remaining = _v68;
-					accumulator = _v69;
-					continue uniqueHelp;
-				} else {
-					var _v70 = f,
-						_v71 = A2(_elm_lang$core$Set$insert, computedFirst, existing),
-						_v72 = _p75,
-						_v73 = {ctor: '::', _0: _p74, _1: accumulator};
-					f = _v70;
-					existing = _v71;
-					remaining = _v72;
-					accumulator = _v73;
-					continue uniqueHelp;
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$uniqueBy = F2(
-	function (f, list) {
-		return A4(
-			_elm_community$list_extra$List_Extra$uniqueHelp,
-			f,
-			_elm_lang$core$Set$empty,
-			list,
-			{ctor: '[]'});
-	});
-var _elm_community$list_extra$List_Extra$allDifferentBy = F2(
-	function (f, list) {
-		return _elm_lang$core$Native_Utils.eq(
-			_elm_lang$core$List$length(list),
-			_elm_lang$core$List$length(
-				A2(_elm_community$list_extra$List_Extra$uniqueBy, f, list)));
-	});
-var _elm_community$list_extra$List_Extra$allDifferent = function (list) {
-	return A2(_elm_community$list_extra$List_Extra$allDifferentBy, _elm_lang$core$Basics$identity, list);
-};
-var _elm_community$list_extra$List_Extra$unique = function (list) {
-	return A4(
-		_elm_community$list_extra$List_Extra$uniqueHelp,
-		_elm_lang$core$Basics$identity,
-		_elm_lang$core$Set$empty,
-		list,
-		{ctor: '[]'});
-};
-var _elm_community$list_extra$List_Extra$dropWhile = F2(
-	function (predicate, list) {
-		dropWhile:
-		while (true) {
-			var _p76 = list;
-			if (_p76.ctor === '[]') {
-				return {ctor: '[]'};
-			} else {
-				if (predicate(_p76._0)) {
-					var _v75 = predicate,
-						_v76 = _p76._1;
-					predicate = _v75;
-					list = _v76;
-					continue dropWhile;
-				} else {
-					return list;
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$takeWhile = function (predicate) {
-	var takeWhileMemo = F2(
-		function (memo, list) {
-			takeWhileMemo:
-			while (true) {
-				var _p77 = list;
-				if (_p77.ctor === '[]') {
-					return _elm_lang$core$List$reverse(memo);
-				} else {
-					var _p78 = _p77._0;
-					if (predicate(_p78)) {
-						var _v78 = {ctor: '::', _0: _p78, _1: memo},
-							_v79 = _p77._1;
-						memo = _v78;
-						list = _v79;
-						continue takeWhileMemo;
-					} else {
-						return _elm_lang$core$List$reverse(memo);
-					}
-				}
-			}
-		});
-	return takeWhileMemo(
-		{ctor: '[]'});
-};
-var _elm_community$list_extra$List_Extra$span = F2(
-	function (p, xs) {
-		return {
-			ctor: '_Tuple2',
-			_0: A2(_elm_community$list_extra$List_Extra$takeWhile, p, xs),
-			_1: A2(_elm_community$list_extra$List_Extra$dropWhile, p, xs)
-		};
-	});
-var _elm_community$list_extra$List_Extra$break = function (p) {
-	return _elm_community$list_extra$List_Extra$span(
-		function (_p79) {
-			return !p(_p79);
-		});
-};
-var _elm_community$list_extra$List_Extra$groupWhile = F2(
-	function (eq, xs_) {
-		var _p80 = xs_;
-		if (_p80.ctor === '[]') {
-			return {ctor: '[]'};
-		} else {
-			var _p82 = _p80._0;
-			var _p81 = A2(
-				_elm_community$list_extra$List_Extra$span,
-				eq(_p82),
-				_p80._1);
-			var ys = _p81._0;
-			var zs = _p81._1;
-			return {
-				ctor: '::',
-				_0: {ctor: '::', _0: _p82, _1: ys},
-				_1: A2(_elm_community$list_extra$List_Extra$groupWhile, eq, zs)
-			};
-		}
-	});
-var _elm_community$list_extra$List_Extra$group = _elm_community$list_extra$List_Extra$groupWhile(
-	F2(
-		function (x, y) {
-			return _elm_lang$core$Native_Utils.eq(x, y);
-		}));
-var _elm_community$list_extra$List_Extra$minimumBy = F2(
-	function (f, ls) {
-		var minBy = F2(
-			function (x, _p83) {
-				var _p84 = _p83;
-				var _p85 = _p84._1;
-				var fx = f(x);
-				return (_elm_lang$core$Native_Utils.cmp(fx, _p85) < 0) ? {ctor: '_Tuple2', _0: x, _1: fx} : {ctor: '_Tuple2', _0: _p84._0, _1: _p85};
-			});
-		var _p86 = ls;
-		if (_p86.ctor === '::') {
-			if (_p86._1.ctor === '[]') {
-				return _elm_lang$core$Maybe$Just(_p86._0);
-			} else {
-				var _p87 = _p86._0;
-				return _elm_lang$core$Maybe$Just(
-					_elm_lang$core$Tuple$first(
-						A3(
-							_elm_lang$core$List$foldl,
-							minBy,
-							{
-								ctor: '_Tuple2',
-								_0: _p87,
-								_1: f(_p87)
-							},
-							_p86._1)));
-			}
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _elm_community$list_extra$List_Extra$maximumBy = F2(
-	function (f, ls) {
-		var maxBy = F2(
-			function (x, _p88) {
-				var _p89 = _p88;
-				var _p90 = _p89._1;
-				var fx = f(x);
-				return (_elm_lang$core$Native_Utils.cmp(fx, _p90) > 0) ? {ctor: '_Tuple2', _0: x, _1: fx} : {ctor: '_Tuple2', _0: _p89._0, _1: _p90};
-			});
-		var _p91 = ls;
-		if (_p91.ctor === '::') {
-			if (_p91._1.ctor === '[]') {
-				return _elm_lang$core$Maybe$Just(_p91._0);
-			} else {
-				var _p92 = _p91._0;
-				return _elm_lang$core$Maybe$Just(
-					_elm_lang$core$Tuple$first(
-						A3(
-							_elm_lang$core$List$foldl,
-							maxBy,
-							{
-								ctor: '_Tuple2',
-								_0: _p92,
-								_1: f(_p92)
-							},
-							_p91._1)));
-			}
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _elm_community$list_extra$List_Extra$uncons = function (xs) {
-	var _p93 = xs;
-	if (_p93.ctor === '[]') {
-		return _elm_lang$core$Maybe$Nothing;
-	} else {
-		return _elm_lang$core$Maybe$Just(
-			{ctor: '_Tuple2', _0: _p93._0, _1: _p93._1});
-	}
-};
-var _elm_community$list_extra$List_Extra$swapAt = F3(
-	function (index1, index2, l) {
-		swapAt:
-		while (true) {
-			if (_elm_lang$core$Native_Utils.eq(index1, index2) || (_elm_lang$core$Native_Utils.cmp(index1, 0) < 0)) {
-				return l;
-			} else {
-				if (_elm_lang$core$Native_Utils.cmp(index1, index2) > 0) {
-					var _v86 = index2,
-						_v87 = index1,
-						_v88 = l;
-					index1 = _v86;
-					index2 = _v87;
-					l = _v88;
-					continue swapAt;
-				} else {
-					var _p94 = A2(_elm_community$list_extra$List_Extra$splitAt, index1, l);
-					var part1 = _p94._0;
-					var tail1 = _p94._1;
-					var _p95 = A2(_elm_community$list_extra$List_Extra$splitAt, index2 - index1, tail1);
-					var head2 = _p95._0;
-					var tail2 = _p95._1;
-					var _p96 = {
-						ctor: '_Tuple2',
-						_0: _elm_community$list_extra$List_Extra$uncons(head2),
-						_1: _elm_community$list_extra$List_Extra$uncons(tail2)
-					};
-					if (((((_p96.ctor === '_Tuple2') && (_p96._0.ctor === 'Just')) && (_p96._0._0.ctor === '_Tuple2')) && (_p96._1.ctor === 'Just')) && (_p96._1._0.ctor === '_Tuple2')) {
-						return _elm_lang$core$List$concat(
-							{
-								ctor: '::',
-								_0: part1,
-								_1: {
-									ctor: '::',
-									_0: {ctor: '::', _0: _p96._1._0._0, _1: _p96._0._0._1},
-									_1: {
-										ctor: '::',
-										_0: {ctor: '::', _0: _p96._0._0._0, _1: _p96._1._0._1},
-										_1: {ctor: '[]'}
-									}
-								}
-							});
-					} else {
-						return l;
-					}
-				}
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$cycleHelp = F3(
-	function (acc, n, list) {
-		cycleHelp:
-		while (true) {
-			if (_elm_lang$core$Native_Utils.cmp(n, 0) > 0) {
-				var _v90 = A2(_elm_community$list_extra$List_Extra$reverseAppend, list, acc),
-					_v91 = n - 1,
-					_v92 = list;
-				acc = _v90;
-				n = _v91;
-				list = _v92;
-				continue cycleHelp;
-			} else {
-				return acc;
-			}
-		}
-	});
-var _elm_community$list_extra$List_Extra$cycle = F2(
-	function (len, list) {
-		var cycleLength = _elm_lang$core$List$length(list);
-		return (_elm_lang$core$Native_Utils.eq(cycleLength, 0) || _elm_lang$core$Native_Utils.eq(cycleLength, len)) ? list : ((_elm_lang$core$Native_Utils.cmp(cycleLength, len) < 0) ? _elm_lang$core$List$reverse(
-			A2(
-				_elm_community$list_extra$List_Extra$reverseAppend,
-				A2(
-					_elm_lang$core$List$take,
-					A2(_elm_lang$core$Basics$rem, len, cycleLength),
-					list),
-				A3(
-					_elm_community$list_extra$List_Extra$cycleHelp,
-					{ctor: '[]'},
-					(len / cycleLength) | 0,
-					list))) : A2(_elm_lang$core$List$take, len, list));
-	});
-var _elm_community$list_extra$List_Extra$initialize = F2(
-	function (n, f) {
-		var step = F2(
-			function (i, acc) {
-				step:
-				while (true) {
-					if (_elm_lang$core$Native_Utils.cmp(i, 0) < 0) {
-						return acc;
-					} else {
-						var _v93 = i - 1,
-							_v94 = {
-							ctor: '::',
-							_0: f(i),
-							_1: acc
-						};
-						i = _v93;
-						acc = _v94;
-						continue step;
-					}
-				}
-			});
-		return A2(
-			step,
-			n - 1,
-			{ctor: '[]'});
-	});
-var _elm_community$list_extra$List_Extra$iterate = F2(
-	function (f, x) {
-		var _p97 = f(x);
-		if (_p97.ctor === 'Just') {
-			return {
-				ctor: '::',
-				_0: x,
-				_1: A2(_elm_community$list_extra$List_Extra$iterate, f, _p97._0)
-			};
-		} else {
-			return {
-				ctor: '::',
-				_0: x,
-				_1: {ctor: '[]'}
-			};
-		}
-	});
-var _elm_community$list_extra$List_Extra$getAt = F2(
-	function (idx, xs) {
-		return (_elm_lang$core$Native_Utils.cmp(idx, 0) < 0) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$List$head(
-			A2(_elm_lang$core$List$drop, idx, xs));
-	});
-var _elm_community$list_extra$List_Extra_ops = _elm_community$list_extra$List_Extra_ops || {};
-_elm_community$list_extra$List_Extra_ops['!!'] = _elm_lang$core$Basics$flip(_elm_community$list_extra$List_Extra$getAt);
-var _elm_community$list_extra$List_Extra$init = function (items) {
-	var _p98 = items;
-	if (_p98.ctor === '[]') {
-		return _elm_lang$core$Maybe$Nothing;
-	} else {
-		return A2(
-			_elm_lang$core$Maybe$map,
-			_elm_lang$core$List$reverse,
-			_elm_lang$core$List$tail(
-				_elm_lang$core$List$reverse(_p98)));
-	}
-};
-var _elm_community$list_extra$List_Extra$last = function (items) {
-	last:
-	while (true) {
-		var _p99 = items;
-		if (_p99.ctor === '[]') {
-			return _elm_lang$core$Maybe$Nothing;
-		} else {
-			if (_p99._1.ctor === '[]') {
-				return _elm_lang$core$Maybe$Just(_p99._0);
-			} else {
-				var _v98 = _p99._1;
-				items = _v98;
-				continue last;
-			}
-		}
-	}
-};
-
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$hasRecursiveRef = F2(
+var author$project$Graphql$Generator$InputObjectLoops$hasRecursiveRef = F2(
 	function (inputObjectName, referrableType) {
 		hasRecursiveRef:
 		while (true) {
-			var _p0 = referrableType;
-			switch (_p0.ctor) {
+			switch (referrableType.$) {
 				case 'InputObjectRef':
-					return _elm_lang$core$Native_Utils.eq(inputObjectName, _p0._0);
+					var referredInputObjectName = referrableType.a;
+					return _Utils_eq(inputObjectName, referredInputObjectName);
 				case 'List':
-					var _p1 = _p0._0;
-					var _v2 = inputObjectName,
-						_v3 = _p1._0;
-					inputObjectName = _v2;
-					referrableType = _v3;
+					var listTypeRef = referrableType.a;
+					var listType = listTypeRef.a;
+					var isNullable = listTypeRef.b;
+					var $temp$inputObjectName = inputObjectName,
+						$temp$referrableType = listType;
+					inputObjectName = $temp$inputObjectName;
+					referrableType = $temp$referrableType;
 					continue hasRecursiveRef;
 				case 'Scalar':
 					return false;
@@ -14499,1338 +8824,1281 @@ var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$hasRecursiveRef
 			}
 		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$fieldIsRecursive = F2(
+var author$project$Graphql$Generator$InputObjectLoops$fieldIsRecursive = F2(
 	function (inputObjectName, field) {
-		var _p2 = field.typeRef;
-		return A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$hasRecursiveRef, inputObjectName, _p2._0);
+		var _n0 = field.typeRef;
+		var referrableType = _n0.a;
+		var isNullable = _n0.b;
+		return A2(author$project$Graphql$Generator$InputObjectLoops$hasRecursiveRef, inputObjectName, referrableType);
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$isRecursive = F2(
+var author$project$Graphql$Generator$InputObjectLoops$isRecursive = F2(
 	function (inputObjectName, fields) {
 		return A2(
-			_elm_lang$core$List$any,
-			_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$fieldIsRecursive(inputObjectName),
+			elm$core$List$any,
+			author$project$Graphql$Generator$InputObjectLoops$fieldIsRecursive(inputObjectName),
 			fields);
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$lookupInputObject = F2(
+var author$project$Graphql$Generator$InputObjectLoops$lookupInputObject = F2(
 	function (typeDefs, inputObjectName) {
-		return _elm_lang$core$List$head(
+		return elm$core$List$head(
 			A2(
-				_elm_lang$core$List$filterMap,
-				function (_p3) {
-					var _p4 = _p3;
-					var _p6 = _p4._0;
-					var _p5 = _p4._1;
-					if (_p5.ctor === 'InputObjectType') {
-						return _elm_lang$core$Native_Utils.eq(_p6, inputObjectName) ? _elm_lang$core$Maybe$Just(
-							{ctor: '_Tuple2', _0: _p6, _1: _p5._0}) : _elm_lang$core$Maybe$Nothing;
+				elm$core$List$filterMap,
+				function (_n0) {
+					var name = _n0.a;
+					var definableType = _n0.b;
+					var description = _n0.c;
+					if (definableType.$ === 'InputObjectType') {
+						var fields = definableType.a;
+						return _Utils_eq(name, inputObjectName) ? elm$core$Maybe$Just(
+							_Utils_Tuple2(name, fields)) : elm$core$Maybe$Nothing;
 					} else {
-						return _elm_lang$core$Maybe$Nothing;
+						return elm$core$Maybe$Nothing;
 					}
 				},
 				typeDefs));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$fieldIsCircular_ = F4(
+var elm$core$Set$Set_elm_builtin = function (a) {
+	return {$: 'Set_elm_builtin', a: a};
+};
+var elm$core$Set$empty = elm$core$Set$Set_elm_builtin(elm$core$Dict$empty);
+var elm$core$Set$insert = F2(
+	function (key, _n0) {
+		var dict = _n0.a;
+		return elm$core$Set$Set_elm_builtin(
+			A3(elm$core$Dict$insert, key, _Utils_Tuple0, dict));
+	});
+var elm$core$Dict$member = F2(
+	function (key, dict) {
+		var _n0 = A2(elm$core$Dict$get, key, dict);
+		if (_n0.$ === 'Just') {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var elm$core$Set$member = F2(
+	function (key, _n0) {
+		var dict = _n0.a;
+		return A2(elm$core$Dict$member, key, dict);
+	});
+var elm_community$list_extra$List$Extra$uniqueHelp = F4(
+	function (f, existing, remaining, accumulator) {
+		uniqueHelp:
+		while (true) {
+			if (!remaining.b) {
+				return elm$core$List$reverse(accumulator);
+			} else {
+				var first = remaining.a;
+				var rest = remaining.b;
+				var computedFirst = f(first);
+				if (A2(elm$core$Set$member, computedFirst, existing)) {
+					var $temp$f = f,
+						$temp$existing = existing,
+						$temp$remaining = rest,
+						$temp$accumulator = accumulator;
+					f = $temp$f;
+					existing = $temp$existing;
+					remaining = $temp$remaining;
+					accumulator = $temp$accumulator;
+					continue uniqueHelp;
+				} else {
+					var $temp$f = f,
+						$temp$existing = A2(elm$core$Set$insert, computedFirst, existing),
+						$temp$remaining = rest,
+						$temp$accumulator = A2(elm$core$List$cons, first, accumulator);
+					f = $temp$f;
+					existing = $temp$existing;
+					remaining = $temp$remaining;
+					accumulator = $temp$accumulator;
+					continue uniqueHelp;
+				}
+			}
+		}
+	});
+var elm_community$list_extra$List$Extra$uniqueBy = F2(
+	function (f, list) {
+		return A4(elm_community$list_extra$List$Extra$uniqueHelp, f, elm$core$Set$empty, list, _List_Nil);
+	});
+var elm_community$list_extra$List$Extra$allDifferentBy = F2(
+	function (f, list) {
+		return _Utils_eq(
+			elm$core$List$length(list),
+			elm$core$List$length(
+				A2(elm_community$list_extra$List$Extra$uniqueBy, f, list)));
+	});
+var elm_community$list_extra$List$Extra$allDifferent = function (list) {
+	return A2(elm_community$list_extra$List$Extra$allDifferentBy, elm$core$Basics$identity, list);
+};
+var author$project$Graphql$Generator$InputObjectLoops$fieldIsCircular_ = F4(
 	function (visitedNames, typeDefs, inputObjectName, fieldTypeRef) {
 		fieldIsCircular_:
 		while (true) {
-			var alreadyVisitedThis = _elm_community$list_extra$List_Extra$allDifferent(
-				A2(_elm_lang$core$List$map, _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw, visitedNames));
-			var _p7 = fieldTypeRef;
-			var _p8 = _p7._0;
-			switch (_p8.ctor) {
+			var alreadyVisitedThis = elm_community$list_extra$List$Extra$allDifferent(
+				A2(elm$core$List$map, author$project$Graphql$Parser$ClassCaseName$raw, visitedNames));
+			var referrableType = fieldTypeRef.a;
+			var isNullable = fieldTypeRef.b;
+			switch (referrableType.$) {
 				case 'InputObjectRef':
-					var _p9 = A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$lookupInputObject, typeDefs, _p8._0);
-					if (_p9.ctor === 'Just') {
-						var _p10 = _p9._0._1;
-						return (!alreadyVisitedThis) || (A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$isRecursive, inputObjectName, _p10) || A2(
-							_elm_lang$core$List$any,
+					var inputObjectRefName = referrableType.a;
+					var _n2 = A2(author$project$Graphql$Generator$InputObjectLoops$lookupInputObject, typeDefs, inputObjectRefName);
+					if (_n2.$ === 'Just') {
+						var _n3 = _n2.a;
+						var name = _n3.a;
+						var fields = _n3.b;
+						return (!alreadyVisitedThis) || (A2(author$project$Graphql$Generator$InputObjectLoops$isRecursive, inputObjectName, fields) || A2(
+							elm$core$List$any,
 							A3(
-								_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$fieldIsCircular_,
-								{ctor: '::', _0: inputObjectName, _1: visitedNames},
+								author$project$Graphql$Generator$InputObjectLoops$fieldIsCircular_,
+								A2(elm$core$List$cons, inputObjectName, visitedNames),
 								typeDefs,
 								inputObjectName),
 							A2(
-								_elm_lang$core$List$map,
-								function (_) {
-									return _.typeRef;
+								elm$core$List$map,
+								function ($) {
+									return $.typeRef;
 								},
-								_p10)));
+								fields)));
 					} else {
 						return false;
 					}
 				case 'List':
-					var _v10 = {ctor: '::', _0: inputObjectName, _1: visitedNames},
-						_v11 = typeDefs,
-						_v12 = inputObjectName,
-						_v13 = _p8._0;
-					visitedNames = _v10;
-					typeDefs = _v11;
-					inputObjectName = _v12;
-					fieldTypeRef = _v13;
+					var listTypeRef = referrableType.a;
+					var $temp$visitedNames = A2(elm$core$List$cons, inputObjectName, visitedNames),
+						$temp$typeDefs = typeDefs,
+						$temp$inputObjectName = inputObjectName,
+						$temp$fieldTypeRef = listTypeRef;
+					visitedNames = $temp$visitedNames;
+					typeDefs = $temp$typeDefs;
+					inputObjectName = $temp$inputObjectName;
+					fieldTypeRef = $temp$fieldTypeRef;
 					continue fieldIsCircular_;
 				default:
 					return false;
 			}
 		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$fieldIsCircular = F3(
+var author$project$Graphql$Generator$InputObjectLoops$fieldIsCircular = F3(
 	function (typeDefs, inputObjectName, fieldTypeRef) {
-		return A4(
-			_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$fieldIsCircular_,
-			{ctor: '[]'},
-			typeDefs,
-			inputObjectName,
-			fieldTypeRef);
+		return A4(author$project$Graphql$Generator$InputObjectLoops$fieldIsCircular_, _List_Nil, typeDefs, inputObjectName, fieldTypeRef);
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$hasLoop = F2(
-	function (typeDefs, _p11) {
-		var _p12 = _p11;
-		var _p13 = _p12._1;
-		if (_p13.ctor === 'InputObjectType') {
+var author$project$Graphql$Generator$InputObjectLoops$hasLoop = F2(
+	function (typeDefs, _n0) {
+		var name = _n0.a;
+		var definableType = _n0.b;
+		var description = _n0.c;
+		if (definableType.$ === 'InputObjectType') {
+			var fields = definableType.a;
 			return A2(
-				_elm_lang$core$List$any,
-				A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$fieldIsCircular, typeDefs, _p12._0),
+				elm$core$List$any,
+				A2(author$project$Graphql$Generator$InputObjectLoops$fieldIsCircular, typeDefs, name),
 				A2(
-					_elm_lang$core$List$map,
-					function (_) {
-						return _.typeRef;
+					elm$core$List$map,
+					function ($) {
+						return $.typeRef;
 					},
-					_p13._0));
+					fields));
 		} else {
 			return false;
 		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$any = function (typeDefs) {
-	return A2(
-		_elm_lang$core$List$any,
-		_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$hasLoop(typeDefs),
-		typeDefs);
-};
-
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$isInputObject = F2(
-	function (typeDefs, _p0) {
-		var _p1 = _p0;
-		var _p3 = _p1._1;
-		var _p2 = _p3;
-		if (_p2.ctor === 'InputObjectType') {
-			return _elm_lang$core$Maybe$Just(
+var author$project$Graphql$Generator$InputObjectFile$isInputObject = F2(
+	function (typeDefs, typeDef) {
+		var name = typeDef.a;
+		var definableType = typeDef.b;
+		var description = typeDef.c;
+		if (definableType.$ === 'InputObjectType') {
+			var fields = definableType.a;
+			return elm$core$Maybe$Just(
 				{
-					name: _p1._0,
-					definableType: _p3,
-					fields: _p2._0,
-					hasLoop: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectLoops$hasLoop, typeDefs, _p1)
+					definableType: definableType,
+					fields: fields,
+					hasLoop: A2(author$project$Graphql$Generator$InputObjectLoops$hasLoop, typeDefs, typeDef),
+					name: name
 				});
 		} else {
-			return _elm_lang$core$Maybe$Nothing;
+			return elm$core$Maybe$Nothing;
 		}
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$encoderFunction = F2(
-	function (_p4, field) {
-		var _p5 = _p4;
-		var _p6 = field.typeRef;
-		var filledOptionalsRecord = function () {
-			var _p7 = _p6._1;
-			if (_p7.ctor === 'NonNullable') {
-				return A2(
-					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-					' input.{0} |> Just',
-					{
-						ctor: '::',
-						_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(field.name),
-						_1: {ctor: '[]'}
-					});
-			} else {
-				return A2(
-					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-					' |> Encode.optional input.{0}',
-					{
-						ctor: '::',
-						_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(field.name),
-						_1: {ctor: '[]'}
-					});
-			}
-		}();
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'({0}) {1}',
-			{
-				ctor: '::',
-				_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateEncoderLowLevel, _p5.apiSubmodule, _p6._0),
-				_1: {
-					ctor: '::',
-					_0: filledOptionalsRecord,
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$encoderForField = F2(
-	function (context, field) {
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'( \"{0}\", {1} )',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$raw(field.name),
-				_1: {
-					ctor: '::',
-					_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$encoderFunction, context, field),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$encoder = F2(
-	function (context, _p8) {
-		var _p9 = _p8;
-		var _p10 = _p9.name;
-		var parameter = _p9.hasLoop ? A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'({0} input)',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p10),
-				_1: {ctor: '[]'}
-			}) : 'input';
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{-| Encode a {0} into a value that can be used as an argument.\n-}\nencode{0} : {0} -> Value\nencode{0} {1} =\n    Encode.maybeObject\n        [ {2} ]',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p10),
-				_1: {
-					ctor: '::',
-					_0: parameter,
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$String$join,
-							', ',
-							A2(
-								_elm_lang$core$List$map,
-								_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$encoderForField(context),
-								_p9.fields)),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$aliasEntry = F2(
-	function (_p11, field) {
-		var _p12 = _p11;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{0} : {1}',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(field.name),
-				_1: {
-					ctor: '::',
-					_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_Decoder$generateTypeForInputObject, _p12.apiSubmodule, field.typeRef),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$typeAlias = F2(
-	function (context, _p13) {
-		var _p14 = _p13;
-		var _p16 = _p14.name;
-		var _p15 = _p14.fields;
-		return _p14.hasLoop ? A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{-| Type alias for the `{0}` attributes. Note that this type\nneeds to use the `{0}` type (not just a plain type alias) because it has\nreferences to itself either directly (recursive) or indirectly (circular). See\n<https://github.com/dillonkearns/elm-graphql/issues/33>.\n-}\ntype alias {0}Raw =\n    { {1} }\n\n\n{-| Type for the {0} input object.\n-}\ntype {0}\n    = {0} {0}Raw\n    ',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p16),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						', ',
-						A2(
-							_elm_lang$core$List$map,
-							_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$aliasEntry(context),
-							_p15)),
-					_1: {ctor: '[]'}
-				}
-			}) : A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'{-| Type for the {0} input object.\n-}\ntype alias {0} =\n    { {1} }\n    ',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p16),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						', ',
-						A2(
-							_elm_lang$core$List$map,
-							_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$aliasEntry(context),
-							_p15)),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$filledOptionalsRecord = function (optionalFields) {
-	return A2(
-		_elm_lang$core$String$join,
-		', ',
-		A2(
-			_elm_lang$core$List$map,
-			function (fieldName) {
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					_dillonkearns$elm_graphql$Graphql_Parser_CamelCaseName$normalized(fieldName),
-					' = Absent');
-			},
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.name;
-				},
-				optionalFields)));
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generateEncoderAndAlias = F2(
-	function (context, inputObjectDetails) {
-		return A2(
-			_elm_lang$core$String$join,
-			'\n\n',
-			{
-				ctor: '::',
-				_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile_Constructor$generate, context, inputObjectDetails),
-				_1: {
-					ctor: '::',
-					_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$typeAlias, context, inputObjectDetails),
-					_1: {
-						ctor: '::',
-						_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$encoder, context, inputObjectDetails),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$moduleName = function (_p17) {
-	var _p18 = _p17;
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_p18.apiSubmodule,
-		{
-			ctor: '::',
-			_0: 'InputObject',
-			_1: {ctor: '[]'}
-		});
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generateImports = F2(
-	function (_p19, fields) {
-		var _p20 = _p19;
-		var _p21 = _p20.apiSubmodule;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{0}\n',
-			{
-				ctor: '::',
-				_0: A3(
-					_dillonkearns$elm_graphql$Graphql_Generator_Imports$importsString,
-					_p21,
-					_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$moduleName(_p20),
-					fields),
-				_1: {
-					ctor: '::',
-					_0: A2(_elm_lang$core$String$join, '.', _p21),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generateFileContents = F2(
+var author$project$Graphql$Generator$InputObjectFile$generateFileContents = F2(
 	function (context, typeDefinitions) {
 		var typesToGenerate = A2(
-			_elm_lang$core$List$filterMap,
-			_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$isInputObject(typeDefinitions),
+			elm$core$List$filterMap,
+			author$project$Graphql$Generator$InputObjectFile$isInputObject(typeDefinitions),
 			typeDefinitions);
 		var fields = A2(
-			_elm_lang$core$List$concatMap,
-			function (_) {
-				return _.fields;
+			elm$core$List$concatMap,
+			function ($) {
+				return $.fields;
 			},
 			typesToGenerate);
-		return _elm_lang$core$Native_Utils.eq(
-			typesToGenerate,
-			{ctor: '[]'}) ? A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$String$join,
+		return _Utils_eq(typesToGenerate, _List_Nil) ? A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    ""\n',
+			_List_fromArray(
+				[
+					A2(
+					elm$core$String$join,
 					'.',
-					_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$moduleName(context)),
-				_1: {ctor: '[]'}
-			}) : A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+					author$project$Graphql$Generator$InputObjectFile$moduleName(context))
+				])) : A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 			'module {0} exposing (..)\n\n\n{1}\n\n\n{2}\n',
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$String$join,
+			_List_fromArray(
+				[
+					A2(
+					elm$core$String$join,
 					'.',
-					_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$moduleName(context)),
-				_1: {
-					ctor: '::',
-					_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generateImports, context, fields),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$String$join,
-							'\n\n\n',
-							A2(
-								_elm_lang$core$List$map,
-								_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generateEncoderAndAlias(context),
-								typesToGenerate)),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
+					author$project$Graphql$Generator$InputObjectFile$moduleName(context)),
+					A2(author$project$Graphql$Generator$InputObjectFile$generateImports, context, fields),
+					A2(
+					elm$core$String$join,
+					'\n\n\n',
+					A2(
+						elm$core$List$map,
+						author$project$Graphql$Generator$InputObjectFile$generateEncoderAndAlias(context),
+						typesToGenerate))
+				]));
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generate = F2(
+var author$project$Graphql$Generator$InputObjectFile$generate = F2(
 	function (context, typeDefinitions) {
-		return {
-			ctor: '_Tuple2',
-			_0: _dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$moduleName(context),
-			_1: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generateFileContents, context, typeDefinitions)
-		};
+		return _Utils_Tuple2(
+			author$project$Graphql$Generator$InputObjectFile$moduleName(context),
+			A2(author$project$Graphql$Generator$InputObjectFile$generateFileContents, context, typeDefinitions));
 	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Interface$prepend = F3(
-	function (_p0, moduleName, fields) {
-		var _p1 = _p0;
-		var _p2 = _p1.apiSubmodule;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n{-| Select only common fields from the interface.\n-}\ncommonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\ncommonSelection constructor =\n    Object.selection constructor\n\n\n{-| Select both common and type-specific fields from the interface.\n-}\nselection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}\nselection constructor typeSpecificDecoders =\n    Object.interfaceSelection typeSpecificDecoders constructor\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '.', moduleName),
-				_1: {
-					ctor: '::',
-					_0: A3(_dillonkearns$elm_graphql$Graphql_Generator_Imports$importsString, _p2, moduleName, fields),
-					_1: {
-						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, '.', _p2),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Interface$fragment = F3(
-	function (context, moduleName, interfaceImplementor) {
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(interfaceImplementor),
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw(interfaceImplementor),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$String$join,
-							'.',
-							A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$object, context, interfaceImplementor)),
-						_1: {
-							ctor: '::',
-							_0: A2(_elm_lang$core$String$join, '.', moduleName),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Interface$fragments = F3(
-	function (context, implementors, moduleName) {
-		return A2(
-			_elm_lang$core$String$join,
-			'\n\n',
-			A2(
-				_elm_lang$core$List$map,
-				A2(_dillonkearns$elm_graphql$Graphql_Generator_Interface$fragment, context, moduleName),
-				implementors));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Interface$generate = F4(
-	function (context, name, moduleName, fields) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(_dillonkearns$elm_graphql$Graphql_Generator_Interface$prepend, context, moduleName, fields),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				A3(
-					_dillonkearns$elm_graphql$Graphql_Generator_Interface$fragments,
-					context,
-					A2(
-						_elm_lang$core$Maybe$withDefault,
-						{ctor: '[]'},
-						A2(_elm_lang$core$Dict$get, name, context.interfaces)),
-					moduleName),
-				A2(
-					_elm_lang$core$String$join,
-					'\n\n',
-					A2(
-						_elm_lang$core$List$map,
-						A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$generateForInterface, context, name),
-						fields))));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_StaticImports$all = function (_p0) {
-	var _p1 = _p0;
+var author$project$Graphql$Generator$Scalar$generateType = function (name) {
 	return A2(
-		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-		'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.Internal.Encode as Encode exposing (Value)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Json.Decode as Decode exposing (Decoder)\nimport {0}.Object\nimport {0}.Interface\nimport {0}.Union\nimport {0}.Scalar\nimport {0}.InputObject\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphql.Internal.Encode as Encode exposing (Value)',
-		{
-			ctor: '::',
-			_0: A2(_elm_lang$core$String$join, '.', _p1.apiSubmodule),
-			_1: {ctor: '[]'}
-		});
-};
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Mutation$prepend = F3(
-	function (_p0, moduleName, fields) {
-		var _p1 = _p0;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphql.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation\nselection constructor =\n    Object.selection constructor\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '.', moduleName),
-				_1: {
-					ctor: '::',
-					_0: A3(_dillonkearns$elm_graphql$Graphql_Generator_Imports$importsString, _p1.apiSubmodule, moduleName, fields),
-					_1: {
-						ctor: '::',
-						_0: _dillonkearns$elm_graphql$Graphql_Generator_StaticImports$all(_p1),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Mutation$generate = F3(
-	function (context, moduleName, fields) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(_dillonkearns$elm_graphql$Graphql_Generator_Mutation$prepend, context, moduleName, fields),
-			A2(
-				_elm_lang$core$String$join,
-				'\n\n',
-				A2(
-					_elm_lang$core$List$map,
-					A2(
-						_dillonkearns$elm_graphql$Graphql_Generator_Field$generateForObject,
-						context,
-						A2(
-							_elm_lang$core$Maybe$withDefault,
-							_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(''),
-							context.mutation)),
-					fields)));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Object$prepend = F3(
-	function (_p0, moduleName, fields) {
-		var _p1 = _p0;
-		var _p2 = _p1.apiSubmodule;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a SelectionSet for this object.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.selection constructor\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '.', moduleName),
-				_1: {
-					ctor: '::',
-					_0: A3(_dillonkearns$elm_graphql$Graphql_Generator_Imports$importsString, _p2, moduleName, fields),
-					_1: {
-						ctor: '::',
-						_0: A2(_elm_lang$core$String$join, '.', _p2),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Object$generate = F4(
-	function (context, name, moduleName, fields) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(_dillonkearns$elm_graphql$Graphql_Generator_Object$prepend, context, moduleName, fields),
-			A2(
-				_elm_lang$core$String$join,
-				'\n\n',
-				A2(
-					_elm_lang$core$List$map,
-					A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$generateForObject, context, name),
-					fields)));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Query$prepend = F3(
-	function (_p0, moduleName, fields) {
-		var _p1 = _p0;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level query. The request can be sent with\nfunctions from `Graphql.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery\nselection constructor =\n    Object.selection constructor\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '.', moduleName),
-				_1: {
-					ctor: '::',
-					_0: A3(_dillonkearns$elm_graphql$Graphql_Generator_Imports$importsString, _p1.apiSubmodule, moduleName, fields),
-					_1: {
-						ctor: '::',
-						_0: _dillonkearns$elm_graphql$Graphql_Generator_StaticImports$all(_p1),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Query$generate = F3(
-	function (context, moduleName, fields) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(_dillonkearns$elm_graphql$Graphql_Generator_Query$prepend, context, moduleName, fields),
-			A2(
-				_elm_lang$core$String$join,
-				'\n\n',
-				A2(
-					_elm_lang$core$List$map,
-					A2(_dillonkearns$elm_graphql$Graphql_Generator_Field$generateForObject, context, context.query),
-					fields)));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Scalar$generateType = function (name) {
-	return A2(
-		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 		'type {0}\n    = {0} String',
-		{
-			ctor: '::',
-			_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-			_1: {ctor: '[]'}
-		});
+		_List_fromArray(
+			[
+				author$project$Graphql$Parser$ClassCaseName$normalized(name)
+			]));
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Scalar$isScalar = function (definableType) {
-	var _p0 = definableType;
-	if (_p0.ctor === 'ScalarType') {
+var author$project$Graphql$Generator$Scalar$builtInNames = _List_fromArray(
+	['Boolean', 'String', 'Int', 'Float']);
+var author$project$Graphql$Generator$Scalar$isBuiltIn = function (name) {
+	return A2(
+		elm$core$List$member,
+		author$project$Graphql$Parser$ClassCaseName$raw(name),
+		author$project$Graphql$Generator$Scalar$builtInNames);
+};
+var author$project$Graphql$Generator$Scalar$isScalar = function (definableType) {
+	if (definableType.$ === 'ScalarType') {
 		return true;
 	} else {
 		return false;
 	}
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Scalar$builtInNames = {
-	ctor: '::',
-	_0: 'Boolean',
-	_1: {
-		ctor: '::',
-		_0: 'String',
-		_1: {
-			ctor: '::',
-			_0: 'Int',
-			_1: {
-				ctor: '::',
-				_0: 'Float',
-				_1: {ctor: '[]'}
-			}
-		}
-	}
+var elm$core$Basics$and = _Basics_and;
+var author$project$Graphql$Generator$Scalar$include = function (_n0) {
+	var name = _n0.a;
+	var definableType = _n0.b;
+	var description = _n0.c;
+	return author$project$Graphql$Generator$Scalar$isScalar(definableType) && (!author$project$Graphql$Generator$Scalar$isBuiltIn(name));
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_Scalar$isBuiltIn = function (name) {
-	return A2(
-		_elm_lang$core$List$member,
-		_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw(name),
-		_dillonkearns$elm_graphql$Graphql_Generator_Scalar$builtInNames);
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Scalar$include = function (_p1) {
-	var _p2 = _p1;
-	return _dillonkearns$elm_graphql$Graphql_Generator_Scalar$isScalar(_p2._1) && (!_dillonkearns$elm_graphql$Graphql_Generator_Scalar$isBuiltIn(_p2._0));
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Scalar$fileContents = F2(
+var author$project$Graphql$Generator$Scalar$fileContents = F2(
 	function (apiSubmodule, typeDefinitions) {
-		var moduleName = A2(
-			_elm_lang$core$String$join,
-			'.',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				apiSubmodule,
-				{
-					ctor: '::',
-					_0: 'Scalar',
-					_1: {ctor: '[]'}
-				}));
 		var typesToGenerate = A2(
-			_elm_lang$core$List$map,
-			function (_p3) {
-				var _p4 = _p3;
-				return _p4._0;
+			elm$core$List$map,
+			function (_n0) {
+				var name = _n0.a;
+				var definableType = _n0.b;
+				var description = _n0.c;
+				return name;
 			},
-			A2(_elm_lang$core$List$filter, _dillonkearns$elm_graphql$Graphql_Generator_Scalar$include, typeDefinitions));
-		return _elm_lang$core$Native_Utils.eq(
-			typesToGenerate,
-			{ctor: '[]'}) ? A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
-			{
-				ctor: '::',
-				_0: moduleName,
-				_1: {ctor: '[]'}
-			}) : A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\n\n{1}\n',
-			{
-				ctor: '::',
-				_0: moduleName,
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$String$join,
-						'\n\n\n',
-						A2(_elm_lang$core$List$map, _dillonkearns$elm_graphql$Graphql_Generator_Scalar$generateType, typesToGenerate)),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Scalar$generate = F2(
-	function (apiSubmodule, typeDefs) {
-		return {
-			ctor: '_Tuple2',
-			_0: A2(
-				_elm_lang$core$Basics_ops['++'],
+			A2(elm$core$List$filter, author$project$Graphql$Generator$Scalar$include, typeDefinitions));
+		var moduleName = A2(
+			elm$core$String$join,
+			'.',
+			_Utils_ap(
 				apiSubmodule,
-				{
-					ctor: '::',
-					_0: 'Scalar',
-					_1: {ctor: '[]'}
-				}),
-			_1: A2(_dillonkearns$elm_graphql$Graphql_Generator_Scalar$fileContents, apiSubmodule, typeDefs)
-		};
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Subscription$prepend = F3(
-	function (_p0, moduleName, fields) {
-		var _p1 = _p0;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\n{2}\n{1}\n\n\n{-| Select fields to build up a top-level mutation. The request can be sent with\nfunctions from `Graphql.Http`.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) RootSubscription\nselection constructor =\n    Object.selection constructor\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '.', moduleName),
-				_1: {
-					ctor: '::',
-					_0: A3(_dillonkearns$elm_graphql$Graphql_Generator_Imports$importsString, _p1.apiSubmodule, moduleName, fields),
-					_1: {
-						ctor: '::',
-						_0: _dillonkearns$elm_graphql$Graphql_Generator_StaticImports$all(_p1),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Subscription$generate = F3(
-	function (context, moduleName, fields) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(_dillonkearns$elm_graphql$Graphql_Generator_Subscription$prepend, context, moduleName, fields),
-			A2(
-				_elm_lang$core$String$join,
-				'\n\n',
-				A2(
-					_elm_lang$core$List$map,
+				_List_fromArray(
+					['Scalar'])));
+		return _Utils_eq(typesToGenerate, _List_Nil) ? A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    ""\n',
+			_List_fromArray(
+				[moduleName])) : A2(
+			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+			'module {0} exposing (..)\n\n\n{1}\n',
+			_List_fromArray(
+				[
+					moduleName,
 					A2(
-						_dillonkearns$elm_graphql$Graphql_Generator_Field$generateForObject,
-						context,
-						A2(
-							_elm_lang$core$Maybe$withDefault,
-							_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(''),
-							context.subscription)),
-					fields)));
+					elm$core$String$join,
+					'\n\n\n',
+					A2(elm$core$List$map, author$project$Graphql$Generator$Scalar$generateType, typesToGenerate))
+				]));
 	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$interfaceName = function (_p0) {
-	var _p1 = _p0;
-	var _p2 = _p1._1;
-	if (_p2.ctor === 'InterfaceType') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$unionName = function (_p3) {
-	var _p4 = _p3;
-	var _p5 = _p4._1;
-	if (_p5.ctor === 'UnionType') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$objectName = function (_p6) {
-	var _p7 = _p6;
-	var _p8 = _p7._1;
-	if (_p8.ctor === 'ObjectType') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generateType = function (name) {
+var author$project$Graphql$Generator$Scalar$generate = F2(
+	function (apiSubmodule, typeDefs) {
+		return _Utils_Tuple2(
+			_Utils_ap(
+				apiSubmodule,
+				_List_fromArray(
+					['Scalar'])),
+			A2(author$project$Graphql$Generator$Scalar$fileContents, apiSubmodule, typeDefs));
+	});
+var author$project$Graphql$Generator$TypeLockDefinitions$generateType = function (name) {
 	return A2(
-		_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 		'type {0}\n    = {0}',
-		{
-			ctor: '::',
-			_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(name),
-			_1: {ctor: '[]'}
-		});
+		_List_fromArray(
+			[
+				author$project$Graphql$Parser$ClassCaseName$normalized(name)
+			]));
 };
-var _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generateCommon = F4(
+var author$project$Graphql$Generator$TypeLockDefinitions$generateCommon = F4(
 	function (typeName, includeName, apiSubmodule, typeDefinitions) {
 		return function (fileContents) {
-			return {
-				ctor: '_Tuple2',
-				_0: A2(
-					_elm_lang$core$Basics_ops['++'],
+			return _Utils_Tuple2(
+				_Utils_ap(
 					apiSubmodule,
-					{
-						ctor: '::',
-						_0: typeName,
-						_1: {ctor: '[]'}
-					}),
-				_1: fileContents
-			};
+					_List_fromArray(
+						[typeName])),
+				fileContents);
 		}(
 			function () {
 				var typesToGenerate = A2(
-					_elm_lang$core$List$map,
-					function (_p9) {
-						var _p10 = _p9;
-						return _p10._0;
+					elm$core$List$map,
+					function (_n0) {
+						var name = _n0.a;
+						var definableType = _n0.b;
+						var description = _n0.c;
+						return name;
 					},
-					A2(_elm_lang$core$List$filter, includeName, typeDefinitions));
-				return _elm_lang$core$Native_Utils.eq(
-					typesToGenerate,
-					{ctor: '[]'}) ? A2(
-					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-					'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n',
-					{
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$String$join,
-							'.',
+					A2(elm$core$List$filter, includeName, typeDefinitions));
+				return _Utils_eq(typesToGenerate, _List_Nil) ? A2(
+					lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
+					'module {0} exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    ""\n',
+					_List_fromArray(
+						[
 							A2(
-								_elm_lang$core$Basics_ops['++'],
+							elm$core$String$join,
+							'.',
+							_Utils_ap(
 								apiSubmodule,
-								{
-									ctor: '::',
-									_0: typeName,
-									_1: {ctor: '[]'}
-								})),
-						_1: {ctor: '[]'}
-					}) : A2(
-					_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
+								_List_fromArray(
+									[typeName])))
+						])) : A2(
+					lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 					'module {0} exposing (..)\n\n\n{1}\n',
-					{
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$String$join,
-							'.',
+					_List_fromArray(
+						[
 							A2(
-								_elm_lang$core$Basics_ops['++'],
+							elm$core$String$join,
+							'.',
+							_Utils_ap(
 								apiSubmodule,
-								{
-									ctor: '::',
-									_0: typeName,
-									_1: {ctor: '[]'}
-								})),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$String$join,
-								'\n\n\n',
-								A2(_elm_lang$core$List$map, _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generateType, typesToGenerate)),
-							_1: {ctor: '[]'}
-						}
-					});
-			}());
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generate = F2(
-	function (apiSubmodule, typeDefs) {
-		return {
-			ctor: '::',
-			_0: A4(_dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generateCommon, 'Union', _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$unionName, apiSubmodule, typeDefs),
-			_1: {
-				ctor: '::',
-				_0: A4(_dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generateCommon, 'Object', _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$objectName, apiSubmodule, typeDefs),
-				_1: {
-					ctor: '::',
-					_0: A4(_dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generateCommon, 'Interface', _dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$interfaceName, apiSubmodule, typeDefs),
-					_1: {ctor: '[]'}
-				}
-			}
-		};
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Union$prepend = F2(
-	function (_p0, moduleName) {
-		var _p1 = _p0;
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport {1}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n\n\nselection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}\nselection constructor typeSpecificDecoders =\n    Object.unionSelection typeSpecificDecoders constructor\n',
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$String$join, '.', moduleName),
-				_1: {
-					ctor: '::',
-					_0: A2(_elm_lang$core$String$join, '.', _p1.apiSubmodule),
-					_1: {ctor: '[]'}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Union$fragment = F3(
-	function (context, moduleName, interfaceImplementor) {
-		return A2(
-			_lukewestby$elm_string_interpolate$String_Interpolate$interpolate,
-			'on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}\non{0} (SelectionSet fields decoder) =\n    FragmentSelectionSet \"{1}\" fields decoder\n',
-			{
-				ctor: '::',
-				_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(interfaceImplementor),
-				_1: {
-					ctor: '::',
-					_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw(interfaceImplementor),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$String$join,
-							'.',
-							A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$object, context, interfaceImplementor)),
-						_1: {
-							ctor: '::',
-							_0: A2(_elm_lang$core$String$join, '.', moduleName),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			});
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Union$fragments = F3(
-	function (context, implementors, moduleName) {
-		return A2(
-			_elm_lang$core$String$join,
-			'\n\n',
-			A2(
-				_elm_lang$core$List$map,
-				A2(_dillonkearns$elm_graphql$Graphql_Generator_Union$fragment, context, moduleName),
-				implementors));
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Union$generate = F4(
-	function (context, name, moduleName, possibleTypes) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(_dillonkearns$elm_graphql$Graphql_Generator_Union$prepend, context, moduleName),
-			A3(_dillonkearns$elm_graphql$Graphql_Generator_Union$fragments, context, possibleTypes, moduleName));
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$toPair = F2(
-	function (context, _p0) {
-		var _p1 = _p0;
-		var _p4 = _p1._0;
-		var moduleName = A2(_dillonkearns$elm_graphql$Graphql_Generator_ModuleName$generate, context, _p1);
-		return A2(
-			_elm_lang$core$Maybe$map,
-			function (fileContents) {
-				return {ctor: '_Tuple2', _0: moduleName, _1: fileContents};
-			},
-			function () {
-				var _p2 = _p1._1;
-				switch (_p2.ctor) {
-					case 'ObjectType':
-						var _p3 = _p2._0;
-						return _elm_lang$core$Native_Utils.eq(_p4, context.query) ? _elm_lang$core$Maybe$Just(
-							A3(_dillonkearns$elm_graphql$Graphql_Generator_Query$generate, context, moduleName, _p3)) : (_elm_lang$core$Native_Utils.eq(
-							_elm_lang$core$Maybe$Just(_p4),
-							context.mutation) ? _elm_lang$core$Maybe$Just(
-							A3(_dillonkearns$elm_graphql$Graphql_Generator_Mutation$generate, context, moduleName, _p3)) : (_elm_lang$core$Native_Utils.eq(
-							_elm_lang$core$Maybe$Just(_p4),
-							context.subscription) ? _elm_lang$core$Maybe$Just(
-							A3(_dillonkearns$elm_graphql$Graphql_Generator_Subscription$generate, context, moduleName, _p3)) : _elm_lang$core$Maybe$Just(
-							A4(_dillonkearns$elm_graphql$Graphql_Generator_Object$generate, context, _p4, moduleName, _p3))));
-					case 'ScalarType':
-						return _elm_lang$core$Maybe$Nothing;
-					case 'EnumType':
-						return _elm_lang$core$Maybe$Just(
-							A4(_dillonkearns$elm_graphql$Graphql_Generator_Enum$generate, _p4, moduleName, _p2._0, _p1._2));
-					case 'InterfaceType':
-						return _elm_lang$core$Maybe$Just(
-							A4(
-								_dillonkearns$elm_graphql$Graphql_Generator_Interface$generate,
-								context,
-								_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw(_p4),
-								moduleName,
-								_p2._0));
-					case 'UnionType':
-						return _elm_lang$core$Maybe$Just(
-							A4(_dillonkearns$elm_graphql$Graphql_Generator_Union$generate, context, _p4, moduleName, _p2._0));
-					default:
-						return _elm_lang$core$Maybe$Nothing;
-				}
-			}());
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$moduleToFileName = function (modulePath) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		A2(_elm_lang$core$String$join, '/', modulePath),
-		'.elm');
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$excludeSubscription = F2(
-	function (_p5, typeDefinitions) {
-		var _p6 = _p5;
-		var _p7 = _p6.subscription;
-		if (_p7.ctor === 'Just') {
-			return A2(
-				_elm_lang$core$List$filter,
-				function (_p8) {
-					var _p9 = _p8;
-					return !_elm_lang$core$Native_Utils.eq(_p9._0, _p7._0);
-				},
-				typeDefinitions);
-		} else {
-			return typeDefinitions;
-		}
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$excludeMutation = F2(
-	function (_p10, typeDefinitions) {
-		var _p11 = _p10;
-		var _p12 = _p11.mutation;
-		if (_p12.ctor === 'Just') {
-			return A2(
-				_elm_lang$core$List$filter,
-				function (_p13) {
-					var _p14 = _p13;
-					return !_elm_lang$core$Native_Utils.eq(_p14._0, _p12._0);
-				},
-				typeDefinitions);
-		} else {
-			return typeDefinitions;
-		}
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$excludeQuery = F2(
-	function (_p15, typeDefinitions) {
-		var _p16 = _p15;
-		return A2(
-			_elm_lang$core$List$filter,
-			function (_p17) {
-				var _p18 = _p17;
-				return !_elm_lang$core$Native_Utils.eq(_p18._0, _p16.query);
-			},
-			typeDefinitions);
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$excludeBuiltIns = function (typeDefinitions) {
-	return A2(
-		_elm_lang$core$List$filter,
-		function (_p19) {
-			var _p20 = _p19;
-			return !_dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$isBuiltIn(_p20._0);
-		},
-		typeDefinitions);
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$interfacePossibleTypesDict = function (typeDefs) {
-	return _elm_lang$core$Dict$fromList(
-		A2(
-			_elm_lang$core$List$filterMap,
-			function (_p21) {
-				var _p22 = _p21;
-				var _p23 = _p22._1;
-				if (_p23.ctor === 'InterfaceType') {
-					return _elm_lang$core$Maybe$Just(
-						{
-							ctor: '_Tuple2',
-							_0: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$raw(_p22._0),
-							_1: _p23._1
-						});
-				} else {
-					return _elm_lang$core$Maybe$Nothing;
-				}
-			},
-			typeDefs));
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$generateFiles = F2(
-	function (apiSubmodule, _p24) {
-		var _p25 = _p24;
-		var _p26 = _p25.typeDefinitions;
-		var context = {
-			query: _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build(_p25.queryObjectName),
-			mutation: A2(_elm_lang$core$Maybe$map, _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build, _p25.mutationObjectName),
-			subscription: A2(_elm_lang$core$Maybe$map, _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$build, _p25.subscriptionObjectName),
-			apiSubmodule: apiSubmodule,
-			interfaces: _dillonkearns$elm_graphql$Graphql_Generator_Group$interfacePossibleTypesDict(_p26)
-		};
-		var typeLockDefinitions = A2(
-			_dillonkearns$elm_graphql$Graphql_Generator_TypeLockDefinitions$generate,
-			apiSubmodule,
-			A2(
-				_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeSubscription,
-				context,
-				A2(
-					_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeMutation,
-					context,
-					A2(
-						_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeQuery,
-						context,
-						_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeBuiltIns(_p26)))));
-		var scalarDefinitions = A2(
-			_dillonkearns$elm_graphql$Graphql_Generator_Scalar$generate,
-			apiSubmodule,
-			A2(
-				_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeSubscription,
-				context,
-				A2(
-					_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeMutation,
-					context,
-					A2(
-						_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeQuery,
-						context,
-						_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeBuiltIns(_p26)))));
-		return _elm_lang$core$Dict$fromList(
-			A2(
-				_elm_lang$core$List$map,
-				_elm_lang$core$Tuple$mapFirst(_dillonkearns$elm_graphql$Graphql_Generator_Group$moduleToFileName),
-				A2(
-					_elm_lang$core$List$append,
-					{
-						ctor: '::',
-						_0: scalarDefinitions,
-						_1: {ctor: '[]'}
-					},
-					A2(
-						_elm_lang$core$List$append,
-						{
-							ctor: '::',
-							_0: A2(_dillonkearns$elm_graphql$Graphql_Generator_InputObjectFile$generate, context, _p26),
-							_1: {ctor: '[]'}
-						},
-						A2(
-							_elm_lang$core$List$append,
-							typeLockDefinitions,
+								_List_fromArray(
+									[typeName]))),
 							A2(
-								_elm_lang$core$List$filterMap,
-								_dillonkearns$elm_graphql$Graphql_Generator_Group$toPair(context),
-								_dillonkearns$elm_graphql$Graphql_Generator_Group$excludeBuiltIns(_p26)))))));
+							elm$core$String$join,
+							'\n\n\n',
+							A2(elm$core$List$map, author$project$Graphql$Generator$TypeLockDefinitions$generateType, typesToGenerate))
+						]));
+			}());
 	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$typeDefName = function (_p27) {
-	var _p28 = _p27;
-	return _dillonkearns$elm_graphql$Graphql_Parser_ClassCaseName$normalized(_p28._0);
-};
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$sortedIntrospectionData = F4(
-	function (typeDefinitions, queryObjectName, mutationObjectName, subscriptionObjectName) {
-		return {
-			typeDefinitions: A2(_elm_lang$core$List$sortBy, _dillonkearns$elm_graphql$Graphql_Generator_Group$typeDefName, typeDefinitions),
-			queryObjectName: queryObjectName,
-			mutationObjectName: mutationObjectName,
-			subscriptionObjectName: subscriptionObjectName
-		};
-	});
-var _dillonkearns$elm_graphql$Graphql_Generator_Group$IntrospectionData = F4(
-	function (a, b, c, d) {
-		return {typeDefinitions: a, queryObjectName: b, mutationObjectName: c, subscriptionObjectName: d};
-	});
-
-var _dillonkearns$elm_graphql$Graphql_Parser$decoder = function (baseModule) {
-	return A2(
-		_elm_lang$core$Json_Decode$map,
-		_dillonkearns$elm_graphql$Graphql_Generator_Group$generateFiles(baseModule),
-		A5(
-			_elm_lang$core$Json_Decode$map4,
-			_dillonkearns$elm_graphql$Graphql_Generator_Group$sortedIntrospectionData,
-			A2(
-				_elm_lang$core$Json_Decode$at,
-				{
-					ctor: '::',
-					_0: '__schema',
-					_1: {
-						ctor: '::',
-						_0: 'types',
-						_1: {ctor: '[]'}
-					}
-				},
-				_elm_lang$core$Json_Decode$list(_dillonkearns$elm_graphql$Graphql_Parser_Type$decoder)),
-			A2(
-				_elm_lang$core$Json_Decode$at,
-				{
-					ctor: '::',
-					_0: '__schema',
-					_1: {
-						ctor: '::',
-						_0: 'queryType',
-						_1: {
-							ctor: '::',
-							_0: 'name',
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				_elm_lang$core$Json_Decode$string),
-			_elm_lang$core$Json_Decode$maybe(
-				A2(
-					_elm_lang$core$Json_Decode$at,
-					{
-						ctor: '::',
-						_0: '__schema',
-						_1: {
-							ctor: '::',
-							_0: 'mutationType',
-							_1: {
-								ctor: '::',
-								_0: 'name',
-								_1: {ctor: '[]'}
-							}
-						}
-					},
-					_elm_lang$core$Json_Decode$string)),
-			_elm_lang$core$Json_Decode$maybe(
-				A2(
-					_elm_lang$core$Json_Decode$at,
-					{
-						ctor: '::',
-						_0: '__schema',
-						_1: {
-							ctor: '::',
-							_0: 'subscriptionType',
-							_1: {
-								ctor: '::',
-								_0: 'name',
-								_1: {ctor: '[]'}
-							}
-						}
-					},
-					_elm_lang$core$Json_Decode$string))));
-};
-
-var _elm_community$json_extra$Json_Encode_Extra$dict = F3(
-	function (toKey, toValue, dict) {
-		return _elm_lang$core$Json_Encode$object(
-			A2(
-				_elm_lang$core$List$map,
-				function (_p0) {
-					var _p1 = _p0;
-					return {
-						ctor: '_Tuple2',
-						_0: toKey(_p1._0),
-						_1: toValue(_p1._1)
-					};
-				},
-				_elm_lang$core$Dict$toList(dict)));
-	});
-var _elm_community$json_extra$Json_Encode_Extra$maybe = function (encoder) {
-	return function (_p2) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			_elm_lang$core$Json_Encode$null,
-			A2(_elm_lang$core$Maybe$map, encoder, _p2));
-	};
-};
-
-var _dillonkearns$elm_graphql$Main$workaround = _elm_lang$core$Json_Decode$string;
-var _dillonkearns$elm_graphql$Main$generatedFiles = _elm_lang$core$Native_Platform.outgoingPort(
-	'generatedFiles',
-	function (v) {
-		return v;
-	});
-var _dillonkearns$elm_graphql$Main$init = function (flags) {
-	var _p0 = A2(
-		_elm_lang$core$Json_Decode$decodeValue,
-		_dillonkearns$elm_graphql$Graphql_Parser$decoder(flags.baseModule),
-		flags.data);
-	if (_p0.ctor === 'Ok') {
-		return {
-			ctor: '_Tuple2',
-			_0: {ctor: '_Tuple0'},
-			_1: _dillonkearns$elm_graphql$Main$generatedFiles(
-				A3(_elm_community$json_extra$Json_Encode_Extra$dict, _elm_lang$core$Basics$identity, _elm_lang$core$Json_Encode$string, _p0._0))
-		};
+var author$project$Graphql$Generator$TypeLockDefinitions$interfaceName = function (_n0) {
+	var name = _n0.a;
+	var definableType = _n0.b;
+	var description = _n0.c;
+	if (definableType.$ === 'InterfaceType') {
+		return true;
 	} else {
-		return _elm_lang$core$Native_Utils.crashCase(
-			'Main',
-			{
-				start: {line: 30, column: 5},
-				end: {line: 39, column: 57}
-			},
-			_p0)(
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'Got error ',
-				_elm_lang$core$Basics$toString(_p0._0)));
+		return false;
 	}
 };
-var _dillonkearns$elm_graphql$Main$main = _elm_lang$core$Platform$programWithFlags(
+var author$project$Graphql$Generator$TypeLockDefinitions$objectName = function (_n0) {
+	var name = _n0.a;
+	var definableType = _n0.b;
+	var description = _n0.c;
+	if (definableType.$ === 'ObjectType') {
+		return true;
+	} else {
+		return false;
+	}
+};
+var author$project$Graphql$Generator$TypeLockDefinitions$unionName = function (_n0) {
+	var name = _n0.a;
+	var definableType = _n0.b;
+	var description = _n0.c;
+	if (definableType.$ === 'UnionType') {
+		return true;
+	} else {
+		return false;
+	}
+};
+var author$project$Graphql$Generator$TypeLockDefinitions$generate = F2(
+	function (apiSubmodule, typeDefs) {
+		return _List_fromArray(
+			[
+				A4(author$project$Graphql$Generator$TypeLockDefinitions$generateCommon, 'Union', author$project$Graphql$Generator$TypeLockDefinitions$unionName, apiSubmodule, typeDefs),
+				A4(author$project$Graphql$Generator$TypeLockDefinitions$generateCommon, 'Object', author$project$Graphql$Generator$TypeLockDefinitions$objectName, apiSubmodule, typeDefs),
+				A4(author$project$Graphql$Generator$TypeLockDefinitions$generateCommon, 'Interface', author$project$Graphql$Generator$TypeLockDefinitions$interfaceName, apiSubmodule, typeDefs)
+			]);
+	});
+var elm$core$Tuple$mapFirst = F2(
+	function (func, _n0) {
+		var x = _n0.a;
+		var y = _n0.b;
+		return _Utils_Tuple2(
+			func(x),
+			y);
+	});
+var author$project$Graphql$Generator$Group$generateFiles = F2(
+	function (apiSubmodule, _n0) {
+		var typeDefinitions = _n0.typeDefinitions;
+		var queryObjectName = _n0.queryObjectName;
+		var mutationObjectName = _n0.mutationObjectName;
+		var subscriptionObjectName = _n0.subscriptionObjectName;
+		var context = {
+			apiSubmodule: apiSubmodule,
+			interfaces: author$project$Graphql$Generator$Group$interfacePossibleTypesDict(typeDefinitions),
+			mutation: A2(elm$core$Maybe$map, author$project$Graphql$Parser$ClassCaseName$build, mutationObjectName),
+			query: author$project$Graphql$Parser$ClassCaseName$build(queryObjectName),
+			subscription: A2(elm$core$Maybe$map, author$project$Graphql$Parser$ClassCaseName$build, subscriptionObjectName)
+		};
+		var scalarDefinitions = A2(
+			author$project$Graphql$Generator$Scalar$generate,
+			apiSubmodule,
+			A2(
+				author$project$Graphql$Generator$Group$excludeSubscription,
+				context,
+				A2(
+					author$project$Graphql$Generator$Group$excludeMutation,
+					context,
+					A2(
+						author$project$Graphql$Generator$Group$excludeQuery,
+						context,
+						author$project$Graphql$Generator$Group$excludeBuiltIns(typeDefinitions)))));
+		var typeLockDefinitions = A2(
+			author$project$Graphql$Generator$TypeLockDefinitions$generate,
+			apiSubmodule,
+			A2(
+				author$project$Graphql$Generator$Group$excludeSubscription,
+				context,
+				A2(
+					author$project$Graphql$Generator$Group$excludeMutation,
+					context,
+					A2(
+						author$project$Graphql$Generator$Group$excludeQuery,
+						context,
+						author$project$Graphql$Generator$Group$excludeBuiltIns(typeDefinitions)))));
+		return elm$core$Dict$fromList(
+			A2(
+				elm$core$List$map,
+				elm$core$Tuple$mapFirst(author$project$Graphql$Generator$Group$moduleToFileName),
+				A2(
+					elm$core$List$append,
+					_List_fromArray(
+						[scalarDefinitions]),
+					A2(
+						elm$core$List$append,
+						_List_fromArray(
+							[
+								A2(author$project$Graphql$Generator$InputObjectFile$generate, context, typeDefinitions)
+							]),
+						A2(
+							elm$core$List$append,
+							typeLockDefinitions,
+							A2(
+								elm$core$List$filterMap,
+								author$project$Graphql$Generator$Group$toPair(context),
+								author$project$Graphql$Generator$Group$excludeBuiltIns(typeDefinitions)))))));
+	});
+var author$project$Graphql$Generator$Group$typeDefName = function (_n0) {
+	var name = _n0.a;
+	var definableType = _n0.b;
+	var description = _n0.c;
+	return author$project$Graphql$Parser$ClassCaseName$normalized(name);
+};
+var elm$core$List$sortBy = _List_sortBy;
+var author$project$Graphql$Generator$Group$sortedIntrospectionData = F4(
+	function (typeDefinitions, queryObjectName, mutationObjectName, subscriptionObjectName) {
+		return {
+			mutationObjectName: mutationObjectName,
+			queryObjectName: queryObjectName,
+			subscriptionObjectName: subscriptionObjectName,
+			typeDefinitions: A2(elm$core$List$sortBy, author$project$Graphql$Generator$Group$typeDefName, typeDefinitions)
+		};
+	});
+var author$project$Graphql$Parser$Type$EnumType = function (a) {
+	return {$: 'EnumType', a: a};
+};
+var author$project$Graphql$Parser$Type$TypeDefinition = F3(
+	function (a, b, c) {
+		return {$: 'TypeDefinition', a: a, b: b, c: c};
+	});
+var author$project$Graphql$Parser$Type$typeDefinition = F3(
+	function (name, definableType, description) {
+		return A3(
+			author$project$Graphql$Parser$Type$TypeDefinition,
+			author$project$Graphql$Parser$ClassCaseName$build(name),
+			definableType,
+			description);
+	});
+var author$project$Graphql$Parser$Type$createEnum = F3(
+	function (enumName, description, enumValues) {
+		return A3(
+			author$project$Graphql$Parser$Type$typeDefinition,
+			enumName,
+			author$project$Graphql$Parser$Type$EnumType(enumValues),
+			description);
+	});
+var author$project$Graphql$Parser$Type$EnumValue = F2(
+	function (name, description) {
+		return {description: description, name: name};
+	});
+var elm$core$Basics$idiv = _Basics_idiv;
+var elm$core$Elm$JsArray$initialize = _JsArray_initialize;
+var elm$core$Array$initializeHelp = F5(
+	function (fn, fromIndex, len, nodeList, tail) {
+		initializeHelp:
+		while (true) {
+			if (fromIndex < 0) {
+				return A2(
+					elm$core$Array$builderToArray,
+					false,
+					{nodeList: nodeList, nodeListSize: (len / elm$core$Array$branchFactor) | 0, tail: tail});
+			} else {
+				var leaf = elm$core$Array$Leaf(
+					A3(elm$core$Elm$JsArray$initialize, elm$core$Array$branchFactor, fromIndex, fn));
+				var $temp$fn = fn,
+					$temp$fromIndex = fromIndex - elm$core$Array$branchFactor,
+					$temp$len = len,
+					$temp$nodeList = A2(elm$core$List$cons, leaf, nodeList),
+					$temp$tail = tail;
+				fn = $temp$fn;
+				fromIndex = $temp$fromIndex;
+				len = $temp$len;
+				nodeList = $temp$nodeList;
+				tail = $temp$tail;
+				continue initializeHelp;
+			}
+		}
+	});
+var elm$core$Basics$le = _Utils_le;
+var elm$core$Basics$remainderBy = _Basics_remainderBy;
+var elm$core$Array$initialize = F2(
+	function (len, fn) {
+		if (len <= 0) {
+			return elm$core$Array$empty;
+		} else {
+			var tailLen = len % elm$core$Array$branchFactor;
+			var tail = A3(elm$core$Elm$JsArray$initialize, tailLen, len - tailLen, fn);
+			var initialFromIndex = (len - tailLen) - elm$core$Array$branchFactor;
+			return A5(elm$core$Array$initializeHelp, fn, initialFromIndex, len, _List_Nil, tail);
+		}
+	});
+var elm$core$Result$Err = function (a) {
+	return {$: 'Err', a: a};
+};
+var elm$core$Result$Ok = function (a) {
+	return {$: 'Ok', a: a};
+};
+var elm$core$Result$isOk = function (result) {
+	if (result.$ === 'Ok') {
+		return true;
+	} else {
+		return false;
+	}
+};
+var elm$json$Json$Decode$Failure = F2(
+	function (a, b) {
+		return {$: 'Failure', a: a, b: b};
+	});
+var elm$json$Json$Decode$Field = F2(
+	function (a, b) {
+		return {$: 'Field', a: a, b: b};
+	});
+var elm$json$Json$Decode$Index = F2(
+	function (a, b) {
+		return {$: 'Index', a: a, b: b};
+	});
+var elm$json$Json$Decode$OneOf = function (a) {
+	return {$: 'OneOf', a: a};
+};
+var elm$json$Json$Decode$field = _Json_decodeField;
+var elm$json$Json$Decode$map = _Json_map1;
+var elm$json$Json$Decode$map2 = _Json_map2;
+var elm$json$Json$Decode$oneOf = _Json_oneOf;
+var elm$json$Json$Decode$succeed = _Json_succeed;
+var elm$json$Json$Decode$maybe = function (decoder) {
+	return elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2(elm$json$Json$Decode$map, elm$core$Maybe$Just, decoder),
+				elm$json$Json$Decode$succeed(elm$core$Maybe$Nothing)
+			]));
+};
+var elm$json$Json$Decode$string = _Json_decodeString;
+var author$project$Graphql$Parser$Type$enumValueDecoder = A3(
+	elm$json$Json$Decode$map2,
+	author$project$Graphql$Parser$Type$EnumValue,
+	A2(
+		elm$json$Json$Decode$map,
+		author$project$Graphql$Parser$ClassCaseName$build,
+		A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string)),
+	A2(
+		elm$json$Json$Decode$field,
+		'description',
+		elm$json$Json$Decode$maybe(elm$json$Json$Decode$string)));
+var elm$json$Json$Decode$list = _Json_decodeList;
+var elm$json$Json$Decode$map3 = _Json_map3;
+var author$project$Graphql$Parser$Type$enumDecoder = A4(
+	elm$json$Json$Decode$map3,
+	author$project$Graphql$Parser$Type$createEnum,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	elm$json$Json$Decode$maybe(
+		A2(elm$json$Json$Decode$field, 'description', elm$json$Json$Decode$string)),
+	A2(
+		elm$json$Json$Decode$field,
+		'enumValues',
+		elm$json$Json$Decode$list(author$project$Graphql$Parser$Type$enumValueDecoder)));
+var author$project$Graphql$Parser$Type$InputObjectType = function (a) {
+	return {$: 'InputObjectType', a: a};
+};
+var author$project$Graphql$Parser$Type$createInputObject = F2(
+	function (inputObjectName, fields) {
+		return A3(
+			author$project$Graphql$Parser$Type$typeDefinition,
+			inputObjectName,
+			author$project$Graphql$Parser$Type$InputObjectType(fields),
+			elm$core$Maybe$Nothing);
+	});
+var author$project$Graphql$Parser$Type$RawField = F4(
+	function (name, description, ofType, args) {
+		return {args: args, description: description, name: name, ofType: ofType};
+	});
+var author$project$Graphql$Parser$Type$RawTypeRef = function (a) {
+	return {$: 'RawTypeRef', a: a};
+};
+var author$project$Graphql$Parser$Type$createRawTypeRef = F3(
+	function (stringMaybe, typeKind, rawTypeRefMaybe) {
+		return author$project$Graphql$Parser$Type$RawTypeRef(
+			{kind: typeKind, name: stringMaybe, ofType: rawTypeRefMaybe});
+	});
+var author$project$Graphql$Parser$TypeKind$Enum = {$: 'Enum'};
+var author$project$Graphql$Parser$TypeKind$InputObject = {$: 'InputObject'};
+var author$project$Graphql$Parser$TypeKind$Interface = {$: 'Interface'};
+var author$project$Graphql$Parser$TypeKind$List = {$: 'List'};
+var author$project$Graphql$Parser$TypeKind$NonNull = {$: 'NonNull'};
+var author$project$Graphql$Parser$TypeKind$Object = {$: 'Object'};
+var author$project$Graphql$Parser$TypeKind$Scalar = {$: 'Scalar'};
+var author$project$Graphql$Parser$TypeKind$Union = {$: 'Union'};
+var elm$json$Json$Decode$andThen = _Json_andThen;
+var elm$json$Json$Decode$fail = _Json_fail;
+var author$project$Graphql$Parser$TypeKind$decoder = A2(
+	elm$json$Json$Decode$andThen,
+	function (string) {
+		switch (string) {
+			case 'SCALAR':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$Scalar);
+			case 'OBJECT':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$Object);
+			case 'LIST':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$List);
+			case 'NON_NULL':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$NonNull);
+			case 'ENUM':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$Enum);
+			case 'INTERFACE':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$Interface);
+			case 'INPUT_OBJECT':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$InputObject);
+			case 'UNION':
+				return elm$json$Json$Decode$succeed(author$project$Graphql$Parser$TypeKind$Union);
+			default:
+				return elm$json$Json$Decode$fail('Invalid TypeKind' + string);
+		}
+	},
+	elm$json$Json$Decode$string);
+var elm$json$Json$Decode$lazy = function (thunk) {
+	return A2(
+		elm$json$Json$Decode$andThen,
+		thunk,
+		elm$json$Json$Decode$succeed(_Utils_Tuple0));
+};
+function author$project$Graphql$Parser$Type$cyclic$typeRefDecoder() {
+	return A4(
+		elm$json$Json$Decode$map3,
+		author$project$Graphql$Parser$Type$createRawTypeRef,
+		elm$json$Json$Decode$maybe(
+			A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string)),
+		A2(elm$json$Json$Decode$field, 'kind', author$project$Graphql$Parser$TypeKind$decoder),
+		elm$json$Json$Decode$maybe(
+			A2(
+				elm$json$Json$Decode$field,
+				'ofType',
+				elm$json$Json$Decode$lazy(
+					function (_n0) {
+						return author$project$Graphql$Parser$Type$cyclic$typeRefDecoder();
+					}))));
+}
+try {
+	var author$project$Graphql$Parser$Type$typeRefDecoder = author$project$Graphql$Parser$Type$cyclic$typeRefDecoder();
+	author$project$Graphql$Parser$Type$cyclic$typeRefDecoder = function () {
+		return author$project$Graphql$Parser$Type$typeRefDecoder;
+	};
+} catch ($) {
+throw 'Some top-level definitions from `Graphql.Parser.Type` are causing infinite recursion:\n\n  ┌─────┐\n  │    typeRefDecoder\n  └─────┘\n\nThese errors are very tricky, so read https://elm-lang.org/0.19.0/halting-problem to learn how to fix it!';}
+var elm$json$Json$Decode$map4 = _Json_map4;
+var author$project$Graphql$Parser$Type$inputField = A5(
+	elm$json$Json$Decode$map4,
+	author$project$Graphql$Parser$Type$RawField,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'description',
+		elm$json$Json$Decode$maybe(elm$json$Json$Decode$string)),
+	A2(elm$json$Json$Decode$field, 'type', author$project$Graphql$Parser$Type$typeRefDecoder),
+	elm$json$Json$Decode$succeed(_List_Nil));
+var author$project$Graphql$Parser$CamelCaseName$CamelCaseName = function (a) {
+	return {$: 'CamelCaseName', a: a};
+};
+var author$project$Graphql$Parser$CamelCaseName$build = author$project$Graphql$Parser$CamelCaseName$CamelCaseName;
+var author$project$Graphql$Parser$Scalar$Boolean = {$: 'Boolean'};
+var author$project$Graphql$Parser$Scalar$Custom = function (a) {
+	return {$: 'Custom', a: a};
+};
+var author$project$Graphql$Parser$Scalar$Float = {$: 'Float'};
+var author$project$Graphql$Parser$Scalar$Int = {$: 'Int'};
+var author$project$Graphql$Parser$Scalar$String = {$: 'String'};
+var author$project$Graphql$Parser$Scalar$parse = function (scalarName) {
+	switch (scalarName) {
+		case 'String':
+			return author$project$Graphql$Parser$Scalar$String;
+		case 'Boolean':
+			return author$project$Graphql$Parser$Scalar$Boolean;
+		case 'Int':
+			return author$project$Graphql$Parser$Scalar$Int;
+		case 'Float':
+			return author$project$Graphql$Parser$Scalar$Float;
+		default:
+			return author$project$Graphql$Parser$Scalar$Custom(
+				author$project$Graphql$Parser$ClassCaseName$build(scalarName));
+	}
+};
+var author$project$Graphql$Parser$Type$EnumRef = function (a) {
+	return {$: 'EnumRef', a: a};
+};
+var author$project$Graphql$Parser$Type$InputObjectRef = function (a) {
+	return {$: 'InputObjectRef', a: a};
+};
+var author$project$Graphql$Parser$Type$InterfaceRef = function (a) {
+	return {$: 'InterfaceRef', a: a};
+};
+var author$project$Graphql$Parser$Type$List = function (a) {
+	return {$: 'List', a: a};
+};
+var author$project$Graphql$Parser$Type$ObjectRef = function (a) {
+	return {$: 'ObjectRef', a: a};
+};
+var author$project$Graphql$Parser$Type$Scalar = function (a) {
+	return {$: 'Scalar', a: a};
+};
+var author$project$Graphql$Parser$Type$UnionRef = function (a) {
+	return {$: 'UnionRef', a: a};
+};
+var author$project$Graphql$Parser$Type$expectString = function (maybeString) {
+	if (maybeString.$ === 'Just') {
+		var string = maybeString.a;
+		return string;
+	} else {
+		return _Debug_todo(
+			'Graphql.Parser.Type',
+			{
+				start: {line: 269, column: 13},
+				end: {line: 269, column: 23}
+			})('Expected string but got Nothing');
+	}
+};
+var author$project$Graphql$Parser$Type$ignoreRef = A2(
+	author$project$Graphql$Parser$Type$TypeReference,
+	author$project$Graphql$Parser$Type$Scalar(author$project$Graphql$Parser$Scalar$String),
+	author$project$Graphql$Parser$Type$Nullable);
+var author$project$Graphql$Parser$Type$parseRef = function (_n0) {
+	var rawTypeRef = _n0.a;
+	var _n1 = rawTypeRef.kind;
+	switch (_n1.$) {
+		case 'List':
+			var _n2 = rawTypeRef.ofType;
+			if (_n2.$ === 'Just') {
+				var nestedOfType = _n2.a;
+				return A2(
+					author$project$Graphql$Parser$Type$TypeReference,
+					author$project$Graphql$Parser$Type$List(
+						author$project$Graphql$Parser$Type$parseRef(nestedOfType)),
+					author$project$Graphql$Parser$Type$Nullable);
+			} else {
+				return _Debug_todo(
+					'Graphql.Parser.Type',
+					{
+						start: {line: 281, column: 21},
+						end: {line: 281, column: 31}
+					})('Missing nested type for List reference');
+			}
+		case 'Scalar':
+			var _n3 = rawTypeRef.name;
+			if (_n3.$ === 'Just') {
+				var scalarName = _n3.a;
+				return A2(
+					author$project$Graphql$Parser$Type$TypeReference,
+					author$project$Graphql$Parser$Type$Scalar(
+						author$project$Graphql$Parser$Scalar$parse(scalarName)),
+					author$project$Graphql$Parser$Type$Nullable);
+			} else {
+				return _Debug_todo(
+					'Graphql.Parser.Type',
+					{
+						start: {line: 291, column: 21},
+						end: {line: 291, column: 31}
+					})('Should not get null names for scalar references');
+			}
+		case 'Interface':
+			var _n4 = rawTypeRef.name;
+			if (_n4.$ === 'Just') {
+				var interfaceName = _n4.a;
+				return A2(
+					author$project$Graphql$Parser$Type$TypeReference,
+					author$project$Graphql$Parser$Type$InterfaceRef(interfaceName),
+					author$project$Graphql$Parser$Type$Nullable);
+			} else {
+				return _Debug_todo(
+					'Graphql.Parser.Type',
+					{
+						start: {line: 299, column: 21},
+						end: {line: 299, column: 31}
+					})('Should not get null names for interface references');
+			}
+		case 'Object':
+			var _n5 = rawTypeRef.name;
+			if (_n5.$ === 'Just') {
+				var objectName = _n5.a;
+				return A2(
+					author$project$Graphql$Parser$Type$TypeReference,
+					author$project$Graphql$Parser$Type$ObjectRef(objectName),
+					author$project$Graphql$Parser$Type$Nullable);
+			} else {
+				return _Debug_todo(
+					'Graphql.Parser.Type',
+					{
+						start: {line: 307, column: 21},
+						end: {line: 307, column: 31}
+					})('Should not get null names for object references');
+			}
+		case 'NonNull':
+			var _n6 = rawTypeRef.ofType;
+			if (_n6.$ === 'Just') {
+				var actualOfType = _n6.a.a;
+				var _n7 = _Utils_Tuple2(actualOfType.kind, actualOfType.name);
+				switch (_n7.a.$) {
+					case 'Scalar':
+						var _n8 = _n7.a;
+						var scalarName = _n7.b;
+						return A2(
+							author$project$Graphql$Parser$Type$TypeReference,
+							author$project$Graphql$Parser$Type$Scalar(
+								author$project$Graphql$Parser$Scalar$parse(
+									author$project$Graphql$Parser$Type$expectString(scalarName))),
+							author$project$Graphql$Parser$Type$NonNullable);
+					case 'Object':
+						var _n9 = _n7.a;
+						var objectName = _n7.b;
+						return A2(
+							author$project$Graphql$Parser$Type$TypeReference,
+							author$project$Graphql$Parser$Type$ObjectRef(
+								author$project$Graphql$Parser$Type$expectString(objectName)),
+							author$project$Graphql$Parser$Type$NonNullable);
+					case 'Interface':
+						var _n10 = _n7.a;
+						var interfaceName = _n7.b;
+						return A2(
+							author$project$Graphql$Parser$Type$TypeReference,
+							author$project$Graphql$Parser$Type$InterfaceRef(
+								author$project$Graphql$Parser$Type$expectString(interfaceName)),
+							author$project$Graphql$Parser$Type$NonNullable);
+					case 'List':
+						var _n11 = _n7.a;
+						var _n12 = actualOfType.ofType;
+						if (_n12.$ === 'Just') {
+							var nestedOfType = _n12.a;
+							return A2(
+								author$project$Graphql$Parser$Type$TypeReference,
+								author$project$Graphql$Parser$Type$List(
+									author$project$Graphql$Parser$Type$parseRef(nestedOfType)),
+								author$project$Graphql$Parser$Type$NonNullable);
+						} else {
+							return _Debug_todo(
+								'Graphql.Parser.Type',
+								{
+									start: {line: 330, column: 37},
+									end: {line: 330, column: 47}
+								})('');
+						}
+					case 'NonNull':
+						var _n13 = _n7.a;
+						return _Debug_todo(
+							'Graphql.Parser.Type',
+							{
+								start: {line: 333, column: 29},
+								end: {line: 333, column: 39}
+							})('Can\'t have nested non-null types');
+					case 'Ignore':
+						var _n14 = _n7.a;
+						return author$project$Graphql$Parser$Type$ignoreRef;
+					case 'Enum':
+						var _n15 = _n7.a;
+						var enumName = _n7.b;
+						return A2(
+							author$project$Graphql$Parser$Type$TypeReference,
+							author$project$Graphql$Parser$Type$EnumRef(
+								author$project$Graphql$Parser$ClassCaseName$build(
+									author$project$Graphql$Parser$Type$expectString(enumName))),
+							author$project$Graphql$Parser$Type$NonNullable);
+					case 'InputObject':
+						var _n16 = _n7.a;
+						var inputObjectName = _n7.b;
+						return A2(
+							author$project$Graphql$Parser$Type$TypeReference,
+							author$project$Graphql$Parser$Type$InputObjectRef(
+								author$project$Graphql$Parser$ClassCaseName$build(
+									author$project$Graphql$Parser$Type$expectString(inputObjectName))),
+							author$project$Graphql$Parser$Type$NonNullable);
+					default:
+						var _n17 = _n7.a;
+						return A2(
+							author$project$Graphql$Parser$Type$TypeReference,
+							author$project$Graphql$Parser$Type$UnionRef(
+								author$project$Graphql$Parser$Type$expectString(actualOfType.name)),
+							author$project$Graphql$Parser$Type$NonNullable);
+				}
+			} else {
+				return author$project$Graphql$Parser$Type$ignoreRef;
+			}
+		case 'Ignore':
+			return author$project$Graphql$Parser$Type$ignoreRef;
+		case 'Enum':
+			var _n18 = rawTypeRef.name;
+			if (_n18.$ === 'Just') {
+				var objectName = _n18.a;
+				return A2(
+					author$project$Graphql$Parser$Type$TypeReference,
+					author$project$Graphql$Parser$Type$EnumRef(
+						author$project$Graphql$Parser$ClassCaseName$build(objectName)),
+					author$project$Graphql$Parser$Type$Nullable);
+			} else {
+				return _Debug_todo(
+					'Graphql.Parser.Type',
+					{
+						start: {line: 359, column: 21},
+						end: {line: 359, column: 31}
+					})('Should not get null names for enum references');
+			}
+		case 'InputObject':
+			var _n19 = rawTypeRef.name;
+			if (_n19.$ === 'Just') {
+				var inputObjectName = _n19.a;
+				return A2(
+					author$project$Graphql$Parser$Type$TypeReference,
+					author$project$Graphql$Parser$Type$InputObjectRef(
+						author$project$Graphql$Parser$ClassCaseName$build(inputObjectName)),
+					author$project$Graphql$Parser$Type$Nullable);
+			} else {
+				return _Debug_todo(
+					'Graphql.Parser.Type',
+					{
+						start: {line: 367, column: 21},
+						end: {line: 367, column: 31}
+					})('Should not get null names for input object references');
+			}
+		default:
+			return A2(
+				author$project$Graphql$Parser$Type$TypeReference,
+				author$project$Graphql$Parser$Type$UnionRef(
+					author$project$Graphql$Parser$Type$expectString(rawTypeRef.name)),
+				author$project$Graphql$Parser$Type$Nullable);
+	}
+};
+var author$project$Graphql$Parser$Type$parseField = function (_n0) {
+	var name = _n0.name;
+	var ofType = _n0.ofType;
+	var args = _n0.args;
+	var description = _n0.description;
+	return {
+		args: A2(
+			elm$core$List$map,
+			function (arg) {
+				return {
+					description: arg.description,
+					name: author$project$Graphql$Parser$CamelCaseName$build(arg.name),
+					typeRef: author$project$Graphql$Parser$Type$parseRef(arg.ofType)
+				};
+			},
+			args),
+		description: description,
+		name: author$project$Graphql$Parser$CamelCaseName$build(name),
+		typeRef: author$project$Graphql$Parser$Type$parseRef(ofType)
+	};
+};
+var author$project$Graphql$Parser$Type$inputObjectDecoder = A3(
+	elm$json$Json$Decode$map2,
+	author$project$Graphql$Parser$Type$createInputObject,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'inputFields',
+		elm$json$Json$Decode$list(
+			A2(elm$json$Json$Decode$map, author$project$Graphql$Parser$Type$parseField, author$project$Graphql$Parser$Type$inputField))));
+var author$project$Graphql$Parser$Type$InterfaceType = F2(
+	function (a, b) {
+		return {$: 'InterfaceType', a: a, b: b};
+	});
+var author$project$Graphql$Parser$Type$createInterface = F3(
+	function (interfaceName, fields, possibleTypes) {
+		return A3(
+			author$project$Graphql$Parser$Type$typeDefinition,
+			interfaceName,
+			A2(
+				author$project$Graphql$Parser$Type$InterfaceType,
+				fields,
+				A2(elm$core$List$map, author$project$Graphql$Parser$ClassCaseName$build, possibleTypes)),
+			elm$core$Maybe$Nothing);
+	});
+var author$project$Graphql$Parser$Type$RawArg = F3(
+	function (name, description, ofType) {
+		return {description: description, name: name, ofType: ofType};
+	});
+var author$project$Graphql$Parser$Type$argDecoder = A4(
+	elm$json$Json$Decode$map3,
+	author$project$Graphql$Parser$Type$RawArg,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'description',
+		elm$json$Json$Decode$maybe(elm$json$Json$Decode$string)),
+	A2(elm$json$Json$Decode$field, 'type', author$project$Graphql$Parser$Type$typeRefDecoder));
+var author$project$Graphql$Parser$Type$fieldDecoder = A5(
+	elm$json$Json$Decode$map4,
+	author$project$Graphql$Parser$Type$RawField,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'description',
+		elm$json$Json$Decode$maybe(elm$json$Json$Decode$string)),
+	A2(elm$json$Json$Decode$field, 'type', author$project$Graphql$Parser$Type$typeRefDecoder),
+	A2(
+		elm$json$Json$Decode$field,
+		'args',
+		elm$json$Json$Decode$list(author$project$Graphql$Parser$Type$argDecoder)));
+var author$project$Graphql$Parser$Type$interfaceDecoder = A4(
+	elm$json$Json$Decode$map3,
+	author$project$Graphql$Parser$Type$createInterface,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'fields',
+		elm$json$Json$Decode$list(
+			A2(elm$json$Json$Decode$map, author$project$Graphql$Parser$Type$parseField, author$project$Graphql$Parser$Type$fieldDecoder))),
+	A2(
+		elm$json$Json$Decode$field,
+		'possibleTypes',
+		elm$json$Json$Decode$list(
+			A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string))));
+var author$project$Graphql$Parser$Type$ObjectType = function (a) {
+	return {$: 'ObjectType', a: a};
+};
+var author$project$Graphql$Parser$Type$createObject = F2(
+	function (objectName, fields) {
+		return A3(
+			author$project$Graphql$Parser$Type$typeDefinition,
+			objectName,
+			author$project$Graphql$Parser$Type$ObjectType(fields),
+			elm$core$Maybe$Nothing);
+	});
+var author$project$Graphql$Parser$Type$objectDecoder = A3(
+	elm$json$Json$Decode$map2,
+	author$project$Graphql$Parser$Type$createObject,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'fields',
+		elm$json$Json$Decode$list(
+			A2(elm$json$Json$Decode$map, author$project$Graphql$Parser$Type$parseField, author$project$Graphql$Parser$Type$fieldDecoder))));
+var author$project$Graphql$Parser$Type$ScalarType = {$: 'ScalarType'};
+var author$project$Graphql$Parser$Type$scalarDecoder = A2(
+	elm$json$Json$Decode$map,
+	function (scalarName) {
+		return A3(author$project$Graphql$Parser$Type$typeDefinition, scalarName, author$project$Graphql$Parser$Type$ScalarType, elm$core$Maybe$Nothing);
+	},
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string));
+var author$project$Graphql$Parser$Type$UnionType = function (a) {
+	return {$: 'UnionType', a: a};
+};
+var author$project$Graphql$Parser$Type$createUnion = F2(
+	function (interfaceName, possibleTypes) {
+		return A3(
+			author$project$Graphql$Parser$Type$typeDefinition,
+			interfaceName,
+			author$project$Graphql$Parser$Type$UnionType(
+				A2(elm$core$List$map, author$project$Graphql$Parser$ClassCaseName$build, possibleTypes)),
+			elm$core$Maybe$Nothing);
+	});
+var author$project$Graphql$Parser$Type$unionDecoder = A3(
+	elm$json$Json$Decode$map2,
+	author$project$Graphql$Parser$Type$createUnion,
+	A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string),
+	A2(
+		elm$json$Json$Decode$field,
+		'possibleTypes',
+		elm$json$Json$Decode$list(
+			A2(elm$json$Json$Decode$field, 'name', elm$json$Json$Decode$string))));
+var author$project$Graphql$Parser$Type$decodeKind = function (kind) {
+	switch (kind) {
+		case 'OBJECT':
+			return author$project$Graphql$Parser$Type$objectDecoder;
+		case 'ENUM':
+			return author$project$Graphql$Parser$Type$enumDecoder;
+		case 'SCALAR':
+			return author$project$Graphql$Parser$Type$scalarDecoder;
+		case 'INTERFACE':
+			return author$project$Graphql$Parser$Type$interfaceDecoder;
+		case 'UNION':
+			return author$project$Graphql$Parser$Type$unionDecoder;
+		case 'INPUT_OBJECT':
+			return author$project$Graphql$Parser$Type$inputObjectDecoder;
+		default:
+			return elm$json$Json$Decode$fail('Unexpected kind ' + kind);
+	}
+};
+var author$project$Graphql$Parser$Type$decoder = A2(
+	elm$json$Json$Decode$andThen,
+	author$project$Graphql$Parser$Type$decodeKind,
+	A2(elm$json$Json$Decode$field, 'kind', elm$json$Json$Decode$string));
+var elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
+	});
+var author$project$Graphql$Parser$decoder = function (baseModule) {
+	return A2(
+		elm$json$Json$Decode$map,
+		author$project$Graphql$Generator$Group$generateFiles(baseModule),
+		A5(
+			elm$json$Json$Decode$map4,
+			author$project$Graphql$Generator$Group$sortedIntrospectionData,
+			A2(
+				elm$json$Json$Decode$at,
+				_List_fromArray(
+					['__schema', 'types']),
+				elm$json$Json$Decode$list(author$project$Graphql$Parser$Type$decoder)),
+			A2(
+				elm$json$Json$Decode$at,
+				_List_fromArray(
+					['__schema', 'queryType', 'name']),
+				elm$json$Json$Decode$string),
+			elm$json$Json$Decode$maybe(
+				A2(
+					elm$json$Json$Decode$at,
+					_List_fromArray(
+						['__schema', 'mutationType', 'name']),
+					elm$json$Json$Decode$string)),
+			elm$json$Json$Decode$maybe(
+				A2(
+					elm$json$Json$Decode$at,
+					_List_fromArray(
+						['__schema', 'subscriptionType', 'name']),
+					elm$json$Json$Decode$string))));
+};
+var author$project$Main$generatedFiles = _Platform_outgoingPort('generatedFiles', elm$core$Basics$identity);
+var elm$core$Debug$toString = _Debug_toString;
+var elm$json$Json$Decode$decodeValue = _Json_run;
+var elm$json$Json$Encode$string = _Json_wrap;
+var elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			elm$core$List$foldl,
+			F2(
+				function (_n0, obj) {
+					var k = _n0.a;
+					var v = _n0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(_Utils_Tuple0),
+			pairs));
+};
+var elm_community$json_extra$Json$Encode$Extra$dict = F2(
+	function (toKey, toValue) {
+		return A2(
+			elm$core$Basics$composeR,
+			elm$core$Dict$toList,
+			A2(
+				elm$core$Basics$composeR,
+				elm$core$List$map(
+					function (_n0) {
+						var key = _n0.a;
+						var value = _n0.b;
+						return _Utils_Tuple2(
+							toKey(key),
+							toValue(value));
+					}),
+				elm$json$Json$Encode$object));
+	});
+var author$project$Main$init = function (flags) {
+	var _n0 = A2(
+		elm$json$Json$Decode$decodeValue,
+		author$project$Graphql$Parser$decoder(flags.baseModule),
+		flags.data);
+	if (_n0.$ === 'Ok') {
+		var fields = _n0.a;
+		return _Utils_Tuple2(
+			_Utils_Tuple0,
+			author$project$Main$generatedFiles(
+				A3(elm_community$json_extra$Json$Encode$Extra$dict, elm$core$Basics$identity, elm$json$Json$Encode$string, fields)));
+	} else {
+		var error = _n0.a;
+		return _Debug_todo(
+			'Main',
+			{
+				start: {line: 40, column: 13},
+				end: {line: 40, column: 23}
+			})(
+			'Got error ' + elm$core$Debug$toString(error));
+	}
+};
+var elm$core$Platform$worker = _Platform_worker;
+var elm$core$Platform$Cmd$batch = _Platform_batch;
+var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
+var elm$core$Platform$Sub$batch = _Platform_batch;
+var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
+var elm$json$Json$Decode$value = _Json_decodeValue;
+var author$project$Main$main = elm$core$Platform$worker(
 	{
-		init: _dillonkearns$elm_graphql$Main$init,
+		init: author$project$Main$init,
+		subscriptions: function (_n0) {
+			return elm$core$Platform$Sub$none;
+		},
 		update: F2(
 			function (msg, model) {
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			}),
-		subscriptions: function (_p2) {
-			return _elm_lang$core$Platform_Sub$none;
-		}
-	})(
+				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+			})
+	});
+_Platform_export({'Main':{'init':author$project$Main$main(
 	A2(
-		_elm_lang$core$Json_Decode$andThen,
-		function (baseModule) {
+		elm$json$Json$Decode$andThen,
+		function (data) {
 			return A2(
-				_elm_lang$core$Json_Decode$andThen,
-				function (data) {
-					return _elm_lang$core$Json_Decode$succeed(
+				elm$json$Json$Decode$andThen,
+				function (baseModule) {
+					return elm$json$Json$Decode$succeed(
 						{baseModule: baseModule, data: data});
 				},
-				A2(_elm_lang$core$Json_Decode$field, 'data', _elm_lang$core$Json_Decode$value));
+				A2(
+					elm$json$Json$Decode$field,
+					'baseModule',
+					elm$json$Json$Decode$list(elm$json$Json$Decode$string)));
 		},
-		A2(
-			_elm_lang$core$Json_Decode$field,
-			'baseModule',
-			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string))));
-var _dillonkearns$elm_graphql$Main$Flags = F2(
-	function (a, b) {
-		return {data: a, baseModule: b};
-	});
-
-var Elm = {};
-Elm['Main'] = Elm['Main'] || {};
-if (typeof _dillonkearns$elm_graphql$Main$main !== 'undefined') {
-    _dillonkearns$elm_graphql$Main$main(Elm['Main'], 'Main', undefined);
-}
-
-if (true)
-{
-  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() { return Elm; }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  return;
-}
-
-if (true)
-{
-  module['exports'] = Elm;
-  return;
-}
-
-var globalElm = this['Elm'];
-if (typeof globalElm === "undefined")
-{
-  this['Elm'] = Elm;
-  return;
-}
-
-for (var publicModule in Elm)
-{
-  if (publicModule in globalElm)
-  {
-    throw new Error('There are two Elm modules called `' + publicModule + '` on this page! Rename one of them.');
-  }
-  globalElm[publicModule] = Elm[publicModule];
-}
-
-}).call(this);
-
-
+		A2(elm$json$Json$Decode$field, 'data', elm$json$Json$Decode$value)))(0)}});}(this));
 
 /***/ }),
 /* 31 */
@@ -21328,13 +15596,13 @@ function slice (args) {
 /* 74 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"@dillonkearns/elm-graphql","version":"3.1.12","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test","gen:starwars":"npm run build && ./bin/elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/elm-graphql http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src","approve":"npm run build && npm link && elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src && elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --output examples/src && echo 'Ensuring documentation is valid...' && elm-make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/elm-graphql","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.18.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-test":"^0.18.12","elm-live":"^2.7.5","elm-webpack-loader":"^4.3.1","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.7.0-exp","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"elm-graphql":"bin/elm-graphql"}}
+module.exports = {"name":"@dillonkearns/elm-graphql","version":"0.0.1","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test && cd generator && elm-test","gen:starwars":"npm run build && ./bin/elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/elm-graphql http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src","approve-compilation":"cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/GithubComplex.elm src/SimpleMutation.elm","approve":"npm run build && npm link && elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src && elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --output examples/src && elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output ete_tests/src && echo 'Ensuring documentation is valid...' && elm make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'Confirming that ete_tests folder is clean...' && (git diff --exit-code -- ete_tests || (echo 'FAILURE' && echo 'ete_tests code has changed. Commit changes to approve.' && exit 1)) && npm run approve-compilation && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/elm-graphql","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.19.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-live":"^2.7.5","elm-test":"^0.19.0-beta4","elm-webpack-loader":"https://github.com/xtian/elm-webpack-loader.git#0.19","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.8.0","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"elm-graphql":"bin/elm-graphql"}}
 
 /***/ }),
 /* 75 */
 /***/ (function(module, exports) {
 
-module.exports = {"version":"11.2.0","summary":"Type-safe GraphQL queries in Elm.","repository":"https://github.com/dillonkearns/elm-graphql.git","license":"BSD3","source-directories":["src"],"exposed-modules":["Graphql.Operation","Graphql.Http","Graphql.SelectionSet","Graphql.Internal.Encode","Graphql.Document","Graphql.Field","Graphql.Internal.Builder.Argument","Graphql.Internal.Builder.Object","Graphql.OptionalArgument","Graphql.Http.GraphqlError","Graphql.Subscription","Graphql.Subscription.Protocol"],"dependencies":{"elm-community/json-extra":"2.6.0 <= v < 3.0.0","elm-community/list-extra":"7.0.1 <= v < 8.0.0","elm-community/string-extra":"1.4.0 <= v < 2.0.0","elm-lang/core":"5.0.0 <= v < 6.0.0","elm-lang/http":"1.0.0 <= v < 2.0.0","elm-lang/websocket":"1.0.2 <= v < 2.0.0","lukewestby/elm-string-interpolate":"1.0.2 <= v < 2.0.0"},"elm-version":"0.18.0 <= v < 0.19.0"}
+module.exports = {"type":"package","name":"dillonkearns/graphqelm","summary":"Type-safe GraphQL queries in Elm.","license":"BSD-3-Clause","version":"11.2.0","exposed-modules":["Graphql.Operation","Graphql.Http","Graphql.SelectionSet","Graphql.Internal.Encode","Graphql.Document","Graphql.Field","Graphql.Internal.Builder.Argument","Graphql.Internal.Builder.Object","Graphql.OptionalArgument","Graphql.Http.GraphqlError"],"elm-version":"0.19.0 <= v < 0.20.0","dependencies":{"elm/core":"1.0.0 <= v < 2.0.0","elm/http":"1.0.0 <= v < 2.0.0","elm/json":"1.0.0 <= v < 2.0.0","elm/time":"1.0.0 <= v < 2.0.0","elm/url":"1.0.0 <= v < 2.0.0","elm-community/list-extra":"8.0.0 <= v < 9.0.0","lukewestby/elm-string-interpolate":"1.0.3 <= v < 2.0.0"},"test-dependencies":{"elm/html":"1.0.0 <= v < 2.0.0","elm-explorations/test":"1.0.0 <= v < 2.0.0"}}
 
 /***/ })
 /******/ ]);

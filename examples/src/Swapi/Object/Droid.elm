@@ -2,13 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object.Droid exposing (..)
+module Swapi.Object.Droid exposing (appearsIn, avatarUrl, friends, id, name, primaryFunction, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 import Swapi.Enum.Episode
@@ -43,15 +43,15 @@ avatarUrl =
 {-| The friends of the droid, or an empty list if they have none.
 -}
 friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Object.Droid
-friends object =
-    Object.selectionField "friends" [] object (identity >> Decode.list)
+friends object_ =
+    Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the droid.
 -}
 id : Field Swapi.Scalar.Id Swapi.Object.Droid
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Swapi.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the droid.

@@ -1,6 +1,6 @@
 module Graphql.Document.Argument exposing (serialize)
 
-import Graphql.Internal.Builder.Argument as Argument exposing (Argument(Argument))
+import Graphql.Internal.Builder.Argument as Argument exposing (Argument(..))
 import Graphql.Internal.Encode as Encode
 
 

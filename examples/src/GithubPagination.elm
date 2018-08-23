@@ -14,7 +14,7 @@ import Graphql.Document as Document
 import Graphql.Field as Field exposing (Field)
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
-import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(Absent, Null, Present))
+import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Helpers
 import Html exposing (button, div, h1, p, pre, text)
@@ -150,6 +150,7 @@ update msg model =
                 (RemoteData.Success successResponse) :: rest ->
                     if successResponse.paginationData.hasNextPage then
                         ( RemoteData.Loading :: model, makeRequest successResponse.paginationData.cursor )
+
                     else
                         ( model, Cmd.none )
 
@@ -167,7 +168,7 @@ update msg model =
 
 main : Program Never Model Msg
 main =
-    Html.program
+    Browser.element
         { init = init
         , update = update
         , subscriptions = \_ -> Sub.none

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.PullRequestTimelineItem exposing (..)
+module Github.Union.PullRequestTimelineItem exposing (onAssignedEvent, onBaseRefForcePushedEvent, onClosedEvent, onCommit, onCommitCommentThread, onCrossReferencedEvent, onDemilestonedEvent, onDeployedEvent, onHeadRefDeletedEvent, onHeadRefForcePushedEvent, onHeadRefRestoredEvent, onIssueComment, onLabeledEvent, onLockedEvent, onMergedEvent, onMilestonedEvent, onPullRequestReview, onPullRequestReviewComment, onPullRequestReviewThread, onReferencedEvent, onRenamedTitleEvent, onReopenedEvent, onReviewDismissedEvent, onReviewRequestRemovedEvent, onReviewRequestedEvent, onSubscribedEvent, onUnassignedEvent, onUnlabeledEvent, onUnlockedEvent, onUnsubscribedEvent, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,8 +13,8 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 

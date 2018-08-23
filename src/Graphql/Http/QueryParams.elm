@@ -1,12 +1,13 @@
 module Graphql.Http.QueryParams exposing (urlWithQueryParams)
 
-import Http
+import Url
 
 
 urlWithQueryParams : List ( String, String ) -> String -> String
 urlWithQueryParams queryParams url =
     if List.isEmpty queryParams then
         url
+
     else
         url ++ "?" ++ joinUrlEncoded queryParams
 
@@ -23,7 +24,7 @@ queryPair ( key, value ) =
 
 queryEscape : String -> String
 queryEscape =
-    Http.encodeUri >> replace "%20" "+"
+    Url.percentEncode >> replace "%20" "+"
 
 
 replace : String -> String -> String -> String

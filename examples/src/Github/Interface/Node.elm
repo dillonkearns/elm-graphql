@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Node exposing (..)
+module Github.Interface.Node exposing (commonSelection, id, onAddedToProjectEvent, onAssignedEvent, onBaseRefChangedEvent, onBaseRefForcePushedEvent, onBlob, onBot, onClosedEvent, onCommentDeletedEvent, onCommit, onCommitComment, onCommitCommentThread, onConvertedNoteToIssueEvent, onCrossReferencedEvent, onDemilestonedEvent, onDeployKey, onDeployedEvent, onDeployment, onDeploymentStatus, onExternalIdentity, onGist, onGistComment, onHeadRefDeletedEvent, onHeadRefForcePushedEvent, onHeadRefRestoredEvent, onIssue, onIssueComment, onLabel, onLabeledEvent, onLanguage, onLockedEvent, onMarketplaceListing, onMentionedEvent, onMergedEvent, onMilestone, onMilestonedEvent, onMovedColumnsInProjectEvent, onOrganization, onOrganizationIdentityProvider, onOrganizationInvitation, onProject, onProjectCard, onProjectColumn, onProtectedBranch, onPublicKey, onPullRequest, onPullRequestCommit, onPullRequestReview, onPullRequestReviewComment, onPullRequestReviewThread, onPushAllowance, onReaction, onRef, onReferencedEvent, onRelease, onReleaseAsset, onRemovedFromProjectEvent, onRenamedTitleEvent, onReopenedEvent, onRepository, onRepositoryInvitation, onRepositoryTopic, onReviewDismissalAllowance, onReviewDismissedEvent, onReviewRequest, onReviewRequestRemovedEvent, onReviewRequestedEvent, onStatus, onStatusContext, onSubscribedEvent, onTag, onTeam, onTopic, onTree, onUnassignedEvent, onUnlabeledEvent, onUnlockedEvent, onUnsubscribedEvent, onUser, onUserContentEdit, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,8 +13,8 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
-import Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 
@@ -431,4 +431,4 @@ onUserContentEdit (SelectionSet fields decoder) =
 -}
 id : Field Github.Scalar.Id Github.Interface.Node
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)

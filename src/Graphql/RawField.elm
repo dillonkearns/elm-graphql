@@ -1,4 +1,4 @@
-module Graphql.RawField exposing (RawField(Composite, Leaf), name)
+module Graphql.RawField exposing (RawField(..), name)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 

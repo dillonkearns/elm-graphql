@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TeamMemberRole exposing (..)
+module Github.Enum.TeamMemberRole exposing (TeamMemberRole(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

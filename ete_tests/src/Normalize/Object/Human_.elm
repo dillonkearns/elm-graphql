@@ -2,13 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Object.Human_ exposing (..)
+module Normalize.Object.Human_ exposing (appearsIn, friends, homePlanet, id, name, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 import Normalize.Enum.Episode_
@@ -36,8 +36,8 @@ appearsIn =
 {-| The friends of the human, or an empty list if they have none.
 -}
 friends : SelectionSet decodesTo Normalize.Interface.Character -> Field (List decodesTo) Normalize.Object.Human_
-friends object =
-    Object.selectionField "friends" [] object (identity >> Decode.list)
+friends object_ =
+    Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.
@@ -51,7 +51,7 @@ homePlanet =
 -}
 id : Field Normalize.Scalar.Id Normalize.Object.Human_
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Normalize.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the human.

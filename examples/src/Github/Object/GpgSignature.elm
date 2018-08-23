@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.GpgSignature exposing (..)
+module Github.Object.GpgSignature exposing (email, isValid, keyId, payload, selection, signature, signer, state)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject
@@ -14,7 +14,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -64,8 +64,8 @@ signature =
 {-| GitHub user corresponding to the email signing this commit.
 -}
 signer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.GpgSignature
-signer object =
-    Object.selectionField "signer" [] object (identity >> Decode.nullable)
+signer object_ =
+    Object.selectionField "signer" [] object_ (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.

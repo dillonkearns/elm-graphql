@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Union exposing (..)
+module Normalize.Union exposing (CharacterUnion(..))
 
 
 type CharacterUnion

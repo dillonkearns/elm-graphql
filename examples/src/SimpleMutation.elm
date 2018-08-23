@@ -1,5 +1,6 @@
 module SimpleMutation exposing (main)
 
+import Browser
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootMutation)
@@ -36,8 +37,8 @@ type alias Model =
     RemoteData (Graphql.Http.Error Response) Response
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( RemoteData.Loading
     , makeRequest
     )
@@ -64,9 +65,9 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    Html.program
+    Browser.element
         { init = init
         , update = update
         , subscriptions = \_ -> Sub.none

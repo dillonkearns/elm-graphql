@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.BaseRefForcePushedEvent exposing (..)
+module Github.Object.BaseRefForcePushedEvent exposing (actor, afterCommit, beforeCommit, createdAt, id, pullRequest, ref, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,7 +13,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,45 +28,45 @@ selection constructor =
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
-actor object =
-    Object.selectionField "actor" [] object (identity >> Decode.nullable)
+actor object_ =
+    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
-{-| Identifies the after commit SHA for the 'base_ref_force_pushed' event.
+{-| Identifies the after commit SHA for the 'base\_ref\_force\_pushed' event.
 -}
 afterCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
-afterCommit object =
-    Object.selectionField "afterCommit" [] object (identity >> Decode.nullable)
+afterCommit object_ =
+    Object.selectionField "afterCommit" [] object_ (identity >> Decode.nullable)
 
 
-{-| Identifies the before commit SHA for the 'base_ref_force_pushed' event.
+{-| Identifies the before commit SHA for the 'base\_ref\_force\_pushed' event.
 -}
 beforeCommit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
-beforeCommit object =
-    Object.selectionField "beforeCommit" [] object (identity >> Decode.nullable)
+beforeCommit object_ =
+    Object.selectionField "beforeCommit" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.BaseRefForcePushedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 id : Field Github.Scalar.Id Github.Object.BaseRefForcePushedEvent
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.BaseRefForcePushedEvent
-pullRequest object =
-    Object.selectionField "pullRequest" [] object identity
+pullRequest object_ =
+    Object.selectionField "pullRequest" [] object_ identity
 
 
-{-| Identifies the fully qualified ref name for the 'base_ref_force_pushed' event.
+{-| Identifies the fully qualified ref name for the 'base\_ref\_force\_pushed' event.
 -}
 ref : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
-ref object =
-    Object.selectionField "ref" [] object (identity >> Decode.nullable)
+ref object_ =
+    Object.selectionField "ref" [] object_ (identity >> Decode.nullable)

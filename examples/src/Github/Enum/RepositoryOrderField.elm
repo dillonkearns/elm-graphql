@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryOrderField exposing (..)
+module Github.Enum.RepositoryOrderField exposing (RepositoryOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

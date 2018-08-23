@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RefOrderField exposing (..)
+module Github.Enum.RefOrderField exposing (RefOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

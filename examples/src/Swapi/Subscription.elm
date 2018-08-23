@@ -2,14 +2,14 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Subscription exposing (..)
+module Swapi.Subscription exposing (newMessage, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 import Swapi.InputObject
@@ -28,5 +28,5 @@ selection constructor =
 
 
 newMessage : SelectionSet decodesTo Swapi.Object.ChatMessage -> Field decodesTo RootSubscription
-newMessage object =
-    Object.selectionField "newMessage" [] object identity
+newMessage object_ =
+    Object.selectionField "newMessage" [] object_ identity

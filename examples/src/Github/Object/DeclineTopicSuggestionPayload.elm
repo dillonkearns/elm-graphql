@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DeclineTopicSuggestionPayload exposing (..)
+module Github.Object.DeclineTopicSuggestionPayload exposing (clientMutationId, selection, topic)
 
 import Github.InputObject
 import Github.Interface
@@ -13,7 +13,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,5 +35,5 @@ clientMutationId =
 {-| The declined topic.
 -}
 topic : SelectionSet decodesTo Github.Object.Topic -> Field decodesTo Github.Object.DeclineTopicSuggestionPayload
-topic object =
-    Object.selectionField "topic" [] object identity
+topic object_ =
+    Object.selectionField "topic" [] object_ identity

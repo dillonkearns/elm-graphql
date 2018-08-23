@@ -1,18 +1,19 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, interfaceSelection, selection, selectionField, unionSelection)
+module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
+
 @docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection
 
 -}
 
 import Dict
-import Graphql.Field as Field exposing (Field(Field))
+import Graphql.Field as Field exposing (Field(..))
 import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField)
-import Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(..))
+import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
 
 

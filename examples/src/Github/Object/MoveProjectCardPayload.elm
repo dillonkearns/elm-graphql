@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MoveProjectCardPayload exposing (..)
+module Github.Object.MoveProjectCardPayload exposing (cardEdge, clientMutationId, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,7 +13,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -28,8 +28,8 @@ selection constructor =
 {-| The new edge of the moved card.
 -}
 cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> Field decodesTo Github.Object.MoveProjectCardPayload
-cardEdge object =
-    Object.selectionField "cardEdge" [] object identity
+cardEdge object_ =
+    Object.selectionField "cardEdge" [] object_ identity
 
 
 {-| A unique identifier for the client performing the mutation.

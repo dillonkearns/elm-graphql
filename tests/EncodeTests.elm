@@ -5,11 +5,6 @@ import Graphql.Internal.Encode
 import Test exposing (Test, describe, test)
 
 
-(=>) : a -> b -> ( a, b )
-(=>) =
-    (,)
-
-
 all : Test
 all =
     describe "encode"
@@ -37,9 +32,9 @@ all =
         , test "non-empty object" <|
             \() ->
                 Graphql.Internal.Encode.object
-                    [ "number" => Graphql.Internal.Encode.int 47
-                    , "boolean" => Graphql.Internal.Encode.bool True
-                    , "enum" => Graphql.Internal.Encode.enum toString EMPIRE
+                    [ ( "number", Graphql.Internal.Encode.int 47 )
+                    , ( "boolean", Graphql.Internal.Encode.bool True )
+                    , ( "enum", Graphql.Internal.Encode.enum Debug.toString EMPIRE )
                     ]
                     |> Graphql.Internal.Encode.serialize
                     |> Expect.equal """{number: 47, boolean: true, enum: EMPIRE}"""

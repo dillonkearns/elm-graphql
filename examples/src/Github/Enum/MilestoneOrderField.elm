@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.MilestoneOrderField exposing (..)
+module Github.Enum.MilestoneOrderField exposing (MilestoneOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

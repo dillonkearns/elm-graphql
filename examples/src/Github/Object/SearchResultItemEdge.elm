@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.SearchResultItemEdge exposing (..)
+module Github.Object.SearchResultItemEdge exposing (cursor, node, selection, textMatches)
 
 import Github.InputObject
 import Github.Interface
@@ -13,7 +13,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,12 +35,12 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo Github.Union.SearchResultItem -> Field (Maybe decodesTo) Github.Object.SearchResultItemEdge
-node object =
-    Object.selectionField "node" [] object (identity >> Decode.nullable)
+node object_ =
+    Object.selectionField "node" [] object_ (identity >> Decode.nullable)
 
 
 {-| Text matches on the result found.
 -}
 textMatches : SelectionSet decodesTo Github.Object.TextMatch -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemEdge
-textMatches object =
-    Object.selectionField "textMatches" [] object (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+textMatches object_ =
+    Object.selectionField "textMatches" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)

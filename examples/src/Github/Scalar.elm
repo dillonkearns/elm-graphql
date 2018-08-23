@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Scalar exposing (..)
+module Github.Scalar exposing (Date(..), DateTime(..), GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..))
 
 
 type Date

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RemoveOutsideCollaboratorPayload exposing (..)
+module Github.Object.RemoveOutsideCollaboratorPayload exposing (clientMutationId, removedUser, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,7 +13,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,5 +35,5 @@ clientMutationId =
 {-| The user that was removed as an outside collaborator.
 -}
 removedUser : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RemoveOutsideCollaboratorPayload
-removedUser object =
-    Object.selectionField "removedUser" [] object identity
+removedUser object_ =
+    Object.selectionField "removedUser" [] object_ identity

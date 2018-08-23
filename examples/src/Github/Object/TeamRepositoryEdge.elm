@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TeamRepositoryEdge exposing (..)
+module Github.Object.TeamRepositoryEdge exposing (cursor, node, permission, selection)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject
@@ -14,7 +14,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -32,8 +32,8 @@ cursor =
 
 
 node : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.TeamRepositoryEdge
-node object =
-    Object.selectionField "node" [] object identity
+node object_ =
+    Object.selectionField "node" [] object_ identity
 
 
 {-| The permission level the team has on the repository

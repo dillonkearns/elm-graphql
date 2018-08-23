@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface exposing (..)
+module Swapi.Interface exposing (Character(..))
 
 
 type Character

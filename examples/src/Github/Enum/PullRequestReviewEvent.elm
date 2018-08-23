@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestReviewEvent exposing (..)
+module Github.Enum.PullRequestReviewEvent exposing (PullRequestReviewEvent(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

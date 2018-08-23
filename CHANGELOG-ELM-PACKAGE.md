@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.0] - 2018-08-22
 
+### Removed
+
+- **Subscriptions Low-Level Data-Transfer Layer** As before, this library will
+  generate code based on the subscriptions defined in your GraphQL schema.
+  And you will be able to use `Graphql.Document.serializeSubscription` to
+  get a `String` that you can send over to your server when you open a subscription.
+  Then you'll be able to use the `Graphql.Document.decoder` from your subscription
+  to decode the JSON responses from the server.
+  What's been removed is just the low level protocols for doing the websocket connection.
+  As per [this issue](https://github.com/dillonkearns/elm-graphql/issues/43),
+  this responsibility will be moved out of the core `dillonkearns/elm-graphql`
+  package in order to decouple this library from the low-level details which
+  differ between different GraphQL server implementations.
+
+The low-level data transfer logic for connecting over websockets to a subscription
+has been removed from this package.
+https://github.com/dillonkearns/elm-graphql/issues/43
+
 ### Changed
 
 - Rename package from `dillonkearns/graphqelm` to `dillonkearns/elm-graphql`

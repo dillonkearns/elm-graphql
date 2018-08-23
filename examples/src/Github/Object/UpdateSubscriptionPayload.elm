@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UpdateSubscriptionPayload exposing (..)
+module Github.Object.UpdateSubscriptionPayload exposing (clientMutationId, selection, subscribable)
 
 import Github.InputObject
 import Github.Interface
@@ -13,7 +13,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -35,5 +35,5 @@ clientMutationId =
 {-| The input subscribable entity.
 -}
 subscribable : SelectionSet decodesTo Github.Interface.Subscribable -> Field decodesTo Github.Object.UpdateSubscriptionPayload
-subscribable object =
-    Object.selectionField "subscribable" [] object identity
+subscribable object_ =
+    Object.selectionField "subscribable" [] object_ identity

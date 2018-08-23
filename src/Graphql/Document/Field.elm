@@ -2,7 +2,7 @@ module Graphql.Document.Field exposing (serializeChildren)
 
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Indent as Indent
-import Graphql.RawField exposing (RawField(Composite, Leaf))
+import Graphql.RawField exposing (RawField(..))
 import List.Extra
 
 
@@ -23,17 +23,18 @@ alias fieldIndex fields field =
     in
     if indices == [] then
         Nothing
+
     else
-        Just (fieldName ++ toString (List.length indices + 1))
+        Just (fieldName ++ String.fromInt (List.length indices + 1))
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
-serialize alias mIndentationLevel field =
+serialize aliasName mIndentationLevel field =
     let
         prefix =
-            case alias of
-                Just aliasName ->
-                    aliasName
+            case aliasName of
+                Just aliasName_ ->
+                    aliasName_
                         ++ (case mIndentationLevel of
                                 Just _ ->
                                     ": "
@@ -49,6 +50,7 @@ serialize alias mIndentationLevel field =
         Composite fieldName args children ->
             if children == [] then
                 Nothing
+
             else
                 case mIndentationLevel of
                     Nothing ->

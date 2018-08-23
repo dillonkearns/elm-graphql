@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.OrganizationInvitation exposing (..)
+module Github.Object.OrganizationInvitation exposing (createdAt, email, id, invitationType, invitee, inviter, organization, role, selection)
 
 import Github.Enum.OrganizationInvitationRole
 import Github.Enum.OrganizationInvitationType
@@ -15,7 +15,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -31,7 +31,7 @@ selection constructor =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.OrganizationInvitation
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The email address of the user invited to the organization.
@@ -43,7 +43,7 @@ email =
 
 id : Field Github.Scalar.Id Github.Object.OrganizationInvitation
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
 
 
 {-| The type of invitation that was sent (e.g. email, user).
@@ -56,22 +56,22 @@ invitationType =
 {-| The user who was invited to the organization.
 -}
 invitee : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.OrganizationInvitation
-invitee object =
-    Object.selectionField "invitee" [] object (identity >> Decode.nullable)
+invitee object_ =
+    Object.selectionField "invitee" [] object_ (identity >> Decode.nullable)
 
 
 {-| The user who created the invitation.
 -}
 inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.OrganizationInvitation
-inviter object =
-    Object.selectionField "inviter" [] object identity
+inviter object_ =
+    Object.selectionField "inviter" [] object_ identity
 
 
 {-| The organization the invite is for
 -}
 organization : SelectionSet decodesTo Github.Object.Organization -> Field decodesTo Github.Object.OrganizationInvitation
-organization object =
-    Object.selectionField "organization" [] object identity
+organization object_ =
+    Object.selectionField "organization" [] object_ identity
 
 
 {-| The user's pending role in the organization (e.g. member, owner).

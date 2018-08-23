@@ -1,4 +1,4 @@
-module Graphql.Http.GraphqlError exposing (GraphqlError, Location, PossiblyParsedData(..), decoder)
+module Graphql.Http.GraphqlError exposing (GraphqlError, decoder, Location, PossiblyParsedData(..))
 
 {-|
 

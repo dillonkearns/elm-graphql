@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Union exposing (..)
+module Swapi.Union exposing (CharacterUnion(..))
 
 
 type CharacterUnion

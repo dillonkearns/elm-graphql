@@ -1,4 +1,11 @@
-module Graphql.Http exposing (Error(..), QueryRequestMethod(..), Request, ignoreParsedErrorData, mapError, mutationRequest, queryRequest, queryRequestWithHttpGet, send, toTask, withCredentials, withHeader, withQueryParams, withTimeout)
+module Graphql.Http exposing
+    ( Request, Error(..)
+    , queryRequest, mutationRequest, queryRequestWithHttpGet
+    , QueryRequestMethod(..)
+    , withHeader, withTimeout, withCredentials, withQueryParams
+    , send, toTask
+    , mapError, ignoreParsedErrorData
+    )
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
 or the [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples)
@@ -44,7 +51,6 @@ import Http
 import Json.Decode
 import Json.Encode
 import Task exposing (Task)
-import Time exposing (Time)
 
 
 {-| An internal request as it's built up. Once it's built up, send the
@@ -56,7 +62,7 @@ type Request decodesTo
         , headers : List Http.Header
         , baseUrl : String
         , expect : Json.Decode.Decoder decodesTo
-        , timeout : Maybe Time
+        , timeout : Maybe Float
         , withCredentials : Bool
         , queryParams : List ( String, String )
         }
@@ -194,7 +200,7 @@ You can use it on its own, or with a library like
 [RemoteData](http://package.elm-lang.org/packages/krisajenkins/remotedata/latest/).
 
     import Graphql.Http
-    import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
+    import Graphql.OptionalArgument exposing (OptionalArgument(..))
     import RemoteData exposing (RemoteData)
 
     type Msg
@@ -319,7 +325,7 @@ errorDecoder decoder =
 
 decodeErrorWithData : GraphqlError.PossiblyParsedData a -> Json.Decode.Decoder (DataResult a)
 decodeErrorWithData data =
-    GraphqlError.decoder |> Json.Decode.map ((,) data) |> Json.Decode.map Err
+    GraphqlError.decoder |> Json.Decode.map (Tuple.pair data) |> Json.Decode.map Err
 
 
 {-| Add a header.
@@ -354,7 +360,7 @@ withQueryParams additionalQueryParams (Request request) =
 
 {-| Add a timeout.
 -}
-withTimeout : Time -> Request decodesTo -> Request decodesTo
+withTimeout : Float -> Request decodesTo -> Request decodesTo
 withTimeout timeout (Request request) =
     Request { request | timeout = Just timeout }
 

@@ -15,4 +15,4 @@ expect maybe =
             thing
 
         Nothing ->
-            Debug.crash "Expected to get thing, got nothing"
+            Debug.todo "Expected to get thing, got nothing"

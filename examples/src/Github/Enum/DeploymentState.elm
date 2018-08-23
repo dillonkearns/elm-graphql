@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.DeploymentState exposing (..)
+module Github.Enum.DeploymentState exposing (DeploymentState(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

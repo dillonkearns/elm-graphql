@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReleaseOrderField exposing (..)
+module Github.Enum.ReleaseOrderField exposing (ReleaseOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

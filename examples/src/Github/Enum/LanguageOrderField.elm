@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.LanguageOrderField exposing (..)
+module Github.Enum.LanguageOrderField exposing (LanguageOrderField(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

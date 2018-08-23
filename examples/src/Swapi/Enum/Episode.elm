@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Enum.Episode exposing (..)
+module Swapi.Enum.Episode exposing (Episode(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

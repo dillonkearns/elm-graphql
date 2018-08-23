@@ -1,4 +1,7 @@
-module Graphql.OptionalArgument exposing (OptionalArgument(..), fromMaybe)
+module Graphql.OptionalArgument exposing
+    ( OptionalArgument(..)
+    , fromMaybe
+    )
 
 {-|
 
