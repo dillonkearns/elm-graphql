@@ -4,6 +4,8 @@
 
 [![Build Status](https://travis-ci.org/dillonkearns/elm-graphql.svg?branch=master)](https://travis-ci.org/dillonkearns/elm-graphql)
 
+(Formerly Graphqelm, [read about why the name changed.](https://github.com/dillonkearns/elm-graphql/issues/23))
+
 Why use this package over the other available Elm GraphQL packages? This is the only one that
 generates type-safe code for your entire schema. (It's also the only type-safe
 library with Elm 0.18 support, see
