@@ -33,10 +33,7 @@ https://github.com/dillonkearns/elm-graphql/issues/43
 
 - Rename package from `dillonkearns/graphqelm` to `dillonkearns/elm-graphql`
   to follow the elm literal naming convention (see
-  [issue #23](https://github.com/dillonkearns/elm-graphql/issues/23)). This
-  allows users to make the switch to the new naming while they're on Elm 0.18.
-  Then they can upgrade to 0.19 with no changes to their `dillonkearns/elm-graphql`
-  code.
+  [issue #23](https://github.com/dillonkearns/elm-graphql/issues/23)).
 
 ## BELOW THIS IS FOR `dillonkearns/graphqelm` (before [the rename to `dillonkearns/elm-graphql`](https://github.com/dillonkearns/elm-graphql/issues/23))
 
