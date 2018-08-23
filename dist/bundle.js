@@ -7617,7 +7617,7 @@ var author$project$Graphql$Generator$Decoder$generateDecoder = F2(
 												]))));
 								return _List_fromArray(
 									[
-										'Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ]',
+										'Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ]',
 										A2(
 										lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 										'Decode.map {0}',
@@ -8074,7 +8074,7 @@ var author$project$Graphql$Generator$Interface$prepend = F3(
 		var apiSubmodule = _n0.apiSubmodule;
 		return A2(
 			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n{-| Select only common fields from the interface.\n-}\ncommonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\ncommonSelection constructor =\n    Object.selection constructor\n\n\n{-| Select both common and type-specific fields from the interface.\n-}\nselection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}\nselection constructor typeSpecificDecoders =\n    Object.interfaceSelection typeSpecificDecoders constructor\n',
+			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n{-| Select only common fields from the interface.\n-}\ncommonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\ncommonSelection constructor =\n    Object.selection constructor\n\n\n{-| Select both common and type-specific fields from the interface.\n-}\nselection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}\nselection constructor typeSpecificDecoders =\n    Object.interfaceSelection typeSpecificDecoders constructor\n',
 			_List_fromArray(
 				[
 					A2(elm$core$String$join, '.', moduleName),
@@ -8197,7 +8197,7 @@ var author$project$Graphql$Generator$StaticImports$all = function (_n0) {
 	var apiSubmodule = _n0.apiSubmodule;
 	return A2(
 		lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
-		'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.Internal.Encode as Encode exposing (Value)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Json.Decode as Decode exposing (Decoder)\nimport {0}.Object\nimport {0}.Interface\nimport {0}.Union\nimport {0}.Scalar\nimport {0}.InputObject\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphql.Internal.Encode as Encode exposing (Value)',
+		'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.Internal.Encode as Encode exposing (Value)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Json.Decode as Decode exposing (Decoder)\nimport {0}.Object\nimport {0}.Interface\nimport {0}.Union\nimport {0}.Scalar\nimport {0}.InputObject\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)\nimport Json.Decode as Decode exposing (Decoder)\nimport Graphql.Internal.Encode as Encode exposing (Value)',
 		_List_fromArray(
 			[
 				A2(elm$core$String$join, '.', apiSubmodule)
@@ -8239,7 +8239,7 @@ var author$project$Graphql$Generator$Object$prepend = F3(
 		var apiSubmodule = _n0.apiSubmodule;
 		return A2(
 			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a SelectionSet for this object.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.selection constructor\n',
+			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {2}.Object\nimport {2}.Interface\nimport {2}.Union\nimport {2}.Scalar\nimport {2}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{1}\n\n\n{-| Select fields to build up a SelectionSet for this object.\n-}\nselection : (a -> constructor) -> SelectionSet (a -> constructor) {0}\nselection constructor =\n    Object.selection constructor\n',
 			_List_fromArray(
 				[
 					A2(elm$core$String$join, '.', moduleName),
@@ -8346,7 +8346,7 @@ var author$project$Graphql$Generator$Union$prepend = F2(
 		var apiSubmodule = _n0.apiSubmodule;
 		return A2(
 			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
-			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(FragmentSelectionSet), SelectionSet(SelectionSet))\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport {1}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n\n\nselection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}\nselection constructor typeSpecificDecoders =\n    Object.unionSelection typeSpecificDecoders constructor\n',
+			'module {0} exposing (..)\n\nimport Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport {1}.InputObject\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n\n\nselection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}\nselection constructor typeSpecificDecoders =\n    Object.unionSelection typeSpecificDecoders constructor\n',
 			_List_fromArray(
 				[
 					A2(elm$core$String$join, '.', moduleName),
@@ -8783,7 +8783,7 @@ var author$project$Graphql$Generator$InputObjectFile$generateImports = F2(
 		var apiSubmodule = context.apiSubmodule;
 		return A2(
 			lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
-			'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(Absent))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{0}\n',
+			'import Graphql.Internal.Builder.Argument as Argument exposing (Argument)\nimport Graphql.Field as Field exposing (Field)\nimport Graphql.Internal.Builder.Object as Object\nimport Graphql.SelectionSet exposing (SelectionSet)\nimport Graphql.OptionalArgument exposing (OptionalArgument(..))\nimport {1}.Object\nimport {1}.Interface\nimport {1}.Union\nimport {1}.Scalar\nimport Json.Decode as Decode\nimport Graphql.Internal.Encode as Encode exposing (Value)\n{0}\n',
 			_List_fromArray(
 				[
 					A3(

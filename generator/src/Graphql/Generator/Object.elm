@@ -22,7 +22,7 @@ import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.SelectionSet exposing (SelectionSet)
-import Graphql.OptionalArgument exposing (OptionalArgument(Absent))
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import {2}.Object
 import {2}.Interface
 import {2}.Union

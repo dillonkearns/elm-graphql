@@ -32,7 +32,7 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    [ "Decode.oneOf [ Decode.string, Decode.float |> Decode.map toString, Decode.int |> Decode.map toString, Decode.bool |> Decode.map toString ]"
+                    [ "Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ]"
                     , interpolate "Decode.map {0}" [ constructor ]
                     ]
 

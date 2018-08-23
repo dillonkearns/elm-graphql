@@ -1,5 +1,6 @@
 module Starwars exposing (main)
 
+import Browser
 import Graphql.Document as Document
 import Graphql.Field as Field
 import Graphql.Http
@@ -135,8 +136,8 @@ type alias Model =
     RemoteData (Graphql.Http.Error Response) Response
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( RemoteData.Loading
     , makeRequest
     )
@@ -163,7 +164,7 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
