@@ -3853,8 +3853,8 @@ function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
 			throw new Error('Browser.application programs cannot handle URLs like this:\n\n    ' + document.location.href + '\n\nWhat is the root? The root of your file system? Try looking at this program with `elm reactor` or some other server.');
 
 		case 2:
-			var message = fact1;
-			throw new Error('Problem with the flags given to your Elm program on initialization.\n\n' + message);
+			var jsonErrorString = fact1;
+			throw new Error('Problem with the flags given to your Elm program on initialization.\n\n' + jsonErrorString);
 
 		case 3:
 			var portName = fact1;
@@ -4733,6 +4733,14 @@ function _Char_toLocaleLower(char)
 
 
 
+/**/
+function _Json_errorToString(error)
+{
+	return elm$json$Json$Decode$errorToString(error);
+}
+//*/
+
+
 // CORE DECODERS
 
 function _Json_succeed(msg)
@@ -5122,7 +5130,7 @@ function _Json_listEquality(aDecoders, bDecoders)
 
 var _Json_encode = F2(function(indentLevel, value)
 {
-	return JSON.stringify(_Json_unwrap(value), null, indentLevel);
+	return JSON.stringify(_Json_unwrap(value), null, indentLevel) + '';
 });
 
 function _Json_wrap(value) { return { $: 0, a: value }; }
@@ -5381,7 +5389,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 function _Platform_initialize(flagDecoder, args, init, update, subscriptions, stepperBuilder)
 {
 	var result = A2(_Json_run, flagDecoder, _Json_wrap(args ? args['flags'] : undefined));
-	elm$core$Result$isOk(result) || _Debug_crash(2, result.a);
+	elm$core$Result$isOk(result) || _Debug_crash(2 /**/, _Json_errorToString(result.a) /**/);
 	var managers = {};
 	result = init(result.a);
 	var model = result.a;
@@ -9419,6 +9427,175 @@ var elm$json$Json$Decode$Index = F2(
 var elm$json$Json$Decode$OneOf = function (a) {
 	return {$: 'OneOf', a: a};
 };
+var elm$core$Char$toCode = _Char_toCode;
+var elm$core$Char$isLower = function (_char) {
+	var code = elm$core$Char$toCode(_char);
+	return (97 <= code) && (code <= 122);
+};
+var elm$core$Char$isUpper = function (_char) {
+	var code = elm$core$Char$toCode(_char);
+	return (code <= 90) && (65 <= code);
+};
+var elm$core$Char$isAlpha = function (_char) {
+	return elm$core$Char$isLower(_char) || elm$core$Char$isUpper(_char);
+};
+var elm$core$Char$isDigit = function (_char) {
+	var code = elm$core$Char$toCode(_char);
+	return (code <= 57) && (48 <= code);
+};
+var elm$core$Char$isAlphaNum = function (_char) {
+	return elm$core$Char$isLower(_char) || (elm$core$Char$isUpper(_char) || elm$core$Char$isDigit(_char));
+};
+var elm$core$List$map2 = _List_map2;
+var elm$core$List$rangeHelp = F3(
+	function (lo, hi, list) {
+		rangeHelp:
+		while (true) {
+			if (_Utils_cmp(lo, hi) < 1) {
+				var $temp$lo = lo,
+					$temp$hi = hi - 1,
+					$temp$list = A2(elm$core$List$cons, hi, list);
+				lo = $temp$lo;
+				hi = $temp$hi;
+				list = $temp$list;
+				continue rangeHelp;
+			} else {
+				return list;
+			}
+		}
+	});
+var elm$core$List$range = F2(
+	function (lo, hi) {
+		return A3(elm$core$List$rangeHelp, lo, hi, _List_Nil);
+	});
+var elm$core$List$indexedMap = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$map2,
+			f,
+			A2(
+				elm$core$List$range,
+				0,
+				elm$core$List$length(xs) - 1),
+			xs);
+	});
+var elm$core$String$all = _String_all;
+var elm$core$String$fromInt = _String_fromNumber;
+var elm$core$String$split = F2(
+	function (sep, string) {
+		return _List_fromArray(
+			A2(_String_split, sep, string));
+	});
+var elm$json$Json$Decode$indent = function (str) {
+	return A2(
+		elm$core$String$join,
+		'\n    ',
+		A2(elm$core$String$split, '\n', str));
+};
+var elm$json$Json$Encode$encode = _Json_encode;
+var elm$json$Json$Decode$errorOneOf = F2(
+	function (i, error) {
+		return '\n\n(' + (elm$core$String$fromInt(i + 1) + (') ' + elm$json$Json$Decode$indent(
+			elm$json$Json$Decode$errorToString(error))));
+	});
+var elm$json$Json$Decode$errorToString = function (error) {
+	return A2(elm$json$Json$Decode$errorToStringHelp, error, _List_Nil);
+};
+var elm$json$Json$Decode$errorToStringHelp = F2(
+	function (error, context) {
+		errorToStringHelp:
+		while (true) {
+			switch (error.$) {
+				case 'Field':
+					var f = error.a;
+					var err = error.b;
+					var isSimple = function () {
+						var _n1 = elm$core$String$uncons(f);
+						if (_n1.$ === 'Nothing') {
+							return false;
+						} else {
+							var _n2 = _n1.a;
+							var _char = _n2.a;
+							var rest = _n2.b;
+							return elm$core$Char$isAlpha(_char) && A2(elm$core$String$all, elm$core$Char$isAlphaNum, rest);
+						}
+					}();
+					var fieldName = isSimple ? ('.' + f) : ('[\'' + (f + '\']'));
+					var $temp$error = err,
+						$temp$context = A2(elm$core$List$cons, fieldName, context);
+					error = $temp$error;
+					context = $temp$context;
+					continue errorToStringHelp;
+				case 'Index':
+					var i = error.a;
+					var err = error.b;
+					var indexName = '[' + (elm$core$String$fromInt(i) + ']');
+					var $temp$error = err,
+						$temp$context = A2(elm$core$List$cons, indexName, context);
+					error = $temp$error;
+					context = $temp$context;
+					continue errorToStringHelp;
+				case 'OneOf':
+					var errors = error.a;
+					if (!errors.b) {
+						return 'Ran into a Json.Decode.oneOf with no possibilities' + function () {
+							if (!context.b) {
+								return '!';
+							} else {
+								return ' at json' + A2(
+									elm$core$String$join,
+									'',
+									elm$core$List$reverse(context));
+							}
+						}();
+					} else {
+						if (!errors.b.b) {
+							var err = errors.a;
+							var $temp$error = err,
+								$temp$context = context;
+							error = $temp$error;
+							context = $temp$context;
+							continue errorToStringHelp;
+						} else {
+							var starter = function () {
+								if (!context.b) {
+									return 'Json.Decode.oneOf';
+								} else {
+									return 'The Json.Decode.oneOf at json' + A2(
+										elm$core$String$join,
+										'',
+										elm$core$List$reverse(context));
+								}
+							}();
+							var introduction = starter + (' failed in the following ' + (elm$core$String$fromInt(
+								elm$core$List$length(errors)) + ' ways:'));
+							return A2(
+								elm$core$String$join,
+								'\n\n',
+								A2(
+									elm$core$List$cons,
+									introduction,
+									A2(elm$core$List$indexedMap, elm$json$Json$Decode$errorOneOf, errors)));
+						}
+					}
+				default:
+					var msg = error.a;
+					var json = error.b;
+					var introduction = function () {
+						if (!context.b) {
+							return 'Problem with the given value:\n\n';
+						} else {
+							return 'Problem with the value at json' + (A2(
+								elm$core$String$join,
+								'',
+								elm$core$List$reverse(context)) + ':\n\n    ');
+						}
+					}();
+					return introduction + (elm$json$Json$Decode$indent(
+						A2(elm$json$Json$Encode$encode, 4, json)) + ('\n\n' + msg));
+			}
+		}
+	});
 var elm$json$Json$Decode$field = _Json_decodeField;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$map2 = _Json_map2;
@@ -15596,7 +15773,7 @@ function slice (args) {
 /* 74 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"@dillonkearns/elm-graphql","version":"1.0.0","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test && cd generator && elm-test","gen:starwars":"npm run build && ./bin/elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/elm-graphql http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src","approve-compilation":"cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/GithubComplex.elm src/SimpleMutation.elm","approve":"npm run build && npm link && elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src && elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --output examples/src && elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output ete_tests/src && echo 'Ensuring documentation is valid...' && elm make --docs=documentation.json && echo 'Confirming that examples folder is clean...' && (git diff --exit-code -- examples || (echo 'FAILURE' && echo 'examples code has changed. Commit changes to approve.' && exit 1)) && echo 'Confirming that ete_tests folder is clean...' && (git diff --exit-code -- ete_tests || (echo 'FAILURE' && echo 'ete_tests code has changed. Commit changes to approve.' && exit 1)) && npm run approve-compilation && echo 'SUCCESS'","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/elm-graphql","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.19.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-live":"^2.7.5","elm-test":"^0.19.0-beta4","elm-webpack-loader":"https://github.com/xtian/elm-webpack-loader.git#0.19","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.8.0","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"elm-graphql":"bin/elm-graphql"}}
+module.exports = {"name":"@dillonkearns/elm-graphql","version":"1.0.0","scripts":{"build":"webpack","elm-nuke":"rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..","start":"cd examples && elm-live src/GithubComplex.elm --open --output=elm.js","test":"elm-test && cd generator && elm-test","gen:starwars":"npm run build && ./bin/elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src","gen:normalize_test":"npm run build && cd ete_tests && ../bin/elm-graphql http://localhost:4000 --base Normalize && cd -","gen:github":"npm run build && ./bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src","approve-compilation":"cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/GithubComplex.elm src/SimpleMutation.elm","approve":"bin/approve","elm-analyse":"elm-analyse --serve"},"keywords":["elm","graphql"],"repository":"https://github.com/dillonkearns/elm-graphql","author":"Dillon Kearns","license":"BSD-3-Clause","devDependencies":{"@types/fs-extra":"^5.0.0","@types/glob":"^5.0.34","@types/minimist":"^1.2.0","@types/node":"^8.5.2","@types/request":"^2.0.9","@types/webpack":"^3.8.1","elm":"^0.19.0","elm-analyse":"^0.13.3","elm-hot-loader":"0.5.4","elm-live":"^2.7.5","elm-test":"^0.19.0-beta4","elm-webpack-loader":"https://github.com/xtian/elm-webpack-loader.git#0.19","fs-extra":"^5.0.0","ts-loader":"^3.2.0","typescript":"^2.6.2","webpack":"^3.10.0"},"dependencies":{"elm-format":"^0.8.0","glob":"^7.1.2","graphql-request":"^1.4.0","minimist":"^1.2.0","request":"^2.83.0"},"bin":{"elm-graphql":"bin/elm-graphql"}}
 
 /***/ }),
 /* 75 */
