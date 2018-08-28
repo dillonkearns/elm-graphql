@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.4] - 2018-08-28
+
+Nothing to see here! Release 1.0.4 was just testing out a new Travis npm deploy script.
+
 ## [1.0.1] - 2018-08-28
 
 ### Changed
