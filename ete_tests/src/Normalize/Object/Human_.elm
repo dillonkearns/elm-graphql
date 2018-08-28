@@ -51,7 +51,7 @@ homePlanet =
 -}
 id : Field Normalize.Scalar.Id Normalize.Object.Human_
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Normalize.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the human.

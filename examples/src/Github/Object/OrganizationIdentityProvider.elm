@@ -29,7 +29,7 @@ selection constructor =
 -}
 digestMethod : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 digestMethod =
-    Object.fieldDecoder "digestMethod" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "digestMethod" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 type alias ExternalIdentitiesOptionalArguments =
@@ -59,14 +59,14 @@ externalIdentities fillInOptionals object_ =
 
 id : Field Github.Scalar.Id Github.Object.OrganizationIdentityProvider
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The x509 certificate used by the Identity Provder to sign assertions and responses.
 -}
 idpCertificate : Field (Maybe Github.Scalar.X509Certificate) Github.Object.OrganizationIdentityProvider
 idpCertificate =
-    Object.fieldDecoder "idpCertificate" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.X509Certificate |> Decode.nullable)
+    Object.fieldDecoder "idpCertificate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.X509Certificate |> Decode.nullable)
 
 
 {-| The Issuer Entity ID for the SAML Identity Provider
@@ -87,11 +87,11 @@ organization object_ =
 -}
 signatureMethod : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 signatureMethod =
-    Object.fieldDecoder "signatureMethod" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "signatureMethod" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The URL endpoint for the Identity Provider's SAML SSO.
 -}
 ssoUrl : Field (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 ssoUrl =
-    Object.fieldDecoder "ssoUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "ssoUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

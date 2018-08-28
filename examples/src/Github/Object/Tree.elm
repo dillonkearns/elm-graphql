@@ -36,14 +36,14 @@ abbreviatedOid =
 -}
 commitResourcePath : Field Github.Scalar.Uri Github.Object.Tree
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : Field Github.Scalar.Uri Github.Object.Tree
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of tree entries.
@@ -55,14 +55,14 @@ entries object_ =
 
 id : Field Github.Scalar.Id Github.Object.Tree
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
 oid : Field Github.Scalar.GitObjectID Github.Object.Tree
 oid =
-    Object.fieldDecoder "oid" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.GitObjectID)
+    Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to

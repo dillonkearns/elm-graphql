@@ -50,7 +50,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The user's public profile bio.
@@ -64,7 +64,7 @@ bio =
 -}
 bioHTML : Field Github.Scalar.Html Github.Object.User
 bioHTML =
-    Object.fieldDecoder "bioHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "bioHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 type alias CommitCommentsOptionalArguments =
@@ -103,7 +103,7 @@ company =
 -}
 companyHTML : Field Github.Scalar.Html Github.Object.User
 companyHTML =
-    Object.fieldDecoder "companyHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "companyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 type alias ContributedRepositoriesOptionalArguments =
@@ -139,7 +139,7 @@ contributedRepositories fillInOptionals object_ =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.User
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
@@ -274,7 +274,7 @@ gists fillInOptionals object_ =
 
 id : Field Github.Scalar.Id Github.Object.User
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether or not this user is a participant in the GitHub Security Bug Bounty.
@@ -601,7 +601,7 @@ repository requiredArgs object_ =
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.User
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias StarredRepositoriesOptionalArguments =
@@ -635,14 +635,14 @@ starredRepositories fillInOptionals object_ =
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.User
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this user
 -}
 url : Field Github.Scalar.Uri Github.Object.User
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Whether or not the viewer is able to follow the user.
@@ -692,4 +692,4 @@ watching fillInOptionals object_ =
 -}
 websiteUrl : Field (Maybe Github.Scalar.Uri) Github.Object.User
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "websiteUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

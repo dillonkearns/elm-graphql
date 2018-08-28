@@ -36,7 +36,7 @@ contentType =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.ReleaseAsset
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The number of times this asset was downloaded
@@ -50,12 +50,12 @@ downloadCount =
 -}
 downloadUrl : Field Github.Scalar.Uri Github.Object.ReleaseAsset
 downloadUrl =
-    Object.fieldDecoder "downloadUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "downloadUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 id : Field Github.Scalar.Id Github.Object.ReleaseAsset
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the title of the release asset.
@@ -83,7 +83,7 @@ size =
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.ReleaseAsset
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The user that performed the upload
@@ -97,4 +97,4 @@ uploadedBy object_ =
 -}
 url : Field Github.Scalar.Uri Github.Object.ReleaseAsset
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

@@ -58,7 +58,7 @@ homePlanet =
 -}
 id : Field Swapi.Scalar.Id Swapi.Object.Human
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Swapi.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the human.

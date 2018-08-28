@@ -104,7 +104,7 @@ baseRefName =
 -}
 baseRefOid : Field Github.Scalar.GitObjectID Github.Object.PullRequest
 baseRefOid =
-    Object.fieldDecoder "baseRefOid" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.GitObjectID)
+    Object.fieldDecoder "baseRefOid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| Identifies the body of the pull request.
@@ -118,7 +118,7 @@ body =
 -}
 bodyHTML : Field Github.Scalar.Html Github.Object.PullRequest
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the body of the pull request rendered to text.
@@ -146,7 +146,7 @@ closed =
 -}
 closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias CommentsOptionalArguments =
@@ -203,7 +203,7 @@ commits fillInOptionals object_ =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.PullRequest
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -252,7 +252,7 @@ headRefName =
 -}
 headRefOid : Field Github.Scalar.GitObjectID Github.Object.PullRequest
 headRefOid =
-    Object.fieldDecoder "headRefOid" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.GitObjectID)
+    Object.fieldDecoder "headRefOid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The repository associated with this pull request's head Ref.
@@ -271,7 +271,7 @@ headRepositoryOwner object_ =
 
 id : Field Github.Scalar.Id Github.Object.PullRequest
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The head and base repositories are different.
@@ -310,7 +310,7 @@ labels fillInOptionals object_ =
 -}
 lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| `true` if the pull request is locked
@@ -345,7 +345,7 @@ merged =
 -}
 mergedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 mergedAt =
-    Object.fieldDecoder "mergedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "mergedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the milestone associated with the pull request.
@@ -423,7 +423,7 @@ projectCards fillInOptionals object_ =
 -}
 publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -471,21 +471,21 @@ repository object_ =
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.PullRequest
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP path for reverting this pull request.
 -}
 revertResourcePath : Field Github.Scalar.Uri Github.Object.PullRequest
 revertResourcePath =
-    Object.fieldDecoder "revertResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "revertResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for reverting this pull request.
 -}
 revertUrl : Field Github.Scalar.Uri Github.Object.PullRequest
 revertUrl =
-    Object.fieldDecoder "revertUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "revertUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias ReviewRequestsOptionalArguments =
@@ -591,14 +591,14 @@ title =
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.PullRequest
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this pull request.
 -}
 url : Field Github.Scalar.Uri Github.Object.PullRequest
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias UserContentEditsOptionalArguments =

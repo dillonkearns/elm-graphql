@@ -43,4 +43,4 @@ column object_ =
 -}
 deletedCardId : Field Github.Scalar.Id Github.Object.DeleteProjectCardPayload
 deletedCardId =
-    Object.fieldDecoder "deletedCardId" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "deletedCardId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

@@ -123,7 +123,7 @@ commitComments fillInOptionals object_ =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.Repository
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
@@ -202,7 +202,7 @@ description =
 -}
 descriptionHTML : Field Github.Scalar.Html Github.Object.Repository
 descriptionHTML =
-    Object.fieldDecoder "descriptionHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "descriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| The number of kilobytes this repository occupies on disk.
@@ -266,12 +266,12 @@ hasWikiEnabled =
 -}
 homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Object.Repository
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "homepageUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 id : Field Github.Scalar.Id Github.Object.Repository
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -522,7 +522,7 @@ milestones fillInOptionals object_ =
 -}
 mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Object.Repository
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "mirrorUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The name of the repository.
@@ -629,14 +629,14 @@ projects fillInOptionals object_ =
 -}
 projectsResourcePath : Field Github.Scalar.Uri Github.Object.Repository
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing repository's projects
 -}
 projectsUrl : Field Github.Scalar.Uri Github.Object.Repository
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias ProtectedBranchesOptionalArguments =
@@ -712,7 +712,7 @@ pullRequests fillInOptionals object_ =
 -}
 pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Repository
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias RefRequiredArguments =
@@ -830,7 +830,7 @@ repositoryTopics fillInOptionals object_ =
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.Repository
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -852,14 +852,14 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| The SSH URL to clone this repository
 -}
 sshUrl : Field Github.Scalar.GitSSHRemote Github.Object.Repository
 sshUrl =
-    Object.fieldDecoder "sshUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.GitSSHRemote)
+    Object.fieldDecoder "sshUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitSSHRemote)
 
 
 type alias StargazersOptionalArguments =
@@ -892,14 +892,14 @@ stargazers fillInOptionals object_ =
 -}
 updatedAt : Field Github.Scalar.DateTime Github.Object.Repository
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this repository
 -}
 url : Field Github.Scalar.Uri Github.Object.Repository
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Indicates whether the viewer has admin permissions on this repository.

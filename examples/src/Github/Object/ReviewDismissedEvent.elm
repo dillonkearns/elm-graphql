@@ -37,7 +37,7 @@ actor object_ =
 -}
 createdAt : Field Github.Scalar.DateTime Github.Object.ReviewDismissedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime)
+    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
@@ -49,7 +49,7 @@ databaseId =
 
 id : Field Github.Scalar.Id Github.Object.ReviewDismissedEvent
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the message associated with the 'review\_dismissed' event.
@@ -63,7 +63,7 @@ message =
 -}
 messageHtml : Field Github.Scalar.Html Github.Object.ReviewDismissedEvent
 messageHtml =
-    Object.fieldDecoder "messageHtml" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "messageHtml" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the previous state of the review with the 'review\_dismissed' event.
@@ -91,7 +91,7 @@ pullRequestCommit object_ =
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.ReviewDismissedEvent
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the review associated with the 'review\_dismissed' event.
@@ -105,4 +105,4 @@ review object_ =
 -}
 url : Field Github.Scalar.Uri Github.Object.ReviewDismissedEvent
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

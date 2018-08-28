@@ -1,11 +1,11 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection)
+module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection
+@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder
 
 -}
 
@@ -15,6 +15,27 @@ import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
+
+
+{-| Decoder for scalars for use in auto-generated code.
+-}
+scalarDecoder : Decoder String
+scalarDecoder =
+    Decode.oneOf
+        [ Decode.string
+        , Decode.float |> Decode.map String.fromFloat
+        , Decode.int |> Decode.map String.fromInt
+        , Decode.bool
+            |> Decode.map
+                (\bool ->
+                    case bool of
+                        True ->
+                            "true"
+
+                        False ->
+                            "false"
+                )
+        ]
 
 
 {-| Refer to a field in auto-generated code.

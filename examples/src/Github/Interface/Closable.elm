@@ -63,4 +63,4 @@ closed =
 -}
 closedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Closable
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.fieldDecoder "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)

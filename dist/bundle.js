@@ -7617,7 +7617,7 @@ var author$project$Graphql$Generator$Decoder$generateDecoder = F2(
 												]))));
 								return _List_fromArray(
 									[
-										'Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ]',
+										'Object.scalarDecoder',
 										A2(
 										lukewestby$elm_string_interpolate$String$Interpolate$interpolate,
 										'Decode.map {0}',

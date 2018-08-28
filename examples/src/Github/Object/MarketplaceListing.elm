@@ -29,28 +29,28 @@ selection constructor =
 -}
 companyUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 companyUrl =
-    Object.fieldDecoder "companyUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "companyUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The HTTP path for configuring access to the listing's integration or OAuth app
 -}
 configurationResourcePath : Field Github.Scalar.Uri Github.Object.MarketplaceListing
 configurationResourcePath =
-    Object.fieldDecoder "configurationResourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "configurationResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for configuring access to the listing's integration or OAuth app
 -}
 configurationUrl : Field Github.Scalar.Uri Github.Object.MarketplaceListing
 configurationUrl =
-    Object.fieldDecoder "configurationUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "configurationUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| URL to the listing's documentation.
 -}
 documentationUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 documentationUrl =
-    Object.fieldDecoder "documentationUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "documentationUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The listing's detailed description.
@@ -64,7 +64,7 @@ extendedDescription =
 -}
 extendedDescriptionHTML : Field Github.Scalar.Html Github.Object.MarketplaceListing
 extendedDescriptionHTML =
-    Object.fieldDecoder "extendedDescriptionHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "extendedDescriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| The listing's introductory description.
@@ -78,7 +78,7 @@ fullDescription =
 -}
 fullDescriptionHTML : Field Github.Scalar.Html Github.Object.MarketplaceListing
 fullDescriptionHTML =
-    Object.fieldDecoder "fullDescriptionHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "fullDescriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Whether this listing has been submitted for review from GitHub for approval to be displayed in the Marketplace.
@@ -113,19 +113,19 @@ howItWorks =
 -}
 howItWorksHTML : Field Github.Scalar.Html Github.Object.MarketplaceListing
 howItWorksHTML =
-    Object.fieldDecoder "howItWorksHTML" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Html)
+    Object.fieldDecoder "howItWorksHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 id : Field Github.Scalar.Id Github.Object.MarketplaceListing
 id =
-    Object.fieldDecoder "id" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| URL to install the product to the viewer's account or organization.
 -}
 installationUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 installationUrl =
-    Object.fieldDecoder "installationUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "installationUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Whether this listing's app has been installed for the current viewer
@@ -196,7 +196,7 @@ logoUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "logoUrl" optionalArgs (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "logoUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The listing's full name.
@@ -217,7 +217,7 @@ normalizedShortDescription =
 -}
 pricingUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 pricingUrl =
-    Object.fieldDecoder "pricingUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "pricingUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The category that best describes the listing.
@@ -231,14 +231,14 @@ primaryCategory object_ =
 -}
 privacyPolicyUrl : Field Github.Scalar.Uri Github.Object.MarketplaceListing
 privacyPolicyUrl =
-    Object.fieldDecoder "privacyPolicyUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "privacyPolicyUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP path for the Marketplace listing.
 -}
 resourcePath : Field Github.Scalar.Uri Github.Object.MarketplaceListing
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The URLs for the listing's screenshots.
@@ -273,7 +273,7 @@ slug =
 -}
 statusUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 statusUrl =
-    Object.fieldDecoder "statusUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "statusUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| An email address for support for this listing's app.
@@ -287,21 +287,21 @@ supportEmail =
 -}
 supportUrl : Field Github.Scalar.Uri Github.Object.MarketplaceListing
 supportUrl =
-    Object.fieldDecoder "supportUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "supportUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| URL to the listing's terms of service.
 -}
 termsOfServiceUrl : Field (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
 termsOfServiceUrl =
-    Object.fieldDecoder "termsOfServiceUrl" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.fieldDecoder "termsOfServiceUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The HTTP URL for the Marketplace listing.
 -}
 url : Field Github.Scalar.Uri Github.Object.MarketplaceListing
 url =
-    Object.fieldDecoder "url" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Uri)
+    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can the current viewer add plans for this Marketplace listing.

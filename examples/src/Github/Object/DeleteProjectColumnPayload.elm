@@ -36,7 +36,7 @@ clientMutationId =
 -}
 deletedColumnId : Field Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
 deletedColumnId =
-    Object.fieldDecoder "deletedColumnId" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.Id)
+    Object.fieldDecoder "deletedColumnId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The project the deleted column was in.

@@ -50,7 +50,7 @@ object object_ =
 -}
 oid : Field Github.Scalar.GitObjectID Github.Object.TreeEntry
 oid =
-    Object.fieldDecoder "oid" [] (Decode.oneOf [ Decode.string, Decode.float |> Decode.map Debug.toString, Decode.int |> Decode.map Debug.toString, Decode.bool |> Decode.map Debug.toString ] |> Decode.map Github.Scalar.GitObjectID)
+    Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the tree entry belongs to
