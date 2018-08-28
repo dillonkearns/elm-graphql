@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+npm run build
+
+./bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src
+./bin/elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --output examples/src
+./bin/elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output ete_tests/src
+
+echo 'Ensuring documentation is valid...'
+elm make --docs=documentation.json
+
+echo 'Confirming that generated code has been commited...'
+changed_files=$(git diff --name-only)
+
+if [[ -n $changed_files ]]; then
+  echo 'FAILURE'
+  echo 'Generated code has changed. Commit changes to approve.'
+  echo $changed_files
+  exit 1;
+fi
+
+npm run approve-compilation
+
+echo 'SUCCESS'

@@ -6,8 +6,7 @@ node_js:
 
 cache:
   directories:
-    - test/elm-stuff/build-artifacts
-    - node_modules
+    - elm-stuff/
 
 os:
   - linux
@@ -16,8 +15,11 @@ env:
   matrix:
     - ELM_VERSION=0.19.0
 
+before_install:
+  - npm i -g npm@lts
+
 install:
-  - npm install
+  - npm ci
 
 script:
   - npm test
