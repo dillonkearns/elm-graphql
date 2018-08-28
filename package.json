@@ -1,6 +1,6 @@
 {
   "name": "@dillonkearns/elm-graphql",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "scripts": {
     "build": "webpack",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
