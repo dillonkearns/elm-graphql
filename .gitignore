@@ -1,4 +1,5 @@
 # Distribution
+dist/bundle.js
 build/
 documentation.json
 */elm.js
