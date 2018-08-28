@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.0] - 2018-08-28
+
+### Changed
+
+- Extracted `scalarDecoder` constant and moved to module in the `dillonkearns/elm-graphql` package.
+  This is only used in generated code. This change allows us to remove all `Debug.toString` calls
+  in generated code so that users can compile their code with the `--optimize` flag. This resolves
+  [#68](https://github.com/dillonkearns/elm-graphql/issues/68).
+
 ## [1.0.0] - 2018-08-23
 
 Take a look at the [`dillonkearns/elm-graphql` Elm 0.19 upgrade guide](https://github.com/dillonkearns/elm-graphql/blob/master/docs/elm-19-upgrade.md).
