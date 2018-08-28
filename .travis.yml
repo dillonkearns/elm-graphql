@@ -21,6 +21,7 @@ install:
   - npm ci
 
 script:
+  - echo '$TRAVIS_TAG is ' $TRAVIS_TAG
   - npm test
   - npm run approve
 
