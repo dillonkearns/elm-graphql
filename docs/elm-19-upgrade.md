@@ -8,7 +8,8 @@ You can take a look at the [changelog entry](https://github.com/dillonkearns/elm
 With the Elm 0.19 update, `dillonkearns/graphqelm` was moved to `dillonkearns/elm-graphql` to follow the elm literal naming convention (see
 [issue #23](https://github.com/dillonkearns/elm-graphql/issues/23)). First you
 can use the [`elm-upgrade`](https://github.com/avh4/elm-upgrade#elm-upgrade--)
-tool to get your code ready for Elm 0.19. Then simply do a find
+tool to get your code ready for Elm 0.19. Running the latest version of `elm-upgrade` will
+automatically rename the dependency in `elm.json` for you. Then simply do a find
 and replace of `Graphqelm.` in your codebase with `Graphql.`.
 
 If you were using the `Graphqelm.Subscription` module, please see the removed
