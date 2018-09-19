@@ -112,7 +112,7 @@ mainView response =
 
 characterView : CharacterInfo -> Html msg
 characterView character =
-    div [ class "card no-gutters", style "width" "200" ]
+    div [ class "card text-center", style "width" "200" ]
         [ img
             [ class "card-img-top"
             , src character.avatarUrl
@@ -120,7 +120,7 @@ characterView character =
             ]
             []
         , div [ class "card-body" ]
-            [ h5 [ class "card-title text-center" ] [ text character.name ]
+            [ h5 [ class "card-title" ] [ text character.name ]
             ]
         ]
 
