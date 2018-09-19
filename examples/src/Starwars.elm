@@ -125,11 +125,12 @@ mainView response =
 
 characterView : CharacterInfo -> Html msg
 characterView character =
-    div [ class "card text-center", style "width" "200" ]
+    div [ class "card text-center", style "width" "200", style "margin-right" "20" ]
         [ img
             [ class "card-img-top"
             , src character.avatarUrl
             , style "height" "200"
+            , style "width" "200"
             ]
             []
         , div [ class "card-body" ]
@@ -148,13 +149,6 @@ friendsGroupView friendNames =
         (friendNames
             |> List.map (\name -> li [ class "list-group-item" ] [ text name ])
         )
-
-
-
--- friendsGroupView : List String -> Html msg
--- friendsGroupView friendNames =
---     ul [ class "list-group" ]
---         [ li [ class "list-group-item" ] [ friendNames |> String.join ", " |> text ] ]
 
 
 view : Model -> Browser.Document Msg
