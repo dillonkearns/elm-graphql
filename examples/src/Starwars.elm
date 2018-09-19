@@ -150,10 +150,6 @@ requestResponseView model =
             [ h1 [] [ text "Generated Query" ]
             , pre [] [ text (Document.serializeQuery query) ]
             ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , model |> PrintAny.view
-            ]
         ]
 
 
