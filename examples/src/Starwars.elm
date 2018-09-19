@@ -26,10 +26,6 @@ import Swapi.Union.CharacterUnion as CharacterUnion
 
 type alias Response =
     { vader : HumanLookup
-    , tarkin : HumanLookup
-    , hero : Character
-    , union : Maybe CharacterUnion
-    , greeting : String
     }
 
 
@@ -59,32 +55,10 @@ hero =
         |> hardcoded 123
 
 
-type alias CharacterUnion =
-    { details : Maybe HumanOrDroid
-    }
-
-
-heroUnion : SelectionSet CharacterUnion Swapi.Union.CharacterUnion
-heroUnion =
-    CharacterUnion.selection CharacterUnion
-        [ CharacterUnion.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
-        , CharacterUnion.onHuman (Human.selection Human |> with Human.homePlanet)
-        ]
-
-
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> Field.nonNullOrFail)
-        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> Field.nonNullOrFail)
-        |> with
-            (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
-        |> with
-            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
-        |> with
-            (Query.greet
-                { input = Swapi.InputObject.buildGreeting { name = "Chewie" } (\optionals -> { optionals | language = Present Language.Es }) }
-            )
 
 
 type alias HumanLookup =
@@ -124,7 +98,7 @@ episodeYear episode =
 makeRequest : Cmd Msg
 makeRequest =
     query
-        |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
+        |> Graphql.Http.queryRequest "http://localhost:4000"
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
