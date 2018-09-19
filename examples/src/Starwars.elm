@@ -1,4 +1,4 @@
-module Starwars exposing (main)
+module Main exposing (main)
 
 import Browser
 import Graphql.Document as Document
@@ -143,18 +143,22 @@ init _ =
     )
 
 
-view : Model -> Html.Html Msg
+view : Model -> Browser.Document Msg
 view model =
-    div []
+    { title = "Starwars Demo"
+    , body =
         [ div []
-            [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery query) ]
-            ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , model |> PrintAny.view
+            [ div []
+                [ h1 [] [ text "Generated Query" ]
+                , pre [] [ text (Document.serializeQuery query) ]
+                ]
+            , div []
+                [ h1 [] [ text "Response" ]
+                , model |> PrintAny.view
+                ]
             ]
         ]
+    }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -166,7 +170,7 @@ update msg model =
 
 main : Program () Model Msg
 main =
-    Browser.element
+    Browser.document
         { init = init
         , update = update
         , subscriptions = \_ -> Sub.none
