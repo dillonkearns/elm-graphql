@@ -50,11 +50,11 @@ query =
 
 type alias CharacterInfo =
     { name : String
-    , yearsActive : List Int
+    , appearsIn : List String
     , id : StarWars.Scalar.Id
     , avatarUrl : String
     , homePlanet : Maybe String
-    , friends : List FriendInfo
+    , friendNames : List String
     }
 
 
@@ -62,11 +62,24 @@ human : SelectionSet CharacterInfo StarWars.Object.Character
 human =
     Character.selection CharacterInfo
         |> with Character.name
-        |> with (Character.appearsIn |> Field.map (List.map episodeYear))
+        |> with (Character.appearsIn |> Field.map (List.map episodeNumber))
         |> with Character.id
         |> with Character.avatarUrl
         |> with Character.homePlanet
-        |> with (Character.friends friendSelection)
+        |> with (Character.friends (SelectionSet.fieldSelection Character.name))
+
+
+episodeNumber : Episode -> String
+episodeNumber episode =
+    case episode of
+        Episode.Newhope ->
+            "I"
+
+        Episode.Empire ->
+            "II"
+
+        Episode.Jedi ->
+            "III"
 
 
 episodeYear : Episode -> Int
@@ -121,8 +134,27 @@ characterView character =
             []
         , div [ class "card-body" ]
             [ h5 [ class "card-title" ] [ text character.name ]
+            , div [ class "card-header text-info" ] [ b [] [ text "Home" ] ]
+            , li [ class "list-group-item" ] [ text (character.homePlanet |> Maybe.withDefault "Unknown") ]
+            , div [ class "card-header text-info" ] [ b [] [ text "Friends" ] ]
+            , friendsGroupView character.friendNames
             ]
         ]
+
+
+friendsGroupView : List String -> Html msg
+friendsGroupView friendNames =
+    ul [ class "list-group" ]
+        (friendNames
+            |> List.map (\name -> li [ class "list-group-item" ] [ text name ])
+        )
+
+
+
+-- friendsGroupView : List String -> Html msg
+-- friendsGroupView friendNames =
+--     ul [ class "list-group" ]
+--         [ li [ class "list-group-item" ] [ friendNames |> String.join ", " |> text ] ]
 
 
 view : Model -> Browser.Document Msg
