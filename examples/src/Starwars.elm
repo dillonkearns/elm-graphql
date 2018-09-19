@@ -26,16 +26,16 @@ type alias Response =
     }
 
 
-type alias Character =
+type alias FriendInfo =
     { name : String
     , id : StarWars.Scalar.Id
     , friends : List String
     }
 
 
-hero : SelectionSet Character StarWars.Object.Character
-hero =
-    Character.selection Character
+friendSelection : SelectionSet FriendInfo StarWars.Object.Character
+friendSelection =
+    Character.selection FriendInfo
         |> with Character.name
         |> with Character.id
         |> with (Character.friends (SelectionSet.fieldSelection Character.name))
@@ -54,7 +54,7 @@ type alias CharacterInfo =
     , id : StarWars.Scalar.Id
     , avatarUrl : String
     , homePlanet : Maybe String
-    , friends : List Character
+    , friends : List FriendInfo
     }
 
 
@@ -66,7 +66,7 @@ human =
         |> with Character.id
         |> with Character.avatarUrl
         |> with Character.homePlanet
-        |> with (Character.friends hero)
+        |> with (Character.friends friendSelection)
 
 
 episodeYear : Episode -> Int
