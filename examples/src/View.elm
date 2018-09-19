@@ -30,7 +30,7 @@ view query mainViewFunction model =
 requestResponseView query model =
     div []
         [ div []
-            [ h1 [] [ text "Generated Query" ]
+            [ h1 [ style "margin-top" "30" ] [ text "Generated Query" ]
             , pre [] [ text (Document.serializeQuery query) ]
             ]
         ]
