@@ -22,6 +22,7 @@ import StarWars.Scalar
 
 type alias Response =
     { vader : CharacterInfo
+    , all : List CharacterInfo
     }
 
 
@@ -44,6 +45,7 @@ query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.character { id = StarWars.Scalar.Id "1001" } human |> Field.nonNullOrFail)
+        |> with (Query.all human)
 
 
 type alias CharacterInfo =
@@ -105,21 +107,20 @@ init _ =
 mainView : Response -> Html.Html Msg
 mainView response =
     div []
-        [ characterView response.vader
-        ]
+        (List.map characterView response.all)
 
 
 characterView : CharacterInfo -> Html msg
 characterView character =
-    div [ class "card no-gutters d-block", style "width" "200" ]
+    div [ class "card no-gutters", style "width" "200" ]
         [ img
-            [ class "card-img-top col-12"
-            , src "/unknown.png" --character.avatarUrl
+            [ class "card-img-top"
+            , src character.avatarUrl
             , style "height" "200"
             ]
             []
         , div [ class "card-body" ]
-            [ h5 [ class "card-title" ] [ text character.name ]
+            [ h5 [ class "card-title text-center" ] [ text character.name ]
             ]
         ]
 
