@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Mutation exposing (SendMessageRequiredArguments, increment, selection, sendMessage)
+module StarWars.Mutation exposing (SendMessageRequiredArguments, increment, selection, sendMessage)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -12,12 +12,12 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
-import Starwars.Enum.Phrase
-import Starwars.InputObject
-import Starwars.Interface
-import Starwars.Object
-import Starwars.Scalar
-import Starwars.Union
+import StarWars.Enum.Phrase
+import StarWars.InputObject
+import StarWars.Interface
+import StarWars.Object
+import StarWars.Scalar
+import StarWars.Union
 
 
 {-| Select fields to build up a top-level mutation. The request can be sent with
@@ -34,9 +34,9 @@ increment =
 
 
 type alias SendMessageRequiredArguments =
-    { characterId : Starwars.Scalar.Id, phrase : Starwars.Enum.Phrase.Phrase }
+    { characterId : StarWars.Scalar.Id, phrase : StarWars.Enum.Phrase.Phrase }
 
 
-sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Starwars.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
+sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo StarWars.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
 sendMessage requiredArgs object_ =
-    Object.selectionField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(Starwars.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum Starwars.Enum.Phrase.toString) ] object_ (identity >> Decode.nullable)
+    Object.selectionField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(StarWars.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum StarWars.Enum.Phrase.toString) ] object_ (identity >> Decode.nullable)

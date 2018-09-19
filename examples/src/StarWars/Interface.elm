@@ -2,8 +2,9 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Scalar exposing (Id(..))
+module StarWars.Interface exposing (placeholder)
 
 
-type Id
-    = Id String
+placeholder : String
+placeholder =
+    ""

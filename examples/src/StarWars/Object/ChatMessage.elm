@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Object.ChatMessage exposing (character, phrase, selection)
+module StarWars.Object.ChatMessage exposing (character, phrase, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -11,26 +11,26 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-import Starwars.Enum.Phrase
-import Starwars.InputObject
-import Starwars.Interface
-import Starwars.Object
-import Starwars.Scalar
-import Starwars.Union
+import StarWars.Enum.Phrase
+import StarWars.InputObject
+import StarWars.Interface
+import StarWars.Object
+import StarWars.Scalar
+import StarWars.Union
 
 
 {-| Select fields to build up a SelectionSet for this object.
 -}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Starwars.Object.ChatMessage
+selection : (a -> constructor) -> SelectionSet (a -> constructor) StarWars.Object.ChatMessage
 selection constructor =
     Object.selection constructor
 
 
-character : SelectionSet decodesTo Starwars.Interface.Character -> Field (Maybe decodesTo) Starwars.Object.ChatMessage
+character : SelectionSet decodesTo StarWars.Object.Character -> Field (Maybe decodesTo) StarWars.Object.ChatMessage
 character object_ =
     Object.selectionField "character" [] object_ (identity >> Decode.nullable)
 
 
-phrase : Field Starwars.Enum.Phrase.Phrase Starwars.Object.ChatMessage
+phrase : Field StarWars.Enum.Phrase.Phrase StarWars.Object.ChatMessage
 phrase =
-    Object.fieldDecoder "phrase" [] Starwars.Enum.Phrase.decoder
+    Object.fieldDecoder "phrase" [] StarWars.Enum.Phrase.decoder

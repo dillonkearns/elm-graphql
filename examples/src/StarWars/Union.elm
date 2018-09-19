@@ -2,8 +2,9 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Union exposing (CharacterUnion(..))
+module StarWars.Union exposing (placeholder)
 
 
-type CharacterUnion
-    = CharacterUnion
+placeholder : String
+placeholder =
+    ""

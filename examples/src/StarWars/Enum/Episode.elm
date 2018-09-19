@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Enum.Episode exposing (Episode(..), decoder, toString)
+module StarWars.Enum.Episode exposing (Episode(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

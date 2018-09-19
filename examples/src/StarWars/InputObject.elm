@@ -2,8 +2,9 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Interface exposing (Character(..))
+module StarWars.InputObject exposing (placeholder)
 
 
-type Character
-    = Character
+placeholder : String
+placeholder =
+    ""

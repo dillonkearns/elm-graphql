@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Subscription exposing (newMessage, selection)
+module StarWars.Subscription exposing (newMessage, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -12,11 +12,11 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
-import Starwars.InputObject
-import Starwars.Interface
-import Starwars.Object
-import Starwars.Scalar
-import Starwars.Union
+import StarWars.InputObject
+import StarWars.Interface
+import StarWars.Object
+import StarWars.Scalar
+import StarWars.Union
 
 
 {-| Select fields to build up a top-level mutation. The request can be sent with
@@ -27,6 +27,6 @@ selection constructor =
     Object.selection constructor
 
 
-newMessage : SelectionSet decodesTo Starwars.Object.ChatMessage -> Field decodesTo RootSubscription
+newMessage : SelectionSet decodesTo StarWars.Object.ChatMessage -> Field decodesTo RootSubscription
 newMessage object_ =
     Object.selectionField "newMessage" [] object_ identity

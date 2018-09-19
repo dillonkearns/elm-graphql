@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Starwars.Enum.Phrase exposing (Phrase(..), decoder, toString)
+module StarWars.Enum.Phrase exposing (Phrase(..), decoder, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 

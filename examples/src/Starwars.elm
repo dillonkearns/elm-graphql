@@ -10,18 +10,13 @@ import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, w
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
-import Swapi.Enum.Episode as Episode exposing (Episode)
-import Swapi.Enum.Language as Language
-import Swapi.InputObject
-import Swapi.Interface
-import Swapi.Interface.Character as Character
-import Swapi.Object
-import Swapi.Object.Droid as Droid
-import Swapi.Object.Human as Human
-import Swapi.Query as Query
-import Swapi.Scalar
-import Swapi.Union
-import Swapi.Union.CharacterUnion as CharacterUnion
+import StarWars.Enum.Episode as Episode exposing (Episode)
+import StarWars.InputObject
+import StarWars.Interface
+import StarWars.Object
+import StarWars.Object.Character as Character
+import StarWars.Query as Query
+import StarWars.Scalar
 
 
 type alias Response =
@@ -29,57 +24,46 @@ type alias Response =
     }
 
 
-type HumanOrDroid
-    = Human (Maybe String)
-    | Droid (Maybe String)
-
-
 type alias Character =
-    { details : Maybe HumanOrDroid
-    , name : String
-    , id : Swapi.Scalar.Id
+    { name : String
+    , id : StarWars.Scalar.Id
     , friends : List String
-    , myNum : Int
     }
 
 
-hero : SelectionSet Character Swapi.Interface.Character
+hero : SelectionSet Character StarWars.Object.Character
 hero =
     Character.selection Character
-        [ Character.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
-        , Character.onHuman (Human.selection Human |> with Human.homePlanet)
-        ]
         |> with Character.name
         |> with Character.id
-        |> with (Character.friends (Character.commonSelection identity |> with Character.name))
-        |> hardcoded 123
+        |> with (Character.friends (SelectionSet.fieldSelection Character.name))
 
 
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> Field.nonNullOrFail)
+        |> with (Query.character { id = StarWars.Scalar.Id "1001" } human |> Field.nonNullOrFail)
 
 
 type alias HumanLookup =
     { name : String
     , yearsActive : List Int
-    , id : Swapi.Scalar.Id
+    , id : StarWars.Scalar.Id
     , avatarUrl : String
     , homePlanet : Maybe String
     , friends : List Character
     }
 
 
-human : SelectionSet HumanLookup Swapi.Object.Human
+human : SelectionSet HumanLookup StarWars.Object.Character
 human =
-    Human.selection HumanLookup
-        |> with Human.name
-        |> with (Human.appearsIn |> Field.map (List.map episodeYear))
-        |> with Human.id
-        |> with Human.avatarUrl
-        |> with Human.homePlanet
-        |> with (Human.friends hero)
+    Character.selection HumanLookup
+        |> with Character.name
+        |> with (Character.appearsIn |> Field.map (List.map episodeYear))
+        |> with Character.id
+        |> with Character.avatarUrl
+        |> with Character.homePlanet
+        |> with (Character.friends hero)
 
 
 episodeYear : Episode -> Int
