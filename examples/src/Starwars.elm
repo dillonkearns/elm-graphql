@@ -7,7 +7,8 @@ import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
-import Html exposing (div, h1, p, pre, text)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import PrintAny
 import RemoteData exposing (RemoteData)
 import StarWars.Enum.Episode as Episode exposing (Episode)
@@ -101,11 +102,30 @@ init _ =
     )
 
 
+mainView : Response -> Html.Html Msg
+mainView response =
+    div []
+        [ h1 [] [ text "hi!" ]
+        , h3 [] [ text response.vader.name ]
+        , img [ src response.vader.avatarUrl ] []
+        ]
+
+
 view : Model -> Browser.Document Msg
 view model =
     { title = "Starwars Demo"
     , body =
-        [ requestResponseView model ]
+        [ case model of
+            RemoteData.Success successData ->
+                mainView successData
+
+            RemoteData.Failure error ->
+                div [] [ "Error: " ++ Debug.toString error |> text ]
+
+            _ ->
+                div [] [ text "Loading..." ]
+        , requestResponseView model
+        ]
     }
 
 
