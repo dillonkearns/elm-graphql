@@ -76,26 +76,36 @@ init _ =
 
 mainView : Response -> Html.Html Msg
 mainView response =
-    div []
-        (List.map characterView response.all)
+    div [ class "text-center" ]
+        (response.all
+            |> List.map characterView
+        )
+
+
+type alias ViewRecord =
+    { avatarUrl : String
+    , name : String
+    , homePlanet : Maybe String
+    , friendNames : List String
+    }
 
 
 characterView : CharacterInfo -> Html msg
-characterView character =
+characterView characterInfo =
     div [ class "card text-center", style "width" "200", style "margin-right" "20" ]
         [ img
             [ class "card-img-top"
-            , src character.avatarUrl
+            , src characterInfo.avatarUrl
             , style "height" "200"
             , style "width" "200"
             ]
             []
         , div [ class "card-body" ]
-            [ h5 [ class "card-title" ] [ text character.name ]
+            [ h5 [ class "card-title" ] [ text characterInfo.name ]
             , div [ class "card-header text-info" ] [ b [] [ text "Home" ] ]
-            , li [ class "list-group-item" ] [ text (character.homePlanet |> Maybe.withDefault "Unknown") ]
+            , li [ class "list-group-item" ] [ text (characterInfo.homePlanet |> Maybe.withDefault "Unknown") ]
             , div [ class "card-header text-info" ] [ b [] [ text "Friends" ] ]
-            , friendsGroupView character.friendNames
+            , friendsGroupView characterInfo.friendNames
             ]
         ]
 
