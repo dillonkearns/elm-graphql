@@ -21,7 +21,7 @@ import StarWars.Scalar
 
 
 type alias Response =
-    { vader : HumanLookup
+    { vader : CharacterInfo
     }
 
 
@@ -46,7 +46,7 @@ query =
         |> with (Query.character { id = StarWars.Scalar.Id "1001" } human |> Field.nonNullOrFail)
 
 
-type alias HumanLookup =
+type alias CharacterInfo =
     { name : String
     , yearsActive : List Int
     , id : StarWars.Scalar.Id
@@ -56,9 +56,9 @@ type alias HumanLookup =
     }
 
 
-human : SelectionSet HumanLookup StarWars.Object.Character
+human : SelectionSet CharacterInfo StarWars.Object.Character
 human =
-    Character.selection HumanLookup
+    Character.selection CharacterInfo
         |> with Character.name
         |> with (Character.appearsIn |> Field.map (List.map episodeYear))
         |> with Character.id
@@ -105,9 +105,22 @@ init _ =
 mainView : Response -> Html.Html Msg
 mainView response =
     div []
-        [ h1 [] [ text "hi!" ]
-        , h3 [] [ text response.vader.name ]
-        , img [ src response.vader.avatarUrl ] []
+        [ characterView response.vader
+        ]
+
+
+characterView : CharacterInfo -> Html msg
+characterView character =
+    div [ class "card no-gutters d-block", style "width" "200" ]
+        [ img
+            [ class "card-img-top col-12"
+            , src "/unknown.png" --character.avatarUrl
+            , style "height" "200"
+            ]
+            []
+        , div [ class "card-body" ]
+            [ h5 [ class "card-title" ] [ text character.name ]
+            ]
         ]
 
 
