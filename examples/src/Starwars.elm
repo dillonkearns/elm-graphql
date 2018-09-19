@@ -105,18 +105,22 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Starwars Demo"
     , body =
+        [ requestResponseView model ]
+    }
+
+
+requestResponseView : Model -> Html.Html msg
+requestResponseView model =
+    div []
         [ div []
-            [ div []
-                [ h1 [] [ text "Generated Query" ]
-                , pre [] [ text (Document.serializeQuery query) ]
-                ]
-            , div []
-                [ h1 [] [ text "Response" ]
-                , model |> PrintAny.view
-                ]
+            [ h1 [] [ text "Generated Query" ]
+            , pre [] [ text (Document.serializeQuery query) ]
+            ]
+        , div []
+            [ h1 [] [ text "Response" ]
+            , model |> PrintAny.view
             ]
         ]
-    }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
