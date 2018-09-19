@@ -26,21 +26,6 @@ type alias Response =
     }
 
 
-type alias FriendInfo =
-    { name : String
-    , id : StarWars.Scalar.Id
-    , friends : List String
-    }
-
-
-friendSelection : SelectionSet FriendInfo StarWars.Object.Character
-friendSelection =
-    Character.selection FriendInfo
-        |> with Character.name
-        |> with Character.id
-        |> with (Character.friends (SelectionSet.fieldSelection Character.name))
-
-
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
@@ -50,7 +35,6 @@ query =
 
 type alias CharacterInfo =
     { name : String
-    , appearsIn : List String
     , id : StarWars.Scalar.Id
     , avatarUrl : String
     , homePlanet : Maybe String
@@ -62,37 +46,10 @@ human : SelectionSet CharacterInfo StarWars.Object.Character
 human =
     Character.selection CharacterInfo
         |> with Character.name
-        |> with (Character.appearsIn |> Field.map (List.map episodeNumber))
         |> with Character.id
         |> with Character.avatarUrl
         |> with Character.homePlanet
         |> with (Character.friends (SelectionSet.fieldSelection Character.name))
-
-
-episodeNumber : Episode -> String
-episodeNumber episode =
-    case episode of
-        Episode.Newhope ->
-            "I"
-
-        Episode.Empire ->
-            "II"
-
-        Episode.Jedi ->
-            "III"
-
-
-episodeYear : Episode -> Int
-episodeYear episode =
-    case episode of
-        Episode.Newhope ->
-            1977
-
-        Episode.Empire ->
-            1980
-
-        Episode.Jedi ->
-            1983
 
 
 makeRequest : Cmd Msg
