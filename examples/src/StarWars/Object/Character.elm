@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module StarWars.Object.Character exposing (appearsIn, avatarUrl, friends, homePlanet, id, name, selection)
+module StarWars.Object.Character exposing (avatarUrl, friends, homePlanet, id, name, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -11,7 +11,6 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-import StarWars.Enum.Episode
 import StarWars.InputObject
 import StarWars.Interface
 import StarWars.Object
@@ -24,13 +23,6 @@ import StarWars.Union
 selection : (a -> constructor) -> SelectionSet (a -> constructor) StarWars.Object.Character
 selection constructor =
     Object.selection constructor
-
-
-{-| Which movies they appear in.
--}
-appearsIn : Field (List StarWars.Enum.Episode.Episode) StarWars.Object.Character
-appearsIn =
-    Object.fieldDecoder "appearsIn" [] (StarWars.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.

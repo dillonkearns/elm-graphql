@@ -2,12 +2,8 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module StarWars.Object exposing (Character(..), ChatMessage(..))
+module StarWars.Object exposing (Character(..))
 
 
 type Character
     = Character
-
-
-type ChatMessage
-    = ChatMessage
