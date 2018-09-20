@@ -24,7 +24,12 @@ type alias Response =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.character { id = StarWars.Scalar.Id "1001" } characterSelection |> Field.nonNullOrFail)
+        |> with
+            (Query.character
+                { id = StarWars.Scalar.Id "1001" }
+                characterSelection
+                |> Field.nonNullOrFail
+            )
 
 
 type alias CharacterInfo =

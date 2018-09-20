@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module StarWars.Object.Character exposing (avatarUrl, friends, homePlanet, id, name, selection)
+module StarWars.Object.Character exposing (friends, homePlanet, id, name, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -23,13 +23,6 @@ import StarWars.Union
 selection : (a -> constructor) -> SelectionSet (a -> constructor) StarWars.Object.Character
 selection constructor =
     Object.selection constructor
-
-
-{-| Url to a profile picture for the character.
--}
-avatarUrl : Field String StarWars.Object.Character
-avatarUrl =
-    Object.fieldDecoder "avatarUrl" [] Decode.string
 
 
 {-| The friends of the character, or an empty list if they have none.
