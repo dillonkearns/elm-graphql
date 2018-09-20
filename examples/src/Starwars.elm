@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Browser
+import DemoData exposing (DemoData(..))
 import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
@@ -44,9 +45,9 @@ mainView response =
             |> List.map
                 (\character ->
                     { name = character.name
-                    , avatarUrl = unkownAvatarUrl
-                    , homePlanet = Nothing
-                    , friendNames = []
+                    , avatarUrl = TODO
+                    , homePlanet = TODO
+                    , friendNames = TODO
                     }
                 )
             |> List.map View.characterView
