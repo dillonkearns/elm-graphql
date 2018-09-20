@@ -17,38 +17,40 @@ import View
 
 type alias Response =
     { vader : CharacterInfo
-    , all : List CharacterInfo
     }
 
 
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.character { id = StarWars.Scalar.Id "1001" } humanSelection |> Field.nonNullOrFail)
-        |> with (Query.all humanSelection)
+        |> with (Query.character { id = StarWars.Scalar.Id "1001" } characterSelection |> Field.nonNullOrFail)
 
 
 type alias CharacterInfo =
     { name : String
-    , avatarUrl : String
-    , homePlanet : Maybe String
-    , friendNames : List String
     }
 
 
-humanSelection : SelectionSet CharacterInfo StarWars.Object.Character
-humanSelection =
+characterSelection : SelectionSet CharacterInfo StarWars.Object.Character
+characterSelection =
     Character.selection CharacterInfo
         |> with Character.name
-        -- |> with Character.avatarUrl
-        -- avatar URL
-        |> hardcoded "/unknown.png"
-        -- |> with Character.homePlanet
-        -- home planet
-        |> hardcoded Nothing
-        -- |> with (Character.friends (SelectionSet.fieldSelection Character.name))
-        -- friend names
-        |> hardcoded []
+
+
+mainView : Response -> Html.Html Msg
+mainView response =
+    div []
+        ([ response.vader ]
+            |> List.map
+                (\character ->
+                    { name = character.name
+                    , avatarUrl = unkownAvatarUrl
+                    , homePlanet = Nothing
+                    , friendNames = []
+                    }
+                )
+            |> List.map View.characterView
+        )
 
 
 makeRequest : Cmd Msg
@@ -73,12 +75,9 @@ init _ =
     )
 
 
-mainView : Response -> Html.Html Msg
-mainView response =
-    div []
-        (response.all
-            |> List.map View.characterView
-        )
+unkownAvatarUrl : String
+unkownAvatarUrl =
+    "/unknown.png"
 
 
 view : Model -> Browser.Document Msg
