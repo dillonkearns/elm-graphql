@@ -55,7 +55,6 @@ characterView characterInfo =
             []
         , div [ class "card-body" ]
             [ h5 [ class "card-title" ] [ characterInfo.name |> DemoData.toMaybe |> Maybe.withDefault "???" |> text ]
-            , div [ class "card-header text-info" ] [ b [] [ text "Friends" ] ]
             , characterInfo.friendNames |> friendsGroupView
             ]
         ]
@@ -91,9 +90,12 @@ friendsGroupView maybeFriendNames =
         |> DemoData.toMaybe
         |> Maybe.map
             (\friendNames ->
-                ul [ class "list-group" ]
-                    (friendNames
-                        |> List.map (\name -> li [ class "list-group-item" ] [ text name ])
-                    )
+                div []
+                    [ div [ class "card-header text-info" ] [ b [] [ text "Friends" ] ]
+                    , ul [ class "list-group" ]
+                        (friendNames
+                            |> List.map (\name -> li [ class "list-group-item" ] [ text name ])
+                        )
+                    ]
             )
         |> Maybe.withDefault (text "")
