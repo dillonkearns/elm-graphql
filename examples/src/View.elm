@@ -38,7 +38,7 @@ requestResponseView query model =
 
 
 characterView :
-    { name : String
+    { name : DemoData String
     , avatarUrl : DemoData String
     , homePlanet : DemoData (Maybe String)
     , friendNames : DemoData (List String)
@@ -54,7 +54,7 @@ characterView characterInfo =
             ]
             []
         , div [ class "card-body" ]
-            [ h5 [ class "card-title" ] [ text characterInfo.name ]
+            [ h5 [ class "card-title" ] [ characterInfo.name |> DemoData.toMaybe |> Maybe.withDefault "???" |> text ]
             , div [ class "card-header text-info" ] [ b [] [ text "Friends" ] ]
             , characterInfo.friendNames |> friendsGroupView
             ]

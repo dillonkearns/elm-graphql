@@ -44,7 +44,7 @@ mainView response =
         ([ response.vader ]
             |> List.map
                 (\character ->
-                    { name = character.name
+                    { name = DONE character.name
                     , avatarUrl = TODO
                     , homePlanet = TODO
                     , friendNames = TODO
