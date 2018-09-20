@@ -38,20 +38,41 @@ characterSelection =
         |> with Character.name
 
 
-mainView : Response -> Html.Html Msg
-mainView response =
-    div []
-        ([ response.vader ]
-            |> List.map
-                (\character ->
-                    { name = TODO
-                    , avatarUrl = TODO
-                    , homePlanet = TODO
-                    , friendNames = TODO
-                    }
-                )
-            |> List.map View.characterView
-        )
+charactersFromRespons response =
+    [ response.vader ]
+
+
+getCharacterData character =
+    { name = TODO
+    , avatarUrl = TODO
+    , homePlanet = TODO
+    , friendNames = TODO
+    }
+
+
+
+{-
+
+
+
+   Boilerplate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-}
 
 
 makeRequest : Cmd Msg
@@ -76,14 +97,19 @@ init _ =
     )
 
 
-unkownAvatarUrl : String
-unkownAvatarUrl =
-    "/unknown.png"
-
-
 view : Model -> Browser.Document Msg
 view model =
     View.view query mainView model
+
+
+mainView : Response -> Html.Html Msg
+mainView response =
+    div []
+        (response
+            |> charactersFromRespons
+            |> List.map getCharacterData
+            |> List.map View.characterView
+        )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
