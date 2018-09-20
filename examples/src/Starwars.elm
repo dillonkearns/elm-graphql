@@ -38,10 +38,12 @@ characterSelection =
         |> with Character.name
 
 
-charactersFromRespons response =
+charactersFromResponse : Response -> List CharacterInfo
+charactersFromResponse response =
     [ response.vader ]
 
 
+getCharacterData : CharacterInfo -> View.Data
 getCharacterData character =
     { name = TODO
     , avatarUrl = TODO
@@ -106,7 +108,7 @@ mainView : Response -> Html.Html Msg
 mainView response =
     div []
         (response
-            |> charactersFromRespons
+            |> charactersFromResponse
             |> List.map getCharacterData
             |> List.map View.characterView
         )

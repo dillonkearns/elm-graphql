@@ -1,4 +1,4 @@
-module View exposing (characterView, view)
+module View exposing (Data, characterView, view)
 
 import DemoData exposing (DemoData)
 import Graphql.Document as Document
@@ -37,13 +37,15 @@ requestResponseView query model =
         ]
 
 
-characterView :
+type alias Data =
     { name : DemoData String
     , avatarUrl : DemoData String
     , homePlanet : DemoData (Maybe String)
     , friendNames : DemoData (List String)
     }
-    -> Html msg
+
+
+characterView : Data -> Html msg
 characterView characterInfo =
     div [ class "card text-center", style "width" "200", style "margin-right" "20" ]
         [ img
