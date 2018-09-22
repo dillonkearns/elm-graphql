@@ -30,6 +30,13 @@ functions from `Graphql.Http`.
 selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
 selection constructor =
     Object.selection constructor
+{-| Get all known characters.
+-}
+all : SelectionSet decodesTo StarWars.Object.Character -> Field (List decodesTo) RootQuery
+all object_ =
+      Object.selectionField "all" [] (object_) (identity >> Decode.list)
+
+
 type alias CharacterRequiredArguments = { id : StarWars.Scalar.Id }
 
 {-|

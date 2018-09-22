@@ -17,35 +17,18 @@ import View
 
 
 type alias Response =
-    { vader : CharacterInfo
+    { all : List CharacterInfo
     }
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
-        |> with
-            (Query.character
-                { id = StarWars.Scalar.Id "1001" }
-                characterSelection
-                |> Field.nonNullOrFail
-            )
+    SelectionSet.empty
+        |> SelectionSet.map (\_ -> Response [])
 
 
 type alias CharacterInfo =
-    { name : String
-    }
-
-
-characterSelection : SelectionSet CharacterInfo StarWars.Object.Character
-characterSelection =
-    Character.selection CharacterInfo
-        |> with Character.name
-
-
-charactersFromResponse : Response -> List CharacterInfo
-charactersFromResponse response =
-    [ response.vader ]
+    {}
 
 
 getCharacterData : CharacterInfo -> View.Data
@@ -112,8 +95,7 @@ view model =
 mainView : Response -> Html.Html Msg
 mainView response =
     div []
-        (response
-            |> charactersFromResponse
+        (response.all
             |> List.map getCharacterData
             |> List.map View.characterView
         )

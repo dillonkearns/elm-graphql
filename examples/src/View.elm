@@ -40,7 +40,7 @@ requestResponseView query model =
 type alias Data =
     { name : DemoData String
     , avatarUrl : DemoData String
-    , homePlanet : DemoData (Maybe String)
+    , homePlanet : DemoData String
     , friendNames : DemoData (List String)
     }
 
@@ -63,7 +63,7 @@ characterView characterInfo =
         ]
 
 
-homePlanetView : DemoData (Maybe String) -> Html msg
+homePlanetView : DemoData String -> Html msg
 homePlanetView maybeHomePlanet =
     maybeHomePlanet
         |> DemoData.toMaybe
@@ -71,12 +71,7 @@ homePlanetView maybeHomePlanet =
             (\homePlanet ->
                 div []
                     [ div [ class "card-header text-info" ] [ b [] [ text "Home" ] ]
-                    , li [ class "list-group-item" ]
-                        [ text
-                            (homePlanet
-                                |> Maybe.withDefault "Unknown"
-                            )
-                        ]
+                    , li [ class "list-group-item" ] [ text homePlanet ]
                     ]
             )
         |> Maybe.withDefault (text "")

@@ -22,6 +22,13 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 selection : (a -> constructor) -> SelectionSet (a -> constructor) StarWars.Object.Character
 selection constructor =
     Object.selection constructor
+{-| Url to a profile picture for the character.
+-}
+avatarUrl : Field String StarWars.Object.Character
+avatarUrl =
+      Object.fieldDecoder "avatarUrl" [] (Decode.string)
+
+
 {-| The friends of the character, or an empty list if they have none.
 -}
 friends : SelectionSet decodesTo StarWars.Object.Character -> Field (List decodesTo) StarWars.Object.Character
