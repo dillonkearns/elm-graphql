@@ -7,7 +7,6 @@ import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (..)
-import Html.Attributes exposing (..)
 import RemoteData exposing (RemoteData)
 import StarWars.Object
 import StarWars.Object.Character as Character
