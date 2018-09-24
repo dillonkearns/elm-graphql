@@ -35,7 +35,6 @@ getCharacterData character =
     { name = TODO
     , avatarUrl = TODO
     , homePlanet = TODO
-    , friendNames = TODO
     }
 
 

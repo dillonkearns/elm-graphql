@@ -41,7 +41,6 @@ type alias Data =
     { name : DemoData String
     , avatarUrl : DemoData String
     , homePlanet : DemoData String
-    , friendNames : DemoData (List String)
     }
 
 
@@ -58,7 +57,6 @@ characterView characterInfo =
         , div [ class "card-body" ]
             [ h5 [ class "card-title" ] [ characterInfo.name |> DemoData.toMaybe |> Maybe.withDefault "???" |> text ]
             , homePlanetView characterInfo.homePlanet
-            , characterInfo.friendNames |> friendsGroupView
             ]
         ]
 
