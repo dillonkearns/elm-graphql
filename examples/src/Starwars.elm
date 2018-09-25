@@ -15,6 +15,18 @@ import StarWars.Scalar
 import View
 
 
+
+{-
+   query {
+     all {
+       name
+       avatarUrl
+       homePlanet
+     }
+   }
+-}
+
+
 type alias Response =
     { all : List CharacterInfo
     }
