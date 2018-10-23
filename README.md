@@ -55,15 +55,15 @@ type alias Response =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.human { id = StarWars.Scalar.Id "1001" } human)
+        |> with (Query.human { id = StarWars.Scalar.Id "1001" } humanSelection)
 
 
 type alias Human =
     { name : String }
 
 
-human : SelectionSet Human Human.Human
-human =
+humanSelection : SelectionSet Human Human.Human
+humanSelection =
     Human.selection Human
         |> with Human.name
 ```
