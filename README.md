@@ -80,6 +80,9 @@ elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src
 
 If you're just starting out, here are some great resources:
 
+- My Elm Conf 2018 talk goes into the philosophy behind `dillonkearns/elm-graphql` [![Types Without Borders Elm Conf Talk](https://img.youtube.com/vi/memIRXFSNkU/0.jpg)](https://www.youtube.com/watch?v=memIRXFSNkU)
+
+([Skip to 13:06](https://youtu.be/memIRXFSNkU?t=786) to go straight to the `dillonkearns/elm-graphql` demo).
 - There are a couple of chapters so far in [The Official `dillonkearns/elm-graphql` Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
 - [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
 - [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
