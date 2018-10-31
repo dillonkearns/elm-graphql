@@ -1,4 +1,4 @@
-module Main exposing (main)
+module GithubComplex exposing (main)
 
 import Browser
 import ElmReposRequest

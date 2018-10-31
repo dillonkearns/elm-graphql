@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Starwars exposing (main)
 
 import Browser
 import Graphql.Document as Document
