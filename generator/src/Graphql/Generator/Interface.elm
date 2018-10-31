@@ -41,6 +41,7 @@ prepend { apiSubmodule } moduleName fields =
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import {2}.Object

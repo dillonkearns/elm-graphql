@@ -23,6 +23,7 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.SelectionSet exposing (SelectionSet)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import {2}.Object
 import {2}.Interface
 import {2}.Union
