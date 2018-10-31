@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestState exposing (PullRequestState(..), decoder, toString)
+module Github.Enum.PullRequestState exposing (PullRequestState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type PullRequestState
     = Open
     | Closed
     | Merged
+
+
+list : List PullRequestState
+list =
+    [ Open, Closed, Merged ]
 
 
 decoder : Decoder PullRequestState

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestPubSubTopic exposing (PullRequestPubSubTopic(..), decoder, toString)
+module Github.Enum.PullRequestPubSubTopic exposing (PullRequestPubSubTopic(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type PullRequestPubSubTopic
     = Updated
     | Markasread
     | HeadRef
+
+
+list : List PullRequestPubSubTopic
+list =
+    [ Updated, Markasread, HeadRef ]
 
 
 decoder : Decoder PullRequestPubSubTopic

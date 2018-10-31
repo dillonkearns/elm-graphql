@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Enum.Episode exposing (Episode(..), decoder, toString)
+module Swapi.Enum.Episode exposing (Episode(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type Episode
     = Empire
     | Jedi
     | Newhope
+
+
+list : List Episode
+list =
+    [ Empire, Jedi, Newhope ]
 
 
 decoder : Decoder Episode

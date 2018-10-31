@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ProjectCardState exposing (ProjectCardState(..), decoder, toString)
+module Github.Enum.ProjectCardState exposing (ProjectCardState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type ProjectCardState
     = ContentOnly
     | NoteOnly
     | Redacted
+
+
+list : List ProjectCardState
+list =
+    [ ContentOnly, NoteOnly, Redacted ]
 
 
 decoder : Decoder ProjectCardState

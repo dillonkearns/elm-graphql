@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReactionOrderField exposing (ReactionOrderField(..), decoder, toString)
+module Github.Enum.ReactionOrderField exposing (ReactionOrderField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -14,6 +14,11 @@ import Json.Decode as Decode exposing (Decoder)
 -}
 type ReactionOrderField
     = CreatedAt
+
+
+list : List ReactionOrderField
+list =
+    [ CreatedAt ]
 
 
 decoder : Decoder ReactionOrderField

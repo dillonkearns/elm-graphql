@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.IssueState exposing (IssueState(..), decoder, toString)
+module Github.Enum.IssueState exposing (IssueState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type IssueState
     = Open
     | Closed
+
+
+list : List IssueState
+list =
+    [ Open, Closed ]
 
 
 decoder : Decoder IssueState

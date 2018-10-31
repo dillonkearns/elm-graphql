@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TopicSuggestionDeclineReason exposing (TopicSuggestionDeclineReason(..), decoder, toString)
+module Github.Enum.TopicSuggestionDeclineReason exposing (TopicSuggestionDeclineReason(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -20,6 +20,11 @@ type TopicSuggestionDeclineReason
     | TooSpecific
     | PersonalPreference
     | TooGeneral
+
+
+list : List TopicSuggestionDeclineReason
+list =
+    [ NotRelevant, TooSpecific, PersonalPreference, TooGeneral ]
 
 
 decoder : Decoder TopicSuggestionDeclineReason

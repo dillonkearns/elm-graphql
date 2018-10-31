@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.OrderDirection exposing (OrderDirection(..), decoder, toString)
+module Github.Enum.OrderDirection exposing (OrderDirection(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type OrderDirection
     = Asc
     | Desc
+
+
+list : List OrderDirection
+list =
+    [ Asc, Desc ]
 
 
 decoder : Decoder OrderDirection

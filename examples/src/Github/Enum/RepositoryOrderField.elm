@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryOrderField exposing (RepositoryOrderField(..), decoder, toString)
+module Github.Enum.RepositoryOrderField exposing (RepositoryOrderField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -22,6 +22,11 @@ type RepositoryOrderField
     | PushedAt
     | Name
     | Stargazers
+
+
+list : List RepositoryOrderField
+list =
+    [ CreatedAt, UpdatedAt, PushedAt, Name, Stargazers ]
 
 
 decoder : Decoder RepositoryOrderField

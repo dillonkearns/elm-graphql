@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryPermission exposing (RepositoryPermission(..), decoder, toString)
+module Github.Enum.RepositoryPermission exposing (RepositoryPermission(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type RepositoryPermission
     = Admin
     | Write
     | Read
+
+
+list : List RepositoryPermission
+list =
+    [ Admin, Write, Read ]
 
 
 decoder : Decoder RepositoryPermission

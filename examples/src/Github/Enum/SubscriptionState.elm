@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.SubscriptionState exposing (SubscriptionState(..), decoder, toString)
+module Github.Enum.SubscriptionState exposing (SubscriptionState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -20,6 +20,11 @@ type SubscriptionState
     | Subscribed
     | Ignored
     | Unavailable
+
+
+list : List SubscriptionState
+list =
+    [ Unsubscribed, Subscribed, Ignored, Unavailable ]
 
 
 decoder : Decoder SubscriptionState

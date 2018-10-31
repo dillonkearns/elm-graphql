@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Enum.Language exposing (Language(..), decoder, toString)
+module Normalize.Enum.Language exposing (Language(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type Language
     = En
     | Es
     | No
+
+
+list : List Language
+list =
+    [ En, Es, No ]
 
 
 decoder : Decoder Language

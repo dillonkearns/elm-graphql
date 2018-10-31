@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.OrganizationInvitationType exposing (OrganizationInvitationType(..), decoder, toString)
+module Github.Enum.OrganizationInvitationType exposing (OrganizationInvitationType(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type OrganizationInvitationType
     = User
     | Email
+
+
+list : List OrganizationInvitationType
+list =
+    [ User, Email ]
 
 
 decoder : Decoder OrganizationInvitationType

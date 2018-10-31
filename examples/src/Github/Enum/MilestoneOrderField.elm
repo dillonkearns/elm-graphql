@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.MilestoneOrderField exposing (MilestoneOrderField(..), decoder, toString)
+module Github.Enum.MilestoneOrderField exposing (MilestoneOrderField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -20,6 +20,11 @@ type MilestoneOrderField
     | CreatedAt
     | UpdatedAt
     | Number
+
+
+list : List MilestoneOrderField
+list =
+    [ DueDate, CreatedAt, UpdatedAt, Number ]
 
 
 decoder : Decoder MilestoneOrderField

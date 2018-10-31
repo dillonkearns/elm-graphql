@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.DefaultRepositoryPermissionField exposing (DefaultRepositoryPermissionField(..), decoder, toString)
+module Github.Enum.DefaultRepositoryPermissionField exposing (DefaultRepositoryPermissionField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type DefaultRepositoryPermissionField
     = Read
     | Write
     | Admin
+
+
+list : List DefaultRepositoryPermissionField
+list =
+    [ Read, Write, Admin ]
 
 
 decoder : Decoder DefaultRepositoryPermissionField

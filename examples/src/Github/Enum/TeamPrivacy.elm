@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TeamPrivacy exposing (TeamPrivacy(..), decoder, toString)
+module Github.Enum.TeamPrivacy exposing (TeamPrivacy(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type TeamPrivacy
     = Secret
     | Visible
+
+
+list : List TeamPrivacy
+list =
+    [ Secret, Visible ]
 
 
 decoder : Decoder TeamPrivacy

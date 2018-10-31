@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestReviewEvent exposing (PullRequestReviewEvent(..), decoder, toString)
+module Github.Enum.PullRequestReviewEvent exposing (PullRequestReviewEvent(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -20,6 +20,11 @@ type PullRequestReviewEvent
     | Approve
     | RequestChanges
     | Dismiss
+
+
+list : List PullRequestReviewEvent
+list =
+    [ Comment, Approve, RequestChanges, Dismiss ]
 
 
 decoder : Decoder PullRequestReviewEvent

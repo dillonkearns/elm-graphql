@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.LockReason exposing (LockReason(..), decoder, toString)
+module Github.Enum.LockReason exposing (LockReason(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -20,6 +20,11 @@ type LockReason
     | TooHeated
     | Resolved
     | Spam
+
+
+list : List LockReason
+list =
+    [ OffTopic, TooHeated, Resolved, Spam ]
 
 
 decoder : Decoder LockReason

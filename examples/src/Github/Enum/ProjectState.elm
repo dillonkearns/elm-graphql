@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ProjectState exposing (ProjectState(..), decoder, toString)
+module Github.Enum.ProjectState exposing (ProjectState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type ProjectState
     = Open
     | Closed
+
+
+list : List ProjectState
+list =
+    [ Open, Closed ]
 
 
 decoder : Decoder ProjectState

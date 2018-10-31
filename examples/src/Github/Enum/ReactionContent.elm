@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReactionContent exposing (ReactionContent(..), decoder, toString)
+module Github.Enum.ReactionContent exposing (ReactionContent(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -24,6 +24,11 @@ type ReactionContent
     | Hooray
     | Confused
     | Heart
+
+
+list : List ReactionContent
+list =
+    [ ThumbsUp, ThumbsDown, Laugh, Hooray, Confused, Heart ]
 
 
 decoder : Decoder ReactionContent

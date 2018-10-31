@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.MergeableState exposing (MergeableState(..), decoder, toString)
+module Github.Enum.MergeableState exposing (MergeableState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type MergeableState
     = Mergeable
     | Conflicting
     | Unknown
+
+
+list : List MergeableState
+list =
+    [ Mergeable, Conflicting, Unknown ]
 
 
 decoder : Decoder MergeableState

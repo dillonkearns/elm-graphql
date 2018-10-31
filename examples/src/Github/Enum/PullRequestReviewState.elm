@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestReviewState exposing (PullRequestReviewState(..), decoder, toString)
+module Github.Enum.PullRequestReviewState exposing (PullRequestReviewState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -22,6 +22,11 @@ type PullRequestReviewState
     | Approved
     | ChangesRequested
     | Dismissed
+
+
+list : List PullRequestReviewState
+list =
+    [ Pending, Commented, Approved, ChangesRequested, Dismissed ]
 
 
 decoder : Decoder PullRequestReviewState

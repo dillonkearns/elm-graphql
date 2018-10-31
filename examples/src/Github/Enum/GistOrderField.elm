@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.GistOrderField exposing (GistOrderField(..), decoder, toString)
+module Github.Enum.GistOrderField exposing (GistOrderField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type GistOrderField
     = CreatedAt
     | UpdatedAt
     | PushedAt
+
+
+list : List GistOrderField
+list =
+    [ CreatedAt, UpdatedAt, PushedAt ]
 
 
 decoder : Decoder GistOrderField

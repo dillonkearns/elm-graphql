@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.StatusState exposing (StatusState(..), decoder, toString)
+module Github.Enum.StatusState exposing (StatusState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -22,6 +22,11 @@ type StatusState
     | Failure
     | Pending
     | Success
+
+
+list : List StatusState
+list =
+    [ Expected, Error, Failure, Pending, Success ]
 
 
 decoder : Decoder StatusState

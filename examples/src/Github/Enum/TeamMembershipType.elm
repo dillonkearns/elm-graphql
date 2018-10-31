@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TeamMembershipType exposing (TeamMembershipType(..), decoder, toString)
+module Github.Enum.TeamMembershipType exposing (TeamMembershipType(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type TeamMembershipType
     = Immediate
     | ChildTeam
     | All
+
+
+list : List TeamMembershipType
+list =
+    [ Immediate, ChildTeam, All ]
 
 
 decoder : Decoder TeamMembershipType

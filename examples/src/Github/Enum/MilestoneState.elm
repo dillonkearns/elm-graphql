@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.MilestoneState exposing (MilestoneState(..), decoder, toString)
+module Github.Enum.MilestoneState exposing (MilestoneState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type MilestoneState
     = Open
     | Closed
+
+
+list : List MilestoneState
+list =
+    [ Open, Closed ]
 
 
 decoder : Decoder MilestoneState

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Enum.Phrase exposing (Phrase(..), decoder, toString)
+module Swapi.Enum.Phrase exposing (Phrase(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -30,6 +30,11 @@ type Phrase
     | Traitor
     | Trap
     | Try
+
+
+list : List Phrase
+list =
+    [ BadFeeling, Droids, Faith, Father, Help, TheForce, Traitor, Trap, Try ]
 
 
 decoder : Decoder Phrase

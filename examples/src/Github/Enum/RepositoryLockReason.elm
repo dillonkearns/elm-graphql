@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryLockReason exposing (RepositoryLockReason(..), decoder, toString)
+module Github.Enum.RepositoryLockReason exposing (RepositoryLockReason(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -20,6 +20,11 @@ type RepositoryLockReason
     | Billing
     | Rename
     | Migrating
+
+
+list : List RepositoryLockReason
+list =
+    [ Moving, Billing, Rename, Migrating ]
 
 
 decoder : Decoder RepositoryLockReason

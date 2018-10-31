@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Enum.Episode_ exposing (Episode_(..), decoder, toString)
+module Normalize.Enum.Episode_ exposing (Episode_(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type Episode_
     = Empire
     | Jedi_
     | Newhope_
+
+
+list : List Episode_
+list =
+    [ Empire, Jedi_, Newhope_ ]
 
 
 decoder : Decoder Episode_

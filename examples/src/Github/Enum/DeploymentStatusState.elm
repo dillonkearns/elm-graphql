@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.DeploymentStatusState exposing (DeploymentStatusState(..), decoder, toString)
+module Github.Enum.DeploymentStatusState exposing (DeploymentStatusState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -22,6 +22,11 @@ type DeploymentStatusState
     | Failure
     | Inactive
     | Error
+
+
+list : List DeploymentStatusState
+list =
+    [ Pending, Success, Failure, Inactive, Error ]
 
 
 decoder : Decoder DeploymentStatusState

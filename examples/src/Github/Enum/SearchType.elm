@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.SearchType exposing (SearchType(..), decoder, toString)
+module Github.Enum.SearchType exposing (SearchType(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type SearchType
     = Issue
     | Repository
     | User
+
+
+list : List SearchType
+list =
+    [ Issue, Repository, User ]
 
 
 decoder : Decoder SearchType

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RefOrderField exposing (RefOrderField(..), decoder, toString)
+module Github.Enum.RefOrderField exposing (RefOrderField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type RefOrderField
     = TagCommitDate
     | Alphabetical
+
+
+list : List RefOrderField
+list =
+    [ TagCommitDate, Alphabetical ]
 
 
 decoder : Decoder RefOrderField

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TeamRole exposing (TeamRole(..), decoder, toString)
+module Github.Enum.TeamRole exposing (TeamRole(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type TeamRole
     = Admin
     | Member
+
+
+list : List TeamRole
+list =
+    [ Admin, Member ]
 
 
 decoder : Decoder TeamRole

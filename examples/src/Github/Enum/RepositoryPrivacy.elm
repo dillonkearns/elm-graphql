@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryPrivacy exposing (RepositoryPrivacy(..), decoder, toString)
+module Github.Enum.RepositoryPrivacy exposing (RepositoryPrivacy(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type RepositoryPrivacy
     = Public
     | Private
+
+
+list : List RepositoryPrivacy
+list =
+    [ Public, Private ]
 
 
 decoder : Decoder RepositoryPrivacy

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.OrganizationInvitationRole exposing (OrganizationInvitationRole(..), decoder, toString)
+module Github.Enum.OrganizationInvitationRole exposing (OrganizationInvitationRole(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -20,6 +20,11 @@ type OrganizationInvitationRole
     | Admin
     | BillingManager
     | Reinstate
+
+
+list : List OrganizationInvitationRole
+list =
+    [ DirectMember, Admin, BillingManager, Reinstate ]
 
 
 decoder : Decoder OrganizationInvitationRole

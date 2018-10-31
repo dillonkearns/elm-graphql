@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.GitSignatureState exposing (GitSignatureState(..), decoder, toString)
+module Github.Enum.GitSignatureState exposing (GitSignatureState(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -38,6 +38,11 @@ type GitSignatureState
     | GpgverifyError
     | NotSigningKey
     | ExpiredKey
+
+
+list : List GitSignatureState
+list =
+    [ Valid, Invalid, MalformedSig, UnknownKey, BadEmail, UnverifiedEmail, NoUser, UnknownSigType, Unsigned, GpgverifyUnavailable, GpgverifyError, NotSigningKey, ExpiredKey ]
 
 
 decoder : Decoder GitSignatureState

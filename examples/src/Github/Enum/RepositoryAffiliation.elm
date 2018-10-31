@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryAffiliation exposing (RepositoryAffiliation(..), decoder, toString)
+module Github.Enum.RepositoryAffiliation exposing (RepositoryAffiliation(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type RepositoryAffiliation
     = Owner
     | Collaborator
     | OrganizationMember
+
+
+list : List RepositoryAffiliation
+list =
+    [ Owner, Collaborator, OrganizationMember ]
 
 
 decoder : Decoder RepositoryAffiliation

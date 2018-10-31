@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.CommentCannotUpdateReason exposing (CommentCannotUpdateReason(..), decoder, toString)
+module Github.Enum.CommentCannotUpdateReason exposing (CommentCannotUpdateReason(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -22,6 +22,11 @@ type CommentCannotUpdateReason
     | LoginRequired
     | Maintenance
     | VerifiedEmailRequired
+
+
+list : List CommentCannotUpdateReason
+list =
+    [ InsufficientAccess, Locked, LoginRequired, Maintenance, VerifiedEmailRequired ]
 
 
 decoder : Decoder CommentCannotUpdateReason

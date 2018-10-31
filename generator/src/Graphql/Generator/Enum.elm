@@ -27,6 +27,7 @@ import Json.Decode as Decode exposing (Decoder)
         [ moduleName |> String.join "." ]
         ++ docComment
         ++ enumType enumName enumValues
+        ++ enumList enumName enumValues
         ++ enumDecoder enumName enumValues
         ++ "\n\n"
         ++ enumToString enumName enumValues
@@ -44,6 +45,20 @@ enumType enumName enumValues =
                 |> String.join "\n    | "
            )
         ++ "\n"
+
+
+enumList : ClassCaseName -> List EnumValue -> String
+enumList enumName enumValues =
+    interpolate """list : List {0}
+list =
+    [{1}]
+"""
+        [ ClassCaseName.normalized enumName
+        , enumValues
+            |> List.map .name
+            |> List.map ClassCaseName.normalized
+            |> String.join ", "
+        ]
 
 
 enumToString : ClassCaseName -> List EnumValue -> String

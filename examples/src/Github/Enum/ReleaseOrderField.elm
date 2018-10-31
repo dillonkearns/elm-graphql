@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReleaseOrderField exposing (ReleaseOrderField(..), decoder, toString)
+module Github.Enum.ReleaseOrderField exposing (ReleaseOrderField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -16,6 +16,11 @@ import Json.Decode as Decode exposing (Decoder)
 type ReleaseOrderField
     = CreatedAt
     | Name
+
+
+list : List ReleaseOrderField
+list =
+    [ CreatedAt, Name ]
 
 
 decoder : Decoder ReleaseOrderField

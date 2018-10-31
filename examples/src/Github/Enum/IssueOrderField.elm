@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.IssueOrderField exposing (IssueOrderField(..), decoder, toString)
+module Github.Enum.IssueOrderField exposing (IssueOrderField(..), decoder, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -18,6 +18,11 @@ type IssueOrderField
     = CreatedAt
     | UpdatedAt
     | Comments
+
+
+list : List IssueOrderField
+list =
+    [ CreatedAt, UpdatedAt, Comments ]
 
 
 decoder : Decoder IssueOrderField
