@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.6] - 2018-10-31
+
 ### Added
 
 - Generate a list of all possible enums for each enum module. Adds [#77](https://github.com/dillonkearns/elm-graphql/issues/77).
