@@ -87,10 +87,6 @@ query =
             )
 
 
-episodes =
-    Episode.list
-
-
 type alias HumanLookup =
     { name : String
     , yearsActive : List Int
@@ -159,7 +155,6 @@ view model =
             , div []
                 [ h1 [] [ text "Response" ]
                 , model |> PrintAny.view
-                , episodes |> Debug.toString |> text
                 ]
             ]
         ]
