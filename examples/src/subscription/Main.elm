@@ -60,6 +60,7 @@ characterSelection =
 type alias Model =
     { data : List ChatMessage
     , characterId : String
+    , subscriptionStatus : SubscriptionStatus
     }
 
 
@@ -69,6 +70,7 @@ type Msg
     | SentMessage (Result (Graphql.Http.Error (Maybe ())) (Maybe ()))
       -- | SubscriptionStatusChanged Graphql.Subscription.Status
     | ChangeCharacter String
+    | SubscriptionStatusConnected ()
 
 
 init : () -> ( Model, Cmd Msg )
@@ -84,6 +86,7 @@ init flags =
       --       graphqlSubscriptionModel
       --           |> Graphql.Subscription.onStatusChanged SubscriptionStatusChanged
       , characterId = "1001"
+      , subscriptionStatus = NotConnected
       }
     , createSubscriptions (subscriptionDocument |> Graphql.Document.serializeSubscription)
     )
@@ -94,14 +97,20 @@ port createSubscriptions : String -> Cmd msg
 
 view : Model -> Html.Html Msg
 view model =
-    div []
-        [ h1 [] [ text "Star Chat" ]
+    case model.subscriptionStatus of
+        NotConnected ->
+            div []
+                [ h1 [] [ text "Star Chat" ]
+                , text "Connecting..."
+                ]
 
-        -- , text ("Phoenix GraphQL Subscription connection status: " ++ Debug.toString model.subscriptionStatus)
-        , characterRadioButtons
-        , messageButtons
-        , chatMessagesView model.data
-        ]
+        Connected ->
+            div []
+                [ h1 [] [ text "Star Chat" ]
+                , characterRadioButtons
+                , messageButtons
+                , chatMessagesView model.data
+                ]
 
 
 characterRadioButton : ( String, String ) -> Html.Html Msg
@@ -231,14 +240,28 @@ update msg model =
         ChangeCharacter characterId ->
             ( { model | characterId = characterId }, Cmd.none )
 
+        SubscriptionStatusConnected () ->
+            ( { model | subscriptionStatus = Connected }, Cmd.none )
+
+
+type SubscriptionStatus
+    = NotConnected
+    | Connected
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     -- Graphql.Subscription.listen GraphqlSubscriptionMsg model.graphqlSubscriptionModel
-    gotSubscriptionData SubscriptionDataReceived
+    Sub.batch
+        [ gotSubscriptionData SubscriptionDataReceived
+        , socketStatusConnected SubscriptionStatusConnected
+        ]
 
 
 port gotSubscriptionData : (Json.Decode.Value -> msg) -> Sub msg
+
+
+port socketStatusConnected : (() -> msg) -> Sub msg
 
 
 main : Program () Model Msg

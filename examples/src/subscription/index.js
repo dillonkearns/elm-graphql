@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     );
 
     function onStart(data) {
+      app.ports.socketStatusConnected.send(null);
       console.log(">>> Start", JSON.stringify(data));
     }
 
