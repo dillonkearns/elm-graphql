@@ -2,13 +2,9 @@ import * as AbsintheSocket from "@absinthe/socket";
 import { Socket as PhoenixSocket } from "phoenix";
 import { Elm } from "./Main.elm";
 
-console.log("Elm", Elm);
-
 let notifiers = [];
 
 document.addEventListener("DOMContentLoaded", function() {
-  // code...
-
   const absintheSocket = AbsintheSocket.create(
     new PhoenixSocket("ws://localhost:4000/socket")
   );
