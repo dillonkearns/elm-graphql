@@ -121,19 +121,7 @@ characterRadioButtons =
 
 messageButtons : Html.Html Msg
 messageButtons =
-    div []
-        ([ Phrase.Faith
-         , Phrase.Father
-         , Phrase.Help
-         , Phrase.TheForce
-         , Phrase.Try
-         , Phrase.BadFeeling
-         , Phrase.Droids
-         , Phrase.Traitor
-         , Phrase.Trap
-         ]
-            |> List.map messageButton
-        )
+    div [] (List.map messageButton Phrase.list)
 
 
 characters : List ( String, String )
