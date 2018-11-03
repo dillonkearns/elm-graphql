@@ -6,7 +6,7 @@ let notifiers = [];
 
 document.addEventListener("DOMContentLoaded", function() {
   const absintheSocket = AbsintheSocket.create(
-    new PhoenixSocket("ws://localhost:4000/socket")
+    new PhoenixSocket("wss://elm-graphql.herokuapp.com/socket")
   );
 
   const app = Elm.Main.init({ node: document.getElementById("main") });

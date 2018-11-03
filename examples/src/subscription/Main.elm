@@ -227,7 +227,7 @@ update msg model =
         SendMessage phrase ->
             ( model
             , sendChatMessage model.characterId phrase
-                |> Graphql.Http.mutationRequest "http://localhost:4000"
+                |> Graphql.Http.mutationRequest "https://elm-graphql.herokuapp.com/"
                 |> Graphql.Http.send SentMessage
             )
 
