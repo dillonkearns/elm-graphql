@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-serve --open"
+    "start": "webpack-serve --open",
+    "build": "webpack -p && cp index.html dist"
   },
   "keywords": [],
   "author": "",
