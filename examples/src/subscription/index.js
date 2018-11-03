@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
     );
 
     function onStart(data) {
-      app.ports.socketStatusConnected.send(null);
       console.log(">>> Start", JSON.stringify(data));
+      app.ports.socketStatusConnected.send(null);
     }
 
     function onAbort(data) {
@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function onError(data) {
-      app.ports.socketStatusReconnecting.send(null);
       console.log(">>> Error", JSON.stringify(data));
+      app.ports.socketStatusReconnecting.send(null);
     }
 
     function onResult(res) {
