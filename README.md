@@ -22,6 +22,12 @@ I built this package because I wanted to have something that:
 
 See an [example in action on Ellie](https://rebrand.ly/graphqelm).
 
+You can do real-time APIs using GraphQL Subscriptions and `dillonkearns/elm-graphql`.
+Just wire in the framework-specific JavaScript code for opening the WebSocket connection
+through a port. Here's a [live demo](http://www.dillonkearns.com/elm-graphql/) and its
+[source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src/subscription).
+The demo server is running Elixir/Absinthe.
+
 See more end-to-end example code in the
 [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples)
 folder.
@@ -83,6 +89,7 @@ If you're just starting out, here are some great resources:
 - My Elm Conf 2018 talk goes into the philosophy behind `dillonkearns/elm-graphql` [![Types Without Borders Elm Conf Talk](https://img.youtube.com/vi/memIRXFSNkU/0.jpg)](https://www.youtube.com/watch?v=memIRXFSNkU)
 
 ([Skip to 13:06](https://youtu.be/memIRXFSNkU?t=786) to go straight to the `dillonkearns/elm-graphql` demo).
+
 - There are a couple of chapters so far in [The Official `dillonkearns/elm-graphql` Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
 - [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
 - [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
@@ -137,6 +144,9 @@ Thanks for [the reserved words pull request](https://github.com/dillonkearns/elm
 
 A huge thanks to [@xtian](https://github.com/xtian) for doing the vast majority
 of the [0.19 upgrade work](https://github.com/dillonkearns/elm-graphql/pull/60)! :tada:
+
+Thank you [Josh Adams (@knewter)][https://github.com/knewter] for the code example for
+Subscriptions with Elixir/Absinthe wired up through Elm ports!
 
 ## Roadmap
 
