@@ -6,7 +6,7 @@ import Graphql.Http
 import Graphql.Operation exposing (RootSubscription)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (Html, button, div, fieldset, h1, img, input, label, li, p, pre, text, ul)
-import Html.Attributes exposing (name, src, style, type_)
+import Html.Attributes exposing (href, name, src, style, target, type_)
 import Html.Events exposing (onClick)
 import Json.Decode
 import Swapi.Enum.Phrase as Phrase exposing (Phrase)
@@ -100,24 +100,49 @@ view model =
     case model.subscriptionStatus of
         NotConnected ->
             div []
-                [ h1 [] [ text "Star Chat" ]
+                [ headingView
                 , text "Connecting..."
                 ]
 
         Reconnecting ->
             div []
-                [ h1 [] [ text "Star Chat" ]
+                [ headingView
                 , text "Reconnecting..."
                 , chatMessagesView model.data
                 ]
 
         Connected ->
             div []
-                [ h1 [] [ text "Star Chat" ]
+                [ headingView
                 , characterRadioButtons
                 , messageButtons
                 , chatMessagesView model.data
                 ]
+
+
+headingView =
+    div []
+        [ h1 []
+            [ text "Star Chat - "
+            , link
+                { url = "https://github.com/dillonkearns/elm-graphql"
+                , content = "dillonkearns/elm-graphql"
+                }
+            , text " Subscriptions Demo"
+            ]
+        , Html.h2 []
+            [ link
+                { url = "https://github.com/dillonkearns/elm-graphql/tree/master/examples/src/subscription"
+                , content = "See the code on Github"
+                }
+            ]
+        ]
+
+
+link { url, content } =
+    Html.a
+        [ href url, target "_blank" ]
+        [ text content ]
 
 
 characterRadioButton : ( String, String ) -> Html.Html Msg
