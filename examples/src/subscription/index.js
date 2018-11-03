@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function onError(data) {
+      app.ports.socketStatusReconnecting.send(null);
       console.log(">>> Error", JSON.stringify(data));
     }
 

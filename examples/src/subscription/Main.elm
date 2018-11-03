@@ -70,7 +70,7 @@ type Msg
     | SentMessage (Result (Graphql.Http.Error (Maybe ())) (Maybe ()))
       -- | SubscriptionStatusChanged Graphql.Subscription.Status
     | ChangeCharacter String
-    | SubscriptionStatusConnected ()
+    | NewSubscriptionStatus SubscriptionStatus ()
 
 
 init : () -> ( Model, Cmd Msg )
@@ -102,6 +102,12 @@ view model =
             div []
                 [ h1 [] [ text "Star Chat" ]
                 , text "Connecting..."
+                ]
+
+        Reconnecting ->
+            div []
+                [ h1 [] [ text "Star Chat" ]
+                , text "Reconnecting..."
                 ]
 
         Connected ->
@@ -240,13 +246,14 @@ update msg model =
         ChangeCharacter characterId ->
             ( { model | characterId = characterId }, Cmd.none )
 
-        SubscriptionStatusConnected () ->
-            ( { model | subscriptionStatus = Connected }, Cmd.none )
+        NewSubscriptionStatus newStatus () ->
+            ( { model | subscriptionStatus = newStatus }, Cmd.none )
 
 
 type SubscriptionStatus
     = NotConnected
     | Connected
+    | Reconnecting
 
 
 subscriptions : Model -> Sub Msg
@@ -254,7 +261,8 @@ subscriptions model =
     -- Graphql.Subscription.listen GraphqlSubscriptionMsg model.graphqlSubscriptionModel
     Sub.batch
         [ gotSubscriptionData SubscriptionDataReceived
-        , socketStatusConnected SubscriptionStatusConnected
+        , socketStatusConnected (NewSubscriptionStatus Connected)
+        , socketStatusReconnecting (NewSubscriptionStatus Reconnecting)
         ]
 
 
@@ -262,6 +270,9 @@ port gotSubscriptionData : (Json.Decode.Value -> msg) -> Sub msg
 
 
 port socketStatusConnected : (() -> msg) -> Sub msg
+
+
+port socketStatusReconnecting : (() -> msg) -> Sub msg
 
 
 main : Program () Model Msg
