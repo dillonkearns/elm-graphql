@@ -108,6 +108,7 @@ view model =
             div []
                 [ h1 [] [ text "Star Chat" ]
                 , text "Reconnecting..."
+                , chatMessagesView model.data
                 ]
 
         Connected ->
