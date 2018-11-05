@@ -16,7 +16,7 @@ import Github.Union.SearchResultItem
 import Graphql.Field as Field
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet exposing (SelectionSet, with)
+import Graphql.SelectionSet exposing (SelectionSet, fieldSelection, with)
 
 
 type alias Response =
@@ -98,7 +98,11 @@ repositorySelection =
     Repository.selection Repo
         |> with Repository.nameWithOwner
         |> with Repository.description
-        |> with (Repository.stargazers (\optionals -> { optionals | first = Present 0 }) stargazersCount)
+        |> with
+            (Repository.stargazers
+                (\optionals -> { optionals | first = Present 0 })
+                (fieldSelection Github.Object.StargazerConnection.totalCount)
+            )
         |> with Repository.createdAt
         |> with Repository.updatedAt
         |> with Repository.forkCount
@@ -109,13 +113,9 @@ repositorySelection =
 
 openIssues : Field.Field Int Github.Object.Repository
 openIssues =
-    Repository.issues (\optionals -> { optionals | first = Present 0, states = Present [ Github.Enum.IssueState.Open ] }) issuesSelection
-
-
-issuesSelection : SelectionSet Int Github.Object.IssueConnection
-issuesSelection =
-    Github.Object.IssueConnection.selection identity
-        |> with Github.Object.IssueConnection.totalCount
+    Repository.issues
+        (\optionals -> { optionals | first = Present 0, states = Present [ Github.Enum.IssueState.Open ] })
+        (fieldSelection Github.Object.IssueConnection.totalCount)
 
 
 type alias Owner =
