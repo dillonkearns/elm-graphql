@@ -16,7 +16,7 @@ import Github.Union.SearchResultItem
 import Graphql.Field as Field
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet exposing (SelectionSet, fieldSelection, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, include, with)
 
 
 type alias Response =
@@ -84,8 +84,7 @@ type alias Repo =
     { name : String
     , description : Maybe String
     , stargazerCount : Int
-    , createdAt : Github.Scalar.DateTime
-    , updatedAt : Github.Scalar.DateTime
+    , timestamps : Timestamps
     , forkCount : Int
     , issues : Int
     , owner : Owner
@@ -98,17 +97,37 @@ repositorySelection =
     Repository.selection Repo
         |> with Repository.nameWithOwner
         |> with Repository.description
-        |> with
-            (Repository.stargazers
-                (\optionals -> { optionals | first = Present 0 })
-                (fieldSelection Github.Object.StargazerConnection.totalCount)
-            )
-        |> with Repository.createdAt
-        |> with Repository.updatedAt
+        |> include withStargazers
+        |> include createdUpdatedSelection
         |> with Repository.forkCount
         |> with openIssues
         |> with (Repository.owner ownerSelection)
         |> with Repository.url
+
+
+type alias Timestamps =
+    { created : String
+    , updated : String
+    }
+
+
+createdUpdatedSelection =
+    Repository.selection Timestamps
+        |> with (Repository.createdAt |> Field.map mapDateTime)
+        |> with (Repository.updatedAt |> Field.map mapDateTime)
+
+
+mapDateTime (Github.Scalar.DateTime value) =
+    value
+
+
+withStargazers : SelectionSet Int Github.Object.Repository
+withStargazers =
+    fieldSelection
+        (Repository.stargazers
+            (\optionals -> { optionals | first = Present 0 })
+            (fieldSelection Github.Object.StargazerConnection.totalCount)
+        )
 
 
 openIssues : Field.Field Int Github.Object.Repository

@@ -104,12 +104,12 @@ resultView result =
         , repoLink result.name result.url
         , text ("⭐️" ++ String.fromInt result.stargazerCount)
         , text ("🍴" ++ String.fromInt result.forkCount)
-        , text (" Created: " ++ dateTimeToString result.createdAt)
-        , text (" Updated: " ++ dateTimeToString result.updatedAt)
+        , text (" Created: " ++ dateTimeToString result.timestamps.created)
+        , text (" Updated: " ++ dateTimeToString result.timestamps.updated)
         ]
 
 
-dateTimeToString (Github.Scalar.DateTime dateTimeString) =
+dateTimeToString dateTimeString =
     dateTimeString
 
 
