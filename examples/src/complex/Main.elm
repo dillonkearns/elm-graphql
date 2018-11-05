@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Element exposing (Element)
+import ElmPackage
 import ElmReposRequest
 import Github.Scalar
 import Graphql.Document as Document
@@ -11,6 +12,7 @@ import Graphql.SelectionSet
 import Html exposing (Html, a, button, div, h1, img, p, pre, text)
 import Html.Attributes exposing (href, src, style, target)
 import Html.Events exposing (onClick)
+import Http
 import PrintAny
 import RemoteData exposing (RemoteData)
 import View.Result
@@ -21,17 +23,19 @@ makeRequest sortOrder =
     query sortOrder
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.send (RemoteData.fromResult >> RemoteData.mapError Graphql.Http.ignoreParsedErrorData >> GotResponse)
 
 
 type Msg
-    = GotResponse (RemoteData (Graphql.Http.Error ElmReposRequest.Response) ElmReposRequest.Response)
+    = GotResponse (RemoteData (Graphql.Http.Error ()) ElmReposRequest.Response)
     | SetSortOrder ElmReposRequest.SortOrder
+    | GotElmPackages (RemoteData.WebData (List String))
 
 
 type alias Model =
-    { githubResponse : RemoteData (Graphql.Http.Error ElmReposRequest.Response) ElmReposRequest.Response
+    { githubResponse : RemoteData (Graphql.Http.Error ()) ElmReposRequest.Response
     , sortOrder : ElmReposRequest.SortOrder
+    , elmPackages : RemoteData.WebData (List String)
     }
 
 
@@ -39,8 +43,14 @@ init : () -> ( Model, Cmd Msg )
 init _ =
     ( { githubResponse = RemoteData.Loading
       , sortOrder = ElmReposRequest.Stars
+      , elmPackages = RemoteData.Loading
       }
-    , makeRequest ElmReposRequest.Stars
+    , Cmd.batch
+        [ ElmPackage.request
+            |> RemoteData.sendRequest
+            |> Cmd.map GotElmPackages
+        , makeRequest ElmReposRequest.Stars
+        ]
     )
 
 
@@ -85,7 +95,12 @@ sortButtonView sortOrder =
 
 elmProjectsView : Model -> Element Msg
 elmProjectsView model =
-    case model.githubResponse of
+    case
+        RemoteData.map2
+            Tuple.pair
+            model.githubResponse
+            (model.elmPackages |> RemoteData.mapError Graphql.Http.fromHttpError)
+    of
         RemoteData.Success data ->
             successView data
 
@@ -93,8 +108,8 @@ elmProjectsView model =
             Element.none
 
 
-successView : ElmReposRequest.Response -> Element Msg
-successView data =
+successView : ( ElmReposRequest.Response, List String ) -> Element Msg
+successView ( data, elmPackages ) =
     Element.column []
         (data.searchResults
             |> List.filterMap identity
@@ -110,7 +125,12 @@ update msg model =
             ( { model | githubResponse = response }, Cmd.none )
 
         SetSortOrder sortOrder ->
-            ( { model | sortOrder = sortOrder, githubResponse = RemoteData.Loading }, makeRequest sortOrder )
+            ( { model | sortOrder = sortOrder, githubResponse = RemoteData.Loading }
+            , makeRequest sortOrder
+            )
+
+        GotElmPackages packagesData ->
+            ( { model | elmPackages = packagesData }, Cmd.none )
 
 
 main : Program () Model Msg

@@ -4,7 +4,7 @@ module Graphql.Http exposing
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
     , send, toTask
-    , mapError, ignoreParsedErrorData
+    , mapError, ignoreParsedErrorData, fromHttpError
     )
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
@@ -37,7 +37,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Map `Error`s
 
-@docs mapError, ignoreParsedErrorData
+@docs mapError, ignoreParsedErrorData, fromHttpError
 
 -}
 
@@ -166,6 +166,13 @@ mapError mapFn error =
 
         HttpError httpError ->
             HttpError httpError
+
+
+{-| TODO
+-}
+fromHttpError : Http.Error -> Error ()
+fromHttpError httpError =
+    HttpError httpError
 
 
 {-| Useful when you don't want to deal with the recovered data if there is `ParsedData`.
