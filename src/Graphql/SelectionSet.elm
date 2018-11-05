@@ -1,5 +1,6 @@
 module Graphql.SelectionSet exposing
-    ( with, hardcoded, empty, map, map2, succeed, fieldSelection
+    ( with, hardcoded, empty, map, succeed, fieldSelection
+    , map2, include
     , SelectionSet(..), FragmentSelectionSet(..)
     )
 
@@ -50,7 +51,12 @@ the `@dillonkearns/elm-graphql` command line tool.
 The query itself is also a `SelectionSet` so it is built up similarly.
 See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
-@docs with, hardcoded, empty, map, map2, succeed, fieldSelection
+@docs with, hardcoded, empty, map, succeed, fieldSelection
+
+
+## Combining
+
+@docs map2, include
 
 
 ## Types
@@ -164,6 +170,17 @@ with (Field field fieldDecoder) (SelectionSet selectionFields selectionDecoder) 
                 fieldDecoder
             )
             selectionDecoder
+        )
+
+
+{-| TODO
+-}
+include : SelectionSet a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
+include (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
+    SelectionSet (selectionFields1 ++ selectionFields2)
+        (Decode.map2 (|>)
+            selectionDecoder1
+            selectionDecoder2
         )
 
 
