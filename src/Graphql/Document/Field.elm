@@ -8,25 +8,47 @@ import Murmur3
 
 
 hashedAliasName : RawField -> String
-hashedAliasName rawField =
-    Graphql.RawField.name rawField
-        ++ (unaliasedSerializeChildren Nothing rawField
-                |> Murmur3.hashString 0
-                |> String.fromInt
-           )
+hashedAliasName field =
+    field
+        |> alias
+        |> Maybe.withDefault (Graphql.RawField.name field)
 
 
-alias : Int -> List RawField -> RawField -> Maybe String
-alias fieldIndex fields field =
-    if
-        (field |> Graphql.RawField.name |> String.startsWith "...")
-            || (field |> Graphql.RawField.name |> String.startsWith "__")
-    then
-        Nothing
+maybeAliasHash : RawField -> Maybe String
+maybeAliasHash field =
+    {-
+       Composite String (List Argument) (List RawField)
+       | Leaf String (List Argument)
+    -}
+    case field of
+        Composite name arguments children ->
+            if List.isEmpty arguments then
+                Nothing
 
-    else
-        hashedAliasName field
-            |> Just
+            else
+                arguments
+                    |> Argument.serialize
+                    |> Murmur3.hashString 0
+                    |> String.fromInt
+                    |> Just
+
+        Leaf name arguments ->
+            if List.isEmpty arguments then
+                Nothing
+
+            else
+                arguments
+                    |> Argument.serialize
+                    |> Murmur3.hashString 0
+                    |> String.fromInt
+                    |> Just
+
+
+alias : RawField -> Maybe String
+alias field =
+    field
+        |> maybeAliasHash
+        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
@@ -89,8 +111,8 @@ serializeChildren : Maybe Int -> List RawField -> String
 serializeChildren indentationLevel children =
     children
         |> List.indexedMap
-            (\index selection ->
-                serialize (alias index children selection) (indentationLevel |> Maybe.map ((+) 1)) selection
+            (\index field ->
+                serialize (alias field) (indentationLevel |> Maybe.map ((+) 1)) field
             )
         |> List.filterMap identity
         |> String.join
