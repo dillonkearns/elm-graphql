@@ -40,7 +40,7 @@ type SortOrder
 query : SortOrder -> SelectionSet (List Repo) RootQuery
 query sortOrder =
     Query.search (\optionals -> { optionals | first = Present 100 })
-        { query = "date language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
+        { query = "language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
         , type_ = Github.Enum.SearchType.Repository
         }
         searchSelection
@@ -117,15 +117,16 @@ openIssues =
 
 
 type alias Owner =
-    { details : Maybe Never
-    , avatarUrl : Github.Scalar.Uri
+    { avatarUrl : Github.Scalar.Uri
+    , login : String
     }
 
 
 ownerSelection : SelectionSet Owner Github.Interface.RepositoryOwner
 ownerSelection =
-    Github.Interface.RepositoryOwner.selection Owner []
+    Github.Interface.RepositoryOwner.commonSelection Owner
         |> with (Github.Interface.RepositoryOwner.avatarUrl identity)
+        |> with Github.Interface.RepositoryOwner.login
 
 
 stargazersCount : SelectionSet Int Github.Object.StargazerConnection

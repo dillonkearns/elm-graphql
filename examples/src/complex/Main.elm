@@ -110,7 +110,21 @@ elmProjectsView model =
 
 successView : ( List ElmReposRequest.Repo, List String ) -> Element Msg
 successView ( data, elmPackages ) =
-    Element.column [] (data |> List.map View.Result.view)
+    Element.column []
+        ((data
+            |> List.map
+                (\repo ->
+                    ( hasPackage elmPackages repo, repo )
+                )
+            |> List.filter (\( hasPackageYes, _ ) -> hasPackageYes)
+         )
+            |> List.map View.Result.view
+        )
+
+
+hasPackage : List String -> ElmReposRequest.Repo -> Bool
+hasPackage elmPackages repo =
+    elmPackages |> List.any (\package -> repo.name == package)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
