@@ -1,31 +1,32 @@
-module Graphql.Document.Field exposing (serializeChildren)
+module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Indent as Indent
 import Graphql.RawField exposing (RawField(..))
 import List.Extra
+import Murmur3
+
+
+hashedAliasName : RawField -> String
+hashedAliasName rawField =
+    Graphql.RawField.name rawField
+        ++ (unaliasedSerializeChildren Nothing rawField
+                |> Murmur3.hashString 0
+                |> String.fromInt
+           )
 
 
 alias : Int -> List RawField -> RawField -> Maybe String
 alias fieldIndex fields field =
-    let
-        fieldName =
-            Graphql.RawField.name field
-
-        indices =
-            fields
-                |> List.Extra.findIndices
-                    (\currentField ->
-                        Graphql.RawField.name currentField
-                            == fieldName
-                    )
-                |> List.filter (\index -> index < fieldIndex)
-    in
-    if indices == [] then
+    if
+        (field |> Graphql.RawField.name |> String.startsWith "...")
+            || (field |> Graphql.RawField.name |> String.startsWith "__")
+    then
         Nothing
 
     else
-        Just (fieldName ++ String.fromInt (List.length indices + 1))
+        hashedAliasName field
+            |> Just
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
@@ -90,6 +91,24 @@ serializeChildren indentationLevel children =
         |> List.indexedMap
             (\index selection ->
                 serialize (alias index children selection) (indentationLevel |> Maybe.map ((+) 1)) selection
+            )
+        |> List.filterMap identity
+        |> String.join
+            (case indentationLevel of
+                Just _ ->
+                    "\n"
+
+                Nothing ->
+                    " "
+            )
+
+
+unaliasedSerializeChildren : Maybe Int -> RawField -> String
+unaliasedSerializeChildren indentationLevel field =
+    [ field ]
+        |> List.indexedMap
+            (\index selection ->
+                serialize Nothing (indentationLevel |> Maybe.map ((+) 1)) selection
             )
         |> List.filterMap identity
         |> String.join
