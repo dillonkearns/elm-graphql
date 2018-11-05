@@ -12,6 +12,7 @@ import Html.Attributes exposing (href, src, style, target)
 import Html.Events exposing (onClick)
 import PrintAny
 import RemoteData exposing (RemoteData)
+import View.Result
 
 
 makeRequest : ElmReposRequest.SortOrder -> Cmd Msg
@@ -93,34 +94,8 @@ successView data =
         (data.searchResults
             |> List.filterMap identity
             |> List.filterMap identity
-            |> List.map resultView
+            |> List.map View.Result.view
         )
-
-
-resultView : ElmReposRequest.Repo -> Html Msg
-resultView result =
-    div []
-        [ avatarView result.owner.avatarUrl
-        , repoLink result.name result.url
-        , text ("⭐️" ++ String.fromInt result.stargazerCount)
-        , text ("🍴" ++ String.fromInt result.forkCount)
-        , text (" Created: " ++ dateTimeToString result.timestamps.created)
-        , text (" Updated: " ++ dateTimeToString result.timestamps.updated)
-        ]
-
-
-dateTimeToString dateTimeString =
-    dateTimeString
-
-
-avatarView : Github.Scalar.Uri -> Html Msg
-avatarView (Github.Scalar.Uri avatarUrl) =
-    img [ src avatarUrl, style "width" "35px" ] []
-
-
-repoLink : String -> Github.Scalar.Uri -> Html Msg
-repoLink repoName (Github.Scalar.Uri repoUrl) =
-    a [ href repoUrl, target "_blank" ] [ text repoName ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
