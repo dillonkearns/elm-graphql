@@ -1,4 +1,4 @@
-module ElmReposRequest exposing (Owner, Repo, Response, SortOrder(..), query)
+module ElmReposRequest exposing (Owner, Repo, SortOrder(..), query)
 
 import Github.Enum.IssueState
 import Github.Enum.SearchType
@@ -19,67 +19,6 @@ import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, include, with)
 
 
-type alias Response =
-    { searchResults : List (Maybe (Maybe Repo))
-    }
-
-
-type SortOrder
-    = Forks
-    | Stars
-    | Updated
-
-
-query : SortOrder -> SelectionSet Response RootQuery
-query sortOrder =
-    Query.selection Response
-        |> with
-            (Query.search (\optionals -> { optionals | first = Present 100 })
-                { query = "date language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
-                , type_ = Github.Enum.SearchType.Repository
-                }
-                searchSelection
-            )
-
-
-expectField : Field.Field (Maybe a) typeLock -> Field.Field a typeLock
-expectField =
-    Field.map expect
-
-
-expect : Maybe a -> a
-expect maybe =
-    case maybe of
-        Just thing_ ->
-            thing_
-
-        Nothing ->
-            Debug.todo "Expected to get thing, got nothing"
-
-
-searchSelection : SelectionSet (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
-searchSelection =
-    Github.Object.SearchResultItemConnection.selection identity
-        |> with thing
-
-
-thing : Field.Field (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
-thing =
-    Github.Object.SearchResultItemConnection.nodes searchResultSelection |> expectField
-
-
-maybeWithDefault : a -> Field.Field (Maybe a) typeLock -> Field.Field a typeLock
-maybeWithDefault default =
-    Field.map (Maybe.withDefault default)
-
-
-searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
-searchResultSelection =
-    Github.Union.SearchResultItem.selection identity
-        [ Github.Union.SearchResultItem.onRepository repositorySelection
-        ]
-
-
 type alias Repo =
     { name : String
     , description : Maybe String
@@ -90,6 +29,48 @@ type alias Repo =
     , owner : Owner
     , url : Github.Scalar.Uri
     }
+
+
+type SortOrder
+    = Forks
+    | Stars
+    | Updated
+
+
+query : SortOrder -> SelectionSet (List Repo) RootQuery
+query sortOrder =
+    Query.search (\optionals -> { optionals | first = Present 100 })
+        { query = "date language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
+        , type_ = Github.Enum.SearchType.Repository
+        }
+        searchSelection
+        |> fieldSelection
+
+
+searchSelection : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
+searchSelection =
+    Github.Object.SearchResultItemConnection.selection identity
+        |> with thing
+
+
+thing : Field.Field (List Repo) Github.Object.SearchResultItemConnection
+thing =
+    Github.Object.SearchResultItemConnection.nodes searchResultSelection
+        |> Field.nonNullOrFail
+        |> Field.map (List.filterMap identity)
+        |> Field.map (List.filterMap identity)
+
+
+withDefault : a -> Field.Field (Maybe a) typeLock -> Field.Field a typeLock
+withDefault default =
+    Field.map (Maybe.withDefault default)
+
+
+searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
+searchResultSelection =
+    Github.Union.SearchResultItem.selection identity
+        [ Github.Union.SearchResultItem.onRepository repositorySelection
+        ]
 
 
 repositorySelection : SelectionSet Repo Github.Object.Repository

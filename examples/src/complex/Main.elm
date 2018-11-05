@@ -27,13 +27,13 @@ makeRequest sortOrder =
 
 
 type Msg
-    = GotResponse (RemoteData (Graphql.Http.Error ()) ElmReposRequest.Response)
+    = GotResponse (RemoteData (Graphql.Http.Error ()) (List ElmReposRequest.Repo))
     | SetSortOrder ElmReposRequest.SortOrder
     | GotElmPackages (RemoteData.WebData (List String))
 
 
 type alias Model =
-    { githubResponse : RemoteData (Graphql.Http.Error ()) ElmReposRequest.Response
+    { githubResponse : RemoteData (Graphql.Http.Error ()) (List ElmReposRequest.Repo)
     , sortOrder : ElmReposRequest.SortOrder
     , elmPackages : RemoteData.WebData (List String)
     }
@@ -54,7 +54,7 @@ init _ =
     )
 
 
-query : ElmReposRequest.SortOrder -> Graphql.SelectionSet.SelectionSet ElmReposRequest.Response RootQuery
+query : ElmReposRequest.SortOrder -> Graphql.SelectionSet.SelectionSet (List ElmReposRequest.Repo) RootQuery
 query sortOrder =
     ElmReposRequest.query sortOrder
 
@@ -108,14 +108,9 @@ elmProjectsView model =
             Element.none
 
 
-successView : ( ElmReposRequest.Response, List String ) -> Element Msg
+successView : ( List ElmReposRequest.Repo, List String ) -> Element Msg
 successView ( data, elmPackages ) =
-    Element.column []
-        (data.searchResults
-            |> List.filterMap identity
-            |> List.filterMap identity
-            |> List.map View.Result.view
-        )
+    Element.column [] (data |> List.map View.Result.view)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
