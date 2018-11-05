@@ -52,19 +52,20 @@ query sortOrder =
 view : Model -> Html Msg
 view model =
     Element.layout []
-        (div []
-            [ sortOrderView model
+        (Element.column []
+            [ sortOrderView model |> Element.html
             , elmProjectsView model
             , div []
                 [ h1 [] [ text "Generated Query" ]
                 , pre [] [ text (Document.serializeQuery (query model.sortOrder)) ]
                 ]
+                |> Element.html
             , div []
                 [ h1 [] [ text "Response" ]
                 , PrintAny.view model
                 ]
+                |> Element.html
             ]
-            |> Element.html
         )
 
 
@@ -82,19 +83,19 @@ sortButtonView sortOrder =
     button [ onClick (SetSortOrder sortOrder) ] [ sortOrder |> Debug.toString |> text ]
 
 
-elmProjectsView : Model -> Html Msg
+elmProjectsView : Model -> Element Msg
 elmProjectsView model =
     case model.githubResponse of
         RemoteData.Success data ->
             successView data
 
         _ ->
-            div [] []
+            Element.none
 
 
-successView : ElmReposRequest.Response -> Html Msg
+successView : ElmReposRequest.Response -> Element Msg
 successView data =
-    div []
+    Element.column []
         (data.searchResults
             |> List.filterMap identity
             |> List.filterMap identity

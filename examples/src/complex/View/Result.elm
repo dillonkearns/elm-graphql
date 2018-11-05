@@ -1,15 +1,16 @@
 module View.Result exposing (view)
 
+import Element exposing (Element, text)
 import ElmReposRequest
 import Github.Scalar
-import Html exposing (Html, a, button, div, h1, img, p, pre, text)
+import Html exposing (Html, a, button, div, h1, img, p, pre)
 import Html.Attributes exposing (href, src, style, target)
 
 
-view : ElmReposRequest.Repo -> Html msg
+view : ElmReposRequest.Repo -> Element msg
 view result =
-    div []
-        [ avatarView result.owner.avatarUrl
+    Element.row []
+        [ avatarView result.owner.avatarUrl |> Element.html
         , repoLink result.name result.url
         , text ("⭐️" ++ String.fromInt result.stargazerCount)
         , text ("🍴" ++ String.fromInt result.forkCount)
@@ -27,6 +28,6 @@ avatarView (Github.Scalar.Uri avatarUrl) =
     img [ src avatarUrl, style "width" "35px" ] []
 
 
-repoLink : String -> Github.Scalar.Uri -> Html msg
+repoLink : String -> Github.Scalar.Uri -> Element msg
 repoLink repoName (Github.Scalar.Uri repoUrl) =
-    a [ href repoUrl, target "_blank" ] [ text repoName ]
+    Element.newTabLink [] { url = repoUrl, label = text repoName }
