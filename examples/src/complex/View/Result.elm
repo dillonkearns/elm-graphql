@@ -1,17 +1,20 @@
 module View.Result exposing (view)
 
+import DateFormat.Relative
 import Element exposing (Element, text)
+import Element.Font
 import ElmReposRequest
 import Github.Scalar
 import Html exposing (Html, a, button, div, h1, img, p, pre)
 import Html.Attributes exposing (href, src, style, target)
+import Time exposing (Posix)
 
 
 view : ( Bool, ElmReposRequest.Repo ) -> Element msg
 view ( hasPackage, result ) =
     Element.row [ Element.width Element.fill ]
         [ Element.row
-            [ Element.width (Element.fillPortion 3)
+            [ Element.width (Element.fillPortion 2)
             , Element.spacing 10
             ]
             [ avatarView result.owner.avatarUrl
@@ -23,11 +26,12 @@ view ( hasPackage, result ) =
             ]
             [ text ("⭐️" ++ String.fromInt result.stargazerCount) |> Element.el []
             , text ("🍴" ++ String.fromInt result.forkCount) |> Element.el []
-            , packageLink ( hasPackage, result ) |> Element.el []
             , text (dateTimeToString result.timestamps.created)
-            ]
+            , text (dateTimeToString result.timestamps.updated)
 
-        -- , text (" Updated: " ++ dateTimeToString result.timestamps.updated)
+            -- , text ("↻ " ++ dateTimeToString result.timestamps.updated)
+            , packageLink ( hasPackage, result ) |> Element.el []
+            ]
         ]
 
 
@@ -44,8 +48,13 @@ packageLink ( hasPackage, result ) =
         Element.none
 
 
-dateTimeToString dateTimeString =
-    dateTimeString
+dateTimeToString : Posix -> String
+dateTimeToString time =
+    let
+        now =
+            Time.millisToPosix (1541403582 * 1000)
+    in
+    DateFormat.Relative.relativeTime now time
 
 
 avatarView : Github.Scalar.Uri -> Element msg
@@ -55,4 +64,14 @@ avatarView (Github.Scalar.Uri avatarUrl) =
 
 repoLink : String -> Github.Scalar.Uri -> Element msg
 repoLink repoName (Github.Scalar.Uri repoUrl) =
-    Element.newTabLink [] { url = repoUrl, label = text repoName }
+    Element.newTabLink []
+        { url = repoUrl
+        , label =
+            text repoName
+                |> Element.el
+                    [ Element.Font.color (Element.rgba 0 0 0 0.9)
+                    , Element.mouseOver
+                        [ Element.Font.color (Element.rgba 0 0 0 0.7)
+                        ]
+                    ]
+        }

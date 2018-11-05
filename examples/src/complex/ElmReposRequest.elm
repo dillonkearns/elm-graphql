@@ -17,6 +17,8 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, include, with)
+import Iso8601
+import Time exposing (Posix)
 
 
 type alias Repo =
@@ -87,19 +89,22 @@ repositorySelection =
 
 
 type alias Timestamps =
-    { created : String
-    , updated : String
+    { created : Posix
+    , updated : Posix
     }
 
 
 createdUpdatedSelection =
     Repository.selection Timestamps
-        |> with (Repository.createdAt |> Field.map mapDateTime)
-        |> with (Repository.updatedAt |> Field.map mapDateTime)
+        |> with (Repository.createdAt |> Field.mapOrFail mapDateTime)
+        |> with (Repository.updatedAt |> Field.mapOrFail mapDateTime)
 
 
+mapDateTime : Github.Scalar.DateTime -> Result String Posix
 mapDateTime (Github.Scalar.DateTime value) =
-    value
+    -- value
+    Iso8601.toTime value
+        |> Result.mapError (\_ -> "Failed to parse date as Iso8601")
 
 
 stargazers : Field Int Github.Object.Repository
