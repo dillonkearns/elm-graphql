@@ -1,0 +1,16 @@
+{
+  "name": "complex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:complex": "elm-live src/complex/Main.elm --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "elm": "^0.19.0-bugfix2",
+    "elm-live": "^3.2.0"
+  }
+}
