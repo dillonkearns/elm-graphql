@@ -13,7 +13,7 @@ import Github.Query as Query
 import Github.Scalar
 import Github.Union
 import Github.Union.SearchResultItem
-import Graphql.Field as Field
+import Graphql.Field as Field exposing (Field)
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, include, with)
@@ -97,7 +97,7 @@ repositorySelection =
     Repository.selection Repo
         |> with Repository.nameWithOwner
         |> with Repository.description
-        |> include withStargazers
+        |> with stargazers
         |> include createdUpdatedSelection
         |> with Repository.forkCount
         |> with openIssues
@@ -121,13 +121,11 @@ mapDateTime (Github.Scalar.DateTime value) =
     value
 
 
-withStargazers : SelectionSet Int Github.Object.Repository
-withStargazers =
-    fieldSelection
-        (Repository.stargazers
-            (\optionals -> { optionals | first = Present 0 })
-            (fieldSelection Github.Object.StargazerConnection.totalCount)
-        )
+stargazers : Field Int Github.Object.Repository
+stargazers =
+    Repository.stargazers
+        (\optionals -> { optionals | first = Present 0 })
+        (fieldSelection Github.Object.StargazerConnection.totalCount)
 
 
 openIssues : Field.Field Int Github.Object.Repository
