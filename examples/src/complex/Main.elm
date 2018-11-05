@@ -67,7 +67,7 @@ view model =
     Element.layout []
         (Element.column
             [ Element.spacing 30
-            , Element.width (Element.fill |> Element.maximum 1000)
+            , Element.width (Element.fill |> Element.maximum 1200)
             , Element.centerX
             , Element.padding 50
             ]

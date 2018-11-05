@@ -1,4 +1,4 @@
-module ElmReposRequest exposing (Owner, Repo, SortOrder(..), query)
+module ElmReposRequest exposing (Repo, SortOrder(..), query)
 
 import Github.Enum.IssueState
 import Github.Enum.SearchType
@@ -102,7 +102,6 @@ createdUpdatedSelection =
 
 mapDateTime : Github.Scalar.DateTime -> Result String Posix
 mapDateTime (Github.Scalar.DateTime value) =
-    -- value
     Iso8601.toTime value
         |> Result.mapError (\_ -> "Failed to parse date as Iso8601")
 
@@ -132,9 +131,3 @@ ownerSelection =
     Github.Interface.RepositoryOwner.commonSelection Owner
         |> with (Github.Interface.RepositoryOwner.avatarUrl identity)
         |> with Github.Interface.RepositoryOwner.login
-
-
-stargazersCount : SelectionSet Int Github.Object.StargazerConnection
-stargazersCount =
-    Github.Object.StargazerConnection.selection identity
-        |> with Github.Object.StargazerConnection.totalCount

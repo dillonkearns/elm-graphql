@@ -22,17 +22,23 @@ view ( hasPackage, result ) =
             ]
         , Element.row
             [ Element.width (Element.fillPortion 3)
-            , Element.spaceEvenly
+
+            -- , Element.spaceEvenly
             ]
-            [ text ("⭐️" ++ String.fromInt result.stargazerCount) |> Element.el []
-            , text ("🍴" ++ String.fromInt result.forkCount) |> Element.el []
-            , text (dateTimeToString result.timestamps.created)
-            , text (dateTimeToString result.timestamps.updated)
+            [ text ("⭐️" ++ String.fromInt result.stargazerCount) |> fillWidth 1
+            , text ("🍴" ++ String.fromInt result.forkCount) |> fillWidth 1
+            , text ("🐞" ++ String.fromInt result.issues) |> fillWidth 1
+            , text (dateTimeToString result.timestamps.created) |> fillWidth 2
+            , text (dateTimeToString result.timestamps.updated) |> fillWidth 2
 
             -- , text ("↻ " ++ dateTimeToString result.timestamps.updated)
             , packageLink ( hasPackage, result ) |> Element.el []
             ]
         ]
+
+
+fillWidth portion =
+    Element.el [ Element.width (Element.fillPortion portion) ]
 
 
 packageLink : ( Bool, ElmReposRequest.Repo ) -> Element msg
