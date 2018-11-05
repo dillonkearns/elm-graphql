@@ -35,7 +35,7 @@ query sortOrder =
     Query.selection Response
         |> with
             (Query.search (\optionals -> { optionals | first = Present 100 })
-                { query = "language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
+                { query = "date language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
                 , type_ = Github.Enum.SearchType.Repository
                 }
                 searchSelection

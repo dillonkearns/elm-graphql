@@ -10,7 +10,7 @@ import Html.Attributes exposing (href, src, style, target)
 view : ElmReposRequest.Repo -> Element msg
 view result =
     Element.row []
-        [ avatarView result.owner.avatarUrl |> Element.html
+        [ avatarView result.owner.avatarUrl
         , repoLink result.name result.url
         , text ("⭐️" ++ String.fromInt result.stargazerCount)
         , text ("🍴" ++ String.fromInt result.forkCount)
@@ -23,9 +23,9 @@ dateTimeToString dateTimeString =
     dateTimeString
 
 
-avatarView : Github.Scalar.Uri -> Html msg
+avatarView : Github.Scalar.Uri -> Element msg
 avatarView (Github.Scalar.Uri avatarUrl) =
-    img [ src avatarUrl, style "width" "35px" ] []
+    Element.image [ Element.width (Element.px 35) ] { src = avatarUrl, description = "Avatar" }
 
 
 repoLink : String -> Github.Scalar.Uri -> Element msg
