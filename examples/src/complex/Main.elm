@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Browser
+import Element exposing (Element)
 import ElmReposRequest
 import Github.Scalar
 import Graphql.Document as Document
@@ -50,18 +51,21 @@ query sortOrder =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ sortOrderView model
-        , elmProjectsView model
-        , div []
-            [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery (query model.sortOrder)) ]
+    Element.layout []
+        (div []
+            [ sortOrderView model
+            , elmProjectsView model
+            , div []
+                [ h1 [] [ text "Generated Query" ]
+                , pre [] [ text (Document.serializeQuery (query model.sortOrder)) ]
+                ]
+            , div []
+                [ h1 [] [ text "Response" ]
+                , PrintAny.view model
+                ]
             ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , PrintAny.view model
-            ]
-        ]
+            |> Element.html
+        )
 
 
 sortOrderView : Model -> Html Msg
