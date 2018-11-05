@@ -2,6 +2,9 @@ module Main exposing (main)
 
 import Browser
 import Element exposing (Element)
+import Element.Background
+import Element.Border
+import Element.Events
 import ElmPackage
 import ElmReposRequest
 import Github.Scalar
@@ -62,35 +65,42 @@ query sortOrder =
 view : Model -> Html Msg
 view model =
     Element.layout []
-        (Element.column []
-            [ sortOrderView model |> Element.html
+        (Element.column
+            [ Element.spacing 30
+            , Element.width (Element.fill |> Element.maximum 1000)
+            , Element.centerX
+            , Element.padding 50
+            ]
+            [ sortOrderView model
             , elmProjectsView model
-            , div []
-                [ h1 [] [ text "Generated Query" ]
-                , pre [] [ text (Document.serializeQuery (query model.sortOrder)) ]
-                ]
-                |> Element.html
-            , div []
-                [ h1 [] [ text "Response" ]
-                , PrintAny.view model
-                ]
-                |> Element.html
             ]
         )
 
 
-sortOrderView : Model -> Html Msg
+sortOrderView : Model -> Element Msg
 sortOrderView model =
-    div []
+    Element.row
+        [ Element.spacing 10
+        ]
         [ sortButtonView ElmReposRequest.Stars
         , sortButtonView ElmReposRequest.Forks
         , sortButtonView ElmReposRequest.Updated
         ]
 
 
-sortButtonView : ElmReposRequest.SortOrder -> Html Msg
+sortButtonView : ElmReposRequest.SortOrder -> Element Msg
 sortButtonView sortOrder =
-    button [ onClick (SetSortOrder sortOrder) ] [ sortOrder |> Debug.toString |> text ]
+    Element.el
+        [ Element.Events.onClick (SetSortOrder sortOrder)
+        , Element.Border.width 2
+        , Element.Border.rounded 5
+        , Element.padding 10
+        , Element.mouseOver
+            [ Element.Background.color (Element.rgba 0 0 0 0.1)
+            ]
+        , Element.pointer
+        ]
+        (sortOrder |> Debug.toString |> Element.text)
 
 
 elmProjectsView : Model -> Element Msg
@@ -104,13 +114,16 @@ elmProjectsView model =
         RemoteData.Success data ->
             successView data
 
+        RemoteData.Failure error ->
+            Element.text ("Error: " ++ Debug.toString error)
+
         _ ->
-            Element.none
+            Element.text "Loading..."
 
 
 successView : ( List ElmReposRequest.Repo, List String ) -> Element Msg
 successView ( data, elmPackages ) =
-    Element.column []
+    Element.column [ Element.width Element.fill ]
         ((data
             |> List.map
                 (\repo ->
