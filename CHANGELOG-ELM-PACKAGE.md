@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- The generated selection sets now will include at least a `__typename` to ensure
+  they are valid (empty selection sets are invalid in GraphQL). Previously you
+  could get an invalid GraphQL query if you used `SelectionSet.hardcoded`.
 - (Internal implementation details, not public facing though the generated
   queries will look slightly different now) - The `alias` generation has changed to
   be independent of surrounding context. The new

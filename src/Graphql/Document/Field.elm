@@ -67,30 +67,26 @@ serialize aliasName mIndentationLevel field =
     in
     (case field of
         Composite fieldName args children ->
-            if children == [] then
-                Nothing
+            case mIndentationLevel of
+                Nothing ->
+                    (fieldName
+                        ++ Argument.serialize args
+                        ++ "{"
+                        ++ serializeChildren Nothing children
+                    )
+                        ++ "}"
+                        |> Just
 
-            else
-                case mIndentationLevel of
-                    Nothing ->
-                        (fieldName
-                            ++ Argument.serialize args
-                            ++ "{"
-                            ++ serializeChildren Nothing children
-                        )
-                            ++ "}"
-                            |> Just
-
-                    Just indentationLevel ->
-                        (fieldName
-                            ++ Argument.serialize args
-                            ++ " {\n"
-                            ++ serializeChildren (Just indentationLevel) children
-                        )
-                            ++ "\n"
-                            ++ Indent.generate indentationLevel
-                            ++ "}"
-                            |> Just
+                Just indentationLevel ->
+                    (fieldName
+                        ++ Argument.serialize args
+                        ++ " {\n"
+                        ++ serializeChildren (Just indentationLevel) children
+                    )
+                        ++ "\n"
+                        ++ Indent.generate indentationLevel
+                        ++ "}"
+                        |> Just
 
         Leaf fieldName args ->
             Just (fieldName ++ Argument.serialize args)

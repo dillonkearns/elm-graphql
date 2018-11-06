@@ -84,7 +84,7 @@ all =
     avatar
   }
 }"""
-        , test "ignored fields are omitted" <|
+        , test "ignored fields are included with a typename" <|
             \() ->
                 document
                     [ Composite "topLevel"
@@ -95,7 +95,9 @@ all =
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   topLevel {
-
+    ...on Droid {
+      __typename
+    }
   }
 }"""
         , describe "empty queries"
@@ -105,6 +107,17 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   __typename
+}"""
+            , test "nested empty query" <|
+                \() ->
+                    document
+                        [ Composite "viewer" [] []
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  viewer {
+    __typename
+  }
 }"""
             ]
         ]
