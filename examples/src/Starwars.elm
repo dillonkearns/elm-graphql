@@ -25,16 +25,12 @@ import Swapi.Union.CharacterUnion as CharacterUnion
 
 
 type alias Response =
-    { hello : Int }
-
-
-
--- { vader : HumanLookup
--- , tarkin : HumanLookup
--- , hero : Character
--- , union : Maybe CharacterUnion
--- , greeting : String
--- }
+    { vader : HumanLookup
+    , tarkin : HumanLookup
+    , hero : Character
+    , union : Maybe CharacterUnion
+    , greeting : String
+    }
 
 
 type HumanOrDroid
@@ -80,48 +76,36 @@ query : SelectionSet Response RootQuery
 query =
     Query.selection Response
         |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> Field.nonNullOrFail)
-
-
-
--- |> hardcoded 123
--- |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> Field.nonNullOrFail)
--- |> with
---     (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
--- |> with
---     (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
--- |> with
---     (Query.greet
---         { input = Swapi.InputObject.buildGreeting { name = "Chewie" } (\optionals -> { optionals | language = Present Language.Es }) }
---     )
+        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> Field.nonNullOrFail)
+        |> with
+            (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
+        |> with
+            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
+        |> with
+            (Query.greet
+                { input = Swapi.InputObject.buildGreeting { name = "Chewie" } (\optionals -> { optionals | language = Present Language.Es }) }
+            )
 
 
 type alias HumanLookup =
-    { thing : Int }
+    { name : String
+    , yearsActive : List Int
+    , id : Swapi.Scalar.Id
+    , avatarUrl : String
+    , homePlanet : Maybe String
+    , friends : List Character
+    }
 
 
-
--- { name : String
--- , yearsActive : List Int
--- , id : Swapi.Scalar.Id
--- , avatarUrl : String
--- , homePlanet : Maybe String
--- , friends : List Character
--- }
--- human : SelectionSet HumanLookup Swapi.Object.Human
-
-
+human : SelectionSet HumanLookup Swapi.Object.Human
 human =
-    Human.selection identity
-        |> hardcoded 123
-
-
-
--- |> with Human.name
--- |> with (Human.appearsIn |> Field.map (List.map episodeYear))
--- |> with Human.id
--- |> with Human.avatarUrl
--- |> with Human.homePlanet
--- |> with (Human.friends hero)
+    Human.selection HumanLookup
+        |> with Human.name
+        |> with (Human.appearsIn |> Field.map (List.map episodeYear))
+        |> with Human.id
+        |> with Human.avatarUrl
+        |> with Human.homePlanet
+        |> with (Human.friends hero)
 
 
 episodeYear : Episode -> Int
