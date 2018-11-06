@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `SelectionSet.withFragment` allows you to include fields from a `SelectionSet`
+  when you are defining a `SelectionSet`.
+- `SelectionSet.map2` allows you to combine two `SelectionSet`s into one.
+
+### Changed
+
+- (Internal implementation details, not public facing though the generated
+  queries will look slightly different now) - The `alias` generation has changed to
+  be independent of surrounding context. The new
+  algorithm will generate an `alias` for any field if and only if that field has arguments.
+  [You can read more about the details and rationale on this thread](https://github.com/dillonkearns/elm-graphql/issues/64#issuecomment-435733851).
+
 ## [1.1.0] - 2018-08-28
 
 ### Changed
