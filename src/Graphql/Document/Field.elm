@@ -106,6 +106,7 @@ serialize aliasName mIndentationLevel field =
 serializeChildren : Maybe Int -> List RawField -> String
 serializeChildren indentationLevel children =
     children
+        |> nonemptyChildren
         |> List.indexedMap
             (\index field ->
                 serialize (alias field) (indentationLevel |> Maybe.map ((+) 1)) field
@@ -119,3 +120,12 @@ serializeChildren indentationLevel children =
                 Nothing ->
                     " "
             )
+
+
+nonemptyChildren : List RawField -> List RawField
+nonemptyChildren children =
+    if List.isEmpty children then
+        Graphql.RawField.typename :: children
+
+    else
+        children

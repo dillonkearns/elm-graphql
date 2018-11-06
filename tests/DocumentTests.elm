@@ -98,4 +98,13 @@ all =
 
   }
 }"""
+        , describe "empty queries"
+            [ test "top-level empty query" <|
+                \() ->
+                    document []
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  __typename
+}"""
+            ]
         ]

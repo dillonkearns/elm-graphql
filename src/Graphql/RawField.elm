@@ -1,4 +1,4 @@
-module Graphql.RawField exposing (RawField(..), name)
+module Graphql.RawField exposing (RawField(..), name, typename)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 
@@ -16,3 +16,8 @@ name field =
 
         Leaf fieldName argumentList ->
             fieldName
+
+
+typename : RawField
+typename =
+    Leaf "__typename" []
