@@ -104,7 +104,8 @@ map mapFunction (SelectionSet selectionFields selectionDecoder) =
     SelectionSet selectionFields (Decode.map mapFunction selectionDecoder)
 
 
-{-| TODO
+{-| Combine two `SelectionSet`s into one, using the given combine function to
+merge the two data sets together.
 -}
 map2 :
     (decodesTo1 -> decodesTo2 -> decodesToCombined)
