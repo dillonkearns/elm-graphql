@@ -1,34 +1,34 @@
 {
-    "type": "package",
-    "name": "dillonkearns/elm-graphql",
-    "summary": "Type-safe GraphQL queries in Elm.",
-    "license": "BSD-3-Clause",
-    "version": "1.1.0",
-    "exposed-modules": [
-        "Graphql.Operation",
-        "Graphql.Http",
-        "Graphql.SelectionSet",
-        "Graphql.Internal.Encode",
-        "Graphql.Document",
-        "Graphql.Field",
-        "Graphql.Internal.Builder.Argument",
-        "Graphql.Internal.Builder.Object",
-        "Graphql.OptionalArgument",
-        "Graphql.Http.GraphqlError"
-    ],
-    "elm-version": "0.19.0 <= v < 0.20.0",
-    "dependencies": {
-        "Skinney/murmur3": "2.0.8 <= v < 3.0.0",
-        "elm/core": "1.0.0 <= v < 2.0.0",
-        "elm/http": "1.0.0 <= v < 2.0.0",
-        "elm/json": "1.0.0 <= v < 2.0.0",
-        "elm/time": "1.0.0 <= v < 2.0.0",
-        "elm/url": "1.0.0 <= v < 2.0.0",
-        "elm-community/list-extra": "8.0.0 <= v < 9.0.0",
-        "lukewestby/elm-string-interpolate": "1.0.3 <= v < 2.0.0"
-    },
-    "test-dependencies": {
-        "elm/html": "1.0.0 <= v < 2.0.0",
-        "elm-explorations/test": "1.0.0 <= v < 2.0.0"
-    }
+  "type": "package",
+  "name": "dillonkearns/elm-graphql",
+  "summary": "Type-safe GraphQL queries in Elm.",
+  "license": "BSD-3-Clause",
+  "version": "1.1.0",
+  "exposed-modules": [
+    "Graphql.Operation",
+    "Graphql.Http",
+    "Graphql.SelectionSet",
+    "Graphql.Internal.Encode",
+    "Graphql.Document",
+    "Graphql.Field",
+    "Graphql.Internal.Builder.Argument",
+    "Graphql.Internal.Builder.Object",
+    "Graphql.OptionalArgument",
+    "Graphql.Http.GraphqlError"
+  ],
+  "elm-version": "0.19.0 <= v < 0.20.0",
+  "dependencies": {
+    "Skinney/murmur3": "2.0.8 <= v < 3.0.0",
+    "elm/core": "1.0.0 <= v < 2.0.0",
+    "elm/http": "1.0.0 <= v < 2.0.0",
+    "elm/json": "1.0.0 <= v < 2.0.0",
+    "elm/time": "1.0.0 <= v < 2.0.0",
+    "elm/url": "1.0.0 <= v < 2.0.0",
+    "elm-community/list-extra": "8.0.0 <= v < 9.0.0",
+    "lukewestby/elm-string-interpolate": "1.0.3 <= v < 2.0.0"
+  },
+  "test-dependencies": {
+    "elm/html": "1.0.0 <= v < 2.0.0",
+    "elm-explorations/test": "1.1.0 <= v < 2.0.0"
+  }
 }
