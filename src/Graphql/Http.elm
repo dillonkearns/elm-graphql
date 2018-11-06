@@ -168,7 +168,7 @@ mapError mapFn error =
             HttpError httpError
 
 
-{-| TODO
+{-| Turn an `Http.Error` into a `Graphql.Http.Error`.
 -}
 fromHttpError : Http.Error -> Error ()
 fromHttpError httpError =
