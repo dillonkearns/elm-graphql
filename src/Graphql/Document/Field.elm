@@ -16,10 +16,6 @@ hashedAliasName field =
 
 maybeAliasHash : RawField -> Maybe String
 maybeAliasHash field =
-    {-
-       Composite String (List Argument) (List RawField)
-       | Leaf String (List Argument)
-    -}
     case field of
         Composite name arguments children ->
             if List.isEmpty arguments then
