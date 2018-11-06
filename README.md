@@ -170,8 +170,6 @@ design. Please ping me on Slack, drop a message in the
 [#graphql](https://elmlang.slack.com/channels/graphql) channel, or open up a
 Github issue to discuss!
 
-[this live demo](https://rebrand.ly/graphqelm-subscriptions).
-
 I would like to investigate generating helpers to make pagination simpler
 for Connections (based on the
 [Relay Cursor Connections Specification](https://facebook.github.io/relay/graphql/connections.htm)).
