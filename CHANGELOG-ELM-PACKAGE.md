@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `SelectionSet.withFragment` allows you to include fields from a `SelectionSet`
   when you are defining a `SelectionSet`.
 - `SelectionSet.map2` allows you to combine two `SelectionSet`s into one.
+- New `OptionalArgument.map` funciton, thanks [Romario](https://github.com/romariolopezc)!
+  ([See PR #73](https://github.com/dillonkearns/elm-graphql/pull/73)).
 
 ### Changed
 

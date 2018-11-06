@@ -63,7 +63,7 @@ fromMaybe maybeValue =
             Absent
 
 
-{-| Transform an OptionalArgument value with a given function:
+{-| Transform an OptionalArgument value with a given function.
 -}
 map : (a -> b) -> OptionalArgument a -> OptionalArgument b
 map transform option =
