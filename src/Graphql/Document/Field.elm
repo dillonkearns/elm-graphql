@@ -119,21 +119,3 @@ serializeChildren indentationLevel children =
                 Nothing ->
                     " "
             )
-
-
-unaliasedSerializeChildren : Maybe Int -> RawField -> String
-unaliasedSerializeChildren indentationLevel field =
-    [ field ]
-        |> List.indexedMap
-            (\index selection ->
-                serialize Nothing (indentationLevel |> Maybe.map ((+) 1)) selection
-            )
-        |> List.filterMap identity
-        |> String.join
-            (case indentationLevel of
-                Just _ ->
-                    "\n"
-
-                Nothing ->
-                    " "
-            )
