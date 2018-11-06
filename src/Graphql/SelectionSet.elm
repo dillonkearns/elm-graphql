@@ -1,6 +1,6 @@
 module Graphql.SelectionSet exposing
     ( with, hardcoded, empty, map, succeed, fieldSelection
-    , map2, include
+    , map2, withFragment
     , SelectionSet(..), FragmentSelectionSet(..)
     )
 
@@ -56,7 +56,7 @@ See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
 ## Combining
 
-@docs map2, include
+@docs map2, withFragment
 
 
 ## Types
@@ -173,10 +173,89 @@ with (Field field fieldDecoder) (SelectionSet selectionFields selectionDecoder) 
         )
 
 
-{-| TODO
+{-| Include a `SelectionSet` within a `SelectionSet`. This is the equivalent of
+including a [GraphQL fragment](https://graphql.org/learn/queries/#fragments) in
+plain GraphQL queries. This is a handy tool for modularizing your GraphQL queries.
+
+([You can try the below query for yourself by pasting the query into the Github query explorer](https://developer.github.com/v4/explorer/)).
+
+Let's say we want to query Github's GraphQL API like this:
+
+    {
+      repository(owner: "dillonkearns", name: "elm-graphql") {
+        nameWithOwner
+        ...timestamps
+        stargazers(first: 0) { totalCount }
+      }
+    }
+
+    fragment timestamps on Repository {
+      createdAt
+      updatedAt
+    }
+
+We could do the equivalent of the `timestamps` fragment with the `timestampsFragment`
+we define below.
+
+    import Github.Object
+    import Github.Object.Repository as Repository
+    import Github.Object.StargazerConnection
+    import Graphql.Field as Field exposing (Field)
+    import Graphql.Operation exposing (RootQuery)
+    import Graphql.OptionalArgument exposing (OptionalArgument(..))
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, with, withFragment)
+    import Iso8601
+    import Time exposing (Posix)
+
+    type alias Repo =
+        { nameWithOwner : String
+        , timestamps : Timestamps
+        , stargazersCount : Int
+        }
+
+    type alias Timestamps =
+        { createdAt : Posix
+        , updatedAt : Posix
+        }
+
+    repositorySelection : SelectionSet Repo Github.Object.Repository
+    repositorySelection =
+        Repository.selection Repo
+            |> with Repository.nameWithOwner
+            |> withFragment timestampsFragment
+            |> with stargazersCount
+
+    timestampsFragment : SelectionSet Timestamps Github.Object.Repository
+    timestampsFragment =
+        Repository.selection Timestamps
+            |> with (Repository.createdAt |> mapToDateTime)
+            |> with (Repository.updatedAt |> mapToDateTime)
+
+    mapToDateTime : Field Github.Scalar.DateTime typeLock -> Field Posix typeLock
+    mapToDateTime =
+        Field.mapOrFail
+            (\(Github.Scalar.DateTime value) ->
+                Iso8601.toTime value
+                    |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
+            )
+
+    stargazersCount : Field Int Github.Object.Repository
+    stargazersCount =
+        Repository.stargazers
+            (\optionals -> { optionals | first = Present 0 })
+            (fieldSelection Github.Object.StargazerConnection.totalCount)
+
+Notice that we are using two different techniques for abstraction here.
+We use `|> withFragment timestampsFragment` to include a fragment and we use
+`|> with stargazersCount`. What's the difference? For the `timestampsFragment`,
+we want to pull in some fields at the same level of the `SelectionSet` we are
+building up. But for the `stargazersCount`, we are simply extracting a `Field`
+which builds up a nested `SelectionSet` that grabs the `totalCount` within the
+`stargazers` `Field`.
+
 -}
-include : SelectionSet a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
-include (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
+withFragment : SelectionSet a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
+withFragment (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
     SelectionSet (selectionFields1 ++ selectionFields2)
         (Decode.map2 (|>)
             selectionDecoder1
