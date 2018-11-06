@@ -16,13 +16,13 @@ import Github.Union.SearchResultItem
 import Graphql.Field as Field exposing (Field)
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, include, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, with, withFragment)
 import Iso8601
 import Time exposing (Posix)
 
 
 type alias Repo =
-    { name : String
+    { nameWithOwner : String
     , description : Maybe String
     , stargazerCount : Int
     , timestamps : Timestamps
@@ -81,7 +81,7 @@ repositorySelection =
         |> with Repository.nameWithOwner
         |> with Repository.description
         |> with stargazers
-        |> include createdUpdatedSelection
+        |> withFragment timestampsSelection
         |> with Repository.forkCount
         |> with openIssues
         |> with (Repository.owner ownerSelection)
@@ -94,16 +94,20 @@ type alias Timestamps =
     }
 
 
-createdUpdatedSelection =
+timestampsSelection : SelectionSet Timestamps Github.Object.Repository
+timestampsSelection =
     Repository.selection Timestamps
-        |> with (Repository.createdAt |> Field.mapOrFail mapDateTime)
-        |> with (Repository.updatedAt |> Field.mapOrFail mapDateTime)
+        |> with (Repository.createdAt |> mapToDateTime)
+        |> with (Repository.updatedAt |> mapToDateTime)
 
 
-mapDateTime : Github.Scalar.DateTime -> Result String Posix
-mapDateTime (Github.Scalar.DateTime value) =
-    Iso8601.toTime value
-        |> Result.mapError (\_ -> "Failed to parse date as Iso8601")
+mapToDateTime : Field Github.Scalar.DateTime typeLock -> Field Posix typeLock
+mapToDateTime =
+    Field.mapOrFail
+        (\(Github.Scalar.DateTime value) ->
+            Iso8601.toTime value
+                |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
+        )
 
 
 stargazers : Field Int Github.Object.Repository

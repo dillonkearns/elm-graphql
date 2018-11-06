@@ -18,7 +18,7 @@ view ( hasPackage, result ) =
             , Element.spacing 10
             ]
             [ avatarView result.owner.avatarUrl
-            , repoLink result.name result.url
+            , repoLink result.nameWithOwner result.url
             ]
         , Element.row
             [ Element.width (Element.fillPortion 3)
@@ -45,7 +45,7 @@ packageLink : ( Bool, ElmReposRequest.Repo ) -> Element msg
 packageLink ( hasPackage, result ) =
     if hasPackage then
         Element.newTabLink []
-            { url = "http://package.elm-lang.org/packages/" ++ result.name ++ "/latest"
+            { url = "http://package.elm-lang.org/packages/" ++ result.nameWithOwner ++ "/latest"
             , label = Element.text "📦"
             }
             |> Element.el [ Element.alignRight ]

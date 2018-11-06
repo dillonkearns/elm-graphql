@@ -137,7 +137,7 @@ successView ( data, elmPackages ) =
 
 hasPackage : List String -> ElmReposRequest.Repo -> Bool
 hasPackage elmPackages repo =
-    elmPackages |> List.any (\package -> repo.name == package)
+    elmPackages |> List.any (\package -> repo.nameWithOwner == package)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
