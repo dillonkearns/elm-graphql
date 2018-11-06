@@ -20,8 +20,7 @@ importsString apiSubmodule importingFrom typeRefs =
     typeRefs
         |> allRefs
         |> importsWithoutSelf apiSubmodule importingFrom
-        |> List.map toModuleName
-        |> List.map toImportString
+        |> List.map (toModuleName >> toImportString)
         |> String.join "\n"
 
 
