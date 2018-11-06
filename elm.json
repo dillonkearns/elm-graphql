@@ -24,10 +24,11 @@
     "elm/json": "1.0.0 <= v < 2.0.0",
     "elm/time": "1.0.0 <= v < 2.0.0",
     "elm/url": "1.0.0 <= v < 2.0.0",
-    "elm-community/list-extra": "8.1.0 <= v < 9.0.0",
+    "elm-community/list-extra": "8.0.0 <= v < 9.0.0",
     "lukewestby/elm-string-interpolate": "1.0.3 <= v < 2.0.0"
   },
   "test-dependencies": {
-    "elm-explorations/test": "1.1.0 <= v < 2.0.0"
+    "elm/html": "1.0.0 <= v < 2.0.0",
+    "elm-explorations/test": "1.0.0 <= v < 2.0.0"
   }
 }
