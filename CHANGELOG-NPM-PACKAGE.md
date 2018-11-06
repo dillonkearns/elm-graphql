@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.7] - 2018-11-06
+
+### Changed
+
+- Add explicit `elm-version=0.19` argument when running `elm-format`
+  in order to fix [#79](https://github.com/dillonkearns/elm-graphql/issues/79).
+
 ## [1.0.6] - 2018-10-31
 
 ### Added
