@@ -2,6 +2,7 @@
 dist/bundle.js
 build/
 documentation.json
+docs.json
 */elm.js
 *elm-graphql-metadata.json
 
