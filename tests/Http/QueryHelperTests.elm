@@ -45,13 +45,13 @@ all =
                     queryDocument =
                         document [ Composite "hero" [] [ Leaf "name" [] ] ]
                 in
-                    queryDocument
-                        |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" Nothing []
-                        |> Expect.equal
-                            { method = QueryHelper.Post
-                            , url = "https://elm-graphql.herokuapp.com/api"
-                            , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery Nothing queryDocument) ) ])
-                            }
+                queryDocument
+                    |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" Nothing []
+                    |> Expect.equal
+                       { method = QueryHelper.Post
+                       , url = "https://elm-graphql.herokuapp.com/api"
+                       , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery Nothing queryDocument) ) ])
+                       }
         , test "uses POST when it too long" <|
             \() ->
                 let
@@ -64,11 +64,11 @@ all =
                                 ]
                             ]
                 in
-                    queryDocument
-                        |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" Nothing []
-                        |> Expect.equal
-                            { method = QueryHelper.Post
-                            , url = "https://elm-graphql.herokuapp.com/api"
-                            , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery Nothing queryDocument) ) ])
-                            }
+                queryDocument
+                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" Nothing []
+                    |> Expect.equal
+                        { method = QueryHelper.Post
+                        , url = "https://elm-graphql.herokuapp.com/api"
+                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery Nothing queryDocument) ) ])
+                        }
         ]
