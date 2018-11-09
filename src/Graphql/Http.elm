@@ -384,7 +384,8 @@ withCredentials : Request decodesTo -> Request decodesTo
 withCredentials (Request request) =
     Request { request | withCredentials = True }
 
-
+{-| Set OperationName.
+-}
 withOperationName : String -> Request decodesTo -> Request decodesTo
 withOperationName operationName (Request request) =
     Request { request | operationName = Just operationName }
