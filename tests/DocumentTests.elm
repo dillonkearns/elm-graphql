@@ -26,7 +26,7 @@ all =
         [ test "single leaf" <|
             \() ->
                 document [ Leaf "avatar" [] ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   avatar
 }"""
@@ -52,7 +52,7 @@ all =
                     [ Leaf "avatar" []
                     , Leaf "labels" []
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   avatar
   labels
@@ -63,7 +63,7 @@ all =
                     [ Leaf "avatar" []
                     , Leaf "avatar" []
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   avatar
   avatar
@@ -77,7 +77,7 @@ all =
                         , Leaf "avatar" []
                         ]
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   topLevel {
     avatar
@@ -92,7 +92,7 @@ all =
                         [ Composite "...on Droid" [] []
                         ]
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   topLevel {
     ...on Droid {
@@ -104,7 +104,7 @@ all =
             [ test "top-level empty query" <|
                 \() ->
                     document []
-                        |> Graphql.Document.serializeQuery
+                        |> Graphql.Document.serializeQuery Nothing
                         |> Expect.equal """query {
   __typename
 }"""
@@ -113,8 +113,19 @@ all =
                     document
                         [ Composite "viewer" [] []
                         ]
-                        |> Graphql.Document.serializeQuery
+                        |> Graphql.Document.serializeQuery Nothing
                         |> Expect.equal """query {
+  viewer {
+    __typename
+  }
+}"""
+            , test "named operation query" <|
+                \() ->
+                    document
+                        [ Composite "viewer" [] []
+                        ]
+                        |> Graphql.Document.serializeQuery (Just "namedOperation")
+                        |> Expect.equal """query namedOperation {
   viewer {
     __typename
   }

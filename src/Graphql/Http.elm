@@ -5,6 +5,7 @@ module Graphql.Http exposing
     , withHeader, withTimeout, withCredentials, withQueryParams
     , send, toTask
     , mapError, ignoreParsedErrorData, fromHttpError
+    , withOperationName
     )
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
@@ -65,6 +66,7 @@ type Request decodesTo
         , timeout : Maybe Float
         , withCredentials : Bool
         , queryParams : List ( String, String )
+        , operationName : Maybe String
         }
 
 
@@ -93,6 +95,7 @@ queryRequest baseUrl query =
     , withCredentials = False
     , details = Query Nothing query
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -123,6 +126,7 @@ queryRequestWithHttpGet baseUrl requestMethod query =
     , withCredentials = False
     , details = Query (Just requestMethod) query
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -139,6 +143,7 @@ mutationRequest baseUrl mutationSelectionSet =
     , timeout = Nothing
     , withCredentials = False
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -254,6 +259,7 @@ toRequest (Request request) =
                                 Just QueryHelper.Post
                         )
                         request.baseUrl
+                        request.operationName
                         request.queryParams
                         querySelectionSet
             in
@@ -280,7 +286,7 @@ toRequest (Request request) =
                 Http.jsonBody
                     (Json.Encode.object
                         [ ( "query"
-                          , Json.Encode.string (Document.serializeMutation mutationSelectionSet)
+                          , Json.Encode.string (Document.serializeMutation request.operationName mutationSelectionSet)
                           )
                         ]
                     )
@@ -377,3 +383,8 @@ withTimeout timeout (Request request) =
 withCredentials : Request decodesTo -> Request decodesTo
 withCredentials (Request request) =
     Request { request | withCredentials = True }
+
+
+withOperationName : String -> Request decodesTo -> Request decodesTo
+withOperationName operationName (Request request) =
+    Request { request | operationName = Just operationName }

@@ -16,11 +16,25 @@ import Json.Decode as Decode exposing (Decoder)
 import String.Interpolate exposing (interpolate)
 
 
+{-| append user define operationName.
+-}
+appendOperationName : String -> Maybe String -> String
+appendOperationName operation name =
+    name
+        |> Maybe.map (\name_ -> operation ++ " " ++ name_)
+        |> Maybe.withDefault operation
+
+
 {-| Serialize a query selection set into a string for a GraphQL endpoint.
 -}
-serializeQuery : SelectionSet decodesTo RootQuery -> String
-serializeQuery (SelectionSet fields decoder_) =
-    serialize "query" fields
+serializeQuery : Maybe String -> SelectionSet decodesTo RootQuery -> String
+serializeQuery operationName (SelectionSet fields decoder_) =
+    serialize
+        (appendOperationName
+            "query"
+            operationName
+        )
+        fields
 
 
 {-| Serialize a query selection set into a string with minimal whitespace. For
@@ -33,9 +47,14 @@ serializeQueryForUrl (SelectionSet fields decoder_) =
 
 {-| Serialize a mutation selection set into a string for a GraphQL endpoint.
 -}
-serializeMutation : SelectionSet decodesTo RootMutation -> String
-serializeMutation (SelectionSet fields decoder_) =
-    serialize "mutation" fields
+serializeMutation : Maybe String -> SelectionSet decodesTo RootMutation -> String
+serializeMutation operationName (SelectionSet fields decoder_) =
+    serialize
+        (appendOperationName
+            "mutation"
+            operationName
+        )
+        fields
 
 
 {-| Serialize a subscription selection set into a string for a GraphQL endpoint.

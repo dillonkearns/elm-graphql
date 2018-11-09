@@ -33,7 +33,7 @@ all =
         [ test "uses GET when it is short enough" <|
             \() ->
                 document [ Composite "hero" [] [ Leaf "name" [] ] ]
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" []
+                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Get
                         , url = "https://elm-graphql.herokuapp.com/api?query=%7Bhero%7Bname%7D%7D"
@@ -46,11 +46,11 @@ all =
                         document [ Composite "hero" [] [ Leaf "name" [] ] ]
                 in
                 queryDocument
-                    |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" []
+                    |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Post
                         , url = "https://elm-graphql.herokuapp.com/api"
-                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
+                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery Nothing queryDocument) ) ])
                         }
         , test "uses POST when it too long" <|
             \() ->
@@ -65,10 +65,10 @@ all =
                             ]
                 in
                 queryDocument
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" []
+                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Post
                         , url = "https://elm-graphql.herokuapp.com/api"
-                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
+                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery Nothing queryDocument) ) ])
                         }
         ]
