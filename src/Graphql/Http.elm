@@ -28,7 +28,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Configure `Request` Options
 
-@docs withHeader, withTimeout, withCredentials, withQueryParams
+@docs withHeader, withTimeout, withCredentials, withQueryParams, withOperationName
 
 
 ## Perform `Request`
