@@ -19,9 +19,9 @@ import Swapi.Scalar
 import Swapi.Subscription as Subscription
 
 
-sendChatMessage : String -> Phrase -> SelectionSet (Maybe ()) Graphql.Operation.RootMutation
+sendChatMessage : String -> Phrase -> SelectionSet () Graphql.Operation.RootMutation
 sendChatMessage characterId phrase =
-    Mutation.selection identity
+    Mutation.selection (\_ -> ())
         |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty)
 
 
@@ -67,7 +67,7 @@ type alias Model =
 type Msg
     = SendMessage Phrase
     | SubscriptionDataReceived Json.Decode.Value
-    | SentMessage (Result (Graphql.Http.Error (Maybe ())) (Maybe ()))
+    | SentMessage (Result (Graphql.Http.Error ()) ())
       -- | SubscriptionStatusChanged Graphql.Subscription.Status
     | ChangeCharacter String
     | NewSubscriptionStatus SubscriptionStatus ()
