@@ -18,6 +18,7 @@ import Html.Events exposing (onClick)
 import Http
 import PrintAny
 import RemoteData exposing (RemoteData)
+import RepoWithOwner
 import View.Result
 
 
@@ -137,7 +138,7 @@ successView ( data, elmPackages ) =
 
 hasPackage : List String -> ElmReposRequest.Repo -> Bool
 hasPackage elmPackages repo =
-    elmPackages |> List.any (\package -> repo.nameWithOwner == package)
+    elmPackages |> List.any (\package -> RepoWithOwner.toString repo.nameWithOwner == package)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

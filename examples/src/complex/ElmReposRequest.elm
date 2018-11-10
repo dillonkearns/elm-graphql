@@ -18,11 +18,12 @@ import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, with, withFragment)
 import Iso8601
+import RepoWithOwner exposing (RepoWithOwner)
 import Time exposing (Posix)
 
 
 type alias Repo =
-    { nameWithOwner : String
+    { nameWithOwner : RepoWithOwner
     , description : Maybe String
     , stargazerCount : Int
     , timestamps : Timestamps
@@ -78,7 +79,7 @@ searchResultSelection =
 repositorySelection : SelectionSet Repo Github.Object.Repository
 repositorySelection =
     Repository.selection Repo
-        |> with Repository.nameWithOwner
+        |> with (Repository.nameWithOwner |> Field.map RepoWithOwner.repoWithOwner)
         |> with Repository.description
         |> with stargazers
         |> withFragment timestampsSelection

@@ -7,6 +7,7 @@ import ElmReposRequest
 import Github.Scalar
 import Html exposing (Html, a, button, div, h1, img, p, pre)
 import Html.Attributes exposing (href, src, style, target)
+import RepoWithOwner exposing (RepoWithOwner)
 import Time exposing (Posix)
 
 
@@ -45,7 +46,7 @@ packageLink : ( Bool, ElmReposRequest.Repo ) -> Element msg
 packageLink ( hasPackage, result ) =
     if hasPackage then
         Element.newTabLink []
-            { url = "http://package.elm-lang.org/packages/" ++ result.nameWithOwner ++ "/latest"
+            { url = RepoWithOwner.elmPackageUrl result.nameWithOwner
             , label = Element.text "📦"
             }
             |> Element.el [ Element.alignRight ]
@@ -68,12 +69,14 @@ avatarView (Github.Scalar.Uri avatarUrl) =
     Element.image [ Element.width (Element.px 45) ] { src = avatarUrl, description = "Avatar" }
 
 
-repoLink : String -> Github.Scalar.Uri -> Element msg
+repoLink : RepoWithOwner -> Github.Scalar.Uri -> Element msg
 repoLink repoName (Github.Scalar.Uri repoUrl) =
     Element.newTabLink []
         { url = repoUrl
         , label =
-            text repoName
+            repoName
+                |> RepoWithOwner.toString
+                |> text
                 |> Element.el
                     [ Element.Font.color (Element.rgba 0 0 0 0.9)
                     , Element.mouseOver
