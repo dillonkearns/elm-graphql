@@ -1,4 +1,4 @@
-module RepoWithOwner exposing (RepoWithOwner, elmPackageUrl, repoWithOwner, toString)
+module RepoWithOwner exposing (RepoWithOwner, elmPackageUrl, ownerAndRepo, repoWithOwner, toString)
 
 
 type RepoWithOwner
@@ -16,3 +16,13 @@ elmPackageUrl repoWithOwnerValue =
 
 toString (RepoWithOwner value) =
     value
+
+
+ownerAndRepo : RepoWithOwner -> { owner : String, repoName : String }
+ownerAndRepo (RepoWithOwner value) =
+    case value |> String.split "/" of
+        [ owner, repoName ] ->
+            { owner = owner, repoName = repoName }
+
+        _ ->
+            { owner = "???", repoName = "???" }

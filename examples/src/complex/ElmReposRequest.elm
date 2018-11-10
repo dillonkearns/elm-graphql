@@ -1,4 +1,4 @@
-module ElmReposRequest exposing (Repo, SortOrder(..), query)
+module ElmReposRequest exposing (Repo, SortOrder(..), query, queryForRepos)
 
 import Github.Enum.IssueState
 import Github.Enum.SearchType
@@ -48,6 +48,33 @@ query sortOrder =
         }
         searchSelection
         |> fieldSelection
+
+
+queryForRepos : List RepoWithOwner -> SelectionSet (List Repo) RootQuery
+queryForRepos reposWithOwner =
+    reposWithOwner
+        |> List.map repoWithOwnerSelection
+        |> grouped
+        |> SelectionSet.map (List.filterMap identity)
+
+
+grouped selections =
+    List.foldl (SelectionSet.map2 (::))
+        (SelectionSet.empty |> SelectionSet.map (\_ -> []))
+        selections
+
+
+repoWithOwnerSelection : RepoWithOwner -> SelectionSet (Maybe Repo) RootQuery
+repoWithOwnerSelection repoWithOwner =
+    let
+        { owner, repoName } =
+            RepoWithOwner.ownerAndRepo repoWithOwner
+    in
+    fieldSelection
+        (Query.repository
+            { owner = owner, name = repoName }
+            repositorySelection
+        )
 
 
 searchSelection : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
