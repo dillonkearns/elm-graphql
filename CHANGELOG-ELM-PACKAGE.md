@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.4.0] - 2018-11-15
+
+### Changed
+
+- Bump underlying `elm/http` and `elm/json` packages.
+
+### Added
+
+- Add
+  [`Graphql.Http.sendWithTracker`](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/1.4.0/Graphql-Http#sendWithTracker)
+  function, see the [`Http.request`](https://package.elm-lang.org/packages/elm/http/latest/Http#request)
+  docs for details and functions to track Http requests in Elm.
+
 ## [1.3.0] - 2018-11-14
 
 ### Added
