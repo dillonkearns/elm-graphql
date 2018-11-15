@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.3.0] - 2018-11-14
+
 ### Added
 
 - Add `discardParsedErrorData` to make it easier to map errors into a type that can
