@@ -16,43 +16,6 @@ import Html exposing (Html)
 import RemoteData exposing (RemoteData)
 
 
-removeNothingsFromList : Field (List (Maybe a)) typeLock -> Field (List a) typeLock
-removeNothingsFromList =
-    Field.map (List.filterMap identity)
-
-
-makeRequest =
-    licenseExplorerQuery "dillonkearns"
-        |> Graphql.Http.queryRequest "https://api.github.com/graphql"
-        |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphql.Http.send (Graphql.Http.parseableErrorAsSuccess >> RemoteData.fromResult >> GotLicenses)
-
-
-type Msg
-    = GotLicenses LicenseResponse
-
-
-type alias LicenseResponse =
-    RemoteData (Graphql.Http.Error ()) (List FullLicense)
-
-
-type alias Model =
-    { licenses : LicenseResponse
-    }
-
-
-type alias Flags =
-    ()
-
-
-init : Flags -> ( Model, Cmd Msg )
-init _ =
-    ( { licenses = RemoteData.Loading
-      }
-    , makeRequest
-    )
-
-
 
 {-
    query licenseExplorer($owner: String!) {
@@ -61,6 +24,12 @@ init _ =
        ...licenseDetails
      }
 -}
+
+
+type alias FullLicense =
+    { overview : LicenseOverview
+    , details : LicenseDetails
+    }
 
 
 licenseExplorerQuery : String -> SelectionSet (List FullLicense) RootQuery
@@ -72,12 +41,6 @@ licenseExplorerQuery owner =
         )
         |> Field.map (List.filterMap identity)
         |> fieldSelection
-
-
-type alias FullLicense =
-    { overview : LicenseOverview
-    , details : LicenseDetails
-    }
 
 
 
@@ -138,6 +101,17 @@ fragmentLicenseDetails =
             )
 
 
+makeRequest =
+    licenseExplorerQuery "dillonkearns"
+        |> Graphql.Http.queryRequest "https://api.github.com/graphql"
+        |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
+        |> Graphql.Http.send (Graphql.Http.parseableErrorAsSuccess >> RemoteData.fromResult >> GotLicenses)
+
+
+
+-- VIEW
+
+
 view : Model -> Html Msg
 view model =
     (case model.licenses of
@@ -169,11 +143,45 @@ licenseView licenseDetails =
         ]
 
 
+
+-- APPLICATION STATE & BOILERPLATE
+
+
+type alias Model =
+    { licenses : LicenseResponse
+    }
+
+
+type Msg
+    = GotLicenses LicenseResponse
+
+
+type alias LicenseResponse =
+    RemoteData (Graphql.Http.Error ()) (List FullLicense)
+
+
+init : Flags -> ( Model, Cmd Msg )
+init _ =
+    ( { licenses = RemoteData.Loading
+      }
+    , makeRequest
+    )
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotLicenses response ->
             ( { model | licenses = response }, Cmd.none )
+
+
+removeNothingsFromList : Field (List (Maybe a)) typeLock -> Field (List a) typeLock
+removeNothingsFromList =
+    Field.map (List.filterMap identity)
+
+
+type alias Flags =
+    ()
 
 
 main : Program Flags Model Msg
