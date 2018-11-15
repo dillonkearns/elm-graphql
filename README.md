@@ -82,6 +82,12 @@ After installing the command line tool and Elm package, running `elm-graphql` ju
 elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src
 ```
 
+If headers are required, such as a Bearer Token, the `--header` flag can be supplied.
+
+```bash
+elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src 'headerKey: header value'
+```
+
 ## Learning Resources
 
 If you're just starting out, here are some great resources:
