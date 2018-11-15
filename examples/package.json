@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:complex": "elm-live src/complex/Main.elm --open"
+    "start:complex": "elm-live src/complex/Main.elm --open",
+    "start:license-explorer": "elm-live src/license-explorer/Main.elm --open"
   },
   "keywords": [],
   "author": "",
