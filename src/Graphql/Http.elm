@@ -577,7 +577,12 @@ withTimeout timeout (Request request) =
     Request { request | timeout = Just timeout }
 
 
-{-| Set with credentials to true.
+{-| Set with credentials to true. See [the `XMLHttpRequest/withCredentials` docs](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)
+to understand exactly what happens.
+
+Under the hood, this will use either [`Http.riskyRequest`](https://package.elm-lang.org/packages/elm/http/latest/Http#riskyRequest)
+or [`Http.riskyTask`](https://package.elm-lang.org/packages/elm/http/latest/Http#riskyTask).
+
 -}
 withCredentials : Request decodesTo -> Request decodesTo
 withCredentials (Request request) =
