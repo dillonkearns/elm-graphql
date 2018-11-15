@@ -3,62 +3,17 @@ module Main exposing (main)
 import Browser
 import Element exposing (Element)
 import Element.Background
-import Element.Border
-import Element.Events
-import ElmPackage
 import Github.Object
 import Github.Object.License
 import Github.Object.LicenseRule
 import Github.Query
 import Github.Scalar
-import Graphql.Document as Document
 import Graphql.Field as Field exposing (Field)
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, with, withFragment)
-import Html exposing (Html, a, button, div, h1, img, p, pre, text)
-import Html.Attributes exposing (href, src, style, target)
-import Html.Events exposing (onClick)
-import Http
-import PrintAny
+import Html exposing (Html)
 import RemoteData exposing (RemoteData)
-import RepoWithOwner
-import View.Result
-
-
-type alias FullLicense =
-    { overview : LicenseOverview
-    , details : LicenseDetails
-    }
-
-
-type alias LicenseOverview =
-    { name : String
-    , key : String
-    , url : Maybe Github.Scalar.Uri
-    }
-
-
-fragmentLicenseOverview : SelectionSet LicenseOverview Github.Object.License
-fragmentLicenseOverview =
-    Github.Object.License.selection LicenseOverview
-        |> with Github.Object.License.name
-        |> with Github.Object.License.key
-        |> with Github.Object.License.url
-
-
-type alias LicenseDetails =
-    { conditions : List String
-    }
-
-
-fragmentLicenseDetails : SelectionSet LicenseDetails Github.Object.License
-fragmentLicenseDetails =
-    Github.Object.License.selection LicenseDetails
-        |> with
-            (Github.Object.License.conditions (fieldSelection Github.Object.LicenseRule.label)
-                |> removeNothingsFromList
-            )
 
 
 removeNothingsFromList : Field (List (Maybe a)) typeLock -> Field (List a) typeLock
@@ -67,7 +22,7 @@ removeNothingsFromList =
 
 
 makeRequest =
-    query
+    licenseExplorerQuery "dillonkearns"
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphql.Http.send (Graphql.Http.parseableErrorAsSuccess >> RemoteData.fromResult >> GotLicenses)
@@ -98,17 +53,89 @@ init _ =
     )
 
 
-fullLicenseSelection =
-    Github.Object.License.selection FullLicense
-        |> withFragment fragmentLicenseOverview
-        |> withFragment fragmentLicenseDetails
+
+{-
+   query licenseExplorer($owner: String!) {
+     licenses {
+       ...licenseOverview
+       ...licenseDetails
+     }
+-}
 
 
-query : SelectionSet (List FullLicense) RootQuery
-query =
-    Github.Query.licenses fullLicenseSelection
+licenseExplorerQuery : String -> SelectionSet (List FullLicense) RootQuery
+licenseExplorerQuery owner =
+    Github.Query.licenses
+        (Github.Object.License.selection FullLicense
+            |> withFragment fragmentLicenseOverview
+            |> withFragment fragmentLicenseDetails
+        )
         |> Field.map (List.filterMap identity)
         |> fieldSelection
+
+
+type alias FullLicense =
+    { overview : LicenseOverview
+    , details : LicenseDetails
+    }
+
+
+
+{-
+   fragment licenseOverview on License {
+     name
+     nickname
+     url
+   }
+-}
+
+
+type alias LicenseOverview =
+    { name : String
+    , key : String
+    , url : Maybe Github.Scalar.Uri
+    }
+
+
+fragmentLicenseOverview : SelectionSet LicenseOverview Github.Object.License
+fragmentLicenseOverview =
+    Github.Object.License.selection LicenseOverview
+        |> with Github.Object.License.name
+        |> with Github.Object.License.key
+        |> with Github.Object.License.url
+
+
+
+{-
+   fragment licenseDetails on License {
+     conditions {
+       description
+     }
+     permissions {
+       description
+     }
+   }
+-}
+
+
+type alias LicenseDetails =
+    { conditions : List String
+    , permissions : List String
+    }
+
+
+fragmentLicenseDetails : SelectionSet LicenseDetails Github.Object.License
+fragmentLicenseDetails =
+    Github.Object.License.selection LicenseDetails
+        |> with
+            (Github.Object.License.conditions (fieldSelection Github.Object.LicenseRule.label)
+                |> removeNothingsFromList
+            )
+        |> with
+            (Github.Object.License.permissions
+                (fieldSelection Github.Object.LicenseRule.label)
+                |> removeNothingsFromList
+            )
 
 
 view : Model -> Html Msg
