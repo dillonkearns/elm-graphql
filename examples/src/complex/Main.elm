@@ -51,7 +51,7 @@ init _ =
       }
     , Cmd.batch
         [ ElmPackage.request
-            |> RemoteData.sendRequest
+            |> Cmd.map RemoteData.fromResult
             |> Cmd.map GotElmPackages
 
         -- , makeRequest ElmReposRequest.Stars

@@ -3,7 +3,7 @@ module Graphql.Http exposing
     , queryRequest, mutationRequest, queryRequestWithHttpGet
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
-    , send, toTask
+    , send, sendWithTracker, toTask
     , mapError, ignoreParsedErrorData, fromHttpError, discardParsedErrorData
     , parseableErrorAsSuccess
     )
@@ -33,7 +33,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Perform `Request`
 
-@docs send, toTask
+@docs send, sendWithTracker, toTask
 
 
 ## Map `Error`s
@@ -85,6 +85,16 @@ type Request decodesTo
         , withCredentials : Bool
         , queryParams : List ( String, String )
         }
+
+
+type alias ReadyRequest decodesTo =
+    { method : String
+    , headers : List Http.Header
+    , url : String
+    , body : Http.Body
+    , timeout : Maybe Float
+    , decoder : Json.Decode.Decoder (DataResult decodesTo)
+    }
 
 
 {-| Union type to pass in to `queryRequestWithHttpGet`. Only applies to queries.
@@ -331,15 +341,66 @@ any data that made it through in the response.
 
 -}
 send : (Result (Error decodesTo) decodesTo -> msg) -> Request decodesTo -> Cmd msg
-send resultToMessage elmGraphqlRequest =
-    elmGraphqlRequest
-        |> toRequest
-        |> Http.send (convertResult >> resultToMessage)
+send resultToMessage ((Request request) as fullRequest) =
+    fullRequest
+        |> toHttpRequestRecord resultToMessage
+        |> (if request.withCredentials then
+                Http.request
+
+            else
+                Http.riskyRequest
+           )
 
 
-toRequest : Request decodesTo -> Http.Request (DataResult decodesTo)
-toRequest (Request request) =
-    (case request.details of
+{-| Exactly like `Graphql.Http.request` except it allows you to use the `String`
+passed in as the tracker to [`track`](https://package.elm-lang.org/packages/elm/http/2.0.0/Http#track)
+and [`cancel`](https://package.elm-lang.org/packages/elm/http/2.0.0/Http#cancel)
+requests using the core Elm `Http` package (see
+[the `Http.request` docs](https://package.elm-lang.org/packages/elm/http/2.0.0/Http#request))
+-}
+sendWithTracker : String -> (Result (Error decodesTo) decodesTo -> msg) -> Request decodesTo -> Cmd msg
+sendWithTracker tracker resultToMessage ((Request request) as fullRequest) =
+    fullRequest
+        |> toHttpRequestRecord resultToMessage
+        |> (\requestRecord -> { requestRecord | tracker = Just tracker })
+        |> (if request.withCredentials then
+                Http.request
+
+            else
+                Http.riskyRequest
+           )
+
+
+toHttpRequestRecord :
+    (Result (Error decodesTo) decodesTo -> msg)
+    -> Request decodesTo
+    ->
+        { method : String
+        , headers : List Http.Header
+        , url : String
+        , body : Http.Body
+        , expect : Http.Expect msg
+        , timeout : Maybe Float
+        , tracker : Maybe String
+        }
+toHttpRequestRecord resultToMessage ((Request request) as fullRequest) =
+    fullRequest
+        |> toReadyRequest
+        |> (\readyRequest ->
+                { method = readyRequest.method
+                , headers = readyRequest.headers
+                , url = readyRequest.url
+                , body = readyRequest.body
+                , expect = Http.expectJson (convertResult >> resultToMessage) readyRequest.decoder
+                , timeout = readyRequest.timeout
+                , tracker = Nothing
+                }
+           )
+
+
+toReadyRequest : Request decodesTo -> ReadyRequest decodesTo
+toReadyRequest (Request request) =
+    case request.details of
         Query forcedRequestMethod querySelectionSet ->
             let
                 queryRequestDetails =
@@ -368,9 +429,8 @@ toRequest (Request request) =
             , headers = request.headers
             , url = queryRequestDetails.url
             , body = queryRequestDetails.body
-            , expect = Http.expectJson (decoderOrError request.expect)
+            , decoder = decoderOrError request.expect
             , timeout = request.timeout
-            , withCredentials = request.withCredentials
             }
 
         Mutation mutationSelectionSet ->
@@ -385,24 +445,68 @@ toRequest (Request request) =
                           )
                         ]
                     )
-            , expect = Http.expectJson (decoderOrError request.expect)
+            , decoder = decoderOrError request.expect
             , timeout = request.timeout
-            , withCredentials = request.withCredentials
             }
-    )
-        |> Http.request
 
 
 {-| Convert a Request to a Task. See `Graphql.Http.send` for an example of
 how to build up a Request.
 -}
 toTask : Request decodesTo -> Task (Error decodesTo) decodesTo
-toTask request =
-    request
-        |> toRequest
-        |> Http.toTask
+toTask ((Request request) as fullRequest) =
+    fullRequest
+        |> toReadyRequest
+        |> (\readyRequest ->
+                (if request.withCredentials then
+                    Http.task
+
+                 else
+                    Http.riskyTask
+                )
+                    { method = readyRequest.method
+                    , headers = readyRequest.headers
+                    , url = readyRequest.url
+                    , body = readyRequest.body
+                    , resolver = resolver fullRequest
+                    , timeout = readyRequest.timeout
+                    }
+           )
         |> Task.mapError HttpError
         |> Task.andThen failTaskOnHttpSuccessWithErrors
+
+
+resolver : Request decodesTo -> Http.Resolver Http.Error (DataResult decodesTo)
+resolver request =
+    request
+        |> toReadyRequest
+        |> .decoder
+        |> jsonResolver
+
+
+jsonResolver decoder =
+    Http.stringResolver <|
+        \response ->
+            case response of
+                Http.BadUrl_ url ->
+                    Err (Http.BadUrl url)
+
+                Http.Timeout_ ->
+                    Err Http.Timeout
+
+                Http.NetworkError_ ->
+                    Err Http.NetworkError
+
+                Http.BadStatus_ metadata body ->
+                    Err (Http.BadStatus metadata.statusCode)
+
+                Http.GoodStatus_ metadata body ->
+                    case Json.Decode.decodeString decoder body of
+                        Ok value ->
+                            Ok value
+
+                        Err err ->
+                            Err (Http.BadBody (Json.Decode.errorToString err))
 
 
 failTaskOnHttpSuccessWithErrors : DataResult decodesTo -> Task (Error decodesTo) decodesTo
@@ -473,7 +577,12 @@ withTimeout timeout (Request request) =
     Request { request | timeout = Just timeout }
 
 
-{-| Set with credentials to true.
+{-| Set with credentials to true. See [the `XMLHttpRequest/withCredentials` docs](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)
+to understand exactly what happens.
+
+Under the hood, this will use either [`Http.riskyRequest`](https://package.elm-lang.org/packages/elm/http/latest/Http#riskyRequest)
+or [`Http.riskyTask`](https://package.elm-lang.org/packages/elm/http/latest/Http#riskyTask).
+
 -}
 withCredentials : Request decodesTo -> Request decodesTo
 withCredentials (Request request) =
