@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Add `discardParsedErrorData` to make it easier to map errors into a type that can
+  be easily merged together (something that looks like `Result (Error ()) decodesTo`).
+- Add `parseableErrorAsSuccess`, which treats any GraphQL errors like successful
+  responses (throws away the GraphQL error) as long as it is able to successfully
+  run the decoder (it won't be able to if the data returned is partial).
+
 ## [1.2.0] - 2018-11-06
 
 ### Added

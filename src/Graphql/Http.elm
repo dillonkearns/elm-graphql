@@ -4,7 +4,8 @@ module Graphql.Http exposing
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
     , send, toTask
-    , mapError, ignoreParsedErrorData, fromHttpError
+    , mapError, ignoreParsedErrorData, fromHttpError, discardParsedErrorData
+    , parseableErrorAsSuccess
     )
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
@@ -37,7 +38,25 @@ The builder syntax is inspired by Luke Westby's
 
 ## Map `Error`s
 
-@docs mapError, ignoreParsedErrorData, fromHttpError
+@docs mapError, ignoreParsedErrorData, fromHttpError, discardParsedErrorData
+
+
+## Error Handling Strategies
+
+There are 3 possible strategies to handle GraphQL errors.
+
+1.  **`parseableErrorAsSuccess`** If there is a GraphQL error (and the data was
+    complete enough for the decoder to run successfully), pretend that there was
+    no error at all.
+2.  **Not Implemented** If there is a GraphQL error pretend it was a network error.
+    There is currently no implementation for this strategy, if you think this
+    would come in handy, please open a Github issue to describe your use case!
+3.  **Default** This gives you full control. You get an accurate and exact
+    picture of what happened (got a GraphQL error & could parse the body, got a
+    GraphQL error and couldn't parse the body, got an http error, or got
+    everything was successful). And you can handle each case explicitly.
+
+@docs parseableErrorAsSuccess
 
 -}
 
@@ -181,6 +200,88 @@ Just a shorthand for `mapError` that will turn any `ParsedData` into `()`.
 ignoreParsedErrorData : Error parsedData -> Error ()
 ignoreParsedErrorData error =
     mapError (\_ -> ()) error
+
+
+{-| Useful when you don't want to deal with the recovered data if there is `ParsedData`.
+Just a shorthand for `mapError` that will turn any `ParsedData` into `()`.
+
+This is helpful if you want to simplify your types, or if you are combining multiple
+results together and you need the error types to line up (but you don't care about
+recovering parsed data when there are GraphQL errors in the response).
+
+In the examples below, notice the error type is now `(Graphql.Http.Error ())`.
+
+You can use this when you call `Graphql.Http.send` like so:
+
+    import Graphql.Http
+
+    type Msg
+        = GotResponse (Result (Graphql.Http.Error ()) Response)
+
+    makeRequest =
+        query
+            |> Graphql.Http.queryRequest "http://elm-graphql.herokuapp.com"
+            |> Graphql.Http.send
+                (Graphql.Http.discardParsedErrorData
+                    >> RemoteData.fromResult
+                    >> GotResponse
+                )
+
+Or if you are using the RemoteData package:
+
+    import Graphql.Http
+    import RemoteData exposing (RemoteData)
+
+    type Msg
+        = GotResponse (RemoteData (Graphql.Http.Error ()) Response)
+
+    makeRequest =
+        query
+            |> Graphql.Http.queryRequest "http://elm-graphql.herokuapp.com"
+            |> Graphql.Http.send
+                (Graphql.Http.discardParsedErrorData
+                    >> RemoteData.fromResult
+                    >> GotResponse
+                )
+
+-}
+discardParsedErrorData : Result (Error decodesTo) decodesTo -> Result (Error ()) decodesTo
+discardParsedErrorData result =
+    Result.mapError
+        (mapError (\_ -> ()))
+        result
+
+
+{-| WARNING: When using this function you lose information. Make sure this is
+the approach you want before using this.
+
+Treat responses with GraphQL errors as successful responses if the data can
+be parsed. If you want to use the successfully decoded data without ignoring the
+GraphQL error you can do a pattern match on the `Graphql.Http.Error` type
+(it contains `PossiblyParsedData` which is either unparsed with a raw
+`Json.Decode.Value` or else it contains successfully decoded data).
+
+-}
+parseableErrorAsSuccess : Result (Error decodesTo) decodesTo -> Result (Error ()) decodesTo
+parseableErrorAsSuccess result =
+    case result of
+        Ok value ->
+            Ok value
+
+        Err error ->
+            case error of
+                GraphqlError possiblyParsedData errors ->
+                    case possiblyParsedData of
+                        GraphqlError.ParsedData parsedData ->
+                            Ok parsedData
+
+                        GraphqlError.UnparsedData jsonValue ->
+                            GraphqlError (GraphqlError.UnparsedData jsonValue) errors
+                                |> Err
+
+                HttpError httpError ->
+                    HttpError httpError
+                        |> Err
 
 
 type alias DataResult parsedData =

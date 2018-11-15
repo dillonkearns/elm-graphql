@@ -22,31 +22,22 @@ import RepoWithOwner
 import View.Result
 
 
-
--- makeRequest : ElmReposRequest.SortOrder -> Cmd Msg
--- makeRequest sortOrder =
---     query sortOrder
---         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
---         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
---         |> Graphql.Http.send (RemoteData.fromResult >> RemoteData.mapError Graphql.Http.ignoreParsedErrorData >> GotResponse)
-
-
 makePackagesGithubQuery reposWithOwner =
     reposWithOwner
         |> ElmReposRequest.queryForRepos
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.send (Graphql.Http.parseableErrorAsSuccess >> RemoteData.fromResult >> GotResponse)
 
 
 type Msg
-    = GotResponse (RemoteData (Graphql.Http.Error (List ElmReposRequest.Repo)) (List ElmReposRequest.Repo))
+    = GotResponse (RemoteData (Graphql.Http.Error ()) (List ElmReposRequest.Repo))
     | SetSortOrder ElmReposRequest.SortOrder
     | GotElmPackages (RemoteData.WebData (List String))
 
 
 type alias Model =
-    { githubResponse : RemoteData (Graphql.Http.Error (List ElmReposRequest.Repo)) (List ElmReposRequest.Repo)
+    { githubResponse : RemoteData (Graphql.Http.Error ()) (List ElmReposRequest.Repo)
     , sortOrder : ElmReposRequest.SortOrder
     , elmPackages : RemoteData.WebData (List String)
     }
@@ -155,7 +146,14 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotResponse response ->
-            ( { model | githubResponse = response }, Cmd.none )
+            ( { model
+                | githubResponse =
+                    response
+                        |> RemoteData.map (List.sortBy .stargazerCount)
+                        |> RemoteData.map List.reverse
+              }
+            , Cmd.none
+            )
 
         SetSortOrder sortOrder ->
             ( { model | sortOrder = sortOrder, githubResponse = RemoteData.Loading }
