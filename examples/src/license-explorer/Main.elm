@@ -3,14 +3,20 @@ module Main exposing (main)
 import Browser
 import Element exposing (Element)
 import Element.Background
+import Element.Border
+import Element.Font
+import Github.Interface.RepositoryOwner
 import Github.Object
 import Github.Object.License
 import Github.Object.LicenseRule
+import Github.Object.Repository
+import Github.Object.RepositoryConnection
 import Github.Query
 import Github.Scalar
 import Graphql.Field as Field exposing (Field)
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, with, withFragment)
 import Html exposing (Html)
 import RemoteData exposing (RemoteData)
@@ -32,15 +38,24 @@ type alias FullLicense =
     }
 
 
-licenseExplorerQuery : String -> SelectionSet (List FullLicense) RootQuery
+type alias Response =
+    { licenseChoices : List FullLicense
+    , ownerLicenses : List RepoWithLicense
+    }
+
+
+licenseExplorerQuery : String -> SelectionSet Response RootQuery
 licenseExplorerQuery owner =
-    Github.Query.licenses
-        (Github.Object.License.selection FullLicense
-            |> withFragment fragmentLicenseOverview
-            |> withFragment fragmentLicenseDetails
-        )
-        |> Field.map (List.filterMap identity)
-        |> fieldSelection
+    Github.Query.selection Response
+        |> with
+            (Github.Query.licenses
+                (Github.Object.License.selection FullLicense
+                    |> withFragment fragmentLicenseOverview
+                    |> withFragment fragmentLicenseDetails
+                )
+                |> Field.map (List.filterMap identity)
+            )
+        |> with (ownerLicenses owner)
 
 
 
@@ -101,10 +116,61 @@ fragmentLicenseDetails =
             )
 
 
+
+{-
+   fragment repoWithLicense on Repository {
+     name
+     licenseInfo {
+       ...licenseOverview
+     }
+   }
+-}
+
+
+type alias RepoWithLicense =
+    { name : String
+    , license : Maybe LicenseOverview
+    }
+
+
+fragmentRepoWithLicense =
+    Github.Object.Repository.selection RepoWithLicense
+        |> with Github.Object.Repository.name
+        |> with (Github.Object.Repository.licenseInfo fragmentLicenseOverview)
+
+
+
+{-
+   repositoryOwner(login: $owner) {
+      pinnedRepositories(first: 6) {
+        nodes {
+          ...repoWithLicense
+        }
+      }
+    }
+-}
+
+
+ownerLicenses : String -> Field (List RepoWithLicense) RootQuery
+ownerLicenses ownerLogin =
+    Github.Query.repositoryOwner { login = ownerLogin }
+        (Github.Interface.RepositoryOwner.pinnedRepositories (\input -> { input | first = Present 6 })
+            (Github.Object.RepositoryConnection.nodes
+                fragmentRepoWithLicense
+                |> Field.nonNullOrFail
+                |> removeNothingsFromList
+                |> fieldSelection
+            )
+            |> fieldSelection
+        )
+        |> Field.nonNullOrFail
+
+
 makeRequest =
     licenseExplorerQuery "dillonkearns"
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
+        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (Graphql.Http.parseableErrorAsSuccess >> RemoteData.fromResult >> GotLicenses)
 
 
@@ -114,7 +180,7 @@ makeRequest =
 
 view : Model -> Html Msg
 view model =
-    (case model.licenses of
+    (case model of
         RemoteData.Success licenses ->
             Element.column
                 [ Element.spacing 30
@@ -122,8 +188,10 @@ view model =
                 , Element.centerX
                 , Element.padding 50
                 ]
-                (licenses
-                    |> List.map licenseView
+                (ownerLicensesView licenses.ownerLicenses
+                    :: (licenses.licenseChoices
+                            |> List.map licenseView
+                       )
                 )
 
         status ->
@@ -134,12 +202,62 @@ view model =
         |> Element.layout []
 
 
+ownerLicensesView : List RepoWithLicense -> Element msg
+ownerLicensesView licenses =
+    Element.column [ Element.width Element.fill ] (licenses |> List.map ownerLicenseView)
+
+
+ownerLicenseView : RepoWithLicense -> Element msg
+ownerLicenseView repoWithLicense =
+    Element.row [ Element.spaceEvenly, Element.width Element.fill ]
+        [ Element.text repoWithLicense.name |> Element.el []
+        , Element.text
+            (repoWithLicense.license
+                |> Maybe.map .name
+                |> Maybe.withDefault "NO LICENSE"
+            )
+            |> Element.el []
+        ]
+
+
 licenseView : FullLicense -> Element Msg
 licenseView licenseDetails =
-    Element.row [ Element.spaceEvenly, Element.width Element.fill ]
-        [ Element.text licenseDetails.overview.name
-        , Element.text licenseDetails.overview.key
-        , licenseDetails.details.conditions |> Debug.toString |> Element.text
+    Element.column
+        [ Element.spacing 20
+        ]
+        [ [ Element.text licenseDetails.overview.name
+          ]
+            |> Element.paragraph
+                [ Element.Font.size 30
+                ]
+        , Element.row [ Element.spaceEvenly, Element.width Element.fill ]
+            [ conditionsView "Conditions" licenseDetails.details.conditions
+            ]
+        ]
+
+
+conditionsView titleText conditions =
+    Element.column [ Element.spacing 10 ]
+        [ Element.text titleText |> Element.el [ Element.Font.size 20, Element.Font.bold ]
+        , Element.column []
+            (List.map
+                bulletView
+                conditions
+            )
+        ]
+
+
+bulletView : String -> Element msg
+bulletView content =
+    Element.row [ Element.spacing 5 ]
+        [ Element.el
+            [ Element.Background.color (Element.rgba255 0 153 214 1.0)
+            , Element.width (Element.px 12)
+            , Element.height (Element.px 12)
+            , Element.Border.rounded 10000
+            ]
+            Element.none
+        , Element.text content
         ]
 
 
@@ -148,8 +266,7 @@ licenseView licenseDetails =
 
 
 type alias Model =
-    { licenses : LicenseResponse
-    }
+    LicenseResponse
 
 
 type Msg
@@ -157,13 +274,12 @@ type Msg
 
 
 type alias LicenseResponse =
-    RemoteData (Graphql.Http.Error ()) (List FullLicense)
+    RemoteData (Graphql.Http.Error ()) Response
 
 
 init : Flags -> ( Model, Cmd Msg )
 init _ =
-    ( { licenses = RemoteData.Loading
-      }
+    ( RemoteData.Loading
     , makeRequest
     )
 
@@ -172,7 +288,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotLicenses response ->
-            ( { model | licenses = response }, Cmd.none )
+            ( response, Cmd.none )
 
 
 removeNothingsFromList : Field (List (Maybe a)) typeLock -> Field (List a) typeLock
