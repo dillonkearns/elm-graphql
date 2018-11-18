@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, friends, id, name, onDroid, onHuman, selection)
+module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, completeAndCommonSelection, friends, id, name, onDroid, onHuman, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -29,9 +29,42 @@ commonSelection constructor =
 
 {-| Select both common and type-specific fields from the interface.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Swapi.Interface.Character) -> SelectionSet (a -> constructor) Swapi.Interface.Character
+selection :
+    (Maybe typeSpecific -> a -> constructor)
+    -> List (FragmentSelectionSet typeSpecific Swapi.Interface.Character)
+    -> SelectionSet (a -> constructor) Swapi.Interface.Character
 selection constructor typeSpecificDecoders =
     Object.interfaceSelection typeSpecificDecoders constructor
+
+
+{-| Complete selection
+-}
+completeSelection :
+    { onDroid : SelectionSet decodesTo Swapi.Object.Droid
+    , onHuman : SelectionSet decodesTo Swapi.Object.Human
+    }
+    -> SelectionSet decodesTo Swapi.Interface.Character
+completeSelection selections =
+    Object.exhuastiveFragmentSelection
+        [ onDroid selections.onDroid
+        , onHuman selections.onHuman
+        ]
+
+
+{-| Complete selection
+-}
+completeAndCommonSelection :
+    (decodesTo -> a -> constructor)
+    ->
+        { onDroid : SelectionSet decodesTo Swapi.Object.Droid
+        , onHuman : SelectionSet decodesTo Swapi.Object.Human
+        }
+    -> SelectionSet (a -> constructor) Swapi.Interface.Character
+completeAndCommonSelection constructor selections =
+    Object.exhuastiveAndCommonFragmentSelection constructor
+        [ onDroid selections.onDroid
+        , onHuman selections.onHuman
+        ]
 
 
 onHuman : SelectionSet decodesTo Swapi.Object.Human -> FragmentSelectionSet decodesTo Swapi.Interface.Character

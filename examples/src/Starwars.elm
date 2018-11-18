@@ -6,7 +6,7 @@ import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -39,7 +39,7 @@ type HumanOrDroid
 
 
 type alias Character =
-    { details : Maybe HumanOrDroid
+    { details : HumanOrDroid
     , name : String
     , id : Swapi.Scalar.Id
     , friends : List String
@@ -49,13 +49,13 @@ type alias Character =
 
 hero : SelectionSet Character Swapi.Interface.Character
 hero =
-    Character.selection Character
-        [ Character.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
-        , Character.onHuman (Human.selection Human |> with Human.homePlanet)
-        ]
+    Character.completeAndCommonSelection Character
+        { onDroid = Droid.selection Droid |> with Droid.primaryFunction
+        , onHuman = Human.selection Human |> with Human.homePlanet
+        }
         |> with Character.name
         |> with Character.id
-        |> with (Character.friends (Character.commonSelection identity |> with Character.name))
+        |> with (Character.friends (fieldSelection Character.name))
         |> hardcoded 123
 
 

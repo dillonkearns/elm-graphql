@@ -1,11 +1,11 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder)
+module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder
+@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection
 
 -}
 
@@ -100,6 +100,47 @@ interfaceSelection typeSpecificSelections constructor =
             )
             (Decode.succeed constructor)
         )
+
+
+{-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
+-}
+exhuastiveFragmentSelection : List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet decodesTo typeLock
+exhuastiveFragmentSelection typeSpecificSelections =
+    let
+        typeNameDecoder =
+            \typeName ->
+                typeSpecificSelections
+                    |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
+                    |> Dict.fromList
+                    |> Dict.get typeName
+                    |> Maybe.map (Decode.map Just)
+                    |> Maybe.withDefault (Decode.succeed Nothing)
+
+        selections =
+            typeSpecificSelections
+                |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
+    in
+    SelectionSet (leaf "__typename" [] :: selections)
+        (Decode.string
+            |> Decode.field "__typename"
+            |> Decode.andThen typeNameDecoder
+            |> Decode.andThen
+                (\value ->
+                    case value of
+                        Just something ->
+                            Decode.succeed something
+
+                        Nothing ->
+                            Decode.fail "Expected non-null but got null, do you need to rerun the `@dillon/elm-graphql` command line tool? TODO add types that are handled for debugging here."
+                )
+        )
+
+
+{-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
+-}
+exhuastiveAndCommonFragmentSelection : (decodesTo -> a -> b) -> List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet (a -> b) typeLock
+exhuastiveAndCommonFragmentSelection constructor typeSpecificSelections =
+    Graphql.SelectionSet.map2 (|>) (exhuastiveFragmentSelection typeSpecificSelections) (Graphql.SelectionSet.succeed constructor)
 
 
 {-| Used to create the `selection` functions in auto-generated code for unions.
