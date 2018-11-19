@@ -15,6 +15,7 @@ import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
+import String.Interpolate exposing (interpolate)
 
 
 {-| Decoder for scalars for use in auto-generated code.
@@ -107,15 +108,6 @@ interfaceSelection typeSpecificSelections constructor =
 exhuastiveFragmentSelection : List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet decodesTo typeLock
 exhuastiveFragmentSelection typeSpecificSelections =
     let
-        typeNameDecoder =
-            \typeName ->
-                typeSpecificSelections
-                    |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
-                    |> Dict.fromList
-                    |> Dict.get typeName
-                    |> Maybe.map (Decode.map Just)
-                    |> Maybe.withDefault (Decode.succeed Nothing)
-
         selections =
             typeSpecificSelections
                 |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
@@ -123,17 +115,21 @@ exhuastiveFragmentSelection typeSpecificSelections =
     SelectionSet (leaf "__typename" [] :: selections)
         (Decode.string
             |> Decode.field "__typename"
-            |> Decode.andThen typeNameDecoder
             |> Decode.andThen
-                (\value ->
-                    case value of
-                        Just something ->
-                            Decode.succeed something
-
-                        Nothing ->
-                            Decode.fail "Expected non-null but got null, do you need to rerun the `@dillon/elm-graphql` command line tool? TODO add types that are handled for debugging here."
+                (\typeName ->
+                    typeSpecificSelections
+                        |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
+                        |> Dict.fromList
+                        |> Dict.get typeName
+                        |> Maybe.withDefault (exhaustiveFailureMessage typeSpecificSelections typeName |> Decode.fail)
                 )
         )
+
+
+exhaustiveFailureMessage typeSpecificSelections typeName =
+    interpolate
+        "Unhandled type `{0}` in exhaustive fragment handling. The following types had handlers registered to handle them: [{1}]. This happens if you are parsing either a Union or Interface. Do you need to rerun the `@dillonkearns/elm-graphql` command line tool?"
+        [ typeName, typeSpecificSelections |> List.map (\(FragmentSelectionSet fragmentType fields decoder) -> fragmentType) |> String.join ", " ]
 
 
 {-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
