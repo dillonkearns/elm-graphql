@@ -4,6 +4,7 @@ import Browser
 import Graphql.Document as Document
 import Graphql.Field as Field
 import Graphql.Http
+import Graphql.Http.GraphqlError
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
@@ -21,22 +22,12 @@ import Swapi.Scalar exposing (Id(..))
 
 
 type alias Response =
-    Maybe Human
-
-
-type alias Human =
-    { name : String
-    , homePlanet : Maybe String
-    }
+    Maybe String
 
 
 query : Id -> SelectionSet Response RootQuery
 query id =
-    Query.human { id = id }
-        (Human.selection Human
-            |> with Human.name
-            |> with Human.homePlanet
-        )
+    Query.forcedError
         |> fieldSelection
 
 
@@ -99,10 +90,17 @@ errorToString : Graphql.Http.Error parsedData -> String
 errorToString errorData =
     case errorData of
         Graphql.Http.GraphqlError _ graphqlErrors ->
-            "Error"
+            graphqlErrors
+                |> List.map graphqlErrorToString
+                |> String.join "\n"
 
         Graphql.Http.HttpError httpError ->
             "Http Error"
+
+
+graphqlErrorToString : Graphql.Http.GraphqlError.GraphqlError -> String
+graphqlErrorToString error =
+    error.message
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
