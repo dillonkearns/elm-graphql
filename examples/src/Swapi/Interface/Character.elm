@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, completeAndCommonSelection, friends, id, maybeFragments, name, onDroid, onHuman, selection)
+module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, completeAndCommonSelection, friends, id, maybeFragments, name, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -44,8 +44,8 @@ completeSelection :
     -> SelectionSet decodesTo Swapi.Interface.Character
 completeSelection selections =
     Object.exhuastiveFragmentSelection
-        [ onDroid selections.onDroid
-        , onHuman selections.onHuman
+        [ Object.buildFragment "Droid" selections.onDroid
+        , Object.buildFragment "Human" selections.onHuman
         ]
 
 
@@ -73,19 +73,9 @@ completeAndCommonSelection :
     -> SelectionSet (a -> constructor) Swapi.Interface.Character
 completeAndCommonSelection constructor selections =
     Object.exhuastiveAndCommonFragmentSelection constructor
-        [ onDroid selections.onDroid
-        , onHuman selections.onHuman
+        [ Object.buildFragment "Droid" selections.onDroid
+        , Object.buildFragment "Human" selections.onHuman
         ]
-
-
-onHuman : SelectionSet decodesTo Swapi.Object.Human -> FragmentSelectionSet decodesTo Swapi.Interface.Character
-onHuman (SelectionSet fields decoder) =
-    FragmentSelectionSet "Human" fields decoder
-
-
-onDroid : SelectionSet decodesTo Swapi.Object.Droid -> FragmentSelectionSet decodesTo Swapi.Interface.Character
-onDroid (SelectionSet fields decoder) =
-    FragmentSelectionSet "Droid" fields decoder
 
 
 {-| Which movies they appear in.

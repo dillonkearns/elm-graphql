@@ -1,4 +1,7 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection)
+module Graphql.Internal.Builder.Object exposing
+    ( fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection
+    , buildFragment
+    )
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
@@ -73,6 +76,11 @@ leaf fieldName args =
 selection : (a -> constructor) -> SelectionSet (a -> constructor) typeLock
 selection constructor =
     SelectionSet [] (Decode.succeed constructor)
+
+
+buildFragment : String -> SelectionSet decodesTo selectionLock -> FragmentSelectionSet decodesTo fragmentLock
+buildFragment fragmentTypeName (SelectionSet fields decoder) =
+    FragmentSelectionSet fragmentTypeName fields decoder
 
 
 {-| Used to create the `selection` functions in auto-generated code for interfaces.
