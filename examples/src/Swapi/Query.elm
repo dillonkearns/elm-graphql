@@ -89,7 +89,7 @@ type alias HeroUnionOptionalArguments =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : (HeroUnionOptionalArguments -> HeroUnionOptionalArguments) -> SelectionSet decodesTo Swapi.Union.CharacterUnion -> Field (Maybe decodesTo) RootQuery
+heroUnion : (HeroUnionOptionalArguments -> HeroUnionOptionalArguments) -> SelectionSet decodesTo Swapi.Union.CharacterUnion -> Field decodesTo RootQuery
 heroUnion fillInOptionals object_ =
     let
         filledInOptionals =
@@ -99,7 +99,7 @@ heroUnion fillInOptionals object_ =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "heroUnion" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionField "heroUnion" optionalArgs object_ identity
 
 
 type alias HumanRequiredArguments =

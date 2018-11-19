@@ -28,7 +28,7 @@ type alias Response =
     { vader : HumanLookup
     , tarkin : HumanLookup
     , hero : Character
-    , union : Maybe CharacterUnion
+    , union : HumanOrDroid
     , greeting : String
     }
 
@@ -75,17 +75,12 @@ nonExhaustiveFragments =
     }
 
 
-type alias CharacterUnion =
-    { details : Maybe HumanOrDroid
-    }
-
-
-heroUnion : SelectionSet CharacterUnion Swapi.Union.CharacterUnion
+heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
 heroUnion =
-    CharacterUnion.selection CharacterUnion
-        [ CharacterUnion.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
-        , CharacterUnion.onHuman (Human.selection Human |> with Human.homePlanet)
-        ]
+    CharacterUnion.selection
+        { onDroid = Droid.selection Droid |> with Droid.primaryFunction
+        , onHuman = Human.selection Human |> with Human.homePlanet
+        }
 
 
 query : SelectionSet Response RootQuery
