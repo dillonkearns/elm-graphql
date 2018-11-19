@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, completeAndCommonSelection, friends, id, name, onDroid, onHuman, selection)
+module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, completeAndCommonSelection, friends, id, maybeFragments, name, onDroid, onHuman, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -40,15 +40,26 @@ selection constructor typeSpecificDecoders =
 {-| Complete selection
 -}
 completeSelection :
-    { onDroid : SelectionSet decodesTo Swapi.Object.Droid
-    , onHuman : SelectionSet decodesTo Swapi.Object.Human
-    }
+    Fragments decodesTo
     -> SelectionSet decodesTo Swapi.Interface.Character
 completeSelection selections =
     Object.exhuastiveFragmentSelection
         [ onDroid selections.onDroid
         , onHuman selections.onHuman
         ]
+
+
+type alias Fragments decodesTo =
+    { onDroid : SelectionSet decodesTo Swapi.Object.Droid
+    , onHuman : SelectionSet decodesTo Swapi.Object.Human
+    }
+
+
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| Complete selection

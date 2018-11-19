@@ -59,6 +59,21 @@ hero =
         |> hardcoded 123
 
 
+nonExhaustiveFragments =
+    -- you can do partial fragments using syntax like this
+    let
+        -- you can't do record update that begins with a module name at the moment
+        -- there are plans to fix that, though, see the "Record Suggestions" section of
+        -- https://github.com/elm/compiler/issues/1375
+        maybeFragments =
+            Character.maybeFragments
+    in
+    { maybeFragments
+        | onDroid =
+            fieldSelection (Droid.primaryFunction |> Field.map (Droid >> Just))
+    }
+
+
 type alias CharacterUnion =
     { details : Maybe HumanOrDroid
     }
