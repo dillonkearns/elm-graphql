@@ -31,7 +31,8 @@ subscriptionDocument =
         |> with (Subscription.newMessage chatMessageSelection)
 
 
-hooks =
+subscriptionHooks : { init : Cmd Msg, subscriptions : Sub Msg }
+subscriptionHooks =
     Graphql.Document.subscriptionHooks createSubscriptions gotSubscriptionData SubscriptionDataReceived subscriptionDocument
 
 
@@ -92,7 +93,7 @@ init flags =
       , characterId = "1001"
       , subscriptionStatus = NotConnected
       }
-    , Tuple.first hooks
+    , subscriptionHooks.init
     )
 
 
@@ -291,7 +292,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     -- Graphql.Subscription.listen GraphqlSubscriptionMsg model.graphqlSubscriptionModel
     Sub.batch
-        [ Tuple.second hooks
+        [ subscriptionHooks.subscriptions
         , socketStatusConnected (NewSubscriptionStatus Connected)
         , socketStatusReconnecting (NewSubscriptionStatus Reconnecting)
         ]

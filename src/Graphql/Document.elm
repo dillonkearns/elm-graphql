@@ -57,11 +57,11 @@ subscriptionHooks :
     -> ((Decode.Value -> msg) -> Sub msg)
     -> (Result Decode.Error decodesTo -> msg)
     -> SelectionSet decodesTo RootSubscription
-    -> ( Cmd msg, Sub msg )
+    -> { init : Cmd msg, subscriptions : Sub msg }
 subscriptionHooks startSubscriptionPort gotSubscriptionData toMsg subscription =
-    ( startSubscriptionPort (serializeSubscription subscription)
-    , gotSubscriptionData (Decode.decodeValue (decoder subscription) >> toMsg)
-    )
+    { init = startSubscriptionPort (serializeSubscription subscription)
+    , subscriptions = gotSubscriptionData (Decode.decodeValue (decoder subscription) >> toMsg)
+    }
 
 
 {-| Decoder a response from the server. This low-level function shouldn't be needed
