@@ -1,4 +1,7 @@
-module Graphql.Document exposing (serializeQuery, serializeMutation, serializeSubscription, serializeQueryForUrl, decoder)
+module Graphql.Document exposing
+    ( serializeQuery, serializeMutation, serializeSubscription, serializeQueryForUrl, decoder
+    , subscriptionHooks
+    )
 
 {-| You'll usually want to use `Graphql.Http` to perform your queries directly.
 This package provides low-level functions for generating GraphQL documents that
@@ -43,6 +46,22 @@ serializeMutation (SelectionSet fields decoder_) =
 serializeSubscription : SelectionSet decodesTo RootSubscription -> String
 serializeSubscription (SelectionSet fields decoder_) =
     serialize "subscription" fields
+
+
+
+-- (Result Decode.Error decodesTo)
+
+
+subscriptionHooks :
+    (String -> Cmd msg)
+    -> ((Decode.Value -> msg) -> Sub msg)
+    -> (Result Decode.Error decodesTo -> msg)
+    -> SelectionSet decodesTo RootSubscription
+    -> ( Cmd msg, Sub msg )
+subscriptionHooks startSubscriptionPort gotSubscriptionData toMsg subscription =
+    ( startSubscriptionPort (serializeSubscription subscription)
+    , gotSubscriptionData (Decode.decodeValue (decoder subscription) >> toMsg)
+    )
 
 
 {-| Decoder a response from the server. This low-level function shouldn't be needed

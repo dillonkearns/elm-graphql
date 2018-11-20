@@ -31,6 +31,10 @@ subscriptionDocument =
         |> with (Subscription.newMessage chatMessageSelection)
 
 
+hooks =
+    Graphql.Document.subscriptionHooks createSubscriptions gotSubscriptionData SubscriptionDataReceived subscriptionDocument
+
+
 type alias ChatMessage =
     { phrase : Phrase
     , character : Maybe Character
@@ -66,7 +70,7 @@ type alias Model =
 
 type Msg
     = SendMessage Phrase
-    | SubscriptionDataReceived Json.Decode.Value
+    | SubscriptionDataReceived (Result Json.Decode.Error ChatMessage)
     | SentMessage (Result (Graphql.Http.Error ()) ())
       -- | SubscriptionStatusChanged Graphql.Subscription.Status
     | ChangeCharacter String
@@ -88,7 +92,14 @@ init flags =
       , characterId = "1001"
       , subscriptionStatus = NotConnected
       }
-    , createSubscriptions (subscriptionDocument |> Graphql.Document.serializeSubscription)
+    , Tuple.first hooks
+    )
+
+
+pair : SelectionSet ChatMessage RootSubscription -> ( Cmd msg, Sub (Result Json.Decode.Error ChatMessage) )
+pair subscription =
+    ( createSubscriptions (subscription |> Graphql.Document.serializeSubscription)
+    , gotSubscriptionData (Json.Decode.decodeValue (subscriptionDocument |> Graphql.Document.decoder))
     )
 
 
@@ -242,22 +253,16 @@ phraseToString phrase =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        -- GraphqlSubscriptionMsg graphqlSubscriptionMsg ->
-        --     let
-        --         ( newModel, cmd ) =
-        --             Graphql.Subscription.update graphqlSubscriptionMsg model.graphqlSubscriptionModel
-        --     in
-        --     ( { model | graphqlSubscriptionModel = newModel }, cmd )
-        --
         SendMessage phrase ->
             ( model
             , sendChatMessage model.characterId phrase
                 |> Graphql.Http.mutationRequest "https://elm-graphql.herokuapp.com/"
+                |> Graphql.Http.withCredentials
                 |> Graphql.Http.send SentMessage
             )
 
         SubscriptionDataReceived newData ->
-            case Json.Decode.decodeValue (subscriptionDocument |> Graphql.Document.decoder) newData of
+            case newData of
                 Ok chatMessage ->
                     ( { model | data = chatMessage :: model.data }, Cmd.none )
 
@@ -286,7 +291,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     -- Graphql.Subscription.listen GraphqlSubscriptionMsg model.graphqlSubscriptionModel
     Sub.batch
-        [ gotSubscriptionData SubscriptionDataReceived
+        [ Tuple.second hooks
         , socketStatusConnected (NewSubscriptionStatus Connected)
         , socketStatusReconnecting (NewSubscriptionStatus Reconnecting)
         ]
