@@ -38,7 +38,7 @@ const writeWithElmFormat = (
     console.log(data.toString());
   });
 
-  elmFormat.on("close", code => {
+  elmFormat.on("exit", code => {
     if (code !== 0) {
       console.log(`elm-format process exited with code ${code}.
 Was attempting to write to path ${path} with contents:
