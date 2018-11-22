@@ -4,7 +4,7 @@ import { GraphQLClient } from "graphql-request";
 import * as http from "http";
 import * as minimist from "minimist";
 import * as request from "request";
-import { writeFile } from "./formatted-write";
+import { writeFile, applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
@@ -121,6 +121,9 @@ const onDataAvailable = (data: {}) => {
       prependBasePath("elm-graphql-metadata.json"),
       `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
     );
+
+    applyElmFormat(outputPath)
+
     console.log("Success!");
   });
 };
