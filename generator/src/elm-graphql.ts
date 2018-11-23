@@ -4,7 +4,7 @@ import { GraphQLClient } from "graphql-request";
 import * as http from "http";
 import * as minimist from "minimist";
 import * as request from "request";
-import { writeFile, applyElmFormat } from "./formatted-write";
+import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
@@ -102,25 +102,37 @@ if (!(graphqlUrl || introspectionFile)) {
 }
 warnIfContainsNonGenerated(prependBasePath("/"));
 
-const onDataAvailable = (data: {}) => {
+function onDataAvailable(data: {}) {
   console.log("Generating files...");
   let app = Elm.Main.init({ flags: { data, baseModule } });
-  app.ports.generatedFiles.subscribe(function(generatedFile: any) {
+  app.ports.generatedFiles.subscribe(async function(generatedFile: any) {
     removeGenerated(prependBasePath("/"));
-    fs.mkdirpSync(prependBasePath("InputObject"));
-    fs.mkdirpSync(prependBasePath("Object"));
-    fs.mkdirpSync(prependBasePath("Interface"));
-    fs.mkdirpSync(prependBasePath("Union"));
-    fs.mkdirpSync(prependBasePath("Enum"));
+
+    await Promise.all([
+      fs.mkdirp(prependBasePath("InputObject")),
+      fs.mkdirp(prependBasePath("Object")),
+      fs.mkdirp(prependBasePath("Interface")),
+      fs.mkdirp(prependBasePath("Union")),
+      fs.mkdirp(prependBasePath("Enum")),
+    ])
+    
+    const filesToWrite:Promise<void>[] = []
+
     for (let key in generatedFile) {
-      let filePath = path.join(outputPath, key);
-      let value = generatedFile[key];
-      writeFile(filePath, targetComment + value);
+      const filePath = path.join(outputPath, key);
+      const value = generatedFile[key];
+      const fileToWritePromise = fs.writeFile(filePath, targetComment + value);
+      filesToWrite.push(fileToWritePromise)
     }
+
+    await Promise.all(filesToWrite)
+
     fs.writeFileSync(
       prependBasePath("elm-graphql-metadata.json"),
       `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
     );
+
+    console.log("Formatting results...");
 
     applyElmFormat(outputPath)
 
