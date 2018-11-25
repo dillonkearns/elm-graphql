@@ -9,19 +9,24 @@ export const applyElmFormat = (
   fileOrFolderToFormat: string,
 ): void => {
   const elmFormatPath = findElmFormatPath();
+  
+  // If there isn't elm-format, nothing to do
+  if(!elmFormatPath) 
+     return;
+  
+  console.log("Applying elm-format...")
   const elmFormat = execSync(
     elmFormatPath + " --elm-version=0.19 --yes " + fileOrFolderToFormat + "/"
   );
+    
 };
 
-const findElmFormatPath = (): string => {
+const findElmFormatPath = (): string | null => {
   if (fs.existsSync(globalInstallPath)) {
     return globalInstallPath;
   } else if (fs.existsSync(localInstallPath)) {
     return localInstallPath;
   } else {
-    console.log("Cannot proceed w/ Elm Format")
-    process.exit(1)
-    return "" //impossible, satisfy type script
+    return null;
   }
 };
