@@ -108,15 +108,13 @@ function onDataAvailable(data: {}) {
   app.ports.generatedFiles.subscribe(async function(generatedFile: any) {
     removeGenerated(prependBasePath("/"));
 
-    await Promise.all([
-      fs.mkdirp(prependBasePath("InputObject")),
-      fs.mkdirp(prependBasePath("Object")),
-      fs.mkdirp(prependBasePath("Interface")),
-      fs.mkdirp(prependBasePath("Union")),
-      fs.mkdirp(prependBasePath("Enum")),
-    ])
-    
-    const filesToWrite:Promise<void>[] = []
+    fs.mkdirpSync(prependBasePath("InputObject"));	
+    fs.mkdirpSync(prependBasePath("Object"));
+    fs.mkdirpSync(prependBasePath("Interface"));
+    fs.mkdirpSync(prependBasePath("Union"));
+    fs.mkdirpSync(prependBasePath("Enum"));
+
+      const filesToWrite:Promise<void>[] = []
 
     for (let key in generatedFile) {
       const filePath = path.join(outputPath, key);
