@@ -130,8 +130,6 @@ function onDataAvailable(data: {}) {
       `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
     );
 
-    console.log("Formatting results...");
-
     applyElmFormat(outputPath)
 
     console.log("Success!");
