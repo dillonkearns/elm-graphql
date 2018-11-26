@@ -122,27 +122,31 @@ function onDataAvailable(data: {}) {
       "Union",
       "Enum"
     ]);
-    const filesToWrite: Promise<void>[] = [];
 
-    for (let key in generatedFile) {
-      const filePath = path.join(outputPath, key);
-      const value = generatedFile[key];
-      const fileToWritePromise = fs.writeFile(filePath, targetComment + value);
-      filesToWrite.push(fileToWritePromise);
-    }
-
-    await Promise.all(filesToWrite);
-
-    fs.writeFileSync(
-      prependBasePath("elm-graphql-metadata.json"),
-      `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
+    const writeGeneratedFiles = Object.entries(generatedFile).map(
+      ([fileName, fileContents]) => {
+        const filePath = path.join(outputPath, fileName);
+        const fileToWritePromise = fs.writeFile(
+          filePath,
+          targetComment + fileContents
+        );
+        return fileToWritePromise;
+      }
     );
-
+    await Promise.all(writeGeneratedFiles);
+    writeIntrospectionFile();
     applyElmFormat(outputPath);
-
     console.log("Success!");
   });
 }
+
+function writeIntrospectionFile() {
+  fs.writeFileSync(
+    prependBasePath("elm-graphql-metadata.json"),
+    `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
+  );
+}
+
 if (introspectionFile) {
   const introspectionFileJson = JSON.parse(
     fs.readFileSync(introspectionFile).toString()
