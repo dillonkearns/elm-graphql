@@ -79,13 +79,13 @@ GraphQL and Elm are a perfect match because GraphQL is used to enforce the types
 After installing the command line tool and Elm package, running `elm-graphql` just looks like
 
 ```bash
-elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src
+elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src
 ```
 
 If headers are required, such as a Bearer Token, the `--header` flag can be supplied.
 
 ```bash
-elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src 'headerKey: header value'
+elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src 'headerKey: header value'
 ```
 
 ## Learning Resources
@@ -109,7 +109,7 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 `dillonkearns/elm-graphql` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `dillonkearns/elm-graphql`.
 
 1. Add [the `dillonkearns/elm-graphql` elm package](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest)
-   as a dependency in your `elm-package.json`. You will also need to make sure that `elm/json` is a dependency of your project
+   as a dependency in your `elm.json`. You will also need to make sure that `elm/json` is a dependency of your project
    since the generated code has lots of JSON decoders in it.
    ```shell
    elm install dillonkearns/elm-graphql
