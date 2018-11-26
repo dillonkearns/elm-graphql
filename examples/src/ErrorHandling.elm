@@ -1,5 +1,6 @@
 module Starwars exposing (main)
 
+import Browser
 import Graphql.Document as Document
 import Graphql.Field as Field
 import Graphql.Http
@@ -56,8 +57,8 @@ type alias Model =
     RemoteData (Graphql.Http.Error Response) Response
 
 
-init : ( Model, Cmd Msg )
-init =
+init : Flags -> ( Model, Cmd Msg )
+init flags =
     ( RemoteData.Loading
     , makeRequest
     )
@@ -84,18 +85,18 @@ responseDetails model =
             case error of
                 Graphql.Http.GraphqlError possiblyParsedData errors ->
                     "GraphQL errors: \n"
-                        ++ toString errors
+                        ++ Debug.toString errors
                         ++ "\n\n"
                         ++ (case possiblyParsedData of
                                 Graphql.Http.GraphqlError.UnparsedData unparsed ->
-                                    "Unable to parse data, got: " ++ toString unparsed
+                                    "Unable to parse data, got: " ++ Debug.toString unparsed
 
                                 Graphql.Http.GraphqlError.ParsedData parsedData ->
                                     "Parsed error data, so I can extract the name from the structured data... parsedData.vader.name = " ++ parsedData.vader.name
                            )
 
                 Graphql.Http.HttpError httpError ->
-                    "Http error " ++ toString httpError
+                    "Http error " ++ Debug.toString httpError
 
         RemoteData.Loading ->
             "Loading"
@@ -114,11 +115,15 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program Never Model Msg
+type alias Flags =
+    ()
+
+
+main : Program Flags Model Msg
 main =
-    Browser.element
+    Browser.document
         { init = init
         , update = update
         , subscriptions = \_ -> Sub.none
-        , view = view
+        , view = view >> (\mainBody -> { title = "Error Handling Demo", body = [ mainBody ] })
         }
