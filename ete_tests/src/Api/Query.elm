@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Api.Query exposing (..)
+module Api.Query exposing (comments, post, posts, selection)
 
 import Api.Interface
 import Api.Object

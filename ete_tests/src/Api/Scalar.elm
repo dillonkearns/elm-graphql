@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Api.Scalar exposing (..)
+module Api.Scalar exposing (Id(..))
 
 
 type Id

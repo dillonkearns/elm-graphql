@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Api.Subscription exposing (..)
+module Api.Subscription exposing (commentAdded, postAdded, selection)
 
 import Api.Interface
 import Api.Object
