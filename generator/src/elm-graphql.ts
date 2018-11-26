@@ -100,6 +100,13 @@ if (!(graphqlUrl || introspectionFile)) {
   console.log(usage);
   process.exit(0);
 }
+
+function makeEmptyDirectories(directoryNames: Array<string>): void {
+  directoryNames.forEach(dir => {
+    fs.mkdirpSync(prependBasePath(dir));
+  });
+}
+
 warnIfContainsNonGenerated(prependBasePath("/"));
 
 function onDataAvailable(data: {}) {
@@ -108,33 +115,34 @@ function onDataAvailable(data: {}) {
   app.ports.generatedFiles.subscribe(async function(generatedFile: any) {
     removeGenerated(prependBasePath("/"));
 
-    fs.mkdirpSync(prependBasePath("InputObject"));	
-    fs.mkdirpSync(prependBasePath("Object"));
-    fs.mkdirpSync(prependBasePath("Interface"));
-    fs.mkdirpSync(prependBasePath("Union"));
-    fs.mkdirpSync(prependBasePath("Enum"));
-
-      const filesToWrite:Promise<void>[] = []
+    makeEmptyDirectories([
+      "InputObject",
+      "Object",
+      "Interface",
+      "Union",
+      "Enum"
+    ]);
+    const filesToWrite: Promise<void>[] = [];
 
     for (let key in generatedFile) {
       const filePath = path.join(outputPath, key);
       const value = generatedFile[key];
       const fileToWritePromise = fs.writeFile(filePath, targetComment + value);
-      filesToWrite.push(fileToWritePromise)
+      filesToWrite.push(fileToWritePromise);
     }
 
-    await Promise.all(filesToWrite)
+    await Promise.all(filesToWrite);
 
     fs.writeFileSync(
       prependBasePath("elm-graphql-metadata.json"),
       `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
     );
 
-    applyElmFormat(outputPath)
+    applyElmFormat(outputPath);
 
     console.log("Success!");
   });
-};
+}
 if (introspectionFile) {
   const introspectionFileJson = JSON.parse(
     fs.readFileSync(introspectionFile).toString()
