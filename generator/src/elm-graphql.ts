@@ -101,7 +101,7 @@ if (!(graphqlUrl || introspectionFile)) {
   process.exit(0);
 }
 
-function makeEmptyDirectories(directoryNames: Array<string>): void {
+function makeEmptyDirectories(directoryNames: string[]): void {
   directoryNames.forEach(dir => {
     fs.mkdirpSync(prependBasePath(dir));
   });
@@ -114,7 +114,6 @@ function onDataAvailable(data: {}) {
   let app = Elm.Main.init({ flags: { data, baseModule } });
   app.ports.generatedFiles.subscribe(async function(generatedFile: any) {
     removeGenerated(prependBasePath("/"));
-
     makeEmptyDirectories([
       "InputObject",
       "Object",
@@ -122,21 +121,21 @@ function onDataAvailable(data: {}) {
       "Union",
       "Enum"
     ]);
-
-    const writeGeneratedFiles = Object.entries(generatedFile).map(
-      ([fileName, fileContents]) => {
-        const filePath = path.join(outputPath, fileName);
-        const fileToWritePromise = fs.writeFile(
-          filePath,
-          targetComment + fileContents
-        );
-        return fileToWritePromise;
-      }
-    );
-    await Promise.all(writeGeneratedFiles);
+    await Promise.all(writeGeneratedFiles(generatedFile));
     writeIntrospectionFile();
     applyElmFormat(outputPath);
     console.log("Success!");
+  });
+}
+
+function writeGeneratedFiles(generatedFile: {}): Promise<void>[] {
+  return Object.entries(generatedFile).map(([fileName, fileContents]) => {
+    const filePath = path.join(outputPath, fileName);
+    const fileToWritePromise = fs.writeFile(
+      filePath,
+      targetComment + fileContents
+    );
+    return fileToWritePromise;
   });
 }
 
