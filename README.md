@@ -156,6 +156,9 @@ Subscriptions with Elixir/Absinthe wired up through Elm ports!
 
 Thank you [Romario](https://github.com/romariolopezc) for adding [`OptionalArgument.map`](https://github.com/dillonkearns/elm-graphql/pull/73)!
 
+Thank you [Aaron White](https://github.com/aaronwhite) for [your pull request to improve the performance and
+stability of the `elm-format` step](https://github.com/dillonkearns/elm-graphql/pull/87)! 🎉
+
 ## Roadmap
 
 All core features are supported. That is, you can build any query or mutation
