@@ -7,7 +7,7 @@ const localInstallPath = `${__dirname}/../../.bin/elm-format`;
 export const applyElmFormat = (fileOrFolderToFormat: string): void => {
   const elmFormatPath = findElmFormatPath();
 
-  if (!elmFormatPath) {
+  if (elmFormatPath) {
     console.log("Applying elm-format...");
     execSync(
       elmFormatPath + " --elm-version=0.19 --yes " + fileOrFolderToFormat + "/"
