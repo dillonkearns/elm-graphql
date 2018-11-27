@@ -151,7 +151,7 @@ Thanks for [the reserved words pull request](https://github.com/dillonkearns/elm
 A huge thanks to [@xtian](https://github.com/xtian) for doing the vast majority
 of the [0.19 upgrade work](https://github.com/dillonkearns/elm-graphql/pull/60)! :tada:
 
-Thank you [Josh Adams (@knewter)][https://github.com/knewter] for the code example for
+Thank you [Josh Adams (@knewter)](https://github.com/knewter) for the code example for
 Subscriptions with Elixir/Absinthe wired up through Elm ports!
 
 Thank you [Romario](https://github.com/romariolopezc) for adding [`OptionalArgument.map`](https://github.com/dillonkearns/elm-graphql/pull/73)!
