@@ -13,25 +13,73 @@ import String.Interpolate exposing (interpolate)
 generate : Context -> String -> List String -> List Type.Field -> String
 generate context name moduleName fields =
     prepend context moduleName fields
-        ++ fragments context (context.interfaces |> Dict.get name |> Maybe.withDefault []) moduleName
+        ++ fragmentHelpers context (context.interfaces |> Dict.get name |> Maybe.withDefault []) moduleName
         ++ (List.map (FieldGenerator.generateForInterface context name) fields |> String.join "\n\n")
 
 
-fragments : Context -> List ClassCaseName -> List String -> String
-fragments context implementors moduleName =
-    implementors
-        |> List.map (fragment context moduleName)
-        |> String.join "\n\n"
-
-
-fragment : Context -> List String -> ClassCaseName -> String
-fragment context moduleName interfaceImplementor =
+fragmentHelpers : Context -> List ClassCaseName -> List String -> String
+fragmentHelpers context implementors moduleName =
     interpolate
-        """on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}
-on{0} (SelectionSet fields decoder) =
-    FragmentSelectionSet "{1}" fields decoder
+        """
+type alias Fragments decodesTo =
+    {
+    {1}
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
+-}
+fragments :
+      Fragments decodesTo
+      -> SelectionSet decodesTo {0}
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [
+         {2}
+        ]
+
+
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    {
+      {3}
+    }
 """
-        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
+        [ moduleName |> String.join "."
+        , implementors
+            |> List.map (aliasFieldForFragment context moduleName)
+            |> String.join ",\n"
+        , implementors
+            |> List.map (exhaustiveBuildupForFragment context moduleName)
+            |> String.join ",\n"
+        , implementors
+            |> List.map (maybeFragmentEntry context moduleName)
+            |> String.join ",\n"
+        ]
+
+
+aliasFieldForFragment : Context -> List String -> ClassCaseName -> String
+aliasFieldForFragment context moduleName interfaceImplementor =
+    interpolate
+        "on{0} : SelectionSet decodesTo {1}"
+        [ ClassCaseName.normalized interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join "." ]
+
+
+exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> String
+exhaustiveBuildupForFragment context moduleName interfaceImplementor =
+    interpolate
+        """Object.buildFragment "{1}" selections.on{0}"""
+        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
+
+
+maybeFragmentEntry : Context -> List String -> ClassCaseName -> String
+maybeFragmentEntry context moduleName interfaceImplementor =
+    interpolate
+        """on{0} = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\\_ -> Nothing)"""
+        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
 
 
 prepend : Context -> List String -> List Type.Field -> String
@@ -53,18 +101,11 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 {1}
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
+selection constructor =
     Object.selection constructor
-
-
-{-| Select both common and type-specific fields from the interface.
--}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet (a -> constructor) {0}
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

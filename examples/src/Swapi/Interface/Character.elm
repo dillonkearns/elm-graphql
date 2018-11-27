@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface.Character exposing (appearsIn, avatarUrl, completeAndCommonSelection, fragments, friends, id, maybeFragments, name, selection)
+module Swapi.Interface.Character exposing (Fragments, appearsIn, avatarUrl, fragments, friends, id, maybeFragments, name, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -20,52 +20,39 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
 selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character
 selection constructor =
     Object.selection constructor
 
 
-{-| Complete selection
+type alias Fragments decodesTo =
+    { onHuman : SelectionSet decodesTo Swapi.Object.Human
+    , onDroid : SelectionSet decodesTo Swapi.Object.Droid
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Swapi.Interface.Character
 fragments selections =
     Object.exhuastiveFragmentSelection
-        [ Object.buildFragment "Droid" selections.onDroid
-        , Object.buildFragment "Human" selections.onHuman
+        [ Object.buildFragment "Human" selections.onHuman
+        , Object.buildFragment "Droid" selections.onDroid
         ]
 
 
-type alias Fragments decodesTo =
-    { onDroid : SelectionSet decodesTo Swapi.Object.Droid
-    , onHuman : SelectionSet decodesTo Swapi.Object.Human
-    }
-
-
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
 maybeFragments : Fragments (Maybe a)
 maybeFragments =
-    { onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
-    , onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    { onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
-
-
-{-| Complete selection
--}
-completeAndCommonSelection :
-    (decodesTo -> a -> constructor)
-    ->
-        { onDroid : SelectionSet decodesTo Swapi.Object.Droid
-        , onHuman : SelectionSet decodesTo Swapi.Object.Human
-        }
-    -> SelectionSet (a -> constructor) Swapi.Interface.Character
-completeAndCommonSelection constructor selections =
-    Object.exhuastiveAndCommonFragmentSelection constructor
-        [ Object.buildFragment "Droid" selections.onDroid
-        , Object.buildFragment "Human" selections.onHuman
-        ]
 
 
 {-| Which movies they appear in.
