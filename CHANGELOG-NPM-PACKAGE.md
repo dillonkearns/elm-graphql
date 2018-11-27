@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- `elm-format` failed to run during the code generation in some configurations.
+  The new solution uses [an NPM peer dependency](https://nodejs.org/en/blog/npm/peer-dependencies/)
+  of `elm-format`. That means that it will make you install it if it's not already
+  in your dependencies in your `package.json`. With that as a local dependency, we
+  can safely call [`npx`](https://www.npmjs.com/package/npx) to run your local
+  elm-format version. Note that this requires `npm >= 5.2.0`.
+  See [#87](https://github.com/dillonkearns/elm-graphql/pull/87) and
+  [#91](https://github.com/dillonkearns/elm-graphql/issues/91) for more details.
+- The `elm-format` binary was previously run for each individual file asynchronously, which
+  could cause performance issues in some environments. Now, `elm-format` is run
+  as a single step on the entire generated directory after files are generated.
+  This is more performant and more reliable.
+
 ## [1.0.7] - 2018-11-06
 
 ### Changed

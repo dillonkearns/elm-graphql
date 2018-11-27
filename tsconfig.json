@@ -4,7 +4,8 @@
     "module": "commonjs",
     "target": "es5",
     "strict": true,
-    "sourceMap": false
+    "sourceMap": false,
+    "lib": ["es2015", "es2017.object"]
   },
   "exclude": ["node_modules", "generated"]
 }

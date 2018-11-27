@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Api.Mutation exposing (..)
+module Api.Mutation exposing (createComment, createPost, selection)
 
 import Api.Interface
 import Api.Object
