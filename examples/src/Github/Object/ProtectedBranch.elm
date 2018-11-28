@@ -95,7 +95,11 @@ name =
 
 
 type alias PushAllowancesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list push allowances for this protected branch.
@@ -134,7 +138,11 @@ requiredStatusCheckContexts =
 
 
 type alias ReviewDismissalAllowancesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list review dismissal allowances for this protected branch.

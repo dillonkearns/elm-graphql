@@ -34,7 +34,11 @@ digestMethod =
 
 
 type alias ExternalIdentitiesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| External Identities provisioned by this Identity Provider

@@ -94,7 +94,11 @@ login =
 
 
 type alias MembersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of users who are members of this organization.
@@ -147,7 +151,15 @@ organizationBillingEmail =
 
 
 type alias PinnedRepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories this user has pinned to their profile
@@ -190,7 +202,14 @@ project requiredArgs object_ =
 
 
 type alias ProjectsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ProjectOrder, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.ProjectOrder
+    , search : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.ProjectState.ProjectState)
+    }
 
 
 {-| A list of projects under the owner.
@@ -232,7 +251,16 @@ projectsUrl =
 
 
 type alias RepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    , isFork : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories that the user owns.
@@ -304,7 +332,18 @@ team requiredArgs object_ =
 
 
 type alias TeamsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy, role : OptionalArgument Github.Enum.TeamRole.TeamRole, query : OptionalArgument String, userLogins : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.TeamOrder, ldapMapped : OptionalArgument Bool, rootTeamsOnly : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.TeamPrivacy.TeamPrivacy
+    , role : OptionalArgument Github.Enum.TeamRole.TeamRole
+    , query : OptionalArgument String
+    , userLogins : OptionalArgument (List String)
+    , orderBy : OptionalArgument Github.InputObject.TeamOrder
+    , ldapMapped : OptionalArgument Bool
+    , rootTeamsOnly : OptionalArgument Bool
+    }
 
 
 {-| A list of teams in this organization.

@@ -91,7 +91,15 @@ login =
 
 
 type alias PinnedRepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories this user has pinned to their profile
@@ -120,7 +128,16 @@ pinnedRepositories fillInOptionals object_ =
 
 
 type alias RepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    , isFork : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories that the user owns.

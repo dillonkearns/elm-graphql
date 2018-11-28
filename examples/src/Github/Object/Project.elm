@@ -56,7 +56,11 @@ closedAt =
 
 
 type alias ColumnsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| List of columns in the project
@@ -128,7 +132,11 @@ owner object_ =
 
 
 type alias PendingCardsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| List of pending cards in this project

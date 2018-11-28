@@ -96,7 +96,11 @@ state =
 
 
 type alias StatusesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of statuses associated with the deployment.

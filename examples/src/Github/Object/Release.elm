@@ -81,7 +81,12 @@ publishedAt =
 
 
 type alias ReleaseAssetsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, name : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , name : OptionalArgument String
+    }
 
 
 {-| List of releases assets which are dependent on this release.

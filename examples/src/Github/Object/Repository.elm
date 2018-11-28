@@ -38,7 +38,11 @@ selection constructor =
 
 
 type alias AssignableUsersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of users that can be assigned to issues in this repository.
@@ -70,7 +74,12 @@ codeOfConduct object_ =
 
 
 type alias CollaboratorsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, affiliation : OptionalArgument Github.Enum.CollaboratorAffiliation.CollaboratorAffiliation }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , affiliation : OptionalArgument Github.Enum.CollaboratorAffiliation.CollaboratorAffiliation
+    }
 
 
 {-| A list of collaborators associated with the repository.
@@ -96,7 +105,11 @@ collaborators fillInOptionals object_ =
 
 
 type alias CommitCommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of commit comments associated with the repository.
@@ -142,7 +155,11 @@ defaultBranchRef object_ =
 
 
 type alias DeployKeysOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of deploy keys that are on this repository.
@@ -167,7 +184,12 @@ deployKeys fillInOptionals object_ =
 
 
 type alias DeploymentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, environments : OptionalArgument (List String) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , environments : OptionalArgument (List String)
+    }
 
 
 {-| Deployments associated with the repository
@@ -221,7 +243,15 @@ forkCount =
 
 
 type alias ForksOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    }
 
 
 {-| A list of direct forked repositories.
@@ -339,7 +369,14 @@ issueOrPullRequest requiredArgs object_ =
 
 
 type alias IssuesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , labels : OptionalArgument (List String)
+    , orderBy : OptionalArgument Github.InputObject.IssueOrder
+    , states : OptionalArgument (List Github.Enum.IssueState.IssueState)
+    }
 
 
 {-| A list of issues that have been opened in the repository.
@@ -381,7 +418,12 @@ label requiredArgs object_ =
 
 
 type alias LabelsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , query : OptionalArgument String
+    }
 
 
 {-| A list of labels associated with the repository.
@@ -407,7 +449,12 @@ labels fillInOptionals object_ =
 
 
 type alias LanguagesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.LanguageOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.LanguageOrder
+    }
 
 
 {-| A list containing a breakdown of the language composition of the repository.
@@ -454,7 +501,11 @@ lockReason =
 
 
 type alias MentionableUsersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of Users that can be mentioned in the context of the repository.
@@ -493,7 +544,13 @@ milestone requiredArgs object_ =
 
 
 type alias MilestonesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.MilestoneState.MilestoneState), orderBy : OptionalArgument Github.InputObject.MilestoneOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.MilestoneState.MilestoneState)
+    , orderBy : OptionalArgument Github.InputObject.MilestoneOrder
+    }
 
 
 {-| A list of milestones associated with the repository.
@@ -541,7 +598,9 @@ nameWithOwner =
 
 
 type alias ObjectOptionalArguments =
-    { oid : OptionalArgument Github.Scalar.GitObjectID, expression : OptionalArgument String }
+    { oid : OptionalArgument Github.Scalar.GitObjectID
+    , expression : OptionalArgument String
+    }
 
 
 {-| A Git object in the repository
@@ -599,7 +658,14 @@ project requiredArgs object_ =
 
 
 type alias ProjectsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ProjectOrder, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.ProjectOrder
+    , search : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.ProjectState.ProjectState)
+    }
 
 
 {-| A list of projects under the owner.
@@ -641,7 +707,11 @@ projectsUrl =
 
 
 type alias ProtectedBranchesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of protected branches that are on this repository.
@@ -680,7 +750,16 @@ pullRequest requiredArgs object_ =
 
 
 type alias PullRequestsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState)
+    , labels : OptionalArgument (List String)
+    , headRefName : OptionalArgument String
+    , baseRefName : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.IssueOrder
+    }
 
 
 {-| A list of pull requests that have been opened in the repository.
@@ -731,7 +810,13 @@ ref requiredArgs object_ =
 
 
 type alias RefsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, direction : OptionalArgument Github.Enum.OrderDirection.OrderDirection, orderBy : OptionalArgument Github.InputObject.RefOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , direction : OptionalArgument Github.Enum.OrderDirection.OrderDirection
+    , orderBy : OptionalArgument Github.InputObject.RefOrder
+    }
 
 
 type alias RefsRequiredArguments =
@@ -777,7 +862,12 @@ release requiredArgs object_ =
 
 
 type alias ReleasesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ReleaseOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.ReleaseOrder
+    }
 
 
 {-| List of releases which are dependent on this repository.
@@ -803,7 +893,11 @@ releases fillInOptionals object_ =
 
 
 type alias RepositoryTopicsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of applied repository-topic associations for this repository.
@@ -864,7 +958,12 @@ sshUrl =
 
 
 type alias StargazersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.StarOrder
+    }
 
 
 {-| A list of users who have starred this starrable.
@@ -953,7 +1052,11 @@ viewerSubscription =
 
 
 type alias WatchersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of users watching the repository.

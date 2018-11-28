@@ -49,7 +49,11 @@ subject object_ =
 
 
 type alias UsersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| Users who have reacted to the reaction subject with the emotion represented by this reaction group

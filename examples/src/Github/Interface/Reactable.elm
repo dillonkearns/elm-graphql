@@ -84,7 +84,13 @@ reactionGroups object_ =
 
 
 type alias ReactionsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , content : OptionalArgument Github.Enum.ReactionContent.ReactionContent
+    , orderBy : OptionalArgument Github.InputObject.ReactionOrder
+    }
 
 
 {-| A list of Reactions left on the Issue.

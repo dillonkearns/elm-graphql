@@ -84,7 +84,11 @@ changedFiles =
 
 
 type alias CommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| Comments made on the commit.
@@ -151,7 +155,15 @@ deletions =
 
 
 type alias HistoryOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, path : OptionalArgument String, author : OptionalArgument Github.InputObject.CommitAuthor, since : OptionalArgument Github.Scalar.GitTimestamp, until : OptionalArgument Github.Scalar.GitTimestamp }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , path : OptionalArgument String
+    , author : OptionalArgument Github.InputObject.CommitAuthor
+    , since : OptionalArgument Github.Scalar.GitTimestamp
+    , until : OptionalArgument Github.Scalar.GitTimestamp
+    }
 
 
 {-| The linear commit history starting from (and including) this commit, in the same order as `git log`.
@@ -227,7 +239,11 @@ oid =
 
 
 type alias ParentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| The parents of a commit.

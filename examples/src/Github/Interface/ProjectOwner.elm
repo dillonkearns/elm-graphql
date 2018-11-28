@@ -75,7 +75,14 @@ project requiredArgs object_ =
 
 
 type alias ProjectsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.ProjectOrder, search : OptionalArgument String, states : OptionalArgument (List Github.Enum.ProjectState.ProjectState) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.ProjectOrder
+    , search : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.ProjectState.ProjectState)
+    }
 
 
 {-| A list of projects under the owner.

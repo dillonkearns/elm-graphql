@@ -40,7 +40,11 @@ activeLockReason =
 
 
 type alias AssigneesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of Users assigned to this object.
@@ -114,7 +118,11 @@ closedAt =
 
 
 type alias CommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of comments associated with the Issue.
@@ -172,7 +180,11 @@ id =
 
 
 type alias LabelsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of labels associated with the object.
@@ -225,7 +237,11 @@ number =
 
 
 type alias ParticipantsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of Users that are participating in the Issue conversation.
@@ -250,7 +266,11 @@ participants fillInOptionals object_ =
 
 
 type alias ProjectCardsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| List of project cards associated with this issue.
@@ -289,7 +309,13 @@ reactionGroups object_ =
 
 
 type alias ReactionsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , content : OptionalArgument Github.Enum.ReactionContent.ReactionContent
+    , orderBy : OptionalArgument Github.InputObject.ReactionOrder
+    }
 
 
 {-| A list of Reactions left on the Issue.
@@ -337,7 +363,12 @@ state =
 
 
 type alias TimelineOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , since : OptionalArgument Github.Scalar.DateTime
+    }
 
 
 {-| A list of events, comments, commits, etc. associated with the issue.
@@ -384,7 +415,11 @@ url =
 
 
 type alias UserContentEditsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of edits to this content.

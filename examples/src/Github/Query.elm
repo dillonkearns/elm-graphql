@@ -121,7 +121,19 @@ marketplaceListing requiredArgs object_ =
 
 
 type alias MarketplaceListingsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, categorySlug : OptionalArgument String, viewerCanAdmin : OptionalArgument Bool, adminId : OptionalArgument Github.Scalar.Id, organizationId : OptionalArgument Github.Scalar.Id, allStates : OptionalArgument Bool, slugs : OptionalArgument (List (Maybe String)), primaryCategoryOnly : OptionalArgument Bool, withFreeTrialsOnly : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , categorySlug : OptionalArgument String
+    , viewerCanAdmin : OptionalArgument Bool
+    , adminId : OptionalArgument Github.Scalar.Id
+    , organizationId : OptionalArgument Github.Scalar.Id
+    , allStates : OptionalArgument Bool
+    , slugs : OptionalArgument (List (Maybe String))
+    , primaryCategoryOnly : OptionalArgument Bool
+    , withFreeTrialsOnly : OptionalArgument Bool
+    }
 
 
 {-| Look up Marketplace listings
@@ -288,7 +300,11 @@ resource requiredArgs object_ =
 
 
 type alias SearchOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 type alias SearchRequiredArguments =

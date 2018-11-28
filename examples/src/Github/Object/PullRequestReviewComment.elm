@@ -182,7 +182,13 @@ reactionGroups object_ =
 
 
 type alias ReactionsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , content : OptionalArgument Github.Enum.ReactionContent.ReactionContent
+    , orderBy : OptionalArgument Github.InputObject.ReactionOrder
+    }
 
 
 {-| A list of Reactions left on the Issue.
@@ -244,7 +250,11 @@ url =
 
 
 type alias UserContentEditsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of edits to this content.

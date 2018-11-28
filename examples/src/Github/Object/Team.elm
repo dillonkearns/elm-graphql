@@ -31,7 +31,11 @@ selection constructor =
 
 
 type alias AncestorsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of teams that are ancestors of this team.
@@ -78,7 +82,14 @@ avatarUrl fillInOptionals =
 
 
 type alias ChildTeamsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamOrder, userLogins : OptionalArgument (List String), immediateOnly : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.TeamOrder
+    , userLogins : OptionalArgument (List String)
+    , immediateOnly : OptionalArgument Bool
+    }
 
 
 {-| List of child teams belonging to this team
@@ -146,7 +157,11 @@ id =
 
 
 type alias InvitationsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of pending invitations for users to this team
@@ -171,7 +186,14 @@ invitations fillInOptionals object_ =
 
 
 type alias MembersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType, role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , query : OptionalArgument String
+    , membership : OptionalArgument Github.Enum.TeamMembershipType.TeamMembershipType
+    , role : OptionalArgument Github.Enum.TeamMemberRole.TeamMemberRole
+    }
 
 
 {-| A list of users who are members of this team.
@@ -255,7 +277,13 @@ privacy =
 
 
 type alias RepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, query : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.TeamRepositoryOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , query : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.TeamRepositoryOrder
+    }
 
 
 {-| A list of repositories this team has access to.

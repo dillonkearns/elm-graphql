@@ -69,7 +69,11 @@ bioHTML =
 
 
 type alias CommitCommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of commit comments made by this user.
@@ -108,7 +112,15 @@ companyHTML =
 
 
 type alias ContributedRepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories that the user recently contributed to.
@@ -158,7 +170,11 @@ email =
 
 
 type alias FollowersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of users the given user is followed by.
@@ -183,7 +199,11 @@ followers fillInOptionals object_ =
 
 
 type alias FollowingOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of users the given user is following.
@@ -222,7 +242,11 @@ gist requiredArgs object_ =
 
 
 type alias GistCommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of gist comments made by this user.
@@ -247,7 +271,13 @@ gistComments fillInOptionals object_ =
 
 
 type alias GistsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.GistPrivacy.GistPrivacy, orderBy : OptionalArgument Github.InputObject.GistOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.GistPrivacy.GistPrivacy
+    , orderBy : OptionalArgument Github.InputObject.GistOrder
+    }
 
 
 {-| A list of the Gists the user has created.
@@ -328,7 +358,11 @@ isViewer =
 
 
 type alias IssueCommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of issue comments made by this user.
@@ -353,7 +387,14 @@ issueComments fillInOptionals object_ =
 
 
 type alias IssuesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , labels : OptionalArgument (List String)
+    , orderBy : OptionalArgument Github.InputObject.IssueOrder
+    , states : OptionalArgument (List Github.Enum.IssueState.IssueState)
+    }
 
 
 {-| A list of issues assocated with this user.
@@ -416,7 +457,11 @@ organization requiredArgs object_ =
 
 
 type alias OrganizationsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of organizations the user belongs to.
@@ -441,7 +486,15 @@ organizations fillInOptionals object_ =
 
 
 type alias PinnedRepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories this user has pinned to their profile
@@ -470,7 +523,11 @@ pinnedRepositories fillInOptionals object_ =
 
 
 type alias PublicKeysOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of public keys associated with this user.
@@ -495,7 +552,16 @@ publicKeys fillInOptionals object_ =
 
 
 type alias PullRequestsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState)
+    , labels : OptionalArgument (List String)
+    , headRefName : OptionalArgument String
+    , baseRefName : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.IssueOrder
+    }
 
 
 {-| A list of pull requests assocated with this user.
@@ -525,7 +591,16 @@ pullRequests fillInOptionals object_ =
 
 
 type alias RepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool, isFork : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    , isFork : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories that the user owns.
@@ -555,7 +630,16 @@ repositories fillInOptionals object_ =
 
 
 type alias RepositoriesContributedToOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, isLocked : OptionalArgument Bool, includeUserRepositories : OptionalArgument Bool, contributionTypes : OptionalArgument (List (Maybe Github.Enum.RepositoryContributionType.RepositoryContributionType)) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , isLocked : OptionalArgument Bool
+    , includeUserRepositories : OptionalArgument Bool
+    , contributionTypes : OptionalArgument (List (Maybe Github.Enum.RepositoryContributionType.RepositoryContributionType))
+    }
 
 
 {-| A list of repositories that the user recently contributed to.
@@ -606,7 +690,13 @@ resourcePath =
 
 
 type alias StarredRepositoriesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, ownedByViewer : OptionalArgument Bool, orderBy : OptionalArgument Github.InputObject.StarOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , ownedByViewer : OptionalArgument Bool
+    , orderBy : OptionalArgument Github.InputObject.StarOrder
+    }
 
 
 {-| Repositories the user has starred.
@@ -661,7 +751,15 @@ viewerIsFollowing =
 
 
 type alias WatchingOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy, orderBy : OptionalArgument Github.InputObject.RepositoryOrder, affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation)), isLocked : OptionalArgument Bool }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , privacy : OptionalArgument Github.Enum.RepositoryPrivacy.RepositoryPrivacy
+    , orderBy : OptionalArgument Github.InputObject.RepositoryOrder
+    , affiliations : OptionalArgument (List (Maybe Github.Enum.RepositoryAffiliation.RepositoryAffiliation))
+    , isLocked : OptionalArgument Bool
+    }
 
 
 {-| A list of repositories the given user is watching.

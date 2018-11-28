@@ -27,7 +27,11 @@ selection constructor =
 
 
 type alias CommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of comments associated with the gist
@@ -99,7 +103,12 @@ pushedAt =
 
 
 type alias StargazersOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.StarOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.StarOrder
+    }
 
 
 {-| A list of users who have starred this starrable.

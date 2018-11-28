@@ -77,7 +77,14 @@ id =
 
 
 type alias IssuesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, labels : OptionalArgument (List String), orderBy : OptionalArgument Github.InputObject.IssueOrder, states : OptionalArgument (List Github.Enum.IssueState.IssueState) }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , labels : OptionalArgument (List String)
+    , orderBy : OptionalArgument Github.InputObject.IssueOrder
+    , states : OptionalArgument (List Github.Enum.IssueState.IssueState)
+    }
 
 
 {-| A list of issues associated with the milestone.
@@ -112,7 +119,16 @@ number =
 
 
 type alias PullRequestsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState)
+    , labels : OptionalArgument (List String)
+    , headRefName : OptionalArgument String
+    , baseRefName : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.IssueOrder
+    }
 
 
 {-| A list of pull requests associated with the milestone.

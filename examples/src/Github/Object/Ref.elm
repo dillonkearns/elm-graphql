@@ -28,7 +28,16 @@ selection constructor =
 
 
 type alias AssociatedPullRequestsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState), labels : OptionalArgument (List String), headRefName : OptionalArgument String, baseRefName : OptionalArgument String, orderBy : OptionalArgument Github.InputObject.IssueOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.PullRequestState.PullRequestState)
+    , labels : OptionalArgument (List String)
+    , headRefName : OptionalArgument String
+    , baseRefName : OptionalArgument String
+    , orderBy : OptionalArgument Github.InputObject.IssueOrder
+    }
 
 
 {-| A list of pull requests with this ref as the head ref.

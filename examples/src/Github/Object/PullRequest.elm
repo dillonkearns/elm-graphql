@@ -49,7 +49,11 @@ additions =
 
 
 type alias AssigneesOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of Users assigned to this object.
@@ -151,7 +155,11 @@ closedAt =
 
 
 type alias CommentsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of comments associated with the pull request.
@@ -176,7 +184,11 @@ comments fillInOptionals object_ =
 
 
 type alias CommitsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of commits present in this pull request's head branch not present in the base branch.
@@ -283,7 +295,11 @@ isCrossRepository =
 
 
 type alias LabelsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of labels associated with the object.
@@ -364,7 +380,11 @@ number =
 
 
 type alias ParticipantsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of Users that are participating in the Pull Request conversation.
@@ -396,7 +416,11 @@ potentialMergeCommit object_ =
 
 
 type alias ProjectCardsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| List of project cards associated with this pull request.
@@ -435,7 +459,13 @@ reactionGroups object_ =
 
 
 type alias ReactionsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, content : OptionalArgument Github.Enum.ReactionContent.ReactionContent, orderBy : OptionalArgument Github.InputObject.ReactionOrder }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , content : OptionalArgument Github.Enum.ReactionContent.ReactionContent
+    , orderBy : OptionalArgument Github.InputObject.ReactionOrder
+    }
 
 
 {-| A list of Reactions left on the Issue.
@@ -490,7 +520,11 @@ revertUrl =
 
 
 type alias ReviewRequestsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of review requests associated with the pull request.
@@ -515,7 +549,13 @@ reviewRequests fillInOptionals object_ =
 
 
 type alias ReviewsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState), author : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , states : OptionalArgument (List Github.Enum.PullRequestReviewState.PullRequestReviewState)
+    , author : OptionalArgument String
+    }
 
 
 {-| A list of reviews associated with the pull request.
@@ -556,7 +596,12 @@ suggestedReviewers object_ =
 
 
 type alias TimelineOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String, since : OptionalArgument Github.Scalar.DateTime }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    , since : OptionalArgument Github.Scalar.DateTime
+    }
 
 
 {-| A list of events, comments, commits, etc. associated with the pull request.
@@ -603,7 +648,11 @@ url =
 
 
 type alias UserContentEditsOptionalArguments =
-    { first : OptionalArgument Int, after : OptionalArgument String, last : OptionalArgument Int, before : OptionalArgument String }
+    { first : OptionalArgument Int
+    , after : OptionalArgument String
+    , last : OptionalArgument Int
+    , before : OptionalArgument String
+    }
 
 
 {-| A list of edits to this content.
