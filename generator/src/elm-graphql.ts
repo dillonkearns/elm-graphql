@@ -42,9 +42,6 @@ function prependBasePath(
   baseModule: string[],
   outputPath: string
 ): string {
-  console.log("outputPath", outputPath);
-  console.log("baseModule", baseModule);
-
   return path.join(outputPath, baseModule.join("/"), suffixPath);
 }
 
