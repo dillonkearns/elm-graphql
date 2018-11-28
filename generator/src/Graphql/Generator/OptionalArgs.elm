@@ -1,5 +1,6 @@
 module Graphql.Generator.OptionalArgs exposing (Result, generate)
 
+import GenerateSyntax
 import Graphql.Generator.Decoder
 import Graphql.Generator.Let exposing (LetBinding)
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
@@ -88,16 +89,14 @@ annotation fieldName =
 
 typeAlias : List String -> List OptionalArg -> String
 typeAlias apiSubmodule optionalArgs =
-    List.map
-        (\{ name, typeOf } ->
-            CamelCaseName.normalized name
-                ++ " : OptionalArgument "
-                ++ Graphql.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
-        )
-        optionalArgs
-        |> String.join ", "
-        |> List.singleton
-        |> interpolate "{ {0} }"
+    optionalArgs
+        |> List.map
+            (\{ name, typeOf } ->
+                ( CamelCaseName.normalized name
+                , "OptionalArgument " ++ Graphql.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+                )
+            )
+        |> GenerateSyntax.typeAlias
 
 
 optionalArgOrNothing : Type.Arg -> Maybe OptionalArg
