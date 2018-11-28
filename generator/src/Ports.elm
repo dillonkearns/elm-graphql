@@ -12,10 +12,22 @@ port printAndExitFailure : String -> Cmd msg
 port printAndExitSuccess : String -> Cmd msg
 
 
-port introspectSchemaFromFile : String -> Cmd msg
+port introspectSchemaFromFile :
+    { introspectionFilePath : String
+    , excludeDeprecated : Bool
+    , outputPath : String
+    , baseModule : List String
+    }
+    -> Cmd msg
 
 
-port introspectSchemaFromUrl : { excludeDeprecated : Bool, graphqlUrl : String } -> Cmd msg
+port introspectSchemaFromUrl :
+    { excludeDeprecated : Bool
+    , graphqlUrl : String
+    , baseModule : List String
+    , outputPath : String
+    }
+    -> Cmd msg
 
 
 port generateFiles : (Json.Encode.Value -> msg) -> Sub msg

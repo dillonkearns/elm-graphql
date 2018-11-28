@@ -107,13 +107,22 @@ init flags msg =
             , Ports.introspectSchemaFromUrl
                 { graphqlUrl = options.url
                 , excludeDeprecated = options.excludeDeprecated
+                , outputPath = options.outputPath
+                , baseModule = options.base
                 }
             )
 
         FromFile options ->
             -- outputPath excludeDeprecated
             -- "...fetching from file\noptions: " ++ Debug.toString options
-            ( (), Ports.introspectSchemaFromFile options.file )
+            ( ()
+            , Ports.introspectSchemaFromFile
+                { introspectionFilePath = options.file
+                , excludeDeprecated = options.excludeDeprecated
+                , outputPath = options.outputPath
+                , baseModule = options.base
+                }
+            )
 
 
 

@@ -22,22 +22,6 @@ if (args.version) {
   );
   process.exit(0);
 }
-const baseArgRegex = /^[A-Z][A-Za-z_]*(\.[A-Z][A-Za-z_]*)*$/;
-const baseModuleArg: undefined | string = args.base;
-const outputPath: string = args.output || "./src";
-function isValidBaseArg(baseArg: string): boolean {
-  return !!baseArg.match(baseArgRegex);
-}
-if (baseModuleArg && !isValidBaseArg(baseModuleArg)) {
-  console.log(
-    `--base was '${baseModuleArg}' but must be in format ${baseArgRegex}`
-  );
-  process.exit(1);
-}
-const excludeDeprecated: boolean =
-  args.excludeDeprecated === null || args.excludeDeprecated === undefined
-    ? false
-    : args.excludeDeprecated;
 const headerArg: undefined | string | [string] = args.header;
 const addHeader = (object: any, header: string) => {
   const [headerKey, headerValue] = header.split(":");
@@ -53,14 +37,16 @@ if (typeof headerArg === "string") {
     addHeader(headers, header);
   });
 }
-const baseModule = baseModuleArg ? baseModuleArg.split(".") : ["Api"];
-function prependBasePath(suffixPath: string): string {
+function prependBasePath(
+  suffixPath: string,
+  baseModule: string[],
+  outputPath: string
+): string {
+  console.log("outputPath", outputPath);
+  console.log("baseModule", baseModule);
+
   return path.join(outputPath, baseModule.join("/"), suffixPath);
 }
-const graphqlUrl: undefined | string = args._[0];
-const introspectionFile: undefined | string = args["introspection-file"];
-
-warnIfContainsNonGenerated(prependBasePath("/"));
 
 let app = Elm.Main.init({ flags: { argv: process.argv } });
 // app.ports.print.subscribe(console.log);
@@ -74,22 +60,43 @@ app.ports.printAndExitSuccess.subscribe((message: string) => {
 });
 
 app.ports.introspectSchemaFromFile.subscribe(
-  (introspectionFilePath: string) => {
+  ({
+    introspectionFilePath,
+    excludeDeprecated,
+    outputPath,
+    baseModule
+  }: {
+    introspectionFilePath: string;
+    excludeDeprecated: boolean;
+    outputPath: string;
+    baseModule: string[];
+  }) => {
+    warnIfContainsNonGenerated(prependBasePath("/", baseModule, outputPath));
     const introspectionFileJson = JSON.parse(
       fs.readFileSync(introspectionFilePath).toString()
     );
-    onDataAvailable(introspectionFileJson.data || introspectionFileJson);
+    onDataAvailable(
+      introspectionFileJson.data || introspectionFileJson,
+      outputPath,
+      baseModule
+    );
   }
 );
 
 app.ports.introspectSchemaFromUrl.subscribe(
   ({
     graphqlUrl,
-    excludeDeprecated
+    excludeDeprecated,
+    outputPath,
+    baseModule
   }: {
     graphqlUrl: string;
     excludeDeprecated: boolean;
+    outputPath: string;
+    baseModule: string[];
   }) => {
+    warnIfContainsNonGenerated(prependBasePath("/", baseModule, outputPath));
+
     console.log("Fetching GraphQL schema...");
     new GraphQLClient(graphqlUrl, {
       mode: "cors",
@@ -97,7 +104,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     })
       .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
       .then(data => {
-        onDataAvailable(data);
+        onDataAvailable(data, outputPath, baseModule);
       })
       .catch(err => {
         console.log(err.response || err);
@@ -106,30 +113,36 @@ app.ports.introspectSchemaFromUrl.subscribe(
   }
 );
 
-function makeEmptyDirectories(directoryNames: string[]): void {
+function makeEmptyDirectories(
+  baseModule: string[],
+  outputPath: string,
+  directoryNames: string[]
+): void {
   directoryNames.forEach(dir => {
-    fs.mkdirpSync(prependBasePath(dir));
+    fs.mkdirpSync(prependBasePath(dir, baseModule, outputPath));
   });
 }
 
-function onDataAvailable(data: {}) {
+function onDataAvailable(data: {}, outputPath: string, baseModule: string[]) {
   console.log("Generating files...");
   app.ports.generatedFiles.subscribe(async function(generatedFile: {
     [s: string]: string;
   }) {
-    removeGenerated(prependBasePath("/"));
-    makeEmptyDirectories([
+    removeGenerated(prependBasePath("/", baseModule, outputPath));
+    makeEmptyDirectories(baseModule, outputPath, [
       "InputObject",
       "Object",
       "Interface",
       "Union",
       "Enum"
     ]);
-    await Promise.all(writeGeneratedFiles(generatedFile)).catch(err => {
-      console.error("Error writing files", err);
-    });
-    writeIntrospectionFile();
-    applyElmFormat(prependBasePath("/"));
+    await Promise.all(writeGeneratedFiles(outputPath, generatedFile)).catch(
+      err => {
+        console.error("Error writing files", err);
+      }
+    );
+    writeIntrospectionFile(baseModule, outputPath);
+    applyElmFormat(prependBasePath("/", baseModule, outputPath));
     console.log("Success!");
     process.exit(0);
   });
@@ -161,9 +174,12 @@ function removeGenerated(path: string): void {
   glob.sync(path + "/**/*.elm").forEach(fs.unlinkSync);
 }
 
-function writeGeneratedFiles(generatedFile: {
-  [s: string]: string;
-}): Promise<void>[] {
+function writeGeneratedFiles(
+  outputPath: string,
+  generatedFile: {
+    [s: string]: string;
+  }
+): Promise<void>[] {
   return Object.entries(generatedFile).map(([fileName, fileContents]) => {
     const filePath = path.join(outputPath, fileName);
     const fileToWritePromise = fs.writeFile(
@@ -174,9 +190,9 @@ function writeGeneratedFiles(generatedFile: {
   });
 }
 
-function writeIntrospectionFile() {
+function writeIntrospectionFile(baseModule: string[], outputPath: string) {
   fs.writeFile(
-    prependBasePath("elm-graphql-metadata.json"),
+    prependBasePath("elm-graphql-metadata.json", baseModule, outputPath),
     `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
   );
 }
