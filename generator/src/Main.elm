@@ -10,6 +10,7 @@ import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
 import Ports
+import Result.Extra
 
 
 type Msg
@@ -54,18 +55,23 @@ type alias FileArgs =
     }
 
 
+parseHeaders : List String -> Result String (Dict.Dict String String)
 parseHeaders headers =
     headers
-        |> List.filterMap
-            (\header ->
-                case String.split ":" header of
-                    [ key, value ] ->
-                        Just ( key, value )
+        |> List.map parseHeader
+        |> Result.Extra.combine
+        |> Result.map Dict.fromList
 
-                    _ ->
-                        Nothing
-            )
-        |> Dict.fromList
+
+parseHeader : String -> Result String ( String, String )
+parseHeader header =
+    case String.split ":" header of
+        [ key, value ] ->
+            Ok ( key, value )
+
+        _ ->
+            "Could not parse header {0}. Must be of form `<key>: <value>`, for example `authorization: Bearer abcdefg1234567`."
+                |> Err
 
 
 program : Program.Config CliOptions
@@ -79,7 +85,7 @@ program =
                 |> with (Option.flag "excludeDeprecated")
                 |> with
                     (Option.keywordArgList "header"
-                        |> Option.map parseHeaders
+                        |> Option.validateMap parseHeaders
                     )
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
