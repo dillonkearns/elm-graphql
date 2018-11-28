@@ -1,4 +1,12 @@
-port module Ports exposing (generateFiles, introspectSchemaFromFile, introspectSchemaFromUrl, print, printAndExitFailure, printAndExitSuccess)
+port module Ports exposing
+    ( generateFiles
+    , generatedFiles
+    , introspectSchemaFromFile
+    , introspectSchemaFromUrl
+    , print
+    , printAndExitFailure
+    , printAndExitSuccess
+    )
 
 import Json.Encode
 
@@ -32,3 +40,6 @@ port introspectSchemaFromUrl :
 
 
 port generateFiles : (Json.Encode.Value -> msg) -> Sub msg
+
+
+port generatedFiles : Json.Encode.Value -> Cmd msg

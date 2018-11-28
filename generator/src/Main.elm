@@ -26,13 +26,10 @@ run baseModule introspectionQueryJson =
         Ok fields ->
             fields
                 |> Json.Encode.Extra.dict identity Json.Encode.string
-                |> generatedFiles
+                |> Ports.generatedFiles
 
         Err error ->
             Debug.todo ("Got error " ++ Debug.toString error)
-
-
-port generatedFiles : Json.Encode.Value -> Cmd msg
 
 
 type CliOptions
