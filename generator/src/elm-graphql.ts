@@ -180,7 +180,3 @@ function writeIntrospectionFile(baseModule: string[], outputPath: string) {
     `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
   );
 }
-
-(function wait() {
-  if (true) setTimeout(wait, 1000);
-})();
