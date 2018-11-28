@@ -1,6 +1,7 @@
 module Generator.OptionalArgsTests exposing (all)
 
 import Expect
+import GenerateSyntax
 import Graphql.Generator.Let exposing (LetBinding)
 import Graphql.Generator.OptionalArgs as OptionalArgs
 import Graphql.Parser.CamelCaseName as CamelCaseName
@@ -56,7 +57,7 @@ all =
                 ]
                     |> OptionalArgs.generate [ "Api" ]
                     |> expectResult
-                        { typeAlias = "{ id : OptionalArgument String, contains : OptionalArgument String }"
+                        { typeAlias = GenerateSyntax.typeAlias [ ( "id", "OptionalArgument String" ), ( "contains", "OptionalArgument String" ) ]
                         , letBindings =
                             [ ( "filledInOptionals", "fillInOptionals { id = Absent, contains = Absent }" )
                             , ( "optionalArgs", """[ Argument.optional "id" filledInOptionals.id (Encode.string), Argument.optional "contains" filledInOptionals.contains (Encode.string) ]

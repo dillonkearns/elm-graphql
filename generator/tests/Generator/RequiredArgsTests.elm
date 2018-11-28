@@ -1,6 +1,7 @@
 module Generator.RequiredArgsTests exposing (all)
 
 import Expect
+import GenerateSyntax
 import Graphql.Generator.RequiredArgs as RequiredArgs
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.Scalar as Scalar
@@ -46,7 +47,7 @@ all =
                 [ idArg, nameArg ]
                     |> RequiredArgs.generate []
                     |> expectResult
-                        { typeAlias = "{ id : String, name : String }"
+                        { typeAlias = GenerateSyntax.typeAlias [ ( "id", "String" ), ( "name", "String" ) ]
                         , list = """[ Argument.required "id" requiredArgs.id (Encode.string), Argument.required "name" requiredArgs.name (Encode.string) ]"""
                         }
         , test "normalizes arguments" <|
