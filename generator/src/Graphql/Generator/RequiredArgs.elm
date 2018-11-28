@@ -1,5 +1,6 @@
 module Graphql.Generator.RequiredArgs exposing (Result, generate)
 
+import GenerateSyntax
 import Graphql.Generator.Decoder
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.Type as Type
@@ -73,17 +74,13 @@ requiredArgString apiSubmodule { name, referrableType, typeRef } =
 
 requiredArgsAnnotation : List String -> List RequiredArg -> String
 requiredArgsAnnotation apiSubmodule requiredArgs =
-    let
-        annotations =
-            List.map (requiredArgAnnotation apiSubmodule) requiredArgs
-    in
-    "{ " ++ (annotations |> String.join ", ") ++ " }"
+    requiredArgs
+        |> List.map (requiredArgAnnotation apiSubmodule)
+        |> GenerateSyntax.typeAlias
 
 
-requiredArgAnnotation : List String -> RequiredArg -> String
+requiredArgAnnotation : List String -> RequiredArg -> ( String, String )
 requiredArgAnnotation apiSubmodule { name, typeRef } =
-    interpolate
-        "{0} : {1}"
-        [ name |> CamelCaseName.normalized
-        , Graphql.Generator.Decoder.generateType apiSubmodule typeRef
-        ]
+    ( name |> CamelCaseName.normalized
+    , Graphql.Generator.Decoder.generateType apiSubmodule typeRef
+    )

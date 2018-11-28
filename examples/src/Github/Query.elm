@@ -257,7 +257,9 @@ relay object_ =
 
 
 type alias RepositoryRequiredArguments =
-    { owner : String, name : String }
+    { owner : String
+    , name : String
+    }
 
 
 {-| Lookup a given repository by the owner and repository name.
@@ -308,7 +310,9 @@ type alias SearchOptionalArguments =
 
 
 type alias SearchRequiredArguments =
-    { query : String, type_ : Github.Enum.SearchType.SearchType }
+    { query : String
+    , type_ : Github.Enum.SearchType.SearchType
+    }
 
 
 {-| Perform a search across resources.

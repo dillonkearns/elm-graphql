@@ -34,7 +34,9 @@ increment =
 
 
 type alias SendMessageRequiredArguments =
-    { characterId : Swapi.Scalar.Id, phrase : Swapi.Enum.Phrase.Phrase }
+    { characterId : Swapi.Scalar.Id
+    , phrase : Swapi.Enum.Phrase.Phrase
+    }
 
 
 sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Swapi.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
