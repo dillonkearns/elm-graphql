@@ -1,5 +1,6 @@
 module Graphql.Generator.InputObjectFile exposing (generate)
 
+import GenerateSyntax
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.Decoder as Decoder
 import Graphql.Generator.Imports as Imports
@@ -75,14 +76,14 @@ generateEncoderAndAlias context inputObjectDetails =
 
 typeAlias : Context -> InputObjectDetails -> String
 typeAlias context { name, fields, hasLoop } =
-    if hasLoop then
+    (if hasLoop then
         interpolate """{-| Type alias for the `{0}` attributes. Note that this type
 needs to use the `{0}` type (not just a plain type alias) because it has
 references to itself either directly (recursive) or indirectly (circular). See
 <https://github.com/dillonkearns/elm-graphql/issues/33>.
 -}
 type alias {0}Raw =
-    { {1} }
+    {1}
 
 
 {-| Type for the {0} input object.
@@ -90,27 +91,24 @@ type alias {0}Raw =
 type {0}
     = {0} {0}Raw
     """
-            [ ClassCaseName.normalized name
-            , List.map (aliasEntry context) fields |> String.join ", "
-            ]
 
-    else
+     else
         interpolate """{-| Type for the {0} input object.
 -}
 type alias {0} =
-    { {1} }
+    {1}
     """
-            [ ClassCaseName.normalized name
-            , List.map (aliasEntry context) fields |> String.join ", "
-            ]
-
-
-aliasEntry : Context -> Type.Field -> String
-aliasEntry { apiSubmodule } field =
-    interpolate "{0} : {1}"
-        [ CamelCaseName.normalized field.name
-        , Decoder.generateTypeForInputObject apiSubmodule field.typeRef
+    )
+        [ ClassCaseName.normalized name
+        , List.map (aliasEntry context) fields |> GenerateSyntax.typeAlias
         ]
+
+
+aliasEntry : Context -> Type.Field -> ( String, String )
+aliasEntry { apiSubmodule } field =
+    ( CamelCaseName.normalized field.name
+    , Decoder.generateTypeForInputObject apiSubmodule field.typeRef
+    )
 
 
 encoder : Context -> InputObjectDetails -> String

@@ -107,13 +107,18 @@ type alias GreetingRequiredFields =
 
 
 type alias GreetingOptionalFields =
-    { language : OptionalArgument Normalize.Enum.Language.Language, options : OptionalArgument GreetingOptions }
+    { language : OptionalArgument Normalize.Enum.Language.Language
+    , options : OptionalArgument GreetingOptions
+    }
 
 
 {-| Type for the Greeting input object.
 -}
 type alias Greeting =
-    { language : OptionalArgument Normalize.Enum.Language.Language, name : String, options : OptionalArgument GreetingOptions }
+    { language : OptionalArgument Normalize.Enum.Language.Language
+    , name : String
+    , options : OptionalArgument GreetingOptions
+    }
 
 
 {-| Encode a Greeting into a value that can be used as an argument.

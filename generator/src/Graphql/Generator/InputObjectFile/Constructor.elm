@@ -1,5 +1,6 @@
 module Graphql.Generator.InputObjectFile.Constructor exposing (generate)
 
+import GenerateSyntax
 import Graphql.Generator.AnnotatedArg as AnnotatedArg
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.Decoder as Decoder
@@ -104,8 +105,8 @@ constructorFieldsAlias nameThing context fields =
     if List.length fields > 0 then
         interpolate
             """type alias {0} =
-    { {1} }"""
-            [ nameThing, List.map (aliasEntry context) fields |> String.join ", " ]
+    {1}"""
+            [ nameThing, List.map (aliasEntry context) fields |> GenerateSyntax.typeAlias ]
 
     else
         ""
@@ -119,12 +120,11 @@ filledOptionalsRecord optionalFields =
         |> String.join ", "
 
 
-aliasEntry : Context -> Type.Field -> String
+aliasEntry : Context -> Type.Field -> ( String, String )
 aliasEntry { apiSubmodule } field =
-    interpolate "{0} : {1}"
-        [ CamelCaseName.normalized field.name
-        , Decoder.generateTypeForInputObject apiSubmodule field.typeRef
-        ]
+    ( CamelCaseName.normalized field.name
+    , Decoder.generateTypeForInputObject apiSubmodule field.typeRef
+    )
 
 
 when : Bool -> value -> Maybe value

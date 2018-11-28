@@ -47,7 +47,9 @@ buildAcceptTopicSuggestionInput required fillOptionals =
 
 
 type alias AcceptTopicSuggestionInputRequiredFields =
-    { repositoryId : Github.Scalar.Id, name : String }
+    { repositoryId : Github.Scalar.Id
+    , name : String
+    }
 
 
 type alias AcceptTopicSuggestionInputOptionalFields =
@@ -57,7 +59,10 @@ type alias AcceptTopicSuggestionInputOptionalFields =
 {-| Type for the AcceptTopicSuggestionInput input object.
 -}
 type alias AcceptTopicSuggestionInput =
-    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, name : String }
+    { clientMutationId : OptionalArgument String
+    , repositoryId : Github.Scalar.Id
+    , name : String
+    }
 
 
 {-| Encode a AcceptTopicSuggestionInput into a value that can be used as an argument.
@@ -79,7 +84,9 @@ buildAddCommentInput required fillOptionals =
 
 
 type alias AddCommentInputRequiredFields =
-    { subjectId : Github.Scalar.Id, body : String }
+    { subjectId : Github.Scalar.Id
+    , body : String
+    }
 
 
 type alias AddCommentInputOptionalFields =
@@ -89,7 +96,10 @@ type alias AddCommentInputOptionalFields =
 {-| Type for the AddCommentInput input object.
 -}
 type alias AddCommentInput =
-    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, body : String }
+    { clientMutationId : OptionalArgument String
+    , subjectId : Github.Scalar.Id
+    , body : String
+    }
 
 
 {-| Encode a AddCommentInput into a value that can be used as an argument.
@@ -115,13 +125,20 @@ type alias AddProjectCardInputRequiredFields =
 
 
 type alias AddProjectCardInputOptionalFields =
-    { clientMutationId : OptionalArgument String, contentId : OptionalArgument Github.Scalar.Id, note : OptionalArgument String }
+    { clientMutationId : OptionalArgument String
+    , contentId : OptionalArgument Github.Scalar.Id
+    , note : OptionalArgument String
+    }
 
 
 {-| Type for the AddProjectCardInput input object.
 -}
 type alias AddProjectCardInput =
-    { clientMutationId : OptionalArgument String, projectColumnId : Github.Scalar.Id, contentId : OptionalArgument Github.Scalar.Id, note : OptionalArgument String }
+    { clientMutationId : OptionalArgument String
+    , projectColumnId : Github.Scalar.Id
+    , contentId : OptionalArgument Github.Scalar.Id
+    , note : OptionalArgument String
+    }
 
 
 {-| Encode a AddProjectCardInput into a value that can be used as an argument.
@@ -143,7 +160,9 @@ buildAddProjectColumnInput required fillOptionals =
 
 
 type alias AddProjectColumnInputRequiredFields =
-    { projectId : Github.Scalar.Id, name : String }
+    { projectId : Github.Scalar.Id
+    , name : String
+    }
 
 
 type alias AddProjectColumnInputOptionalFields =
@@ -153,7 +172,10 @@ type alias AddProjectColumnInputOptionalFields =
 {-| Type for the AddProjectColumnInput input object.
 -}
 type alias AddProjectColumnInput =
-    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : String }
+    { clientMutationId : OptionalArgument String
+    , projectId : Github.Scalar.Id
+    , name : String
+    }
 
 
 {-| Encode a AddProjectColumnInput into a value that can be used as an argument.
@@ -175,17 +197,31 @@ buildAddPullRequestReviewCommentInput required fillOptionals =
 
 
 type alias AddPullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id, body : String }
+    { pullRequestReviewId : Github.Scalar.Id
+    , body : String
+    }
 
 
 type alias AddPullRequestReviewCommentInputOptionalFields =
-    { clientMutationId : OptionalArgument String, commitOID : OptionalArgument Github.Scalar.GitObjectID, path : OptionalArgument String, position : OptionalArgument Int, inReplyTo : OptionalArgument Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , path : OptionalArgument String
+    , position : OptionalArgument Int
+    , inReplyTo : OptionalArgument Github.Scalar.Id
+    }
 
 
 {-| Type for the AddPullRequestReviewCommentInput input object.
 -}
 type alias AddPullRequestReviewCommentInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : String, path : OptionalArgument String, position : OptionalArgument Int, inReplyTo : OptionalArgument Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , pullRequestReviewId : Github.Scalar.Id
+    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , body : String
+    , path : OptionalArgument String
+    , position : OptionalArgument Int
+    , inReplyTo : OptionalArgument Github.Scalar.Id
+    }
 
 
 {-| Encode a AddPullRequestReviewCommentInput into a value that can be used as an argument.
@@ -211,13 +247,24 @@ type alias AddPullRequestReviewInputRequiredFields =
 
 
 type alias AddPullRequestReviewInputOptionalFields =
-    { clientMutationId : OptionalArgument String, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : OptionalArgument String, event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment)) }
+    { clientMutationId : OptionalArgument String
+    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , body : OptionalArgument String
+    , event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
+    , comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment))
+    }
 
 
 {-| Type for the AddPullRequestReviewInput input object.
 -}
 type alias AddPullRequestReviewInput =
-    { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, commitOID : OptionalArgument Github.Scalar.GitObjectID, body : OptionalArgument String, event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment)) }
+    { clientMutationId : OptionalArgument String
+    , pullRequestId : Github.Scalar.Id
+    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , body : OptionalArgument String
+    , event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
+    , comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment))
+    }
 
 
 {-| Encode a AddPullRequestReviewInput into a value that can be used as an argument.
@@ -239,7 +286,9 @@ buildAddReactionInput required fillOptionals =
 
 
 type alias AddReactionInputRequiredFields =
-    { subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+    { subjectId : Github.Scalar.Id
+    , content : Github.Enum.ReactionContent.ReactionContent
+    }
 
 
 type alias AddReactionInputOptionalFields =
@@ -249,7 +298,10 @@ type alias AddReactionInputOptionalFields =
 {-| Type for the AddReactionInput input object.
 -}
 type alias AddReactionInput =
-    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+    { clientMutationId : OptionalArgument String
+    , subjectId : Github.Scalar.Id
+    , content : Github.Enum.ReactionContent.ReactionContent
+    }
 
 
 {-| Encode a AddReactionInput into a value that can be used as an argument.
@@ -281,7 +333,9 @@ type alias AddStarInputOptionalFields =
 {-| Type for the AddStarInput input object.
 -}
 type alias AddStarInput =
-    { clientMutationId : OptionalArgument String, starrableId : Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , starrableId : Github.Scalar.Id
+    }
 
 
 {-| Encode a AddStarInput into a value that can be used as an argument.
@@ -303,13 +357,17 @@ buildCommitAuthor fillOptionals =
 
 
 type alias CommitAuthorOptionalFields =
-    { id : OptionalArgument Github.Scalar.Id, emails : OptionalArgument (List String) }
+    { id : OptionalArgument Github.Scalar.Id
+    , emails : OptionalArgument (List String)
+    }
 
 
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
-    { id : OptionalArgument Github.Scalar.Id, emails : OptionalArgument (List String) }
+    { id : OptionalArgument Github.Scalar.Id
+    , emails : OptionalArgument (List String)
+    }
 
 
 {-| Encode a CommitAuthor into a value that can be used as an argument.
@@ -331,17 +389,25 @@ buildCreateProjectInput required fillOptionals =
 
 
 type alias CreateProjectInputRequiredFields =
-    { ownerId : Github.Scalar.Id, name : String }
+    { ownerId : Github.Scalar.Id
+    , name : String
+    }
 
 
 type alias CreateProjectInputOptionalFields =
-    { clientMutationId : OptionalArgument String, body : OptionalArgument String }
+    { clientMutationId : OptionalArgument String
+    , body : OptionalArgument String
+    }
 
 
 {-| Type for the CreateProjectInput input object.
 -}
 type alias CreateProjectInput =
-    { clientMutationId : OptionalArgument String, ownerId : Github.Scalar.Id, name : String, body : OptionalArgument String }
+    { clientMutationId : OptionalArgument String
+    , ownerId : Github.Scalar.Id
+    , name : String
+    , body : OptionalArgument String
+    }
 
 
 {-| Encode a CreateProjectInput into a value that can be used as an argument.
@@ -363,7 +429,10 @@ buildDeclineTopicSuggestionInput required fillOptionals =
 
 
 type alias DeclineTopicSuggestionInputRequiredFields =
-    { repositoryId : Github.Scalar.Id, name : String, reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
+    { repositoryId : Github.Scalar.Id
+    , name : String
+    , reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason
+    }
 
 
 type alias DeclineTopicSuggestionInputOptionalFields =
@@ -373,7 +442,11 @@ type alias DeclineTopicSuggestionInputOptionalFields =
 {-| Type for the DeclineTopicSuggestionInput input object.
 -}
 type alias DeclineTopicSuggestionInput =
-    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, name : String, reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason }
+    { clientMutationId : OptionalArgument String
+    , repositoryId : Github.Scalar.Id
+    , name : String
+    , reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason
+    }
 
 
 {-| Encode a DeclineTopicSuggestionInput into a value that can be used as an argument.
@@ -405,7 +478,9 @@ type alias DeleteProjectCardInputOptionalFields =
 {-| Type for the DeleteProjectCardInput input object.
 -}
 type alias DeleteProjectCardInput =
-    { clientMutationId : OptionalArgument String, cardId : Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , cardId : Github.Scalar.Id
+    }
 
 
 {-| Encode a DeleteProjectCardInput into a value that can be used as an argument.
@@ -437,7 +512,9 @@ type alias DeleteProjectColumnInputOptionalFields =
 {-| Type for the DeleteProjectColumnInput input object.
 -}
 type alias DeleteProjectColumnInput =
-    { clientMutationId : OptionalArgument String, columnId : Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , columnId : Github.Scalar.Id
+    }
 
 
 {-| Encode a DeleteProjectColumnInput into a value that can be used as an argument.
@@ -469,7 +546,9 @@ type alias DeleteProjectInputOptionalFields =
 {-| Type for the DeleteProjectInput input object.
 -}
 type alias DeleteProjectInput =
-    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , projectId : Github.Scalar.Id
+    }
 
 
 {-| Encode a DeleteProjectInput into a value that can be used as an argument.
@@ -501,7 +580,9 @@ type alias DeletePullRequestReviewInputOptionalFields =
 {-| Type for the DeletePullRequestReviewInput input object.
 -}
 type alias DeletePullRequestReviewInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , pullRequestReviewId : Github.Scalar.Id
+    }
 
 
 {-| Encode a DeletePullRequestReviewInput into a value that can be used as an argument.
@@ -523,7 +604,9 @@ buildDismissPullRequestReviewInput required fillOptionals =
 
 
 type alias DismissPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id, message : String }
+    { pullRequestReviewId : Github.Scalar.Id
+    , message : String
+    }
 
 
 type alias DismissPullRequestReviewInputOptionalFields =
@@ -533,7 +616,10 @@ type alias DismissPullRequestReviewInputOptionalFields =
 {-| Type for the DismissPullRequestReviewInput input object.
 -}
 type alias DismissPullRequestReviewInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, message : String }
+    { clientMutationId : OptionalArgument String
+    , pullRequestReviewId : Github.Scalar.Id
+    , message : String
+    }
 
 
 {-| Encode a DismissPullRequestReviewInput into a value that can be used as an argument.
@@ -550,13 +636,19 @@ buildDraftPullRequestReviewComment required =
 
 
 type alias DraftPullRequestReviewCommentRequiredFields =
-    { path : String, position : Int, body : String }
+    { path : String
+    , position : Int
+    , body : String
+    }
 
 
 {-| Type for the DraftPullRequestReviewComment input object.
 -}
 type alias DraftPullRequestReviewComment =
-    { path : String, position : Int, body : String }
+    { path : String
+    , position : Int
+    , body : String
+    }
 
 
 {-| Encode a DraftPullRequestReviewComment into a value that can be used as an argument.
@@ -573,13 +665,17 @@ buildGistOrder required =
 
 
 type alias GistOrderRequiredFields =
-    { field : Github.Enum.GistOrderField.GistOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.GistOrderField.GistOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the GistOrder input object.
 -}
 type alias GistOrder =
-    { field : Github.Enum.GistOrderField.GistOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.GistOrderField.GistOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a GistOrder into a value that can be used as an argument.
@@ -596,13 +692,17 @@ buildIssueOrder required =
 
 
 type alias IssueOrderRequiredFields =
-    { field : Github.Enum.IssueOrderField.IssueOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.IssueOrderField.IssueOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the IssueOrder input object.
 -}
 type alias IssueOrder =
-    { field : Github.Enum.IssueOrderField.IssueOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.IssueOrderField.IssueOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a IssueOrder into a value that can be used as an argument.
@@ -619,13 +719,17 @@ buildLanguageOrder required =
 
 
 type alias LanguageOrderRequiredFields =
-    { field : Github.Enum.LanguageOrderField.LanguageOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.LanguageOrderField.LanguageOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the LanguageOrder input object.
 -}
 type alias LanguageOrder =
-    { field : Github.Enum.LanguageOrderField.LanguageOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.LanguageOrderField.LanguageOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a LanguageOrder into a value that can be used as an argument.
@@ -651,13 +755,18 @@ type alias LockLockableInputRequiredFields =
 
 
 type alias LockLockableInputOptionalFields =
-    { clientMutationId : OptionalArgument String, lockReason : OptionalArgument Github.Enum.LockReason.LockReason }
+    { clientMutationId : OptionalArgument String
+    , lockReason : OptionalArgument Github.Enum.LockReason.LockReason
+    }
 
 
 {-| Type for the LockLockableInput input object.
 -}
 type alias LockLockableInput =
-    { clientMutationId : OptionalArgument String, lockableId : Github.Scalar.Id, lockReason : OptionalArgument Github.Enum.LockReason.LockReason }
+    { clientMutationId : OptionalArgument String
+    , lockableId : Github.Scalar.Id
+    , lockReason : OptionalArgument Github.Enum.LockReason.LockReason
+    }
 
 
 {-| Encode a LockLockableInput into a value that can be used as an argument.
@@ -674,13 +783,17 @@ buildMilestoneOrder required =
 
 
 type alias MilestoneOrderRequiredFields =
-    { field : Github.Enum.MilestoneOrderField.MilestoneOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.MilestoneOrderField.MilestoneOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the MilestoneOrder input object.
 -}
 type alias MilestoneOrder =
-    { field : Github.Enum.MilestoneOrderField.MilestoneOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.MilestoneOrderField.MilestoneOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a MilestoneOrder into a value that can be used as an argument.
@@ -702,17 +815,25 @@ buildMoveProjectCardInput required fillOptionals =
 
 
 type alias MoveProjectCardInputRequiredFields =
-    { cardId : Github.Scalar.Id, columnId : Github.Scalar.Id }
+    { cardId : Github.Scalar.Id
+    , columnId : Github.Scalar.Id
+    }
 
 
 type alias MoveProjectCardInputOptionalFields =
-    { clientMutationId : OptionalArgument String, afterCardId : OptionalArgument Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , afterCardId : OptionalArgument Github.Scalar.Id
+    }
 
 
 {-| Type for the MoveProjectCardInput input object.
 -}
 type alias MoveProjectCardInput =
-    { clientMutationId : OptionalArgument String, cardId : Github.Scalar.Id, columnId : Github.Scalar.Id, afterCardId : OptionalArgument Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , cardId : Github.Scalar.Id
+    , columnId : Github.Scalar.Id
+    , afterCardId : OptionalArgument Github.Scalar.Id
+    }
 
 
 {-| Encode a MoveProjectCardInput into a value that can be used as an argument.
@@ -738,13 +859,18 @@ type alias MoveProjectColumnInputRequiredFields =
 
 
 type alias MoveProjectColumnInputOptionalFields =
-    { clientMutationId : OptionalArgument String, afterColumnId : OptionalArgument Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , afterColumnId : OptionalArgument Github.Scalar.Id
+    }
 
 
 {-| Type for the MoveProjectColumnInput input object.
 -}
 type alias MoveProjectColumnInput =
-    { clientMutationId : OptionalArgument String, columnId : Github.Scalar.Id, afterColumnId : OptionalArgument Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , columnId : Github.Scalar.Id
+    , afterColumnId : OptionalArgument Github.Scalar.Id
+    }
 
 
 {-| Encode a MoveProjectColumnInput into a value that can be used as an argument.
@@ -761,13 +887,17 @@ buildProjectOrder required =
 
 
 type alias ProjectOrderRequiredFields =
-    { field : Github.Enum.ProjectOrderField.ProjectOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.ProjectOrderField.ProjectOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the ProjectOrder input object.
 -}
 type alias ProjectOrder =
-    { field : Github.Enum.ProjectOrderField.ProjectOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.ProjectOrderField.ProjectOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a ProjectOrder into a value that can be used as an argument.
@@ -784,13 +914,17 @@ buildReactionOrder required =
 
 
 type alias ReactionOrderRequiredFields =
-    { field : Github.Enum.ReactionOrderField.ReactionOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.ReactionOrderField.ReactionOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the ReactionOrder input object.
 -}
 type alias ReactionOrder =
-    { field : Github.Enum.ReactionOrderField.ReactionOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.ReactionOrderField.ReactionOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a ReactionOrder into a value that can be used as an argument.
@@ -807,13 +941,17 @@ buildRefOrder required =
 
 
 type alias RefOrderRequiredFields =
-    { field : Github.Enum.RefOrderField.RefOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.RefOrderField.RefOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the RefOrder input object.
 -}
 type alias RefOrder =
-    { field : Github.Enum.RefOrderField.RefOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.RefOrderField.RefOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a RefOrder into a value that can be used as an argument.
@@ -830,13 +968,17 @@ buildReleaseOrder required =
 
 
 type alias ReleaseOrderRequiredFields =
-    { field : Github.Enum.ReleaseOrderField.ReleaseOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.ReleaseOrderField.ReleaseOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the ReleaseOrder input object.
 -}
 type alias ReleaseOrder =
-    { field : Github.Enum.ReleaseOrderField.ReleaseOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.ReleaseOrderField.ReleaseOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a ReleaseOrder into a value that can be used as an argument.
@@ -858,7 +1000,9 @@ buildRemoveOutsideCollaboratorInput required fillOptionals =
 
 
 type alias RemoveOutsideCollaboratorInputRequiredFields =
-    { userId : Github.Scalar.Id, organizationId : Github.Scalar.Id }
+    { userId : Github.Scalar.Id
+    , organizationId : Github.Scalar.Id
+    }
 
 
 type alias RemoveOutsideCollaboratorInputOptionalFields =
@@ -868,7 +1012,10 @@ type alias RemoveOutsideCollaboratorInputOptionalFields =
 {-| Type for the RemoveOutsideCollaboratorInput input object.
 -}
 type alias RemoveOutsideCollaboratorInput =
-    { clientMutationId : OptionalArgument String, userId : Github.Scalar.Id, organizationId : Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , userId : Github.Scalar.Id
+    , organizationId : Github.Scalar.Id
+    }
 
 
 {-| Encode a RemoveOutsideCollaboratorInput into a value that can be used as an argument.
@@ -890,7 +1037,9 @@ buildRemoveReactionInput required fillOptionals =
 
 
 type alias RemoveReactionInputRequiredFields =
-    { subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+    { subjectId : Github.Scalar.Id
+    , content : Github.Enum.ReactionContent.ReactionContent
+    }
 
 
 type alias RemoveReactionInputOptionalFields =
@@ -900,7 +1049,10 @@ type alias RemoveReactionInputOptionalFields =
 {-| Type for the RemoveReactionInput input object.
 -}
 type alias RemoveReactionInput =
-    { clientMutationId : OptionalArgument String, subjectId : Github.Scalar.Id, content : Github.Enum.ReactionContent.ReactionContent }
+    { clientMutationId : OptionalArgument String
+    , subjectId : Github.Scalar.Id
+    , content : Github.Enum.ReactionContent.ReactionContent
+    }
 
 
 {-| Encode a RemoveReactionInput into a value that can be used as an argument.
@@ -932,7 +1084,9 @@ type alias RemoveStarInputOptionalFields =
 {-| Type for the RemoveStarInput input object.
 -}
 type alias RemoveStarInput =
-    { clientMutationId : OptionalArgument String, starrableId : Github.Scalar.Id }
+    { clientMutationId : OptionalArgument String
+    , starrableId : Github.Scalar.Id
+    }
 
 
 {-| Encode a RemoveStarInput into a value that can be used as an argument.
@@ -949,13 +1103,17 @@ buildRepositoryOrder required =
 
 
 type alias RepositoryOrderRequiredFields =
-    { field : Github.Enum.RepositoryOrderField.RepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.RepositoryOrderField.RepositoryOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the RepositoryOrder input object.
 -}
 type alias RepositoryOrder =
-    { field : Github.Enum.RepositoryOrderField.RepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.RepositoryOrderField.RepositoryOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a RepositoryOrder into a value that can be used as an argument.
@@ -981,13 +1139,22 @@ type alias RequestReviewsInputRequiredFields =
 
 
 type alias RequestReviewsInputOptionalFields =
-    { clientMutationId : OptionalArgument String, userIds : OptionalArgument (List Github.Scalar.Id), teamIds : OptionalArgument (List Github.Scalar.Id), union : OptionalArgument Bool }
+    { clientMutationId : OptionalArgument String
+    , userIds : OptionalArgument (List Github.Scalar.Id)
+    , teamIds : OptionalArgument (List Github.Scalar.Id)
+    , union : OptionalArgument Bool
+    }
 
 
 {-| Type for the RequestReviewsInput input object.
 -}
 type alias RequestReviewsInput =
-    { clientMutationId : OptionalArgument String, pullRequestId : Github.Scalar.Id, userIds : OptionalArgument (List Github.Scalar.Id), teamIds : OptionalArgument (List Github.Scalar.Id), union : OptionalArgument Bool }
+    { clientMutationId : OptionalArgument String
+    , pullRequestId : Github.Scalar.Id
+    , userIds : OptionalArgument (List Github.Scalar.Id)
+    , teamIds : OptionalArgument (List Github.Scalar.Id)
+    , union : OptionalArgument Bool
+    }
 
 
 {-| Encode a RequestReviewsInput into a value that can be used as an argument.
@@ -1004,13 +1171,17 @@ buildStarOrder required =
 
 
 type alias StarOrderRequiredFields =
-    { field : Github.Enum.StarOrderField.StarOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.StarOrderField.StarOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the StarOrder input object.
 -}
 type alias StarOrder =
-    { field : Github.Enum.StarOrderField.StarOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.StarOrderField.StarOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a StarOrder into a value that can be used as an argument.
@@ -1032,17 +1203,25 @@ buildSubmitPullRequestReviewInput required fillOptionals =
 
 
 type alias SubmitPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id, event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent }
+    { pullRequestReviewId : Github.Scalar.Id
+    , event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
+    }
 
 
 type alias SubmitPullRequestReviewInputOptionalFields =
-    { clientMutationId : OptionalArgument String, body : OptionalArgument String }
+    { clientMutationId : OptionalArgument String
+    , body : OptionalArgument String
+    }
 
 
 {-| Type for the SubmitPullRequestReviewInput input object.
 -}
 type alias SubmitPullRequestReviewInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent, body : OptionalArgument String }
+    { clientMutationId : OptionalArgument String
+    , pullRequestReviewId : Github.Scalar.Id
+    , event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
+    , body : OptionalArgument String
+    }
 
 
 {-| Encode a SubmitPullRequestReviewInput into a value that can be used as an argument.
@@ -1059,13 +1238,17 @@ buildTeamOrder required =
 
 
 type alias TeamOrderRequiredFields =
-    { field : Github.Enum.TeamOrderField.TeamOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.TeamOrderField.TeamOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the TeamOrder input object.
 -}
 type alias TeamOrder =
-    { field : Github.Enum.TeamOrderField.TeamOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.TeamOrderField.TeamOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a TeamOrder into a value that can be used as an argument.
@@ -1082,13 +1265,17 @@ buildTeamRepositoryOrder required =
 
 
 type alias TeamRepositoryOrderRequiredFields =
-    { field : Github.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Type for the TeamRepositoryOrder input object.
 -}
 type alias TeamRepositoryOrder =
-    { field : Github.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField, direction : Github.Enum.OrderDirection.OrderDirection }
+    { field : Github.Enum.TeamRepositoryOrderField.TeamRepositoryOrderField
+    , direction : Github.Enum.OrderDirection.OrderDirection
+    }
 
 
 {-| Encode a TeamRepositoryOrder into a value that can be used as an argument.
@@ -1110,7 +1297,9 @@ buildUpdateProjectCardInput required fillOptionals =
 
 
 type alias UpdateProjectCardInputRequiredFields =
-    { projectCardId : Github.Scalar.Id, note : String }
+    { projectCardId : Github.Scalar.Id
+    , note : String
+    }
 
 
 type alias UpdateProjectCardInputOptionalFields =
@@ -1120,7 +1309,10 @@ type alias UpdateProjectCardInputOptionalFields =
 {-| Type for the UpdateProjectCardInput input object.
 -}
 type alias UpdateProjectCardInput =
-    { clientMutationId : OptionalArgument String, projectCardId : Github.Scalar.Id, note : String }
+    { clientMutationId : OptionalArgument String
+    , projectCardId : Github.Scalar.Id
+    , note : String
+    }
 
 
 {-| Encode a UpdateProjectCardInput into a value that can be used as an argument.
@@ -1142,7 +1334,9 @@ buildUpdateProjectColumnInput required fillOptionals =
 
 
 type alias UpdateProjectColumnInputRequiredFields =
-    { projectColumnId : Github.Scalar.Id, name : String }
+    { projectColumnId : Github.Scalar.Id
+    , name : String
+    }
 
 
 type alias UpdateProjectColumnInputOptionalFields =
@@ -1152,7 +1346,10 @@ type alias UpdateProjectColumnInputOptionalFields =
 {-| Type for the UpdateProjectColumnInput input object.
 -}
 type alias UpdateProjectColumnInput =
-    { clientMutationId : OptionalArgument String, projectColumnId : Github.Scalar.Id, name : String }
+    { clientMutationId : OptionalArgument String
+    , projectColumnId : Github.Scalar.Id
+    , name : String
+    }
 
 
 {-| Encode a UpdateProjectColumnInput into a value that can be used as an argument.
@@ -1178,13 +1375,24 @@ type alias UpdateProjectInputRequiredFields =
 
 
 type alias UpdateProjectInputOptionalFields =
-    { clientMutationId : OptionalArgument String, name : OptionalArgument String, body : OptionalArgument String, state : OptionalArgument Github.Enum.ProjectState.ProjectState, public : OptionalArgument Bool }
+    { clientMutationId : OptionalArgument String
+    , name : OptionalArgument String
+    , body : OptionalArgument String
+    , state : OptionalArgument Github.Enum.ProjectState.ProjectState
+    , public : OptionalArgument Bool
+    }
 
 
 {-| Type for the UpdateProjectInput input object.
 -}
 type alias UpdateProjectInput =
-    { clientMutationId : OptionalArgument String, projectId : Github.Scalar.Id, name : OptionalArgument String, body : OptionalArgument String, state : OptionalArgument Github.Enum.ProjectState.ProjectState, public : OptionalArgument Bool }
+    { clientMutationId : OptionalArgument String
+    , projectId : Github.Scalar.Id
+    , name : OptionalArgument String
+    , body : OptionalArgument String
+    , state : OptionalArgument Github.Enum.ProjectState.ProjectState
+    , public : OptionalArgument Bool
+    }
 
 
 {-| Encode a UpdateProjectInput into a value that can be used as an argument.
@@ -1206,7 +1414,9 @@ buildUpdatePullRequestReviewCommentInput required fillOptionals =
 
 
 type alias UpdatePullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewCommentId : Github.Scalar.Id, body : String }
+    { pullRequestReviewCommentId : Github.Scalar.Id
+    , body : String
+    }
 
 
 type alias UpdatePullRequestReviewCommentInputOptionalFields =
@@ -1216,7 +1426,10 @@ type alias UpdatePullRequestReviewCommentInputOptionalFields =
 {-| Type for the UpdatePullRequestReviewCommentInput input object.
 -}
 type alias UpdatePullRequestReviewCommentInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewCommentId : Github.Scalar.Id, body : String }
+    { clientMutationId : OptionalArgument String
+    , pullRequestReviewCommentId : Github.Scalar.Id
+    , body : String
+    }
 
 
 {-| Encode a UpdatePullRequestReviewCommentInput into a value that can be used as an argument.
@@ -1238,7 +1451,9 @@ buildUpdatePullRequestReviewInput required fillOptionals =
 
 
 type alias UpdatePullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id, body : String }
+    { pullRequestReviewId : Github.Scalar.Id
+    , body : String
+    }
 
 
 type alias UpdatePullRequestReviewInputOptionalFields =
@@ -1248,7 +1463,10 @@ type alias UpdatePullRequestReviewInputOptionalFields =
 {-| Type for the UpdatePullRequestReviewInput input object.
 -}
 type alias UpdatePullRequestReviewInput =
-    { clientMutationId : OptionalArgument String, pullRequestReviewId : Github.Scalar.Id, body : String }
+    { clientMutationId : OptionalArgument String
+    , pullRequestReviewId : Github.Scalar.Id
+    , body : String
+    }
 
 
 {-| Encode a UpdatePullRequestReviewInput into a value that can be used as an argument.
@@ -1270,7 +1488,9 @@ buildUpdateSubscriptionInput required fillOptionals =
 
 
 type alias UpdateSubscriptionInputRequiredFields =
-    { subscribableId : Github.Scalar.Id, state : Github.Enum.SubscriptionState.SubscriptionState }
+    { subscribableId : Github.Scalar.Id
+    , state : Github.Enum.SubscriptionState.SubscriptionState
+    }
 
 
 type alias UpdateSubscriptionInputOptionalFields =
@@ -1280,7 +1500,10 @@ type alias UpdateSubscriptionInputOptionalFields =
 {-| Type for the UpdateSubscriptionInput input object.
 -}
 type alias UpdateSubscriptionInput =
-    { clientMutationId : OptionalArgument String, subscribableId : Github.Scalar.Id, state : Github.Enum.SubscriptionState.SubscriptionState }
+    { clientMutationId : OptionalArgument String
+    , subscribableId : Github.Scalar.Id
+    , state : Github.Enum.SubscriptionState.SubscriptionState
+    }
 
 
 {-| Encode a UpdateSubscriptionInput into a value that can be used as an argument.
@@ -1302,7 +1525,9 @@ buildUpdateTopicsInput required fillOptionals =
 
 
 type alias UpdateTopicsInputRequiredFields =
-    { repositoryId : Github.Scalar.Id, topicNames : List String }
+    { repositoryId : Github.Scalar.Id
+    , topicNames : List String
+    }
 
 
 type alias UpdateTopicsInputOptionalFields =
@@ -1312,7 +1537,10 @@ type alias UpdateTopicsInputOptionalFields =
 {-| Type for the UpdateTopicsInput input object.
 -}
 type alias UpdateTopicsInput =
-    { clientMutationId : OptionalArgument String, repositoryId : Github.Scalar.Id, topicNames : List String }
+    { clientMutationId : OptionalArgument String
+    , repositoryId : Github.Scalar.Id
+    , topicNames : List String
+    }
 
 
 {-| Encode a UpdateTopicsInput into a value that can be used as an argument.
