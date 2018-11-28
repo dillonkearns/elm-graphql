@@ -4,6 +4,7 @@ import Cli.Option as Option
 import Cli.OptionsParser as OptionsParser exposing (OptionsParser, with)
 import Cli.Program as Program
 import Cli.Validate
+import Dict
 import Graphql.Parser
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
@@ -44,7 +45,7 @@ type alias UrlArgs =
     , base : List String
     , outputPath : String
     , excludeDeprecated : Bool
-    , headers : List String
+    , headers : Dict.Dict String String
     }
 
 
@@ -56,6 +57,20 @@ type alias FileArgs =
     }
 
 
+parseHeaders headers =
+    headers
+        |> List.filterMap
+            (\header ->
+                case String.split ":" header of
+                    [ key, value ] ->
+                        Just ( key, value )
+
+                    _ ->
+                        Nothing
+            )
+        |> Dict.fromList
+
+
 program : Program.Config CliOptions
 program =
     Program.config { version = "1.2.3" }
@@ -65,7 +80,10 @@ program =
                 |> with baseOption
                 |> with outputPathOption
                 |> with (Option.flag "excludeDeprecated")
-                |> with (Option.keywordArgList "header")
+                |> with
+                    (Option.keywordArgList "header"
+                        |> Option.map parseHeaders
+                    )
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
             )
@@ -107,6 +125,7 @@ init flags msg =
                 , excludeDeprecated = options.excludeDeprecated
                 , outputPath = options.outputPath
                 , baseModule = options.base
+                , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
                 }
             )
 

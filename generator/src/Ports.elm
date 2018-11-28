@@ -26,6 +26,7 @@ port introspectSchemaFromUrl :
     , graphqlUrl : String
     , baseModule : List String
     , outputPath : String
+    , headers : Json.Encode.Value
     }
     -> Cmd msg
 

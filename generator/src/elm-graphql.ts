@@ -22,21 +22,6 @@ if (args.version) {
   );
   process.exit(0);
 }
-const headerArg: undefined | string | [string] = args.header;
-const addHeader = (object: any, header: string) => {
-  const [headerKey, headerValue] = header.split(":");
-  object[headerKey] = headerValue;
-  return object;
-};
-let headers = {};
-if (typeof headerArg === "string") {
-  addHeader(headers, headerArg);
-} else if (headerArg == undefined) {
-} else {
-  headerArg.forEach(header => {
-    addHeader(headers, header);
-  });
-}
 function prependBasePath(
   suffixPath: string,
   baseModule: string[],
@@ -85,12 +70,14 @@ app.ports.introspectSchemaFromUrl.subscribe(
     graphqlUrl,
     excludeDeprecated,
     outputPath,
-    baseModule
+    baseModule,
+    headers
   }: {
     graphqlUrl: string;
     excludeDeprecated: boolean;
     outputPath: string;
     baseModule: string[];
+    headers: {};
   }) => {
     warnIfContainsNonGenerated(prependBasePath("/", baseModule, outputPath));
 
