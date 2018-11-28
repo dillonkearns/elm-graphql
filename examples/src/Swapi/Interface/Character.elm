@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface.Character exposing (appearsIn, avatarUrl, commonSelection, friends, id, name, onDroid, onHuman, selection)
+module Swapi.Interface.Character exposing (Fragments, appearsIn, avatarUrl, fragments, friends, id, maybeFragments, name, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -20,28 +20,39 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onHuman : SelectionSet decodesTo Swapi.Object.Human
+    , onDroid : SelectionSet decodesTo Swapi.Object.Droid
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Swapi.Interface.Character) -> SelectionSet (a -> constructor) Swapi.Interface.Character
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Swapi.Interface.Character
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Human" selections.onHuman
+        , Object.buildFragment "Droid" selections.onDroid
+        ]
 
 
-onHuman : SelectionSet decodesTo Swapi.Object.Human -> FragmentSelectionSet decodesTo Swapi.Interface.Character
-onHuman (SelectionSet fields decoder) =
-    FragmentSelectionSet "Human" fields decoder
-
-
-onDroid : SelectionSet decodesTo Swapi.Object.Droid -> FragmentSelectionSet decodesTo Swapi.Interface.Character
-onDroid (SelectionSet fields decoder) =
-    FragmentSelectionSet "Droid" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| Which movies they appear in.

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.GitObject exposing (abbreviatedOid, commitResourcePath, commitUrl, commonSelection, id, oid, onBlob, onCommit, onTag, onTree, repository, selection)
+module Github.Interface.GitObject exposing (Fragments, abbreviatedOid, commitResourcePath, commitUrl, fragments, id, maybeFragments, oid, repository, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -19,38 +19,45 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.GitObject
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.GitObject
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onBlob : SelectionSet decodesTo Github.Object.Blob
+    , onCommit : SelectionSet decodesTo Github.Object.Commit
+    , onTag : SelectionSet decodesTo Github.Object.Tag
+    , onTree : SelectionSet decodesTo Github.Object.Tree
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.GitObject) -> SelectionSet (a -> constructor) Github.Interface.GitObject
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.GitObject
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Blob" selections.onBlob
+        , Object.buildFragment "Commit" selections.onCommit
+        , Object.buildFragment "Tag" selections.onTag
+        , Object.buildFragment "Tree" selections.onTree
+        ]
 
 
-onBlob : SelectionSet decodesTo Github.Object.Blob -> FragmentSelectionSet decodesTo Github.Interface.GitObject
-onBlob (SelectionSet fields decoder) =
-    FragmentSelectionSet "Blob" fields decoder
-
-
-onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Interface.GitObject
-onCommit (SelectionSet fields decoder) =
-    FragmentSelectionSet "Commit" fields decoder
-
-
-onTag : SelectionSet decodesTo Github.Object.Tag -> FragmentSelectionSet decodesTo Github.Interface.GitObject
-onTag (SelectionSet fields decoder) =
-    FragmentSelectionSet "Tag" fields decoder
-
-
-onTree : SelectionSet decodesTo Github.Object.Tree -> FragmentSelectionSet decodesTo Github.Interface.GitObject
-onTree (SelectionSet fields decoder) =
-    FragmentSelectionSet "Tree" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onBlob = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTag = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTree = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| An abbreviated version of the Git object ID

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Assignable exposing (AssigneesOptionalArguments, assignees, commonSelection, onIssue, onPullRequest, selection)
+module Github.Interface.Assignable exposing (AssigneesOptionalArguments, Fragments, assignees, fragments, maybeFragments, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -19,28 +19,39 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Assignable
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Assignable
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onIssue : SelectionSet decodesTo Github.Object.Issue
+    , onPullRequest : SelectionSet decodesTo Github.Object.PullRequest
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Assignable) -> SelectionSet (a -> constructor) Github.Interface.Assignable
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.Assignable
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Issue" selections.onIssue
+        , Object.buildFragment "PullRequest" selections.onPullRequest
+        ]
 
 
-onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Assignable
-onIssue (SelectionSet fields decoder) =
-    FragmentSelectionSet "Issue" fields decoder
-
-
-onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Assignable
-onPullRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequest" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 type alias AssigneesOptionalArguments =

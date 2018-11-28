@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Interface.Character exposing (appearsIn, commonSelection, friends, id, name, onDroid, onHuman_, selection)
+module Normalize.Interface.Character exposing (Fragments, appearsIn, fragments, friends, id, maybeFragments, name, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -20,28 +20,39 @@ import Normalize.Scalar
 import Normalize.Union
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Interface.Character
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Interface.Character
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onHuman_ : SelectionSet decodesTo Normalize.Object.Human_
+    , onDroid : SelectionSet decodesTo Normalize.Object.Droid
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Normalize.Interface.Character) -> SelectionSet (a -> constructor) Normalize.Interface.Character
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Normalize.Interface.Character
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "_human" selections.onHuman_
+        , Object.buildFragment "Droid" selections.onDroid
+        ]
 
 
-onHuman_ : SelectionSet decodesTo Normalize.Object.Human_ -> FragmentSelectionSet decodesTo Normalize.Interface.Character
-onHuman_ (SelectionSet fields decoder) =
-    FragmentSelectionSet "_human" fields decoder
-
-
-onDroid : SelectionSet decodesTo Normalize.Object.Droid -> FragmentSelectionSet decodesTo Normalize.Interface.Character
-onDroid (SelectionSet fields decoder) =
-    FragmentSelectionSet "Droid" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onHuman_ = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| Which movies they appear in.

@@ -1,11 +1,11 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder)
+module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder
+@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
 
 -}
 
@@ -15,6 +15,7 @@ import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
+import String.Interpolate exposing (interpolate)
 
 
 {-| Decoder for scalars for use in auto-generated code.
@@ -74,6 +75,13 @@ selection constructor =
     SelectionSet [] (Decode.succeed constructor)
 
 
+{-| Used to create FragmentSelectionSets for type-specific fragmentsin auto-generated code.
+-}
+buildFragment : String -> SelectionSet decodesTo selectionLock -> FragmentSelectionSet decodesTo fragmentLock
+buildFragment fragmentTypeName (SelectionSet fields decoder) =
+    FragmentSelectionSet fragmentTypeName fields decoder
+
+
 {-| Used to create the `selection` functions in auto-generated code for interfaces.
 -}
 interfaceSelection : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a -> b) -> SelectionSet (a -> b) typeLock
@@ -100,6 +108,42 @@ interfaceSelection typeSpecificSelections constructor =
             )
             (Decode.succeed constructor)
         )
+
+
+{-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
+-}
+exhuastiveFragmentSelection : List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet decodesTo typeLock
+exhuastiveFragmentSelection typeSpecificSelections =
+    let
+        selections =
+            typeSpecificSelections
+                |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
+    in
+    SelectionSet (leaf "__typename" [] :: selections)
+        (Decode.string
+            |> Decode.field "__typename"
+            |> Decode.andThen
+                (\typeName ->
+                    typeSpecificSelections
+                        |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
+                        |> Dict.fromList
+                        |> Dict.get typeName
+                        |> Maybe.withDefault (exhaustiveFailureMessage typeSpecificSelections typeName |> Decode.fail)
+                )
+        )
+
+
+exhaustiveFailureMessage typeSpecificSelections typeName =
+    interpolate
+        "Unhandled type `{0}` in exhaustive fragment handling. The following types had handlers registered to handle them: [{1}]. This happens if you are parsing either a Union or Interface. Do you need to rerun the `@dillonkearns/elm-graphql` command line tool?"
+        [ typeName, typeSpecificSelections |> List.map (\(FragmentSelectionSet fragmentType fields decoder) -> fragmentType) |> String.join ", " ]
+
+
+{-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
+-}
+exhuastiveAndCommonFragmentSelection : (decodesTo -> a -> b) -> List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet (a -> b) typeLock
+exhuastiveAndCommonFragmentSelection constructor typeSpecificSelections =
+    Graphql.SelectionSet.map2 (|>) (exhuastiveFragmentSelection typeSpecificSelections) (Graphql.SelectionSet.succeed constructor)
 
 
 {-| Used to create the `selection` functions in auto-generated code for unions.

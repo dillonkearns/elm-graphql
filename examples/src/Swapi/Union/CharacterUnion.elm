@@ -2,12 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Union.CharacterUnion exposing (onDroid, onHuman, selection)
+module Swapi.Union.CharacterUnion exposing (Fragments, maybeFragments, selection)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
@@ -18,16 +19,29 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific Swapi.Union.CharacterUnion) -> SelectionSet constructor Swapi.Union.CharacterUnion
-selection constructor typeSpecificDecoders =
-    Object.unionSelection typeSpecificDecoders constructor
+type alias Fragments decodesTo =
+    { onHuman : SelectionSet decodesTo Swapi.Object.Human
+    , onDroid : SelectionSet decodesTo Swapi.Object.Droid
+    }
 
 
-onHuman : SelectionSet decodesTo Swapi.Object.Human -> FragmentSelectionSet decodesTo Swapi.Union.CharacterUnion
-onHuman (SelectionSet fields decoder) =
-    FragmentSelectionSet "Human" fields decoder
+{-| Build up a selection for this Union by passing in a Fragments record.
+-}
+selection :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Swapi.Union.CharacterUnion
+selection selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Human" selections.onHuman
+        , Object.buildFragment "Droid" selections.onDroid
+        ]
 
 
-onDroid : SelectionSet decodesTo Swapi.Object.Droid -> FragmentSelectionSet decodesTo Swapi.Union.CharacterUnion
-onDroid (SelectionSet fields decoder) =
-    FragmentSelectionSet "Droid" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }

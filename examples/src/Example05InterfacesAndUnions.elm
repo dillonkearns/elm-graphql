@@ -6,7 +6,7 @@ import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet, fieldSelection, hardcoded, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -23,9 +23,9 @@ import Swapi.Union.CharacterUnion
 
 
 type alias Response =
-    { heroUnion : Maybe HumanOrDroidDetails
+    { heroUnion : HumanOrDroidDetails
     , heroInterface : HumanOrDroidWithName
-    , nonExhaustiveFragment : Maybe (Maybe String)
+    , nonExhaustiveFragment : Maybe String
     }
 
 
@@ -54,17 +54,17 @@ type HumanOrDroidDetails
 -}
 
 
-heroUnionSelection : SelectionSet (Maybe HumanOrDroidDetails) Swapi.Union.CharacterUnion
+heroUnionSelection : SelectionSet HumanOrDroidDetails Swapi.Union.CharacterUnion
 heroUnionSelection =
-    Swapi.Union.CharacterUnion.selection identity
-        [ Swapi.Union.CharacterUnion.onHuman (Human.selection HumanDetails |> with Human.homePlanet)
-        , Swapi.Union.CharacterUnion.onDroid (Droid.selection DroidDetails |> with Droid.primaryFunction)
-        ]
+    Swapi.Union.CharacterUnion.selection
+        { onHuman = Human.selection HumanDetails |> with Human.homePlanet
+        , onDroid = Droid.selection DroidDetails |> with Droid.primaryFunction
+        }
 
 
 type alias HumanOrDroidWithName =
-    { details : Maybe HumanOrDroidDetails
-    , name : String
+    { name : String
+    , details : HumanOrDroidDetails
     }
 
 
@@ -80,22 +80,29 @@ type alias HumanOrDroidWithName =
 
 heroSelection : SelectionSet HumanOrDroidWithName Swapi.Interface.Character
 heroSelection =
-    Character.selection HumanOrDroidWithName heroDetailsFragment
+    Character.selection HumanOrDroidWithName
         |> with Character.name
+        |> withFragment heroDetailsFragment
 
 
-heroDetailsFragment : List (FragmentSelectionSet HumanOrDroidDetails Swapi.Interface.Character)
+heroDetailsFragment : SelectionSet HumanOrDroidDetails Swapi.Interface.Character
 heroDetailsFragment =
-    [ Character.onHuman (Human.selection HumanDetails |> with Human.homePlanet)
-    , Character.onDroid (Droid.selection DroidDetails |> with Droid.primaryFunction)
-    ]
+    Character.fragments
+        { onHuman = Human.selection HumanDetails |> with Human.homePlanet
+        , onDroid = Droid.selection DroidDetails |> with Droid.primaryFunction
+        }
 
 
-nonExhaustiveFragment : SelectionSet (Maybe (Maybe String)) Swapi.Union.CharacterUnion
+nonExhaustiveFragment : SelectionSet (Maybe String) Swapi.Union.CharacterUnion
 nonExhaustiveFragment =
-    Swapi.Union.CharacterUnion.selection identity
-        [ Swapi.Union.CharacterUnion.onHuman (Human.selection identity |> with Human.homePlanet)
-        ]
+    let
+        maybeFragments =
+            Swapi.Union.CharacterUnion.maybeFragments
+    in
+    Swapi.Union.CharacterUnion.selection
+        { maybeFragments
+            | onHuman = fieldSelection Human.homePlanet
+        }
 
 
 makeRequest : Cmd Msg

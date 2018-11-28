@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.PullRequestTimelineItem exposing (onAssignedEvent, onBaseRefForcePushedEvent, onClosedEvent, onCommit, onCommitCommentThread, onCrossReferencedEvent, onDemilestonedEvent, onDeployedEvent, onHeadRefDeletedEvent, onHeadRefForcePushedEvent, onHeadRefRestoredEvent, onIssueComment, onLabeledEvent, onLockedEvent, onMergedEvent, onMilestonedEvent, onPullRequestReview, onPullRequestReviewComment, onPullRequestReviewThread, onReferencedEvent, onRenamedTitleEvent, onReopenedEvent, onReviewDismissedEvent, onReviewRequestRemovedEvent, onReviewRequestedEvent, onSubscribedEvent, onUnassignedEvent, onUnlabeledEvent, onUnlockedEvent, onUnsubscribedEvent, selection)
+module Github.Union.PullRequestTimelineItem exposing (Fragments, maybeFragments, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,161 +13,119 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 
-selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Union.PullRequestTimelineItem) -> SelectionSet constructor Github.Union.PullRequestTimelineItem
-selection constructor typeSpecificDecoders =
-    Object.unionSelection typeSpecificDecoders constructor
+type alias Fragments decodesTo =
+    { onCommit : SelectionSet decodesTo Github.Object.Commit
+    , onCommitCommentThread : SelectionSet decodesTo Github.Object.CommitCommentThread
+    , onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview
+    , onPullRequestReviewThread : SelectionSet decodesTo Github.Object.PullRequestReviewThread
+    , onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment
+    , onIssueComment : SelectionSet decodesTo Github.Object.IssueComment
+    , onClosedEvent : SelectionSet decodesTo Github.Object.ClosedEvent
+    , onReopenedEvent : SelectionSet decodesTo Github.Object.ReopenedEvent
+    , onSubscribedEvent : SelectionSet decodesTo Github.Object.SubscribedEvent
+    , onUnsubscribedEvent : SelectionSet decodesTo Github.Object.UnsubscribedEvent
+    , onMergedEvent : SelectionSet decodesTo Github.Object.MergedEvent
+    , onReferencedEvent : SelectionSet decodesTo Github.Object.ReferencedEvent
+    , onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent
+    , onAssignedEvent : SelectionSet decodesTo Github.Object.AssignedEvent
+    , onUnassignedEvent : SelectionSet decodesTo Github.Object.UnassignedEvent
+    , onLabeledEvent : SelectionSet decodesTo Github.Object.LabeledEvent
+    , onUnlabeledEvent : SelectionSet decodesTo Github.Object.UnlabeledEvent
+    , onMilestonedEvent : SelectionSet decodesTo Github.Object.MilestonedEvent
+    , onDemilestonedEvent : SelectionSet decodesTo Github.Object.DemilestonedEvent
+    , onRenamedTitleEvent : SelectionSet decodesTo Github.Object.RenamedTitleEvent
+    , onLockedEvent : SelectionSet decodesTo Github.Object.LockedEvent
+    , onUnlockedEvent : SelectionSet decodesTo Github.Object.UnlockedEvent
+    , onDeployedEvent : SelectionSet decodesTo Github.Object.DeployedEvent
+    , onHeadRefDeletedEvent : SelectionSet decodesTo Github.Object.HeadRefDeletedEvent
+    , onHeadRefRestoredEvent : SelectionSet decodesTo Github.Object.HeadRefRestoredEvent
+    , onHeadRefForcePushedEvent : SelectionSet decodesTo Github.Object.HeadRefForcePushedEvent
+    , onBaseRefForcePushedEvent : SelectionSet decodesTo Github.Object.BaseRefForcePushedEvent
+    , onReviewRequestedEvent : SelectionSet decodesTo Github.Object.ReviewRequestedEvent
+    , onReviewRequestRemovedEvent : SelectionSet decodesTo Github.Object.ReviewRequestRemovedEvent
+    , onReviewDismissedEvent : SelectionSet decodesTo Github.Object.ReviewDismissedEvent
+    }
 
 
-onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onCommit (SelectionSet fields decoder) =
-    FragmentSelectionSet "Commit" fields decoder
+{-| Build up a selection for this Union by passing in a Fragments record.
+-}
+selection :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Union.PullRequestTimelineItem
+selection selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Commit" selections.onCommit
+        , Object.buildFragment "CommitCommentThread" selections.onCommitCommentThread
+        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewThread" selections.onPullRequestReviewThread
+        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        , Object.buildFragment "IssueComment" selections.onIssueComment
+        , Object.buildFragment "ClosedEvent" selections.onClosedEvent
+        , Object.buildFragment "ReopenedEvent" selections.onReopenedEvent
+        , Object.buildFragment "SubscribedEvent" selections.onSubscribedEvent
+        , Object.buildFragment "UnsubscribedEvent" selections.onUnsubscribedEvent
+        , Object.buildFragment "MergedEvent" selections.onMergedEvent
+        , Object.buildFragment "ReferencedEvent" selections.onReferencedEvent
+        , Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent
+        , Object.buildFragment "AssignedEvent" selections.onAssignedEvent
+        , Object.buildFragment "UnassignedEvent" selections.onUnassignedEvent
+        , Object.buildFragment "LabeledEvent" selections.onLabeledEvent
+        , Object.buildFragment "UnlabeledEvent" selections.onUnlabeledEvent
+        , Object.buildFragment "MilestonedEvent" selections.onMilestonedEvent
+        , Object.buildFragment "DemilestonedEvent" selections.onDemilestonedEvent
+        , Object.buildFragment "RenamedTitleEvent" selections.onRenamedTitleEvent
+        , Object.buildFragment "LockedEvent" selections.onLockedEvent
+        , Object.buildFragment "UnlockedEvent" selections.onUnlockedEvent
+        , Object.buildFragment "DeployedEvent" selections.onDeployedEvent
+        , Object.buildFragment "HeadRefDeletedEvent" selections.onHeadRefDeletedEvent
+        , Object.buildFragment "HeadRefRestoredEvent" selections.onHeadRefRestoredEvent
+        , Object.buildFragment "HeadRefForcePushedEvent" selections.onHeadRefForcePushedEvent
+        , Object.buildFragment "BaseRefForcePushedEvent" selections.onBaseRefForcePushedEvent
+        , Object.buildFragment "ReviewRequestedEvent" selections.onReviewRequestedEvent
+        , Object.buildFragment "ReviewRequestRemovedEvent" selections.onReviewRequestRemovedEvent
+        , Object.buildFragment "ReviewDismissedEvent" selections.onReviewDismissedEvent
+        ]
 
 
-onCommitCommentThread : SelectionSet decodesTo Github.Object.CommitCommentThread -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onCommitCommentThread (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommitCommentThread" fields decoder
-
-
-onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onPullRequestReview (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReview" fields decoder
-
-
-onPullRequestReviewThread : SelectionSet decodesTo Github.Object.PullRequestReviewThread -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onPullRequestReviewThread (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReviewThread" fields decoder
-
-
-onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onPullRequestReviewComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReviewComment" fields decoder
-
-
-onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onIssueComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "IssueComment" fields decoder
-
-
-onClosedEvent : SelectionSet decodesTo Github.Object.ClosedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onClosedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ClosedEvent" fields decoder
-
-
-onReopenedEvent : SelectionSet decodesTo Github.Object.ReopenedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onReopenedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReopenedEvent" fields decoder
-
-
-onSubscribedEvent : SelectionSet decodesTo Github.Object.SubscribedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onSubscribedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "SubscribedEvent" fields decoder
-
-
-onUnsubscribedEvent : SelectionSet decodesTo Github.Object.UnsubscribedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onUnsubscribedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnsubscribedEvent" fields decoder
-
-
-onMergedEvent : SelectionSet decodesTo Github.Object.MergedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onMergedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MergedEvent" fields decoder
-
-
-onReferencedEvent : SelectionSet decodesTo Github.Object.ReferencedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onReferencedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReferencedEvent" fields decoder
-
-
-onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onCrossReferencedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "CrossReferencedEvent" fields decoder
-
-
-onAssignedEvent : SelectionSet decodesTo Github.Object.AssignedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onAssignedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "AssignedEvent" fields decoder
-
-
-onUnassignedEvent : SelectionSet decodesTo Github.Object.UnassignedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onUnassignedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnassignedEvent" fields decoder
-
-
-onLabeledEvent : SelectionSet decodesTo Github.Object.LabeledEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onLabeledEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "LabeledEvent" fields decoder
-
-
-onUnlabeledEvent : SelectionSet decodesTo Github.Object.UnlabeledEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onUnlabeledEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnlabeledEvent" fields decoder
-
-
-onMilestonedEvent : SelectionSet decodesTo Github.Object.MilestonedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onMilestonedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MilestonedEvent" fields decoder
-
-
-onDemilestonedEvent : SelectionSet decodesTo Github.Object.DemilestonedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onDemilestonedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "DemilestonedEvent" fields decoder
-
-
-onRenamedTitleEvent : SelectionSet decodesTo Github.Object.RenamedTitleEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onRenamedTitleEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "RenamedTitleEvent" fields decoder
-
-
-onLockedEvent : SelectionSet decodesTo Github.Object.LockedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onLockedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "LockedEvent" fields decoder
-
-
-onUnlockedEvent : SelectionSet decodesTo Github.Object.UnlockedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onUnlockedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnlockedEvent" fields decoder
-
-
-onDeployedEvent : SelectionSet decodesTo Github.Object.DeployedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onDeployedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "DeployedEvent" fields decoder
-
-
-onHeadRefDeletedEvent : SelectionSet decodesTo Github.Object.HeadRefDeletedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onHeadRefDeletedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "HeadRefDeletedEvent" fields decoder
-
-
-onHeadRefRestoredEvent : SelectionSet decodesTo Github.Object.HeadRefRestoredEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onHeadRefRestoredEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "HeadRefRestoredEvent" fields decoder
-
-
-onHeadRefForcePushedEvent : SelectionSet decodesTo Github.Object.HeadRefForcePushedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onHeadRefForcePushedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "HeadRefForcePushedEvent" fields decoder
-
-
-onBaseRefForcePushedEvent : SelectionSet decodesTo Github.Object.BaseRefForcePushedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onBaseRefForcePushedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "BaseRefForcePushedEvent" fields decoder
-
-
-onReviewRequestedEvent : SelectionSet decodesTo Github.Object.ReviewRequestedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onReviewRequestedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewRequestedEvent" fields decoder
-
-
-onReviewRequestRemovedEvent : SelectionSet decodesTo Github.Object.ReviewRequestRemovedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onReviewRequestRemovedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewRequestRemovedEvent" fields decoder
-
-
-onReviewDismissedEvent : SelectionSet decodesTo Github.Object.ReviewDismissedEvent -> FragmentSelectionSet decodesTo Github.Union.PullRequestTimelineItem
-onReviewDismissedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewDismissedEvent" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCommitCommentThread = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReviewThread = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onClosedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReopenedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onSubscribedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnsubscribedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMergedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCrossReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onAssignedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnassignedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLabeledEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnlabeledEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMilestonedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDemilestonedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRenamedTitleEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLockedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnlockedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDeployedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHeadRefDeletedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHeadRefRestoredEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHeadRefForcePushedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onBaseRefForcePushedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewRequestedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewRequestRemovedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewDismissedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }

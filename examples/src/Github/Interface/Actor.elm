@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Actor exposing (AvatarUrlOptionalArguments, avatarUrl, commonSelection, login, onBot, onOrganization, onUser, resourcePath, selection, url)
+module Github.Interface.Actor exposing (AvatarUrlOptionalArguments, Fragments, avatarUrl, fragments, login, maybeFragments, resourcePath, selection, url)
 
 import Github.InputObject
 import Github.Interface
@@ -19,33 +19,42 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Actor
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Actor
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onBot : SelectionSet decodesTo Github.Object.Bot
+    , onOrganization : SelectionSet decodesTo Github.Object.Organization
+    , onUser : SelectionSet decodesTo Github.Object.User
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Actor) -> SelectionSet (a -> constructor) Github.Interface.Actor
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.Actor
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Bot" selections.onBot
+        , Object.buildFragment "Organization" selections.onOrganization
+        , Object.buildFragment "User" selections.onUser
+        ]
 
 
-onBot : SelectionSet decodesTo Github.Object.Bot -> FragmentSelectionSet decodesTo Github.Interface.Actor
-onBot (SelectionSet fields decoder) =
-    FragmentSelectionSet "Bot" fields decoder
-
-
-onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.Actor
-onOrganization (SelectionSet fields decoder) =
-    FragmentSelectionSet "Organization" fields decoder
-
-
-onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Interface.Actor
-onUser (SelectionSet fields decoder) =
-    FragmentSelectionSet "User" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onBot = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 type alias AvatarUrlOptionalArguments =

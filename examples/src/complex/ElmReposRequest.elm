@@ -98,9 +98,16 @@ withDefault default =
 
 searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
 searchResultSelection =
-    Github.Union.SearchResultItem.selection identity
-        [ Github.Union.SearchResultItem.onRepository repositorySelection
-        ]
+    let
+        maybeFragments =
+            Github.Union.SearchResultItem.maybeFragments
+
+        partialFragments =
+            { maybeFragments
+                | onRepository = repositorySelection |> SelectionSet.map Just
+            }
+    in
+    Github.Union.SearchResultItem.selection partialFragments
 
 
 repositorySelection : SelectionSet Repo Github.Object.Repository
@@ -160,6 +167,6 @@ type alias Owner =
 
 ownerSelection : SelectionSet Owner Github.Interface.RepositoryOwner
 ownerSelection =
-    Github.Interface.RepositoryOwner.commonSelection Owner
+    Github.Interface.RepositoryOwner.selection Owner
         |> with (Github.Interface.RepositoryOwner.avatarUrl identity)
         |> with Github.Interface.RepositoryOwner.login

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Subscribable exposing (commonSelection, id, onCommit, onIssue, onPullRequest, onRepository, onTeam, selection, viewerCanSubscribe, viewerSubscription)
+module Github.Interface.Subscribable exposing (Fragments, fragments, id, maybeFragments, selection, viewerCanSubscribe, viewerSubscription)
 
 import Github.Enum.SubscriptionState
 import Github.InputObject
@@ -20,43 +20,48 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Subscribable
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Subscribable
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onCommit : SelectionSet decodesTo Github.Object.Commit
+    , onIssue : SelectionSet decodesTo Github.Object.Issue
+    , onPullRequest : SelectionSet decodesTo Github.Object.PullRequest
+    , onRepository : SelectionSet decodesTo Github.Object.Repository
+    , onTeam : SelectionSet decodesTo Github.Object.Team
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Subscribable) -> SelectionSet (a -> constructor) Github.Interface.Subscribable
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.Subscribable
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Commit" selections.onCommit
+        , Object.buildFragment "Issue" selections.onIssue
+        , Object.buildFragment "PullRequest" selections.onPullRequest
+        , Object.buildFragment "Repository" selections.onRepository
+        , Object.buildFragment "Team" selections.onTeam
+        ]
 
 
-onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
-onCommit (SelectionSet fields decoder) =
-    FragmentSelectionSet "Commit" fields decoder
-
-
-onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
-onIssue (SelectionSet fields decoder) =
-    FragmentSelectionSet "Issue" fields decoder
-
-
-onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
-onPullRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequest" fields decoder
-
-
-onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
-onRepository (SelectionSet fields decoder) =
-    FragmentSelectionSet "Repository" fields decoder
-
-
-onTeam : SelectionSet decodesTo Github.Object.Team -> FragmentSelectionSet decodesTo Github.Interface.Subscribable
-onTeam (SelectionSet fields decoder) =
-    FragmentSelectionSet "Team" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 id : Field Github.Scalar.Id Github.Interface.Subscribable

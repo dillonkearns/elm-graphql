@@ -52,7 +52,7 @@ type alias Character =
 
 characterSelection : SelectionSet Character Swapi.Interface.Character
 characterSelection =
-    Swapi.Interface.Character.commonSelection Character
+    Swapi.Interface.Character.selection Character
         |> with Swapi.Interface.Character.name
         |> with Swapi.Interface.Character.avatarUrl
 

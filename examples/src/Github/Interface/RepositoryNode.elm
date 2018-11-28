@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.RepositoryNode exposing (commonSelection, onCommitComment, onCommitCommentThread, onIssue, onIssueComment, onPullRequest, onPullRequestReview, onPullRequestReviewComment, repository, selection)
+module Github.Interface.RepositoryNode exposing (Fragments, fragments, maybeFragments, repository, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -19,53 +19,54 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryNode
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryNode
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onCommitComment : SelectionSet decodesTo Github.Object.CommitComment
+    , onCommitCommentThread : SelectionSet decodesTo Github.Object.CommitCommentThread
+    , onIssue : SelectionSet decodesTo Github.Object.Issue
+    , onIssueComment : SelectionSet decodesTo Github.Object.IssueComment
+    , onPullRequest : SelectionSet decodesTo Github.Object.PullRequest
+    , onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview
+    , onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.RepositoryNode) -> SelectionSet (a -> constructor) Github.Interface.RepositoryNode
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.RepositoryNode
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "CommitComment" selections.onCommitComment
+        , Object.buildFragment "CommitCommentThread" selections.onCommitCommentThread
+        , Object.buildFragment "Issue" selections.onIssue
+        , Object.buildFragment "IssueComment" selections.onIssueComment
+        , Object.buildFragment "PullRequest" selections.onPullRequest
+        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        ]
 
 
-onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
-onCommitComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommitComment" fields decoder
-
-
-onCommitCommentThread : SelectionSet decodesTo Github.Object.CommitCommentThread -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
-onCommitCommentThread (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommitCommentThread" fields decoder
-
-
-onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
-onIssue (SelectionSet fields decoder) =
-    FragmentSelectionSet "Issue" fields decoder
-
-
-onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
-onIssueComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "IssueComment" fields decoder
-
-
-onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
-onPullRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequest" fields decoder
-
-
-onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
-onPullRequestReview (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReview" fields decoder
-
-
-onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.RepositoryNode
-onPullRequestReviewComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReviewComment" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCommitCommentThread = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| The repository associated with this node.

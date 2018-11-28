@@ -9,24 +9,72 @@ import String.Interpolate exposing (interpolate)
 generate : Context -> ClassCaseName -> List String -> List ClassCaseName -> String
 generate context name moduleName possibleTypes =
     prepend context moduleName
-        ++ fragments context possibleTypes moduleName
+        ++ fragmentHelpers context possibleTypes moduleName
 
 
-fragments : Context -> List ClassCaseName -> List String -> String
-fragments context implementors moduleName =
-    implementors
-        |> List.map (fragment context moduleName)
-        |> String.join "\n\n"
-
-
-fragment : Context -> List String -> ClassCaseName -> String
-fragment context moduleName interfaceImplementor =
+fragmentHelpers : Context -> List ClassCaseName -> List String -> String
+fragmentHelpers context implementors moduleName =
     interpolate
-        """on{0} : SelectionSet decodesTo {2} -> FragmentSelectionSet decodesTo {3}
-on{0} (SelectionSet fields decoder) =
-    FragmentSelectionSet "{1}" fields decoder
+        """
+type alias Fragments decodesTo =
+    {
+    {1}
+    }
+
+
+{-| Build up a selection for this Union by passing in a Fragments record.
+-}
+selection :
+    Fragments decodesTo
+    -> SelectionSet decodesTo {0}
+selection selections =
+    Object.exhuastiveFragmentSelection
+        [
+          {2}
+        ]
+
+
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    {
+      {3}
+    }
 """
-        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join ".", moduleName |> String.join "." ]
+        [ moduleName |> String.join "."
+        , implementors
+            |> List.map (aliasFieldForFragment context moduleName)
+            |> String.join ",\n"
+        , implementors
+            |> List.map (exhaustiveBuildupForFragment context moduleName)
+            |> String.join ",\n"
+        , implementors
+            |> List.map (maybeFragmentEntry context moduleName)
+            |> String.join ",\n"
+        ]
+
+
+aliasFieldForFragment : Context -> List String -> ClassCaseName -> String
+aliasFieldForFragment context moduleName interfaceImplementor =
+    interpolate
+        "on{0} : SelectionSet decodesTo {1}"
+        [ ClassCaseName.normalized interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join "." ]
+
+
+exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> String
+exhaustiveBuildupForFragment context moduleName interfaceImplementor =
+    interpolate
+        """Object.buildFragment "{1}" selections.on{0}"""
+        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
+
+
+maybeFragmentEntry : Context -> List String -> ClassCaseName -> String
+maybeFragmentEntry context moduleName interfaceImplementor =
+    interpolate
+        """on{0} = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\\_ -> Nothing)"""
+        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
 
 
 prepend : Context -> List String -> String
@@ -36,6 +84,7 @@ prepend { apiSubmodule } moduleName =
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import {1}.Object
@@ -46,10 +95,6 @@ import {1}.InputObject
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
-
-selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific {0}) -> SelectionSet constructor {0}
-selection constructor typeSpecificDecoders =
-    Object.unionSelection typeSpecificDecoders constructor
 """
         [ moduleName |> String.join "."
         , apiSubmodule |> String.join "."

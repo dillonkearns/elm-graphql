@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.ReviewDismissalAllowanceActor exposing (onTeam, onUser, selection)
+module Github.Union.ReviewDismissalAllowanceActor exposing (Fragments, maybeFragments, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,21 +13,35 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 
-selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Union.ReviewDismissalAllowanceActor) -> SelectionSet constructor Github.Union.ReviewDismissalAllowanceActor
-selection constructor typeSpecificDecoders =
-    Object.unionSelection typeSpecificDecoders constructor
+type alias Fragments decodesTo =
+    { onUser : SelectionSet decodesTo Github.Object.User
+    , onTeam : SelectionSet decodesTo Github.Object.Team
+    }
 
 
-onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor
-onUser (SelectionSet fields decoder) =
-    FragmentSelectionSet "User" fields decoder
+{-| Build up a selection for this Union by passing in a Fragments record.
+-}
+selection :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor
+selection selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "User" selections.onUser
+        , Object.buildFragment "Team" selections.onTeam
+        ]
 
 
-onTeam : SelectionSet decodesTo Github.Object.Team -> FragmentSelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor
-onTeam (SelectionSet fields decoder) =
-    FragmentSelectionSet "Team" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }

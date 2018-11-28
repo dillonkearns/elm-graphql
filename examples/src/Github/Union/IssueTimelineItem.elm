@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.IssueTimelineItem exposing (onAssignedEvent, onClosedEvent, onCommit, onCrossReferencedEvent, onDemilestonedEvent, onIssueComment, onLabeledEvent, onLockedEvent, onMilestonedEvent, onReferencedEvent, onRenamedTitleEvent, onReopenedEvent, onSubscribedEvent, onUnassignedEvent, onUnlabeledEvent, onUnlockedEvent, onUnsubscribedEvent, selection)
+module Github.Union.IssueTimelineItem exposing (Fragments, maybeFragments, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -13,96 +13,80 @@ import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
 
 
-selection : (Maybe typeSpecific -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Union.IssueTimelineItem) -> SelectionSet constructor Github.Union.IssueTimelineItem
-selection constructor typeSpecificDecoders =
-    Object.unionSelection typeSpecificDecoders constructor
+type alias Fragments decodesTo =
+    { onCommit : SelectionSet decodesTo Github.Object.Commit
+    , onIssueComment : SelectionSet decodesTo Github.Object.IssueComment
+    , onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent
+    , onClosedEvent : SelectionSet decodesTo Github.Object.ClosedEvent
+    , onReopenedEvent : SelectionSet decodesTo Github.Object.ReopenedEvent
+    , onSubscribedEvent : SelectionSet decodesTo Github.Object.SubscribedEvent
+    , onUnsubscribedEvent : SelectionSet decodesTo Github.Object.UnsubscribedEvent
+    , onReferencedEvent : SelectionSet decodesTo Github.Object.ReferencedEvent
+    , onAssignedEvent : SelectionSet decodesTo Github.Object.AssignedEvent
+    , onUnassignedEvent : SelectionSet decodesTo Github.Object.UnassignedEvent
+    , onLabeledEvent : SelectionSet decodesTo Github.Object.LabeledEvent
+    , onUnlabeledEvent : SelectionSet decodesTo Github.Object.UnlabeledEvent
+    , onMilestonedEvent : SelectionSet decodesTo Github.Object.MilestonedEvent
+    , onDemilestonedEvent : SelectionSet decodesTo Github.Object.DemilestonedEvent
+    , onRenamedTitleEvent : SelectionSet decodesTo Github.Object.RenamedTitleEvent
+    , onLockedEvent : SelectionSet decodesTo Github.Object.LockedEvent
+    , onUnlockedEvent : SelectionSet decodesTo Github.Object.UnlockedEvent
+    }
 
 
-onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onCommit (SelectionSet fields decoder) =
-    FragmentSelectionSet "Commit" fields decoder
+{-| Build up a selection for this Union by passing in a Fragments record.
+-}
+selection :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Union.IssueTimelineItem
+selection selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Commit" selections.onCommit
+        , Object.buildFragment "IssueComment" selections.onIssueComment
+        , Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent
+        , Object.buildFragment "ClosedEvent" selections.onClosedEvent
+        , Object.buildFragment "ReopenedEvent" selections.onReopenedEvent
+        , Object.buildFragment "SubscribedEvent" selections.onSubscribedEvent
+        , Object.buildFragment "UnsubscribedEvent" selections.onUnsubscribedEvent
+        , Object.buildFragment "ReferencedEvent" selections.onReferencedEvent
+        , Object.buildFragment "AssignedEvent" selections.onAssignedEvent
+        , Object.buildFragment "UnassignedEvent" selections.onUnassignedEvent
+        , Object.buildFragment "LabeledEvent" selections.onLabeledEvent
+        , Object.buildFragment "UnlabeledEvent" selections.onUnlabeledEvent
+        , Object.buildFragment "MilestonedEvent" selections.onMilestonedEvent
+        , Object.buildFragment "DemilestonedEvent" selections.onDemilestonedEvent
+        , Object.buildFragment "RenamedTitleEvent" selections.onRenamedTitleEvent
+        , Object.buildFragment "LockedEvent" selections.onLockedEvent
+        , Object.buildFragment "UnlockedEvent" selections.onUnlockedEvent
+        ]
 
 
-onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onIssueComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "IssueComment" fields decoder
-
-
-onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onCrossReferencedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "CrossReferencedEvent" fields decoder
-
-
-onClosedEvent : SelectionSet decodesTo Github.Object.ClosedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onClosedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ClosedEvent" fields decoder
-
-
-onReopenedEvent : SelectionSet decodesTo Github.Object.ReopenedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onReopenedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReopenedEvent" fields decoder
-
-
-onSubscribedEvent : SelectionSet decodesTo Github.Object.SubscribedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onSubscribedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "SubscribedEvent" fields decoder
-
-
-onUnsubscribedEvent : SelectionSet decodesTo Github.Object.UnsubscribedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onUnsubscribedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnsubscribedEvent" fields decoder
-
-
-onReferencedEvent : SelectionSet decodesTo Github.Object.ReferencedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onReferencedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReferencedEvent" fields decoder
-
-
-onAssignedEvent : SelectionSet decodesTo Github.Object.AssignedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onAssignedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "AssignedEvent" fields decoder
-
-
-onUnassignedEvent : SelectionSet decodesTo Github.Object.UnassignedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onUnassignedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnassignedEvent" fields decoder
-
-
-onLabeledEvent : SelectionSet decodesTo Github.Object.LabeledEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onLabeledEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "LabeledEvent" fields decoder
-
-
-onUnlabeledEvent : SelectionSet decodesTo Github.Object.UnlabeledEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onUnlabeledEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnlabeledEvent" fields decoder
-
-
-onMilestonedEvent : SelectionSet decodesTo Github.Object.MilestonedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onMilestonedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MilestonedEvent" fields decoder
-
-
-onDemilestonedEvent : SelectionSet decodesTo Github.Object.DemilestonedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onDemilestonedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "DemilestonedEvent" fields decoder
-
-
-onRenamedTitleEvent : SelectionSet decodesTo Github.Object.RenamedTitleEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onRenamedTitleEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "RenamedTitleEvent" fields decoder
-
-
-onLockedEvent : SelectionSet decodesTo Github.Object.LockedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onLockedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "LockedEvent" fields decoder
-
-
-onUnlockedEvent : SelectionSet decodesTo Github.Object.UnlockedEvent -> FragmentSelectionSet decodesTo Github.Union.IssueTimelineItem
-onUnlockedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnlockedEvent" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCrossReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onClosedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReopenedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onSubscribedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnsubscribedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onAssignedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnassignedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLabeledEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnlabeledEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMilestonedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDemilestonedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRenamedTitleEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLockedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnlockedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }

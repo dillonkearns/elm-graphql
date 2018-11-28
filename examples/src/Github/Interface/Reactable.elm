@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Reactable exposing (ReactionsOptionalArguments, commonSelection, databaseId, id, onCommitComment, onIssue, onIssueComment, onPullRequest, onPullRequestReviewComment, reactionGroups, reactions, selection, viewerCanReact)
+module Github.Interface.Reactable exposing (Fragments, ReactionsOptionalArguments, databaseId, fragments, id, maybeFragments, reactionGroups, reactions, selection, viewerCanReact)
 
 import Github.Enum.ReactionContent
 import Github.InputObject
@@ -20,43 +20,48 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Reactable
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Reactable
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onCommitComment : SelectionSet decodesTo Github.Object.CommitComment
+    , onIssue : SelectionSet decodesTo Github.Object.Issue
+    , onIssueComment : SelectionSet decodesTo Github.Object.IssueComment
+    , onPullRequest : SelectionSet decodesTo Github.Object.PullRequest
+    , onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Reactable) -> SelectionSet (a -> constructor) Github.Interface.Reactable
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.Reactable
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "CommitComment" selections.onCommitComment
+        , Object.buildFragment "Issue" selections.onIssue
+        , Object.buildFragment "IssueComment" selections.onIssueComment
+        , Object.buildFragment "PullRequest" selections.onPullRequest
+        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        ]
 
 
-onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.Reactable
-onCommitComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommitComment" fields decoder
-
-
-onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Reactable
-onIssue (SelectionSet fields decoder) =
-    FragmentSelectionSet "Issue" fields decoder
-
-
-onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.Reactable
-onIssueComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "IssueComment" fields decoder
-
-
-onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Reactable
-onPullRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequest" fields decoder
-
-
-onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.Reactable
-onPullRequestReviewComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReviewComment" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| Identifies the primary key from the database.

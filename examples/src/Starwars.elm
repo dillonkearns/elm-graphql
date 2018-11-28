@@ -6,7 +6,7 @@ import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -28,7 +28,7 @@ type alias Response =
     { vader : HumanLookup
     , tarkin : HumanLookup
     , hero : Character
-    , union : Maybe CharacterUnion
+    , union : HumanOrDroid
     , greeting : String
     }
 
@@ -39,37 +39,48 @@ type HumanOrDroid
 
 
 type alias Character =
-    { details : Maybe HumanOrDroid
+    { details : HumanOrDroid
     , name : String
     , id : Swapi.Scalar.Id
     , friends : List String
-    , myNum : Int
     }
 
 
 hero : SelectionSet Character Swapi.Interface.Character
 hero =
     Character.selection Character
-        [ Character.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
-        , Character.onHuman (Human.selection Human |> with Human.homePlanet)
-        ]
+        |> withFragment
+            (Character.fragments
+                { onDroid = Droid.selection Droid |> with Droid.primaryFunction
+                , onHuman = Human.selection Human |> with Human.homePlanet
+                }
+            )
         |> with Character.name
         |> with Character.id
-        |> with (Character.friends (Character.commonSelection identity |> with Character.name))
-        |> hardcoded 123
+        |> with (Character.friends (fieldSelection Character.name))
 
 
-type alias CharacterUnion =
-    { details : Maybe HumanOrDroid
+nonExhaustiveFragments =
+    -- you can do partial fragments using syntax like this
+    let
+        -- you can't do record update that begins with a module name at the moment
+        -- there are plans to fix that, though, see the "Record Suggestions" section of
+        -- https://github.com/elm/compiler/issues/1375
+        maybeFragments =
+            Character.maybeFragments
+    in
+    { maybeFragments
+        | onDroid =
+            fieldSelection (Droid.primaryFunction |> Field.map (Droid >> Just))
     }
 
 
-heroUnion : SelectionSet CharacterUnion Swapi.Union.CharacterUnion
+heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
 heroUnion =
-    CharacterUnion.selection CharacterUnion
-        [ CharacterUnion.onDroid (Droid.selection Droid |> with Droid.primaryFunction)
-        , CharacterUnion.onHuman (Human.selection Human |> with Human.homePlanet)
-        ]
+    CharacterUnion.selection
+        { onDroid = Droid.selection Droid |> with Droid.primaryFunction
+        , onHuman = Human.selection Human |> with Human.homePlanet
+        }
 
 
 query : SelectionSet Response RootQuery
