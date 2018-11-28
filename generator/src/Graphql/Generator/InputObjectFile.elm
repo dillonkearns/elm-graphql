@@ -73,14 +73,6 @@ generateEncoderAndAlias context inputObjectDetails =
         |> String.join "\n\n"
 
 
-filledOptionalsRecord : List Type.Field -> String
-filledOptionalsRecord optionalFields =
-    optionalFields
-        |> List.map .name
-        |> List.map (\fieldName -> CamelCaseName.normalized fieldName ++ " = Absent")
-        |> String.join ", "
-
-
 typeAlias : Context -> InputObjectDetails -> String
 typeAlias context { name, fields, hasLoop } =
     if hasLoop then
