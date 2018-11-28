@@ -79,26 +79,49 @@ if (!(graphqlUrl || introspectionFile)) {
 
 warnIfContainsNonGenerated(prependBasePath("/"));
 
-if (introspectionFile) {
-  const introspectionFileJson = JSON.parse(
-    fs.readFileSync(introspectionFile).toString()
-  );
-  onDataAvailable(introspectionFileJson.data || introspectionFileJson);
-} else {
-  console.log("Fetching GraphQL schema...");
-  new GraphQLClient(graphqlUrl, {
-    mode: "cors",
-    headers: headers
-  })
-    .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
-    .then(data => {
-      onDataAvailable(data);
+let app = Elm.Main.init({ flags: { argv: process.argv } });
+// app.ports.print.subscribe(console.log);
+app.ports.printAndExitFailure.subscribe((message: string) => {
+  console.log(message);
+  process.exit(1);
+});
+app.ports.printAndExitSuccess.subscribe((message: string) => {
+  console.log(message);
+  process.exit(0);
+});
+
+app.ports.introspectSchemaFromFile.subscribe(
+  (introspectionFilePath: string) => {
+    const introspectionFileJson = JSON.parse(
+      fs.readFileSync(introspectionFilePath).toString()
+    );
+    onDataAvailable(introspectionFileJson.data || introspectionFileJson);
+  }
+);
+
+app.ports.introspectSchemaFromUrl.subscribe(
+  ({
+    graphqlUrl,
+    excludeDeprecated
+  }: {
+    graphqlUrl: string;
+    excludeDeprecated: boolean;
+  }) => {
+    console.log("Fetching GraphQL schema...");
+    new GraphQLClient(graphqlUrl, {
+      mode: "cors",
+      headers: headers
     })
-    .catch(err => {
-      console.log(err.response || err);
-      process.exit(1);
-    });
-}
+      .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
+      .then(data => {
+        onDataAvailable(data);
+      })
+      .catch(err => {
+        console.log(err.response || err);
+        process.exit(1);
+      });
+  }
+);
 
 function makeEmptyDirectories(directoryNames: string[]): void {
   directoryNames.forEach(dir => {
@@ -108,7 +131,6 @@ function makeEmptyDirectories(directoryNames: string[]): void {
 
 function onDataAvailable(data: {}) {
   console.log("Generating files...");
-  let app = Elm.Main.init({ flags: { data, baseModule } });
   app.ports.generatedFiles.subscribe(async function(generatedFile: {
     [s: string]: string;
   }) {
@@ -120,11 +142,15 @@ function onDataAvailable(data: {}) {
       "Union",
       "Enum"
     ]);
-    await Promise.all(writeGeneratedFiles(generatedFile));
+    await Promise.all(writeGeneratedFiles(generatedFile)).catch(err => {
+      console.error("Error writing files", err);
+    });
     writeIntrospectionFile();
     applyElmFormat(prependBasePath("/"));
     console.log("Success!");
+    process.exit(0);
   });
+  app.ports.generateFiles.send(data);
 }
 
 function isGenerated(path: string): boolean {
@@ -171,3 +197,7 @@ function writeIntrospectionFile() {
     `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
   );
 }
+
+(function wait() {
+  if (true) setTimeout(wait, 1000);
+})();
