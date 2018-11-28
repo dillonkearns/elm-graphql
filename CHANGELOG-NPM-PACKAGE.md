@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.1] - 2018-11-27
+
+### Changed
+
+- Add newlines for readability in the generated code between fields in type
+  alias definitions. See [#74](https://github.com/dillonkearns/elm-graphql/issues/74)
+  for details.
+
 ## [2.0.0] - 2018-11-27
 
 ### Changed
