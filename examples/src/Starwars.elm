@@ -7,8 +7,7 @@ import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
-import Html exposing (div, h1, p, pre, text)
-import PrintAny
+import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Enum.Language as Language
@@ -58,21 +57,6 @@ hero =
         |> with Character.name
         |> with Character.id
         |> with (Character.friends (fieldSelection Character.name))
-
-
-nonExhaustiveFragments =
-    -- you can do partial fragments using syntax like this
-    let
-        -- you can't do record update that begins with a module name at the moment
-        -- there are plans to fix that, though, see the "Record Suggestions" section of
-        -- https://github.com/elm/compiler/issues/1375
-        maybeFragments =
-            Character.maybeFragments
-    in
-    { maybeFragments
-        | onDroid =
-            fieldSelection (Droid.primaryFunction |> Field.map (Droid >> Just))
-    }
 
 
 heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
@@ -140,6 +124,10 @@ makeRequest =
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 
+
+-- Elm Architecture Setup
+
+
 type Msg
     = GotResponse Model
 
@@ -148,29 +136,13 @@ type alias Model =
     RemoteData (Graphql.Http.Error Response) Response
 
 
-init : () -> ( Model, Cmd Msg )
+type alias Flags =
+    ()
+
+
+init : Flags -> ( Model, Cmd Msg )
 init _ =
-    ( RemoteData.Loading
-    , makeRequest
-    )
-
-
-view : Model -> Browser.Document Msg
-view model =
-    { title = "Starwars Demo"
-    , body =
-        [ div []
-            [ div []
-                [ h1 [] [ text "Generated Query" ]
-                , pre [] [ text (Document.serializeQuery query) ]
-                ]
-            , div []
-                [ h1 [] [ text "Response" ]
-                , model |> PrintAny.view
-                ]
-            ]
-        ]
-    }
+    ( RemoteData.Loading, makeRequest )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -180,11 +152,11 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program () Model Msg
+main : Program Flags Model Msg
 main =
     Browser.document
         { init = init
         , update = update
         , subscriptions = \_ -> Sub.none
-        , view = view
+        , view = Helpers.Main.view (Document.serializeQuery query)
         }
