@@ -101,8 +101,6 @@ init : Flags -> CliOptions -> ( Model, Cmd msg )
 init flags msg =
     case msg of
         FromUrl options ->
-            -- outputPath excludeDeprecated headers
-            -- "...fetching from url\noptions: " ++ Debug.toString options
             ( ()
             , Ports.introspectSchemaFromUrl
                 { graphqlUrl = options.url
@@ -113,8 +111,6 @@ init flags msg =
             )
 
         FromFile options ->
-            -- outputPath excludeDeprecated
-            -- "...fetching from file\noptions: " ++ Debug.toString options
             ( ()
             , Ports.introspectSchemaFromFile
                 { introspectionFilePath = options.file
@@ -123,10 +119,6 @@ init flags msg =
                 , baseModule = options.base
                 }
             )
-
-
-
--- |> Ports.print
 
 
 update : CliOptions -> Msg -> Model -> ( Model, Cmd Msg )
