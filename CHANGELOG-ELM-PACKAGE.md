@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.5.0] - 2018-11-27
+
+- Add new internal builder function, for use with the new generated code for
+  building exhaustive Union and Interface fragments.
+  See this diff to understand the changes and how to migrate:
+  [e530d94](https://github.com/dillonkearns/elm-graphql/pull/85/commits/e530d94cded94f43135aa7e68233ab4f8b7e5912).
+
 ## [1.4.0] - 2018-11-15
 
 ### Changed

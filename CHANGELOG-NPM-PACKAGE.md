@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.0] - 2018-11-27
+
+### Changed
+
+- This introduces a backwards-incompatible change for any selections on Unions or Interfaces.
+  The change allows you to do exhaustive type-specific fragments. Now, if you
+  add a new type to a Union or Interface in your schema, the Elm compiler will
+  tell you to check for that type if you're doing an exhaustive selection.
+  See this diff to understand the changes and how to migrate to the new version:
+  [e530d94](https://github.com/dillonkearns/elm-graphql/pull/85/commits/e530d94cded94f43135aa7e68233ab4f8b7e5912).
+- With the new change, you can build exhaustive type-specific fragments that
+  get rid of the Maybe (because the compiler knows you're handling all possibilities).
+
 ## [1.0.8] - 2018-11-27
 
 ### Fixed
