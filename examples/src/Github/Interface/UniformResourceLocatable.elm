@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.UniformResourceLocatable exposing (commonSelection, onBot, onCrossReferencedEvent, onIssue, onMergedEvent, onMilestone, onOrganization, onPullRequest, onPullRequestCommit, onRelease, onRepository, onRepositoryTopic, onReviewDismissedEvent, onUser, resourcePath, selection, url)
+module Github.Interface.UniformResourceLocatable exposing (Fragments, fragments, maybeFragments, resourcePath, selection, url)
 
 import Github.InputObject
 import Github.Interface
@@ -19,83 +19,72 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.UniformResourceLocatable
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.UniformResourceLocatable
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onBot : SelectionSet decodesTo Github.Object.Bot
+    , onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent
+    , onIssue : SelectionSet decodesTo Github.Object.Issue
+    , onMergedEvent : SelectionSet decodesTo Github.Object.MergedEvent
+    , onMilestone : SelectionSet decodesTo Github.Object.Milestone
+    , onOrganization : SelectionSet decodesTo Github.Object.Organization
+    , onPullRequest : SelectionSet decodesTo Github.Object.PullRequest
+    , onPullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit
+    , onRelease : SelectionSet decodesTo Github.Object.Release
+    , onRepository : SelectionSet decodesTo Github.Object.Repository
+    , onRepositoryTopic : SelectionSet decodesTo Github.Object.RepositoryTopic
+    , onReviewDismissedEvent : SelectionSet decodesTo Github.Object.ReviewDismissedEvent
+    , onUser : SelectionSet decodesTo Github.Object.User
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.UniformResourceLocatable) -> SelectionSet (a -> constructor) Github.Interface.UniformResourceLocatable
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Bot" selections.onBot
+        , Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent
+        , Object.buildFragment "Issue" selections.onIssue
+        , Object.buildFragment "MergedEvent" selections.onMergedEvent
+        , Object.buildFragment "Milestone" selections.onMilestone
+        , Object.buildFragment "Organization" selections.onOrganization
+        , Object.buildFragment "PullRequest" selections.onPullRequest
+        , Object.buildFragment "PullRequestCommit" selections.onPullRequestCommit
+        , Object.buildFragment "Release" selections.onRelease
+        , Object.buildFragment "Repository" selections.onRepository
+        , Object.buildFragment "RepositoryTopic" selections.onRepositoryTopic
+        , Object.buildFragment "ReviewDismissedEvent" selections.onReviewDismissedEvent
+        , Object.buildFragment "User" selections.onUser
+        ]
 
 
-onBot : SelectionSet decodesTo Github.Object.Bot -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onBot (SelectionSet fields decoder) =
-    FragmentSelectionSet "Bot" fields decoder
-
-
-onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onCrossReferencedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "CrossReferencedEvent" fields decoder
-
-
-onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onIssue (SelectionSet fields decoder) =
-    FragmentSelectionSet "Issue" fields decoder
-
-
-onMergedEvent : SelectionSet decodesTo Github.Object.MergedEvent -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onMergedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MergedEvent" fields decoder
-
-
-onMilestone : SelectionSet decodesTo Github.Object.Milestone -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onMilestone (SelectionSet fields decoder) =
-    FragmentSelectionSet "Milestone" fields decoder
-
-
-onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onOrganization (SelectionSet fields decoder) =
-    FragmentSelectionSet "Organization" fields decoder
-
-
-onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onPullRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequest" fields decoder
-
-
-onPullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onPullRequestCommit (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestCommit" fields decoder
-
-
-onRelease : SelectionSet decodesTo Github.Object.Release -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onRelease (SelectionSet fields decoder) =
-    FragmentSelectionSet "Release" fields decoder
-
-
-onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onRepository (SelectionSet fields decoder) =
-    FragmentSelectionSet "Repository" fields decoder
-
-
-onRepositoryTopic : SelectionSet decodesTo Github.Object.RepositoryTopic -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onRepositoryTopic (SelectionSet fields decoder) =
-    FragmentSelectionSet "RepositoryTopic" fields decoder
-
-
-onReviewDismissedEvent : SelectionSet decodesTo Github.Object.ReviewDismissedEvent -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onReviewDismissedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewDismissedEvent" fields decoder
-
-
-onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Interface.UniformResourceLocatable
-onUser (SelectionSet fields decoder) =
-    FragmentSelectionSet "User" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onBot = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCrossReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMergedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMilestone = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRelease = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepositoryTopic = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewDismissedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| The HTML path to this resource.

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.GitSignature exposing (commonSelection, email, isValid, onGpgSignature, onSmimeSignature, onUnknownSignature, payload, selection, signature, signer, state)
+module Github.Interface.GitSignature exposing (Fragments, email, fragments, isValid, maybeFragments, payload, selection, signature, signer, state)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject
@@ -20,33 +20,42 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.GitSignature
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.GitSignature
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onGpgSignature : SelectionSet decodesTo Github.Object.GpgSignature
+    , onSmimeSignature : SelectionSet decodesTo Github.Object.SmimeSignature
+    , onUnknownSignature : SelectionSet decodesTo Github.Object.UnknownSignature
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.GitSignature) -> SelectionSet (a -> constructor) Github.Interface.GitSignature
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.GitSignature
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "GpgSignature" selections.onGpgSignature
+        , Object.buildFragment "SmimeSignature" selections.onSmimeSignature
+        , Object.buildFragment "UnknownSignature" selections.onUnknownSignature
+        ]
 
 
-onGpgSignature : SelectionSet decodesTo Github.Object.GpgSignature -> FragmentSelectionSet decodesTo Github.Interface.GitSignature
-onGpgSignature (SelectionSet fields decoder) =
-    FragmentSelectionSet "GpgSignature" fields decoder
-
-
-onSmimeSignature : SelectionSet decodesTo Github.Object.SmimeSignature -> FragmentSelectionSet decodesTo Github.Interface.GitSignature
-onSmimeSignature (SelectionSet fields decoder) =
-    FragmentSelectionSet "SmimeSignature" fields decoder
-
-
-onUnknownSignature : SelectionSet decodesTo Github.Object.UnknownSignature -> FragmentSelectionSet decodesTo Github.Interface.GitSignature
-onUnknownSignature (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnknownSignature" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onGpgSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onSmimeSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnknownSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| Email used to sign this object.

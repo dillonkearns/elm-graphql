@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.ProjectOwner exposing (ProjectRequiredArguments, ProjectsOptionalArguments, commonSelection, id, onOrganization, onRepository, project, projects, projectsResourcePath, projectsUrl, selection, viewerCanCreateProjects)
+module Github.Interface.ProjectOwner exposing (Fragments, ProjectRequiredArguments, ProjectsOptionalArguments, fragments, id, maybeFragments, project, projects, projectsResourcePath, projectsUrl, selection, viewerCanCreateProjects)
 
 import Github.Enum.ProjectState
 import Github.InputObject
@@ -20,28 +20,39 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onOrganization : SelectionSet decodesTo Github.Object.Organization
+    , onRepository : SelectionSet decodesTo Github.Object.Repository
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.ProjectOwner) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.ProjectOwner
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Organization" selections.onOrganization
+        , Object.buildFragment "Repository" selections.onRepository
+        ]
 
 
-onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.ProjectOwner
-onOrganization (SelectionSet fields decoder) =
-    FragmentSelectionSet "Organization" fields decoder
-
-
-onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.ProjectOwner
-onRepository (SelectionSet fields decoder) =
-    FragmentSelectionSet "Repository" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 id : Field Github.Scalar.Id Github.Interface.ProjectOwner

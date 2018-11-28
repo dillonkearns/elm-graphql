@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Updatable exposing (commonSelection, onCommitComment, onGistComment, onIssue, onIssueComment, onProject, onPullRequest, onPullRequestReview, onPullRequestReviewComment, selection, viewerCanUpdate)
+module Github.Interface.Updatable exposing (Fragments, fragments, maybeFragments, selection, viewerCanUpdate)
 
 import Github.InputObject
 import Github.Interface
@@ -19,58 +19,57 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Updatable
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Updatable
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onCommitComment : SelectionSet decodesTo Github.Object.CommitComment
+    , onGistComment : SelectionSet decodesTo Github.Object.GistComment
+    , onIssue : SelectionSet decodesTo Github.Object.Issue
+    , onIssueComment : SelectionSet decodesTo Github.Object.IssueComment
+    , onProject : SelectionSet decodesTo Github.Object.Project
+    , onPullRequest : SelectionSet decodesTo Github.Object.PullRequest
+    , onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview
+    , onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Updatable) -> SelectionSet (a -> constructor) Github.Interface.Updatable
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.Updatable
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "CommitComment" selections.onCommitComment
+        , Object.buildFragment "GistComment" selections.onGistComment
+        , Object.buildFragment "Issue" selections.onIssue
+        , Object.buildFragment "IssueComment" selections.onIssueComment
+        , Object.buildFragment "Project" selections.onProject
+        , Object.buildFragment "PullRequest" selections.onPullRequest
+        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        ]
 
 
-onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onCommitComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommitComment" fields decoder
-
-
-onGistComment : SelectionSet decodesTo Github.Object.GistComment -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onGistComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "GistComment" fields decoder
-
-
-onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onIssue (SelectionSet fields decoder) =
-    FragmentSelectionSet "Issue" fields decoder
-
-
-onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onIssueComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "IssueComment" fields decoder
-
-
-onProject : SelectionSet decodesTo Github.Object.Project -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onProject (SelectionSet fields decoder) =
-    FragmentSelectionSet "Project" fields decoder
-
-
-onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onPullRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequest" fields decoder
-
-
-onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onPullRequestReview (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReview" fields decoder
-
-
-onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.Updatable
-onPullRequestReviewComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReviewComment" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onGistComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onProject = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| Check if the current viewer can update this object.

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.RepositoryInfo exposing (ShortDescriptionHTMLOptionalArguments, commonSelection, createdAt, description, descriptionHTML, forkCount, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, mirrorUrl, name, nameWithOwner, onRepository, onRepositoryInvitationRepository, owner, pushedAt, resourcePath, selection, shortDescriptionHTML, updatedAt, url)
+module Github.Interface.RepositoryInfo exposing (Fragments, ShortDescriptionHTMLOptionalArguments, createdAt, description, descriptionHTML, forkCount, fragments, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, maybeFragments, mirrorUrl, name, nameWithOwner, owner, pushedAt, resourcePath, selection, shortDescriptionHTML, updatedAt, url)
 
 import Github.Enum.RepositoryLockReason
 import Github.InputObject
@@ -20,28 +20,39 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryInfo
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryInfo
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onRepository : SelectionSet decodesTo Github.Object.Repository
+    , onRepositoryInvitationRepository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.RepositoryInfo) -> SelectionSet (a -> constructor) Github.Interface.RepositoryInfo
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.RepositoryInfo
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Repository" selections.onRepository
+        , Object.buildFragment "RepositoryInvitationRepository" selections.onRepositoryInvitationRepository
+        ]
 
 
-onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.RepositoryInfo
-onRepository (SelectionSet fields decoder) =
-    FragmentSelectionSet "Repository" fields decoder
-
-
-onRepositoryInvitationRepository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> FragmentSelectionSet decodesTo Github.Interface.RepositoryInfo
-onRepositoryInvitationRepository (SelectionSet fields decoder) =
-    FragmentSelectionSet "RepositoryInvitationRepository" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepositoryInvitationRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| Identifies the date and time when the object was created.

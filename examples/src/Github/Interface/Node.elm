@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Node exposing (commonSelection, id, onAddedToProjectEvent, onAssignedEvent, onBaseRefChangedEvent, onBaseRefForcePushedEvent, onBlob, onBot, onClosedEvent, onCommentDeletedEvent, onCommit, onCommitComment, onCommitCommentThread, onConvertedNoteToIssueEvent, onCrossReferencedEvent, onDemilestonedEvent, onDeployKey, onDeployedEvent, onDeployment, onDeploymentStatus, onExternalIdentity, onGist, onGistComment, onHeadRefDeletedEvent, onHeadRefForcePushedEvent, onHeadRefRestoredEvent, onIssue, onIssueComment, onLabel, onLabeledEvent, onLanguage, onLockedEvent, onMarketplaceListing, onMentionedEvent, onMergedEvent, onMilestone, onMilestonedEvent, onMovedColumnsInProjectEvent, onOrganization, onOrganizationIdentityProvider, onOrganizationInvitation, onProject, onProjectCard, onProjectColumn, onProtectedBranch, onPublicKey, onPullRequest, onPullRequestCommit, onPullRequestReview, onPullRequestReviewComment, onPullRequestReviewThread, onPushAllowance, onReaction, onRef, onReferencedEvent, onRelease, onReleaseAsset, onRemovedFromProjectEvent, onRenamedTitleEvent, onReopenedEvent, onRepository, onRepositoryInvitation, onRepositoryTopic, onReviewDismissalAllowance, onReviewDismissedEvent, onReviewRequest, onReviewRequestRemovedEvent, onReviewRequestedEvent, onStatus, onStatusContext, onSubscribedEvent, onTag, onTeam, onTopic, onTree, onUnassignedEvent, onUnlabeledEvent, onUnlockedEvent, onUnsubscribedEvent, onUser, onUserContentEdit, selection)
+module Github.Interface.Node exposing (Fragments, fragments, id, maybeFragments, selection)
 
 import Github.InputObject
 import Github.Interface
@@ -19,413 +19,270 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Node
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Node
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onAddedToProjectEvent : SelectionSet decodesTo Github.Object.AddedToProjectEvent
+    , onAssignedEvent : SelectionSet decodesTo Github.Object.AssignedEvent
+    , onBaseRefChangedEvent : SelectionSet decodesTo Github.Object.BaseRefChangedEvent
+    , onBaseRefForcePushedEvent : SelectionSet decodesTo Github.Object.BaseRefForcePushedEvent
+    , onBlob : SelectionSet decodesTo Github.Object.Blob
+    , onBot : SelectionSet decodesTo Github.Object.Bot
+    , onClosedEvent : SelectionSet decodesTo Github.Object.ClosedEvent
+    , onCommentDeletedEvent : SelectionSet decodesTo Github.Object.CommentDeletedEvent
+    , onCommit : SelectionSet decodesTo Github.Object.Commit
+    , onCommitComment : SelectionSet decodesTo Github.Object.CommitComment
+    , onCommitCommentThread : SelectionSet decodesTo Github.Object.CommitCommentThread
+    , onConvertedNoteToIssueEvent : SelectionSet decodesTo Github.Object.ConvertedNoteToIssueEvent
+    , onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent
+    , onDemilestonedEvent : SelectionSet decodesTo Github.Object.DemilestonedEvent
+    , onDeployKey : SelectionSet decodesTo Github.Object.DeployKey
+    , onDeployedEvent : SelectionSet decodesTo Github.Object.DeployedEvent
+    , onDeployment : SelectionSet decodesTo Github.Object.Deployment
+    , onDeploymentStatus : SelectionSet decodesTo Github.Object.DeploymentStatus
+    , onExternalIdentity : SelectionSet decodesTo Github.Object.ExternalIdentity
+    , onGist : SelectionSet decodesTo Github.Object.Gist
+    , onGistComment : SelectionSet decodesTo Github.Object.GistComment
+    , onHeadRefDeletedEvent : SelectionSet decodesTo Github.Object.HeadRefDeletedEvent
+    , onHeadRefForcePushedEvent : SelectionSet decodesTo Github.Object.HeadRefForcePushedEvent
+    , onHeadRefRestoredEvent : SelectionSet decodesTo Github.Object.HeadRefRestoredEvent
+    , onIssue : SelectionSet decodesTo Github.Object.Issue
+    , onIssueComment : SelectionSet decodesTo Github.Object.IssueComment
+    , onLabel : SelectionSet decodesTo Github.Object.Label
+    , onLabeledEvent : SelectionSet decodesTo Github.Object.LabeledEvent
+    , onLanguage : SelectionSet decodesTo Github.Object.Language
+    , onLockedEvent : SelectionSet decodesTo Github.Object.LockedEvent
+    , onMarketplaceListing : SelectionSet decodesTo Github.Object.MarketplaceListing
+    , onMentionedEvent : SelectionSet decodesTo Github.Object.MentionedEvent
+    , onMergedEvent : SelectionSet decodesTo Github.Object.MergedEvent
+    , onMilestone : SelectionSet decodesTo Github.Object.Milestone
+    , onMilestonedEvent : SelectionSet decodesTo Github.Object.MilestonedEvent
+    , onMovedColumnsInProjectEvent : SelectionSet decodesTo Github.Object.MovedColumnsInProjectEvent
+    , onOrganization : SelectionSet decodesTo Github.Object.Organization
+    , onOrganizationIdentityProvider : SelectionSet decodesTo Github.Object.OrganizationIdentityProvider
+    , onOrganizationInvitation : SelectionSet decodesTo Github.Object.OrganizationInvitation
+    , onProject : SelectionSet decodesTo Github.Object.Project
+    , onProjectCard : SelectionSet decodesTo Github.Object.ProjectCard
+    , onProjectColumn : SelectionSet decodesTo Github.Object.ProjectColumn
+    , onProtectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch
+    , onPublicKey : SelectionSet decodesTo Github.Object.PublicKey
+    , onPullRequest : SelectionSet decodesTo Github.Object.PullRequest
+    , onPullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit
+    , onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview
+    , onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment
+    , onPullRequestReviewThread : SelectionSet decodesTo Github.Object.PullRequestReviewThread
+    , onPushAllowance : SelectionSet decodesTo Github.Object.PushAllowance
+    , onReaction : SelectionSet decodesTo Github.Object.Reaction
+    , onRef : SelectionSet decodesTo Github.Object.Ref
+    , onReferencedEvent : SelectionSet decodesTo Github.Object.ReferencedEvent
+    , onRelease : SelectionSet decodesTo Github.Object.Release
+    , onReleaseAsset : SelectionSet decodesTo Github.Object.ReleaseAsset
+    , onRemovedFromProjectEvent : SelectionSet decodesTo Github.Object.RemovedFromProjectEvent
+    , onRenamedTitleEvent : SelectionSet decodesTo Github.Object.RenamedTitleEvent
+    , onReopenedEvent : SelectionSet decodesTo Github.Object.ReopenedEvent
+    , onRepository : SelectionSet decodesTo Github.Object.Repository
+    , onRepositoryInvitation : SelectionSet decodesTo Github.Object.RepositoryInvitation
+    , onRepositoryTopic : SelectionSet decodesTo Github.Object.RepositoryTopic
+    , onReviewDismissalAllowance : SelectionSet decodesTo Github.Object.ReviewDismissalAllowance
+    , onReviewDismissedEvent : SelectionSet decodesTo Github.Object.ReviewDismissedEvent
+    , onReviewRequest : SelectionSet decodesTo Github.Object.ReviewRequest
+    , onReviewRequestRemovedEvent : SelectionSet decodesTo Github.Object.ReviewRequestRemovedEvent
+    , onReviewRequestedEvent : SelectionSet decodesTo Github.Object.ReviewRequestedEvent
+    , onStatus : SelectionSet decodesTo Github.Object.Status
+    , onStatusContext : SelectionSet decodesTo Github.Object.StatusContext
+    , onSubscribedEvent : SelectionSet decodesTo Github.Object.SubscribedEvent
+    , onTag : SelectionSet decodesTo Github.Object.Tag
+    , onTeam : SelectionSet decodesTo Github.Object.Team
+    , onTopic : SelectionSet decodesTo Github.Object.Topic
+    , onTree : SelectionSet decodesTo Github.Object.Tree
+    , onUnassignedEvent : SelectionSet decodesTo Github.Object.UnassignedEvent
+    , onUnlabeledEvent : SelectionSet decodesTo Github.Object.UnlabeledEvent
+    , onUnlockedEvent : SelectionSet decodesTo Github.Object.UnlockedEvent
+    , onUnsubscribedEvent : SelectionSet decodesTo Github.Object.UnsubscribedEvent
+    , onUser : SelectionSet decodesTo Github.Object.User
+    , onUserContentEdit : SelectionSet decodesTo Github.Object.UserContentEdit
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Node) -> SelectionSet (a -> constructor) Github.Interface.Node
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
-
-
-onAddedToProjectEvent : SelectionSet decodesTo Github.Object.AddedToProjectEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onAddedToProjectEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "AddedToProjectEvent" fields decoder
-
-
-onAssignedEvent : SelectionSet decodesTo Github.Object.AssignedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onAssignedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "AssignedEvent" fields decoder
-
-
-onBaseRefChangedEvent : SelectionSet decodesTo Github.Object.BaseRefChangedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onBaseRefChangedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "BaseRefChangedEvent" fields decoder
-
-
-onBaseRefForcePushedEvent : SelectionSet decodesTo Github.Object.BaseRefForcePushedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onBaseRefForcePushedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "BaseRefForcePushedEvent" fields decoder
-
-
-onBlob : SelectionSet decodesTo Github.Object.Blob -> FragmentSelectionSet decodesTo Github.Interface.Node
-onBlob (SelectionSet fields decoder) =
-    FragmentSelectionSet "Blob" fields decoder
-
-
-onBot : SelectionSet decodesTo Github.Object.Bot -> FragmentSelectionSet decodesTo Github.Interface.Node
-onBot (SelectionSet fields decoder) =
-    FragmentSelectionSet "Bot" fields decoder
-
-
-onClosedEvent : SelectionSet decodesTo Github.Object.ClosedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onClosedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ClosedEvent" fields decoder
-
-
-onCommentDeletedEvent : SelectionSet decodesTo Github.Object.CommentDeletedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onCommentDeletedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommentDeletedEvent" fields decoder
-
-
-onCommit : SelectionSet decodesTo Github.Object.Commit -> FragmentSelectionSet decodesTo Github.Interface.Node
-onCommit (SelectionSet fields decoder) =
-    FragmentSelectionSet "Commit" fields decoder
-
-
-onCommitComment : SelectionSet decodesTo Github.Object.CommitComment -> FragmentSelectionSet decodesTo Github.Interface.Node
-onCommitComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommitComment" fields decoder
-
-
-onCommitCommentThread : SelectionSet decodesTo Github.Object.CommitCommentThread -> FragmentSelectionSet decodesTo Github.Interface.Node
-onCommitCommentThread (SelectionSet fields decoder) =
-    FragmentSelectionSet "CommitCommentThread" fields decoder
-
-
-onConvertedNoteToIssueEvent : SelectionSet decodesTo Github.Object.ConvertedNoteToIssueEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onConvertedNoteToIssueEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ConvertedNoteToIssueEvent" fields decoder
-
-
-onCrossReferencedEvent : SelectionSet decodesTo Github.Object.CrossReferencedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onCrossReferencedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "CrossReferencedEvent" fields decoder
-
-
-onDemilestonedEvent : SelectionSet decodesTo Github.Object.DemilestonedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onDemilestonedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "DemilestonedEvent" fields decoder
-
-
-onDeployKey : SelectionSet decodesTo Github.Object.DeployKey -> FragmentSelectionSet decodesTo Github.Interface.Node
-onDeployKey (SelectionSet fields decoder) =
-    FragmentSelectionSet "DeployKey" fields decoder
-
-
-onDeployedEvent : SelectionSet decodesTo Github.Object.DeployedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onDeployedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "DeployedEvent" fields decoder
-
-
-onDeployment : SelectionSet decodesTo Github.Object.Deployment -> FragmentSelectionSet decodesTo Github.Interface.Node
-onDeployment (SelectionSet fields decoder) =
-    FragmentSelectionSet "Deployment" fields decoder
-
-
-onDeploymentStatus : SelectionSet decodesTo Github.Object.DeploymentStatus -> FragmentSelectionSet decodesTo Github.Interface.Node
-onDeploymentStatus (SelectionSet fields decoder) =
-    FragmentSelectionSet "DeploymentStatus" fields decoder
-
-
-onExternalIdentity : SelectionSet decodesTo Github.Object.ExternalIdentity -> FragmentSelectionSet decodesTo Github.Interface.Node
-onExternalIdentity (SelectionSet fields decoder) =
-    FragmentSelectionSet "ExternalIdentity" fields decoder
-
-
-onGist : SelectionSet decodesTo Github.Object.Gist -> FragmentSelectionSet decodesTo Github.Interface.Node
-onGist (SelectionSet fields decoder) =
-    FragmentSelectionSet "Gist" fields decoder
-
-
-onGistComment : SelectionSet decodesTo Github.Object.GistComment -> FragmentSelectionSet decodesTo Github.Interface.Node
-onGistComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "GistComment" fields decoder
-
-
-onHeadRefDeletedEvent : SelectionSet decodesTo Github.Object.HeadRefDeletedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onHeadRefDeletedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "HeadRefDeletedEvent" fields decoder
-
-
-onHeadRefForcePushedEvent : SelectionSet decodesTo Github.Object.HeadRefForcePushedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onHeadRefForcePushedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "HeadRefForcePushedEvent" fields decoder
-
-
-onHeadRefRestoredEvent : SelectionSet decodesTo Github.Object.HeadRefRestoredEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onHeadRefRestoredEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "HeadRefRestoredEvent" fields decoder
-
-
-onIssue : SelectionSet decodesTo Github.Object.Issue -> FragmentSelectionSet decodesTo Github.Interface.Node
-onIssue (SelectionSet fields decoder) =
-    FragmentSelectionSet "Issue" fields decoder
-
-
-onIssueComment : SelectionSet decodesTo Github.Object.IssueComment -> FragmentSelectionSet decodesTo Github.Interface.Node
-onIssueComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "IssueComment" fields decoder
-
-
-onLabel : SelectionSet decodesTo Github.Object.Label -> FragmentSelectionSet decodesTo Github.Interface.Node
-onLabel (SelectionSet fields decoder) =
-    FragmentSelectionSet "Label" fields decoder
-
-
-onLabeledEvent : SelectionSet decodesTo Github.Object.LabeledEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onLabeledEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "LabeledEvent" fields decoder
-
-
-onLanguage : SelectionSet decodesTo Github.Object.Language -> FragmentSelectionSet decodesTo Github.Interface.Node
-onLanguage (SelectionSet fields decoder) =
-    FragmentSelectionSet "Language" fields decoder
-
-
-onLockedEvent : SelectionSet decodesTo Github.Object.LockedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onLockedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "LockedEvent" fields decoder
-
-
-onMarketplaceListing : SelectionSet decodesTo Github.Object.MarketplaceListing -> FragmentSelectionSet decodesTo Github.Interface.Node
-onMarketplaceListing (SelectionSet fields decoder) =
-    FragmentSelectionSet "MarketplaceListing" fields decoder
-
-
-onMentionedEvent : SelectionSet decodesTo Github.Object.MentionedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onMentionedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MentionedEvent" fields decoder
-
-
-onMergedEvent : SelectionSet decodesTo Github.Object.MergedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onMergedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MergedEvent" fields decoder
-
-
-onMilestone : SelectionSet decodesTo Github.Object.Milestone -> FragmentSelectionSet decodesTo Github.Interface.Node
-onMilestone (SelectionSet fields decoder) =
-    FragmentSelectionSet "Milestone" fields decoder
-
-
-onMilestonedEvent : SelectionSet decodesTo Github.Object.MilestonedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onMilestonedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MilestonedEvent" fields decoder
-
-
-onMovedColumnsInProjectEvent : SelectionSet decodesTo Github.Object.MovedColumnsInProjectEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onMovedColumnsInProjectEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "MovedColumnsInProjectEvent" fields decoder
-
-
-onOrganization : SelectionSet decodesTo Github.Object.Organization -> FragmentSelectionSet decodesTo Github.Interface.Node
-onOrganization (SelectionSet fields decoder) =
-    FragmentSelectionSet "Organization" fields decoder
-
-
-onOrganizationIdentityProvider : SelectionSet decodesTo Github.Object.OrganizationIdentityProvider -> FragmentSelectionSet decodesTo Github.Interface.Node
-onOrganizationIdentityProvider (SelectionSet fields decoder) =
-    FragmentSelectionSet "OrganizationIdentityProvider" fields decoder
-
-
-onOrganizationInvitation : SelectionSet decodesTo Github.Object.OrganizationInvitation -> FragmentSelectionSet decodesTo Github.Interface.Node
-onOrganizationInvitation (SelectionSet fields decoder) =
-    FragmentSelectionSet "OrganizationInvitation" fields decoder
-
-
-onProject : SelectionSet decodesTo Github.Object.Project -> FragmentSelectionSet decodesTo Github.Interface.Node
-onProject (SelectionSet fields decoder) =
-    FragmentSelectionSet "Project" fields decoder
-
-
-onProjectCard : SelectionSet decodesTo Github.Object.ProjectCard -> FragmentSelectionSet decodesTo Github.Interface.Node
-onProjectCard (SelectionSet fields decoder) =
-    FragmentSelectionSet "ProjectCard" fields decoder
-
-
-onProjectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> FragmentSelectionSet decodesTo Github.Interface.Node
-onProjectColumn (SelectionSet fields decoder) =
-    FragmentSelectionSet "ProjectColumn" fields decoder
-
-
-onProtectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> FragmentSelectionSet decodesTo Github.Interface.Node
-onProtectedBranch (SelectionSet fields decoder) =
-    FragmentSelectionSet "ProtectedBranch" fields decoder
-
-
-onPublicKey : SelectionSet decodesTo Github.Object.PublicKey -> FragmentSelectionSet decodesTo Github.Interface.Node
-onPublicKey (SelectionSet fields decoder) =
-    FragmentSelectionSet "PublicKey" fields decoder
-
-
-onPullRequest : SelectionSet decodesTo Github.Object.PullRequest -> FragmentSelectionSet decodesTo Github.Interface.Node
-onPullRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequest" fields decoder
-
-
-onPullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit -> FragmentSelectionSet decodesTo Github.Interface.Node
-onPullRequestCommit (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestCommit" fields decoder
-
-
-onPullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> FragmentSelectionSet decodesTo Github.Interface.Node
-onPullRequestReview (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReview" fields decoder
-
-
-onPullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> FragmentSelectionSet decodesTo Github.Interface.Node
-onPullRequestReviewComment (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReviewComment" fields decoder
-
-
-onPullRequestReviewThread : SelectionSet decodesTo Github.Object.PullRequestReviewThread -> FragmentSelectionSet decodesTo Github.Interface.Node
-onPullRequestReviewThread (SelectionSet fields decoder) =
-    FragmentSelectionSet "PullRequestReviewThread" fields decoder
-
-
-onPushAllowance : SelectionSet decodesTo Github.Object.PushAllowance -> FragmentSelectionSet decodesTo Github.Interface.Node
-onPushAllowance (SelectionSet fields decoder) =
-    FragmentSelectionSet "PushAllowance" fields decoder
-
-
-onReaction : SelectionSet decodesTo Github.Object.Reaction -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReaction (SelectionSet fields decoder) =
-    FragmentSelectionSet "Reaction" fields decoder
-
-
-onRef : SelectionSet decodesTo Github.Object.Ref -> FragmentSelectionSet decodesTo Github.Interface.Node
-onRef (SelectionSet fields decoder) =
-    FragmentSelectionSet "Ref" fields decoder
-
-
-onReferencedEvent : SelectionSet decodesTo Github.Object.ReferencedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReferencedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReferencedEvent" fields decoder
-
-
-onRelease : SelectionSet decodesTo Github.Object.Release -> FragmentSelectionSet decodesTo Github.Interface.Node
-onRelease (SelectionSet fields decoder) =
-    FragmentSelectionSet "Release" fields decoder
-
-
-onReleaseAsset : SelectionSet decodesTo Github.Object.ReleaseAsset -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReleaseAsset (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReleaseAsset" fields decoder
-
-
-onRemovedFromProjectEvent : SelectionSet decodesTo Github.Object.RemovedFromProjectEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onRemovedFromProjectEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "RemovedFromProjectEvent" fields decoder
-
-
-onRenamedTitleEvent : SelectionSet decodesTo Github.Object.RenamedTitleEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onRenamedTitleEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "RenamedTitleEvent" fields decoder
-
-
-onReopenedEvent : SelectionSet decodesTo Github.Object.ReopenedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReopenedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReopenedEvent" fields decoder
-
-
-onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.Node
-onRepository (SelectionSet fields decoder) =
-    FragmentSelectionSet "Repository" fields decoder
-
-
-onRepositoryInvitation : SelectionSet decodesTo Github.Object.RepositoryInvitation -> FragmentSelectionSet decodesTo Github.Interface.Node
-onRepositoryInvitation (SelectionSet fields decoder) =
-    FragmentSelectionSet "RepositoryInvitation" fields decoder
-
-
-onRepositoryTopic : SelectionSet decodesTo Github.Object.RepositoryTopic -> FragmentSelectionSet decodesTo Github.Interface.Node
-onRepositoryTopic (SelectionSet fields decoder) =
-    FragmentSelectionSet "RepositoryTopic" fields decoder
-
-
-onReviewDismissalAllowance : SelectionSet decodesTo Github.Object.ReviewDismissalAllowance -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReviewDismissalAllowance (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewDismissalAllowance" fields decoder
-
-
-onReviewDismissedEvent : SelectionSet decodesTo Github.Object.ReviewDismissedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReviewDismissedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewDismissedEvent" fields decoder
-
-
-onReviewRequest : SelectionSet decodesTo Github.Object.ReviewRequest -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReviewRequest (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewRequest" fields decoder
-
-
-onReviewRequestRemovedEvent : SelectionSet decodesTo Github.Object.ReviewRequestRemovedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReviewRequestRemovedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewRequestRemovedEvent" fields decoder
-
-
-onReviewRequestedEvent : SelectionSet decodesTo Github.Object.ReviewRequestedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onReviewRequestedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "ReviewRequestedEvent" fields decoder
-
-
-onStatus : SelectionSet decodesTo Github.Object.Status -> FragmentSelectionSet decodesTo Github.Interface.Node
-onStatus (SelectionSet fields decoder) =
-    FragmentSelectionSet "Status" fields decoder
-
-
-onStatusContext : SelectionSet decodesTo Github.Object.StatusContext -> FragmentSelectionSet decodesTo Github.Interface.Node
-onStatusContext (SelectionSet fields decoder) =
-    FragmentSelectionSet "StatusContext" fields decoder
-
-
-onSubscribedEvent : SelectionSet decodesTo Github.Object.SubscribedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onSubscribedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "SubscribedEvent" fields decoder
-
-
-onTag : SelectionSet decodesTo Github.Object.Tag -> FragmentSelectionSet decodesTo Github.Interface.Node
-onTag (SelectionSet fields decoder) =
-    FragmentSelectionSet "Tag" fields decoder
-
-
-onTeam : SelectionSet decodesTo Github.Object.Team -> FragmentSelectionSet decodesTo Github.Interface.Node
-onTeam (SelectionSet fields decoder) =
-    FragmentSelectionSet "Team" fields decoder
-
-
-onTopic : SelectionSet decodesTo Github.Object.Topic -> FragmentSelectionSet decodesTo Github.Interface.Node
-onTopic (SelectionSet fields decoder) =
-    FragmentSelectionSet "Topic" fields decoder
-
-
-onTree : SelectionSet decodesTo Github.Object.Tree -> FragmentSelectionSet decodesTo Github.Interface.Node
-onTree (SelectionSet fields decoder) =
-    FragmentSelectionSet "Tree" fields decoder
-
-
-onUnassignedEvent : SelectionSet decodesTo Github.Object.UnassignedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onUnassignedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnassignedEvent" fields decoder
-
-
-onUnlabeledEvent : SelectionSet decodesTo Github.Object.UnlabeledEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onUnlabeledEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnlabeledEvent" fields decoder
-
-
-onUnlockedEvent : SelectionSet decodesTo Github.Object.UnlockedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onUnlockedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnlockedEvent" fields decoder
-
-
-onUnsubscribedEvent : SelectionSet decodesTo Github.Object.UnsubscribedEvent -> FragmentSelectionSet decodesTo Github.Interface.Node
-onUnsubscribedEvent (SelectionSet fields decoder) =
-    FragmentSelectionSet "UnsubscribedEvent" fields decoder
-
-
-onUser : SelectionSet decodesTo Github.Object.User -> FragmentSelectionSet decodesTo Github.Interface.Node
-onUser (SelectionSet fields decoder) =
-    FragmentSelectionSet "User" fields decoder
-
-
-onUserContentEdit : SelectionSet decodesTo Github.Object.UserContentEdit -> FragmentSelectionSet decodesTo Github.Interface.Node
-onUserContentEdit (SelectionSet fields decoder) =
-    FragmentSelectionSet "UserContentEdit" fields decoder
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.Node
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "AddedToProjectEvent" selections.onAddedToProjectEvent
+        , Object.buildFragment "AssignedEvent" selections.onAssignedEvent
+        , Object.buildFragment "BaseRefChangedEvent" selections.onBaseRefChangedEvent
+        , Object.buildFragment "BaseRefForcePushedEvent" selections.onBaseRefForcePushedEvent
+        , Object.buildFragment "Blob" selections.onBlob
+        , Object.buildFragment "Bot" selections.onBot
+        , Object.buildFragment "ClosedEvent" selections.onClosedEvent
+        , Object.buildFragment "CommentDeletedEvent" selections.onCommentDeletedEvent
+        , Object.buildFragment "Commit" selections.onCommit
+        , Object.buildFragment "CommitComment" selections.onCommitComment
+        , Object.buildFragment "CommitCommentThread" selections.onCommitCommentThread
+        , Object.buildFragment "ConvertedNoteToIssueEvent" selections.onConvertedNoteToIssueEvent
+        , Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent
+        , Object.buildFragment "DemilestonedEvent" selections.onDemilestonedEvent
+        , Object.buildFragment "DeployKey" selections.onDeployKey
+        , Object.buildFragment "DeployedEvent" selections.onDeployedEvent
+        , Object.buildFragment "Deployment" selections.onDeployment
+        , Object.buildFragment "DeploymentStatus" selections.onDeploymentStatus
+        , Object.buildFragment "ExternalIdentity" selections.onExternalIdentity
+        , Object.buildFragment "Gist" selections.onGist
+        , Object.buildFragment "GistComment" selections.onGistComment
+        , Object.buildFragment "HeadRefDeletedEvent" selections.onHeadRefDeletedEvent
+        , Object.buildFragment "HeadRefForcePushedEvent" selections.onHeadRefForcePushedEvent
+        , Object.buildFragment "HeadRefRestoredEvent" selections.onHeadRefRestoredEvent
+        , Object.buildFragment "Issue" selections.onIssue
+        , Object.buildFragment "IssueComment" selections.onIssueComment
+        , Object.buildFragment "Label" selections.onLabel
+        , Object.buildFragment "LabeledEvent" selections.onLabeledEvent
+        , Object.buildFragment "Language" selections.onLanguage
+        , Object.buildFragment "LockedEvent" selections.onLockedEvent
+        , Object.buildFragment "MarketplaceListing" selections.onMarketplaceListing
+        , Object.buildFragment "MentionedEvent" selections.onMentionedEvent
+        , Object.buildFragment "MergedEvent" selections.onMergedEvent
+        , Object.buildFragment "Milestone" selections.onMilestone
+        , Object.buildFragment "MilestonedEvent" selections.onMilestonedEvent
+        , Object.buildFragment "MovedColumnsInProjectEvent" selections.onMovedColumnsInProjectEvent
+        , Object.buildFragment "Organization" selections.onOrganization
+        , Object.buildFragment "OrganizationIdentityProvider" selections.onOrganizationIdentityProvider
+        , Object.buildFragment "OrganizationInvitation" selections.onOrganizationInvitation
+        , Object.buildFragment "Project" selections.onProject
+        , Object.buildFragment "ProjectCard" selections.onProjectCard
+        , Object.buildFragment "ProjectColumn" selections.onProjectColumn
+        , Object.buildFragment "ProtectedBranch" selections.onProtectedBranch
+        , Object.buildFragment "PublicKey" selections.onPublicKey
+        , Object.buildFragment "PullRequest" selections.onPullRequest
+        , Object.buildFragment "PullRequestCommit" selections.onPullRequestCommit
+        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        , Object.buildFragment "PullRequestReviewThread" selections.onPullRequestReviewThread
+        , Object.buildFragment "PushAllowance" selections.onPushAllowance
+        , Object.buildFragment "Reaction" selections.onReaction
+        , Object.buildFragment "Ref" selections.onRef
+        , Object.buildFragment "ReferencedEvent" selections.onReferencedEvent
+        , Object.buildFragment "Release" selections.onRelease
+        , Object.buildFragment "ReleaseAsset" selections.onReleaseAsset
+        , Object.buildFragment "RemovedFromProjectEvent" selections.onRemovedFromProjectEvent
+        , Object.buildFragment "RenamedTitleEvent" selections.onRenamedTitleEvent
+        , Object.buildFragment "ReopenedEvent" selections.onReopenedEvent
+        , Object.buildFragment "Repository" selections.onRepository
+        , Object.buildFragment "RepositoryInvitation" selections.onRepositoryInvitation
+        , Object.buildFragment "RepositoryTopic" selections.onRepositoryTopic
+        , Object.buildFragment "ReviewDismissalAllowance" selections.onReviewDismissalAllowance
+        , Object.buildFragment "ReviewDismissedEvent" selections.onReviewDismissedEvent
+        , Object.buildFragment "ReviewRequest" selections.onReviewRequest
+        , Object.buildFragment "ReviewRequestRemovedEvent" selections.onReviewRequestRemovedEvent
+        , Object.buildFragment "ReviewRequestedEvent" selections.onReviewRequestedEvent
+        , Object.buildFragment "Status" selections.onStatus
+        , Object.buildFragment "StatusContext" selections.onStatusContext
+        , Object.buildFragment "SubscribedEvent" selections.onSubscribedEvent
+        , Object.buildFragment "Tag" selections.onTag
+        , Object.buildFragment "Team" selections.onTeam
+        , Object.buildFragment "Topic" selections.onTopic
+        , Object.buildFragment "Tree" selections.onTree
+        , Object.buildFragment "UnassignedEvent" selections.onUnassignedEvent
+        , Object.buildFragment "UnlabeledEvent" selections.onUnlabeledEvent
+        , Object.buildFragment "UnlockedEvent" selections.onUnlockedEvent
+        , Object.buildFragment "UnsubscribedEvent" selections.onUnsubscribedEvent
+        , Object.buildFragment "User" selections.onUser
+        , Object.buildFragment "UserContentEdit" selections.onUserContentEdit
+        ]
+
+
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onAddedToProjectEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onAssignedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onBaseRefChangedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onBaseRefForcePushedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onBlob = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onBot = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onClosedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCommentDeletedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCommitCommentThread = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onConvertedNoteToIssueEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onCrossReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDemilestonedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDeployKey = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDeployedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDeployment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onDeploymentStatus = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onExternalIdentity = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onGist = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onGistComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHeadRefDeletedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHeadRefForcePushedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHeadRefRestoredEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLabel = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLabeledEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLanguage = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onLockedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMarketplaceListing = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMentionedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMergedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMilestone = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMilestonedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onMovedColumnsInProjectEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onOrganizationIdentityProvider = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onOrganizationInvitation = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onProject = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onProjectCard = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onProjectColumn = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onProtectedBranch = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPublicKey = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPullRequestReviewThread = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onPushAllowance = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReaction = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRef = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRelease = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReleaseAsset = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRemovedFromProjectEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRenamedTitleEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReopenedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepositoryInvitation = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepositoryTopic = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewDismissalAllowance = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewDismissedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewRequestRemovedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onReviewRequestedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onStatus = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onStatusContext = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onSubscribedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTag = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTopic = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onTree = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnassignedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnlabeledEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnlockedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUnsubscribedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onUserContentEdit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 {-| ID of the object.

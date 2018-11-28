@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Starrable exposing (StargazersOptionalArguments, commonSelection, id, onGist, onRepository, selection, stargazers, viewerHasStarred)
+module Github.Interface.Starrable exposing (Fragments, StargazersOptionalArguments, fragments, id, maybeFragments, selection, stargazers, viewerHasStarred)
 
 import Github.InputObject
 import Github.Interface
@@ -19,28 +19,39 @@ import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..)
 import Json.Decode as Decode
 
 
-{-| Select only common fields from the interface.
+{-| Select fields to build up a SelectionSet for this Interface.
 -}
-commonSelection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Starrable
-commonSelection constructor =
+selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Starrable
+selection constructor =
     Object.selection constructor
 
 
-{-| Select both common and type-specific fields from the interface.
+type alias Fragments decodesTo =
+    { onGist : SelectionSet decodesTo Github.Object.Gist
+    , onRepository : SelectionSet decodesTo Github.Object.Repository
+    }
+
+
+{-| Build an exhaustive selection of type-specific fragments.
 -}
-selection : (Maybe typeSpecific -> a -> constructor) -> List (FragmentSelectionSet typeSpecific Github.Interface.Starrable) -> SelectionSet (a -> constructor) Github.Interface.Starrable
-selection constructor typeSpecificDecoders =
-    Object.interfaceSelection typeSpecificDecoders constructor
+fragments :
+    Fragments decodesTo
+    -> SelectionSet decodesTo Github.Interface.Starrable
+fragments selections =
+    Object.exhuastiveFragmentSelection
+        [ Object.buildFragment "Gist" selections.onGist
+        , Object.buildFragment "Repository" selections.onRepository
+        ]
 
 
-onGist : SelectionSet decodesTo Github.Object.Gist -> FragmentSelectionSet decodesTo Github.Interface.Starrable
-onGist (SelectionSet fields decoder) =
-    FragmentSelectionSet "Gist" fields decoder
-
-
-onRepository : SelectionSet decodesTo Github.Object.Repository -> FragmentSelectionSet decodesTo Github.Interface.Starrable
-onRepository (SelectionSet fields decoder) =
-    FragmentSelectionSet "Repository" fields decoder
+{-| Can be used to create a non-exhuastive set of fragments by using the record
+update syntax to add `SelectionSet`s for the types you want to handle.
+-}
+maybeFragments : Fragments (Maybe a)
+maybeFragments =
+    { onGist = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    }
 
 
 id : Field Github.Scalar.Id Github.Interface.Starrable
