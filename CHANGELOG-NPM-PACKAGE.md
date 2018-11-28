@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.2] - 2018-11-28
+
+### Fixed
+
+- Only run `elm-format` on the generated code directory, not the entire  
+  `--output` directory. In the last release, it didn't take `--base` into account
+  when running `elm-format`.
+
 ## [2.0.1] - 2018-11-27
 
 ### Changed

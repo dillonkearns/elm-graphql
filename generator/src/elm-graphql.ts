@@ -122,7 +122,7 @@ function onDataAvailable(data: {}) {
     ]);
     await Promise.all(writeGeneratedFiles(generatedFile));
     writeIntrospectionFile();
-    applyElmFormat(outputPath);
+    applyElmFormat(prependBasePath("/"));
     console.log("Success!");
   });
 }
