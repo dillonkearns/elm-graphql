@@ -7,6 +7,7 @@ import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
+import { removeGenerated } from "./cli/generated-code-handler";
 const npmPackageVersion = require("../../package.json").version;
 const elmPackageVersion = require("../../elm.json").version;
 
@@ -144,10 +145,6 @@ function warnIfContainsNonGenerated(path: string): void {
     );
     process.exit(1);
   }
-}
-
-function removeGenerated(path: string): void {
-  glob.sync(path + "/**/*.elm").forEach(fs.unlinkSync);
 }
 
 function writeGeneratedFiles(
