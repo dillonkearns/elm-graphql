@@ -54,7 +54,6 @@ type alias FileArgs =
     { file : String
     , base : List String
     , outputPath : String
-    , excludeDeprecated : Bool
     }
 
 
@@ -86,7 +85,7 @@ program =
                 |> with (Option.requiredPositionalArg "url")
                 |> with baseOption
                 |> with outputPathOption
-                |> with (Option.flag "excludeDeprecated")
+                |> with (Option.flag "exclude-deprecated")
                 |> with
                     (Option.keywordArgList "header"
                         |> Option.validateMap parseHeaders
@@ -99,7 +98,6 @@ program =
                 |> with (Option.requiredKeywordArg "introspection-file")
                 |> with baseOption
                 |> with outputPathOption
-                |> with (Option.flag "excludeDeprecated")
                 |> OptionsParser.map FromFile
             )
 
@@ -140,7 +138,6 @@ init flags msg =
             ( ()
             , Ports.introspectSchemaFromFile
                 { introspectionFilePath = options.file
-                , excludeDeprecated = options.excludeDeprecated
                 , outputPath = options.outputPath
                 , baseModule = options.base
                 }

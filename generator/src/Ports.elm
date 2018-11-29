@@ -22,7 +22,6 @@ port printAndExitSuccess : String -> Cmd msg
 
 port introspectSchemaFromFile :
     { introspectionFilePath : String
-    , excludeDeprecated : Bool
     , outputPath : String
     , baseModule : List String
     }

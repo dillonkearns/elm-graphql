@@ -44,12 +44,10 @@ app.ports.printAndExitSuccess.subscribe((message: string) => {
 app.ports.introspectSchemaFromFile.subscribe(
   ({
     introspectionFilePath,
-    excludeDeprecated,
     outputPath,
     baseModule
   }: {
     introspectionFilePath: string;
-    excludeDeprecated: boolean;
     outputPath: string;
     baseModule: string[];
   }) => {
