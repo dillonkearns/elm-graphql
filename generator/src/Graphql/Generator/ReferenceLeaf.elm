@@ -1,6 +1,7 @@
 module Graphql.Generator.ReferenceLeaf exposing (ReferenceLeaf(..), get)
 
 import Graphql.Parser.Type as Type exposing (TypeReference(..))
+import MyDebug
 
 
 type ReferenceLeaf
@@ -32,7 +33,7 @@ get (TypeReference referrableType isNullable) =
             Enum
 
         Type.InputObjectRef _ ->
-            Debug.todo "TODO"
+            MyDebug.crash "TODO"
 
         Type.UnionRef _ ->
             Union
