@@ -24,7 +24,6 @@
   "devDependencies": {
     "@types/fs-extra": "^5.0.0",
     "@types/glob": "^5.0.34",
-    "@types/minimist": "^1.2.0",
     "@types/node": "^8.5.2",
     "@types/request": "^2.0.9",
     "@types/webpack": "^3.8.1",
@@ -47,7 +46,6 @@
     "encoding": "^0.1.12",
     "glob": "^7.1.2",
     "graphql-request": "^1.4.0",
-    "minimist": "^1.2.0",
     "request": "^2.83.0"
   },
   "bin": {
