@@ -173,7 +173,7 @@ function writeGeneratedFiles(
 }
 
 function writeIntrospectionFile(baseModule: string[], outputPath: string) {
-  fs.writeFile(
+  fs.writeFileSync(
     prependBasePath("elm-graphql-metadata.json", baseModule, outputPath),
     `{"targetElmPackageVersion": "${elmPackageVersion}", "generatedByNpmPackageVersion": "${npmPackageVersion}"}`
   );
