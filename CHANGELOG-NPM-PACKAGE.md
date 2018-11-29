@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.3] - 2018-11-29
+
+### Changed
+
+- Now using `--optimize` flag so there is no more warning printed from Elm when
+  running the CLI.
+- Now using https://github.com/dillonkearns/elm-cli-options-parser so you will
+  get better feedback when you pass invalid arguments to the CLI.
+
 ## [2.0.2] - 2018-11-28
 
 ### Fixed
