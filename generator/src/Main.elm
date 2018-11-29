@@ -11,6 +11,7 @@ import Json.Encode
 import Json.Encode.Extra
 import Ports
 import Result.Extra
+import String.Interpolate exposing (interpolate)
 
 
 type Msg
@@ -70,7 +71,8 @@ parseHeader header =
             Ok ( key, value )
 
         _ ->
-            "Could not parse header {0}. Must be of form `<key>: <value>`, for example `authorization: Bearer abcdefg1234567`."
+            interpolate "Could not parse header `{0}`. Must be of form `<key>: <value>`, for example `authorization: Bearer abcdefg1234567`."
+                [ header ]
                 |> Err
 
 
