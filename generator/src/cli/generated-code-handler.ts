@@ -1,5 +1,6 @@
 import * as glob from "glob";
 import * as fs from "fs-extra";
+import { prependBasePath } from "./path-helpers";
 
 export function removeGenerated(path: string): void {
   glob.sync(path + "/**/*.elm").forEach(fs.unlinkSync);
@@ -13,8 +14,16 @@ export function isGenerated(path: string): boolean {
   );
 }
 
-export function warnAndExitIfContainsNonGenerated(path: string): void {
-  const files: string[] = glob.sync(path + "/**/*.elm");
+export function warnAndExitIfContainsNonGenerated({
+  baseModule,
+  outputPath
+}: {
+  baseModule: string[];
+  outputPath: string;
+}): void {
+  const files: string[] = glob.sync(
+    prependBasePath("/", baseModule, outputPath) + "/**/*.elm"
+  );
   const nonGenerated = files.filter(file => !isGenerated(file));
 
   if (nonGenerated.length > 0) {

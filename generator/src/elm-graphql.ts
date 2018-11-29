@@ -50,9 +50,7 @@ app.ports.introspectSchemaFromFile.subscribe(
     outputPath: string;
     baseModule: string[];
   }) => {
-    warnAndExitIfContainsNonGenerated(
-      prependBasePath("/", baseModule, outputPath)
-    );
+    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
     const introspectionFileJson = JSON.parse(
       fs.readFileSync(introspectionFilePath).toString()
     );
@@ -78,9 +76,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     baseModule: string[];
     headers: {};
   }) => {
-    warnAndExitIfContainsNonGenerated(
-      prependBasePath("/", baseModule, outputPath)
-    );
+    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
 
     console.log("Fetching GraphQL schema...");
     new GraphQLClient(graphqlUrl, {
