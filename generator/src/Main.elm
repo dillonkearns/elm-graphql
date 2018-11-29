@@ -9,6 +9,7 @@ import Graphql.Parser
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
+import MyDebug
 import Ports
 import Result.Extra
 import String.Interpolate exposing (interpolate)
@@ -31,7 +32,8 @@ run baseModule introspectionQueryJson =
                 |> Ports.generatedFiles
 
         Err error ->
-            Debug.todo ("Got error " ++ Debug.toString error)
+            ("Got error " ++ Decode.errorToString error)
+                |> Ports.printAndExitFailure
 
 
 type CliOptions

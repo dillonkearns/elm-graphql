@@ -1,6 +1,7 @@
 module Graphql.Generator.Normalize exposing (capitalized, decapitalized)
 
 import Char
+import MyDebug
 import Regex
 import String.Extra
 
@@ -28,10 +29,10 @@ underscores string =
             }
 
         Nothing ->
-            Debug.todo "Got nothing"
+            MyDebug.crash "Got nothing"
 
         _ ->
-            Debug.todo ("Unexpected regex result for name " ++ string)
+            MyDebug.crash ("Unexpected regex result for name " ++ string)
 
 
 isAllUpper : String -> Bool

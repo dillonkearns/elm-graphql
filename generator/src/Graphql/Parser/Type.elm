@@ -19,6 +19,7 @@ import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Scalar as Scalar exposing (Scalar)
 import Graphql.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
+import MyDebug
 
 
 decoder : Decoder TypeDefinition
@@ -266,7 +267,7 @@ expectString maybeString =
             string
 
         Nothing ->
-            Debug.todo "Expected string but got Nothing"
+            MyDebug.crash "Expected string but got Nothing"
 
 
 parseRef : RawTypeRef -> TypeReference
@@ -278,7 +279,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (List (parseRef nestedOfType)) Nullable
 
                 Nothing ->
-                    Debug.todo "Missing nested type for List reference"
+                    MyDebug.crash "Missing nested type for List reference"
 
         TypeKind.Scalar ->
             case rawTypeRef.name of
@@ -288,7 +289,7 @@ parseRef (RawTypeRef rawTypeRef) =
                         Nullable
 
                 Nothing ->
-                    Debug.todo "Should not get null names for scalar references"
+                    MyDebug.crash "Should not get null names for scalar references"
 
         TypeKind.Interface ->
             case rawTypeRef.name of
@@ -296,7 +297,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (InterfaceRef interfaceName) Nullable
 
                 Nothing ->
-                    Debug.todo "Should not get null names for interface references"
+                    MyDebug.crash "Should not get null names for interface references"
 
         TypeKind.Object ->
             case rawTypeRef.name of
@@ -304,7 +305,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (ObjectRef objectName) Nullable
 
                 Nothing ->
-                    Debug.todo "Should not get null names for object references"
+                    MyDebug.crash "Should not get null names for object references"
 
         TypeKind.NonNull ->
             case rawTypeRef.ofType of
@@ -327,10 +328,10 @@ parseRef (RawTypeRef rawTypeRef) =
                                     TypeReference (List (parseRef nestedOfType)) NonNullable
 
                                 Nothing ->
-                                    Debug.todo ""
+                                    MyDebug.crash ""
 
                         ( TypeKind.NonNull, _ ) ->
-                            Debug.todo "Can't have nested non-null types"
+                            MyDebug.crash "Can't have nested non-null types"
 
                         ( TypeKind.Ignore, _ ) ->
                             ignoreRef
@@ -356,7 +357,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (objectName |> ClassCaseName.build |> EnumRef) Nullable
 
                 Nothing ->
-                    Debug.todo "Should not get null names for enum references"
+                    MyDebug.crash "Should not get null names for enum references"
 
         TypeKind.InputObject ->
             case rawTypeRef.name of
@@ -364,7 +365,7 @@ parseRef (RawTypeRef rawTypeRef) =
                     TypeReference (inputObjectName |> ClassCaseName.build |> InputObjectRef) Nullable
 
                 Nothing ->
-                    Debug.todo "Should not get null names for input object references"
+                    MyDebug.crash "Should not get null names for input object references"
 
         TypeKind.Union ->
             TypeReference (UnionRef (expectString rawTypeRef.name)) Nullable

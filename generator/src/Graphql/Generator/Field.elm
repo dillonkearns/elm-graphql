@@ -11,6 +11,7 @@ import Graphql.Generator.RequiredArgs
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeReference)
+import MyDebug
 import String.Extra
 import String.Interpolate exposing (interpolate)
 
@@ -192,13 +193,13 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
                     ModuleName.interface context (ClassCaseName.build refName) |> String.join "."
 
                 ReferenceLeaf.Enum ->
-                    Debug.todo "TODO"
+                    MyDebug.crash "TODO"
 
                 ReferenceLeaf.Union ->
                     ModuleName.union context (ClassCaseName.build refName) |> String.join "."
 
                 ReferenceLeaf.Scalar ->
-                    Debug.todo "TODO"
+                    MyDebug.crash "TODO"
 
         objectArgAnnotation =
             interpolate
@@ -261,7 +262,7 @@ leafType (Type.TypeReference referrableType isNullable) =
             EnumLeaf
 
         Type.InputObjectRef _ ->
-            Debug.todo "Unexpected type"
+            MyDebug.crash "Unexpected type"
 
 
 init : Context -> CamelCaseName -> TypeReference -> FieldGenerator
