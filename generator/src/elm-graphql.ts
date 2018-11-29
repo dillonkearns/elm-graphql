@@ -7,7 +7,11 @@ import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
-import { removeGenerated, isGenerated } from "./cli/generated-code-handler";
+import {
+  removeGenerated,
+  isGenerated,
+  warnAndExitIfContainsNonGenerated
+} from "./cli/generated-code-handler";
 const npmPackageVersion = require("../../package.json").version;
 const elmPackageVersion = require("../../elm.json").version;
 
@@ -46,7 +50,9 @@ app.ports.introspectSchemaFromFile.subscribe(
     outputPath: string;
     baseModule: string[];
   }) => {
-    warnIfContainsNonGenerated(prependBasePath("/", baseModule, outputPath));
+    warnAndExitIfContainsNonGenerated(
+      prependBasePath("/", baseModule, outputPath)
+    );
     const introspectionFileJson = JSON.parse(
       fs.readFileSync(introspectionFilePath).toString()
     );
@@ -72,7 +78,9 @@ app.ports.introspectSchemaFromUrl.subscribe(
     baseModule: string[];
     headers: {};
   }) => {
-    warnIfContainsNonGenerated(prependBasePath("/", baseModule, outputPath));
+    warnAndExitIfContainsNonGenerated(
+      prependBasePath("/", baseModule, outputPath)
+    );
 
     console.log("Fetching GraphQL schema...");
     new GraphQLClient(graphqlUrl, {
@@ -124,19 +132,6 @@ function onDataAvailable(data: {}, outputPath: string, baseModule: string[]) {
     process.exit(0);
   });
   app.ports.generateFiles.send(data);
-}
-
-function warnIfContainsNonGenerated(path: string): void {
-  const files: string[] = glob.sync(path + "/**/*.elm");
-  const nonGenerated = files.filter(file => !isGenerated(file));
-
-  if (nonGenerated.length > 0) {
-    console.log(
-      "@dillonkearns/elm-graphql found some files that it did not generate. Please move or delete the following files and run @dillonkearns/elm-graphql again.",
-      nonGenerated
-    );
-    process.exit(1);
-  }
 }
 
 function writeGeneratedFiles(
