@@ -6,7 +6,9 @@ import * as request from "request";
 import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
+import * as ora from "ora";
 import * as path from "path";
+
 import {
   removeGenerated,
   isGenerated,
@@ -21,6 +23,12 @@ const targetComment = `-- Do not manually edit this file, it was auto-generated 
 
 const versionMessage = `npm version ${npmPackageVersion}\nTargeting elm package dillonkearns/elm-graphql@${elmPackageVersion}`;
 
+const [taskGetSchema, taskGenerateFiles, taskFormatFiles] = [
+  ora({ text: "Fetch GraphQL schema" }).start(),
+  ora({ text: "Generate files" }),
+  ora({ text: "elm-format on generated files" })
+];
+
 function prependBasePath(
   suffixPath: string,
   baseModule: string[],
@@ -30,7 +38,6 @@ function prependBasePath(
 }
 
 let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
-// app.ports.print.subscribe(console.log);
 app.ports.printAndExitFailure.subscribe((message: string) => {
   console.log(message);
   process.exit(1);
@@ -51,6 +58,7 @@ app.ports.introspectSchemaFromFile.subscribe(
     baseModule: string[];
   }) => {
     warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+    taskGetSchema.text = `Reading ${introspectionFilePath} file.`;
     const introspectionFileJson = JSON.parse(
       fs.readFileSync(introspectionFilePath).toString()
     );
@@ -77,8 +85,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     headers: {};
   }) => {
     warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
-
-    console.log("Fetching GraphQL schema...");
+    taskGetSchema.text = `Fetching from ${graphqlUrl}`;
     new GraphQLClient(graphqlUrl, {
       mode: "cors",
       headers: headers
@@ -88,8 +95,8 @@ app.ports.introspectSchemaFromUrl.subscribe(
         onDataAvailable(data, outputPath, baseModule);
       })
       .catch(err => {
-        console.log(err.response || err);
-        process.exit(1);
+        taskGetSchema.fail();
+        console.error(err.response || err);
       });
   }
 );
@@ -105,7 +112,8 @@ function makeEmptyDirectories(
 }
 
 function onDataAvailable(data: {}, outputPath: string, baseModule: string[]) {
-  console.log("Generating files...");
+  taskGetSchema.succeed();
+  taskGenerateFiles.start();
   app.ports.generatedFiles.subscribe(async function(generatedFile: {
     [s: string]: string;
   }) {
@@ -123,9 +131,10 @@ function onDataAvailable(data: {}, outputPath: string, baseModule: string[]) {
       }
     );
     writeIntrospectionFile(baseModule, outputPath);
+    taskGenerateFiles.succeed();
+    taskFormatFiles.start();
     applyElmFormat(prependBasePath("/", baseModule, outputPath));
-    console.log("Success!");
-    process.exit(0);
+    taskFormatFiles.succeed();
   });
   app.ports.generateFiles.send(data);
 }

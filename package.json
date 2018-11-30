@@ -7,9 +7,9 @@
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "elm-test && cd generator && elm-test",
     "test:watch": "elm-test --watch",
-    "gen:starwars": "npm run build && ./bin/elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src",
+    "gen:starwars": "npm run build && clear && ./bin/elm-graphql https://elm-graphql.herokuapp.com --base Swapi --output examples/src",
     "gen:normalize_test": "npm run build && cd ete_tests && ../bin/elm-graphql http://localhost:4000 --base Normalize && cd -",
-    "gen:github": "npm run build && ./bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src",
+    "gen:github": "npm run build && clear && ./bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output examples/src",
     "approve-compilation": "cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/complex/Main.elm src/SimpleMutation.elm",
     "approve": "bin/approve",
     "elm-analyse": "elm-analyse --serve"
@@ -25,10 +25,12 @@
     "@types/fs-extra": "^5.0.0",
     "@types/glob": "^5.0.34",
     "@types/node": "^8.5.2",
+    "@types/ora": "^1.3.4",
     "@types/request": "^2.0.9",
     "@types/webpack": "^3.8.1",
     "elm": "^0.19.0-bugfix2",
     "elm-analyse": "^0.13.3",
+    "elm-format": "^0.8.1",
     "elm-hot-loader": "0.5.4",
     "elm-live": "3.0.5",
     "elm-test": "^0.19.0-rev3",
@@ -36,17 +38,21 @@
     "fs-extra": "^5.0.0",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
-    "elm-format": "^0.8.1",
     "webpack": "^3.10.0"
   },
   "peerDependencies": {
     "elm-format": ">= 0.8.0 < 1"
   },
   "dependencies": {
+    "any-observable": "^0.3.0",
     "encoding": "^0.1.12",
     "glob": "^7.1.2",
     "graphql-request": "^1.4.0",
-    "request": "^2.83.0"
+    "listr": "^0.14.3",
+    "ora": "^3.0.0",
+    "request": "^2.83.0",
+    "rxjs": "^6.3.3",
+    "zen-observable": "^0.8.11"
   },
   "bin": {
     "elm-graphql": "bin/elm-graphql"
