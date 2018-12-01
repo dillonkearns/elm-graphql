@@ -1,6 +1,6 @@
 module Graphql.SelectionSet exposing
-    ( with, hardcoded, empty, map, succeed, fieldSelection
-    , map2, withFragment
+    ( with, hardcoded, empty, map, succeed
+    , map2
     , SelectionSet(..), FragmentSelectionSet(..)
     )
 
@@ -80,23 +80,6 @@ type SelectionSet decodesTo typeLock
     = SelectionSet (List RawField) (Decoder decodesTo)
 
 
-{-| Create a `SelectionSet` from a single `Field`.
-
-    import Api.Object
-    import Api.Object.Human as Human
-    import Graphql.SelectionSet exposing (SelectionSet)
-
-    humanSelection : SelectionSet String Api.Object.Human
-    humanSelection =
-        SelectionSet.fieldSelection Human.name
-
--}
-fieldSelection : Field response typeLock -> SelectionSet response typeLock
-fieldSelection field =
-    SelectionSet [] (Decode.succeed identity)
-        |> with field
-
-
 {-| Apply a function to change the result of decoding the `SelectionSet`.
 -}
 map : (a -> b) -> SelectionSet a typeLock -> SelectionSet b typeLock
@@ -141,37 +124,29 @@ type FragmentSelectionSet decodesTo typeLock
     = FragmentSelectionSet String (List RawField) (Decoder decodesTo)
 
 
-{-| Used to pick out fields on an object.
 
-    import Api.Enum.Episode as Episode exposing (Episode)
-    import Api.Object
-    import Api.Scalar
-    import Graphql.SelectionSet exposing (SelectionSet, with)
+{- TODO add this documentation to `with`
+   Used to pick out fields on an object.
 
-    type alias Hero =
-        { name : String
-        , id : Api.Scalar.Id
-        , appearsIn : List Episode
-        }
+      import Api.Enum.Episode as Episode exposing (Episode)
+      import Api.Object
+      import Api.Scalar
+      import Graphql.SelectionSet exposing (SelectionSet, with)
 
-    hero : SelectionSet Hero Api.Interface.Character
-    hero =
-        Character.commonSelection Hero
-            |> with Character.name
-            |> with Character.id
-            |> with Character.appearsIn
+      type alias Hero =
+          { name : String
+          , id : Api.Scalar.Id
+          , appearsIn : List Episode
+          }
+
+      hero : SelectionSet Hero Api.Interface.Character
+      hero =
+          Character.commonSelection Hero
+              |> with Character.name
+              |> with Character.id
+              |> with Character.appearsIn
 
 -}
-with : Field a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
-with (Field field fieldDecoder) (SelectionSet selectionFields selectionDecoder) =
-    SelectionSet (selectionFields ++ [ field ])
-        (Decode.map2 (|>)
-            (Decode.field
-                (Graphql.Document.Field.hashedAliasName field)
-                fieldDecoder
-            )
-            selectionDecoder
-        )
 
 
 {-| Include a `SelectionSet` within a `SelectionSet`. This is the equivalent of
@@ -255,8 +230,8 @@ which builds up a nested `SelectionSet` that grabs the `totalCount` within the
 `stargazers` `Field`.
 
 -}
-withFragment : SelectionSet a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
-withFragment (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
+with : SelectionSet a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
+with (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
     SelectionSet (selectionFields1 ++ selectionFields2)
         (Decode.map2 (|>)
             selectionDecoder1

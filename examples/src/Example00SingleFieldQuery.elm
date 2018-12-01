@@ -6,7 +6,7 @@ import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Language as Language
@@ -41,8 +41,8 @@ type alias Response =
 queryAlt : SelectionSet ( String, String ) RootQuery
 queryAlt =
     SelectionSet.succeed Tuple.pair
-        |> SelectionSet.withFragment Query.hello
-        |> SelectionSet.withFragment
+        |> SelectionSet.with Query.hello
+        |> SelectionSet.with
             (Query.greet
                 { input =
                     Swapi.InputObject.buildGreeting
