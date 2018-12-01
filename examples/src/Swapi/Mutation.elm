@@ -28,7 +28,7 @@ selection constructor =
     Object.selection constructor
 
 
-increment : Field Int RootMutation
+increment : SelectionSet Int RootMutation
 increment =
     Object.fieldDecoder "increment" [] Decode.int
 
@@ -39,6 +39,6 @@ type alias SendMessageRequiredArguments =
     }
 
 
-sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Swapi.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
+sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Swapi.Object.ChatMessage -> SelectionSet (Maybe decodesTo) RootMutation
 sendMessage requiredArgs object_ =
     Object.selectionField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(Swapi.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object_ (identity >> Decode.nullable)

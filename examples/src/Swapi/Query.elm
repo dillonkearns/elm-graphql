@@ -37,14 +37,14 @@ type alias DroidRequiredArguments =
   - id - ID of the droid.
 
 -}
-droid : DroidRequiredArguments -> SelectionSet decodesTo Swapi.Object.Droid -> Field (Maybe decodesTo) RootQuery
+droid : DroidRequiredArguments -> SelectionSet decodesTo Swapi.Object.Droid -> SelectionSet (Maybe decodesTo) RootQuery
 droid requiredArgs object_ =
     Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
 
 
 {-| Getting this field will result in an error.
 -}
-forcedError : Field (Maybe String) RootQuery
+forcedError : SelectionSet (Maybe String) RootQuery
 forcedError =
     Object.fieldDecoder "forcedError" [] (Decode.string |> Decode.nullable)
 
@@ -55,12 +55,12 @@ type alias GreetRequiredArguments =
 
 greet : GreetRequiredArguments -> SelectionSet String RootQuery
 greet requiredArgs =
-    Object.selectionForField "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
+    Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
 
 
 hello : SelectionSet String RootQuery
 hello =
-    Object.selectionForField "hello" [] Decode.string
+    Object.fieldDecoder "hello" [] Decode.string
 
 
 type alias HeroOptionalArguments =
@@ -72,7 +72,7 @@ type alias HeroOptionalArguments =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : (HeroOptionalArguments -> HeroOptionalArguments) -> SelectionSet decodesTo Swapi.Interface.Character -> Field decodesTo RootQuery
+hero : (HeroOptionalArguments -> HeroOptionalArguments) -> SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet decodesTo RootQuery
 hero fillInOptionals object_ =
     let
         filledInOptionals =
@@ -94,7 +94,7 @@ type alias HeroUnionOptionalArguments =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : (HeroUnionOptionalArguments -> HeroUnionOptionalArguments) -> SelectionSet decodesTo Swapi.Union.CharacterUnion -> Field decodesTo RootQuery
+heroUnion : (HeroUnionOptionalArguments -> HeroUnionOptionalArguments) -> SelectionSet decodesTo Swapi.Union.CharacterUnion -> SelectionSet decodesTo RootQuery
 heroUnion fillInOptionals object_ =
     let
         filledInOptionals =
@@ -116,6 +116,6 @@ type alias HumanRequiredArguments =
   - id - ID of the human.
 
 -}
-human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> Field (Maybe decodesTo) RootQuery
+human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
     Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)

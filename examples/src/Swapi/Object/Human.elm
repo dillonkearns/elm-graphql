@@ -31,39 +31,39 @@ selection constructor =
 -}
 appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Object.Human
 appearsIn =
-    Object.selectionForField "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+    Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.
 -}
 avatarUrl : SelectionSet String Swapi.Object.Human
 avatarUrl =
-    Object.selectionForField "avatarUrl" [] Decode.string
+    Object.fieldDecoder "avatarUrl" [] Decode.string
 
 
 {-| The friends of the human, or an empty list if they have none.
 -}
 friends : SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet (List decodesTo) Swapi.Object.Human
 friends object_ =
-    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
+    Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.
 -}
 homePlanet : SelectionSet (Maybe String) Swapi.Object.Human
 homePlanet =
-    Object.selectionForField "homePlanet" [] (Decode.string |> Decode.nullable)
+    Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.nullable)
 
 
 {-| The ID of the human.
 -}
 id : SelectionSet Swapi.Scalar.Id Swapi.Object.Human
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
+    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the human.
 -}
 name : SelectionSet String Swapi.Object.Human
 name =
-    Object.selectionForField "name" [] Decode.string
+    Object.fieldDecoder "name" [] Decode.string

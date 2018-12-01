@@ -37,7 +37,6 @@ query id =
             |> withFragment Human.name
             |> withFragment Human.homePlanet
         )
-        |> fieldSelection
 
 
 makeRequest : Cmd Msg

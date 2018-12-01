@@ -29,41 +29,41 @@ selection constructor =
 
 {-| Which movies they appear in.
 -}
-appearsIn : Field (List Swapi.Enum.Episode.Episode) Swapi.Object.Droid
+appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Object.Droid
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.
 -}
-avatarUrl : Field String Swapi.Object.Droid
+avatarUrl : SelectionSet String Swapi.Object.Droid
 avatarUrl =
     Object.fieldDecoder "avatarUrl" [] Decode.string
 
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Object.Droid
+friends : SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet (List decodesTo) Swapi.Object.Droid
 friends object_ =
     Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the droid.
 -}
-id : Field Swapi.Scalar.Id Swapi.Object.Droid
+id : SelectionSet Swapi.Scalar.Id Swapi.Object.Droid
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the droid.
 -}
-name : Field String Swapi.Object.Droid
+name : SelectionSet String Swapi.Object.Droid
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The primary function of the droid.
 -}
-primaryFunction : Field (Maybe String) Swapi.Object.Droid
+primaryFunction : SelectionSet (Maybe String) Swapi.Object.Droid
 primaryFunction =
     Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.nullable)
