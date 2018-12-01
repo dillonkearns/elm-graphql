@@ -1,15 +1,16 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment)
+module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, selectionForField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
+@docs fieldDecoder, selection, selectionField, selectionForField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
 
 -}
 
 import Dict
+import Graphql.Document.Field
 import Graphql.Field as Field exposing (Field(..))
 import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField)
@@ -44,6 +45,28 @@ scalarDecoder =
 fieldDecoder : String -> List Argument -> Decoder decodesTo -> Field decodesTo lockedTo
 fieldDecoder fieldName args decoder =
     Field (leaf fieldName args) decoder
+
+
+{-| Refer to a field in auto-generated code.
+-}
+selectionForField : String -> List Argument -> Decoder decodesTo -> SelectionSet decodesTo lockedTo
+selectionForField fieldName args decoder =
+    SelectionSet [ leaf fieldName args ]
+        (Decode.field
+            (Graphql.Document.Field.hashedAliasName (leaf fieldName args))
+            decoder
+        )
+
+
+
+--     SelectionSet (selectionFields ++ [ field ])
+-- (Decode.map2 (|>)
+--     (Decode.field
+--         (Graphql.Document.Field.hashedAliasName field)
+--         fieldDecoder
+--     )
+--     selectionDecoder
+-- )
 
 
 {-| Refer to an object in auto-generated code.
