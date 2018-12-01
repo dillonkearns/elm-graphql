@@ -5,9 +5,12 @@ import Graphql.Document as Document
 import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
+import Swapi.Enum.Language as Language
+import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Interface.Character as Character
 import Swapi.Object
@@ -31,9 +34,35 @@ import Swapi.Scalar
 -}
 
 
-query : SelectionSet String RootQuery
+type alias Response =
+    ( String, String )
+
+
+queryAlt : SelectionSet Response RootQuery
+queryAlt =
+    SelectionSet.succeed Tuple.pair
+        |> SelectionSet.withFragment Query.hello
+        |> SelectionSet.withFragment
+            (Query.greet
+                { input =
+                    Swapi.InputObject.buildGreeting
+                        { name = "Chewie" }
+                        (\optionals -> { optionals | language = Present Language.Es })
+                }
+            )
+
+
+query : SelectionSet Response RootQuery
 query =
-    Query.hello
+    SelectionSet.map2 Tuple.pair
+        Query.hello
+        (Query.greet
+            { input =
+                Swapi.InputObject.buildGreeting
+                    { name = "Chewie" }
+                    (\optionals -> { optionals | language = Present Language.Es })
+            }
+        )
 
 
 makeRequest : Cmd Msg
@@ -53,7 +82,7 @@ type Msg
 
 
 type alias Model =
-    RemoteData (Graphql.Http.Error String) String
+    RemoteData (Graphql.Http.Error Response) Response
 
 
 type alias Flags =

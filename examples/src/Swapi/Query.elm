@@ -53,15 +53,16 @@ type alias GreetRequiredArguments =
     { input : Swapi.InputObject.Greeting }
 
 
-greet : GreetRequiredArguments -> Field String RootQuery
+greet : GreetRequiredArguments -> SelectionSet String RootQuery
 greet requiredArgs =
     Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
+        |> Graphql.SelectionSet.fieldSelection
 
 
 hello : SelectionSet String RootQuery
 hello =
-    Graphql.SelectionSet.SelectionSet [] (Decode.succeed identity)
-        |> Graphql.SelectionSet.with (Object.fieldDecoder "hello" [] Decode.string)
+    Object.fieldDecoder "hello" [] Decode.string
+        |> Graphql.SelectionSet.fieldSelection
 
 
 type alias HeroOptionalArguments =
