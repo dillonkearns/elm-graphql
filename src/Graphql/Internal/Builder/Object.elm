@@ -50,9 +50,9 @@ scalarDecoder =
 
 {-| Refer to a field in auto-generated code.
 -}
-fieldDecoder : String -> List Argument -> Decoder decodesTo -> Field decodesTo lockedTo
-fieldDecoder fieldName args decoder =
-    Field (leaf fieldName args) decoder
+fieldDecoder : String -> List Argument -> Decoder decodesTo -> SelectionSet decodesTo lockedTo
+fieldDecoder =
+    selectionForField
 
 
 {-| Refer to a field in auto-generated code.
@@ -89,9 +89,9 @@ selectionField :
     -> List Argument
     -> SelectionSet a objectTypeLock
     -> (Decoder a -> Decoder b)
-    -> Field b lockedTo
-selectionField fieldName args (SelectionSet fields decoder) decoderTransform =
-    Field (composite fieldName args fields) (decoderTransform decoder)
+    -> SelectionSet b lockedTo
+selectionField =
+    selectionForCompositeField
 
 
 composite : String -> List Argument -> List RawField -> RawField

@@ -48,7 +48,7 @@ generateForInterface context thisObjectName field =
 
 forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> String
 forObject_ context thisObjectName field fieldGenerator =
-    fieldGeneratorToString (interpolate "Field {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectName |> String.join "." ]) field fieldGenerator
+    fieldGeneratorToString (interpolate "SelectionSet {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectName |> String.join "." ]) field fieldGenerator
 
 
 fieldGeneratorToString : String -> Type.Field -> FieldGenerator -> String
