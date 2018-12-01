@@ -33,9 +33,9 @@ type alias Human =
 query : Id -> SelectionSet Response RootQuery
 query id =
     Query.human { id = id }
-        (Human.selection Human
-            |> with Human.name
-            |> with Human.homePlanet
+        (SelectionSet.succeed Human
+            |> withFragment Human.name
+            |> withFragment Human.homePlanet
         )
         |> fieldSelection
 

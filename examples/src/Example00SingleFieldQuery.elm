@@ -35,10 +35,10 @@ import Swapi.Scalar
 
 
 type alias Response =
-    ( String, String )
+    String
 
 
-queryAlt : SelectionSet Response RootQuery
+queryAlt : SelectionSet ( String, String ) RootQuery
 queryAlt =
     SelectionSet.succeed Tuple.pair
         |> SelectionSet.withFragment Query.hello
@@ -52,8 +52,8 @@ queryAlt =
             )
 
 
-query : SelectionSet Response RootQuery
-query =
+queryPair : SelectionSet ( String, String ) RootQuery
+queryPair =
     SelectionSet.map2 Tuple.pair
         Query.hello
         (Query.greet
@@ -63,6 +63,11 @@ query =
                     (\optionals -> { optionals | language = Present Language.Es })
             }
         )
+
+
+query : SelectionSet Response RootQuery
+query =
+    Query.hello
 
 
 makeRequest : Cmd Msg
