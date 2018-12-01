@@ -71,20 +71,20 @@ avatarUrl =
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Interface.Character
+friends : SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet (List decodesTo) Swapi.Interface.Character
 friends object_ =
-    Object.selectionField "friends" [] object_ (identity >> Decode.list)
+    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the character.
 -}
-id : Field Swapi.Scalar.Id Swapi.Interface.Character
+id : SelectionSet Swapi.Scalar.Id Swapi.Interface.Character
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the character.
 -}
-name : Field String Swapi.Interface.Character
+name : SelectionSet String Swapi.Interface.Character
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string

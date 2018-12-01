@@ -1,11 +1,19 @@
-module Graphql.Internal.Builder.Object exposing (fieldDecoder, selection, selectionField, selectionForField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment)
+module Graphql.Internal.Builder.Object exposing
+    ( fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
+    , selectionForField, selectionForCompositeField
+    )
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, selection, selectionField, selectionForField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
+@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
+
+
+## New API
+
+@docs selectionForField, selectionForCompositeField
 
 -}
 
@@ -58,15 +66,20 @@ selectionForField fieldName args decoder =
         )
 
 
-
---     SelectionSet (selectionFields ++ [ field ])
--- (Decode.map2 (|>)
---     (Decode.field
---         (Graphql.Document.Field.hashedAliasName field)
---         fieldDecoder
---     )
---     selectionDecoder
--- )
+{-| Refer to an object in auto-generated code.
+-}
+selectionForCompositeField :
+    String
+    -> List Argument
+    -> SelectionSet a objectTypeLock
+    -> (Decoder a -> Decoder b)
+    -> SelectionSet b lockedTo
+selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderTransform =
+    SelectionSet [ composite fieldName args fields ]
+        (Decode.field
+            (Graphql.Document.Field.hashedAliasName (composite fieldName args fields))
+            (decoderTransform decoder)
+        )
 
 
 {-| Refer to an object in auto-generated code.
