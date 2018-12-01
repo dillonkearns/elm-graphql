@@ -34,7 +34,6 @@ import Swapi.Scalar
 query : SelectionSet String RootQuery
 query =
     Query.hello
-        |> fieldSelection
 
 
 makeRequest : Cmd Msg
