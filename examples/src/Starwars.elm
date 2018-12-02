@@ -58,6 +58,21 @@ hero =
         |> with (Character.friends Character.name)
 
 
+type alias MyCharacter =
+    { name : String
+    , id : Swapi.Scalar.Id
+    , friends : List String
+    }
+
+
+thing : SelectionSet MyCharacter Swapi.Interface.Character
+thing =
+    SelectionSet.map3 MyCharacter
+        Character.name
+        Character.id
+        (Character.friends Character.name)
+
+
 heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
 heroUnion =
     CharacterUnion.fragments

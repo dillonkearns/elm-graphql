@@ -1,6 +1,6 @@
 module Graphql.SelectionSet exposing
     ( with, hardcoded, empty, map, succeed, withDefault
-    , map2
+    , map2, map3
     , SelectionSet(..), FragmentSelectionSet(..)
     , mapOrFail, nonNullOrFail, nonNullElementsOrFail
     )
@@ -57,7 +57,7 @@ See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
 ## Combining
 
-@docs map2
+@docs map2, map3
 
 
 ## Types
@@ -136,8 +136,28 @@ map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
         (Decode.map2 combine selectionDecoder1 selectionDecoder2)
 
 
-{-| Combine two `SelectionSet`s into one, using the given combine function to
-merge the two data sets together.
+{-| Combine three `SelectionSet`s into one, using the given combine function to
+merge the two data sets together. This gives more clear error messages than the
+pipeline syntax (using `SelectionSet.succeed` to start the pipeline
+and `SelectionSet.with` to continue it).
+
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+    import Swapi.Interface
+    import Swapi.Interface.Character as Character
+
+    type alias Character =
+        { name : String
+        , id : Swapi.Scalar.Id
+        , friends : List String
+        }
+
+    thing : SelectionSet Character Swapi.Interface.Character
+    thing =
+        SelectionSet.map3 MyCharacter
+            Character.name
+            Character.id
+            (Character.friends Character.name)
+
 -}
 map3 :
     (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesToCombined)
