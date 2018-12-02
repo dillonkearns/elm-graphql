@@ -1,6 +1,9 @@
 module Graphql.SelectionSet exposing
-    ( with, hardcoded, empty, map, succeed, withDefault
+    ( map
     , map2, map3, map4, map5, map6, map7, map8
+    , withDefault
+    , with, hardcoded, succeed
+    , empty
     , SelectionSet(..), FragmentSelectionSet(..)
     , mapOrFail, nonNullOrFail, nonNullElementsOrFail
     )
@@ -54,17 +57,50 @@ See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 There are lots of full-length examples in the
 [examples folder](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src).
 
-@docs with, hardcoded, empty, map, succeed, withDefault
 
-
-## Combining
+## Mapping & Combining
 
 If you run out of `mapN` functions for building up `SelectionSet`s,
 you can use the pipeline
 which makes it easier to handle large objects, but produces
 lower quality type errors.
 
+@docs map
+
 @docs map2, map3, map4, map5, map6, map7, map8
+
+@docs withDefault
+
+
+## Pipelines
+
+As an alternative to the `mapN` functions, you can build up
+`SelectionSet`s using the pipeline syntax. If you've used
+the [`elm-json-decode-pipeline`](https://package.elm-lang.org/packages/NoRedInk/elm-json-decode-pipeline/latest/)
+package then this style will feel very familiar. The example above in this page
+would translate to this using the pipeline notation:
+
+    import Api.Object
+    import Api.Object.Human as Human
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+
+    type alias Human =
+        { name : String
+        , id : String
+        }
+
+    hero : SelectionSet Hero Api.Object.Human
+    hero =
+        SelectionSet.succeed Human
+            |> with Human.name
+            |> with Human.id
+
+You can see an end-to-end example using the pipeline syntax in the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src)
+folder.
+
+@docs with, hardcoded, succeed
+
+@docs empty
 
 
 ## Types
@@ -81,6 +117,10 @@ server response will decode successfully.
 
 These helpers, though convenient, will cause your entire decoder to fail if
 it ever maps to an `Err` instead of an `Ok` `Result`.
+
+If you're wondering why there are so many `Maybe`s in your generated code,
+take a look at the
+[FAQ question "Why are there so many Maybes in my responses? How do I reduce them?"](https://github.com/dillonkearns/graphqelm/blob/master/FAQ.md#why-are-there-so-many-maybes-in-my-responses-how-do-i-reduce-them).
 
 @docs mapOrFail, nonNullOrFail, nonNullElementsOrFail
 
