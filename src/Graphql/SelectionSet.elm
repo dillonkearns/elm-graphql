@@ -60,7 +60,7 @@ There are lots of full-length examples in the
 
 ## Mapping & Combining
 
-If you run out of `mapN` functions for building up `SelectionSet`s,
+Note: If you run out of `mapN` functions for building up `SelectionSet`s,
 you can use the pipeline
 which makes it easier to handle large objects, but produces
 lower quality type errors.
@@ -145,7 +145,7 @@ schema.
 
     import Api.Object
     import Api.Object.User as User
-    import Graphql.SelectionSet exposing (SelectionSet, with)
+    import Graphql.SelectionSet exposing (SelectionSet)
 
     human : SelectionSet String Api.Object.User
     human =
@@ -153,6 +153,39 @@ schema.
 
 You can also map to values of a different type (`String -> Int`, for example), see
 [`examples/StarWars.elm`](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Starwars.elm) for more advanced example.
+
+`SelectionSet.map` is also helpful when using a record to wrap a type:
+
+    import Api.Query as Query
+    import Graphql.Operation exposing (RootQuery)
+    import Graphql.SelectionSet exposing (SelectionSet)
+
+    type alias Response =
+        { hello : String }
+
+    query : SelectionSet Response RootQuery
+    query =
+        SelectionSet.map Response Query.hello
+
+Mapping is also handy when you are dealing with polymorphic GraphQL types
+(Interfaces and Unions).
+
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+    import Swapi.Object.Droid as Droid
+    import Swapi.Object.Human as Human
+    import Swapi.Union
+    import Swapi.Union.CharacterUnion
+
+    type HumanOrDroidDetails
+        = HumanDetails (Maybe String)
+        | DroidDetails (Maybe String)
+
+    heroUnionSelection : SelectionSet HumanOrDroidDetails Swapi.Union.CharacterUnion
+    heroUnionSelection =
+        Swapi.Union.CharacterUnion.fragments
+            { onHuman = SelectionSet.map HumanDetails Human.homePlanet
+            , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
+            }
 
 -}
 map : (a -> b) -> SelectionSet a typeLock -> SelectionSet b typeLock
