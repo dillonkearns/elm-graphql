@@ -33,7 +33,7 @@ You could build up the above `SelectionSet` with the following `dillonkearns/elm
 
     import Api.Object
     import Api.Object.Human as Human
-    import Graphql.SelectionSet exposing (SelectionSet, with)
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 
     type alias Human =
         { name : String
@@ -42,7 +42,7 @@ You could build up the above `SelectionSet` with the following `dillonkearns/elm
 
     hero : SelectionSet Hero Api.Interface.Human
     hero =
-        Human.selection Human
+        SelectionSet.succeed Human
             |> with Human.name
             |> with Human.id
 
@@ -104,11 +104,7 @@ schema.
 
     human : SelectionSet String Api.Object.User
     human =
-        User.selection identity
-            |> with
-                (User.name
-                    |> SelectionSet.map String.toUpper
-                )
+        User.name |> SelectionSet.map String.toUpper
 
 You can also map to values of a different type (`String -> Int`, for example), see
 [`examples/StarWars.elm`](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Starwars.elm) for more advanced example.
@@ -140,6 +136,21 @@ map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
         (Decode.map2 combine selectionDecoder1 selectionDecoder2)
 
 
+{-| Combine two `SelectionSet`s into one, using the given combine function to
+merge the two data sets together.
+-}
+map3 :
+    (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesToCombined)
+    -> SelectionSet decodesTo1 typeLock
+    -> SelectionSet decodesTo2 typeLock
+    -> SelectionSet decodesTo3 typeLock
+    -> SelectionSet decodesToCombined typeLock
+map3 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) =
+    SelectionSet
+        (List.concat [ selectionFields1, selectionFields2, selectionFields3 ])
+        (Decode.map3 combine selectionDecoder1 selectionDecoder2 selectionDecoder3)
+
+
 {-| Useful for Mutations when you don't want any data back.
 
     import Api.Mutation as Mutation
@@ -148,8 +159,7 @@ map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 
     sendChatMessage : String -> SelectionSet () RootMutation
     sendChatMessage message =
-        Mutation.selection identity
-            |> with (Mutation.sendMessage { message = message } SelectionSet.empty)
+        Mutation.sendMessage { message = message } SelectionSet.empty
 
 -}
 empty : SelectionSet () typeLock
@@ -235,14 +245,14 @@ we define below.
 
     repositorySelection : SelectionSet Repo Github.Object.Repository
     repositorySelection =
-        Repository.selection Repo
+        SelectionSet.succeed Repo
             |> with Repository.nameWithOwner
             |> withFragment timestampsFragment
             |> with stargazersCount
 
     timestampsFragment : SelectionSet Timestamps Github.Object.Repository
     timestampsFragment =
-        Repository.selection Timestamps
+        SelectionSet.succeed Timestamps
             |> with (Repository.createdAt |> mapToDateTime)
             |> with (Repository.updatedAt |> mapToDateTime)
 
@@ -342,6 +352,7 @@ If it returns an `Err`, the _entire_ response will fail to decode.
     -- NOTE: Iso8601 comes from an external dependency in Elm >= 0.19:
     -- https://package.elm-lang.org/packages/rtfeldman/elm-iso8601-date-strings/latest/
     import Iso8601
+    import Graphql.SelectionSet as SelectionSet exposing (with)
     import Graphql.Field as Field exposing (Field)
 
     type alias Timestamps =
@@ -352,7 +363,7 @@ If it returns an `Err`, the _entire_ response will fail to decode.
 
     timestampsSelection : SelectionSet Timestamps Github.Object.Repository
     timestampsSelection =
-        Repository.selection Timestamps
+        SelectionSet.succeed Timestamps
             |> with (Repository.createdAt |> mapToDateTime)
             |> with (Repository.updatedAt |> mapToDateTime)
 
@@ -419,12 +430,9 @@ reason you can't go in and fix this in the schema, for example:
 
     releases : SelectionSet (List Release) Github.Object.ReleaseConnection
     releases =
-        Github.Object.ReleaseConnection.selection identity
-            |> with
-                (Github.Object.ReleaseConnection.nodes release
-                    |> Field.nonNullOrFail
-                    |> Field.nonNullElementsOrFail
-                )
+        Github.Object.ReleaseConnection.nodes release
+            |> Field.nonNullOrFail
+            |> Field.nonNullElementsOrFail
 
 Without the `Field.nonNull...` transformations here, the type would be
 `SelectionSet (Maybe (List (Maybe Release))) Github.Object.ReleaseConnection`.

@@ -92,7 +92,7 @@ searchResultSelection =
                 | onRepository = repositorySelection |> SelectionSet.map Just
             }
     in
-    Github.Union.SearchResultItem.selection partialFragments
+    Github.Union.SearchResultItem.fragments partialFragments
 
 
 repositorySelection : SelectionSet Repo Github.Object.Repository

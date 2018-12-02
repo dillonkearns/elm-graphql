@@ -60,7 +60,7 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
+    SelectionSet.succeed Response
         |> with (Query.human { id = StarWars.Scalar.Id "1001" } humanSelection)
 
 
@@ -70,7 +70,7 @@ type alias Human =
 
 humanSelection : SelectionSet Human Human.Human
 humanSelection =
-    Human.selection Human
+    SelectionSet.succeed Human
         |> with Human.name
 ```
 

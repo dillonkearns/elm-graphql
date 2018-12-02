@@ -60,7 +60,7 @@ hero =
 
 heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
 heroUnion =
-    CharacterUnion.selection
+    CharacterUnion.fragments
         { onDroid = SelectionSet.map Droid Droid.primaryFunction
         , onHuman = SelectionSet.map Human Human.homePlanet
         }
