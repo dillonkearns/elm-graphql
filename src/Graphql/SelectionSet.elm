@@ -503,12 +503,14 @@ map8 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 {-| Useful for Mutations when you don't want any data back.
 
     import Graphql.Operation exposing (RootMutation)
-    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
     import StarWars.Mutation as Mutation
 
     sendChatMessage : String -> SelectionSet () RootMutation
     sendChatMessage message =
-        Mutation.sendMessage { message = message } SelectionSet.empty
+        Mutation.sendMessage
+            { message = message }
+            SelectionSet.empty
 
 -}
 empty : SelectionSet () typeLock
