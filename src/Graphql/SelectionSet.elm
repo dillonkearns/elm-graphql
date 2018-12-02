@@ -356,10 +356,11 @@ merge the two data sets together.
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
     import StarWars.Object
     import StarWars.Object.Human as Human
+    import StarWars.Scalar
 
     type alias Human =
         { name : String
-        , id : String
+        , id : Swapi.Scalar.Id
         }
 
     hero : SelectionSet Hero StarWars.Object.Human
@@ -389,6 +390,7 @@ pipeline syntax (using `SelectionSet.succeed` to start the pipeline
 and `SelectionSet.with` to continue it).
 
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+    import StarWars.Scalar
     import Swapi.Interface
     import Swapi.Interface.Character as Character
 
