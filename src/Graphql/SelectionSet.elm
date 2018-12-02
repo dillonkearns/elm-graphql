@@ -336,8 +336,12 @@ hardcoded constant (SelectionSet objectFields objectDecoder) =
 an entire `SelectionSet`. This can be useful if you want hardcoded data based on
 only the type when using a polymorphic type (Interface or Union).
 
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+    import Swapi.Interface
+    import Swapi.Interface.Character as Character
+
     type alias Character =
-        { details : Maybe HumanOrDroid
+        { typename : HumanOrDroid
         , name : String
         }
 
@@ -348,10 +352,15 @@ only the type when using a polymorphic type (Interface or Union).
     hero : SelectionSet Character Swapi.Interface.Character
     hero =
         SelectionSet.succeed Character
-            [ Character.onDroid (SelectionSet.succeed Droid)
-            , Character.onHuman (SelectionSet.succeed Human)
-            ]
+            |> with heroType
             |> with Character.name
+
+    heroType : SelectionSet HumanOrDroid Swapi.Interface.Character
+    heroType =
+        Character.fragments
+            { onHuman = SelectionSet.succeed Human
+            , onDroid = SelectionSet.succeed Droid
+            }
 
 -}
 succeed : a -> SelectionSet a typeLock
