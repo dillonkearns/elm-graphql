@@ -49,19 +49,15 @@ would look like this in `dillonkearns/elm-graphql` (the code in this example tha
 ```elm
 import Graphql.Operation exposing (RootQuery)
 import Graphql.SelectionSet exposing (SelectionSet, with)
+import StarWars.Scalar
 import StarWars.Object
 import StarWars.Object.Human as Human
 import StarWars.Query as Query
 
 
-type alias Response =
-    { vader : Maybe Human }
-
-
-query : SelectionSet Response RootQuery
+query : SelectionSet (Maybe Human) RootQuery
 query =
-    SelectionSet.succeed Response
-        |> with (Query.human { id = StarWars.Scalar.Id "1001" } humanSelection)
+    Query.human { id = StarWars.Scalar.Id "1001" } humanSelection
 
 
 type alias Human =
@@ -72,9 +68,9 @@ type alias Human =
 
 humanSelection : SelectionSet Human StarWars.Object.Human
 humanSelection =
-    SelectionSet.succeed Human
-        |> with Human.name
-        |> with Human.homePlanet
+    SelectionSet.map2 Human
+        Human.name
+        Human.homePlanet
 ```
 
 GraphQL and Elm are a perfect match because GraphQL is used to enforce the types that your API takes as inputs and outputs, much like Elm's type system does within Elm. `elm-graphql` simply bridges this gap by making your Elm code aware of your GraphQL server's schema. If you are new to GraphQL, [graphql.org/learn/](http://graphql.org/learn/) is an excellent way to learn the basics.

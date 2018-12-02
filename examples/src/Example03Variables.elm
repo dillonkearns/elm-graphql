@@ -31,11 +31,10 @@ type alias Human =
 
 query : Id -> SelectionSet Response RootQuery
 query id =
-    Query.human { id = id }
-        (SelectionSet.succeed Human
-            |> with Human.name
-            |> with Human.homePlanet
-        )
+    Query.human { id = id } <|
+        SelectionSet.map2 Human
+            Human.name
+            Human.homePlanet
 
 
 makeRequest : Cmd Msg

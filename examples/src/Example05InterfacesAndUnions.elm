@@ -30,10 +30,10 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    SelectionSet.succeed Response
-        |> with (Query.heroUnion identity heroUnionSelection)
-        |> with (Query.hero identity heroSelection)
-        |> with (Query.heroUnion identity nonExhaustiveFragment)
+    SelectionSet.map3 Response
+        (Query.heroUnion identity heroUnionSelection)
+        (Query.hero identity heroSelection)
+        (Query.heroUnion identity nonExhaustiveFragment)
 
 
 type HumanOrDroidDetails
@@ -79,17 +79,13 @@ type alias HumanOrDroidWithName =
 
 heroSelection : SelectionSet HumanOrDroidWithName Swapi.Interface.Character
 heroSelection =
-    SelectionSet.succeed HumanOrDroidWithName
-        |> with Character.name
-        |> with heroDetailsFragment
-
-
-heroDetailsFragment : SelectionSet HumanOrDroidDetails Swapi.Interface.Character
-heroDetailsFragment =
-    Character.fragments
-        { onHuman = SelectionSet.map HumanDetails Human.homePlanet
-        , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
-        }
+    SelectionSet.map2 HumanOrDroidWithName
+        Character.name
+        (Character.fragments
+            { onHuman = SelectionSet.map HumanDetails Human.homePlanet
+            , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
+            }
+        )
 
 
 nonExhaustiveFragment : SelectionSet (Maybe String) Swapi.Union.CharacterUnion

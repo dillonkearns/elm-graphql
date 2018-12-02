@@ -78,10 +78,10 @@ type alias Character =
 
 characterInfoSelection : SelectionSet Character Swapi.Interface.Character
 characterInfoSelection =
-    SelectionSet.succeed Character
-        |> with Character.name
-        |> with Character.id
-        |> with (Character.friends Character.name)
+    SelectionSet.map3 Character
+        Character.name
+        Character.id
+        (Character.friends Character.name)
 
 
 makeRequest : Cmd Msg

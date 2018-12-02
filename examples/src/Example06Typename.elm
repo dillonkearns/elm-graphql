@@ -22,9 +22,9 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    SelectionSet.succeed Response
-        |> with (Query.heroUnion identity heroUnionSelection)
-        |> with (Query.hero identity heroSelection)
+    SelectionSet.map2 Response
+        (Query.heroUnion identity heroUnionSelection)
+        (Query.hero identity heroSelection)
 
 
 type HumanOrDroid
@@ -48,17 +48,13 @@ type alias HumanOrDroidWithName =
 
 heroSelection : SelectionSet HumanOrDroidWithName Swapi.Interface.Character
 heroSelection =
-    SelectionSet.succeed HumanOrDroidWithName
-        |> with Character.name
-        |> with heroType
-
-
-heroType : SelectionSet HumanOrDroid Swapi.Interface.Character
-heroType =
-    Character.fragments
-        { onHuman = SelectionSet.succeed Human
-        , onDroid = SelectionSet.succeed Droid
-        }
+    SelectionSet.map2 HumanOrDroidWithName
+        Character.name
+        (Character.fragments
+            { onHuman = SelectionSet.succeed Human
+            , onDroid = SelectionSet.succeed Droid
+            }
+        )
 
 
 makeRequest : Cmd Msg
