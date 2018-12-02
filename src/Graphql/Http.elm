@@ -345,10 +345,10 @@ send resultToMessage ((Request request) as fullRequest) =
     fullRequest
         |> toHttpRequestRecord resultToMessage
         |> (if request.withCredentials then
-                Http.request
+                Http.riskyRequest
 
             else
-                Http.riskyRequest
+                Http.request
            )
 
 
@@ -364,10 +364,10 @@ sendWithTracker tracker resultToMessage ((Request request) as fullRequest) =
         |> toHttpRequestRecord resultToMessage
         |> (\requestRecord -> { requestRecord | tracker = Just tracker })
         |> (if request.withCredentials then
-                Http.request
+                Http.riskyRequest
 
             else
-                Http.riskyRequest
+                Http.request
            )
 
 
@@ -459,10 +459,10 @@ toTask ((Request request) as fullRequest) =
         |> toReadyRequest
         |> (\readyRequest ->
                 (if request.withCredentials then
-                    Http.task
+                    Http.riskyTask
 
                  else
-                    Http.riskyTask
+                    Http.task
                 )
                     { method = readyRequest.method
                     , headers = readyRequest.headers

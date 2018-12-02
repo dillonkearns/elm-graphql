@@ -9,7 +9,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.5.1] - 2018-11-27
+
+### Fixed
+
+- The `withCredentials` was inverted with release 1.4.0. So it would use
+  the `Http.risky` and `Http.riskyTask` versions if you _didn't_ call `withCredentials`
+  , and it would use the regular `Http.request` and `Http.task` builders if you
+  _did_. Thank you [@kyasu1](https://github.com/kyasu1) for reporting the problem!
+  See [#97](https://github.com/dillonkearns/elm-graphql/issues/97).
+
 ## [1.5.0] - 2018-11-27
+
+### Added
 
 - Add new internal builder function, for use with the new generated code for
   building exhaustive Union and Interface fragments.
