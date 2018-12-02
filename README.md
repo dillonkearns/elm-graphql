@@ -48,7 +48,7 @@ would look like this in `dillonkearns/elm-graphql` (the code in this example tha
 
 ```elm
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet exposing (SelectionSet, with)
+import Graphql.SelectionSet exposing (SelectionSet)
 import StarWars.Scalar
 import StarWars.Object
 import StarWars.Object.Human as Human
