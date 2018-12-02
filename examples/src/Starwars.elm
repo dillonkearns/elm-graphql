@@ -2,7 +2,6 @@ module Starwars exposing (main)
 
 import Browser
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
@@ -48,7 +47,7 @@ type alias Character =
 hero : SelectionSet Character Swapi.Interface.Character
 hero =
     Character.selection Character
-        |> withFragment
+        |> with
             (Character.fragments
                 { onDroid = Droid.selection Droid |> with Droid.primaryFunction
                 , onHuman = Human.selection Human |> with Human.homePlanet
@@ -56,7 +55,7 @@ hero =
             )
         |> with Character.name
         |> with Character.id
-        |> with (Character.friends (fieldSelection Character.name))
+        |> with (Character.friends Character.name)
 
 
 heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
@@ -70,8 +69,8 @@ heroUnion =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> Field.nonNullOrFail)
-        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> Field.nonNullOrFail)
+        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> SelectionSet.nonNullOrFail)
+        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> SelectionSet.nonNullOrFail)
         |> with
             (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
         |> with
@@ -96,7 +95,7 @@ human : SelectionSet HumanLookup Swapi.Object.Human
 human =
     Human.selection HumanLookup
         |> with Human.name
-        |> with (Human.appearsIn |> Field.map (List.map episodeYear))
+        |> with (Human.appearsIn |> SelectionSet.map (List.map episodeYear))
         |> with Human.id
         |> with Human.avatarUrl
         |> with Human.homePlanet

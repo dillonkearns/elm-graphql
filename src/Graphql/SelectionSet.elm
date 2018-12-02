@@ -1,5 +1,5 @@
 module Graphql.SelectionSet exposing
-    ( with, hardcoded, empty, map, succeed
+    ( with, hardcoded, empty, map, succeed, withDefault
     , map2
     , SelectionSet(..), FragmentSelectionSet(..)
     , mapOrFail, nonNullOrFail, nonNullElementsOrFail
@@ -52,7 +52,7 @@ the `@dillonkearns/elm-graphql` command line tool.
 The query itself is also a `SelectionSet` so it is built up similarly.
 See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
-@docs with, hardcoded, empty, map, succeed
+@docs with, hardcoded, empty, map, succeed, withDefault
 
 
 ## Combining
@@ -117,6 +117,13 @@ You can also map to values of a different type (`String -> Int`, for example), s
 map : (a -> b) -> SelectionSet a typeLock -> SelectionSet b typeLock
 map mapFunction (SelectionSet selectionFields selectionDecoder) =
     SelectionSet selectionFields (Decode.map mapFunction selectionDecoder)
+
+
+{-| A helper for mapping a SelectionSet to provide a default value.
+-}
+withDefault : a -> SelectionSet (Maybe a) typeLock -> SelectionSet a typeLock
+withDefault default =
+    map (Maybe.withDefault default)
 
 
 {-| Combine two `SelectionSet`s into one, using the given combine function to
