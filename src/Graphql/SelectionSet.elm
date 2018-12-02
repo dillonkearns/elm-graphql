@@ -320,7 +320,7 @@ only the type when using a polymorphic type (Interface or Union).
 
     hero : SelectionSet Character Swapi.Interface.Character
     hero =
-        Character.selection Character
+        SelectionSet.succeed Character
             [ Character.onDroid (SelectionSet.succeed Droid)
             , Character.onHuman (SelectionSet.succeed Human)
             ]

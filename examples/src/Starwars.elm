@@ -46,11 +46,11 @@ type alias Character =
 
 hero : SelectionSet Character Swapi.Interface.Character
 hero =
-    Character.selection Character
+    SelectionSet.succeed Character
         |> with
             (Character.fragments
-                { onDroid = Droid.selection Droid |> with Droid.primaryFunction
-                , onHuman = Human.selection Human |> with Human.homePlanet
+                { onDroid = SelectionSet.map Droid Droid.primaryFunction
+                , onHuman = SelectionSet.map Human Human.homePlanet
                 }
             )
         |> with Character.name
@@ -61,14 +61,14 @@ hero =
 heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
 heroUnion =
     CharacterUnion.selection
-        { onDroid = Droid.selection Droid |> with Droid.primaryFunction
-        , onHuman = Human.selection Human |> with Human.homePlanet
+        { onDroid = SelectionSet.map Droid Droid.primaryFunction
+        , onHuman = SelectionSet.map Human Human.homePlanet
         }
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
+    SelectionSet.succeed Response
         |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> SelectionSet.nonNullOrFail)
         |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> SelectionSet.nonNullOrFail)
         |> with
@@ -93,7 +93,7 @@ type alias HumanLookup =
 
 human : SelectionSet HumanLookup Swapi.Object.Human
 human =
-    Human.selection HumanLookup
+    SelectionSet.succeed HumanLookup
         |> with Human.name
         |> with (Human.appearsIn |> SelectionSet.map (List.map episodeYear))
         |> with Human.id

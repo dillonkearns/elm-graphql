@@ -31,7 +31,7 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
+    SelectionSet.succeed Response
         |> with (Query.heroUnion identity heroUnionSelection)
         |> with (Query.hero identity heroSelection)
         |> with (Query.heroUnion identity nonExhaustiveFragment)
@@ -57,8 +57,8 @@ type HumanOrDroidDetails
 heroUnionSelection : SelectionSet HumanOrDroidDetails Swapi.Union.CharacterUnion
 heroUnionSelection =
     Swapi.Union.CharacterUnion.selection
-        { onHuman = Human.selection HumanDetails |> with Human.homePlanet
-        , onDroid = Droid.selection DroidDetails |> with Droid.primaryFunction
+        { onHuman = SelectionSet.map HumanDetails Human.homePlanet
+        , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
         }
 
 
@@ -80,16 +80,16 @@ type alias HumanOrDroidWithName =
 
 heroSelection : SelectionSet HumanOrDroidWithName Swapi.Interface.Character
 heroSelection =
-    Character.selection HumanOrDroidWithName
+    SelectionSet.succeed HumanOrDroidWithName
         |> with Character.name
-        |> withFragment heroDetailsFragment
+        |> with heroDetailsFragment
 
 
 heroDetailsFragment : SelectionSet HumanOrDroidDetails Swapi.Interface.Character
 heroDetailsFragment =
     Character.fragments
-        { onHuman = Human.selection HumanDetails |> with Human.homePlanet
-        , onDroid = Droid.selection DroidDetails |> with Droid.primaryFunction
+        { onHuman = SelectionSet.map HumanDetails Human.homePlanet
+        , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
         }
 
 
@@ -101,7 +101,7 @@ nonExhaustiveFragment =
     in
     Swapi.Union.CharacterUnion.selection
         { maybeFragments
-            | onHuman = fieldSelection Human.homePlanet
+            | onHuman = Human.homePlanet
         }
 
 
