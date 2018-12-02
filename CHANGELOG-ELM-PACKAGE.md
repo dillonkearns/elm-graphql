@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Add `SelectionSet.mapN` functions for an alternate syntax to the pipeline syntax
   (starting a pipeline with `SelectionSet.succeed`).
+- New `SeletionSet.withDefault`. Just a convenience function which is equivalent
+  to `SelectionSet.map Maybe.withDefault`.
 
 ### Changed
 
