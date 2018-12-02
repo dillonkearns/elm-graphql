@@ -33,15 +33,7 @@ import Swapi.Scalar
 
 
 type alias Response =
-    { hero : Character
-    }
-
-
-
-{- Check out this page to learn more about how Record Constructor Functions
-   like `Response` in this example are used as the first argument to `selection`s:
-   https://dillonkearns.gitbooks.io/elm-graphql/content/selection-sets.html
--}
+    Character
 
 
 query : SelectionSet Response RootQuery
@@ -50,7 +42,6 @@ query =
     -- optional arguments to `hero`. Read this blog post for more:
     -- https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74
     Query.hero identity characterInfoSelection
-        |> SelectionSet.map Response
 
 
 
@@ -76,6 +67,13 @@ type alias Character =
     , id : Swapi.Scalar.Id
     , friends : List String
     }
+
+
+
+{- Check out this page to learn more about how Record Constructor Functions
+   like `Character` in this example are used as the first argument to `selection`s:
+   https://dillonkearns.gitbooks.io/elm-graphql/content/selection-sets.html
+-}
 
 
 characterInfoSelection : SelectionSet Character Swapi.Interface.Character
