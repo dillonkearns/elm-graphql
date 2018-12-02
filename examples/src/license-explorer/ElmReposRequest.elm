@@ -45,7 +45,7 @@ query sortOrder =
         { query = "language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
         , type_ = Github.Enum.SearchType.Repository
         }
-        searchSelection
+        thing
 
 
 queryForRepos : List RepoWithOwner -> SelectionSet (List Repo) RootQuery
@@ -71,12 +71,6 @@ repoWithOwnerSelection repoWithOwner =
     Query.repository
         { owner = owner, name = repoName }
         repositorySelection
-
-
-searchSelection : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
-searchSelection =
-    SelectionSet.succeed identity
-        |> with thing
 
 
 thing : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
