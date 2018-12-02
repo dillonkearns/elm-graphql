@@ -45,7 +45,7 @@ query sortOrder =
         { query = "language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
         , type_ = Github.Enum.SearchType.Repository
         }
-        searchSelection
+        thing
 
 
 queryForRepos : List RepoWithOwner -> SelectionSet (List Repo) RootQuery
@@ -73,12 +73,6 @@ repoWithOwnerSelection repoWithOwner =
         repositorySelection
 
 
-searchSelection : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
-searchSelection =
-    Github.Object.SearchResultItemConnection.selection identity
-        |> with thing
-
-
 thing : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
 thing =
     Github.Object.SearchResultItemConnection.nodes searchResultSelection
@@ -103,7 +97,7 @@ searchResultSelection =
 
 repositorySelection : SelectionSet Repo Github.Object.Repository
 repositorySelection =
-    Repository.selection Repo
+    SelectionSet.succeed Repo
         |> with (Repository.nameWithOwner |> SelectionSet.map RepoWithOwner.repoWithOwner)
         |> with Repository.description
         |> with stargazers
@@ -122,7 +116,7 @@ type alias Timestamps =
 
 timestampsSelection : SelectionSet Timestamps Github.Object.Repository
 timestampsSelection =
-    Repository.selection Timestamps
+    SelectionSet.succeed Timestamps
         |> with (Repository.createdAt |> mapToDateTime)
         |> with (Repository.updatedAt |> mapToDateTime)
 
@@ -158,6 +152,6 @@ type alias Owner =
 
 ownerSelection : SelectionSet Owner Github.Interface.RepositoryOwner
 ownerSelection =
-    Github.Interface.RepositoryOwner.selection Owner
+    SelectionSet.succeed Owner
         |> with (Github.Interface.RepositoryOwner.avatarUrl identity)
         |> with Github.Interface.RepositoryOwner.login
