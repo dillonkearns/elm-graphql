@@ -149,10 +149,8 @@ we define below.
 
     import Github.Object
     import Github.Object.Repository as Repository
-    import Github.Object.StargazerConnection
     import Graphql.Operation exposing (RootQuery)
-    import Graphql.OptionalArgument exposing (OptionalArgument(..))
-    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
     import Iso8601
     import Time exposing (Posix)
 
@@ -168,15 +166,15 @@ we define below.
 
     repositorySelection : SelectionSet Repo Github.Object.Repository
     repositorySelection =
-        SelectionSet.succeed Repo
-            |> with Repository.nameWithOwner
-            |> with timestampsFragment
+        SelectionSet.map2 Repo
+            Repository.nameWithOwner
+            timestampsFragment
 
     timestampsFragment : SelectionSet Timestamps Github.Object.Repository
     timestampsFragment =
-        SelectionSet.succeed Timestamps
-            |> with (Repository.createdAt |> mapToDateTime)
-            |> with (Repository.updatedAt |> mapToDateTime)
+        SelectionSet.map2 Timestamps
+            (Repository.createdAt |> mapToDateTime)
+            (Repository.updatedAt |> mapToDateTime)
 
     mapToDateTime : SelectionSet Github.Scalar.DateTime typeLock -> SelectionSet Posix typeLock
     mapToDateTime =
@@ -186,10 +184,10 @@ we define below.
                     |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
             )
 
-Note that the type of an individual GraphQL field (like `StarWars.Object.Human.name`), or
-a collection of fields (like our `timestampsFragment`) is exactly the same.
-They're both just `SelectionSet`s. So we can pull in a single field
-or a pair of fields to our query using the exact same syntax.
+Note that both individual GraphQL fields (like `Repository.nameWithOwner`), and
+collections of fields (like our `timestampsFragment`) are just `SelectionSet`s.
+So whether it's a single field or a pair of fields, we can pull it into our
+query using the exact same syntax!
 
 
 ## Mapping & Combining
