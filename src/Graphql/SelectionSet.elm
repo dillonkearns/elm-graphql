@@ -45,7 +45,7 @@ You can execute this query, but the result won't be very interesting!
 
 In the StarWars API example in the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src)
 folder, there is a top-level query field called `hello`. So you could also
-build a valid query with this code:
+build a valid query to get `hello`:
 
     import Graphql.Operation exposing (RootQuery)
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
@@ -68,7 +68,7 @@ If we wanted to query for two top-level fields it's just as easy. Let's see how 
       goodbye
     }
 
-The only difference for combining two `SelectionSet`s is that need to define which
+The only difference for combining two `SelectionSet`s is that you need to define which
 function we want to use to combine the two fields together into one piece of data.
 Let's just define our own function for now, called `helloAndGoodbyeToString`.
 
@@ -78,7 +78,10 @@ Let's just define our own function for now, called `helloAndGoodbyeToString`.
 
     helloAndGoodbyeToString : String -> String -> String
     helloAndGoodbyeToString helloValue goodbyeValue =
-        "greeting: " ++ helloValue ++ "\ngoodbye: " ++ goodbyeValue
+        "greeting: "
+            ++ helloValue
+            ++ "\ngoodbye: "
+            ++ goodbyeValue
 
     hero : SelectionSet String RootQuery
     hero =
@@ -86,12 +89,15 @@ Let's just define our own function for now, called `helloAndGoodbyeToString`.
             Query.hello
             Query.goodbye
 
-A very common pattern is to use record constructors as the
-constructor functions. But any function that takes the right number of arguments
-(of the right types, order matters) will work. Let's define a type alias for a
-record called `Phrases`. When we define this type alias, Elm creates a function
-called `Phrases` that will build up a record of tha type. So we can use
-that function with `map2`!
+Great, we retrieved two fields! But often you don't want to combine the values
+into a primitive, you just want to store the values in some data structure
+like a record. So a very common pattern is to use record constructors as the
+constructor function for `map2` (or `mapN`). Any function that takes the right number of arguments
+(of the right types, order matters) will work here.
+
+Let's define a type alias for a record called `Phrases`. When we define this
+type alias, Elm creates a function called `Phrases` that will build up a record
+of that type. So we can use that function with `map2`!
 
     import Graphql.Operation exposing (RootQuery)
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
@@ -112,13 +118,14 @@ Note that if you changed the order of `Query.hello` and `Query.goodbye`,
 you would end up with a record with values under the wrong name. Order matters
 with record constructors!
 
+
+## Modularizing `SelectionSet`s
+
 Since both single fields and collections of fields are `SelectionSet`s in `dillonkearns/elm-graphql`,
-you can easily pull in sub-`SelectionSet`s in your queries. Just treat it like you would a regular field.
+you can easily pull in sub-`SelectionSet`s to your queries. Just treat it like you would a regular field.
 
 This is analagous to using a [fragment in plain GraphQL](https://graphql.org/learn/queries/#fragments).
 This is a handy tool for modularizing your GraphQL queries.
-
-([You can try the below query for yourself by pasting the query into the Github query explorer](https://developer.github.com/v4/explorer/)).
 
 Let's say we want to query Github's GraphQL API like this:
 
@@ -135,6 +142,8 @@ Let's say we want to query Github's GraphQL API like this:
       updatedAt
     }
 
+(You can try the above query for yourself by pasting the query into the [Github query explorer](https://developer.github.com/v4/explorer/)).
+
 We could do the equivalent of the `timestamps` fragment with the `timestampsFragment`
 we define below.
 
@@ -148,34 +157,34 @@ we define below.
     import Time exposing (Posix)
 
     type alias Repo =
-    { nameWithOwner : String
-    , timestamps : Timestamps
-    }
+        { nameWithOwner : String
+        , timestamps : Timestamps
+        }
 
     type alias Timestamps =
-    { createdAt : Posix
-    , updatedAt : Posix
-    }
+        { createdAt : Posix
+        , updatedAt : Posix
+        }
 
     repositorySelection : SelectionSet Repo Github.Object.Repository
     repositorySelection =
-    SelectionSet.succeed Repo
-      |> with Repository.nameWithOwner
-      |> with timestampsFragment
+        SelectionSet.succeed Repo
+            |> with Repository.nameWithOwner
+            |> with timestampsFragment
 
     timestampsFragment : SelectionSet Timestamps Github.Object.Repository
     timestampsFragment =
-    SelectionSet.succeed Timestamps
-      |> with (Repository.createdAt |> mapToDateTime)
-      |> with (Repository.updatedAt |> mapToDateTime)
+        SelectionSet.succeed Timestamps
+            |> with (Repository.createdAt |> mapToDateTime)
+            |> with (Repository.updatedAt |> mapToDateTime)
 
     mapToDateTime : SelectionSet Github.Scalar.DateTime typeLock -> SelectionSet Posix typeLock
     mapToDateTime =
-      SelectionSet.mapOrFail
-      ((Github.Scalar.DateTime value) ->
-      Iso8601.toTime value
-      |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
-      )
+        SelectionSet.mapOrFail
+            (\(Github.Scalar.DateTime value) ->
+                Iso8601.toTime value
+                    |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
+            )
 
 Note that the type of an individual GraphQL field (like `StarWars.Object.Human.name`), or
 a collection of fields (like our `timestampsFragment`) is exactly the same.
