@@ -1,5 +1,5 @@
 module Graphql.Internal.Builder.Object exposing
-    ( fieldDecoder, interfaceSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
+    ( fieldDecoder, scalarDecoder, exhuastiveFragmentSelection, buildFragment
     , selectionForField, selectionForCompositeField
     )
 
@@ -8,7 +8,7 @@ code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, interfaceSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
+@docs fieldDecoder, scalarDecoder, exhuastiveFragmentSelection, buildFragment
 
 
 ## New API
@@ -96,34 +96,6 @@ leaf fieldName args =
 buildFragment : String -> SelectionSet decodesTo selectionLock -> FragmentSelectionSet decodesTo fragmentLock
 buildFragment fragmentTypeName (SelectionSet fields decoder) =
     FragmentSelectionSet fragmentTypeName fields decoder
-
-
-{-| Used to create the `selection` functions in auto-generated code for interfaces.
--}
-interfaceSelection : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a -> b) -> SelectionSet (a -> b) typeLock
-interfaceSelection typeSpecificSelections constructor =
-    let
-        typeNameDecoder =
-            \typeName ->
-                typeSpecificSelections
-                    |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
-                    |> Dict.fromList
-                    |> Dict.get typeName
-                    |> Maybe.map (Decode.map Just)
-                    |> Maybe.withDefault (Decode.succeed Nothing)
-
-        selections =
-            typeSpecificSelections
-                |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
-    in
-    SelectionSet (leaf "__typename" [] :: selections)
-        (Decode.map2 (|>)
-            (Decode.string
-                |> Decode.field "__typename"
-                |> Decode.andThen typeNameDecoder
-            )
-            (Decode.succeed constructor)
-        )
 
 
 {-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
