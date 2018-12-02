@@ -201,9 +201,26 @@ withDefault default =
 
 
 {-| Combine two `SelectionSet`s into one, using the given combine function to
-merge the two data sets together. See the top of these docs for an example,
-or check out the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src)
-folder.
+merge the two data sets together.
+
+    import Api.Object
+    import Api.Object.Human as Human
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+
+    type alias Human =
+        { name : String
+        , id : String
+        }
+
+    hero : SelectionSet Hero Api.Object.Human
+    hero =
+        SelectionSet.map2 Human
+            Human.name
+            Human.id
+
+Check out the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src)
+folder, there are lots of end-to-end examples there!
+
 -}
 map2 :
     (decodesTo1 -> decodesTo2 -> decodesToCombined)
@@ -221,7 +238,7 @@ merge the two data sets together. This gives more clear error messages than the
 pipeline syntax (using `SelectionSet.succeed` to start the pipeline
 and `SelectionSet.with` to continue it).
 
-    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
     import Swapi.Interface
     import Swapi.Interface.Character as Character
 
@@ -231,9 +248,9 @@ and `SelectionSet.with` to continue it).
         , friends : List String
         }
 
-    thing : SelectionSet Character Swapi.Interface.Character
-    thing =
-        SelectionSet.map3 MyCharacter
+    characterSelection : SelectionSet Character Swapi.Interface.Character
+    characterSelection =
+        SelectionSet.map3 Character
             Character.name
             Character.id
             (Character.friends Character.name)
