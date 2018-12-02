@@ -23,28 +23,28 @@ import Json.Decode as Decode
 -}
 email : SelectionSet String Github.Object.SmimeSignature
 email =
-    Object.fieldDecoder "email" [] Decode.string
+    Object.selectionForField "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
 isValid : SelectionSet Bool Github.Object.SmimeSignature
 isValid =
-    Object.fieldDecoder "isValid" [] Decode.bool
+    Object.selectionForField "isValid" [] Decode.bool
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
 payload : SelectionSet String Github.Object.SmimeSignature
 payload =
-    Object.fieldDecoder "payload" [] Decode.string
+    Object.selectionForField "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
 signature : SelectionSet String Github.Object.SmimeSignature
 signature =
-    Object.fieldDecoder "signature" [] Decode.string
+    Object.selectionForField "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
@@ -58,4 +58,4 @@ signer object_ =
 -}
 state : SelectionSet Github.Enum.GitSignatureState.GitSignatureState Github.Object.SmimeSignature
 state =
-    Object.fieldDecoder "state" [] Github.Enum.GitSignatureState.decoder
+    Object.selectionForField "state" [] Github.Enum.GitSignatureState.decoder

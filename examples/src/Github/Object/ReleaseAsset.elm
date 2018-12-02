@@ -22,40 +22,40 @@ import Json.Decode as Decode
 -}
 contentType : SelectionSet String Github.Object.ReleaseAsset
 contentType =
-    Object.fieldDecoder "contentType" [] Decode.string
+    Object.selectionForField "contentType" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ReleaseAsset
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The number of times this asset was downloaded
 -}
 downloadCount : SelectionSet Int Github.Object.ReleaseAsset
 downloadCount =
-    Object.fieldDecoder "downloadCount" [] Decode.int
+    Object.selectionForField "downloadCount" [] Decode.int
 
 
 {-| Identifies the URL where you can download the release asset via the browser.
 -}
 downloadUrl : SelectionSet Github.Scalar.Uri Github.Object.ReleaseAsset
 downloadUrl =
-    Object.fieldDecoder "downloadUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "downloadUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.ReleaseAsset
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the title of the release asset.
 -}
 name : SelectionSet String Github.Object.ReleaseAsset
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| Release that the asset is associated with
@@ -69,14 +69,14 @@ release object_ =
 -}
 size : SelectionSet Int Github.Object.ReleaseAsset
 size =
-    Object.fieldDecoder "size" [] Decode.int
+    Object.selectionForField "size" [] Decode.int
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.ReleaseAsset
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The user that performed the upload
@@ -90,4 +90,4 @@ uploadedBy object_ =
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.ReleaseAsset
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

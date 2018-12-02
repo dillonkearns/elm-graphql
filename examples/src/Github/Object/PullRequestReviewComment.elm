@@ -32,28 +32,28 @@ author object_ =
 -}
 authorAssociation : SelectionSet Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.PullRequestReviewComment
 authorAssociation =
-    Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
+    Object.selectionForField "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| The comment body of this review comment.
 -}
 body : SelectionSet String Github.Object.PullRequestReviewComment
 body =
-    Object.fieldDecoder "body" [] Decode.string
+    Object.selectionForField "body" [] Decode.string
 
 
 {-| The comment body of this review comment rendered to HTML.
 -}
 bodyHTML : SelectionSet Github.Scalar.Html Github.Object.PullRequestReviewComment
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| The comment body of this review comment rendered as plain text.
 -}
 bodyText : SelectionSet String Github.Object.PullRequestReviewComment
 bodyText =
-    Object.fieldDecoder "bodyText" [] Decode.string
+    Object.selectionForField "bodyText" [] Decode.string
 
 
 {-| Identifies the commit associated with the comment.
@@ -67,35 +67,35 @@ commit object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequestReviewComment
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
 createdViaEmail : SelectionSet Bool Github.Object.PullRequestReviewComment
 createdViaEmail =
-    Object.fieldDecoder "createdViaEmail" [] Decode.bool
+    Object.selectionForField "createdViaEmail" [] Decode.bool
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.PullRequestReviewComment
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The diff hunk to which the comment applies.
 -}
 diffHunk : SelectionSet String Github.Object.PullRequestReviewComment
 diffHunk =
-    Object.fieldDecoder "diffHunk" [] Decode.string
+    Object.selectionForField "diffHunk" [] Decode.string
 
 
 {-| Identifies when the comment was created in a draft state.
 -}
 draftedAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequestReviewComment
 draftedAt =
-    Object.fieldDecoder "draftedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "draftedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who edited the comment.
@@ -107,14 +107,14 @@ editor object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.PullRequestReviewComment
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
 lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReviewComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the original commit associated with the comment.
@@ -128,28 +128,28 @@ originalCommit object_ =
 -}
 originalPosition : SelectionSet Int Github.Object.PullRequestReviewComment
 originalPosition =
-    Object.fieldDecoder "originalPosition" [] Decode.int
+    Object.selectionForField "originalPosition" [] Decode.int
 
 
 {-| The path to which the comment applies.
 -}
 path : SelectionSet String Github.Object.PullRequestReviewComment
 path =
-    Object.fieldDecoder "path" [] Decode.string
+    Object.selectionForField "path" [] Decode.string
 
 
 {-| The line index in the diff to which the comment applies.
 -}
 position : SelectionSet (Maybe Int) Github.Object.PullRequestReviewComment
 position =
-    Object.fieldDecoder "position" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReviewComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The pull request associated with this review comment.
@@ -224,21 +224,21 @@ repository object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.PullRequestReviewComment
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies when the comment was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequestReviewComment
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL permalink for this review comment.
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.PullRequestReviewComment
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias UserContentEditsOptionalArguments =
@@ -274,32 +274,32 @@ userContentEdits fillInOptionals object_ =
 -}
 viewerCanDelete : SelectionSet Bool Github.Object.PullRequestReviewComment
 viewerCanDelete =
-    Object.fieldDecoder "viewerCanDelete" [] Decode.bool
+    Object.selectionForField "viewerCanDelete" [] Decode.bool
 
 
 {-| Can user react to this subject
 -}
 viewerCanReact : SelectionSet Bool Github.Object.PullRequestReviewComment
 viewerCanReact =
-    Object.fieldDecoder "viewerCanReact" [] Decode.bool
+    Object.selectionForField "viewerCanReact" [] Decode.bool
 
 
 {-| Check if the current viewer can update this object.
 -}
 viewerCanUpdate : SelectionSet Bool Github.Object.PullRequestReviewComment
 viewerCanUpdate =
-    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField "viewerCanUpdate" [] Decode.bool
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
 viewerCannotUpdateReasons : SelectionSet (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.PullRequestReviewComment
 viewerCannotUpdateReasons =
-    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+    Object.selectionForField "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
 viewerDidAuthor : SelectionSet Bool Github.Object.PullRequestReviewComment
 viewerDidAuthor =
-    Object.fieldDecoder "viewerDidAuthor" [] Decode.bool
+    Object.selectionForField "viewerDidAuthor" [] Decode.bool

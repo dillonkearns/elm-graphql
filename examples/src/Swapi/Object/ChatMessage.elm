@@ -26,4 +26,4 @@ character object_ =
 
 phrase : SelectionSet Swapi.Enum.Phrase.Phrase Swapi.Object.ChatMessage
 phrase =
-    Object.fieldDecoder "phrase" [] Swapi.Enum.Phrase.decoder
+    Object.selectionForField "phrase" [] Swapi.Enum.Phrase.decoder

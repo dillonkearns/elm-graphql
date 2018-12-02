@@ -83,11 +83,11 @@ maybeFragments =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Interface.UniformResourceLocatable
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The URL to this resource.
 -}
 url : SelectionSet Github.Scalar.Uri Github.Interface.UniformResourceLocatable
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

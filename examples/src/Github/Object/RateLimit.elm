@@ -22,32 +22,32 @@ import Json.Decode as Decode
 -}
 cost : SelectionSet Int Github.Object.RateLimit
 cost =
-    Object.fieldDecoder "cost" [] Decode.int
+    Object.selectionForField "cost" [] Decode.int
 
 
 {-| The maximum number of points the client is permitted to consume in a 60 minute window.
 -}
 limit : SelectionSet Int Github.Object.RateLimit
 limit =
-    Object.fieldDecoder "limit" [] Decode.int
+    Object.selectionForField "limit" [] Decode.int
 
 
 {-| The maximum number of nodes this query may return
 -}
 nodeCount : SelectionSet Int Github.Object.RateLimit
 nodeCount =
-    Object.fieldDecoder "nodeCount" [] Decode.int
+    Object.selectionForField "nodeCount" [] Decode.int
 
 
 {-| The number of points remaining in the current rate limit window.
 -}
 remaining : SelectionSet Int Github.Object.RateLimit
 remaining =
-    Object.fieldDecoder "remaining" [] Decode.int
+    Object.selectionForField "remaining" [] Decode.int
 
 
 {-| The time at which the current rate limit window resets in UTC epoch seconds.
 -}
 resetAt : SelectionSet Github.Scalar.DateTime Github.Object.RateLimit
 resetAt =
-    Object.fieldDecoder "resetAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "resetAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

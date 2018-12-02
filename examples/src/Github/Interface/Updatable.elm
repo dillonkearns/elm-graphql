@@ -68,4 +68,4 @@ maybeFragments =
 -}
 viewerCanUpdate : SelectionSet Bool Github.Interface.Updatable
 viewerCanUpdate =
-    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField "viewerCanUpdate" [] Decode.bool

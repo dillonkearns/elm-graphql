@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.DeleteProjectCardPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The column the deleted card was in.
@@ -36,4 +36,4 @@ column object_ =
 -}
 deletedCardId : SelectionSet Github.Scalar.Id Github.Object.DeleteProjectCardPayload
 deletedCardId =
-    Object.fieldDecoder "deletedCardId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "deletedCardId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

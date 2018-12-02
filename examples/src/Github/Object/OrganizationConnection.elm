@@ -43,4 +43,4 @@ pageInfo object_ =
 -}
 totalCount : SelectionSet Int Github.Object.OrganizationConnection
 totalCount =
-    Object.fieldDecoder "totalCount" [] Decode.int
+    Object.selectionForField "totalCount" [] Decode.int

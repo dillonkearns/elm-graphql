@@ -20,14 +20,14 @@ import Json.Decode as Decode
 
 id : SelectionSet Github.Scalar.Id Github.Object.Topic
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The topic's name.
 -}
 name : SelectionSet String Github.Object.Topic
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| A list of related topics, including aliases of this topic, sorted with the most relevant

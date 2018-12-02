@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 fragment : SelectionSet String Github.Object.TextMatch
 fragment =
-    Object.fieldDecoder "fragment" [] Decode.string
+    Object.selectionForField "fragment" [] Decode.string
 
 
 {-| Highlights within the matched fragment.
@@ -36,4 +36,4 @@ highlights object_ =
 -}
 property : SelectionSet String Github.Object.TextMatch
 property =
-    Object.fieldDecoder "property" [] Decode.string
+    Object.selectionForField "property" [] Decode.string

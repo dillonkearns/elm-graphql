@@ -37,28 +37,28 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The timestamp of the Git action (authoring or committing).
 -}
 date : SelectionSet (Maybe Github.Scalar.GitTimestamp) Github.Object.GitActor
 date =
-    Object.fieldDecoder "date" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitTimestamp |> Decode.nullable)
+    Object.selectionForField "date" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitTimestamp |> Decode.nullable)
 
 
 {-| The email in the Git commit.
 -}
 email : SelectionSet (Maybe String) Github.Object.GitActor
 email =
-    Object.fieldDecoder "email" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "email" [] (Decode.string |> Decode.nullable)
 
 
 {-| The name in the Git commit.
 -}
 name : SelectionSet (Maybe String) Github.Object.GitActor
 name =
-    Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "name" [] (Decode.string |> Decode.nullable)
 
 
 {-| The GitHub user corresponding to the email field. Null if no such user exists.

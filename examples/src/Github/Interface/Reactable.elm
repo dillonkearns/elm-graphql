@@ -60,12 +60,12 @@ maybeFragments =
 -}
 databaseId : SelectionSet (Maybe Int) Github.Interface.Reactable
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Interface.Reactable
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -112,4 +112,4 @@ reactions fillInOptionals object_ =
 -}
 viewerCanReact : SelectionSet Bool Github.Interface.Reactable
 viewerCanReact =
-    Object.fieldDecoder "viewerCanReact" [] Decode.bool
+    Object.selectionForField "viewerCanReact" [] Decode.bool

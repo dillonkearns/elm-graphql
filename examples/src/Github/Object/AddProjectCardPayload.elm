@@ -29,7 +29,7 @@ cardEdge object_ =
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.AddProjectCardPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The ProjectColumn

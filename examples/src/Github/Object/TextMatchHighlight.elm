@@ -22,18 +22,18 @@ import Json.Decode as Decode
 -}
 beginIndice : SelectionSet Int Github.Object.TextMatchHighlight
 beginIndice =
-    Object.fieldDecoder "beginIndice" [] Decode.int
+    Object.selectionForField "beginIndice" [] Decode.int
 
 
 {-| The indice in the fragment where the matched text ends.
 -}
 endIndice : SelectionSet Int Github.Object.TextMatchHighlight
 endIndice =
-    Object.fieldDecoder "endIndice" [] Decode.int
+    Object.selectionForField "endIndice" [] Decode.int
 
 
 {-| The text matched.
 -}
 text : SelectionSet String Github.Object.TextMatchHighlight
 text =
-    Object.fieldDecoder "text" [] Decode.string
+    Object.selectionForField "text" [] Decode.string

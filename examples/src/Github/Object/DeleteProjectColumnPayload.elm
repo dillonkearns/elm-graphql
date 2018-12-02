@@ -22,14 +22,14 @@ import Json.Decode as Decode
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.DeleteProjectColumnPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The deleted column ID.
 -}
 deletedColumnId : SelectionSet Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
 deletedColumnId =
-    Object.fieldDecoder "deletedColumnId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "deletedColumnId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The project the deleted column was in.

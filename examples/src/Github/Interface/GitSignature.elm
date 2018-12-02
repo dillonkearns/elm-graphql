@@ -54,28 +54,28 @@ maybeFragments =
 -}
 email : SelectionSet String Github.Interface.GitSignature
 email =
-    Object.fieldDecoder "email" [] Decode.string
+    Object.selectionForField "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
 isValid : SelectionSet Bool Github.Interface.GitSignature
 isValid =
-    Object.fieldDecoder "isValid" [] Decode.bool
+    Object.selectionForField "isValid" [] Decode.bool
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
 payload : SelectionSet String Github.Interface.GitSignature
 payload =
-    Object.fieldDecoder "payload" [] Decode.string
+    Object.selectionForField "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
 signature : SelectionSet String Github.Interface.GitSignature
 signature =
-    Object.fieldDecoder "signature" [] Decode.string
+    Object.selectionForField "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
@@ -89,4 +89,4 @@ signer object_ =
 -}
 state : SelectionSet Github.Enum.GitSignatureState.GitSignatureState Github.Interface.GitSignature
 state =
-    Object.fieldDecoder "state" [] Github.Enum.GitSignatureState.decoder
+    Object.selectionForField "state" [] Github.Enum.GitSignatureState.decoder

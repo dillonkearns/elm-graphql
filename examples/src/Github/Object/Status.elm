@@ -49,11 +49,11 @@ contexts object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.Status
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The combined commit status.
 -}
 state : SelectionSet Github.Enum.StatusState.StatusState Github.Object.Status
 state =
-    Object.fieldDecoder "state" [] Github.Enum.StatusState.decoder
+    Object.selectionForField "state" [] Github.Enum.StatusState.decoder

@@ -24,26 +24,26 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.OrganizationInvitation
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The email address of the user invited to the organization.
 -}
 email : SelectionSet (Maybe String) Github.Object.OrganizationInvitation
 email =
-    Object.fieldDecoder "email" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "email" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.OrganizationInvitation
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The type of invitation that was sent (e.g. email, user).
 -}
 invitationType : SelectionSet Github.Enum.OrganizationInvitationType.OrganizationInvitationType Github.Object.OrganizationInvitation
 invitationType =
-    Object.fieldDecoder "invitationType" [] Github.Enum.OrganizationInvitationType.decoder
+    Object.selectionForField "invitationType" [] Github.Enum.OrganizationInvitationType.decoder
 
 
 {-| The user who was invited to the organization.
@@ -71,4 +71,4 @@ organization object_ =
 -}
 role : SelectionSet Github.Enum.OrganizationInvitationRole.OrganizationInvitationRole Github.Object.OrganizationInvitation
 role =
-    Object.fieldDecoder "role" [] Github.Enum.OrganizationInvitationRole.decoder
+    Object.selectionForField "role" [] Github.Enum.OrganizationInvitationRole.decoder

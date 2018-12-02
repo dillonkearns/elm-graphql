@@ -41,4 +41,4 @@ pageInfo object_ =
 -}
 totalCount : SelectionSet Int Github.Object.CommitHistoryConnection
 totalCount =
-    Object.fieldDecoder "totalCount" [] Decode.int
+    Object.selectionForField "totalCount" [] Decode.int

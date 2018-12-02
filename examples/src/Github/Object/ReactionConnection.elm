@@ -43,11 +43,11 @@ pageInfo object_ =
 -}
 totalCount : SelectionSet Int Github.Object.ReactionConnection
 totalCount =
-    Object.fieldDecoder "totalCount" [] Decode.int
+    Object.selectionForField "totalCount" [] Decode.int
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.
 -}
 viewerHasReacted : SelectionSet Bool Github.Object.ReactionConnection
 viewerHasReacted =
-    Object.fieldDecoder "viewerHasReacted" [] Decode.bool
+    Object.selectionForField "viewerHasReacted" [] Decode.bool

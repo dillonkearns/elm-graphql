@@ -29,33 +29,33 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.CrossReferencedEvent
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Reference originated in a different repository.
 -}
 isCrossRepository : SelectionSet Bool Github.Object.CrossReferencedEvent
 isCrossRepository =
-    Object.fieldDecoder "isCrossRepository" [] Decode.bool
+    Object.selectionForField "isCrossRepository" [] Decode.bool
 
 
 {-| Identifies when the reference was made.
 -}
 referencedAt : SelectionSet Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 referencedAt =
-    Object.fieldDecoder "referencedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "referencedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP path for this pull request.
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.CrossReferencedEvent
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Issue or pull request that made the reference.
@@ -76,11 +76,11 @@ target object_ =
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.CrossReferencedEvent
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Checks if the target will be closed when the source is merged.
 -}
 willCloseTarget : SelectionSet Bool Github.Object.CrossReferencedEvent
 willCloseTarget =
-    Object.fieldDecoder "willCloseTarget" [] Decode.bool
+    Object.selectionForField "willCloseTarget" [] Decode.bool

@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 codeCount : SelectionSet Int Github.Object.SearchResultItemConnection
 codeCount =
-    Object.fieldDecoder "codeCount" [] Decode.int
+    Object.selectionForField "codeCount" [] Decode.int
 
 
 {-| A list of edges.
@@ -36,7 +36,7 @@ edges object_ =
 -}
 issueCount : SelectionSet Int Github.Object.SearchResultItemConnection
 issueCount =
-    Object.fieldDecoder "issueCount" [] Decode.int
+    Object.selectionForField "issueCount" [] Decode.int
 
 
 {-| A list of nodes.
@@ -57,18 +57,18 @@ pageInfo object_ =
 -}
 repositoryCount : SelectionSet Int Github.Object.SearchResultItemConnection
 repositoryCount =
-    Object.fieldDecoder "repositoryCount" [] Decode.int
+    Object.selectionForField "repositoryCount" [] Decode.int
 
 
 {-| The number of users that matched the search query.
 -}
 userCount : SelectionSet Int Github.Object.SearchResultItemConnection
 userCount =
-    Object.fieldDecoder "userCount" [] Decode.int
+    Object.selectionForField "userCount" [] Decode.int
 
 
 {-| The number of wiki pages that matched the search query.
 -}
 wikiCount : SelectionSet Int Github.Object.SearchResultItemConnection
 wikiCount =
-    Object.fieldDecoder "wikiCount" [] Decode.int
+    Object.selectionForField "wikiCount" [] Decode.int

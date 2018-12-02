@@ -30,14 +30,14 @@ commit object_ =
 -}
 context : SelectionSet String Github.Object.StatusContext
 context =
-    Object.fieldDecoder "context" [] Decode.string
+    Object.selectionForField "context" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.StatusContext
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who created this status context.
@@ -51,23 +51,23 @@ creator object_ =
 -}
 description : SelectionSet (Maybe String) Github.Object.StatusContext
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.StatusContext
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The state of this status context.
 -}
 state : SelectionSet Github.Enum.StatusState.StatusState Github.Object.StatusContext
 state =
-    Object.fieldDecoder "state" [] Github.Enum.StatusState.decoder
+    Object.selectionForField "state" [] Github.Enum.StatusState.decoder
 
 
 {-| The URL for this status context.
 -}
 targetUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.StatusContext
 targetUrl =
-    Object.fieldDecoder "targetUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "targetUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

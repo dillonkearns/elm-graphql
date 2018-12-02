@@ -22,39 +22,39 @@ import Json.Decode as Decode
 -}
 gitHubServicesSha : SelectionSet String Github.Object.GitHubMetadata
 gitHubServicesSha =
-    Object.fieldDecoder "gitHubServicesSha" [] Decode.string
+    Object.selectionForField "gitHubServicesSha" [] Decode.string
 
 
 {-| IP addresses that users connect to for git operations
 -}
 gitIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 gitIpAddresses =
-    Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that service hooks are sent from
 -}
 hookIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 hookIpAddresses =
-    Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that the importer connects from
 -}
 importerIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 importerIpAddresses =
-    Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| Whether or not users are verified
 -}
 isPasswordAuthenticationVerifiable : SelectionSet Bool Github.Object.GitHubMetadata
 isPasswordAuthenticationVerifiable =
-    Object.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.bool
+    Object.selectionForField "isPasswordAuthenticationVerifiable" [] Decode.bool
 
 
 {-| IP addresses for GitHub Pages' A records
 -}
 pagesIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 pagesIpAddresses =
-    Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)

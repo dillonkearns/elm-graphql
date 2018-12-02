@@ -37,7 +37,7 @@ droid requiredArgs object_ =
 -}
 forcedError : SelectionSet (Maybe String) RootQuery
 forcedError =
-    Object.fieldDecoder "forcedError" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "forcedError" [] (Decode.string |> Decode.nullable)
 
 
 type alias GreetRequiredArguments =
@@ -46,12 +46,12 @@ type alias GreetRequiredArguments =
 
 greet : GreetRequiredArguments -> SelectionSet String RootQuery
 greet requiredArgs =
-    Object.fieldDecoder "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
+    Object.selectionForField "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
 
 
 hello : SelectionSet String RootQuery
 hello =
-    Object.fieldDecoder "hello" [] Decode.string
+    Object.selectionForField "hello" [] Decode.string
 
 
 type alias HeroOptionalArguments =

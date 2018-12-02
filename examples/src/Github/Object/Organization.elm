@@ -42,47 +42,47 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.Organization
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The organization's public profile description.
 -}
 description : SelectionSet (Maybe String) Github.Object.Organization
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The organization's public email.
 -}
 email : SelectionSet (Maybe String) Github.Object.Organization
 email =
-    Object.fieldDecoder "email" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "email" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Organization
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The organization's public profile location.
 -}
 location : SelectionSet (Maybe String) Github.Object.Organization
 location =
-    Object.fieldDecoder "location" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "location" [] (Decode.string |> Decode.nullable)
 
 
 {-| The organization's login name.
 -}
 login : SelectionSet String Github.Object.Organization
 login =
-    Object.fieldDecoder "login" [] Decode.string
+    Object.selectionForField "login" [] Decode.string
 
 
 type alias MembersOptionalArguments =
@@ -118,28 +118,28 @@ members fillInOptionals object_ =
 -}
 name : SelectionSet (Maybe String) Github.Object.Organization
 name =
-    Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "name" [] (Decode.string |> Decode.nullable)
 
 
 {-| The HTTP path creating a new team
 -}
 newTeamResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Organization
 newTeamResourcePath =
-    Object.fieldDecoder "newTeamResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "newTeamResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL creating a new team
 -}
 newTeamUrl : SelectionSet Github.Scalar.Uri Github.Object.Organization
 newTeamUrl =
-    Object.fieldDecoder "newTeamUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "newTeamUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The billing email for the organization.
 -}
 organizationBillingEmail : SelectionSet (Maybe String) Github.Object.Organization
 organizationBillingEmail =
-    Object.fieldDecoder "organizationBillingEmail" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "organizationBillingEmail" [] (Decode.string |> Decode.nullable)
 
 
 type alias PinnedRepositoriesOptionalArguments =
@@ -232,14 +232,14 @@ projects fillInOptionals object_ =
 -}
 projectsResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Organization
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing organization's projects
 -}
 projectsUrl : SelectionSet Github.Scalar.Uri Github.Object.Organization
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias RepositoriesOptionalArguments =
@@ -299,7 +299,7 @@ repository requiredArgs object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Organization
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The Organization's SAML Identity Providers
@@ -370,60 +370,60 @@ teams fillInOptionals object_ =
 -}
 teamsResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Organization
 teamsResourcePath =
-    Object.fieldDecoder "teamsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "teamsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing organization's teams
 -}
 teamsUrl : SelectionSet Github.Scalar.Uri Github.Object.Organization
 teamsUrl =
-    Object.fieldDecoder "teamsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "teamsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this user
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.Organization
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Organization is adminable by the viewer.
 -}
 viewerCanAdminister : SelectionSet Bool Github.Object.Organization
 viewerCanAdminister =
-    Object.fieldDecoder "viewerCanAdminister" [] Decode.bool
+    Object.selectionForField "viewerCanAdminister" [] Decode.bool
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
 viewerCanCreateProjects : SelectionSet Bool Github.Object.Organization
 viewerCanCreateProjects =
-    Object.fieldDecoder "viewerCanCreateProjects" [] Decode.bool
+    Object.selectionForField "viewerCanCreateProjects" [] Decode.bool
 
 
 {-| Viewer can create repositories on this organization
 -}
 viewerCanCreateRepositories : SelectionSet Bool Github.Object.Organization
 viewerCanCreateRepositories =
-    Object.fieldDecoder "viewerCanCreateRepositories" [] Decode.bool
+    Object.selectionForField "viewerCanCreateRepositories" [] Decode.bool
 
 
 {-| Viewer can create teams on this organization.
 -}
 viewerCanCreateTeams : SelectionSet Bool Github.Object.Organization
 viewerCanCreateTeams =
-    Object.fieldDecoder "viewerCanCreateTeams" [] Decode.bool
+    Object.selectionForField "viewerCanCreateTeams" [] Decode.bool
 
 
 {-| Viewer is an active member of this organization.
 -}
 viewerIsAMember : SelectionSet Bool Github.Object.Organization
 viewerIsAMember =
-    Object.fieldDecoder "viewerIsAMember" [] Decode.bool
+    Object.selectionForField "viewerIsAMember" [] Decode.bool
 
 
 {-| The organization's public profile URL.
 -}
 websiteUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.Organization
 websiteUrl =
-    Object.fieldDecoder "websiteUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "websiteUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

@@ -22,25 +22,25 @@ import Json.Decode as Decode
 -}
 body : SelectionSet (Maybe String) Github.Object.CodeOfConduct
 body =
-    Object.fieldDecoder "body" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "body" [] (Decode.string |> Decode.nullable)
 
 
 {-| The key for the CoC
 -}
 key : SelectionSet String Github.Object.CodeOfConduct
 key =
-    Object.fieldDecoder "key" [] Decode.string
+    Object.selectionForField "key" [] Decode.string
 
 
 {-| The formal name of the CoC
 -}
 name : SelectionSet String Github.Object.CodeOfConduct
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| The path to the CoC
 -}
 url : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

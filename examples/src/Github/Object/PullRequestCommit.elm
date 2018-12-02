@@ -27,7 +27,7 @@ commit object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.PullRequestCommit
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The pull request this commit belongs to
@@ -41,11 +41,11 @@ pullRequest object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.PullRequestCommit
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this pull request commit
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.PullRequestCommit
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
