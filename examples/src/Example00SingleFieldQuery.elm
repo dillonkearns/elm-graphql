@@ -38,33 +38,6 @@ type alias Response =
     String
 
 
-queryAlt : SelectionSet ( String, String ) RootQuery
-queryAlt =
-    SelectionSet.succeed Tuple.pair
-        |> SelectionSet.with Query.hello
-        |> SelectionSet.with
-            (Query.greet
-                { input =
-                    Swapi.InputObject.buildGreeting
-                        { name = "Chewie" }
-                        (\optionals -> { optionals | language = Present Language.Es })
-                }
-            )
-
-
-queryPair : SelectionSet ( String, String ) RootQuery
-queryPair =
-    SelectionSet.map2 Tuple.pair
-        Query.hello
-        (Query.greet
-            { input =
-                Swapi.InputObject.buildGreeting
-                    { name = "Chewie" }
-                    (\optionals -> { optionals | language = Present Language.Es })
-            }
-        )
-
-
 query : SelectionSet Response RootQuery
 query =
     Query.hello
