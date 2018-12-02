@@ -1,5 +1,5 @@
 module Graphql.Internal.Builder.Object exposing
-    ( fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
+    ( fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
     , selectionForField, selectionForCompositeField
     )
 
@@ -8,7 +8,7 @@ code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, exhuastiveAndCommonFragmentSelection, buildFragment
+@docs fieldDecoder, selection, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
 
 
 ## New API
@@ -172,13 +172,6 @@ exhaustiveFailureMessage typeSpecificSelections typeName =
     interpolate
         "Unhandled type `{0}` in exhaustive fragment handling. The following types had handlers registered to handle them: [{1}]. This happens if you are parsing either a Union or Interface. Do you need to rerun the `@dillonkearns/elm-graphql` command line tool?"
         [ typeName, typeSpecificSelections |> List.map (\(FragmentSelectionSet fragmentType fields decoder) -> fragmentType) |> String.join ", " ]
-
-
-{-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
--}
-exhuastiveAndCommonFragmentSelection : (decodesTo -> a -> b) -> List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet (a -> b) typeLock
-exhuastiveAndCommonFragmentSelection constructor typeSpecificSelections =
-    Graphql.SelectionSet.map2 (|>) (exhuastiveFragmentSelection typeSpecificSelections) (Graphql.SelectionSet.succeed constructor)
 
 
 {-| Used to create the `selection` functions in auto-generated code for unions.
