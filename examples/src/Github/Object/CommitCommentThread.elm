@@ -42,7 +42,7 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.CommitCommentThread
+comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> SelectionSet decodesTo Github.Object.CommitCommentThread
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -57,32 +57,32 @@ comments fillInOptionals object_ =
 
 {-| The commit the comments were made on.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.CommitCommentThread
+commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.CommitCommentThread
 commit object_ =
     Object.selectionField "commit" [] object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.CommitCommentThread
+id : SelectionSet Github.Scalar.Id Github.Object.CommitCommentThread
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The file the comments were made on.
 -}
-path : Field (Maybe String) Github.Object.CommitCommentThread
+path : SelectionSet (Maybe String) Github.Object.CommitCommentThread
 path =
     Object.fieldDecoder "path" [] (Decode.string |> Decode.nullable)
 
 
 {-| The position in the diff for the commit that the comment was made on.
 -}
-position : Field (Maybe Int) Github.Object.CommitCommentThread
+position : SelectionSet (Maybe Int) Github.Object.CommitCommentThread
 position =
     Object.fieldDecoder "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.CommitCommentThread
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.CommitCommentThread
 repository object_ =
     Object.selectionField "repository" [] object_ identity

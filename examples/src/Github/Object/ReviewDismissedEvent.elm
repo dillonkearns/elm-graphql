@@ -29,81 +29,81 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReviewDismissedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.ReviewDismissedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ReviewDismissedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.ReviewDismissedEvent
+databaseId : SelectionSet (Maybe Int) Github.Object.ReviewDismissedEvent
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.ReviewDismissedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.ReviewDismissedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the message associated with the 'review\_dismissed' event.
 -}
-message : Field String Github.Object.ReviewDismissedEvent
+message : SelectionSet String Github.Object.ReviewDismissedEvent
 message =
     Object.fieldDecoder "message" [] Decode.string
 
 
 {-| The message associated with the event, rendered to HTML.
 -}
-messageHtml : Field Github.Scalar.Html Github.Object.ReviewDismissedEvent
+messageHtml : SelectionSet Github.Scalar.Html Github.Object.ReviewDismissedEvent
 messageHtml =
     Object.fieldDecoder "messageHtml" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the previous state of the review with the 'review\_dismissed' event.
 -}
-previousReviewState : Field Github.Enum.PullRequestReviewState.PullRequestReviewState Github.Object.ReviewDismissedEvent
+previousReviewState : SelectionSet Github.Enum.PullRequestReviewState.PullRequestReviewState Github.Object.ReviewDismissedEvent
 previousReviewState =
     Object.fieldDecoder "previousReviewState" [] Github.Enum.PullRequestReviewState.decoder
 
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.ReviewDismissedEvent
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.ReviewDismissedEvent
 pullRequest object_ =
     Object.selectionField "pullRequest" [] object_ identity
 
 
 {-| Identifies the commit which caused the review to become stale.
 -}
-pullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit -> Field (Maybe decodesTo) Github.Object.ReviewDismissedEvent
+pullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 pullRequestCommit object_ =
     Object.selectionField "pullRequestCommit" [] object_ (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this review dismissed event.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.ReviewDismissedEvent
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.ReviewDismissedEvent
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the review associated with the 'review\_dismissed' event.
 -}
-review : SelectionSet decodesTo Github.Object.PullRequestReview -> Field (Maybe decodesTo) Github.Object.ReviewDismissedEvent
+review : SelectionSet decodesTo Github.Object.PullRequestReview -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 review object_ =
     Object.selectionField "review" [] object_ (identity >> Decode.nullable)
 
 
 {-| The HTTP URL for this review dismissed event.
 -}
-url : Field Github.Scalar.Uri Github.Object.ReviewDismissedEvent
+url : SelectionSet Github.Scalar.Uri Github.Object.ReviewDismissedEvent
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

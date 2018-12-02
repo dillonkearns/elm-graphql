@@ -28,41 +28,41 @@ selection constructor =
 
 {-| Entry file mode.
 -}
-mode : Field Int Github.Object.TreeEntry
+mode : SelectionSet Int Github.Object.TreeEntry
 mode =
     Object.fieldDecoder "mode" [] Decode.int
 
 
 {-| Entry file name.
 -}
-name : Field String Github.Object.TreeEntry
+name : SelectionSet String Github.Object.TreeEntry
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| Entry file object.
 -}
-object : SelectionSet decodesTo Github.Interface.GitObject -> Field (Maybe decodesTo) Github.Object.TreeEntry
+object : SelectionSet decodesTo Github.Interface.GitObject -> SelectionSet (Maybe decodesTo) Github.Object.TreeEntry
 object object_ =
     Object.selectionField "object" [] object_ (identity >> Decode.nullable)
 
 
 {-| Entry file Git object ID.
 -}
-oid : Field Github.Scalar.GitObjectID Github.Object.TreeEntry
+oid : SelectionSet Github.Scalar.GitObjectID Github.Object.TreeEntry
 oid =
     Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the tree entry belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.TreeEntry
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.TreeEntry
 repository object_ =
     Object.selectionField "repository" [] object_ identity
 
 
 {-| Entry file type.
 -}
-type_ : Field String Github.Object.TreeEntry
+type_ : SelectionSet String Github.Object.TreeEntry
 type_ =
     Object.fieldDecoder "type" [] Decode.string

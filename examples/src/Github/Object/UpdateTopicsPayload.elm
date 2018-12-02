@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.UpdateTopicsPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.UpdateTopicsPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| Names of the provided topics that are not valid.
 -}
-invalidTopicNames : Field (Maybe (List String)) Github.Object.UpdateTopicsPayload
+invalidTopicNames : SelectionSet (Maybe (List String)) Github.Object.UpdateTopicsPayload
 invalidTopicNames =
     Object.fieldDecoder "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| The updated repository.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.UpdateTopicsPayload
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.UpdateTopicsPayload
 repository object_ =
     Object.selectionField "repository" [] object_ identity

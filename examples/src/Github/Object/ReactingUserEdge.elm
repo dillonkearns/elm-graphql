@@ -26,18 +26,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : Field String Github.Object.ReactingUserEdge
+cursor : SelectionSet String Github.Object.ReactingUserEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.ReactingUserEdge
+node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.ReactingUserEdge
 node object_ =
     Object.selectionField "node" [] object_ identity
 
 
 {-| The moment when the user made the reaction.
 -}
-reactedAt : Field Github.Scalar.DateTime Github.Object.ReactingUserEdge
+reactedAt : SelectionSet Github.Scalar.DateTime Github.Object.ReactingUserEdge
 reactedAt =
     Object.fieldDecoder "reactedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

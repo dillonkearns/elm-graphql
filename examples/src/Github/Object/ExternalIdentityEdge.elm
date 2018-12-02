@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A cursor for use in pagination.
 -}
-cursor : Field String Github.Object.ExternalIdentityEdge
+cursor : SelectionSet String Github.Object.ExternalIdentityEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet decodesTo Github.Object.ExternalIdentity -> Field (Maybe decodesTo) Github.Object.ExternalIdentityEdge
+node : SelectionSet decodesTo Github.Object.ExternalIdentity -> SelectionSet (Maybe decodesTo) Github.Object.ExternalIdentityEdge
 node object_ =
     Object.selectionField "node" [] object_ (identity >> Decode.nullable)

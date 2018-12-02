@@ -26,13 +26,13 @@ selection constructor =
     Object.selection constructor
 
 
-id : Field Github.Scalar.Id Github.Object.PublicKey
+id : SelectionSet Github.Scalar.Id Github.Object.PublicKey
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The public key string
 -}
-key : Field String Github.Object.PublicKey
+key : SelectionSet String Github.Object.PublicKey
 key =
     Object.fieldDecoder "key" [] Decode.string

@@ -35,7 +35,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Object.GitActor
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Object.GitActor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -50,27 +50,27 @@ avatarUrl fillInOptionals =
 
 {-| The timestamp of the Git action (authoring or committing).
 -}
-date : Field (Maybe Github.Scalar.GitTimestamp) Github.Object.GitActor
+date : SelectionSet (Maybe Github.Scalar.GitTimestamp) Github.Object.GitActor
 date =
     Object.fieldDecoder "date" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitTimestamp |> Decode.nullable)
 
 
 {-| The email in the Git commit.
 -}
-email : Field (Maybe String) Github.Object.GitActor
+email : SelectionSet (Maybe String) Github.Object.GitActor
 email =
     Object.fieldDecoder "email" [] (Decode.string |> Decode.nullable)
 
 
 {-| The name in the Git commit.
 -}
-name : Field (Maybe String) Github.Object.GitActor
+name : SelectionSet (Maybe String) Github.Object.GitActor
 name =
     Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
 
 
 {-| The GitHub user corresponding to the email field. Null if no such user exists.
 -}
-user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.GitActor
+user : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.GitActor
 user object_ =
     Object.selectionField "user" [] object_ (identity >> Decode.nullable)

@@ -28,20 +28,20 @@ selection constructor =
 
 {-| The indice in the fragment where the matched text begins.
 -}
-beginIndice : Field Int Github.Object.TextMatchHighlight
+beginIndice : SelectionSet Int Github.Object.TextMatchHighlight
 beginIndice =
     Object.fieldDecoder "beginIndice" [] Decode.int
 
 
 {-| The indice in the fragment where the matched text ends.
 -}
-endIndice : Field Int Github.Object.TextMatchHighlight
+endIndice : SelectionSet Int Github.Object.TextMatchHighlight
 endIndice =
     Object.fieldDecoder "endIndice" [] Decode.int
 
 
 {-| The text matched.
 -}
-text : Field String Github.Object.TextMatchHighlight
+text : SelectionSet String Github.Object.TextMatchHighlight
 text =
     Object.fieldDecoder "text" [] Decode.string

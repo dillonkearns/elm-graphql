@@ -57,13 +57,13 @@ maybeFragments =
 
 {-| Reason that the conversation was locked.
 -}
-activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Interface.Lockable
+activeLockReason : SelectionSet (Maybe Github.Enum.LockReason.LockReason) Github.Interface.Lockable
 activeLockReason =
     Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
 
 
 {-| `true` if the object is locked
 -}
-locked : Field Bool Github.Interface.Lockable
+locked : SelectionSet Bool Github.Interface.Lockable
 locked =
     Object.fieldDecoder "locked" [] Decode.bool

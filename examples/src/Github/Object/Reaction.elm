@@ -29,39 +29,39 @@ selection constructor =
 
 {-| Identifies the emoji reaction.
 -}
-content : Field Github.Enum.ReactionContent.ReactionContent Github.Object.Reaction
+content : SelectionSet Github.Enum.ReactionContent.ReactionContent Github.Object.Reaction
 content =
     Object.fieldDecoder "content" [] Github.Enum.ReactionContent.decoder
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.Reaction
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Reaction
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.Reaction
+databaseId : SelectionSet (Maybe Int) Github.Object.Reaction
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Reaction
+id : SelectionSet Github.Scalar.Id Github.Object.Reaction
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The reactable piece of content
 -}
-reactable : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.Reaction
+reactable : SelectionSet decodesTo Github.Interface.Reactable -> SelectionSet decodesTo Github.Object.Reaction
 reactable object_ =
     Object.selectionField "reactable" [] object_ identity
 
 
 {-| Identifies the user who created this reaction.
 -}
-user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Reaction
+user : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.Reaction
 user object_ =
     Object.selectionField "user" [] object_ (identity >> Decode.nullable)

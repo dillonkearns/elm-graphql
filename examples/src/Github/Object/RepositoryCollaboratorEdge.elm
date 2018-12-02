@@ -27,18 +27,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : Field String Github.Object.RepositoryCollaboratorEdge
+cursor : SelectionSet String Github.Object.RepositoryCollaboratorEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryCollaboratorEdge
+node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RepositoryCollaboratorEdge
 node object_ =
     Object.selectionField "node" [] object_ identity
 
 
 {-| The permission the user has on the repository.
 -}
-permission : Field Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryCollaboratorEdge
+permission : SelectionSet Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryCollaboratorEdge
 permission =
     Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder

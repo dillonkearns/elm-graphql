@@ -30,26 +30,26 @@ selection constructor =
 
 {-| Identifies the label color.
 -}
-color : Field String Github.Object.Label
+color : SelectionSet String Github.Object.Label
 color =
     Object.fieldDecoder "color" [] Decode.string
 
 
 {-| A brief description of this label.
 -}
-description : Field (Maybe String) Github.Object.Label
+description : SelectionSet (Maybe String) Github.Object.Label
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Label
+id : SelectionSet Github.Scalar.Id Github.Object.Label
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates whether or not this is a default label.
 -}
-isDefault : Field Bool Github.Object.Label
+isDefault : SelectionSet Bool Github.Object.Label
 isDefault =
     Object.fieldDecoder "isDefault" [] Decode.bool
 
@@ -76,7 +76,7 @@ type alias IssuesOptionalArguments =
   - states - A list of states to filter the issues by.
 
 -}
-issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> Field decodesTo Github.Object.Label
+issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> SelectionSet decodesTo Github.Object.Label
 issues fillInOptionals object_ =
     let
         filledInOptionals =
@@ -91,7 +91,7 @@ issues fillInOptionals object_ =
 
 {-| Identifies the label name.
 -}
-name : Field String Github.Object.Label
+name : SelectionSet String Github.Object.Label
 name =
     Object.fieldDecoder "name" [] Decode.string
 
@@ -122,7 +122,7 @@ type alias PullRequestsOptionalArguments =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Label
+pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> SelectionSet decodesTo Github.Object.Label
 pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -137,6 +137,6 @@ pullRequests fillInOptionals object_ =
 
 {-| The repository associated with this label.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Label
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Label
 repository object_ =
     Object.selectionField "repository" [] object_ identity

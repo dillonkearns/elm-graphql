@@ -74,6 +74,6 @@ maybeFragments =
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : Field Bool Github.Interface.Updatable
+viewerCanUpdate : SelectionSet Bool Github.Interface.Updatable
 viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool

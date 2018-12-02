@@ -28,34 +28,34 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.ReactionEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReactionConnection
+edges : SelectionSet decodesTo Github.Object.ReactionEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ReactionConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Reaction -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReactionConnection
+nodes : SelectionSet decodesTo Github.Object.Reaction -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ReactionConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.ReactionConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.ReactionConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.ReactionConnection
+totalCount : SelectionSet Int Github.Object.ReactionConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.
 -}
-viewerHasReacted : Field Bool Github.Object.ReactionConnection
+viewerHasReacted : SelectionSet Bool Github.Object.ReactionConnection
 viewerHasReacted =
     Object.fieldDecoder "viewerHasReacted" [] Decode.bool

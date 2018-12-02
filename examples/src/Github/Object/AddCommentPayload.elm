@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.AddCommentPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.AddCommentPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The edge from the subject's comment connection.
 -}
-commentEdge : SelectionSet decodesTo Github.Object.IssueCommentEdge -> Field decodesTo Github.Object.AddCommentPayload
+commentEdge : SelectionSet decodesTo Github.Object.IssueCommentEdge -> SelectionSet decodesTo Github.Object.AddCommentPayload
 commentEdge object_ =
     Object.selectionField "commentEdge" [] object_ identity
 
 
 {-| The subject
 -}
-subject : SelectionSet decodesTo Github.Interface.Node -> Field decodesTo Github.Object.AddCommentPayload
+subject : SelectionSet decodesTo Github.Interface.Node -> SelectionSet decodesTo Github.Object.AddCommentPayload
 subject object_ =
     Object.selectionField "subject" [] object_ identity
 
 
 {-| The edge from the subject's timeline connection.
 -}
-timelineEdge : SelectionSet decodesTo Github.Object.IssueTimelineItemEdge -> Field decodesTo Github.Object.AddCommentPayload
+timelineEdge : SelectionSet decodesTo Github.Object.IssueTimelineItemEdge -> SelectionSet decodesTo Github.Object.AddCommentPayload
 timelineEdge object_ =
     Object.selectionField "timelineEdge" [] object_ identity

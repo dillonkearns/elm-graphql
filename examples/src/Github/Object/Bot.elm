@@ -35,7 +35,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Object.Bot
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Object.Bot
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -50,46 +50,46 @@ avatarUrl fillInOptionals =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.Bot
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Bot
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.Bot
+databaseId : SelectionSet (Maybe Int) Github.Object.Bot
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Bot
+id : SelectionSet Github.Scalar.Id Github.Object.Bot
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The username of the actor.
 -}
-login : Field String Github.Object.Bot
+login : SelectionSet String Github.Object.Bot
 login =
     Object.fieldDecoder "login" [] Decode.string
 
 
 {-| The HTTP path for this bot
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.Bot
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Bot
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.Bot
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Bot
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this bot
 -}
-url : Field Github.Scalar.Uri Github.Object.Bot
+url : SelectionSet Github.Scalar.Uri Github.Object.Bot
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

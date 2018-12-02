@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.DeleteProjectCardPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.DeleteProjectCardPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The column the deleted card was in.
 -}
-column : SelectionSet decodesTo Github.Object.ProjectColumn -> Field decodesTo Github.Object.DeleteProjectCardPayload
+column : SelectionSet decodesTo Github.Object.ProjectColumn -> SelectionSet decodesTo Github.Object.DeleteProjectCardPayload
 column object_ =
     Object.selectionField "column" [] object_ identity
 
 
 {-| The deleted card ID.
 -}
-deletedCardId : Field Github.Scalar.Id Github.Object.DeleteProjectCardPayload
+deletedCardId : SelectionSet Github.Scalar.Id Github.Object.DeleteProjectCardPayload
 deletedCardId =
     Object.fieldDecoder "deletedCardId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

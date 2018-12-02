@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.AddProjectColumnPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.AddProjectColumnPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The edge from the project's column connection.
 -}
-columnEdge : SelectionSet decodesTo Github.Object.ProjectColumnEdge -> Field decodesTo Github.Object.AddProjectColumnPayload
+columnEdge : SelectionSet decodesTo Github.Object.ProjectColumnEdge -> SelectionSet decodesTo Github.Object.AddProjectColumnPayload
 columnEdge object_ =
     Object.selectionField "columnEdge" [] object_ identity
 
 
 {-| The project
 -}
-project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.AddProjectColumnPayload
+project : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.AddProjectColumnPayload
 project object_ =
     Object.selectionField "project" [] object_ identity

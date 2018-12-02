@@ -287,6 +287,6 @@ maybeFragments =
 
 {-| ID of the object.
 -}
-id : Field Github.Scalar.Id Github.Interface.Node
+id : SelectionSet Github.Scalar.Id Github.Interface.Node
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

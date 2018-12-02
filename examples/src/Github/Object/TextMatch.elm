@@ -28,20 +28,20 @@ selection constructor =
 
 {-| The specific text fragment within the property matched on.
 -}
-fragment : Field String Github.Object.TextMatch
+fragment : SelectionSet String Github.Object.TextMatch
 fragment =
     Object.fieldDecoder "fragment" [] Decode.string
 
 
 {-| Highlights within the matched fragment.
 -}
-highlights : SelectionSet decodesTo Github.Object.TextMatchHighlight -> Field (List (Maybe decodesTo)) Github.Object.TextMatch
+highlights : SelectionSet decodesTo Github.Object.TextMatchHighlight -> SelectionSet (List (Maybe decodesTo)) Github.Object.TextMatch
 highlights object_ =
     Object.selectionField "highlights" [] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 {-| The property matched on.
 -}
-property : Field String Github.Object.TextMatch
+property : SelectionSet String Github.Object.TextMatch
 property =
     Object.fieldDecoder "property" [] Decode.string

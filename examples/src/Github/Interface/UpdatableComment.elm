@@ -72,6 +72,6 @@ maybeFragments =
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : Field (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Interface.UpdatableComment
+viewerCannotUpdateReasons : SelectionSet (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Interface.UpdatableComment
 viewerCannotUpdateReasons =
     Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)

@@ -66,19 +66,19 @@ maybeFragments =
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Interface.Reactable
+databaseId : SelectionSet (Maybe Int) Github.Interface.Reactable
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Interface.Reactable
+id : SelectionSet Github.Scalar.Id Github.Interface.Reactable
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Interface.Reactable
+reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Interface.Reactable
 reactionGroups object_ =
     Object.selectionField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
@@ -103,7 +103,7 @@ type alias ReactionsOptionalArguments =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Interface.Reactable
+reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> SelectionSet decodesTo Github.Interface.Reactable
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -118,6 +118,6 @@ reactions fillInOptionals object_ =
 
 {-| Can user react to this subject
 -}
-viewerCanReact : Field Bool Github.Interface.Reactable
+viewerCanReact : SelectionSet Bool Github.Interface.Reactable
 viewerCanReact =
     Object.fieldDecoder "viewerCanReact" [] Decode.bool

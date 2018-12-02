@@ -27,18 +27,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : Field String Github.Object.TeamRepositoryEdge
+cursor : SelectionSet String Github.Object.TeamRepositoryEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.TeamRepositoryEdge
+node : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.TeamRepositoryEdge
 node object_ =
     Object.selectionField "node" [] object_ identity
 
 
 {-| The permission level the team has on the repository
 -}
-permission : Field Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.TeamRepositoryEdge
+permission : SelectionSet Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.TeamRepositoryEdge
 permission =
     Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder

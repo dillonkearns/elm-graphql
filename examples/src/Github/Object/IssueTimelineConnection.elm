@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.IssueTimelineItemEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.IssueTimelineConnection
+edges : SelectionSet decodesTo Github.Object.IssueTimelineItemEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.IssueTimelineConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Union.IssueTimelineItem -> Field (Maybe (List (Maybe decodesTo))) Github.Object.IssueTimelineConnection
+nodes : SelectionSet decodesTo Github.Union.IssueTimelineItem -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.IssueTimelineConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.IssueTimelineConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.IssueTimelineConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.IssueTimelineConnection
+totalCount : SelectionSet Int Github.Object.IssueTimelineConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

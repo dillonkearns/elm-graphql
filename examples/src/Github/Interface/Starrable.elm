@@ -54,7 +54,7 @@ maybeFragments =
     }
 
 
-id : Field Github.Scalar.Id Github.Interface.Starrable
+id : SelectionSet Github.Scalar.Id Github.Interface.Starrable
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
@@ -77,7 +77,7 @@ type alias StargazersOptionalArguments =
   - orderBy - Order for connection
 
 -}
-stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> Field decodesTo Github.Interface.Starrable
+stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> SelectionSet decodesTo Github.Interface.Starrable
 stargazers fillInOptionals object_ =
     let
         filledInOptionals =
@@ -92,6 +92,6 @@ stargazers fillInOptionals object_ =
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
-viewerHasStarred : Field Bool Github.Interface.Starrable
+viewerHasStarred : SelectionSet Bool Github.Interface.Starrable
 viewerHasStarred =
     Object.fieldDecoder "viewerHasStarred" [] Decode.bool

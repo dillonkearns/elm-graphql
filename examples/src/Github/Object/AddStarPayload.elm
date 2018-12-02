@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.AddStarPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.AddStarPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The starrable.
 -}
-starrable : SelectionSet decodesTo Github.Interface.Starrable -> Field decodesTo Github.Object.AddStarPayload
+starrable : SelectionSet decodesTo Github.Interface.Starrable -> SelectionSet decodesTo Github.Object.AddStarPayload
 starrable object_ =
     Object.selectionField "starrable" [] object_ identity

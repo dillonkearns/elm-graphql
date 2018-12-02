@@ -29,7 +29,7 @@ selection constructor =
 
 {-| The commit this status is attached to.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.Status
+commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe decodesTo) Github.Object.Status
 commit object_ =
     Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
@@ -43,25 +43,25 @@ type alias ContextRequiredArguments =
   - name - The context name.
 
 -}
-context : ContextRequiredArguments -> SelectionSet decodesTo Github.Object.StatusContext -> Field (Maybe decodesTo) Github.Object.Status
+context : ContextRequiredArguments -> SelectionSet decodesTo Github.Object.StatusContext -> SelectionSet (Maybe decodesTo) Github.Object.Status
 context requiredArgs object_ =
     Object.selectionField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.
 -}
-contexts : SelectionSet decodesTo Github.Object.StatusContext -> Field (List decodesTo) Github.Object.Status
+contexts : SelectionSet decodesTo Github.Object.StatusContext -> SelectionSet (List decodesTo) Github.Object.Status
 contexts object_ =
     Object.selectionField "contexts" [] object_ (identity >> Decode.list)
 
 
-id : Field Github.Scalar.Id Github.Object.Status
+id : SelectionSet Github.Scalar.Id Github.Object.Status
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The combined commit status.
 -}
-state : Field Github.Enum.StatusState.StatusState Github.Object.Status
+state : SelectionSet Github.Enum.StatusState.StatusState Github.Object.Status
 state =
     Object.fieldDecoder "state" [] Github.Enum.StatusState.decoder

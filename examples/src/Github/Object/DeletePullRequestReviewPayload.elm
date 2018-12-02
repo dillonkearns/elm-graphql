@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.DeletePullRequestReviewPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.DeletePullRequestReviewPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The deleted pull request review.
 -}
-pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> Field decodesTo Github.Object.DeletePullRequestReviewPayload
+pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> SelectionSet decodesTo Github.Object.DeletePullRequestReviewPayload
 pullRequestReview object_ =
     Object.selectionField "pullRequestReview" [] object_ identity

@@ -27,34 +27,34 @@ selection constructor =
     Object.selection constructor
 
 
-id : Field Github.Scalar.Id Github.Object.RepositoryInvitation
+id : SelectionSet Github.Scalar.Id Github.Object.RepositoryInvitation
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The user who received the invitation.
 -}
-invitee : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
+invitee : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RepositoryInvitation
 invitee object_ =
     Object.selectionField "invitee" [] object_ identity
 
 
 {-| The user who created the invitation.
 -}
-inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
+inviter : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RepositoryInvitation
 inviter object_ =
     Object.selectionField "inviter" [] object_ identity
 
 
 {-| The permission granted on this repository by this invitation.
 -}
-permission : Field Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryInvitation
+permission : SelectionSet Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryInvitation
 permission =
     Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder
 
 
 {-| The Repository the user is invited to.
 -}
-repository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> Field (Maybe decodesTo) Github.Object.RepositoryInvitation
+repository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> SelectionSet (Maybe decodesTo) Github.Object.RepositoryInvitation
 repository object_ =
     Object.selectionField "repository" [] object_ (identity >> Decode.nullable)

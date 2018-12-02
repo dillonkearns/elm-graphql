@@ -29,34 +29,34 @@ selection constructor =
 
 {-| Which movies they appear in.
 -}
-appearsIn : Field (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
+appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> Field (List decodesTo) Normalize.Object.Droid
+friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Object.Droid
 friends object_ =
     Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the droid.
 -}
-id : Field Normalize.Scalar.Id Normalize.Object.Droid
+id : SelectionSet Normalize.Scalar.Id Normalize.Object.Droid
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the droid.
 -}
-name : Field String Normalize.Object.Droid
+name : SelectionSet String Normalize.Object.Droid
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The primary function of the droid.
 -}
-primaryFunction : Field (Maybe String) Normalize.Object.Droid
+primaryFunction : SelectionSet (Maybe String) Normalize.Object.Droid
 primaryFunction =
     Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.nullable)

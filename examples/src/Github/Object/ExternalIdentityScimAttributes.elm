@@ -28,6 +28,6 @@ selection constructor =
 
 {-| The userName of the SCIM identity
 -}
-username : Field (Maybe String) Github.Object.ExternalIdentityScimAttributes
+username : SelectionSet (Maybe String) Github.Object.ExternalIdentityScimAttributes
 username =
     Object.fieldDecoder "username" [] (Decode.string |> Decode.nullable)

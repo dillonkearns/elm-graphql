@@ -28,41 +28,41 @@ selection constructor =
 
 {-| Returns a String that's a SHA of `github-services`
 -}
-gitHubServicesSha : Field String Github.Object.GitHubMetadata
+gitHubServicesSha : SelectionSet String Github.Object.GitHubMetadata
 gitHubServicesSha =
     Object.fieldDecoder "gitHubServicesSha" [] Decode.string
 
 
 {-| IP addresses that users connect to for git operations
 -}
-gitIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
+gitIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 gitIpAddresses =
     Object.fieldDecoder "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that service hooks are sent from
 -}
-hookIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
+hookIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 hookIpAddresses =
     Object.fieldDecoder "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that the importer connects from
 -}
-importerIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
+importerIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 importerIpAddresses =
     Object.fieldDecoder "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| Whether or not users are verified
 -}
-isPasswordAuthenticationVerifiable : Field Bool Github.Object.GitHubMetadata
+isPasswordAuthenticationVerifiable : SelectionSet Bool Github.Object.GitHubMetadata
 isPasswordAuthenticationVerifiable =
     Object.fieldDecoder "isPasswordAuthenticationVerifiable" [] Decode.bool
 
 
 {-| IP addresses for GitHub Pages' A records
 -}
-pagesIpAddresses : Field (Maybe (List String)) Github.Object.GitHubMetadata
+pagesIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 pagesIpAddresses =
     Object.fieldDecoder "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)

@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.PullRequestCommitEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestCommitConnection
+edges : SelectionSet decodesTo Github.Object.PullRequestCommitEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestCommitConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.PullRequestCommit -> Field (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestCommitConnection
+nodes : SelectionSet decodesTo Github.Object.PullRequestCommit -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestCommitConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.PullRequestCommitConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.PullRequestCommitConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.PullRequestCommitConnection
+totalCount : SelectionSet Int Github.Object.PullRequestCommitConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

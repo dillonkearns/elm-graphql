@@ -28,18 +28,18 @@ selection constructor =
 
 {-| The actor that can push.
 -}
-actor : SelectionSet decodesTo Github.Union.PushAllowanceActor -> Field (Maybe decodesTo) Github.Object.PushAllowance
+actor : SelectionSet decodesTo Github.Union.PushAllowanceActor -> SelectionSet (Maybe decodesTo) Github.Object.PushAllowance
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.PushAllowance
+id : SelectionSet Github.Scalar.Id Github.Object.PushAllowance
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
-protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> Field decodesTo Github.Object.PushAllowance
+protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> SelectionSet decodesTo Github.Object.PushAllowance
 protectedBranch object_ =
     Object.selectionField "protectedBranch" [] object_ identity

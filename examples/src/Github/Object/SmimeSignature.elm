@@ -29,41 +29,41 @@ selection constructor =
 
 {-| Email used to sign this object.
 -}
-email : Field String Github.Object.SmimeSignature
+email : SelectionSet String Github.Object.SmimeSignature
 email =
     Object.fieldDecoder "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
-isValid : Field Bool Github.Object.SmimeSignature
+isValid : SelectionSet Bool Github.Object.SmimeSignature
 isValid =
     Object.fieldDecoder "isValid" [] Decode.bool
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
-payload : Field String Github.Object.SmimeSignature
+payload : SelectionSet String Github.Object.SmimeSignature
 payload =
     Object.fieldDecoder "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
-signature : Field String Github.Object.SmimeSignature
+signature : SelectionSet String Github.Object.SmimeSignature
 signature =
     Object.fieldDecoder "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
 -}
-signer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.SmimeSignature
+signer : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.SmimeSignature
 signer object_ =
     Object.selectionField "signer" [] object_ (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.
 -}
-state : Field Github.Enum.GitSignatureState.GitSignatureState Github.Object.SmimeSignature
+state : SelectionSet Github.Enum.GitSignatureState.GitSignatureState Github.Object.SmimeSignature
 state =
     Object.fieldDecoder "state" [] Github.Enum.GitSignatureState.decoder

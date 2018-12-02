@@ -28,25 +28,25 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.HeadRefRestoredEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefRestoredEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.HeadRefRestoredEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.HeadRefRestoredEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.HeadRefRestoredEvent
+id : SelectionSet Github.Scalar.Id Github.Object.HeadRefRestoredEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.HeadRefRestoredEvent
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.HeadRefRestoredEvent
 pullRequest object_ =
     Object.selectionField "pullRequest" [] object_ identity

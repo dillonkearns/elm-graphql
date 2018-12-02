@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.AddPullRequestReviewCommentPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.AddPullRequestReviewCommentPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The newly created comment.
 -}
-comment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> Field decodesTo Github.Object.AddPullRequestReviewCommentPayload
+comment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> SelectionSet decodesTo Github.Object.AddPullRequestReviewCommentPayload
 comment object_ =
     Object.selectionField "comment" [] object_ identity
 
 
 {-| The edge from the review's comment connection.
 -}
-commentEdge : SelectionSet decodesTo Github.Object.PullRequestReviewCommentEdge -> Field decodesTo Github.Object.AddPullRequestReviewCommentPayload
+commentEdge : SelectionSet decodesTo Github.Object.PullRequestReviewCommentEdge -> SelectionSet decodesTo Github.Object.AddPullRequestReviewCommentPayload
 commentEdge object_ =
     Object.selectionField "commentEdge" [] object_ identity

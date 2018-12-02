@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.UpdateProjectCardPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.UpdateProjectCardPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The updated ProjectCard.
 -}
-projectCard : SelectionSet decodesTo Github.Object.ProjectCard -> Field decodesTo Github.Object.UpdateProjectCardPayload
+projectCard : SelectionSet decodesTo Github.Object.ProjectCard -> SelectionSet decodesTo Github.Object.UpdateProjectCardPayload
 projectCard object_ =
     Object.selectionField "projectCard" [] object_ identity

@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A description of the rule
 -}
-description : Field String Github.Object.LicenseRule
+description : SelectionSet String Github.Object.LicenseRule
 description =
     Object.fieldDecoder "description" [] Decode.string
 
 
 {-| The machine-readable rule key
 -}
-key : Field String Github.Object.LicenseRule
+key : SelectionSet String Github.Object.LicenseRule
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
 {-| The human-readable rule label
 -}
-label : Field String Github.Object.LicenseRule
+label : SelectionSet String Github.Object.LicenseRule
 label =
     Object.fieldDecoder "label" [] Decode.string

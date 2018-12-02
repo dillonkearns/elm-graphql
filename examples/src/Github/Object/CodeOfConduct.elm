@@ -28,27 +28,27 @@ selection constructor =
 
 {-| The body of the CoC
 -}
-body : Field (Maybe String) Github.Object.CodeOfConduct
+body : SelectionSet (Maybe String) Github.Object.CodeOfConduct
 body =
     Object.fieldDecoder "body" [] (Decode.string |> Decode.nullable)
 
 
 {-| The key for the CoC
 -}
-key : Field String Github.Object.CodeOfConduct
+key : SelectionSet String Github.Object.CodeOfConduct
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
 {-| The formal name of the CoC
 -}
-name : Field String Github.Object.CodeOfConduct
+name : SelectionSet String Github.Object.CodeOfConduct
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The path to the CoC
 -}
-url : Field (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
+url : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

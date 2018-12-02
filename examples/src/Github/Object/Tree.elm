@@ -28,46 +28,46 @@ selection constructor =
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : Field String Github.Object.Tree
+abbreviatedOid : SelectionSet String Github.Object.Tree
 abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : Field Github.Scalar.Uri Github.Object.Tree
+commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Tree
 commitResourcePath =
     Object.fieldDecoder "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : Field Github.Scalar.Uri Github.Object.Tree
+commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Tree
 commitUrl =
     Object.fieldDecoder "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of tree entries.
 -}
-entries : SelectionSet decodesTo Github.Object.TreeEntry -> Field (Maybe (List decodesTo)) Github.Object.Tree
+entries : SelectionSet decodesTo Github.Object.TreeEntry -> SelectionSet (Maybe (List decodesTo)) Github.Object.Tree
 entries object_ =
     Object.selectionField "entries" [] object_ (identity >> Decode.list >> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Tree
+id : SelectionSet Github.Scalar.Id Github.Object.Tree
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
-oid : Field Github.Scalar.GitObjectID Github.Object.Tree
+oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Tree
 oid =
     Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Tree
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Tree
 repository object_ =
     Object.selectionField "repository" [] object_ identity

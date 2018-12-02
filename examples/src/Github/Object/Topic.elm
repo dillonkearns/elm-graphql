@@ -26,14 +26,14 @@ selection constructor =
     Object.selection constructor
 
 
-id : Field Github.Scalar.Id Github.Object.Topic
+id : SelectionSet Github.Scalar.Id Github.Object.Topic
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The topic's name.
 -}
-name : Field String Github.Object.Topic
+name : SelectionSet String Github.Object.Topic
 name =
     Object.fieldDecoder "name" [] Decode.string
 
@@ -41,6 +41,6 @@ name =
 {-| A list of related topics, including aliases of this topic, sorted with the most relevant
 first.
 -}
-relatedTopics : SelectionSet decodesTo Github.Object.Topic -> Field (List decodesTo) Github.Object.Topic
+relatedTopics : SelectionSet decodesTo Github.Object.Topic -> SelectionSet (List decodesTo) Github.Object.Topic
 relatedTopics object_ =
     Object.selectionField "relatedTopics" [] object_ (identity >> Decode.list)

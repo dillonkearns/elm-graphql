@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.RemoveReactionPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.RemoveReactionPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The reaction object.
 -}
-reaction : SelectionSet decodesTo Github.Object.Reaction -> Field decodesTo Github.Object.RemoveReactionPayload
+reaction : SelectionSet decodesTo Github.Object.Reaction -> SelectionSet decodesTo Github.Object.RemoveReactionPayload
 reaction object_ =
     Object.selectionField "reaction" [] object_ identity
 
 
 {-| The reactable subject.
 -}
-subject : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.RemoveReactionPayload
+subject : SelectionSet decodesTo Github.Interface.Reactable -> SelectionSet decodesTo Github.Object.RemoveReactionPayload
 subject object_ =
     Object.selectionField "subject" [] object_ identity

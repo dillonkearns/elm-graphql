@@ -28,32 +28,32 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.AssignedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.AssignedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the assignable associated with the event.
 -}
-assignable : SelectionSet decodesTo Github.Interface.Assignable -> Field decodesTo Github.Object.AssignedEvent
+assignable : SelectionSet decodesTo Github.Interface.Assignable -> SelectionSet decodesTo Github.Object.AssignedEvent
 assignable object_ =
     Object.selectionField "assignable" [] object_ identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.AssignedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.AssignedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.AssignedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.AssignedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the user who was assigned.
 -}
-user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.AssignedEvent
+user : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.AssignedEvent
 user object_ =
     Object.selectionField "user" [] object_ (identity >> Decode.nullable)

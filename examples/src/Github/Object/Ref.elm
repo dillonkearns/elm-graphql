@@ -53,7 +53,7 @@ type alias AssociatedPullRequestsOptionalArguments =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Ref
+associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> SelectionSet decodesTo Github.Object.Ref
 associatedPullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -66,34 +66,34 @@ associatedPullRequests fillInOptionals object_ =
     Object.selectionField "associatedPullRequests" optionalArgs object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.Ref
+id : SelectionSet Github.Scalar.Id Github.Object.Ref
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The ref name.
 -}
-name : Field String Github.Object.Ref
+name : SelectionSet String Github.Object.Ref
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The ref's prefix, such as `refs/heads/` or `refs/tags/`.
 -}
-prefix : Field String Github.Object.Ref
+prefix : SelectionSet String Github.Object.Ref
 prefix =
     Object.fieldDecoder "prefix" [] Decode.string
 
 
 {-| The repository the ref belongs to.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Ref
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Ref
 repository object_ =
     Object.selectionField "repository" [] object_ identity
 
 
 {-| The object the ref points to.
 -}
-target : SelectionSet decodesTo Github.Interface.GitObject -> Field decodesTo Github.Object.Ref
+target : SelectionSet decodesTo Github.Interface.GitObject -> SelectionSet decodesTo Github.Object.Ref
 target object_ =
     Object.selectionField "target" [] object_ identity

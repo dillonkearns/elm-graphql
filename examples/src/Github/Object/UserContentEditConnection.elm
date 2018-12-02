@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.UserContentEditEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.UserContentEditConnection
+edges : SelectionSet decodesTo Github.Object.UserContentEditEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.UserContentEditConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.UserContentEdit -> Field (Maybe (List (Maybe decodesTo))) Github.Object.UserContentEditConnection
+nodes : SelectionSet decodesTo Github.Object.UserContentEdit -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.UserContentEditConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.UserContentEditConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.UserContentEditConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.UserContentEditConnection
+totalCount : SelectionSet Int Github.Object.UserContentEditConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.PullRequestReviewCommentEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestReviewCommentConnection
+edges : SelectionSet decodesTo Github.Object.PullRequestReviewCommentEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestReviewCommentConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> Field (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestReviewCommentConnection
+nodes : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.PullRequestReviewCommentConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.PullRequestReviewCommentConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.PullRequestReviewCommentConnection
+totalCount : SelectionSet Int Github.Object.PullRequestReviewCommentConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

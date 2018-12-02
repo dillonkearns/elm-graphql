@@ -62,39 +62,39 @@ maybeFragments =
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : Field String Github.Interface.GitObject
+abbreviatedOid : SelectionSet String Github.Interface.GitObject
 abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : Field Github.Scalar.Uri Github.Interface.GitObject
+commitResourcePath : SelectionSet Github.Scalar.Uri Github.Interface.GitObject
 commitResourcePath =
     Object.fieldDecoder "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : Field Github.Scalar.Uri Github.Interface.GitObject
+commitUrl : SelectionSet Github.Scalar.Uri Github.Interface.GitObject
 commitUrl =
     Object.fieldDecoder "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-id : Field Github.Scalar.Id Github.Interface.GitObject
+id : SelectionSet Github.Scalar.Id Github.Interface.GitObject
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
-oid : Field Github.Scalar.GitObjectID Github.Interface.GitObject
+oid : SelectionSet Github.Scalar.GitObjectID Github.Interface.GitObject
 oid =
     Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Interface.GitObject
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Interface.GitObject
 repository object_ =
     Object.selectionField "repository" [] object_ identity

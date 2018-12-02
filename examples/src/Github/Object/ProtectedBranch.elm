@@ -28,68 +28,68 @@ selection constructor =
 
 {-| The actor who created this protected branch.
 -}
-creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProtectedBranch
+creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ProtectedBranch
 creator object_ =
     Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Will new commits pushed to this branch dismiss pull request review approvals.
 -}
-hasDismissableStaleReviews : Field Bool Github.Object.ProtectedBranch
+hasDismissableStaleReviews : SelectionSet Bool Github.Object.ProtectedBranch
 hasDismissableStaleReviews =
     Object.fieldDecoder "hasDismissableStaleReviews" [] Decode.bool
 
 
 {-| Are reviews required to update this branch.
 -}
-hasRequiredReviews : Field Bool Github.Object.ProtectedBranch
+hasRequiredReviews : SelectionSet Bool Github.Object.ProtectedBranch
 hasRequiredReviews =
     Object.fieldDecoder "hasRequiredReviews" [] Decode.bool
 
 
 {-| Are status checks required to update this branch.
 -}
-hasRequiredStatusChecks : Field Bool Github.Object.ProtectedBranch
+hasRequiredStatusChecks : SelectionSet Bool Github.Object.ProtectedBranch
 hasRequiredStatusChecks =
     Object.fieldDecoder "hasRequiredStatusChecks" [] Decode.bool
 
 
 {-| Is pushing to this branch restricted.
 -}
-hasRestrictedPushes : Field Bool Github.Object.ProtectedBranch
+hasRestrictedPushes : SelectionSet Bool Github.Object.ProtectedBranch
 hasRestrictedPushes =
     Object.fieldDecoder "hasRestrictedPushes" [] Decode.bool
 
 
 {-| Is dismissal of pull request reviews restricted.
 -}
-hasRestrictedReviewDismissals : Field Bool Github.Object.ProtectedBranch
+hasRestrictedReviewDismissals : SelectionSet Bool Github.Object.ProtectedBranch
 hasRestrictedReviewDismissals =
     Object.fieldDecoder "hasRestrictedReviewDismissals" [] Decode.bool
 
 
 {-| Are branches required to be up to date before merging.
 -}
-hasStrictRequiredStatusChecks : Field Bool Github.Object.ProtectedBranch
+hasStrictRequiredStatusChecks : SelectionSet Bool Github.Object.ProtectedBranch
 hasStrictRequiredStatusChecks =
     Object.fieldDecoder "hasStrictRequiredStatusChecks" [] Decode.bool
 
 
-id : Field Github.Scalar.Id Github.Object.ProtectedBranch
+id : SelectionSet Github.Scalar.Id Github.Object.ProtectedBranch
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Can admins overwrite branch protection.
 -}
-isAdminEnforced : Field Bool Github.Object.ProtectedBranch
+isAdminEnforced : SelectionSet Bool Github.Object.ProtectedBranch
 isAdminEnforced =
     Object.fieldDecoder "isAdminEnforced" [] Decode.bool
 
 
 {-| Identifies the name of the protected branch.
 -}
-name : Field String Github.Object.ProtectedBranch
+name : SelectionSet String Github.Object.ProtectedBranch
 name =
     Object.fieldDecoder "name" [] Decode.string
 
@@ -110,7 +110,7 @@ type alias PushAllowancesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.PushAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
+pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.PushAllowanceConnection -> SelectionSet decodesTo Github.Object.ProtectedBranch
 pushAllowances fillInOptionals object_ =
     let
         filledInOptionals =
@@ -125,14 +125,14 @@ pushAllowances fillInOptionals object_ =
 
 {-| The repository associated with this protected branch.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.ProtectedBranch
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.ProtectedBranch
 repository object_ =
     Object.selectionField "repository" [] object_ identity
 
 
 {-| List of required status check contexts that must pass for commits to be accepted to this branch.
 -}
-requiredStatusCheckContexts : Field (Maybe (List (Maybe String))) Github.Object.ProtectedBranch
+requiredStatusCheckContexts : SelectionSet (Maybe (List (Maybe String))) Github.Object.ProtectedBranch
 requiredStatusCheckContexts =
     Object.fieldDecoder "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
 
@@ -153,7 +153,7 @@ type alias ReviewDismissalAllowancesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection -> Field decodesTo Github.Object.ProtectedBranch
+reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection -> SelectionSet decodesTo Github.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals object_ =
     let
         filledInOptionals =

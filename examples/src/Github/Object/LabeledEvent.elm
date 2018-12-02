@@ -28,32 +28,32 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.LabeledEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.LabeledEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.LabeledEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.LabeledEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.LabeledEvent
+id : SelectionSet Github.Scalar.Id Github.Object.LabeledEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the label associated with the 'labeled' event.
 -}
-label : SelectionSet decodesTo Github.Object.Label -> Field decodesTo Github.Object.LabeledEvent
+label : SelectionSet decodesTo Github.Object.Label -> SelectionSet decodesTo Github.Object.LabeledEvent
 label object_ =
     Object.selectionField "label" [] object_ identity
 
 
 {-| Identifies the `Labelable` associated with the event.
 -}
-labelable : SelectionSet decodesTo Github.Interface.Labelable -> Field decodesTo Github.Object.LabeledEvent
+labelable : SelectionSet decodesTo Github.Interface.Labelable -> SelectionSet decodesTo Github.Object.LabeledEvent
 labelable object_ =
     Object.selectionField "labelable" [] object_ identity

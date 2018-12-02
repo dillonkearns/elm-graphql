@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.ProtectedBranchEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ProtectedBranchConnection
+edges : SelectionSet decodesTo Github.Object.ProtectedBranchEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ProtectedBranchConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.ProtectedBranch -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ProtectedBranchConnection
+nodes : SelectionSet decodesTo Github.Object.ProtectedBranch -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ProtectedBranchConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.ProtectedBranchConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.ProtectedBranchConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.ProtectedBranchConnection
+totalCount : SelectionSet Int Github.Object.ProtectedBranchConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

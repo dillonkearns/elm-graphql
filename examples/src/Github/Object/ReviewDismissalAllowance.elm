@@ -28,18 +28,18 @@ selection constructor =
 
 {-| The actor that can dismiss.
 -}
-actor : SelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor -> Field (Maybe decodesTo) Github.Object.ReviewDismissalAllowance
+actor : SelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissalAllowance
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.ReviewDismissalAllowance
+id : SelectionSet Github.Scalar.Id Github.Object.ReviewDismissalAllowance
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
-protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> Field decodesTo Github.Object.ReviewDismissalAllowance
+protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowance
 protectedBranch object_ =
     Object.selectionField "protectedBranch" [] object_ identity

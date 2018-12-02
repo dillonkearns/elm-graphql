@@ -28,32 +28,32 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.MilestonedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.MilestonedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.MilestonedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.MilestonedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.MilestonedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.MilestonedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the milestone title associated with the 'milestoned' event.
 -}
-milestoneTitle : Field String Github.Object.MilestonedEvent
+milestoneTitle : SelectionSet String Github.Object.MilestonedEvent
 milestoneTitle =
     Object.fieldDecoder "milestoneTitle" [] Decode.string
 
 
 {-| Object referenced by event.
 -}
-subject : SelectionSet decodesTo Github.Union.MilestoneItem -> Field decodesTo Github.Object.MilestonedEvent
+subject : SelectionSet decodesTo Github.Union.MilestoneItem -> SelectionSet decodesTo Github.Object.MilestonedEvent
 subject object_ =
     Object.selectionField "subject" [] object_ identity

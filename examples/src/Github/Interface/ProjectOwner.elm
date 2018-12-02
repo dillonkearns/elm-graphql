@@ -55,7 +55,7 @@ maybeFragments =
     }
 
 
-id : Field Github.Scalar.Id Github.Interface.ProjectOwner
+id : SelectionSet Github.Scalar.Id Github.Interface.ProjectOwner
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
@@ -69,7 +69,7 @@ type alias ProjectRequiredArguments =
   - number - The project number to find.
 
 -}
-project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Interface.ProjectOwner
+project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> SelectionSet (Maybe decodesTo) Github.Interface.ProjectOwner
 project requiredArgs object_ =
     Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
@@ -96,7 +96,7 @@ type alias ProjectsOptionalArguments =
   - states - A list of states to filter the projects by.
 
 -}
-projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> Field decodesTo Github.Interface.ProjectOwner
+projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> SelectionSet decodesTo Github.Interface.ProjectOwner
 projects fillInOptionals object_ =
     let
         filledInOptionals =
@@ -111,20 +111,20 @@ projects fillInOptionals object_ =
 
 {-| The HTTP path listing owners projects
 -}
-projectsResourcePath : Field Github.Scalar.Uri Github.Interface.ProjectOwner
+projectsResourcePath : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
     Object.fieldDecoder "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing owners projects
 -}
-projectsUrl : Field Github.Scalar.Uri Github.Interface.ProjectOwner
+projectsUrl : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsUrl =
     Object.fieldDecoder "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
-viewerCanCreateProjects : Field Bool Github.Interface.ProjectOwner
+viewerCanCreateProjects : SelectionSet Bool Github.Interface.ProjectOwner
 viewerCanCreateProjects =
     Object.fieldDecoder "viewerCanCreateProjects" [] Decode.bool

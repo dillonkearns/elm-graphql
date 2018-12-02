@@ -34,7 +34,7 @@ selection constructor =
 
 {-| Reason that the conversation was locked.
 -}
-activeLockReason : Field (Maybe Github.Enum.LockReason.LockReason) Github.Object.Issue
+activeLockReason : SelectionSet (Maybe Github.Enum.LockReason.LockReason) Github.Object.Issue
 activeLockReason =
     Object.fieldDecoder "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
 
@@ -55,7 +55,7 @@ type alias AssigneesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.Issue
+assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> SelectionSet decodesTo Github.Object.Issue
 assignees fillInOptionals object_ =
     let
         filledInOptionals =
@@ -70,49 +70,49 @@ assignees fillInOptionals object_ =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Issue
+author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 author object_ =
     Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : Field Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Issue
+authorAssociation : SelectionSet Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Issue
 authorAssociation =
     Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| Identifies the body of the issue.
 -}
-body : Field String Github.Object.Issue
+body : SelectionSet String Github.Object.Issue
 body =
     Object.fieldDecoder "body" [] Decode.string
 
 
 {-| Identifies the body of the issue rendered to HTML.
 -}
-bodyHTML : Field Github.Scalar.Html Github.Object.Issue
+bodyHTML : SelectionSet Github.Scalar.Html Github.Object.Issue
 bodyHTML =
     Object.fieldDecoder "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the body of the issue rendered to text.
 -}
-bodyText : Field String Github.Object.Issue
+bodyText : SelectionSet String Github.Object.Issue
 bodyText =
     Object.fieldDecoder "bodyText" [] Decode.string
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : Field Bool Github.Object.Issue
+closed : SelectionSet Bool Github.Object.Issue
 closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
+closedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Issue
 closedAt =
     Object.fieldDecoder "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
@@ -133,7 +133,7 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> Field decodesTo Github.Object.Issue
+comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> SelectionSet decodesTo Github.Object.Issue
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -148,33 +148,33 @@ comments fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.Issue
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Issue
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : Field Bool Github.Object.Issue
+createdViaEmail : SelectionSet Bool Github.Object.Issue
 createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.Issue
+databaseId : SelectionSet (Maybe Int) Github.Object.Issue
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.Issue
+editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 editor object_ =
     Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Issue
+id : SelectionSet Github.Scalar.Id Github.Object.Issue
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
@@ -195,7 +195,7 @@ type alias LabelsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> Field (Maybe decodesTo) Github.Object.Issue
+labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 labels fillInOptionals object_ =
     let
         filledInOptionals =
@@ -210,28 +210,28 @@ labels fillInOptionals object_ =
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
+lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Issue
 lastEditedAt =
     Object.fieldDecoder "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| `true` if the object is locked
 -}
-locked : Field Bool Github.Object.Issue
+locked : SelectionSet Bool Github.Object.Issue
 locked =
     Object.fieldDecoder "locked" [] Decode.bool
 
 
 {-| Identifies the milestone associated with the issue.
 -}
-milestone : SelectionSet decodesTo Github.Object.Milestone -> Field (Maybe decodesTo) Github.Object.Issue
+milestone : SelectionSet decodesTo Github.Object.Milestone -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 milestone object_ =
     Object.selectionField "milestone" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the issue number.
 -}
-number : Field Int Github.Object.Issue
+number : SelectionSet Int Github.Object.Issue
 number =
     Object.fieldDecoder "number" [] Decode.int
 
@@ -252,7 +252,7 @@ type alias ParticipantsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Object.Issue
+participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> SelectionSet decodesTo Github.Object.Issue
 participants fillInOptionals object_ =
     let
         filledInOptionals =
@@ -281,7 +281,7 @@ type alias ProjectCardsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.Issue
+projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> SelectionSet decodesTo Github.Object.Issue
 projectCards fillInOptionals object_ =
     let
         filledInOptionals =
@@ -296,14 +296,14 @@ projectCards fillInOptionals object_ =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Issue
+publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Issue
 publishedAt =
     Object.fieldDecoder "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Object.Issue
+reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Object.Issue
 reactionGroups object_ =
     Object.selectionField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
@@ -328,7 +328,7 @@ type alias ReactionsOptionalArguments =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Object.Issue
+reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> SelectionSet decodesTo Github.Object.Issue
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -343,21 +343,21 @@ reactions fillInOptionals object_ =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Issue
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Issue
 repository object_ =
     Object.selectionField "repository" [] object_ identity
 
 
 {-| The HTTP path for this issue
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.Issue
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Issue
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the state of the issue.
 -}
-state : Field Github.Enum.IssueState.IssueState Github.Object.Issue
+state : SelectionSet Github.Enum.IssueState.IssueState Github.Object.Issue
 state =
     Object.fieldDecoder "state" [] Github.Enum.IssueState.decoder
 
@@ -380,7 +380,7 @@ type alias TimelineOptionalArguments =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : (TimelineOptionalArguments -> TimelineOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueTimelineConnection -> Field decodesTo Github.Object.Issue
+timeline : (TimelineOptionalArguments -> TimelineOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueTimelineConnection -> SelectionSet decodesTo Github.Object.Issue
 timeline fillInOptionals object_ =
     let
         filledInOptionals =
@@ -395,21 +395,21 @@ timeline fillInOptionals object_ =
 
 {-| Identifies the issue title.
 -}
-title : Field String Github.Object.Issue
+title : SelectionSet String Github.Object.Issue
 title =
     Object.fieldDecoder "title" [] Decode.string
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.Issue
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Issue
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this issue
 -}
-url : Field Github.Scalar.Uri Github.Object.Issue
+url : SelectionSet Github.Scalar.Uri Github.Object.Issue
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
@@ -430,7 +430,7 @@ type alias UserContentEditsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Object.Issue
+userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =
@@ -445,41 +445,41 @@ userContentEdits fillInOptionals object_ =
 
 {-| Can user react to this subject
 -}
-viewerCanReact : Field Bool Github.Object.Issue
+viewerCanReact : SelectionSet Bool Github.Object.Issue
 viewerCanReact =
     Object.fieldDecoder "viewerCanReact" [] Decode.bool
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : Field Bool Github.Object.Issue
+viewerCanSubscribe : SelectionSet Bool Github.Object.Issue
 viewerCanSubscribe =
     Object.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : Field Bool Github.Object.Issue
+viewerCanUpdate : SelectionSet Bool Github.Object.Issue
 viewerCanUpdate =
     Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : Field (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.Issue
+viewerCannotUpdateReasons : SelectionSet (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.Issue
 viewerCannotUpdateReasons =
     Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : Field Bool Github.Object.Issue
+viewerDidAuthor : SelectionSet Bool Github.Object.Issue
 viewerDidAuthor =
     Object.fieldDecoder "viewerDidAuthor" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : Field Github.Enum.SubscriptionState.SubscriptionState Github.Object.Issue
+viewerSubscription : SelectionSet Github.Enum.SubscriptionState.SubscriptionState Github.Object.Issue
 viewerSubscription =
     Object.fieldDecoder "viewerSubscription" [] Github.Enum.SubscriptionState.decoder

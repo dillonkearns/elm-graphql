@@ -28,39 +28,39 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.RenamedTitleEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.RenamedTitleEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.RenamedTitleEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.RenamedTitleEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the current title of the issue or pull request.
 -}
-currentTitle : Field String Github.Object.RenamedTitleEvent
+currentTitle : SelectionSet String Github.Object.RenamedTitleEvent
 currentTitle =
     Object.fieldDecoder "currentTitle" [] Decode.string
 
 
-id : Field Github.Scalar.Id Github.Object.RenamedTitleEvent
+id : SelectionSet Github.Scalar.Id Github.Object.RenamedTitleEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the previous title of the issue or pull request.
 -}
-previousTitle : Field String Github.Object.RenamedTitleEvent
+previousTitle : SelectionSet String Github.Object.RenamedTitleEvent
 previousTitle =
     Object.fieldDecoder "previousTitle" [] Decode.string
 
 
 {-| Subject that was renamed.
 -}
-subject : SelectionSet decodesTo Github.Union.RenamedTitleSubject -> Field decodesTo Github.Object.RenamedTitleEvent
+subject : SelectionSet decodesTo Github.Union.RenamedTitleSubject -> SelectionSet decodesTo Github.Object.RenamedTitleEvent
 subject object_ =
     Object.selectionField "subject" [] object_ identity

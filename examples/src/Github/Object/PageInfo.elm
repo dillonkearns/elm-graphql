@@ -28,27 +28,27 @@ selection constructor =
 
 {-| When paginating forwards, the cursor to continue.
 -}
-endCursor : Field (Maybe String) Github.Object.PageInfo
+endCursor : SelectionSet (Maybe String) Github.Object.PageInfo
 endCursor =
     Object.fieldDecoder "endCursor" [] (Decode.string |> Decode.nullable)
 
 
 {-| When paginating forwards, are there more items?
 -}
-hasNextPage : Field Bool Github.Object.PageInfo
+hasNextPage : SelectionSet Bool Github.Object.PageInfo
 hasNextPage =
     Object.fieldDecoder "hasNextPage" [] Decode.bool
 
 
 {-| When paginating backwards, are there more items?
 -}
-hasPreviousPage : Field Bool Github.Object.PageInfo
+hasPreviousPage : SelectionSet Bool Github.Object.PageInfo
 hasPreviousPage =
     Object.fieldDecoder "hasPreviousPage" [] Decode.bool
 
 
 {-| When paginating backwards, the cursor to continue.
 -}
-startCursor : Field (Maybe String) Github.Object.PageInfo
+startCursor : SelectionSet (Maybe String) Github.Object.PageInfo
 startCursor =
     Object.fieldDecoder "startCursor" [] (Decode.string |> Decode.nullable)

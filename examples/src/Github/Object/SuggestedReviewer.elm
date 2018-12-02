@@ -28,20 +28,20 @@ selection constructor =
 
 {-| Is this suggestion based on past commits?
 -}
-isAuthor : Field Bool Github.Object.SuggestedReviewer
+isAuthor : SelectionSet Bool Github.Object.SuggestedReviewer
 isAuthor =
     Object.fieldDecoder "isAuthor" [] Decode.bool
 
 
 {-| Is this suggestion based on past review comments?
 -}
-isCommenter : Field Bool Github.Object.SuggestedReviewer
+isCommenter : SelectionSet Bool Github.Object.SuggestedReviewer
 isCommenter =
     Object.fieldDecoder "isCommenter" [] Decode.bool
 
 
 {-| Identifies the user suggested to review the pull request.
 -}
-reviewer : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.SuggestedReviewer
+reviewer : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.SuggestedReviewer
 reviewer object_ =
     Object.selectionField "reviewer" [] object_ identity

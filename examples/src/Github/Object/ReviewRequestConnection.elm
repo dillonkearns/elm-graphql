@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.ReviewRequestEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReviewRequestConnection
+edges : SelectionSet decodesTo Github.Object.ReviewRequestEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ReviewRequestConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.ReviewRequest -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReviewRequestConnection
+nodes : SelectionSet decodesTo Github.Object.ReviewRequest -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ReviewRequestConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.ReviewRequestConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.ReviewRequestConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.ReviewRequestConnection
+totalCount : SelectionSet Int Github.Object.ReviewRequestConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

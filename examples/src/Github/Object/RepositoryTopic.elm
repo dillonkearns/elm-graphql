@@ -26,27 +26,27 @@ selection constructor =
     Object.selection constructor
 
 
-id : Field Github.Scalar.Id Github.Object.RepositoryTopic
+id : SelectionSet Github.Scalar.Id Github.Object.RepositoryTopic
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The HTTP path for this repository-topic.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.RepositoryTopic
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The topic.
 -}
-topic : SelectionSet decodesTo Github.Object.Topic -> Field decodesTo Github.Object.RepositoryTopic
+topic : SelectionSet decodesTo Github.Object.Topic -> SelectionSet decodesTo Github.Object.RepositoryTopic
 topic object_ =
     Object.selectionField "topic" [] object_ identity
 
 
 {-| The HTTP URL for this repository-topic.
 -}
-url : Field Github.Scalar.Uri Github.Object.RepositoryTopic
+url : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

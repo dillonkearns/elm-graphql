@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The user that was removed as an outside collaborator.
 -}
-removedUser : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RemoveOutsideCollaboratorPayload
+removedUser : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RemoveOutsideCollaboratorPayload
 removedUser object_ =
     Object.selectionField "removedUser" [] object_ identity

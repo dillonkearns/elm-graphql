@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.DeleteProjectColumnPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.DeleteProjectColumnPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The deleted column ID.
 -}
-deletedColumnId : Field Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
+deletedColumnId : SelectionSet Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
 deletedColumnId =
     Object.fieldDecoder "deletedColumnId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The project the deleted column was in.
 -}
-project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.DeleteProjectColumnPayload
+project : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.DeleteProjectColumnPayload
 project object_ =
     Object.selectionField "project" [] object_ identity

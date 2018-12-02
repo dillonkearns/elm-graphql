@@ -28,34 +28,34 @@ selection constructor =
 
 {-| The point cost for the current query counting against the rate limit.
 -}
-cost : Field Int Github.Object.RateLimit
+cost : SelectionSet Int Github.Object.RateLimit
 cost =
     Object.fieldDecoder "cost" [] Decode.int
 
 
 {-| The maximum number of points the client is permitted to consume in a 60 minute window.
 -}
-limit : Field Int Github.Object.RateLimit
+limit : SelectionSet Int Github.Object.RateLimit
 limit =
     Object.fieldDecoder "limit" [] Decode.int
 
 
 {-| The maximum number of nodes this query may return
 -}
-nodeCount : Field Int Github.Object.RateLimit
+nodeCount : SelectionSet Int Github.Object.RateLimit
 nodeCount =
     Object.fieldDecoder "nodeCount" [] Decode.int
 
 
 {-| The number of points remaining in the current rate limit window.
 -}
-remaining : Field Int Github.Object.RateLimit
+remaining : SelectionSet Int Github.Object.RateLimit
 remaining =
     Object.fieldDecoder "remaining" [] Decode.int
 
 
 {-| The time at which the current rate limit window resets in UTC epoch seconds.
 -}
-resetAt : Field Github.Scalar.DateTime Github.Object.RateLimit
+resetAt : SelectionSet Github.Scalar.DateTime Github.Object.RateLimit
 resetAt =
     Object.fieldDecoder "resetAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

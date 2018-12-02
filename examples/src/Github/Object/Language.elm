@@ -28,18 +28,18 @@ selection constructor =
 
 {-| The color defined for the current language.
 -}
-color : Field (Maybe String) Github.Object.Language
+color : SelectionSet (Maybe String) Github.Object.Language
 color =
     Object.fieldDecoder "color" [] (Decode.string |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Language
+id : SelectionSet Github.Scalar.Id Github.Object.Language
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The name of the current language.
 -}
-name : Field String Github.Object.Language
+name : SelectionSet String Github.Object.Language
 name =
     Object.fieldDecoder "name" [] Decode.string

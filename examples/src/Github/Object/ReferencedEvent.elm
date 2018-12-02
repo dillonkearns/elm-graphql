@@ -28,60 +28,60 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReferencedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ReferencedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'referenced' event.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.ReferencedEvent
+commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe decodesTo) Github.Object.ReferencedEvent
 commit object_ =
     Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the repository associated with the 'referenced' event.
 -}
-commitRepository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.ReferencedEvent
+commitRepository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.ReferencedEvent
 commitRepository object_ =
     Object.selectionField "commitRepository" [] object_ identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.ReferencedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ReferencedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.ReferencedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.ReferencedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Reference originated in a different repository.
 -}
-isCrossReference : Field Bool Github.Object.ReferencedEvent
+isCrossReference : SelectionSet Bool Github.Object.ReferencedEvent
 isCrossReference =
     Object.fieldDecoder "isCrossReference" [] Decode.bool
 
 
 {-| Reference originated in a different repository.
 -}
-isCrossRepository : Field Bool Github.Object.ReferencedEvent
+isCrossRepository : SelectionSet Bool Github.Object.ReferencedEvent
 isCrossRepository =
     Object.fieldDecoder "isCrossRepository" [] Decode.bool
 
 
 {-| Checks if the commit message itself references the subject. Can be false in the case of a commit comment reference.
 -}
-isDirectReference : Field Bool Github.Object.ReferencedEvent
+isDirectReference : SelectionSet Bool Github.Object.ReferencedEvent
 isDirectReference =
     Object.fieldDecoder "isDirectReference" [] Decode.bool
 
 
 {-| Object referenced by event.
 -}
-subject : SelectionSet decodesTo Github.Union.ReferencedSubject -> Field decodesTo Github.Object.ReferencedEvent
+subject : SelectionSet decodesTo Github.Union.ReferencedSubject -> SelectionSet decodesTo Github.Object.ReferencedEvent
 subject object_ =
     Object.selectionField "subject" [] object_ identity

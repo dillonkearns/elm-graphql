@@ -28,20 +28,20 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.RequestReviewsPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.RequestReviewsPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The pull request that is getting requests.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.RequestReviewsPayload
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.RequestReviewsPayload
 pullRequest object_ =
     Object.selectionField "pullRequest" [] object_ identity
 
 
 {-| The edge from the pull request to the requested reviewers.
 -}
-requestedReviewersEdge : SelectionSet decodesTo Github.Object.UserEdge -> Field decodesTo Github.Object.RequestReviewsPayload
+requestedReviewersEdge : SelectionSet decodesTo Github.Object.UserEdge -> SelectionSet decodesTo Github.Object.RequestReviewsPayload
 requestedReviewersEdge object_ =
     Object.selectionField "requestedReviewersEdge" [] object_ identity

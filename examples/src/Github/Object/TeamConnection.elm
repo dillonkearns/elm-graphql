@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.TeamEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
+edges : SelectionSet decodesTo Github.Object.TeamEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Team -> Field (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
+nodes : SelectionSet decodesTo Github.Object.Team -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.TeamConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.TeamConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.TeamConnection
+totalCount : SelectionSet Int Github.Object.TeamConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

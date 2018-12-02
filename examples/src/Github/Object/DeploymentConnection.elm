@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.DeploymentEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.DeploymentConnection
+edges : SelectionSet decodesTo Github.Object.DeploymentEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.DeploymentConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Deployment -> Field (Maybe (List (Maybe decodesTo))) Github.Object.DeploymentConnection
+nodes : SelectionSet decodesTo Github.Object.Deployment -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.DeploymentConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.DeploymentConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.DeploymentConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.DeploymentConnection
+totalCount : SelectionSet Int Github.Object.DeploymentConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

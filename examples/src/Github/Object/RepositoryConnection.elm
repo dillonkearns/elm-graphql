@@ -28,34 +28,34 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.RepositoryEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
+edges : SelectionSet decodesTo Github.Object.RepositoryEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Repository -> Field (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
+nodes : SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.RepositoryConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.RepositoryConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.RepositoryConnection
+totalCount : SelectionSet Int Github.Object.RepositoryConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int
 
 
 {-| The total size in kilobytes of all repositories in the connection.
 -}
-totalDiskUsage : Field Int Github.Object.RepositoryConnection
+totalDiskUsage : SelectionSet Int Github.Object.RepositoryConnection
 totalDiskUsage =
     Object.fieldDecoder "totalDiskUsage" [] Decode.int

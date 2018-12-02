@@ -57,27 +57,27 @@ maybeFragments =
 
 {-| Which movies they appear in.
 -}
-appearsIn : Field (List Normalize.Enum.Episode_.Episode_) Normalize.Interface.Character
+appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Interface.Character
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> Field (List decodesTo) Normalize.Interface.Character
+friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Interface.Character
 friends object_ =
     Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the character.
 -}
-id : Field Normalize.Scalar.Id Normalize.Interface.Character
+id : SelectionSet Normalize.Scalar.Id Normalize.Interface.Character
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the character.
 -}
-name : Field String Normalize.Interface.Character
+name : SelectionSet String Normalize.Interface.Character
 name =
     Object.fieldDecoder "name" [] Decode.string

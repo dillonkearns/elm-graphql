@@ -26,18 +26,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : Field String Github.Object.LanguageEdge
+cursor : SelectionSet String Github.Object.LanguageEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.Language -> Field decodesTo Github.Object.LanguageEdge
+node : SelectionSet decodesTo Github.Object.Language -> SelectionSet decodesTo Github.Object.LanguageEdge
 node object_ =
     Object.selectionField "node" [] object_ identity
 
 
 {-| The number of bytes of code written in the language.
 -}
-size : Field Int Github.Object.LanguageEdge
+size : SelectionSet Int Github.Object.LanguageEdge
 size =
     Object.fieldDecoder "size" [] Decode.int

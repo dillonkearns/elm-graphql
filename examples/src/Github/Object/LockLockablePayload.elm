@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.LockLockablePayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.LockLockablePayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The item that was locked.
 -}
-lockedRecord : SelectionSet decodesTo Github.Interface.Lockable -> Field (Maybe decodesTo) Github.Object.LockLockablePayload
+lockedRecord : SelectionSet decodesTo Github.Interface.Lockable -> SelectionSet (Maybe decodesTo) Github.Object.LockLockablePayload
 lockedRecord object_ =
     Object.selectionField "lockedRecord" [] object_ (identity >> Decode.nullable)

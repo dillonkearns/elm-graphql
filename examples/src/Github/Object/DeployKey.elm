@@ -28,39 +28,39 @@ selection constructor =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.DeployKey
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.DeployKey
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.DeployKey
+id : SelectionSet Github.Scalar.Id Github.Object.DeployKey
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The deploy key.
 -}
-key : Field String Github.Object.DeployKey
+key : SelectionSet String Github.Object.DeployKey
 key =
     Object.fieldDecoder "key" [] Decode.string
 
 
 {-| Whether or not the deploy key is read only.
 -}
-readOnly : Field Bool Github.Object.DeployKey
+readOnly : SelectionSet Bool Github.Object.DeployKey
 readOnly =
     Object.fieldDecoder "readOnly" [] Decode.bool
 
 
 {-| The deploy key title.
 -}
-title : Field String Github.Object.DeployKey
+title : SelectionSet String Github.Object.DeployKey
 title =
     Object.fieldDecoder "title" [] Decode.string
 
 
 {-| Whether or not the deploy key has been verified.
 -}
-verified : Field Bool Github.Object.DeployKey
+verified : SelectionSet Bool Github.Object.DeployKey
 verified =
     Object.fieldDecoder "verified" [] Decode.bool

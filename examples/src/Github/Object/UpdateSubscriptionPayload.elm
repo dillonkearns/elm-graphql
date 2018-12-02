@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.UpdateSubscriptionPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.UpdateSubscriptionPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The input subscribable entity.
 -}
-subscribable : SelectionSet decodesTo Github.Interface.Subscribable -> Field decodesTo Github.Object.UpdateSubscriptionPayload
+subscribable : SelectionSet decodesTo Github.Interface.Subscribable -> SelectionSet decodesTo Github.Object.UpdateSubscriptionPayload
 subscribable object_ =
     Object.selectionField "subscribable" [] object_ identity

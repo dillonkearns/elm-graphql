@@ -28,39 +28,39 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ClosedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ClosedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Object that was closed.
 -}
-closable : SelectionSet decodesTo Github.Interface.Closable -> Field decodesTo Github.Object.ClosedEvent
+closable : SelectionSet decodesTo Github.Interface.Closable -> SelectionSet decodesTo Github.Object.ClosedEvent
 closable object_ =
     Object.selectionField "closable" [] object_ identity
 
 
 {-| Object which triggered the creation of this event.
 -}
-closer : SelectionSet decodesTo Github.Union.Closer -> Field (Maybe decodesTo) Github.Object.ClosedEvent
+closer : SelectionSet decodesTo Github.Union.Closer -> SelectionSet (Maybe decodesTo) Github.Object.ClosedEvent
 closer object_ =
     Object.selectionField "closer" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'closed' event.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> Field (Maybe decodesTo) Github.Object.ClosedEvent
+commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe decodesTo) Github.Object.ClosedEvent
 commit object_ =
     Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.ClosedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ClosedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.ClosedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.ClosedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

@@ -66,7 +66,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Interface.Actor
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Interface.Actor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -81,20 +81,20 @@ avatarUrl fillInOptionals =
 
 {-| The username of the actor.
 -}
-login : Field String Github.Interface.Actor
+login : SelectionSet String Github.Interface.Actor
 login =
     Object.fieldDecoder "login" [] Decode.string
 
 
 {-| The HTTP path for this actor.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Interface.Actor
+resourcePath : SelectionSet Github.Scalar.Uri Github.Interface.Actor
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this actor.
 -}
-url : Field Github.Scalar.Uri Github.Interface.Actor
+url : SelectionSet Github.Scalar.Uri Github.Interface.Actor
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

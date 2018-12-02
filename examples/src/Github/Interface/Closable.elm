@@ -62,13 +62,13 @@ maybeFragments =
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : Field Bool Github.Interface.Closable
+closed : SelectionSet Bool Github.Interface.Closable
 closed =
     Object.fieldDecoder "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Closable
+closedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Interface.Closable
 closedAt =
     Object.fieldDecoder "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)

@@ -32,88 +32,88 @@ project column at a time. The column field will be null if the card is created
 in a pending state and has yet to be associated with a column. Once cards are
 associated with a column, they will not become pending in the future.
 -}
-column : SelectionSet decodesTo Github.Object.ProjectColumn -> Field (Maybe decodesTo) Github.Object.ProjectCard
+column : SelectionSet decodesTo Github.Object.ProjectColumn -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
 column object_ =
     Object.selectionField "column" [] object_ (identity >> Decode.nullable)
 
 
 {-| The card content item
 -}
-content : SelectionSet decodesTo Github.Union.ProjectCardItem -> Field (Maybe decodesTo) Github.Object.ProjectCard
+content : SelectionSet decodesTo Github.Union.ProjectCardItem -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
 content object_ =
     Object.selectionField "content" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.ProjectCard
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectCard
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who created this card
 -}
-creator : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ProjectCard
+creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
 creator object_ =
     Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.ProjectCard
+databaseId : SelectionSet (Maybe Int) Github.Object.ProjectCard
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.ProjectCard
+id : SelectionSet Github.Scalar.Id Github.Object.ProjectCard
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The card note
 -}
-note : Field (Maybe String) Github.Object.ProjectCard
+note : SelectionSet (Maybe String) Github.Object.ProjectCard
 note =
     Object.fieldDecoder "note" [] (Decode.string |> Decode.nullable)
 
 
 {-| The project that contains this card.
 -}
-project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.ProjectCard
+project : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.ProjectCard
 project object_ =
     Object.selectionField "project" [] object_ identity
 
 
 {-| The column that contains this card.
 -}
-projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> Field decodesTo Github.Object.ProjectCard
+projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> SelectionSet decodesTo Github.Object.ProjectCard
 projectColumn object_ =
     Object.selectionField "projectColumn" [] object_ identity
 
 
 {-| The HTTP path for this card
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.ProjectCard
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.ProjectCard
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The state of ProjectCard
 -}
-state : Field (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
+state : SelectionSet (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
 state =
     Object.fieldDecoder "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.ProjectCard
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectCard
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this card
 -}
-url : Field Github.Scalar.Uri Github.Object.ProjectCard
+url : SelectionSet Github.Scalar.Uri Github.Object.ProjectCard
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

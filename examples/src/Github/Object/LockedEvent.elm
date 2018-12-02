@@ -28,25 +28,25 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.LockedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.LockedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.LockedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.LockedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.LockedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.LockedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Object that was locked.
 -}
-lockable : SelectionSet decodesTo Github.Interface.Lockable -> Field decodesTo Github.Object.LockedEvent
+lockable : SelectionSet decodesTo Github.Interface.Lockable -> SelectionSet decodesTo Github.Object.LockedEvent
 lockable object_ =
     Object.selectionField "lockable" [] object_ identity

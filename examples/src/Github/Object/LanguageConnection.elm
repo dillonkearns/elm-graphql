@@ -28,34 +28,34 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.LanguageEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LanguageConnection
+edges : SelectionSet decodesTo Github.Object.LanguageEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.LanguageConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Language -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LanguageConnection
+nodes : SelectionSet decodesTo Github.Object.Language -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.LanguageConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.LanguageConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.LanguageConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.LanguageConnection
+totalCount : SelectionSet Int Github.Object.LanguageConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int
 
 
 {-| The total size in bytes of files written in that language.
 -}
-totalSize : Field Int Github.Object.LanguageConnection
+totalSize : SelectionSet Int Github.Object.LanguageConnection
 totalSize =
     Object.fieldDecoder "totalSize" [] Decode.int

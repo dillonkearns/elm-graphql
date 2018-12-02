@@ -28,39 +28,39 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.HeadRefDeletedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.HeadRefDeletedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the Ref associated with the `head_ref_deleted` event.
 -}
-headRef : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
+headRef : SelectionSet decodesTo Github.Object.Ref -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
 headRef object_ =
     Object.selectionField "headRef" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the name of the Ref associated with the `head_ref_deleted` event.
 -}
-headRefName : Field String Github.Object.HeadRefDeletedEvent
+headRefName : SelectionSet String Github.Object.HeadRefDeletedEvent
 headRefName =
     Object.fieldDecoder "headRefName" [] Decode.string
 
 
-id : Field Github.Scalar.Id Github.Object.HeadRefDeletedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.HeadRefDeletedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.HeadRefDeletedEvent
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.HeadRefDeletedEvent
 pullRequest object_ =
     Object.selectionField "pullRequest" [] object_ identity

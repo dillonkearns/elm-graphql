@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.PushAllowanceEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.PushAllowanceConnection
+edges : SelectionSet decodesTo Github.Object.PushAllowanceEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.PushAllowanceConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.PushAllowance -> Field (Maybe (List (Maybe decodesTo))) Github.Object.PushAllowanceConnection
+nodes : SelectionSet decodesTo Github.Object.PushAllowance -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.PushAllowanceConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.PushAllowanceConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.PushAllowanceConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.PushAllowanceConnection
+totalCount : SelectionSet Int Github.Object.PushAllowanceConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

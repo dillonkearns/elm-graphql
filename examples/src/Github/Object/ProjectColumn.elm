@@ -42,7 +42,7 @@ type alias CardsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-cards : (CardsOptionalArguments -> CardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> Field decodesTo Github.Object.ProjectColumn
+cards : (CardsOptionalArguments -> CardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> SelectionSet decodesTo Github.Object.ProjectColumn
 cards fillInOptionals object_ =
     let
         filledInOptionals =
@@ -57,53 +57,53 @@ cards fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.ProjectColumn
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectColumn
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.ProjectColumn
+databaseId : SelectionSet (Maybe Int) Github.Object.ProjectColumn
 databaseId =
     Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.ProjectColumn
+id : SelectionSet Github.Scalar.Id Github.Object.ProjectColumn
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The project column's name.
 -}
-name : Field String Github.Object.ProjectColumn
+name : SelectionSet String Github.Object.ProjectColumn
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The project that contains this column.
 -}
-project : SelectionSet decodesTo Github.Object.Project -> Field decodesTo Github.Object.ProjectColumn
+project : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.ProjectColumn
 project object_ =
     Object.selectionField "project" [] object_ identity
 
 
 {-| The HTTP path for this project column
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.ProjectColumn
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.ProjectColumn
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.ProjectColumn
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectColumn
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this project column
 -}
-url : Field Github.Scalar.Uri Github.Object.ProjectColumn
+url : SelectionSet Github.Scalar.Uri Github.Object.ProjectColumn
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

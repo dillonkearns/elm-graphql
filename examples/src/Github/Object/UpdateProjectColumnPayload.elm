@@ -28,13 +28,13 @@ selection constructor =
 
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.UpdateProjectColumnPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.UpdateProjectColumnPayload
 clientMutationId =
     Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The updated project column.
 -}
-projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> Field decodesTo Github.Object.UpdateProjectColumnPayload
+projectColumn : SelectionSet decodesTo Github.Object.ProjectColumn -> SelectionSet decodesTo Github.Object.UpdateProjectColumnPayload
 projectColumn object_ =
     Object.selectionField "projectColumn" [] object_ identity

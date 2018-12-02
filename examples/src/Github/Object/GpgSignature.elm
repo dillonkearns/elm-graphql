@@ -29,48 +29,48 @@ selection constructor =
 
 {-| Email used to sign this object.
 -}
-email : Field String Github.Object.GpgSignature
+email : SelectionSet String Github.Object.GpgSignature
 email =
     Object.fieldDecoder "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
-isValid : Field Bool Github.Object.GpgSignature
+isValid : SelectionSet Bool Github.Object.GpgSignature
 isValid =
     Object.fieldDecoder "isValid" [] Decode.bool
 
 
 {-| Hex-encoded ID of the key that signed this object.
 -}
-keyId : Field (Maybe String) Github.Object.GpgSignature
+keyId : SelectionSet (Maybe String) Github.Object.GpgSignature
 keyId =
     Object.fieldDecoder "keyId" [] (Decode.string |> Decode.nullable)
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
-payload : Field String Github.Object.GpgSignature
+payload : SelectionSet String Github.Object.GpgSignature
 payload =
     Object.fieldDecoder "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
-signature : Field String Github.Object.GpgSignature
+signature : SelectionSet String Github.Object.GpgSignature
 signature =
     Object.fieldDecoder "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
 -}
-signer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.GpgSignature
+signer : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.GpgSignature
 signer object_ =
     Object.selectionField "signer" [] object_ (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.
 -}
-state : Field Github.Enum.GitSignatureState.GitSignatureState Github.Object.GpgSignature
+state : SelectionSet Github.Enum.GitSignatureState.GitSignatureState Github.Object.GpgSignature
 state =
     Object.fieldDecoder "state" [] Github.Enum.GitSignatureState.decoder

@@ -28,25 +28,25 @@ selection constructor =
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.ReopenedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ReopenedEvent
 actor object_ =
     Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Object that was reopened.
 -}
-closable : SelectionSet decodesTo Github.Interface.Closable -> Field decodesTo Github.Object.ReopenedEvent
+closable : SelectionSet decodesTo Github.Interface.Closable -> SelectionSet decodesTo Github.Object.ReopenedEvent
 closable object_ =
     Object.selectionField "closable" [] object_ identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.ReopenedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ReopenedEvent
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.ReopenedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.ReopenedEvent
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

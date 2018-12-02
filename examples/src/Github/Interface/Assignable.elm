@@ -70,7 +70,7 @@ type alias AssigneesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> Field decodesTo Github.Interface.Assignable
+assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> SelectionSet decodesTo Github.Interface.Assignable
 assignees fillInOptionals object_ =
     let
         filledInOptionals =

@@ -29,147 +29,147 @@ selection constructor =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.RepositoryInvitationRepository
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.RepositoryInvitationRepository
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The description of the repository.
 -}
-description : Field (Maybe String) Github.Object.RepositoryInvitationRepository
+description : SelectionSet (Maybe String) Github.Object.RepositoryInvitationRepository
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : Field Github.Scalar.Html Github.Object.RepositoryInvitationRepository
+descriptionHTML : SelectionSet Github.Scalar.Html Github.Object.RepositoryInvitationRepository
 descriptionHTML =
     Object.fieldDecoder "descriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Returns how many forks there are of this repository in the whole network.
 -}
-forkCount : Field Int Github.Object.RepositoryInvitationRepository
+forkCount : SelectionSet Int Github.Object.RepositoryInvitationRepository
 forkCount =
     Object.fieldDecoder "forkCount" [] Decode.int
 
 
 {-| Indicates if the repository has issues feature enabled.
 -}
-hasIssuesEnabled : Field Bool Github.Object.RepositoryInvitationRepository
+hasIssuesEnabled : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 hasIssuesEnabled =
     Object.fieldDecoder "hasIssuesEnabled" [] Decode.bool
 
 
 {-| Indicates if the repository has wiki feature enabled.
 -}
-hasWikiEnabled : Field Bool Github.Object.RepositoryInvitationRepository
+hasWikiEnabled : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 hasWikiEnabled =
     Object.fieldDecoder "hasWikiEnabled" [] Decode.bool
 
 
 {-| The repository's URL.
 -}
-homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
+homepageUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
 homepageUrl =
     Object.fieldDecoder "homepageUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Indicates if the repository is unmaintained.
 -}
-isArchived : Field Bool Github.Object.RepositoryInvitationRepository
+isArchived : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isArchived =
     Object.fieldDecoder "isArchived" [] Decode.bool
 
 
 {-| Identifies if the repository is a fork.
 -}
-isFork : Field Bool Github.Object.RepositoryInvitationRepository
+isFork : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isFork =
     Object.fieldDecoder "isFork" [] Decode.bool
 
 
 {-| Indicates if the repository has been locked or not.
 -}
-isLocked : Field Bool Github.Object.RepositoryInvitationRepository
+isLocked : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isLocked =
     Object.fieldDecoder "isLocked" [] Decode.bool
 
 
 {-| Identifies if the repository is a mirror.
 -}
-isMirror : Field Bool Github.Object.RepositoryInvitationRepository
+isMirror : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isMirror =
     Object.fieldDecoder "isMirror" [] Decode.bool
 
 
 {-| Identifies if the repository is private.
 -}
-isPrivate : Field Bool Github.Object.RepositoryInvitationRepository
+isPrivate : SelectionSet Bool Github.Object.RepositoryInvitationRepository
 isPrivate =
     Object.fieldDecoder "isPrivate" [] Decode.bool
 
 
 {-| The license associated with the repository
 -}
-license : Field (Maybe String) Github.Object.RepositoryInvitationRepository
+license : SelectionSet (Maybe String) Github.Object.RepositoryInvitationRepository
 license =
     Object.fieldDecoder "license" [] (Decode.string |> Decode.nullable)
 
 
 {-| The license associated with the repository
 -}
-licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Object.RepositoryInvitationRepository
+licenseInfo : SelectionSet decodesTo Github.Object.License -> SelectionSet (Maybe decodesTo) Github.Object.RepositoryInvitationRepository
 licenseInfo object_ =
     Object.selectionField "licenseInfo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
 -}
-lockReason : Field (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Object.RepositoryInvitationRepository
+lockReason : SelectionSet (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Object.RepositoryInvitationRepository
 lockReason =
     Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.nullable)
 
 
 {-| The repository's original mirror URL.
 -}
-mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
+mirrorUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.RepositoryInvitationRepository
 mirrorUrl =
     Object.fieldDecoder "mirrorUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The name of the repository.
 -}
-name : Field String Github.Object.RepositoryInvitationRepository
+name : SelectionSet String Github.Object.RepositoryInvitationRepository
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The repository's name with owner.
 -}
-nameWithOwner : Field String Github.Object.RepositoryInvitationRepository
+nameWithOwner : SelectionSet String Github.Object.RepositoryInvitationRepository
 nameWithOwner =
     Object.fieldDecoder "nameWithOwner" [] Decode.string
 
 
 {-| The owner of the repository associated with this invitation repository.
 -}
-owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field decodesTo Github.Object.RepositoryInvitationRepository
+owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet decodesTo Github.Object.RepositoryInvitationRepository
 owner object_ =
     Object.selectionField "owner" [] object_ identity
 
 
 {-| Identifies when the repository was last pushed to.
 -}
-pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.RepositoryInvitationRepository
+pushedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.RepositoryInvitationRepository
 pushedAt =
     Object.fieldDecoder "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The HTTP path for this repository
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.RepositoryInvitationRepository
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.RepositoryInvitationRepository
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
@@ -183,7 +183,7 @@ type alias ShortDescriptionHTMLOptionalArguments =
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> Field Github.Scalar.Html Github.Object.RepositoryInvitationRepository
+shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> SelectionSet Github.Scalar.Html Github.Object.RepositoryInvitationRepository
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
@@ -198,13 +198,13 @@ shortDescriptionHTML fillInOptionals =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.RepositoryInvitationRepository
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.RepositoryInvitationRepository
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this repository
 -}
-url : Field Github.Scalar.Uri Github.Object.RepositoryInvitationRepository
+url : SelectionSet Github.Scalar.Uri Github.Object.RepositoryInvitationRepository
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

@@ -28,67 +28,67 @@ selection constructor =
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : Field String Github.Object.Blob
+abbreviatedOid : SelectionSet String Github.Object.Blob
 abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
 {-| Byte size of Blob object
 -}
-byteSize : Field Int Github.Object.Blob
+byteSize : SelectionSet Int Github.Object.Blob
 byteSize =
     Object.fieldDecoder "byteSize" [] Decode.int
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : Field Github.Scalar.Uri Github.Object.Blob
+commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Blob
 commitResourcePath =
     Object.fieldDecoder "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : Field Github.Scalar.Uri Github.Object.Blob
+commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Blob
 commitUrl =
     Object.fieldDecoder "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-id : Field Github.Scalar.Id Github.Object.Blob
+id : SelectionSet Github.Scalar.Id Github.Object.Blob
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates whether the Blob is binary or text
 -}
-isBinary : Field Bool Github.Object.Blob
+isBinary : SelectionSet Bool Github.Object.Blob
 isBinary =
     Object.fieldDecoder "isBinary" [] Decode.bool
 
 
 {-| Indicates whether the contents is truncated
 -}
-isTruncated : Field Bool Github.Object.Blob
+isTruncated : SelectionSet Bool Github.Object.Blob
 isTruncated =
     Object.fieldDecoder "isTruncated" [] Decode.bool
 
 
 {-| The Git object ID
 -}
-oid : Field Github.Scalar.GitObjectID Github.Object.Blob
+oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Blob
 oid =
     Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Blob
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Blob
 repository object_ =
     Object.selectionField "repository" [] object_ identity
 
 
 {-| UTF8 text data or null if the Blob is binary
 -}
-text : Field (Maybe String) Github.Object.Blob
+text : SelectionSet (Maybe String) Github.Object.Blob
 text =
     Object.fieldDecoder "text" [] (Decode.string |> Decode.nullable)

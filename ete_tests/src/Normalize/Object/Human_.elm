@@ -29,34 +29,34 @@ selection constructor =
 
 {-| Which movies they appear in.
 -}
-appearsIn : Field (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Human_
+appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Human_
 appearsIn =
     Object.fieldDecoder "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> Field (List decodesTo) Normalize.Object.Human_
+friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Object.Human_
 friends object_ =
     Object.selectionField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.
 -}
-homePlanet : Field (Maybe String) Normalize.Object.Human_
+homePlanet : SelectionSet (Maybe String) Normalize.Object.Human_
 homePlanet =
     Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.nullable)
 
 
 {-| The ID of the human.
 -}
-id : Field Normalize.Scalar.Id Normalize.Object.Human_
+id : SelectionSet Normalize.Scalar.Id Normalize.Object.Human_
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the human.
 -}
-name : Field String Normalize.Object.Human_
+name : SelectionSet String Normalize.Object.Human_
 name =
     Object.fieldDecoder "name" [] Decode.string

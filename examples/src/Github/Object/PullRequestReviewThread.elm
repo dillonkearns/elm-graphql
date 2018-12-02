@@ -42,7 +42,7 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection -> Field decodesTo Github.Object.PullRequestReviewThread
+comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -55,20 +55,20 @@ comments fillInOptionals object_ =
     Object.selectionField "comments" optionalArgs object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.PullRequestReviewThread
+id : SelectionSet Github.Scalar.Id Github.Object.PullRequestReviewThread
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this thread.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestReviewThread
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
 pullRequest object_ =
     Object.selectionField "pullRequest" [] object_ identity
 
 
 {-| Identifies the repository associated with this thread.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.PullRequestReviewThread
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
 repository object_ =
     Object.selectionField "repository" [] object_ identity

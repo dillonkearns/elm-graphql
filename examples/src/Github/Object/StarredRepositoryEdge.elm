@@ -26,18 +26,18 @@ selection constructor =
     Object.selection constructor
 
 
-cursor : Field String Github.Object.StarredRepositoryEdge
+cursor : SelectionSet String Github.Object.StarredRepositoryEdge
 cursor =
     Object.fieldDecoder "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.StarredRepositoryEdge
+node : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.StarredRepositoryEdge
 node object_ =
     Object.selectionField "node" [] object_ identity
 
 
 {-| Identifies when the item was starred.
 -}
-starredAt : Field Github.Scalar.DateTime Github.Object.StarredRepositoryEdge
+starredAt : SelectionSet Github.Scalar.DateTime Github.Object.StarredRepositoryEdge
 starredAt =
     Object.fieldDecoder "starredAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

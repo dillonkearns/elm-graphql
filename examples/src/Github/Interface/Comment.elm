@@ -72,75 +72,75 @@ maybeFragments =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Interface.Comment
+author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
 author object_ =
     Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
 -}
-authorAssociation : Field Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Interface.Comment
+authorAssociation : SelectionSet Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Interface.Comment
 authorAssociation =
     Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| The comment body as Markdown.
 -}
-body : Field String Github.Interface.Comment
+body : SelectionSet String Github.Interface.Comment
 body =
     Object.fieldDecoder "body" [] Decode.string
 
 
 {-| The comment body rendered to HTML.
 -}
-bodyHTML : Field Github.Scalar.Html Github.Interface.Comment
+bodyHTML : SelectionSet Github.Scalar.Html Github.Interface.Comment
 bodyHTML =
     Object.fieldDecoder "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Interface.Comment
+createdAt : SelectionSet Github.Scalar.DateTime Github.Interface.Comment
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : Field Bool Github.Interface.Comment
+createdViaEmail : SelectionSet Bool Github.Interface.Comment
 createdViaEmail =
     Object.fieldDecoder "createdViaEmail" [] Decode.bool
 
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Interface.Comment
+editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
 editor object_ =
     Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Interface.Comment
+id : SelectionSet Github.Scalar.Id Github.Interface.Comment
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Comment
+lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Interface.Comment
 lastEditedAt =
     Object.fieldDecoder "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Comment
+publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Interface.Comment
 publishedAt =
     Object.fieldDecoder "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Interface.Comment
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Interface.Comment
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
@@ -161,7 +161,7 @@ type alias UserContentEditsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Interface.Comment
+userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =
@@ -176,6 +176,6 @@ userContentEdits fillInOptionals object_ =
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : Field Bool Github.Interface.Comment
+viewerDidAuthor : SelectionSet Bool Github.Interface.Comment
 viewerDidAuthor =
     Object.fieldDecoder "viewerDidAuthor" [] Decode.bool

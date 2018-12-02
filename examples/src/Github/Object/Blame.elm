@@ -28,6 +28,6 @@ selection constructor =
 
 {-| The list of ranges from a Git blame.
 -}
-ranges : SelectionSet decodesTo Github.Object.BlameRange -> Field (List decodesTo) Github.Object.Blame
+ranges : SelectionSet decodesTo Github.Object.BlameRange -> SelectionSet (List decodesTo) Github.Object.Blame
 ranges object_ =
     Object.selectionField "ranges" [] object_ (identity >> Decode.list)

@@ -28,54 +28,54 @@ selection constructor =
 
 {-| The author of the release
 -}
-author : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Release
+author : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.Release
 author object_ =
     Object.selectionField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.Release
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Release
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the description of the release.
 -}
-description : Field (Maybe String) Github.Object.Release
+description : SelectionSet (Maybe String) Github.Object.Release
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Release
+id : SelectionSet Github.Scalar.Id Github.Object.Release
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether or not the release is a draft
 -}
-isDraft : Field Bool Github.Object.Release
+isDraft : SelectionSet Bool Github.Object.Release
 isDraft =
     Object.fieldDecoder "isDraft" [] Decode.bool
 
 
 {-| Whether or not the release is a prerelease
 -}
-isPrerelease : Field Bool Github.Object.Release
+isPrerelease : SelectionSet Bool Github.Object.Release
 isPrerelease =
     Object.fieldDecoder "isPrerelease" [] Decode.bool
 
 
 {-| Identifies the title of the release.
 -}
-name : Field (Maybe String) Github.Object.Release
+name : SelectionSet (Maybe String) Github.Object.Release
 name =
     Object.fieldDecoder "name" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the date and time when the release was created.
 -}
-publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Release
+publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Release
 publishedAt =
     Object.fieldDecoder "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
@@ -98,7 +98,7 @@ type alias ReleaseAssetsOptionalArguments =
   - name - A list of names to filter the assets by.
 
 -}
-releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection -> Field decodesTo Github.Object.Release
+releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection -> SelectionSet decodesTo Github.Object.Release
 releaseAssets fillInOptionals object_ =
     let
         filledInOptionals =
@@ -113,27 +113,27 @@ releaseAssets fillInOptionals object_ =
 
 {-| The HTTP path for this issue
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.Release
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Release
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The Git tag the release points to
 -}
-tag : SelectionSet decodesTo Github.Object.Ref -> Field (Maybe decodesTo) Github.Object.Release
+tag : SelectionSet decodesTo Github.Object.Ref -> SelectionSet (Maybe decodesTo) Github.Object.Release
 tag object_ =
     Object.selectionField "tag" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.Release
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Release
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this issue
 -}
-url : Field Github.Scalar.Uri Github.Object.Release
+url : SelectionSet Github.Scalar.Uri Github.Object.Release
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

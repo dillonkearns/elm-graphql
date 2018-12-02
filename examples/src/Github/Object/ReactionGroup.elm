@@ -29,21 +29,21 @@ selection constructor =
 
 {-| Identifies the emoji reaction.
 -}
-content : Field Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup
+content : SelectionSet Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup
 content =
     Object.fieldDecoder "content" [] Github.Enum.ReactionContent.decoder
 
 
 {-| Identifies when the reaction was created.
 -}
-createdAt : Field (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
+createdAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The subject that was reacted to.
 -}
-subject : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.ReactionGroup
+subject : SelectionSet decodesTo Github.Interface.Reactable -> SelectionSet decodesTo Github.Object.ReactionGroup
 subject object_ =
     Object.selectionField "subject" [] object_ identity
 
@@ -64,7 +64,7 @@ type alias UsersOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> Field decodesTo Github.Object.ReactionGroup
+users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> SelectionSet decodesTo Github.Object.ReactionGroup
 users fillInOptionals object_ =
     let
         filledInOptionals =
@@ -79,6 +79,6 @@ users fillInOptionals object_ =
 
 {-| Whether or not the authenticated user has left a reaction on the subject.
 -}
-viewerHasReacted : Field Bool Github.Object.ReactionGroup
+viewerHasReacted : SelectionSet Bool Github.Object.ReactionGroup
 viewerHasReacted =
     Object.fieldDecoder "viewerHasReacted" [] Decode.bool

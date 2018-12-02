@@ -28,55 +28,55 @@ selection constructor =
 
 {-| The category's description.
 -}
-description : Field (Maybe String) Github.Object.MarketplaceCategory
+description : SelectionSet (Maybe String) Github.Object.MarketplaceCategory
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The technical description of how apps listed in this category work with GitHub.
 -}
-howItWorks : Field (Maybe String) Github.Object.MarketplaceCategory
+howItWorks : SelectionSet (Maybe String) Github.Object.MarketplaceCategory
 howItWorks =
     Object.fieldDecoder "howItWorks" [] (Decode.string |> Decode.nullable)
 
 
 {-| The category's name.
 -}
-name : Field String Github.Object.MarketplaceCategory
+name : SelectionSet String Github.Object.MarketplaceCategory
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| How many Marketplace listings have this as their primary category.
 -}
-primaryListingCount : Field Int Github.Object.MarketplaceCategory
+primaryListingCount : SelectionSet Int Github.Object.MarketplaceCategory
 primaryListingCount =
     Object.fieldDecoder "primaryListingCount" [] Decode.int
 
 
 {-| The HTTP path for this Marketplace category.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.MarketplaceCategory
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceCategory
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| How many Marketplace listings have this as their secondary category.
 -}
-secondaryListingCount : Field Int Github.Object.MarketplaceCategory
+secondaryListingCount : SelectionSet Int Github.Object.MarketplaceCategory
 secondaryListingCount =
     Object.fieldDecoder "secondaryListingCount" [] Decode.int
 
 
 {-| The short name of the category used in its URL.
 -}
-slug : Field String Github.Object.MarketplaceCategory
+slug : SelectionSet String Github.Object.MarketplaceCategory
 slug =
     Object.fieldDecoder "slug" [] Decode.string
 
 
 {-| The HTTP URL for this Marketplace category.
 -}
-url : Field Github.Scalar.Uri Github.Object.MarketplaceCategory
+url : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceCategory
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

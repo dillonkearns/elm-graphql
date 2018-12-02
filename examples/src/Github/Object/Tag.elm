@@ -28,67 +28,67 @@ selection constructor =
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : Field String Github.Object.Tag
+abbreviatedOid : SelectionSet String Github.Object.Tag
 abbreviatedOid =
     Object.fieldDecoder "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : Field Github.Scalar.Uri Github.Object.Tag
+commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Tag
 commitResourcePath =
     Object.fieldDecoder "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : Field Github.Scalar.Uri Github.Object.Tag
+commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Tag
 commitUrl =
     Object.fieldDecoder "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-id : Field Github.Scalar.Id Github.Object.Tag
+id : SelectionSet Github.Scalar.Id Github.Object.Tag
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git tag message.
 -}
-message : Field (Maybe String) Github.Object.Tag
+message : SelectionSet (Maybe String) Github.Object.Tag
 message =
     Object.fieldDecoder "message" [] (Decode.string |> Decode.nullable)
 
 
 {-| The Git tag name.
 -}
-name : Field String Github.Object.Tag
+name : SelectionSet String Github.Object.Tag
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The Git object ID
 -}
-oid : Field Github.Scalar.GitObjectID Github.Object.Tag
+oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Tag
 oid =
     Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Tag
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Tag
 repository object_ =
     Object.selectionField "repository" [] object_ identity
 
 
 {-| Details about the tag author.
 -}
-tagger : SelectionSet decodesTo Github.Object.GitActor -> Field (Maybe decodesTo) Github.Object.Tag
+tagger : SelectionSet decodesTo Github.Object.GitActor -> SelectionSet (Maybe decodesTo) Github.Object.Tag
 tagger object_ =
     Object.selectionField "tagger" [] object_ (identity >> Decode.nullable)
 
 
 {-| The Git object the tag points to.
 -}
-target : SelectionSet decodesTo Github.Interface.GitObject -> Field decodesTo Github.Object.Tag
+target : SelectionSet decodesTo Github.Interface.GitObject -> SelectionSet decodesTo Github.Object.Tag
 target object_ =
     Object.selectionField "target" [] object_ identity

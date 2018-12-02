@@ -46,7 +46,7 @@ type alias AncestorsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-ancestors : (AncestorsOptionalArguments -> AncestorsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> Field decodesTo Github.Object.Team
+ancestors : (AncestorsOptionalArguments -> AncestorsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> SelectionSet decodesTo Github.Object.Team
 ancestors fillInOptionals object_ =
     let
         filledInOptionals =
@@ -68,7 +68,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size in pixels of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field (Maybe Github.Scalar.Uri) Github.Object.Team
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet (Maybe Github.Scalar.Uri) Github.Object.Team
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -103,7 +103,7 @@ type alias ChildTeamsOptionalArguments =
   - immediateOnly - Whether to list immediate child teams or all descendant child teams.
 
 -}
-childTeams : (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> Field decodesTo Github.Object.Team
+childTeams : (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> SelectionSet decodesTo Github.Object.Team
 childTeams fillInOptionals object_ =
     let
         filledInOptionals =
@@ -118,40 +118,40 @@ childTeams fillInOptionals object_ =
 
 {-| The slug corresponding to the organization and team.
 -}
-combinedSlug : Field String Github.Object.Team
+combinedSlug : SelectionSet String Github.Object.Team
 combinedSlug =
     Object.fieldDecoder "combinedSlug" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.Team
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Team
 createdAt =
     Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The description of the team.
 -}
-description : Field (Maybe String) Github.Object.Team
+description : SelectionSet (Maybe String) Github.Object.Team
 description =
     Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The HTTP path for editing this team
 -}
-editTeamResourcePath : Field Github.Scalar.Uri Github.Object.Team
+editTeamResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Team
 editTeamResourcePath =
     Object.fieldDecoder "editTeamResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for editing this team
 -}
-editTeamUrl : Field Github.Scalar.Uri Github.Object.Team
+editTeamUrl : SelectionSet Github.Scalar.Uri Github.Object.Team
 editTeamUrl =
     Object.fieldDecoder "editTeamUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-id : Field Github.Scalar.Id Github.Object.Team
+id : SelectionSet Github.Scalar.Id Github.Object.Team
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
@@ -172,7 +172,7 @@ type alias InvitationsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-invitations : (InvitationsOptionalArguments -> InvitationsOptionalArguments) -> SelectionSet decodesTo Github.Object.OrganizationInvitationConnection -> Field (Maybe decodesTo) Github.Object.Team
+invitations : (InvitationsOptionalArguments -> InvitationsOptionalArguments) -> SelectionSet decodesTo Github.Object.OrganizationInvitationConnection -> SelectionSet (Maybe decodesTo) Github.Object.Team
 invitations fillInOptionals object_ =
     let
         filledInOptionals =
@@ -207,7 +207,7 @@ type alias MembersOptionalArguments =
   - role - Filter by team member role
 
 -}
-members : (MembersOptionalArguments -> MembersOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamMemberConnection -> Field decodesTo Github.Object.Team
+members : (MembersOptionalArguments -> MembersOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamMemberConnection -> SelectionSet decodesTo Github.Object.Team
 members fillInOptionals object_ =
     let
         filledInOptionals =
@@ -222,56 +222,56 @@ members fillInOptionals object_ =
 
 {-| The HTTP path for the team' members
 -}
-membersResourcePath : Field Github.Scalar.Uri Github.Object.Team
+membersResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Team
 membersResourcePath =
     Object.fieldDecoder "membersResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for the team' members
 -}
-membersUrl : Field Github.Scalar.Uri Github.Object.Team
+membersUrl : SelectionSet Github.Scalar.Uri Github.Object.Team
 membersUrl =
     Object.fieldDecoder "membersUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The name of the team.
 -}
-name : Field String Github.Object.Team
+name : SelectionSet String Github.Object.Team
 name =
     Object.fieldDecoder "name" [] Decode.string
 
 
 {-| The HTTP path creating a new team
 -}
-newTeamResourcePath : Field Github.Scalar.Uri Github.Object.Team
+newTeamResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Team
 newTeamResourcePath =
     Object.fieldDecoder "newTeamResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL creating a new team
 -}
-newTeamUrl : Field Github.Scalar.Uri Github.Object.Team
+newTeamUrl : SelectionSet Github.Scalar.Uri Github.Object.Team
 newTeamUrl =
     Object.fieldDecoder "newTeamUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The organization that owns this team.
 -}
-organization : SelectionSet decodesTo Github.Object.Organization -> Field decodesTo Github.Object.Team
+organization : SelectionSet decodesTo Github.Object.Organization -> SelectionSet decodesTo Github.Object.Team
 organization object_ =
     Object.selectionField "organization" [] object_ identity
 
 
 {-| The parent team of the team.
 -}
-parentTeam : SelectionSet decodesTo Github.Object.Team -> Field (Maybe decodesTo) Github.Object.Team
+parentTeam : SelectionSet decodesTo Github.Object.Team -> SelectionSet (Maybe decodesTo) Github.Object.Team
 parentTeam object_ =
     Object.selectionField "parentTeam" [] object_ (identity >> Decode.nullable)
 
 
 {-| The level of privacy the team has.
 -}
-privacy : Field Github.Enum.TeamPrivacy.TeamPrivacy Github.Object.Team
+privacy : SelectionSet Github.Enum.TeamPrivacy.TeamPrivacy Github.Object.Team
 privacy =
     Object.fieldDecoder "privacy" [] Github.Enum.TeamPrivacy.decoder
 
@@ -296,7 +296,7 @@ type alias RepositoriesOptionalArguments =
   - orderBy - Order for the connection.
 
 -}
-repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamRepositoryConnection -> Field decodesTo Github.Object.Team
+repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamRepositoryConnection -> SelectionSet decodesTo Github.Object.Team
 repositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -311,76 +311,76 @@ repositories fillInOptionals object_ =
 
 {-| The HTTP path for this team's repositories
 -}
-repositoriesResourcePath : Field Github.Scalar.Uri Github.Object.Team
+repositoriesResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Team
 repositoriesResourcePath =
     Object.fieldDecoder "repositoriesResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this team's repositories
 -}
-repositoriesUrl : Field Github.Scalar.Uri Github.Object.Team
+repositoriesUrl : SelectionSet Github.Scalar.Uri Github.Object.Team
 repositoriesUrl =
     Object.fieldDecoder "repositoriesUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP path for this team
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.Team
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Team
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The slug corresponding to the team.
 -}
-slug : Field String Github.Object.Team
+slug : SelectionSet String Github.Object.Team
 slug =
     Object.fieldDecoder "slug" [] Decode.string
 
 
 {-| The HTTP path for this team's teams
 -}
-teamsResourcePath : Field Github.Scalar.Uri Github.Object.Team
+teamsResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Team
 teamsResourcePath =
     Object.fieldDecoder "teamsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this team's teams
 -}
-teamsUrl : Field Github.Scalar.Uri Github.Object.Team
+teamsUrl : SelectionSet Github.Scalar.Uri Github.Object.Team
 teamsUrl =
     Object.fieldDecoder "teamsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.Team
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Team
 updatedAt =
     Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this team
 -}
-url : Field Github.Scalar.Uri Github.Object.Team
+url : SelectionSet Github.Scalar.Uri Github.Object.Team
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Team is adminable by the viewer.
 -}
-viewerCanAdminister : Field Bool Github.Object.Team
+viewerCanAdminister : SelectionSet Bool Github.Object.Team
 viewerCanAdminister =
     Object.fieldDecoder "viewerCanAdminister" [] Decode.bool
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
-viewerCanSubscribe : Field Bool Github.Object.Team
+viewerCanSubscribe : SelectionSet Bool Github.Object.Team
 viewerCanSubscribe =
     Object.fieldDecoder "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
-viewerSubscription : Field Github.Enum.SubscriptionState.SubscriptionState Github.Object.Team
+viewerSubscription : SelectionSet Github.Enum.SubscriptionState.SubscriptionState Github.Object.Team
 viewerSubscription =
     Object.fieldDecoder "viewerSubscription" [] Github.Enum.SubscriptionState.decoder

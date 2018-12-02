@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.LabelEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
+edges : SelectionSet decodesTo Github.Object.LabelEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Label -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
+nodes : SelectionSet decodesTo Github.Object.Label -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.LabelConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.LabelConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.LabelConnection
+totalCount : SelectionSet Int Github.Object.LabelConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int

@@ -65,7 +65,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Interface.RepositoryOwner
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Interface.RepositoryOwner
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -78,14 +78,14 @@ avatarUrl fillInOptionals =
     Object.fieldDecoder "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-id : Field Github.Scalar.Id Github.Interface.RepositoryOwner
+id : SelectionSet Github.Scalar.Id Github.Interface.RepositoryOwner
 id =
     Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The username used to login.
 -}
-login : Field String Github.Interface.RepositoryOwner
+login : SelectionSet String Github.Interface.RepositoryOwner
 login =
     Object.fieldDecoder "login" [] Decode.string
 
@@ -114,7 +114,7 @@ type alias PinnedRepositoriesOptionalArguments =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Interface.RepositoryOwner
+pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Interface.RepositoryOwner
 pinnedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -153,7 +153,7 @@ type alias RepositoriesOptionalArguments =
   - isFork - If non-null, filters repositories according to whether they are forks of another repository
 
 -}
-repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Interface.RepositoryOwner
+repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Interface.RepositoryOwner
 repositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -175,20 +175,20 @@ type alias RepositoryRequiredArguments =
   - name - Name of Repository to find.
 
 -}
-repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Interface.RepositoryOwner
+repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe decodesTo) Github.Interface.RepositoryOwner
 repository requiredArgs object_ =
     Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The HTTP URL for the owner.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Interface.RepositoryOwner
+resourcePath : SelectionSet Github.Scalar.Uri Github.Interface.RepositoryOwner
 resourcePath =
     Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for the owner.
 -}
-url : Field Github.Scalar.Uri Github.Interface.RepositoryOwner
+url : SelectionSet Github.Scalar.Uri Github.Interface.RepositoryOwner
 url =
     Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

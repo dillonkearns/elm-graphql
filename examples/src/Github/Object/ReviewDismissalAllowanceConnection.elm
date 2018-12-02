@@ -28,27 +28,27 @@ selection constructor =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReviewDismissalAllowanceConnection
+edges : SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ReviewDismissalAllowanceConnection
 edges object_ =
     Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.ReviewDismissalAllowance -> Field (Maybe (List (Maybe decodesTo))) Github.Object.ReviewDismissalAllowanceConnection
+nodes : SelectionSet decodesTo Github.Object.ReviewDismissalAllowance -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.ReviewDismissalAllowanceConnection
 nodes object_ =
     Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.ReviewDismissalAllowanceConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection
 pageInfo object_ =
     Object.selectionField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.ReviewDismissalAllowanceConnection
+totalCount : SelectionSet Int Github.Object.ReviewDismissalAllowanceConnection
 totalCount =
     Object.fieldDecoder "totalCount" [] Decode.int
