@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Interface.Character exposing (Fragments, appearsIn, fragments, friends, id, maybeFragments, name, selection)
+module Normalize.Interface.Character exposing (Fragments, appearsIn, fragments, friends, id, maybeFragments, name)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -18,13 +18,6 @@ import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
 import Normalize.Union
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Interface.Character
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =

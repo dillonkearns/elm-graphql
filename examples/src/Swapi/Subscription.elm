@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Subscription exposing (newMessage, selection)
+module Swapi.Subscription exposing (newMessage)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -17,14 +17,6 @@ import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
 import Swapi.Union
-
-
-{-| Select fields to build up a top-level mutation. The request can be sent with
-functions from `Graphql.Http`.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) RootSubscription
-selection constructor =
-    Object.selection constructor
 
 
 newMessage : SelectionSet decodesTo Swapi.Object.ChatMessage -> SelectionSet decodesTo RootSubscription

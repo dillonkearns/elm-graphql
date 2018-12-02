@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Query exposing (CircularInputRequiredArguments, DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, RecursiveInputRequiredArguments, TypeOptionalArguments, circularInput, droid_, greet, hero, heroUnion, human, recursiveInput, selection, type_)
+module Normalize.Query exposing (CircularInputRequiredArguments, DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, RecursiveInputRequiredArguments, TypeOptionalArguments, circularInput, droid_, greet, hero, heroUnion, human, recursiveInput, type_)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -18,14 +18,6 @@ import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
 import Normalize.Union
-
-
-{-| Select fields to build up a top-level query. The request can be sent with
-functions from `Graphql.Http`.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
-selection constructor =
-    Object.selection constructor
 
 
 type alias CircularInputRequiredArguments =

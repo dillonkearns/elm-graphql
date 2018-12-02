@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.UpdatableComment exposing (Fragments, fragments, maybeFragments, selection, viewerCannotUpdateReasons)
+module Github.Interface.UpdatableComment exposing (Fragments, fragments, maybeFragments, viewerCannotUpdateReasons)
 
 import Github.Enum.CommentCannotUpdateReason
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.UpdatableComment
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =

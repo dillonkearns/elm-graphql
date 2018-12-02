@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.RepositoryOwner exposing (AvatarUrlOptionalArguments, Fragments, PinnedRepositoriesOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, avatarUrl, fragments, id, login, maybeFragments, pinnedRepositories, repositories, repository, resourcePath, selection, url)
+module Github.Interface.RepositoryOwner exposing (AvatarUrlOptionalArguments, Fragments, PinnedRepositoriesOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, avatarUrl, fragments, id, login, maybeFragments, pinnedRepositories, repositories, repository, resourcePath, url)
 
 import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryPrivacy
@@ -19,13 +19,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryOwner
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =

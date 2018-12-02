@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UnknownSignature exposing (email, isValid, payload, selection, signature, signer, state)
+module Github.Object.UnknownSignature exposing (email, isValid, payload, signature, signer, state)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.UnknownSignature
-selection constructor =
-    Object.selection constructor
 
 
 {-| Email used to sign this object.

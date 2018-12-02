@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TreeEntry exposing (mode, name, object, oid, repository, selection, type_)
+module Github.Object.TreeEntry exposing (mode, name, object, oid, repository, type_)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.TreeEntry
-selection constructor =
-    Object.selection constructor
 
 
 {-| Entry file mode.

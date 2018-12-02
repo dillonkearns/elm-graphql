@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object.Droid exposing (appearsIn, avatarUrl, friends, id, name, primaryFunction, selection)
+module Swapi.Object.Droid exposing (appearsIn, avatarUrl, friends, id, name, primaryFunction)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -18,13 +18,6 @@ import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
 import Swapi.Union
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Object.Droid
-selection constructor =
-    Object.selection constructor
 
 
 {-| Which movies they appear in.

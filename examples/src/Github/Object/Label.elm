@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Label exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, color, description, id, isDefault, issues, name, pullRequests, repository, selection)
+module Github.Object.Label exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, color, description, id, isDefault, issues, name, pullRequests, repository)
 
 import Github.Enum.IssueState
 import Github.Enum.PullRequestState
@@ -19,13 +19,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Label
-selection constructor =
-    Object.selection constructor
 
 
 {-| Identifies the label color.

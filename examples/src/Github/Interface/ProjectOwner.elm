@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.ProjectOwner exposing (Fragments, ProjectRequiredArguments, ProjectsOptionalArguments, fragments, id, maybeFragments, project, projects, projectsResourcePath, projectsUrl, selection, viewerCanCreateProjects)
+module Github.Interface.ProjectOwner exposing (Fragments, ProjectRequiredArguments, ProjectsOptionalArguments, fragments, id, maybeFragments, project, projects, projectsResourcePath, projectsUrl, viewerCanCreateProjects)
 
 import Github.Enum.ProjectState
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =

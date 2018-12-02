@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PageInfo exposing (endCursor, hasNextPage, hasPreviousPage, selection, startCursor)
+module Github.Object.PageInfo exposing (endCursor, hasNextPage, hasPreviousPage, startCursor)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PageInfo
-selection constructor =
-    Object.selection constructor
 
 
 {-| When paginating forwards, the cursor to continue.

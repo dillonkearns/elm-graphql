@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Ref exposing (AssociatedPullRequestsOptionalArguments, associatedPullRequests, id, name, prefix, repository, selection, target)
+module Github.Object.Ref exposing (AssociatedPullRequestsOptionalArguments, associatedPullRequests, id, name, prefix, repository, target)
 
 import Github.Enum.PullRequestState
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Ref
-selection constructor =
-    Object.selection constructor
 
 
 type alias AssociatedPullRequestsOptionalArguments =

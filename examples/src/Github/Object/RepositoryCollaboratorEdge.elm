@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryCollaboratorEdge exposing (cursor, node, permission, selection)
+module Github.Object.RepositoryCollaboratorEdge exposing (cursor, node, permission)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryCollaboratorEdge
-selection constructor =
-    Object.selection constructor
 
 
 cursor : SelectionSet String Github.Object.RepositoryCollaboratorEdge

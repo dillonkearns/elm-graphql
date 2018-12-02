@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Milestone exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, closed, closedAt, createdAt, creator, description, dueOn, id, issues, number, pullRequests, repository, resourcePath, selection, state, title, updatedAt, url)
+module Github.Object.Milestone exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, closed, closedAt, createdAt, creator, description, dueOn, id, issues, number, pullRequests, repository, resourcePath, state, title, updatedAt, url)
 
 import Github.Enum.IssueState
 import Github.Enum.MilestoneState
@@ -20,13 +20,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Milestone
-selection constructor =
-    Object.selection constructor
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)

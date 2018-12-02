@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Mutation exposing (SendMessageRequiredArguments, increment, selection, sendMessage)
+module Swapi.Mutation exposing (SendMessageRequiredArguments, increment, sendMessage)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -18,14 +18,6 @@ import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
 import Swapi.Union
-
-
-{-| Select fields to build up a top-level mutation. The request can be sent with
-functions from `Graphql.Http`.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
-selection constructor =
-    Object.selection constructor
 
 
 increment : SelectionSet Int RootMutation

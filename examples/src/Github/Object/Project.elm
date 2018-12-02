@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Project exposing (ColumnsOptionalArguments, PendingCardsOptionalArguments, body, bodyHTML, closed, closedAt, columns, createdAt, creator, databaseId, id, name, number, owner, pendingCards, resourcePath, selection, state, updatedAt, url, viewerCanUpdate)
+module Github.Object.Project exposing (ColumnsOptionalArguments, PendingCardsOptionalArguments, body, bodyHTML, closed, closedAt, columns, createdAt, creator, databaseId, id, name, number, owner, pendingCards, resourcePath, state, updatedAt, url, viewerCanUpdate)
 
 import Github.Enum.ProjectState
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Project
-selection constructor =
-    Object.selection constructor
 
 
 {-| The project's description body.

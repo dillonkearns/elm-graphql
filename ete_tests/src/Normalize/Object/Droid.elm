@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Object.Droid exposing (appearsIn, friends, id, name, primaryFunction, selection)
+module Normalize.Object.Droid exposing (appearsIn, friends, id, name, primaryFunction)
 
 import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -18,13 +18,6 @@ import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
 import Normalize.Union
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Object.Droid
-selection constructor =
-    Object.selection constructor
 
 
 {-| Which movies they appear in.

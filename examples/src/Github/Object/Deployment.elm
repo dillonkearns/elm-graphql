@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Deployment exposing (StatusesOptionalArguments, commit, createdAt, creator, databaseId, environment, id, latestStatus, payload, repository, selection, state, statuses)
+module Github.Object.Deployment exposing (StatusesOptionalArguments, commit, createdAt, creator, databaseId, environment, id, latestStatus, payload, repository, state, statuses)
 
 import Github.Enum.DeploymentState
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Deployment
-selection constructor =
-    Object.selection constructor
 
 
 {-| Identifies the commit sha of the deployment.

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewDismissedEvent exposing (actor, createdAt, databaseId, id, message, messageHtml, previousReviewState, pullRequest, pullRequestCommit, resourcePath, review, selection, url)
+module Github.Object.ReviewDismissedEvent exposing (actor, createdAt, databaseId, id, message, messageHtml, previousReviewState, pullRequest, pullRequestCommit, resourcePath, review, url)
 
 import Github.Enum.PullRequestReviewState
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ReviewDismissedEvent
-selection constructor =
-    Object.selection constructor
 
 
 {-| Identifies the actor who performed the event.

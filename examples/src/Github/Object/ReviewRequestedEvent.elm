@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewRequestedEvent exposing (actor, createdAt, id, pullRequest, requestedReviewer, selection, subject)
+module Github.Object.ReviewRequestedEvent exposing (actor, createdAt, id, pullRequest, requestedReviewer, subject)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ReviewRequestedEvent
-selection constructor =
-    Object.selection constructor
 
 
 {-| Identifies the actor who performed the event.

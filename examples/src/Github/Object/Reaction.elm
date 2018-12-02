@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Reaction exposing (content, createdAt, databaseId, id, reactable, selection, user)
+module Github.Object.Reaction exposing (content, createdAt, databaseId, id, reactable, user)
 
 import Github.Enum.ReactionContent
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Reaction
-selection constructor =
-    Object.selection constructor
 
 
 {-| Identifies the emoji reaction.

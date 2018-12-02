@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Mutation exposing (AcceptTopicSuggestionRequiredArguments, AddCommentRequiredArguments, AddProjectCardRequiredArguments, AddProjectColumnRequiredArguments, AddPullRequestReviewCommentRequiredArguments, AddPullRequestReviewRequiredArguments, AddReactionRequiredArguments, AddStarRequiredArguments, CreateProjectRequiredArguments, DeclineTopicSuggestionRequiredArguments, DeleteProjectCardRequiredArguments, DeleteProjectColumnRequiredArguments, DeleteProjectRequiredArguments, DeletePullRequestReviewRequiredArguments, DismissPullRequestReviewRequiredArguments, LockLockableRequiredArguments, MoveProjectCardRequiredArguments, MoveProjectColumnRequiredArguments, RemoveOutsideCollaboratorRequiredArguments, RemoveReactionRequiredArguments, RemoveStarRequiredArguments, RequestReviewsRequiredArguments, SubmitPullRequestReviewRequiredArguments, UpdateProjectCardRequiredArguments, UpdateProjectColumnRequiredArguments, UpdateProjectRequiredArguments, UpdatePullRequestReviewCommentRequiredArguments, UpdatePullRequestReviewRequiredArguments, UpdateSubscriptionRequiredArguments, UpdateTopicsRequiredArguments, acceptTopicSuggestion, addComment, addProjectCard, addProjectColumn, addPullRequestReview, addPullRequestReviewComment, addReaction, addStar, createProject, declineTopicSuggestion, deleteProject, deleteProjectCard, deleteProjectColumn, deletePullRequestReview, dismissPullRequestReview, lockLockable, moveProjectCard, moveProjectColumn, removeOutsideCollaborator, removeReaction, removeStar, requestReviews, selection, submitPullRequestReview, updateProject, updateProjectCard, updateProjectColumn, updatePullRequestReview, updatePullRequestReviewComment, updateSubscription, updateTopics)
+module Github.Mutation exposing (AcceptTopicSuggestionRequiredArguments, AddCommentRequiredArguments, AddProjectCardRequiredArguments, AddProjectColumnRequiredArguments, AddPullRequestReviewCommentRequiredArguments, AddPullRequestReviewRequiredArguments, AddReactionRequiredArguments, AddStarRequiredArguments, CreateProjectRequiredArguments, DeclineTopicSuggestionRequiredArguments, DeleteProjectCardRequiredArguments, DeleteProjectColumnRequiredArguments, DeleteProjectRequiredArguments, DeletePullRequestReviewRequiredArguments, DismissPullRequestReviewRequiredArguments, LockLockableRequiredArguments, MoveProjectCardRequiredArguments, MoveProjectColumnRequiredArguments, RemoveOutsideCollaboratorRequiredArguments, RemoveReactionRequiredArguments, RemoveStarRequiredArguments, RequestReviewsRequiredArguments, SubmitPullRequestReviewRequiredArguments, UpdateProjectCardRequiredArguments, UpdateProjectColumnRequiredArguments, UpdateProjectRequiredArguments, UpdatePullRequestReviewCommentRequiredArguments, UpdatePullRequestReviewRequiredArguments, UpdateSubscriptionRequiredArguments, UpdateTopicsRequiredArguments, acceptTopicSuggestion, addComment, addProjectCard, addProjectColumn, addPullRequestReview, addPullRequestReviewComment, addReaction, addStar, createProject, declineTopicSuggestion, deleteProject, deleteProjectCard, deleteProjectColumn, deletePullRequestReview, dismissPullRequestReview, lockLockable, moveProjectCard, moveProjectColumn, removeOutsideCollaborator, removeReaction, removeStar, requestReviews, submitPullRequestReview, updateProject, updateProjectCard, updateProjectColumn, updatePullRequestReview, updatePullRequestReviewComment, updateSubscription, updateTopics)
 
 import Github.InputObject
 import Github.Interface
@@ -17,14 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
-
-
-{-| Select fields to build up a top-level mutation. The request can be sent with
-functions from `Graphql.Http`.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
-selection constructor =
-    Object.selection constructor
 
 
 type alias AcceptTopicSuggestionRequiredArguments =

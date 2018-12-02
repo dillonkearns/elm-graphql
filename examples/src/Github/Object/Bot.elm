@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Bot exposing (AvatarUrlOptionalArguments, avatarUrl, createdAt, databaseId, id, login, resourcePath, selection, updatedAt, url)
+module Github.Object.Bot exposing (AvatarUrlOptionalArguments, avatarUrl, createdAt, databaseId, id, login, resourcePath, updatedAt, url)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Bot
-selection constructor =
-    Object.selection constructor
 
 
 type alias AvatarUrlOptionalArguments =

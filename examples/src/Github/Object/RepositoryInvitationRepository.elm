@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryInvitationRepository exposing (ShortDescriptionHTMLOptionalArguments, createdAt, description, descriptionHTML, forkCount, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, mirrorUrl, name, nameWithOwner, owner, pushedAt, resourcePath, selection, shortDescriptionHTML, updatedAt, url)
+module Github.Object.RepositoryInvitationRepository exposing (ShortDescriptionHTMLOptionalArguments, createdAt, description, descriptionHTML, forkCount, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, mirrorUrl, name, nameWithOwner, owner, pushedAt, resourcePath, shortDescriptionHTML, updatedAt, url)
 
 import Github.Enum.RepositoryLockReason
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryInvitationRepository
-selection constructor =
-    Object.selection constructor
 
 
 {-| Identifies the date and time when the object was created.

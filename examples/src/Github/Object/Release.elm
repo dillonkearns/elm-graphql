@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Release exposing (ReleaseAssetsOptionalArguments, author, createdAt, description, id, isDraft, isPrerelease, name, publishedAt, releaseAssets, resourcePath, selection, tag, updatedAt, url)
+module Github.Object.Release exposing (ReleaseAssetsOptionalArguments, author, createdAt, description, id, isDraft, isPrerelease, name, publishedAt, releaseAssets, resourcePath, tag, updatedAt, url)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Release
-selection constructor =
-    Object.selection constructor
 
 
 {-| The author of the release

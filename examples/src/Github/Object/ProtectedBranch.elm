@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ProtectedBranch exposing (PushAllowancesOptionalArguments, ReviewDismissalAllowancesOptionalArguments, creator, hasDismissableStaleReviews, hasRequiredReviews, hasRequiredStatusChecks, hasRestrictedPushes, hasRestrictedReviewDismissals, hasStrictRequiredStatusChecks, id, isAdminEnforced, name, pushAllowances, repository, requiredStatusCheckContexts, reviewDismissalAllowances, selection)
+module Github.Object.ProtectedBranch exposing (PushAllowancesOptionalArguments, ReviewDismissalAllowancesOptionalArguments, creator, hasDismissableStaleReviews, hasRequiredReviews, hasRequiredStatusChecks, hasRestrictedPushes, hasRestrictedReviewDismissals, hasStrictRequiredStatusChecks, id, isAdminEnforced, name, pushAllowances, repository, requiredStatusCheckContexts, reviewDismissalAllowances)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ProtectedBranch
-selection constructor =
-    Object.selection constructor
 
 
 {-| The actor who created this protected branch.

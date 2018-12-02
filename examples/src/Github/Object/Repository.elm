@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Repository exposing (AssignableUsersOptionalArguments, CollaboratorsOptionalArguments, CommitCommentsOptionalArguments, DeployKeysOptionalArguments, DeploymentsOptionalArguments, ForksOptionalArguments, IssueOrPullRequestRequiredArguments, IssueRequiredArguments, IssuesOptionalArguments, LabelRequiredArguments, LabelsOptionalArguments, LanguagesOptionalArguments, MentionableUsersOptionalArguments, MilestoneRequiredArguments, MilestonesOptionalArguments, ObjectOptionalArguments, ProjectRequiredArguments, ProjectsOptionalArguments, ProtectedBranchesOptionalArguments, PullRequestRequiredArguments, PullRequestsOptionalArguments, RefRequiredArguments, RefsOptionalArguments, RefsRequiredArguments, ReleaseRequiredArguments, ReleasesOptionalArguments, RepositoryTopicsOptionalArguments, ShortDescriptionHTMLOptionalArguments, StargazersOptionalArguments, WatchersOptionalArguments, assignableUsers, codeOfConduct, collaborators, commitComments, createdAt, databaseId, defaultBranchRef, deployKeys, deployments, description, descriptionHTML, diskUsage, forkCount, forks, hasIssuesEnabled, hasWikiEnabled, homepageUrl, id, isArchived, isFork, isLocked, isMirror, isPrivate, issue, issueOrPullRequest, issues, label, labels, languages, license, licenseInfo, lockReason, mentionableUsers, milestone, milestones, mirrorUrl, name, nameWithOwner, object, owner, parent, primaryLanguage, project, projects, projectsResourcePath, projectsUrl, protectedBranches, pullRequest, pullRequests, pushedAt, ref, refs, release, releases, repositoryTopics, resourcePath, selection, shortDescriptionHTML, sshUrl, stargazers, updatedAt, url, viewerCanAdminister, viewerCanCreateProjects, viewerCanSubscribe, viewerCanUpdateTopics, viewerHasStarred, viewerPermission, viewerSubscription, watchers)
+module Github.Object.Repository exposing (AssignableUsersOptionalArguments, CollaboratorsOptionalArguments, CommitCommentsOptionalArguments, DeployKeysOptionalArguments, DeploymentsOptionalArguments, ForksOptionalArguments, IssueOrPullRequestRequiredArguments, IssueRequiredArguments, IssuesOptionalArguments, LabelRequiredArguments, LabelsOptionalArguments, LanguagesOptionalArguments, MentionableUsersOptionalArguments, MilestoneRequiredArguments, MilestonesOptionalArguments, ObjectOptionalArguments, ProjectRequiredArguments, ProjectsOptionalArguments, ProtectedBranchesOptionalArguments, PullRequestRequiredArguments, PullRequestsOptionalArguments, RefRequiredArguments, RefsOptionalArguments, RefsRequiredArguments, ReleaseRequiredArguments, ReleasesOptionalArguments, RepositoryTopicsOptionalArguments, ShortDescriptionHTMLOptionalArguments, StargazersOptionalArguments, WatchersOptionalArguments, assignableUsers, codeOfConduct, collaborators, commitComments, createdAt, databaseId, defaultBranchRef, deployKeys, deployments, description, descriptionHTML, diskUsage, forkCount, forks, hasIssuesEnabled, hasWikiEnabled, homepageUrl, id, isArchived, isFork, isLocked, isMirror, isPrivate, issue, issueOrPullRequest, issues, label, labels, languages, license, licenseInfo, lockReason, mentionableUsers, milestone, milestones, mirrorUrl, name, nameWithOwner, object, owner, parent, primaryLanguage, project, projects, projectsResourcePath, projectsUrl, protectedBranches, pullRequest, pullRequests, pushedAt, ref, refs, release, releases, repositoryTopics, resourcePath, shortDescriptionHTML, sshUrl, stargazers, updatedAt, url, viewerCanAdminister, viewerCanCreateProjects, viewerCanSubscribe, viewerCanUpdateTopics, viewerHasStarred, viewerPermission, viewerSubscription, watchers)
 
 import Github.Enum.CollaboratorAffiliation
 import Github.Enum.IssueState
@@ -28,13 +28,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Repository
-selection constructor =
-    Object.selection constructor
 
 
 type alias AssignableUsersOptionalArguments =

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Issue exposing (AssigneesOptionalArguments, CommentsOptionalArguments, LabelsOptionalArguments, ParticipantsOptionalArguments, ProjectCardsOptionalArguments, ReactionsOptionalArguments, TimelineOptionalArguments, UserContentEditsOptionalArguments, activeLockReason, assignees, author, authorAssociation, body, bodyHTML, bodyText, closed, closedAt, comments, createdAt, createdViaEmail, databaseId, editor, id, labels, lastEditedAt, locked, milestone, number, participants, projectCards, publishedAt, reactionGroups, reactions, repository, resourcePath, selection, state, timeline, title, updatedAt, url, userContentEdits, viewerCanReact, viewerCanSubscribe, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor, viewerSubscription)
+module Github.Object.Issue exposing (AssigneesOptionalArguments, CommentsOptionalArguments, LabelsOptionalArguments, ParticipantsOptionalArguments, ProjectCardsOptionalArguments, ReactionsOptionalArguments, TimelineOptionalArguments, UserContentEditsOptionalArguments, activeLockReason, assignees, author, authorAssociation, body, bodyHTML, bodyText, closed, closedAt, comments, createdAt, createdViaEmail, databaseId, editor, id, labels, lastEditedAt, locked, milestone, number, participants, projectCards, publishedAt, reactionGroups, reactions, repository, resourcePath, state, timeline, title, updatedAt, url, userContentEdits, viewerCanReact, viewerCanSubscribe, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor, viewerSubscription)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
@@ -23,13 +23,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Issue
-selection constructor =
-    Object.selection constructor
 
 
 {-| Reason that the conversation was locked.

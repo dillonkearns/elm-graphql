@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryInvitation exposing (id, invitee, inviter, permission, repository, selection)
+module Github.Object.RepositoryInvitation exposing (id, invitee, inviter, permission, repository)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject
@@ -18,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryInvitation
-selection constructor =
-    Object.selection constructor
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.RepositoryInvitation

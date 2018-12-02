@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Labelable exposing (Fragments, LabelsOptionalArguments, fragments, labels, maybeFragments, selection)
+module Github.Interface.Labelable exposing (Fragments, LabelsOptionalArguments, fragments, labels, maybeFragments)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Labelable
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =

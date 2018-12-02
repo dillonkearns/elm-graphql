@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RequestReviewsPayload exposing (clientMutationId, pullRequest, requestedReviewersEdge, selection)
+module Github.Object.RequestReviewsPayload exposing (clientMutationId, pullRequest, requestedReviewersEdge)
 
 import Github.InputObject
 import Github.Interface
@@ -17,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RequestReviewsPayload
-selection constructor =
-    Object.selection constructor
 
 
 {-| A unique identifier for the client performing the mutation.
