@@ -522,32 +522,8 @@ type FragmentSelectionSet decodesTo typeLock
     = FragmentSelectionSet String (List RawField) (Decoder decodesTo)
 
 
-
-{- TODO add this documentation to `with`
-   Used to pick out fields on an object.
-
-      import StarWars.Enum.Episode as Episode exposing (Episode)
-      import StarWars.Object
-      import StarWars.Scalar
-      import Graphql.SelectionSet exposing (SelectionSet, with)
-
-      type alias Hero =
-          { name : String
-          , id : StarWars.Scalar.Id
-          , appearsIn : List Episode
-          }
-
-      hero : SelectionSet Hero StarWars.Interface.Character
-      hero =
-          Character.commonSelection Hero
-              |> with Character.name
-              |> with Character.id
-              |> with Character.appearsIn
-
--}
-
-
-{-| TODO
+{-| See the explanation in the Pipeline section. This function is used
+to add `SelectionSet`s onto a pipeline.
 -}
 with : SelectionSet a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
 with (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
