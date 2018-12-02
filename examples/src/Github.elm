@@ -52,13 +52,7 @@ repo =
         |> with Repository.createdAt
         |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
         |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
-        |> with (Repository.stargazers identity stargazers)
-
-
-stargazers : SelectionSet Int Github.Object.StargazerConnection
-stargazers =
-    Github.Object.StargazerConnection.selection identity
-        |> with Github.Object.StargazerConnection.totalCount
+        |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
 type alias ReleaseInfo =

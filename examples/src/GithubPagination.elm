@@ -1,5 +1,6 @@
 module GithubPagination exposing (main)
 
+import Browser
 import Github.Enum.SearchType
 import Github.Object
 import Github.Object.PageInfo
@@ -71,15 +72,19 @@ searchPageInfoSelection =
         |> with Github.Object.PageInfo.hasNextPage
 
 
-searchResultField : Field.Field (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
+searchResultField : SelectionSet (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
 searchResultField =
-    Github.Object.SearchResultItemConnection.nodes searchResultSelection |> Helpers.expectField
+    Github.Object.SearchResultItemConnection.nodes searchResultSelection |> SelectionSet.nonNullOrFail
 
 
 searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
 searchResultSelection =
-    Github.Union.SearchResultItem.selection identity
-        [ Github.Union.SearchResultItem.onRepository repositorySelection ]
+    let
+        defaults =
+            Github.Union.SearchResultItem.maybeFragments
+    in
+    Github.Union.SearchResultItem.selection
+        { defaults | onRepository = repositorySelection |> SelectionSet.map Just }
 
 
 type alias Repo =
@@ -122,8 +127,8 @@ type alias RemoteDataResponse =
     RemoteData (Graphql.Http.Error Response) Response
 
 
-init : ( Model, Cmd Msg )
-init =
+init : Flags -> ( Model, Cmd Msg )
+init flags =
     ( [ RemoteData.Loading ], makeRequest Nothing )
 
 
@@ -166,7 +171,11 @@ update msg model =
                     ( model, Cmd.none )
 
 
-main : Program Never Model Msg
+type alias Flags =
+    ()
+
+
+main : Program Flags Model Msg
 main =
     Browser.element
         { init = init
