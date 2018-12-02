@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.PushAllowanceActor exposing (Fragments, maybeFragments, selection)
+module Github.Union.PushAllowanceActor exposing (Fragments, fragments, maybeFragments)
 
 import Github.InputObject
 import Github.Interface
@@ -27,10 +27,10 @@ type alias Fragments decodesTo =
 
 {-| Build up a selection for this Union by passing in a Fragments record.
 -}
-selection :
+fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Union.PushAllowanceActor
-selection selections =
+fragments selections =
     Object.exhuastiveFragmentSelection
         [ Object.buildFragment "User" selections.onUser
         , Object.buildFragment "Team" selections.onTeam
@@ -40,7 +40,7 @@ selection selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)

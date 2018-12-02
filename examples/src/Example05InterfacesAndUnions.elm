@@ -56,7 +56,7 @@ type HumanOrDroidDetails
 
 heroUnionSelection : SelectionSet HumanOrDroidDetails Swapi.Union.CharacterUnion
 heroUnionSelection =
-    Swapi.Union.CharacterUnion.selection
+    Swapi.Union.CharacterUnion.fragments
         { onHuman = SelectionSet.map HumanDetails Human.homePlanet
         , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
         }
@@ -99,7 +99,7 @@ nonExhaustiveFragment =
         maybeFragments =
             Swapi.Union.CharacterUnion.maybeFragments
     in
-    Swapi.Union.CharacterUnion.selection
+    Swapi.Union.CharacterUnion.fragments
         { maybeFragments
             | onHuman = Human.homePlanet
         }
