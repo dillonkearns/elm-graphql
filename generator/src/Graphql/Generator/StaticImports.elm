@@ -8,7 +8,6 @@ all : Context -> String
 all { apiSubmodule } =
     interpolate
         """import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)

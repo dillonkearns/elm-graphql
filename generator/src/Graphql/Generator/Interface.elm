@@ -87,7 +87,6 @@ prepend { apiSubmodule } moduleName fields =
     interpolate """module {0} exposing (..)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
