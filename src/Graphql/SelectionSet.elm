@@ -80,7 +80,6 @@ it ever maps to an `Err` instead of an `Ok` `Result`.
 -}
 
 import Graphql.Document.Field
-import Graphql.Field as Field exposing (Field(..))
 import Graphql.RawField as RawField exposing (RawField)
 import Json.Decode as Decode exposing (Decoder)
 import List.Extra
