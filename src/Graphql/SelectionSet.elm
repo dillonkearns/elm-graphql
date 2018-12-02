@@ -201,7 +201,9 @@ withDefault default =
 
 
 {-| Combine two `SelectionSet`s into one, using the given combine function to
-merge the two data sets together.
+merge the two data sets together. See the top of these docs for an example,
+or check out the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src)
+folder.
 -}
 map2 :
     (decodesTo1 -> decodesTo2 -> decodesToCombined)
