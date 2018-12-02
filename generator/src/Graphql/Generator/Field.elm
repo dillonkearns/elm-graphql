@@ -210,7 +210,7 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
     , fieldArgs = []
     , decoderAnnotation = Graphql.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder = "object_"
-    , otherThing = ".selectionField"
+    , otherThing = ".selectionForCompositeField"
     , letBindings = []
     , objectDecoderChain =
         " ("

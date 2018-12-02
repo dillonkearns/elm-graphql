@@ -1,5 +1,5 @@
 module Graphql.Internal.Builder.Object exposing
-    ( fieldDecoder, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
+    ( fieldDecoder, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
     , selectionForField, selectionForCompositeField
     )
 
@@ -8,7 +8,7 @@ code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, selectionField, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
+@docs fieldDecoder, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
 
 
 ## New API
@@ -79,18 +79,6 @@ selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderT
             (Graphql.Document.Field.hashedAliasName (composite fieldName args fields))
             (decoderTransform decoder)
         )
-
-
-{-| Refer to an object in auto-generated code.
--}
-selectionField :
-    String
-    -> List Argument
-    -> SelectionSet a objectTypeLock
-    -> (Decoder a -> Decoder b)
-    -> SelectionSet b lockedTo
-selectionField =
-    selectionForCompositeField
 
 
 composite : String -> List Argument -> List RawField -> RawField
