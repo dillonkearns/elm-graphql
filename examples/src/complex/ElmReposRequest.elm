@@ -116,9 +116,9 @@ type alias Timestamps =
 
 timestampsSelection : SelectionSet Timestamps Github.Object.Repository
 timestampsSelection =
-    SelectionSet.succeed Timestamps
-        |> with (Repository.createdAt |> mapToDateTime)
-        |> with (Repository.updatedAt |> mapToDateTime)
+    SelectionSet.map2 Timestamps
+        (Repository.createdAt |> mapToDateTime)
+        (Repository.updatedAt |> mapToDateTime)
 
 
 mapToDateTime : SelectionSet Github.Scalar.DateTime typeLock -> SelectionSet Posix typeLock
@@ -152,6 +152,6 @@ type alias Owner =
 
 ownerSelection : SelectionSet Owner Github.Interface.RepositoryOwner
 ownerSelection =
-    SelectionSet.succeed Owner
-        |> with (Github.Interface.RepositoryOwner.avatarUrl identity)
-        |> with Github.Interface.RepositoryOwner.login
+    SelectionSet.map2 Owner
+        (Github.Interface.RepositoryOwner.avatarUrl identity)
+        Github.Interface.RepositoryOwner.login
