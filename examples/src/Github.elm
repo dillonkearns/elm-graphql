@@ -36,19 +36,14 @@ type alias RepositoryInfo =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
+    SelectionSet.succeed Response
         |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo |> SelectionSet.nonNullOrFail)
-        |> with (Query.topic { name = "" } topicId)
-
-
-topicId : SelectionSet Github.Scalar.Id Github.Object.Topic
-topicId =
-    Github.Object.Topic.selection identity |> with Github.Object.Topic.id
+        |> with (Query.topic { name = "" } Github.Object.Topic.id)
 
 
 repo : SelectionSet RepositoryInfo Github.Object.Repository
 repo =
-    Repository.selection RepositoryInfo
+    SelectionSet.succeed RepositoryInfo
         |> with Repository.createdAt
         |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
         |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
@@ -63,7 +58,7 @@ type alias ReleaseInfo =
 
 releases : SelectionSet ReleaseInfo Github.Object.ReleaseConnection
 releases =
-    Github.Object.ReleaseConnection.selection ReleaseInfo
+    SelectionSet.succeed ReleaseInfo
         |> with Github.Object.ReleaseConnection.totalCount
         |> with (Github.Object.ReleaseConnection.nodes release |> SelectionSet.nonNullOrFail |> SelectionSet.nonNullElementsOrFail)
 
@@ -76,7 +71,7 @@ type alias Release =
 
 release : SelectionSet Release Github.Object.Release
 release =
-    Github.Object.Release.selection Release
+    SelectionSet.succeed Release
         |> with (Github.Object.Release.name |> SelectionSet.map (Maybe.withDefault ""))
         |> with Github.Object.Release.url
 
