@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Add `SelectionSet.mapN` functions for an alternate syntax to the pipeline syntax
+  (starting a pipeline with `SelectionSet.succeed`).
+
+### Changed
+
+- The `Field` module has been removed. With this change, think of a `Field` as
+  just a special case of a `SelectionSet`. The `SelectionSet` is now used
+  for both a single element or multiple (much like a single `Cmd msg` or multiple
+  with `Cmd.batch [cmd1, cmd2]`). This means that any functions you called on
+  `Field` before are now in `SelectionSet` (so it's `SelectionSet.nonNullOrFail`,
+  `SelectionSet.map`, etc).
+
 ## [1.5.1] - 2018-12-01
 
 ### Fixed
