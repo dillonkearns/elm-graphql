@@ -14,7 +14,7 @@ import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet exposing (SelectionSet, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -37,7 +37,7 @@ type alias RepositoryInfo =
 query : SelectionSet Response RootQuery
 query =
     Query.selection Response
-        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo |> Field.nonNullOrFail)
+        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo |> SelectionSet.nonNullOrFail)
         |> with (Query.topic { name = "" } topicId)
 
 
@@ -71,7 +71,7 @@ releases : SelectionSet ReleaseInfo Github.Object.ReleaseConnection
 releases =
     Github.Object.ReleaseConnection.selection ReleaseInfo
         |> with Github.Object.ReleaseConnection.totalCount
-        |> with (Github.Object.ReleaseConnection.nodes release |> Field.nonNullOrFail |> Field.nonNullElementsOrFail)
+        |> with (Github.Object.ReleaseConnection.nodes release |> SelectionSet.nonNullOrFail |> SelectionSet.nonNullElementsOrFail)
 
 
 type alias Release =
@@ -83,7 +83,7 @@ type alias Release =
 release : SelectionSet Release Github.Object.Release
 release =
     Github.Object.Release.selection Release
-        |> with (Github.Object.Release.name |> Field.map (Maybe.withDefault ""))
+        |> with (Github.Object.Release.name |> SelectionSet.map (Maybe.withDefault ""))
         |> with Github.Object.Release.url
 
 
@@ -92,6 +92,7 @@ makeRequest =
     query
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
+        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

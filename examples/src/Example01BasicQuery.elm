@@ -5,7 +5,7 @@ import Graphql.Document as Document
 import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Interface
@@ -82,9 +82,9 @@ type alias Character =
 characterInfoSelection : SelectionSet Character Swapi.Interface.Character
 characterInfoSelection =
     SelectionSet.succeed Character
-        |> withFragment Character.name
-        |> withFragment Character.id
-        |> withFragment (Character.friends Character.name)
+        |> with Character.name
+        |> with Character.id
+        |> with (Character.friends Character.name)
 
 
 makeRequest : Cmd Msg
