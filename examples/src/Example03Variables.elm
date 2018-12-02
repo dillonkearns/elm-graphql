@@ -44,7 +44,6 @@ makeRequest =
     Id "1001"
         |> query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

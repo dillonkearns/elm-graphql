@@ -12,7 +12,6 @@ import Github.Scalar
 import Github.Union
 import Github.Union.SearchResultItem
 import Graphql.Document as Document
-import Graphql.Field as Field exposing (Field)
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
@@ -36,25 +35,22 @@ type alias Paginator dataType cursorType =
 
 query : Maybe String -> SelectionSet Response RootQuery
 query cursor =
-    Query.selection identity
-        |> with
-            (Query.search
-                (\optionals ->
-                    { optionals
-                        | first = Present 1
-                        , after = OptionalArgument.fromMaybe cursor
-                    }
-                )
-                { query = "language:Elm"
-                , type_ = Github.Enum.SearchType.Repository
-                }
-                searchSelection
-            )
+    Query.search
+        (\optionals ->
+            { optionals
+                | first = Present 1
+                , after = OptionalArgument.fromMaybe cursor
+            }
+        )
+        { query = "language:Elm"
+        , type_ = Github.Enum.SearchType.Repository
+        }
+        searchSelection
 
 
 searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
 searchSelection =
-    Github.Object.SearchResultItemConnection.selection Paginator
+    SelectionSet.succeed Paginator
         |> with searchResultField
         |> with (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
 
@@ -67,7 +63,7 @@ type alias PaginationData cursorType =
 
 searchPageInfoSelection : SelectionSet (PaginationData String) Github.Object.PageInfo
 searchPageInfoSelection =
-    Github.Object.PageInfo.selection PaginationData
+    SelectionSet.succeed PaginationData
         |> with Github.Object.PageInfo.endCursor
         |> with Github.Object.PageInfo.hasNextPage
 
@@ -98,12 +94,12 @@ type alias Repo =
 
 repositorySelection : SelectionSet Repo Github.Object.Repository
 repositorySelection =
-    Repository.selection Repo
+    SelectionSet.succeed Repo
         |> with Repository.nameWithOwner
         |> with Repository.description
         |> with Repository.createdAt
         |> with Repository.updatedAt
-        |> with (Repository.stargazers identity (Github.Object.StargazerConnection.selection identity |> with Github.Object.StargazerConnection.totalCount))
+        |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
 makeRequest : Maybe String -> Cmd Msg

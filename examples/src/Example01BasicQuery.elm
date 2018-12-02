@@ -47,11 +47,11 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
-        -- We use `identity` to say that we aren't giving any
-        -- optional arguments to `hero`. Read this blog post for more:
-        -- https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74
-        |> with (Query.hero identity characterInfoSelection)
+    -- We use `identity` to say that we aren't giving any
+    -- optional arguments to `hero`. Read this blog post for more:
+    -- https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74
+    Query.hero identity characterInfoSelection
+        |> SelectionSet.map Response
 
 
 
@@ -91,7 +91,6 @@ makeRequest : Cmd Msg
 makeRequest =
     query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

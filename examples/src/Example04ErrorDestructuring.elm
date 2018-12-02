@@ -28,7 +28,6 @@ type alias Response =
 query : Id -> SelectionSet Response RootQuery
 query id =
     Query.forcedError
-        |> fieldSelection
 
 
 makeRequest : Cmd Msg
@@ -36,7 +35,6 @@ makeRequest =
     Id "1001"
         |> query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

@@ -13,7 +13,6 @@ import Github.Object.Repository
 import Github.Object.RepositoryConnection
 import Github.Query
 import Github.Scalar
-import Graphql.Field as Field exposing (Field)
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
@@ -46,14 +45,14 @@ type alias Response =
 
 licenseExplorerQuery : String -> SelectionSet Response RootQuery
 licenseExplorerQuery owner =
-    Github.Query.selection Response
+    SelectionSet.succeed Response
         |> with
             (Github.Query.licenses
-                (Github.Object.License.selection FullLicense
-                    |> withFragment fragmentLicenseOverview
-                    |> withFragment fragmentLicenseDetails
+                (SelectionSet.succeed FullLicense
+                    |> with fragmentLicenseOverview
+                    |> with fragmentLicenseDetails
                 )
-                |> Field.map (List.filterMap identity)
+                |> SelectionSet.map (List.filterMap identity)
             )
         |> with (ownerLicenses owner)
 
@@ -77,7 +76,7 @@ type alias LicenseOverview =
 
 fragmentLicenseOverview : SelectionSet LicenseOverview Github.Object.License
 fragmentLicenseOverview =
-    Github.Object.License.selection LicenseOverview
+    SelectionSet.succeed LicenseOverview
         |> with Github.Object.License.name
         |> with Github.Object.License.key
         |> with Github.Object.License.url
@@ -104,14 +103,14 @@ type alias LicenseDetails =
 
 fragmentLicenseDetails : SelectionSet LicenseDetails Github.Object.License
 fragmentLicenseDetails =
-    Github.Object.License.selection LicenseDetails
+    SelectionSet.succeed LicenseDetails
         |> with
-            (Github.Object.License.conditions (fieldSelection Github.Object.LicenseRule.label)
+            (Github.Object.License.conditions Github.Object.LicenseRule.label
                 |> removeNothingsFromList
             )
         |> with
             (Github.Object.License.permissions
-                (fieldSelection Github.Object.LicenseRule.label)
+                Github.Object.LicenseRule.label
                 |> removeNothingsFromList
             )
 
@@ -134,7 +133,7 @@ type alias RepoWithLicense =
 
 
 fragmentRepoWithLicense =
-    Github.Object.Repository.selection RepoWithLicense
+    SelectionSet.succeed RepoWithLicense
         |> with Github.Object.Repository.name
         |> with (Github.Object.Repository.licenseInfo fragmentLicenseOverview)
 
@@ -151,26 +150,23 @@ fragmentRepoWithLicense =
 -}
 
 
-ownerLicenses : String -> Field (List RepoWithLicense) RootQuery
+ownerLicenses : String -> SelectionSet (List RepoWithLicense) RootQuery
 ownerLicenses ownerLogin =
     Github.Query.repositoryOwner { login = ownerLogin }
         (Github.Interface.RepositoryOwner.pinnedRepositories (\input -> { input | first = Present 6 })
             (Github.Object.RepositoryConnection.nodes
                 fragmentRepoWithLicense
-                |> Field.nonNullOrFail
+                |> SelectionSet.nonNullOrFail
                 |> removeNothingsFromList
-                |> fieldSelection
             )
-            |> fieldSelection
         )
-        |> Field.nonNullOrFail
+        |> SelectionSet.nonNullOrFail
 
 
 makeRequest =
     licenseExplorerQuery "dillonkearns"
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (Graphql.Http.parseableErrorAsSuccess >> RemoteData.fromResult >> GotLicenses)
 
 
@@ -291,9 +287,9 @@ update msg model =
             ( response, Cmd.none )
 
 
-removeNothingsFromList : Field (List (Maybe a)) typeLock -> Field (List a) typeLock
+removeNothingsFromList : SelectionSet (List (Maybe a)) typeLock -> SelectionSet (List a) typeLock
 removeNothingsFromList =
-    Field.map (List.filterMap identity)
+    SelectionSet.map (List.filterMap identity)
 
 
 type alias Flags =

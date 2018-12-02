@@ -12,14 +12,12 @@ import Swapi.Mutation as Mutation
 
 
 type alias Response =
-    { counterValue : Int
-    }
+    Int
 
 
 mutation : SelectionSet Response RootMutation
 mutation =
-    Mutation.selection Response
-        |> with Mutation.increment
+    Mutation.increment
 
 
 makeRequest : Cmd Msg
