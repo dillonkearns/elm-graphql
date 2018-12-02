@@ -1,5 +1,5 @@
 module Graphql.Internal.Builder.Object exposing
-    ( fieldDecoder, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
+    ( fieldDecoder, interfaceSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
     , selectionForField, selectionForCompositeField
     )
 
@@ -8,7 +8,7 @@ code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, interfaceSelection, unionSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
+@docs fieldDecoder, interfaceSelection, scalarDecoder, exhuastiveFragmentSelection, buildFragment
 
 
 ## New API
@@ -153,31 +153,3 @@ exhaustiveFailureMessage typeSpecificSelections typeName =
     interpolate
         "Unhandled type `{0}` in exhaustive fragment handling. The following types had handlers registered to handle them: [{1}]. This happens if you are parsing either a Union or Interface. Do you need to rerun the `@dillonkearns/elm-graphql` command line tool?"
         [ typeName, typeSpecificSelections |> List.map (\(FragmentSelectionSet fragmentType fields decoder) -> fragmentType) |> String.join ", " ]
-
-
-{-| Used to create the `selection` functions in auto-generated code for unions.
--}
-unionSelection : List (FragmentSelectionSet typeSpecific typeLock) -> (Maybe typeSpecific -> a) -> SelectionSet a typeLock
-unionSelection typeSpecificSelections constructor =
-    let
-        typeNameDecoder =
-            \typeName ->
-                typeSpecificSelections
-                    |> List.map (\(FragmentSelectionSet thisTypeName fields decoder) -> ( thisTypeName, decoder ))
-                    |> Dict.fromList
-                    |> Dict.get typeName
-                    |> Maybe.map (Decode.map Just)
-                    |> Maybe.withDefault (Decode.succeed Nothing)
-
-        selections =
-            typeSpecificSelections
-                |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
-    in
-    SelectionSet (leaf "__typename" [] :: selections)
-        (Decode.map2 (|>)
-            (Decode.string
-                |> Decode.field "__typename"
-                |> Decode.andThen typeNameDecoder
-            )
-            (Decode.succeed constructor)
-        )
