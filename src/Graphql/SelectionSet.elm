@@ -284,16 +284,25 @@ type SelectionSet decodesTo typeLock
 that the `name` field on a `User` object is a String according to your GraphQL
 schema.
 
+    import Graphql.Operation exposing (RootQuery)
     import Graphql.SelectionSet exposing (SelectionSet)
-    import StarWars.Object
-    import StarWars.Object.User as User
+    import StarWars.Query as Query
 
-    human : SelectionSet String StarWars.Object.User
-    human =
-        User.name |> SelectionSet.map String.toUpper
+    query : SelectionSet String RootQuery
+    query =
+        Query.hello |> SelectionSet.map String.toUpper
 
-You can also map to values of a different type (`String -> Int`, for example), see
-[`examples/StarWars.elm`](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Starwars.elm) for more advanced example.
+You can also map to values of a different type. For example, if we
+use a (`String -> Int`) map function, it will change the type of our `SelectionSet`
+accordingly:
+
+    import Graphql.Operation exposing (RootQuery)
+    import Graphql.SelectionSet exposing (SelectionSet)
+    import StarWars.Query as Query
+
+    query : SelectionSet Int RootQuery
+    query =
+        Query.hello |> SelectionSet.map String.length
 
 `SelectionSet.map` is also helpful when using a record to wrap a type:
 
