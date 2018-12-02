@@ -534,7 +534,8 @@ with (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFi
         )
 
 
-{-| Include a hardcoded value.
+{-| Include a hardcoded value. This is used analagously to `with` to add values
+into a pipeline.
 
         import StarWars.Enum.Episode as Episode exposing (Episode)
         import StarWars.Object
