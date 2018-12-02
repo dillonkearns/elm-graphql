@@ -562,7 +562,14 @@ hardcoded constant (SelectionSet objectFields objectDecoder) =
         )
 
 
-{-| Instead of hardcoding a field like `hardcoded`, `SelectionSet.succeed` hardcodes
+{-| Most commonly `succeed` is used to start a pipeline. See the description
+in the Pipeline section above for more.
+
+There are other ways to use `succeed`. It simply takes the value you pass into it
+and decodes into that value without looking at the GraphQL response (just like
+`Json.Decode.succeed`).
+
+So instead of hardcoding a field like `hardcoded`, `SelectionSet.succeed` hardcodes
 an entire `SelectionSet`. This can be useful if you want hardcoded data based on
 only the type when using a polymorphic type (Interface or Union).
 
