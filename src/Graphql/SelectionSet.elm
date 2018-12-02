@@ -218,7 +218,7 @@ lower quality type errors.
 As an alternative to the `mapN` functions, you can build up
 `SelectionSet`s using the pipeline syntax. If you've used
 the [`elm-json-decode-pipeline`](https://package.elm-lang.org/packages/NoRedInk/elm-json-decode-pipeline/latest/)
-package then this style will feel very familiar. The example above in this page
+package then this style will feel very familiar. The `map2` example in this page
 would translate to this using the pipeline notation:
 
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
