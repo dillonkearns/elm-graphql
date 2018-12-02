@@ -1,6 +1,6 @@
 module Graphql.SelectionSet exposing
     ( with, hardcoded, empty, map, succeed, withDefault
-    , map2, map3
+    , map2, map3, map4, map5, map6, map7, map8
     , SelectionSet(..), FragmentSelectionSet(..)
     , mapOrFail, nonNullOrFail, nonNullElementsOrFail
     )
@@ -57,7 +57,12 @@ See [this live code demo](https://rebrand.ly/graphqelm) for an example.
 
 ## Combining
 
-@docs map2, map3
+If you run out of `mapN` functions for building up `SelectionSet`s,
+you can use the pipeline
+which makes it easier to handle large objects, but produces
+lower quality type errors.
+
+@docs map2, map3, map4, map5, map6, map7, map8
 
 
 ## Types
@@ -167,6 +172,86 @@ map3 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
     SelectionSet
         (List.concat [ selectionFields1, selectionFields2, selectionFields3 ])
         (Decode.map3 combine selectionDecoder1 selectionDecoder2 selectionDecoder3)
+
+
+{-| -}
+map4 :
+    (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesToCombined)
+    -> SelectionSet decodesTo1 typeLock
+    -> SelectionSet decodesTo2 typeLock
+    -> SelectionSet decodesTo3 typeLock
+    -> SelectionSet decodesTo4 typeLock
+    -> SelectionSet decodesToCombined typeLock
+map4 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) =
+    SelectionSet
+        (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4 ])
+        (Decode.map4 combine selectionDecoder1 selectionDecoder2 selectionDecoder3 selectionDecoder4)
+
+
+{-| -}
+map5 :
+    (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesToCombined)
+    -> SelectionSet decodesTo1 typeLock
+    -> SelectionSet decodesTo2 typeLock
+    -> SelectionSet decodesTo3 typeLock
+    -> SelectionSet decodesTo4 typeLock
+    -> SelectionSet decodesTo5 typeLock
+    -> SelectionSet decodesToCombined typeLock
+map5 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) =
+    SelectionSet
+        (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5 ])
+        (Decode.map5 combine selectionDecoder1 selectionDecoder2 selectionDecoder3 selectionDecoder4 selectionDecoder5)
+
+
+{-| -}
+map6 :
+    (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesTo6 -> decodesToCombined)
+    -> SelectionSet decodesTo1 typeLock
+    -> SelectionSet decodesTo2 typeLock
+    -> SelectionSet decodesTo3 typeLock
+    -> SelectionSet decodesTo4 typeLock
+    -> SelectionSet decodesTo5 typeLock
+    -> SelectionSet decodesTo6 typeLock
+    -> SelectionSet decodesToCombined typeLock
+map6 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) (SelectionSet selectionFields6 selectionDecoder6) =
+    SelectionSet
+        (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5, selectionFields6 ])
+        (Decode.map6 combine selectionDecoder1 selectionDecoder2 selectionDecoder3 selectionDecoder4 selectionDecoder5 selectionDecoder6)
+
+
+{-| -}
+map7 :
+    (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesTo6 -> decodesTo7 -> decodesToCombined)
+    -> SelectionSet decodesTo1 typeLock
+    -> SelectionSet decodesTo2 typeLock
+    -> SelectionSet decodesTo3 typeLock
+    -> SelectionSet decodesTo4 typeLock
+    -> SelectionSet decodesTo5 typeLock
+    -> SelectionSet decodesTo6 typeLock
+    -> SelectionSet decodesTo7 typeLock
+    -> SelectionSet decodesToCombined typeLock
+map7 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) (SelectionSet selectionFields6 selectionDecoder6) (SelectionSet selectionFields7 selectionDecoder7) =
+    SelectionSet
+        (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5, selectionFields6, selectionFields7 ])
+        (Decode.map7 combine selectionDecoder1 selectionDecoder2 selectionDecoder3 selectionDecoder4 selectionDecoder5 selectionDecoder6 selectionDecoder7)
+
+
+{-| -}
+map8 :
+    (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesTo6 -> decodesTo7 -> decodesTo8 -> decodesToCombined)
+    -> SelectionSet decodesTo1 typeLock
+    -> SelectionSet decodesTo2 typeLock
+    -> SelectionSet decodesTo3 typeLock
+    -> SelectionSet decodesTo4 typeLock
+    -> SelectionSet decodesTo5 typeLock
+    -> SelectionSet decodesTo6 typeLock
+    -> SelectionSet decodesTo7 typeLock
+    -> SelectionSet decodesTo8 typeLock
+    -> SelectionSet decodesToCombined typeLock
+map8 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) (SelectionSet selectionFields6 selectionDecoder6) (SelectionSet selectionFields7 selectionDecoder7) (SelectionSet selectionFields8 selectionDecoder8) =
+    SelectionSet
+        (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5, selectionFields6, selectionFields7, selectionFields8 ])
+        (Decode.map8 combine selectionDecoder1 selectionDecoder2 selectionDecoder3 selectionDecoder4 selectionDecoder5 selectionDecoder6 selectionDecoder7 selectionDecoder8)
 
 
 {-| Useful for Mutations when you don't want any data back.
