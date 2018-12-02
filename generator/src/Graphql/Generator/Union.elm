@@ -24,10 +24,10 @@ type alias Fragments decodesTo =
 
 {-| Build up a selection for this Union by passing in a Fragments record.
 -}
-selection :
+fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo {0}
-selection selections =
+fragments selections =
     Object.exhuastiveFragmentSelection
         [
           {2}
@@ -37,7 +37,7 @@ selection selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       {3}
