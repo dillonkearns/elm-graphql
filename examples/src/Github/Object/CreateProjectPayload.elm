@@ -29,4 +29,4 @@ clientMutationId =
 -}
 project : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.CreateProjectPayload
 project object_ =
-    Object.selectionField "project" [] object_ identity
+    Object.selectionForCompositeField "project" [] object_ identity

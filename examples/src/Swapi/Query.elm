@@ -30,7 +30,7 @@ type alias DroidRequiredArguments =
 -}
 droid : DroidRequiredArguments -> SelectionSet decodesTo Swapi.Object.Droid -> SelectionSet (Maybe decodesTo) RootQuery
 droid requiredArgs object_ =
-    Object.selectionField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
 
 
 {-| Getting this field will result in an error.
@@ -73,7 +73,7 @@ hero fillInOptionals object_ =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "hero" optionalArgs object_ identity
+    Object.selectionForCompositeField "hero" optionalArgs object_ identity
 
 
 type alias HeroUnionOptionalArguments =
@@ -95,7 +95,7 @@ heroUnion fillInOptionals object_ =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "heroUnion" optionalArgs object_ identity
+    Object.selectionForCompositeField "heroUnion" optionalArgs object_ identity
 
 
 type alias HumanRequiredArguments =
@@ -109,4 +109,4 @@ type alias HumanRequiredArguments =
 -}
 human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
-    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)

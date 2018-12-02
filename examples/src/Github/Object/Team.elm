@@ -48,7 +48,7 @@ ancestors fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "ancestors" optionalArgs object_ identity
+    Object.selectionForCompositeField "ancestors" optionalArgs object_ identity
 
 
 type alias AvatarUrlOptionalArguments =
@@ -105,7 +105,7 @@ childTeams fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeTeamOrder, Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "childTeams" optionalArgs object_ identity
+    Object.selectionForCompositeField "childTeams" optionalArgs object_ identity
 
 
 {-| The slug corresponding to the organization and team.
@@ -174,7 +174,7 @@ invitations fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "invitations" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "invitations" optionalArgs object_ (identity >> Decode.nullable)
 
 
 type alias MembersOptionalArguments =
@@ -209,7 +209,7 @@ members fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "membership" filledInOptionals.membership (Encode.enum Github.Enum.TeamMembershipType.toString), Argument.optional "role" filledInOptionals.role (Encode.enum Github.Enum.TeamMemberRole.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "members" optionalArgs object_ identity
+    Object.selectionForCompositeField "members" optionalArgs object_ identity
 
 
 {-| The HTTP path for the team' members
@@ -251,14 +251,14 @@ newTeamUrl =
 -}
 organization : SelectionSet decodesTo Github.Object.Organization -> SelectionSet decodesTo Github.Object.Team
 organization object_ =
-    Object.selectionField "organization" [] object_ identity
+    Object.selectionForCompositeField "organization" [] object_ identity
 
 
 {-| The parent team of the team.
 -}
 parentTeam : SelectionSet decodesTo Github.Object.Team -> SelectionSet (Maybe decodesTo) Github.Object.Team
 parentTeam object_ =
-    Object.selectionField "parentTeam" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "parentTeam" [] object_ (identity >> Decode.nullable)
 
 
 {-| The level of privacy the team has.
@@ -298,7 +298,7 @@ repositories fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeTeamRepositoryOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "repositories" optionalArgs object_ identity
+    Object.selectionForCompositeField "repositories" optionalArgs object_ identity
 
 
 {-| The HTTP path for this team's repositories

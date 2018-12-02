@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> SelectionSet decodesTo Github.Object.AddProjectCardPayload
 cardEdge object_ =
-    Object.selectionField "cardEdge" [] object_ identity
+    Object.selectionForCompositeField "cardEdge" [] object_ identity
 
 
 {-| A unique identifier for the client performing the mutation.
@@ -36,4 +36,4 @@ clientMutationId =
 -}
 projectColumn : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.AddProjectCardPayload
 projectColumn object_ =
-    Object.selectionField "projectColumn" [] object_ identity
+    Object.selectionForCompositeField "projectColumn" [] object_ identity

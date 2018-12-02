@@ -23,7 +23,7 @@ import Json.Decode as Decode
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -70,14 +70,14 @@ previousReviewState =
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.ReviewDismissedEvent
 pullRequest object_ =
-    Object.selectionField "pullRequest" [] object_ identity
+    Object.selectionForCompositeField "pullRequest" [] object_ identity
 
 
 {-| Identifies the commit which caused the review to become stale.
 -}
 pullRequestCommit : SelectionSet decodesTo Github.Object.PullRequestCommit -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 pullRequestCommit object_ =
-    Object.selectionField "pullRequestCommit" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "pullRequestCommit" [] object_ (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this review dismissed event.
@@ -91,7 +91,7 @@ resourcePath =
 -}
 review : SelectionSet decodesTo Github.Object.PullRequestReview -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissedEvent
 review object_ =
-    Object.selectionField "review" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "review" [] object_ (identity >> Decode.nullable)
 
 
 {-| The HTTP URL for this review dismissed event.

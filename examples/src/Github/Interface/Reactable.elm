@@ -72,7 +72,7 @@ id =
 -}
 reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Interface.Reactable
 reactionGroups object_ =
-    Object.selectionField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -105,7 +105,7 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReactionOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "reactions" optionalArgs object_ identity
+    Object.selectionForCompositeField "reactions" optionalArgs object_ identity
 
 
 {-| Can user react to this subject

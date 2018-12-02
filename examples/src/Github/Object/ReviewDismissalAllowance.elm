@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 actor : SelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissalAllowance
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.ReviewDismissalAllowance
@@ -34,4 +34,4 @@ id =
 -}
 protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowance
 protectedBranch object_ =
-    Object.selectionField "protectedBranch" [] object_ identity
+    Object.selectionForCompositeField "protectedBranch" [] object_ identity

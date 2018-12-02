@@ -22,21 +22,21 @@ import Json.Decode as Decode
 -}
 edges : SelectionSet decodesTo Github.Object.RepositoryTopicEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryTopicConnection
 edges object_ =
-    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo Github.Object.RepositoryTopic -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryTopicConnection
 nodes object_ =
-    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.RepositoryTopicConnection
 pageInfo object_ =
-    Object.selectionField "pageInfo" [] object_ identity
+    Object.selectionForCompositeField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.

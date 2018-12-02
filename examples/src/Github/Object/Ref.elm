@@ -55,7 +55,7 @@ associatedPullRequests fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "associatedPullRequests" optionalArgs object_ identity
+    Object.selectionForCompositeField "associatedPullRequests" optionalArgs object_ identity
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Ref
@@ -81,11 +81,11 @@ prefix =
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Ref
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity
 
 
 {-| The object the ref points to.
 -}
 target : SelectionSet decodesTo Github.Interface.GitObject -> SelectionSet decodesTo Github.Object.Ref
 target object_ =
-    Object.selectionField "target" [] object_ identity
+    Object.selectionForCompositeField "target" [] object_ identity

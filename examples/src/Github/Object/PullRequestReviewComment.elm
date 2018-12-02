@@ -25,7 +25,7 @@ import Json.Decode as Decode
 -}
 author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReviewComment
 author object_ =
-    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -60,7 +60,7 @@ bodyText =
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.PullRequestReviewComment
 commit object_ =
-    Object.selectionField "commit" [] object_ identity
+    Object.selectionForCompositeField "commit" [] object_ identity
 
 
 {-| Identifies when the comment was created.
@@ -102,7 +102,7 @@ draftedAt =
 -}
 editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReviewComment
 editor object_ =
-    Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.PullRequestReviewComment
@@ -121,7 +121,7 @@ lastEditedAt =
 -}
 originalCommit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReviewComment
 originalCommit object_ =
-    Object.selectionField "originalCommit" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "originalCommit" [] object_ (identity >> Decode.nullable)
 
 
 {-| The original line index in the diff to which the comment applies.
@@ -156,21 +156,21 @@ publishedAt =
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.PullRequestReviewComment
 pullRequest object_ =
-    Object.selectionField "pullRequest" [] object_ identity
+    Object.selectionForCompositeField "pullRequest" [] object_ identity
 
 
 {-| The pull request review associated with this review comment.
 -}
 pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReviewComment
 pullRequestReview object_ =
-    Object.selectionField "pullRequestReview" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "pullRequestReview" [] object_ (identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Object.PullRequestReviewComment
 reactionGroups object_ =
-    Object.selectionField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -203,21 +203,21 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReactionOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "reactions" optionalArgs object_ identity
+    Object.selectionForCompositeField "reactions" optionalArgs object_ identity
 
 
 {-| The comment this is a reply to.
 -}
 replyTo : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReviewComment
 replyTo object_ =
-    Object.selectionField "replyTo" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "replyTo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.PullRequestReviewComment
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity
 
 
 {-| The HTTP path permalink for this review comment.
@@ -267,7 +267,7 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

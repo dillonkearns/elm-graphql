@@ -29,4 +29,4 @@ clientMutationId =
 -}
 pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> SelectionSet decodesTo Github.Object.UpdatePullRequestReviewPayload
 pullRequestReview object_ =
-    Object.selectionField "pullRequestReview" [] object_ identity
+    Object.selectionForCompositeField "pullRequestReview" [] object_ identity

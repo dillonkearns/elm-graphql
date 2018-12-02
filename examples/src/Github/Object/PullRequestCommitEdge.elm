@@ -29,4 +29,4 @@ cursor =
 -}
 node : SelectionSet decodesTo Github.Object.PullRequestCommit -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestCommitEdge
 node object_ =
-    Object.selectionField "node" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [] object_ (identity >> Decode.nullable)

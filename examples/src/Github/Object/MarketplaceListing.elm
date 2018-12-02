@@ -217,7 +217,7 @@ pricingUrl =
 -}
 primaryCategory : SelectionSet decodesTo Github.Object.MarketplaceCategory -> SelectionSet decodesTo Github.Object.MarketplaceListing
 primaryCategory object_ =
-    Object.selectionField "primaryCategory" [] object_ identity
+    Object.selectionForCompositeField "primaryCategory" [] object_ identity
 
 
 {-| URL to the listing's privacy policy.
@@ -245,7 +245,7 @@ screenshotUrls =
 -}
 secondaryCategory : SelectionSet decodesTo Github.Object.MarketplaceCategory -> SelectionSet (Maybe decodesTo) Github.Object.MarketplaceListing
 secondaryCategory object_ =
-    Object.selectionField "secondaryCategory" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "secondaryCategory" [] object_ (identity >> Decode.nullable)
 
 
 {-| The listing's very short description.

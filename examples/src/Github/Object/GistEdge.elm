@@ -29,4 +29,4 @@ cursor =
 -}
 node : SelectionSet decodesTo Github.Object.Gist -> SelectionSet (Maybe decodesTo) Github.Object.GistEdge
 node object_ =
-    Object.selectionField "node" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [] object_ (identity >> Decode.nullable)

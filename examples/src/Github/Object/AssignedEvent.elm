@@ -22,14 +22,14 @@ import Json.Decode as Decode
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.AssignedEvent
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the assignable associated with the event.
 -}
 assignable : SelectionSet decodesTo Github.Interface.Assignable -> SelectionSet decodesTo Github.Object.AssignedEvent
 assignable object_ =
-    Object.selectionField "assignable" [] object_ identity
+    Object.selectionForCompositeField "assignable" [] object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -48,4 +48,4 @@ id =
 -}
 user : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.AssignedEvent
 user object_ =
-    Object.selectionField "user" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "user" [] object_ (identity >> Decode.nullable)

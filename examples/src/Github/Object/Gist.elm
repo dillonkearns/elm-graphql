@@ -44,7 +44,7 @@ comments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object_ identity
+    Object.selectionForCompositeField "comments" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -84,7 +84,7 @@ name =
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet (Maybe decodesTo) Github.Object.Gist
 owner object_ =
-    Object.selectionField "owner" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "owner" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies when the gist was last pushed to.
@@ -122,7 +122,7 @@ stargazers fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "stargazers" optionalArgs object_ identity
+    Object.selectionForCompositeField "stargazers" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was last updated.

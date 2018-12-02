@@ -35,4 +35,4 @@ first.
 -}
 relatedTopics : SelectionSet decodesTo Github.Object.Topic -> SelectionSet (List decodesTo) Github.Object.Topic
 relatedTopics object_ =
-    Object.selectionField "relatedTopics" [] object_ (identity >> Decode.list)
+    Object.selectionForCompositeField "relatedTopics" [] object_ (identity >> Decode.list)

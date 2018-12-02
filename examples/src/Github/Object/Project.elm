@@ -73,7 +73,7 @@ columns fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "columns" optionalArgs object_ identity
+    Object.selectionForCompositeField "columns" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -87,7 +87,7 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Project
 creator object_ =
-    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -120,7 +120,7 @@ number =
 -}
 owner : SelectionSet decodesTo Github.Interface.ProjectOwner -> SelectionSet decodesTo Github.Object.Project
 owner object_ =
-    Object.selectionField "owner" [] object_ identity
+    Object.selectionForCompositeField "owner" [] object_ identity
 
 
 type alias PendingCardsOptionalArguments =
@@ -149,7 +149,7 @@ pendingCards fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pendingCards" optionalArgs object_ identity
+    Object.selectionForCompositeField "pendingCards" optionalArgs object_ identity
 
 
 {-| The HTTP path for this project

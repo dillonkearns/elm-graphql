@@ -43,7 +43,7 @@ commitUrl =
 -}
 entries : SelectionSet decodesTo Github.Object.TreeEntry -> SelectionSet (Maybe (List decodesTo)) Github.Object.Tree
 entries object_ =
-    Object.selectionField "entries" [] object_ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "entries" [] object_ (identity >> Decode.list >> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Tree
@@ -62,4 +62,4 @@ oid =
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Tree
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity

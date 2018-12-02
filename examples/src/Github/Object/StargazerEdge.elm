@@ -25,7 +25,7 @@ cursor =
 
 node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.StargazerEdge
 node object_ =
-    Object.selectionField "node" [] object_ identity
+    Object.selectionForCompositeField "node" [] object_ identity
 
 
 {-| Identifies when the item was starred.

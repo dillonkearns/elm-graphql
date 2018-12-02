@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 actor : SelectionSet decodesTo Github.Union.PushAllowanceActor -> SelectionSet (Maybe decodesTo) Github.Object.PushAllowance
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.PushAllowance
@@ -34,4 +34,4 @@ id =
 -}
 protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> SelectionSet decodesTo Github.Object.PushAllowance
 protectedBranch object_ =
-    Object.selectionField "protectedBranch" [] object_ identity
+    Object.selectionForCompositeField "protectedBranch" [] object_ identity

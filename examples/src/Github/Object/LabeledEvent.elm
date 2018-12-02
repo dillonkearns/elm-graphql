@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.LabeledEvent
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -41,11 +41,11 @@ id =
 -}
 label : SelectionSet decodesTo Github.Object.Label -> SelectionSet decodesTo Github.Object.LabeledEvent
 label object_ =
-    Object.selectionField "label" [] object_ identity
+    Object.selectionForCompositeField "label" [] object_ identity
 
 
 {-| Identifies the `Labelable` associated with the event.
 -}
 labelable : SelectionSet decodesTo Github.Interface.Labelable -> SelectionSet decodesTo Github.Object.LabeledEvent
 labelable object_ =
-    Object.selectionField "labelable" [] object_ identity
+    Object.selectionForCompositeField "labelable" [] object_ identity

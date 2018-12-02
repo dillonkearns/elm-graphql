@@ -30,7 +30,7 @@ appearsIn =
 -}
 friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Object.Droid
 friends object_ =
-    Object.selectionField "friends" [] object_ (identity >> Decode.list)
+    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the droid.

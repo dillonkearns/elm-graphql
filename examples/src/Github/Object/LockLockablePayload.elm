@@ -29,4 +29,4 @@ clientMutationId =
 -}
 lockedRecord : SelectionSet decodesTo Github.Interface.Lockable -> SelectionSet (Maybe decodesTo) Github.Object.LockLockablePayload
 lockedRecord object_ =
-    Object.selectionField "lockedRecord" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "lockedRecord" [] object_ (identity >> Decode.nullable)

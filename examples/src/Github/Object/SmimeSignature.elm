@@ -51,7 +51,7 @@ signature =
 -}
 signer : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.SmimeSignature
 signer object_ =
-    Object.selectionField "signer" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "signer" [] object_ (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.

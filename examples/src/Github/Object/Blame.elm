@@ -22,4 +22,4 @@ import Json.Decode as Decode
 -}
 ranges : SelectionSet decodesTo Github.Object.BlameRange -> SelectionSet (List decodesTo) Github.Object.Blame
 ranges object_ =
-    Object.selectionField "ranges" [] object_ (identity >> Decode.list)
+    Object.selectionForCompositeField "ranges" [] object_ (identity >> Decode.list)

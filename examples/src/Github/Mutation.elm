@@ -26,7 +26,7 @@ type alias AcceptTopicSuggestionRequiredArguments =
 -}
 acceptTopicSuggestion : AcceptTopicSuggestionRequiredArguments -> SelectionSet decodesTo Github.Object.AcceptTopicSuggestionPayload -> SelectionSet (Maybe decodesTo) RootMutation
 acceptTopicSuggestion requiredArgs object_ =
-    Object.selectionField "acceptTopicSuggestion" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAcceptTopicSuggestionInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "acceptTopicSuggestion" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAcceptTopicSuggestionInput ] object_ (identity >> Decode.nullable)
 
 
 type alias AddCommentRequiredArguments =
@@ -37,7 +37,7 @@ type alias AddCommentRequiredArguments =
 -}
 addComment : AddCommentRequiredArguments -> SelectionSet decodesTo Github.Object.AddCommentPayload -> SelectionSet (Maybe decodesTo) RootMutation
 addComment requiredArgs object_ =
-    Object.selectionField "addComment" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddCommentInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "addComment" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddCommentInput ] object_ (identity >> Decode.nullable)
 
 
 type alias AddProjectCardRequiredArguments =
@@ -48,7 +48,7 @@ type alias AddProjectCardRequiredArguments =
 -}
 addProjectCard : AddProjectCardRequiredArguments -> SelectionSet decodesTo Github.Object.AddProjectCardPayload -> SelectionSet (Maybe decodesTo) RootMutation
 addProjectCard requiredArgs object_ =
-    Object.selectionField "addProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddProjectCardInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "addProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddProjectCardInput ] object_ (identity >> Decode.nullable)
 
 
 type alias AddProjectColumnRequiredArguments =
@@ -59,7 +59,7 @@ type alias AddProjectColumnRequiredArguments =
 -}
 addProjectColumn : AddProjectColumnRequiredArguments -> SelectionSet decodesTo Github.Object.AddProjectColumnPayload -> SelectionSet (Maybe decodesTo) RootMutation
 addProjectColumn requiredArgs object_ =
-    Object.selectionField "addProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddProjectColumnInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "addProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddProjectColumnInput ] object_ (identity >> Decode.nullable)
 
 
 type alias AddPullRequestReviewRequiredArguments =
@@ -70,7 +70,7 @@ type alias AddPullRequestReviewRequiredArguments =
 -}
 addPullRequestReview : AddPullRequestReviewRequiredArguments -> SelectionSet decodesTo Github.Object.AddPullRequestReviewPayload -> SelectionSet (Maybe decodesTo) RootMutation
 addPullRequestReview requiredArgs object_ =
-    Object.selectionField "addPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddPullRequestReviewInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "addPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddPullRequestReviewInput ] object_ (identity >> Decode.nullable)
 
 
 type alias AddPullRequestReviewCommentRequiredArguments =
@@ -81,7 +81,7 @@ type alias AddPullRequestReviewCommentRequiredArguments =
 -}
 addPullRequestReviewComment : AddPullRequestReviewCommentRequiredArguments -> SelectionSet decodesTo Github.Object.AddPullRequestReviewCommentPayload -> SelectionSet (Maybe decodesTo) RootMutation
 addPullRequestReviewComment requiredArgs object_ =
-    Object.selectionField "addPullRequestReviewComment" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddPullRequestReviewCommentInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "addPullRequestReviewComment" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddPullRequestReviewCommentInput ] object_ (identity >> Decode.nullable)
 
 
 type alias AddReactionRequiredArguments =
@@ -92,7 +92,7 @@ type alias AddReactionRequiredArguments =
 -}
 addReaction : AddReactionRequiredArguments -> SelectionSet decodesTo Github.Object.AddReactionPayload -> SelectionSet (Maybe decodesTo) RootMutation
 addReaction requiredArgs object_ =
-    Object.selectionField "addReaction" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddReactionInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "addReaction" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddReactionInput ] object_ (identity >> Decode.nullable)
 
 
 type alias AddStarRequiredArguments =
@@ -103,7 +103,7 @@ type alias AddStarRequiredArguments =
 -}
 addStar : AddStarRequiredArguments -> SelectionSet decodesTo Github.Object.AddStarPayload -> SelectionSet (Maybe decodesTo) RootMutation
 addStar requiredArgs object_ =
-    Object.selectionField "addStar" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddStarInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "addStar" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeAddStarInput ] object_ (identity >> Decode.nullable)
 
 
 type alias CreateProjectRequiredArguments =
@@ -114,7 +114,7 @@ type alias CreateProjectRequiredArguments =
 -}
 createProject : CreateProjectRequiredArguments -> SelectionSet decodesTo Github.Object.CreateProjectPayload -> SelectionSet (Maybe decodesTo) RootMutation
 createProject requiredArgs object_ =
-    Object.selectionField "createProject" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeCreateProjectInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "createProject" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeCreateProjectInput ] object_ (identity >> Decode.nullable)
 
 
 type alias DeclineTopicSuggestionRequiredArguments =
@@ -125,7 +125,7 @@ type alias DeclineTopicSuggestionRequiredArguments =
 -}
 declineTopicSuggestion : DeclineTopicSuggestionRequiredArguments -> SelectionSet decodesTo Github.Object.DeclineTopicSuggestionPayload -> SelectionSet (Maybe decodesTo) RootMutation
 declineTopicSuggestion requiredArgs object_ =
-    Object.selectionField "declineTopicSuggestion" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeclineTopicSuggestionInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "declineTopicSuggestion" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeclineTopicSuggestionInput ] object_ (identity >> Decode.nullable)
 
 
 type alias DeleteProjectRequiredArguments =
@@ -136,7 +136,7 @@ type alias DeleteProjectRequiredArguments =
 -}
 deleteProject : DeleteProjectRequiredArguments -> SelectionSet decodesTo Github.Object.DeleteProjectPayload -> SelectionSet (Maybe decodesTo) RootMutation
 deleteProject requiredArgs object_ =
-    Object.selectionField "deleteProject" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeleteProjectInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "deleteProject" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeleteProjectInput ] object_ (identity >> Decode.nullable)
 
 
 type alias DeleteProjectCardRequiredArguments =
@@ -147,7 +147,7 @@ type alias DeleteProjectCardRequiredArguments =
 -}
 deleteProjectCard : DeleteProjectCardRequiredArguments -> SelectionSet decodesTo Github.Object.DeleteProjectCardPayload -> SelectionSet (Maybe decodesTo) RootMutation
 deleteProjectCard requiredArgs object_ =
-    Object.selectionField "deleteProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeleteProjectCardInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "deleteProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeleteProjectCardInput ] object_ (identity >> Decode.nullable)
 
 
 type alias DeleteProjectColumnRequiredArguments =
@@ -158,7 +158,7 @@ type alias DeleteProjectColumnRequiredArguments =
 -}
 deleteProjectColumn : DeleteProjectColumnRequiredArguments -> SelectionSet decodesTo Github.Object.DeleteProjectColumnPayload -> SelectionSet (Maybe decodesTo) RootMutation
 deleteProjectColumn requiredArgs object_ =
-    Object.selectionField "deleteProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeleteProjectColumnInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "deleteProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeleteProjectColumnInput ] object_ (identity >> Decode.nullable)
 
 
 type alias DeletePullRequestReviewRequiredArguments =
@@ -169,7 +169,7 @@ type alias DeletePullRequestReviewRequiredArguments =
 -}
 deletePullRequestReview : DeletePullRequestReviewRequiredArguments -> SelectionSet decodesTo Github.Object.DeletePullRequestReviewPayload -> SelectionSet (Maybe decodesTo) RootMutation
 deletePullRequestReview requiredArgs object_ =
-    Object.selectionField "deletePullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeletePullRequestReviewInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "deletePullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDeletePullRequestReviewInput ] object_ (identity >> Decode.nullable)
 
 
 type alias DismissPullRequestReviewRequiredArguments =
@@ -180,7 +180,7 @@ type alias DismissPullRequestReviewRequiredArguments =
 -}
 dismissPullRequestReview : DismissPullRequestReviewRequiredArguments -> SelectionSet decodesTo Github.Object.DismissPullRequestReviewPayload -> SelectionSet (Maybe decodesTo) RootMutation
 dismissPullRequestReview requiredArgs object_ =
-    Object.selectionField "dismissPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDismissPullRequestReviewInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "dismissPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeDismissPullRequestReviewInput ] object_ (identity >> Decode.nullable)
 
 
 type alias LockLockableRequiredArguments =
@@ -191,7 +191,7 @@ type alias LockLockableRequiredArguments =
 -}
 lockLockable : LockLockableRequiredArguments -> SelectionSet decodesTo Github.Object.LockLockablePayload -> SelectionSet (Maybe decodesTo) RootMutation
 lockLockable requiredArgs object_ =
-    Object.selectionField "lockLockable" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeLockLockableInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "lockLockable" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeLockLockableInput ] object_ (identity >> Decode.nullable)
 
 
 type alias MoveProjectCardRequiredArguments =
@@ -202,7 +202,7 @@ type alias MoveProjectCardRequiredArguments =
 -}
 moveProjectCard : MoveProjectCardRequiredArguments -> SelectionSet decodesTo Github.Object.MoveProjectCardPayload -> SelectionSet (Maybe decodesTo) RootMutation
 moveProjectCard requiredArgs object_ =
-    Object.selectionField "moveProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeMoveProjectCardInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "moveProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeMoveProjectCardInput ] object_ (identity >> Decode.nullable)
 
 
 type alias MoveProjectColumnRequiredArguments =
@@ -213,7 +213,7 @@ type alias MoveProjectColumnRequiredArguments =
 -}
 moveProjectColumn : MoveProjectColumnRequiredArguments -> SelectionSet decodesTo Github.Object.MoveProjectColumnPayload -> SelectionSet (Maybe decodesTo) RootMutation
 moveProjectColumn requiredArgs object_ =
-    Object.selectionField "moveProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeMoveProjectColumnInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "moveProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeMoveProjectColumnInput ] object_ (identity >> Decode.nullable)
 
 
 type alias RemoveOutsideCollaboratorRequiredArguments =
@@ -224,7 +224,7 @@ type alias RemoveOutsideCollaboratorRequiredArguments =
 -}
 removeOutsideCollaborator : RemoveOutsideCollaboratorRequiredArguments -> SelectionSet decodesTo Github.Object.RemoveOutsideCollaboratorPayload -> SelectionSet (Maybe decodesTo) RootMutation
 removeOutsideCollaborator requiredArgs object_ =
-    Object.selectionField "removeOutsideCollaborator" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRemoveOutsideCollaboratorInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "removeOutsideCollaborator" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRemoveOutsideCollaboratorInput ] object_ (identity >> Decode.nullable)
 
 
 type alias RemoveReactionRequiredArguments =
@@ -235,7 +235,7 @@ type alias RemoveReactionRequiredArguments =
 -}
 removeReaction : RemoveReactionRequiredArguments -> SelectionSet decodesTo Github.Object.RemoveReactionPayload -> SelectionSet (Maybe decodesTo) RootMutation
 removeReaction requiredArgs object_ =
-    Object.selectionField "removeReaction" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRemoveReactionInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "removeReaction" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRemoveReactionInput ] object_ (identity >> Decode.nullable)
 
 
 type alias RemoveStarRequiredArguments =
@@ -246,7 +246,7 @@ type alias RemoveStarRequiredArguments =
 -}
 removeStar : RemoveStarRequiredArguments -> SelectionSet decodesTo Github.Object.RemoveStarPayload -> SelectionSet (Maybe decodesTo) RootMutation
 removeStar requiredArgs object_ =
-    Object.selectionField "removeStar" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRemoveStarInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "removeStar" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRemoveStarInput ] object_ (identity >> Decode.nullable)
 
 
 type alias RequestReviewsRequiredArguments =
@@ -257,7 +257,7 @@ type alias RequestReviewsRequiredArguments =
 -}
 requestReviews : RequestReviewsRequiredArguments -> SelectionSet decodesTo Github.Object.RequestReviewsPayload -> SelectionSet (Maybe decodesTo) RootMutation
 requestReviews requiredArgs object_ =
-    Object.selectionField "requestReviews" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRequestReviewsInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "requestReviews" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeRequestReviewsInput ] object_ (identity >> Decode.nullable)
 
 
 type alias SubmitPullRequestReviewRequiredArguments =
@@ -268,7 +268,7 @@ type alias SubmitPullRequestReviewRequiredArguments =
 -}
 submitPullRequestReview : SubmitPullRequestReviewRequiredArguments -> SelectionSet decodesTo Github.Object.SubmitPullRequestReviewPayload -> SelectionSet (Maybe decodesTo) RootMutation
 submitPullRequestReview requiredArgs object_ =
-    Object.selectionField "submitPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeSubmitPullRequestReviewInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "submitPullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeSubmitPullRequestReviewInput ] object_ (identity >> Decode.nullable)
 
 
 type alias UpdateProjectRequiredArguments =
@@ -279,7 +279,7 @@ type alias UpdateProjectRequiredArguments =
 -}
 updateProject : UpdateProjectRequiredArguments -> SelectionSet decodesTo Github.Object.UpdateProjectPayload -> SelectionSet (Maybe decodesTo) RootMutation
 updateProject requiredArgs object_ =
-    Object.selectionField "updateProject" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateProjectInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "updateProject" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateProjectInput ] object_ (identity >> Decode.nullable)
 
 
 type alias UpdateProjectCardRequiredArguments =
@@ -290,7 +290,7 @@ type alias UpdateProjectCardRequiredArguments =
 -}
 updateProjectCard : UpdateProjectCardRequiredArguments -> SelectionSet decodesTo Github.Object.UpdateProjectCardPayload -> SelectionSet (Maybe decodesTo) RootMutation
 updateProjectCard requiredArgs object_ =
-    Object.selectionField "updateProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateProjectCardInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "updateProjectCard" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateProjectCardInput ] object_ (identity >> Decode.nullable)
 
 
 type alias UpdateProjectColumnRequiredArguments =
@@ -301,7 +301,7 @@ type alias UpdateProjectColumnRequiredArguments =
 -}
 updateProjectColumn : UpdateProjectColumnRequiredArguments -> SelectionSet decodesTo Github.Object.UpdateProjectColumnPayload -> SelectionSet (Maybe decodesTo) RootMutation
 updateProjectColumn requiredArgs object_ =
-    Object.selectionField "updateProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateProjectColumnInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "updateProjectColumn" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateProjectColumnInput ] object_ (identity >> Decode.nullable)
 
 
 type alias UpdatePullRequestReviewRequiredArguments =
@@ -312,7 +312,7 @@ type alias UpdatePullRequestReviewRequiredArguments =
 -}
 updatePullRequestReview : UpdatePullRequestReviewRequiredArguments -> SelectionSet decodesTo Github.Object.UpdatePullRequestReviewPayload -> SelectionSet (Maybe decodesTo) RootMutation
 updatePullRequestReview requiredArgs object_ =
-    Object.selectionField "updatePullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdatePullRequestReviewInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "updatePullRequestReview" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdatePullRequestReviewInput ] object_ (identity >> Decode.nullable)
 
 
 type alias UpdatePullRequestReviewCommentRequiredArguments =
@@ -323,7 +323,7 @@ type alias UpdatePullRequestReviewCommentRequiredArguments =
 -}
 updatePullRequestReviewComment : UpdatePullRequestReviewCommentRequiredArguments -> SelectionSet decodesTo Github.Object.UpdatePullRequestReviewCommentPayload -> SelectionSet (Maybe decodesTo) RootMutation
 updatePullRequestReviewComment requiredArgs object_ =
-    Object.selectionField "updatePullRequestReviewComment" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdatePullRequestReviewCommentInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "updatePullRequestReviewComment" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdatePullRequestReviewCommentInput ] object_ (identity >> Decode.nullable)
 
 
 type alias UpdateSubscriptionRequiredArguments =
@@ -334,7 +334,7 @@ type alias UpdateSubscriptionRequiredArguments =
 -}
 updateSubscription : UpdateSubscriptionRequiredArguments -> SelectionSet decodesTo Github.Object.UpdateSubscriptionPayload -> SelectionSet (Maybe decodesTo) RootMutation
 updateSubscription requiredArgs object_ =
-    Object.selectionField "updateSubscription" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateSubscriptionInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "updateSubscription" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateSubscriptionInput ] object_ (identity >> Decode.nullable)
 
 
 type alias UpdateTopicsRequiredArguments =
@@ -345,4 +345,4 @@ type alias UpdateTopicsRequiredArguments =
 -}
 updateTopics : UpdateTopicsRequiredArguments -> SelectionSet decodesTo Github.Object.UpdateTopicsPayload -> SelectionSet (Maybe decodesTo) RootMutation
 updateTopics requiredArgs object_ =
-    Object.selectionField "updateTopics" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateTopicsInput ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "updateTopics" [ Argument.required "input" requiredArgs.input Github.InputObject.encodeUpdateTopicsInput ] object_ (identity >> Decode.nullable)

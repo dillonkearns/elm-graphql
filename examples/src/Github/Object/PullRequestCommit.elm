@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.PullRequestCommit
 commit object_ =
-    Object.selectionField "commit" [] object_ identity
+    Object.selectionForCompositeField "commit" [] object_ identity
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.PullRequestCommit
@@ -34,7 +34,7 @@ id =
 -}
 pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.PullRequestCommit
 pullRequest object_ =
-    Object.selectionField "pullRequest" [] object_ identity
+    Object.selectionForCompositeField "pullRequest" [] object_ identity
 
 
 {-| The HTTP path for this pull request commit

@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.MilestonedEvent
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -48,4 +48,4 @@ milestoneTitle =
 -}
 subject : SelectionSet decodesTo Github.Union.MilestoneItem -> SelectionSet decodesTo Github.Object.MilestonedEvent
 subject object_ =
-    Object.selectionField "subject" [] object_ identity
+    Object.selectionForCompositeField "subject" [] object_ identity

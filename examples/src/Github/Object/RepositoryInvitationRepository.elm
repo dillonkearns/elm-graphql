@@ -114,7 +114,7 @@ license =
 -}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> SelectionSet (Maybe decodesTo) Github.Object.RepositoryInvitationRepository
 licenseInfo object_ =
-    Object.selectionField "licenseInfo" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "licenseInfo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -149,7 +149,7 @@ nameWithOwner =
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet decodesTo Github.Object.RepositoryInvitationRepository
 owner object_ =
-    Object.selectionField "owner" [] object_ identity
+    Object.selectionForCompositeField "owner" [] object_ identity
 
 
 {-| Identifies when the repository was last pushed to.

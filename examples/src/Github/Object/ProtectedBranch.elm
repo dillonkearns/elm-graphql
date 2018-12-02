@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ProtectedBranch
 creator object_ =
-    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Will new commits pushed to this branch dismiss pull request review approvals.
@@ -112,14 +112,14 @@ pushAllowances fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pushAllowances" optionalArgs object_ identity
+    Object.selectionForCompositeField "pushAllowances" optionalArgs object_ identity
 
 
 {-| The repository associated with this protected branch.
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.ProtectedBranch
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity
 
 
 {-| List of required status check contexts that must pass for commits to be accepted to this branch.
@@ -155,4 +155,4 @@ reviewDismissalAllowances fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "reviewDismissalAllowances" optionalArgs object_ identity
+    Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs object_ identity

@@ -72,4 +72,4 @@ assignees fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "assignees" optionalArgs object_ identity
+    Object.selectionForCompositeField "assignees" optionalArgs object_ identity

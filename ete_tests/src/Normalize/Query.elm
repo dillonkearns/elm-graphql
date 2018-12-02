@@ -44,7 +44,7 @@ type alias DroidRequiredArguments =
 -}
 droid_ : DroidRequiredArguments -> SelectionSet decodesTo Normalize.Object.Droid -> SelectionSet (Maybe decodesTo) RootQuery
 droid_ requiredArgs object_ =
-    Object.selectionField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
 
 
 type alias GreetRequiredArguments =
@@ -75,7 +75,7 @@ hero fillInOptionals object_ =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "hero" optionalArgs object_ identity
+    Object.selectionForCompositeField "hero" optionalArgs object_ identity
 
 
 type alias HeroUnionOptionalArguments =
@@ -97,7 +97,7 @@ heroUnion fillInOptionals object_ =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "heroUnion" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "heroUnion" optionalArgs object_ (identity >> Decode.nullable)
 
 
 type alias HumanRequiredArguments =
@@ -111,7 +111,7 @@ type alias HumanRequiredArguments =
 -}
 human : HumanRequiredArguments -> SelectionSet decodesTo Normalize.Object.Human_ -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
-    Object.selectionField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
 
 
 type alias RecursiveInputRequiredArguments =

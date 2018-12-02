@@ -29,7 +29,7 @@ body =
 -}
 conditions : SelectionSet decodesTo Github.Object.LicenseRule -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
 conditions object_ =
-    Object.selectionField "conditions" [] object_ (identity >> Decode.nullable >> Decode.list)
+    Object.selectionForCompositeField "conditions" [] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 {-| A human-readable description of the license
@@ -76,7 +76,7 @@ key =
 -}
 limitations : SelectionSet decodesTo Github.Object.LicenseRule -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
 limitations object_ =
-    Object.selectionField "limitations" [] object_ (identity >> Decode.nullable >> Decode.list)
+    Object.selectionForCompositeField "limitations" [] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 {-| The license full name specified by <https://spdx.org/licenses>
@@ -97,7 +97,7 @@ nickname =
 -}
 permissions : SelectionSet decodesTo Github.Object.LicenseRule -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
 permissions object_ =
-    Object.selectionField "permissions" [] object_ (identity >> Decode.nullable >> Decode.list)
+    Object.selectionForCompositeField "permissions" [] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 {-| Short identifier specified by <https://spdx.org/licenses>

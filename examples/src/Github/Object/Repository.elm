@@ -55,14 +55,14 @@ assignableUsers fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "assignableUsers" optionalArgs object_ identity
+    Object.selectionForCompositeField "assignableUsers" optionalArgs object_ identity
 
 
 {-| Returns the code of conduct for this repository
 -}
 codeOfConduct : SelectionSet decodesTo Github.Object.CodeOfConduct -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 codeOfConduct object_ =
-    Object.selectionField "codeOfConduct" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "codeOfConduct" [] object_ (identity >> Decode.nullable)
 
 
 type alias CollaboratorsOptionalArguments =
@@ -93,7 +93,7 @@ collaborators fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "affiliation" filledInOptionals.affiliation (Encode.enum Github.Enum.CollaboratorAffiliation.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "collaborators" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "collaborators" optionalArgs object_ (identity >> Decode.nullable)
 
 
 type alias CommitCommentsOptionalArguments =
@@ -122,7 +122,7 @@ commitComments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "commitComments" optionalArgs object_ identity
+    Object.selectionForCompositeField "commitComments" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -143,7 +143,7 @@ databaseId =
 -}
 defaultBranchRef : SelectionSet decodesTo Github.Object.Ref -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 defaultBranchRef object_ =
-    Object.selectionField "defaultBranchRef" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "defaultBranchRef" [] object_ (identity >> Decode.nullable)
 
 
 type alias DeployKeysOptionalArguments =
@@ -172,7 +172,7 @@ deployKeys fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "deployKeys" optionalArgs object_ identity
+    Object.selectionForCompositeField "deployKeys" optionalArgs object_ identity
 
 
 type alias DeploymentsOptionalArguments =
@@ -203,7 +203,7 @@ deployments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "environments" filledInOptionals.environments (Encode.string |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "deployments" optionalArgs object_ identity
+    Object.selectionForCompositeField "deployments" optionalArgs object_ identity
 
 
 {-| The description of the repository.
@@ -268,7 +268,7 @@ forks fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "forks" optionalArgs object_ identity
+    Object.selectionForCompositeField "forks" optionalArgs object_ identity
 
 
 {-| Indicates if the repository has issues feature enabled.
@@ -343,7 +343,7 @@ type alias IssueRequiredArguments =
 -}
 issue : IssueRequiredArguments -> SelectionSet decodesTo Github.Object.Issue -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 issue requiredArgs object_ =
-    Object.selectionField "issue" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "issue" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias IssueOrPullRequestRequiredArguments =
@@ -357,7 +357,7 @@ type alias IssueOrPullRequestRequiredArguments =
 -}
 issueOrPullRequest : IssueOrPullRequestRequiredArguments -> SelectionSet decodesTo Github.Union.IssueOrPullRequest -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 issueOrPullRequest requiredArgs object_ =
-    Object.selectionField "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias IssuesOptionalArguments =
@@ -392,7 +392,7 @@ issues fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "issues" optionalArgs object_ identity
+    Object.selectionForCompositeField "issues" optionalArgs object_ identity
 
 
 type alias LabelRequiredArguments =
@@ -406,7 +406,7 @@ type alias LabelRequiredArguments =
 -}
 label : LabelRequiredArguments -> SelectionSet decodesTo Github.Object.Label -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 label requiredArgs object_ =
-    Object.selectionField "label" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "label" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias LabelsOptionalArguments =
@@ -437,7 +437,7 @@ labels fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "labels" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "labels" optionalArgs object_ (identity >> Decode.nullable)
 
 
 type alias LanguagesOptionalArguments =
@@ -468,7 +468,7 @@ languages fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeLanguageOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "languages" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "languages" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| The license associated with the repository
@@ -482,7 +482,7 @@ license =
 -}
 licenseInfo : SelectionSet decodesTo Github.Object.License -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 licenseInfo object_ =
-    Object.selectionField "licenseInfo" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "licenseInfo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -518,7 +518,7 @@ mentionableUsers fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "mentionableUsers" optionalArgs object_ identity
+    Object.selectionForCompositeField "mentionableUsers" optionalArgs object_ identity
 
 
 type alias MilestoneRequiredArguments =
@@ -532,7 +532,7 @@ type alias MilestoneRequiredArguments =
 -}
 milestone : MilestoneRequiredArguments -> SelectionSet decodesTo Github.Object.Milestone -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 milestone requiredArgs object_ =
-    Object.selectionField "milestone" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "milestone" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias MilestonesOptionalArguments =
@@ -565,7 +565,7 @@ milestones fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.MilestoneState.toString |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeMilestoneOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "milestones" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "milestones" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| The repository's original mirror URL.
@@ -611,28 +611,28 @@ object fillInOptionals object_ =
             [ Argument.optional "oid" filledInOptionals.oid (\(Github.Scalar.GitObjectID raw) -> Encode.string raw), Argument.optional "expression" filledInOptionals.expression Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "object" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "object" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| The User owner of the repository.
 -}
 owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet decodesTo Github.Object.Repository
 owner object_ =
-    Object.selectionField "owner" [] object_ identity
+    Object.selectionForCompositeField "owner" [] object_ identity
 
 
 {-| The repository parent, if this is a fork.
 -}
 parent : SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 parent object_ =
-    Object.selectionField "parent" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "parent" [] object_ (identity >> Decode.nullable)
 
 
 {-| The primary language of the repository's code.
 -}
 primaryLanguage : SelectionSet decodesTo Github.Object.Language -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 primaryLanguage object_ =
-    Object.selectionField "primaryLanguage" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "primaryLanguage" [] object_ (identity >> Decode.nullable)
 
 
 type alias ProjectRequiredArguments =
@@ -646,7 +646,7 @@ type alias ProjectRequiredArguments =
 -}
 project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 project requiredArgs object_ =
-    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -681,7 +681,7 @@ projects fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeProjectOrder, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.ProjectState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "projects" optionalArgs object_ identity
+    Object.selectionForCompositeField "projects" optionalArgs object_ identity
 
 
 {-| The HTTP path listing repository's projects
@@ -724,7 +724,7 @@ protectedBranches fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "protectedBranches" optionalArgs object_ identity
+    Object.selectionForCompositeField "protectedBranches" optionalArgs object_ identity
 
 
 type alias PullRequestRequiredArguments =
@@ -738,7 +738,7 @@ type alias PullRequestRequiredArguments =
 -}
 pullRequest : PullRequestRequiredArguments -> SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 pullRequest requiredArgs object_ =
-    Object.selectionField "pullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "pullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias PullRequestsOptionalArguments =
@@ -777,7 +777,7 @@ pullRequests fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pullRequests" optionalArgs object_ identity
+    Object.selectionForCompositeField "pullRequests" optionalArgs object_ identity
 
 
 {-| Identifies when the repository was last pushed to.
@@ -798,7 +798,7 @@ type alias RefRequiredArguments =
 -}
 ref : RefRequiredArguments -> SelectionSet decodesTo Github.Object.Ref -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 ref requiredArgs object_ =
-    Object.selectionField "ref" [ Argument.required "qualifiedName" requiredArgs.qualifiedName Encode.string ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "ref" [ Argument.required "qualifiedName" requiredArgs.qualifiedName Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias RefsOptionalArguments =
@@ -836,7 +836,7 @@ refs fillInOptionals requiredArgs object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "direction" filledInOptionals.direction (Encode.enum Github.Enum.OrderDirection.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRefOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "refs" (optionalArgs ++ [ Argument.required "refPrefix" requiredArgs.refPrefix Encode.string ]) object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "refs" (optionalArgs ++ [ Argument.required "refPrefix" requiredArgs.refPrefix Encode.string ]) object_ (identity >> Decode.nullable)
 
 
 type alias ReleaseRequiredArguments =
@@ -850,7 +850,7 @@ type alias ReleaseRequiredArguments =
 -}
 release : ReleaseRequiredArguments -> SelectionSet decodesTo Github.Object.Release -> SelectionSet (Maybe decodesTo) Github.Object.Repository
 release requiredArgs object_ =
-    Object.selectionField "release" [ Argument.required "tagName" requiredArgs.tagName Encode.string ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "release" [ Argument.required "tagName" requiredArgs.tagName Encode.string ] object_ (identity >> Decode.nullable)
 
 
 type alias ReleasesOptionalArguments =
@@ -881,7 +881,7 @@ releases fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReleaseOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "releases" optionalArgs object_ identity
+    Object.selectionForCompositeField "releases" optionalArgs object_ identity
 
 
 type alias RepositoryTopicsOptionalArguments =
@@ -910,7 +910,7 @@ repositoryTopics fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "repositoryTopics" optionalArgs object_ identity
+    Object.selectionForCompositeField "repositoryTopics" optionalArgs object_ identity
 
 
 {-| The HTTP path for this repository
@@ -977,7 +977,7 @@ stargazers fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "stargazers" optionalArgs object_ identity
+    Object.selectionForCompositeField "stargazers" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was last updated.
@@ -1069,4 +1069,4 @@ watchers fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "watchers" optionalArgs object_ identity
+    Object.selectionForCompositeField "watchers" optionalArgs object_ identity

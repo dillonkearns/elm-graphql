@@ -23,7 +23,7 @@ import Json.Decode as Decode
 -}
 commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe decodesTo) Github.Object.Deployment
 commit object_ =
-    Object.selectionField "commit" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "commit" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -37,7 +37,7 @@ createdAt =
 -}
 creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Deployment
 creator object_ =
-    Object.selectionField "creator" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -63,7 +63,7 @@ id =
 -}
 latestStatus : SelectionSet decodesTo Github.Object.DeploymentStatus -> SelectionSet (Maybe decodesTo) Github.Object.Deployment
 latestStatus object_ =
-    Object.selectionField "latestStatus" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "latestStatus" [] object_ (identity >> Decode.nullable)
 
 
 {-| Extra information that a deployment system might need.
@@ -77,7 +77,7 @@ payload =
 -}
 repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Deployment
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity
 
 
 {-| The current state of the deployment.
@@ -113,4 +113,4 @@ statuses fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "statuses" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "statuses" optionalArgs object_ (identity >> Decode.nullable)
