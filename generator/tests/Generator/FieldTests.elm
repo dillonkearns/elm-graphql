@@ -21,7 +21,7 @@ all =
                     |> Expect.equal
                         """me : SelectionSet String RootQuery
 me =
-      Object.fieldDecoder "me" [] (Decode.string)
+      Object.selectionForField "me" [] (Decode.string)
 """
         , test "converts for object" <|
             \() ->
@@ -30,7 +30,7 @@ me =
                     |> Expect.equal
                         """me : SelectionSet String Api.Object.Foo
 me =
-      Object.fieldDecoder "me" [] (Decode.string)
+      Object.selectionForField "me" [] (Decode.string)
 """
         , test "simple object with no args" <|
             \() ->
@@ -155,7 +155,7 @@ menuItems fillInOptionals object_ =
                     |> Expect.equal
                         """type_ : SelectionSet String Api.Object.TreeEntry
 type_ =
-      Object.fieldDecoder "type" [] (Decode.string)
+      Object.selectionForField "type" [] (Decode.string)
 """
         ]
 

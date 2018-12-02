@@ -1,19 +1,11 @@
-module Graphql.Internal.Builder.Object exposing
-    ( fieldDecoder, scalarDecoder, exhuastiveFragmentSelection, buildFragment
-    , selectionForField, selectionForCompositeField
-    )
+module Graphql.Internal.Builder.Object exposing (scalarDecoder, exhuastiveFragmentSelection, buildFragment, selectionForField, selectionForCompositeField)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs fieldDecoder, scalarDecoder, exhuastiveFragmentSelection, buildFragment
-
-
-## New API
-
-@docs selectionForField, selectionForCompositeField
+@docs scalarDecoder, exhuastiveFragmentSelection, buildFragment, selectionForField, selectionForCompositeField
 
 -}
 
@@ -45,13 +37,6 @@ scalarDecoder =
                             "false"
                 )
         ]
-
-
-{-| Refer to a field in auto-generated code.
--}
-fieldDecoder : String -> List Argument -> Decoder decodesTo -> SelectionSet decodesTo lockedTo
-fieldDecoder =
-    selectionForField
 
 
 {-| Refer to a field in auto-generated code.

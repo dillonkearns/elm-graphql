@@ -292,7 +292,7 @@ initScalarField apiSubmodule typeRef =
     , decoder =
         Graphql.Generator.Decoder.generateDecoder apiSubmodule typeRef
             |> String.join " |> "
-    , otherThing = ".fieldDecoder"
+    , otherThing = ".selectionForField"
     , letBindings = []
     , objectDecoderChain = Nothing
     , typeAliases = []
