@@ -20,7 +20,7 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
+    SelectionSet.succeed Response
         |> with (Query.type_ (\optionals -> { optionals | input = Present (Normalize.InputObject.buildReservedWord { type_ = "Hi!" }) }))
 
 
