@@ -99,7 +99,6 @@ schema.
 
     import Api.Object
     import Api.Object.User as User
-    import Graphql.Field as Field
     import Graphql.SelectionSet exposing (SelectionSet, with)
 
     human : SelectionSet String Api.Object.User
@@ -245,7 +244,6 @@ we define below.
     import Github.Object
     import Github.Object.Repository as Repository
     import Github.Object.StargazerConnection
-    import Graphql.Field as Field exposing (Field)
     import Graphql.Operation exposing (RootQuery)
     import Graphql.OptionalArgument exposing (OptionalArgument(..))
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
@@ -373,7 +371,6 @@ If it returns an `Err`, the _entire_ response will fail to decode.
     -- https://package.elm-lang.org/packages/rtfeldman/elm-iso8601-date-strings/latest/
     import Iso8601
     import Graphql.SelectionSet as SelectionSet exposing (with)
-    import Graphql.Field as Field exposing (Field)
 
     type alias Timestamps =
     { created : Posix

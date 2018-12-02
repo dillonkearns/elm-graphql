@@ -19,7 +19,6 @@ Internal functions for use by auto-generated code from the `@dillonkearns/elm-gr
 
 import Dict
 import Graphql.Document.Field
-import Graphql.Field as Field exposing (Field(..))
 import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))

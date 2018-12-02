@@ -10,7 +10,6 @@ import Github.Object.Topic
 import Github.Query as Query
 import Github.Scalar exposing (Date)
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
