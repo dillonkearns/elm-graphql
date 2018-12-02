@@ -181,13 +181,22 @@ we define below.
         SelectionSet.mapOrFail
             (\(Github.Scalar.DateTime value) ->
                 Iso8601.toTime value
-                    |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
+                    |> Result.mapError
+                        (\_ ->
+                            "Failed to parse "
+                                ++ value
+                                ++ " as Iso8601 DateTime."
+                        )
             )
 
 Note that both individual GraphQL fields (like `Repository.nameWithOwner`), and
 collections of fields (like our `timestampsFragment`) are just `SelectionSet`s.
 So whether it's a single field or a pair of fields, we can pull it into our
 query using the exact same syntax!
+
+Modularizing your queries like this is a great idea. Dealing with these
+sub-`SelectionSet`s also allows the Elm compiler to give you more precise
+error messages. Just be sure to add type annotations to all your `SelectionSet`s!
 
 
 ## Mapping & Combining
@@ -631,7 +640,8 @@ If it returns an `Err`, the _entire_ response will fail to decode.
         Field.mapOrFail
             (\(Github.Scalar.DateTime value) ->
                 Iso8601.toTime value
-                    |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
+                    |> Result.mapError (\_ -> "Failed to parse "
+                     ++ value ++ " as Iso8601 DateTime.")
 
 -}
 mapOrFail : (decodesTo -> Result String mapsTo) -> SelectionSet decodesTo typeLock -> SelectionSet mapsTo typeLock
