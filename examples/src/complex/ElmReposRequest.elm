@@ -16,7 +16,7 @@ import Github.Union.SearchResultItem
 import Graphql.Field as Field exposing (Field)
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Iso8601
 import RepoWithOwner exposing (RepoWithOwner)
 import Time exposing (Posix)
