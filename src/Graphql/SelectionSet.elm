@@ -518,7 +518,7 @@ empty =
     SelectionSet [] (Decode.succeed ())
 
 
-{-| FragmentSelectionSet type
+{-| This type is used internally only in the generated code.
 -}
 type FragmentSelectionSet decodesTo typeLock
     = FragmentSelectionSet String (List RawField) (Decoder decodesTo)
