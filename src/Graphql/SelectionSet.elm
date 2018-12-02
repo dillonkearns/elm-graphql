@@ -182,7 +182,7 @@ map3 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 -}
 empty : SelectionSet () typeLock
 empty =
-    SelectionSet [ RawField.Leaf "__typename" [] ] (Decode.succeed ())
+    SelectionSet [] (Decode.succeed ())
 
 
 {-| FragmentSelectionSet type
@@ -364,8 +364,8 @@ only the type when using a polymorphic type (Interface or Union).
 
 -}
 succeed : a -> SelectionSet a typeLock
-succeed constant =
-    SelectionSet [ RawField.Leaf "__typename" [] ] (Decode.succeed constant)
+succeed constructor =
+    SelectionSet [] (Decode.succeed constructor)
 
 
 {-| If the map function provided returns an `Ok` `Result`, it will map to that value.
