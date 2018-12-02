@@ -22,14 +22,6 @@ prepend ({ apiSubmodule } as context) moduleName fields =
 
 {2}
 {1}
-
-
-{-| Select fields to build up a top-level mutation. The request can be sent with
-functions from `Graphql.Http`.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) RootSubscription
-selection constructor =
-    Object.selection constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

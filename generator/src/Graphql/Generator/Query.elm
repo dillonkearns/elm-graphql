@@ -21,14 +21,6 @@ prepend ({ apiSubmodule } as context) moduleName fields =
 
 {2}
 {1}
-
-
-{-| Select fields to build up a top-level query. The request can be sent with
-functions from `Graphql.Http`.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) RootQuery
-selection constructor =
-    Object.selection constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

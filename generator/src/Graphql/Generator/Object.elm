@@ -32,13 +32,6 @@ import {2}.InputObject
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 {1}
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
-selection constructor =
-    Object.selection constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields
