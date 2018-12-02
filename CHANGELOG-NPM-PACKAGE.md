@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2018-12-02
+
+## Changed
+
+- The code generate has changed to completely remove the `Field` module. See
+  the [Elm package version 2.0.0 release notes](https://github.com/dillonkearns/elm-graphql/blob/master/CHANGELOG-ELM-PACKAGE.md#100---2018-12-02)
+  for details and migration steps.
+
 ## [2.0.3] - 2018-11-29
 
 ### Changed

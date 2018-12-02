@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.SearchResultItemConnection exposing (codeCount, edges, issueCount, nodes, pageInfo, repositoryCount, selection, userCount, wikiCount)
+module Github.Object.SearchResultItemConnection exposing (codeCount, edges, issueCount, nodes, pageInfo, repositoryCount, userCount, wikiCount)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,64 +18,57 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.SearchResultItemConnection
-selection constructor =
-    Object.selection constructor
-
-
 {-| The number of pieces of code that matched the search query.
 -}
-codeCount : Field Int Github.Object.SearchResultItemConnection
+codeCount : SelectionSet Int Github.Object.SearchResultItemConnection
 codeCount =
-    Object.fieldDecoder "codeCount" [] Decode.int
+    Object.selectionForField "codeCount" [] Decode.int
 
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.SearchResultItemEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
+edges : SelectionSet decodesTo Github.Object.SearchResultItemEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
 edges object_ =
-    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| The number of issues that matched the search query.
 -}
-issueCount : Field Int Github.Object.SearchResultItemConnection
+issueCount : SelectionSet Int Github.Object.SearchResultItemConnection
 issueCount =
-    Object.fieldDecoder "issueCount" [] Decode.int
+    Object.selectionForField "issueCount" [] Decode.int
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Union.SearchResultItem -> Field (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
+nodes : SelectionSet decodesTo Github.Union.SearchResultItem -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
 nodes object_ =
-    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.SearchResultItemConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.SearchResultItemConnection
 pageInfo object_ =
-    Object.selectionField "pageInfo" [] object_ identity
+    Object.selectionForCompositeField "pageInfo" [] object_ identity
 
 
 {-| The number of repositories that matched the search query.
 -}
-repositoryCount : Field Int Github.Object.SearchResultItemConnection
+repositoryCount : SelectionSet Int Github.Object.SearchResultItemConnection
 repositoryCount =
-    Object.fieldDecoder "repositoryCount" [] Decode.int
+    Object.selectionForField "repositoryCount" [] Decode.int
 
 
 {-| The number of users that matched the search query.
 -}
-userCount : Field Int Github.Object.SearchResultItemConnection
+userCount : SelectionSet Int Github.Object.SearchResultItemConnection
 userCount =
-    Object.fieldDecoder "userCount" [] Decode.int
+    Object.selectionForField "userCount" [] Decode.int
 
 
 {-| The number of wiki pages that matched the search query.
 -}
-wikiCount : Field Int Github.Object.SearchResultItemConnection
+wikiCount : SelectionSet Int Github.Object.SearchResultItemConnection
 wikiCount =
-    Object.fieldDecoder "wikiCount" [] Decode.int
+    Object.selectionForField "wikiCount" [] Decode.int

@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryTopic exposing (id, resourcePath, selection, topic, url)
+module Github.Object.RepositoryTopic exposing (id, resourcePath, topic, url)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,34 +18,27 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryTopic
-selection constructor =
-    Object.selection constructor
-
-
-id : Field Github.Scalar.Id Github.Object.RepositoryTopic
+id : SelectionSet Github.Scalar.Id Github.Object.RepositoryTopic
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The HTTP path for this repository-topic.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.RepositoryTopic
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The topic.
 -}
-topic : SelectionSet decodesTo Github.Object.Topic -> Field decodesTo Github.Object.RepositoryTopic
+topic : SelectionSet decodesTo Github.Object.Topic -> SelectionSet decodesTo Github.Object.RepositoryTopic
 topic object_ =
-    Object.selectionField "topic" [] object_ identity
+    Object.selectionForCompositeField "topic" [] object_ identity
 
 
 {-| The HTTP URL for this repository-topic.
 -}
-url : Field Github.Scalar.Uri Github.Object.RepositoryTopic
+url : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReactingUserEdge exposing (cursor, node, reactedAt, selection)
+module Github.Object.ReactingUserEdge exposing (cursor, node, reactedAt)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,25 +18,18 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ReactingUserEdge
-selection constructor =
-    Object.selection constructor
-
-
-cursor : Field String Github.Object.ReactingUserEdge
+cursor : SelectionSet String Github.Object.ReactingUserEdge
 cursor =
-    Object.fieldDecoder "cursor" [] Decode.string
+    Object.selectionForField "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.ReactingUserEdge
+node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.ReactingUserEdge
 node object_ =
-    Object.selectionField "node" [] object_ identity
+    Object.selectionForCompositeField "node" [] object_ identity
 
 
 {-| The moment when the user made the reaction.
 -}
-reactedAt : Field Github.Scalar.DateTime Github.Object.ReactingUserEdge
+reactedAt : SelectionSet Github.Scalar.DateTime Github.Object.ReactingUserEdge
 reactedAt =
-    Object.fieldDecoder "reactedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "reactedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

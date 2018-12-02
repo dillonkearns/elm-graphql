@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Closable exposing (Fragments, closed, closedAt, fragments, maybeFragments, selection)
+module Github.Interface.Closable exposing (Fragments, closed, closedAt, fragments, maybeFragments)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,13 +16,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Closable
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -51,7 +43,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onMilestone = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -62,13 +54,13 @@ maybeFragments =
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
-closed : Field Bool Github.Interface.Closable
+closed : SelectionSet Bool Github.Interface.Closable
 closed =
-    Object.fieldDecoder "closed" [] Decode.bool
+    Object.selectionForField "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.Closable
+closedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Interface.Closable
 closedAt =
-    Object.fieldDecoder "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)

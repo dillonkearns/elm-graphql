@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PullRequestCommit exposing (commit, id, pullRequest, resourcePath, selection, url)
+module Github.Object.PullRequestCommit exposing (commit, id, pullRequest, resourcePath, url)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,41 +18,34 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PullRequestCommit
-selection constructor =
-    Object.selection constructor
-
-
 {-| The Git commit object
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.PullRequestCommit
+commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.PullRequestCommit
 commit object_ =
-    Object.selectionField "commit" [] object_ identity
+    Object.selectionForCompositeField "commit" [] object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.PullRequestCommit
+id : SelectionSet Github.Scalar.Id Github.Object.PullRequestCommit
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The pull request this commit belongs to
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestCommit
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.PullRequestCommit
 pullRequest object_ =
-    Object.selectionField "pullRequest" [] object_ identity
+    Object.selectionForCompositeField "pullRequest" [] object_ identity
 
 
 {-| The HTTP path for this pull request commit
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.PullRequestCommit
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.PullRequestCommit
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this pull request commit
 -}
-url : Field Github.Scalar.Uri Github.Object.PullRequestCommit
+url : SelectionSet Github.Scalar.Uri Github.Object.PullRequestCommit
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

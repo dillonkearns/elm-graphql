@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.GistComment exposing (UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, createdAt, createdViaEmail, databaseId, editor, gist, id, lastEditedAt, publishedAt, selection, updatedAt, userContentEdits, viewerCanDelete, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor)
+module Github.Object.GistComment exposing (UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, createdAt, createdViaEmail, databaseId, editor, gist, id, lastEditedAt, publishedAt, updatedAt, userContentEdits, viewerCanDelete, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason
@@ -11,7 +11,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -21,100 +20,93 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.GistComment
-selection constructor =
-    Object.selection constructor
-
-
 {-| The actor who authored the comment.
 -}
-author : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
+author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 author object_ =
-    Object.selectionField "author" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
 
 
 {-| Author's association with the gist.
 -}
-authorAssociation : Field Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.GistComment
+authorAssociation : SelectionSet Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.GistComment
 authorAssociation =
-    Object.fieldDecoder "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
+    Object.selectionForField "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| Identifies the comment body.
 -}
-body : Field String Github.Object.GistComment
+body : SelectionSet String Github.Object.GistComment
 body =
-    Object.fieldDecoder "body" [] Decode.string
+    Object.selectionForField "body" [] Decode.string
 
 
 {-| The comment body rendered to HTML.
 -}
-bodyHTML : Field Github.Scalar.Html Github.Object.GistComment
+bodyHTML : SelectionSet Github.Scalar.Html Github.Object.GistComment
 bodyHTML =
-    Object.fieldDecoder "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.GistComment
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.GistComment
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
-createdViaEmail : Field Bool Github.Object.GistComment
+createdViaEmail : SelectionSet Bool Github.Object.GistComment
 createdViaEmail =
-    Object.fieldDecoder "createdViaEmail" [] Decode.bool
+    Object.selectionForField "createdViaEmail" [] Decode.bool
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.GistComment
+databaseId : SelectionSet (Maybe Int) Github.Object.GistComment
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.GistComment
+editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 editor object_ =
-    Object.selectionField "editor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
 {-| The associated gist.
 -}
-gist : SelectionSet decodesTo Github.Object.Gist -> Field decodesTo Github.Object.GistComment
+gist : SelectionSet decodesTo Github.Object.Gist -> SelectionSet decodesTo Github.Object.GistComment
 gist object_ =
-    Object.selectionField "gist" [] object_ identity
+    Object.selectionForCompositeField "gist" [] object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.GistComment
+id : SelectionSet Github.Scalar.Id Github.Object.GistComment
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.GistComment
+lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.GistComment
 lastEditedAt =
-    Object.fieldDecoder "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.GistComment
+publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.GistComment
 publishedAt =
-    Object.fieldDecoder "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.GistComment
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.GistComment
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 type alias UserContentEditsOptionalArguments =
@@ -133,7 +125,7 @@ type alias UserContentEditsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> Field (Maybe decodesTo) Github.Object.GistComment
+userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =
@@ -143,32 +135,32 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.
 -}
-viewerCanDelete : Field Bool Github.Object.GistComment
+viewerCanDelete : SelectionSet Bool Github.Object.GistComment
 viewerCanDelete =
-    Object.fieldDecoder "viewerCanDelete" [] Decode.bool
+    Object.selectionForField "viewerCanDelete" [] Decode.bool
 
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : Field Bool Github.Object.GistComment
+viewerCanUpdate : SelectionSet Bool Github.Object.GistComment
 viewerCanUpdate =
-    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField "viewerCanUpdate" [] Decode.bool
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
-viewerCannotUpdateReasons : Field (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.GistComment
+viewerCannotUpdateReasons : SelectionSet (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.GistComment
 viewerCannotUpdateReasons =
-    Object.fieldDecoder "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+    Object.selectionForField "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
-viewerDidAuthor : Field Bool Github.Object.GistComment
+viewerDidAuthor : SelectionSet Bool Github.Object.GistComment
 viewerDidAuthor =
-    Object.fieldDecoder "viewerDidAuthor" [] Decode.bool
+    Object.selectionForField "viewerDidAuthor" [] Decode.bool

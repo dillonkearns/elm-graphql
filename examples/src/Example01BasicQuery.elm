@@ -2,10 +2,9 @@ module Example01BasicQuery exposing (main)
 
 import Browser
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Interface
@@ -34,24 +33,15 @@ import Swapi.Scalar
 
 
 type alias Response =
-    { hero : Character
-    }
-
-
-
-{- Check out this page to learn more about how Record Constructor Functions
-   like `Response` in this example are used as the first argument to `selection`s:
-   https://dillonkearns.gitbooks.io/elm-graphql/content/selection-sets.html
--}
+    Character
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
-        -- We use `identity` to say that we aren't giving any
-        -- optional arguments to `hero`. Read this blog post for more:
-        -- https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74
-        |> with (Query.hero identity characterInfoSelection)
+    -- We use `identity` to say that we aren't giving any
+    -- optional arguments to `hero`. Read this blog post for more:
+    -- https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74
+    Query.hero identity characterInfoSelection
 
 
 
@@ -79,19 +69,25 @@ type alias Character =
     }
 
 
+
+{- Check out this page to learn more about how Record Constructor Functions
+   like `Character` in this example are used as the first argument to `selection`s:
+   https://dillonkearns.gitbooks.io/elm-graphql/content/selection-sets.html
+-}
+
+
 characterInfoSelection : SelectionSet Character Swapi.Interface.Character
 characterInfoSelection =
-    Character.selection Character
-        |> with Character.name
-        |> with Character.id
-        |> with (Character.friends (fieldSelection Character.name))
+    SelectionSet.map3 Character
+        Character.name
+        Character.id
+        (Character.friends Character.name)
 
 
 makeRequest : Cmd Msg
 makeRequest =
     query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

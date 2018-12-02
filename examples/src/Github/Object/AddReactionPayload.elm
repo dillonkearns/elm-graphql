@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.AddReactionPayload exposing (clientMutationId, reaction, selection, subject)
+module Github.Object.AddReactionPayload exposing (clientMutationId, reaction, subject)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,29 +18,22 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.AddReactionPayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.AddReactionPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.AddReactionPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The reaction object.
 -}
-reaction : SelectionSet decodesTo Github.Object.Reaction -> Field decodesTo Github.Object.AddReactionPayload
+reaction : SelectionSet decodesTo Github.Object.Reaction -> SelectionSet decodesTo Github.Object.AddReactionPayload
 reaction object_ =
-    Object.selectionField "reaction" [] object_ identity
+    Object.selectionForCompositeField "reaction" [] object_ identity
 
 
 {-| The reactable subject.
 -}
-subject : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.AddReactionPayload
+subject : SelectionSet decodesTo Github.Interface.Reactable -> SelectionSet decodesTo Github.Object.AddReactionPayload
 subject object_ =
-    Object.selectionField "subject" [] object_ identity
+    Object.selectionForCompositeField "subject" [] object_ identity

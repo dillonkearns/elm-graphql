@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Updatable exposing (Fragments, fragments, maybeFragments, selection, viewerCanUpdate)
+module Github.Interface.Updatable exposing (Fragments, fragments, maybeFragments, viewerCanUpdate)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,13 +16,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Updatable
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -59,7 +51,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onGistComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -74,6 +66,6 @@ maybeFragments =
 
 {-| Check if the current viewer can update this object.
 -}
-viewerCanUpdate : Field Bool Github.Interface.Updatable
+viewerCanUpdate : SelectionSet Bool Github.Interface.Updatable
 viewerCanUpdate =
-    Object.fieldDecoder "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField "viewerCanUpdate" [] Decode.bool

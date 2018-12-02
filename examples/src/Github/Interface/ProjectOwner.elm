@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.ProjectOwner exposing (Fragments, ProjectRequiredArguments, ProjectsOptionalArguments, fragments, id, maybeFragments, project, projects, projectsResourcePath, projectsUrl, selection, viewerCanCreateProjects)
+module Github.Interface.ProjectOwner exposing (Fragments, ProjectRequiredArguments, ProjectsOptionalArguments, fragments, id, maybeFragments, project, projects, projectsResourcePath, projectsUrl, viewerCanCreateProjects)
 
 import Github.Enum.ProjectState
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -18,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.ProjectOwner
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -48,16 +40,16 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 
 
-id : Field Github.Scalar.Id Github.Interface.ProjectOwner
+id : SelectionSet Github.Scalar.Id Github.Interface.ProjectOwner
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 type alias ProjectRequiredArguments =
@@ -69,9 +61,9 @@ type alias ProjectRequiredArguments =
   - number - The project number to find.
 
 -}
-project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> Field (Maybe decodesTo) Github.Interface.ProjectOwner
+project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> SelectionSet (Maybe decodesTo) Github.Interface.ProjectOwner
 project requiredArgs object_ =
-    Object.selectionField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -96,7 +88,7 @@ type alias ProjectsOptionalArguments =
   - states - A list of states to filter the projects by.
 
 -}
-projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> Field decodesTo Github.Interface.ProjectOwner
+projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> SelectionSet decodesTo Github.Interface.ProjectOwner
 projects fillInOptionals object_ =
     let
         filledInOptionals =
@@ -106,25 +98,25 @@ projects fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeProjectOrder, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.ProjectState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "projects" optionalArgs object_ identity
+    Object.selectionForCompositeField "projects" optionalArgs object_ identity
 
 
 {-| The HTTP path listing owners projects
 -}
-projectsResourcePath : Field Github.Scalar.Uri Github.Interface.ProjectOwner
+projectsResourcePath : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.fieldDecoder "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing owners projects
 -}
-projectsUrl : Field Github.Scalar.Uri Github.Interface.ProjectOwner
+projectsUrl : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.fieldDecoder "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
-viewerCanCreateProjects : Field Bool Github.Interface.ProjectOwner
+viewerCanCreateProjects : SelectionSet Bool Github.Interface.ProjectOwner
 viewerCanCreateProjects =
-    Object.fieldDecoder "viewerCanCreateProjects" [] Decode.bool
+    Object.selectionForField "viewerCanCreateProjects" [] Decode.bool

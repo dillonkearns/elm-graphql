@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryInvitation exposing (id, invitee, inviter, permission, repository, selection)
+module Github.Object.RepositoryInvitation exposing (id, invitee, inviter, permission, repository)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,41 +19,34 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryInvitation
-selection constructor =
-    Object.selection constructor
-
-
-id : Field Github.Scalar.Id Github.Object.RepositoryInvitation
+id : SelectionSet Github.Scalar.Id Github.Object.RepositoryInvitation
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The user who received the invitation.
 -}
-invitee : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
+invitee : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RepositoryInvitation
 invitee object_ =
-    Object.selectionField "invitee" [] object_ identity
+    Object.selectionForCompositeField "invitee" [] object_ identity
 
 
 {-| The user who created the invitation.
 -}
-inviter : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryInvitation
+inviter : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RepositoryInvitation
 inviter object_ =
-    Object.selectionField "inviter" [] object_ identity
+    Object.selectionForCompositeField "inviter" [] object_ identity
 
 
 {-| The permission granted on this repository by this invitation.
 -}
-permission : Field Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryInvitation
+permission : SelectionSet Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryInvitation
 permission =
-    Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder
+    Object.selectionForField "permission" [] Github.Enum.RepositoryPermission.decoder
 
 
 {-| The Repository the user is invited to.
 -}
-repository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> Field (Maybe decodesTo) Github.Object.RepositoryInvitation
+repository : SelectionSet decodesTo Github.Object.RepositoryInvitationRepository -> SelectionSet (Maybe decodesTo) Github.Object.RepositoryInvitation
 repository object_ =
-    Object.selectionField "repository" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "repository" [] object_ (identity >> Decode.nullable)

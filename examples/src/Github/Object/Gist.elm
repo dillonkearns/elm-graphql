@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Gist exposing (CommentsOptionalArguments, StargazersOptionalArguments, comments, createdAt, description, id, isPublic, name, owner, pushedAt, selection, stargazers, updatedAt, viewerHasStarred)
+module Github.Object.Gist exposing (CommentsOptionalArguments, StargazersOptionalArguments, comments, createdAt, description, id, isPublic, name, owner, pushedAt, stargazers, updatedAt, viewerHasStarred)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,13 +16,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Gist
-selection constructor =
-    Object.selection constructor
 
 
 type alias CommentsOptionalArguments =
@@ -42,7 +34,7 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> Field decodesTo Github.Object.Gist
+comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> SelectionSet decodesTo Github.Object.Gist
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -52,54 +44,54 @@ comments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object_ identity
+    Object.selectionForCompositeField "comments" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.Gist
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Gist
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The gist description.
 -}
-description : Field (Maybe String) Github.Object.Gist
+description : SelectionSet (Maybe String) Github.Object.Gist
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Gist
+id : SelectionSet Github.Scalar.Id Github.Object.Gist
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether the gist is public or not.
 -}
-isPublic : Field Bool Github.Object.Gist
+isPublic : SelectionSet Bool Github.Object.Gist
 isPublic =
-    Object.fieldDecoder "isPublic" [] Decode.bool
+    Object.selectionForField "isPublic" [] Decode.bool
 
 
 {-| The gist name.
 -}
-name : Field String Github.Object.Gist
+name : SelectionSet String Github.Object.Gist
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| The gist owner.
 -}
-owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field (Maybe decodesTo) Github.Object.Gist
+owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet (Maybe decodesTo) Github.Object.Gist
 owner object_ =
-    Object.selectionField "owner" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "owner" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies when the gist was last pushed to.
 -}
-pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Object.Gist
+pushedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Gist
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias StargazersOptionalArguments =
@@ -120,7 +112,7 @@ type alias StargazersOptionalArguments =
   - orderBy - Order for connection
 
 -}
-stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> Field decodesTo Github.Object.Gist
+stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> SelectionSet decodesTo Github.Object.Gist
 stargazers fillInOptionals object_ =
     let
         filledInOptionals =
@@ -130,18 +122,18 @@ stargazers fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "stargazers" optionalArgs object_ identity
+    Object.selectionForCompositeField "stargazers" optionalArgs object_ identity
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Object.Gist
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Gist
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
-viewerHasStarred : Field Bool Github.Object.Gist
+viewerHasStarred : SelectionSet Bool Github.Object.Gist
 viewerHasStarred =
-    Object.fieldDecoder "viewerHasStarred" [] Decode.bool
+    Object.selectionForField "viewerHasStarred" [] Decode.bool

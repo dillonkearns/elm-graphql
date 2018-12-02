@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Reaction exposing (content, createdAt, databaseId, id, reactable, selection, user)
+module Github.Object.Reaction exposing (content, createdAt, databaseId, id, reactable, user)
 
 import Github.Enum.ReactionContent
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,48 +19,41 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Reaction
-selection constructor =
-    Object.selection constructor
-
-
 {-| Identifies the emoji reaction.
 -}
-content : Field Github.Enum.ReactionContent.ReactionContent Github.Object.Reaction
+content : SelectionSet Github.Enum.ReactionContent.ReactionContent Github.Object.Reaction
 content =
-    Object.fieldDecoder "content" [] Github.Enum.ReactionContent.decoder
+    Object.selectionForField "content" [] Github.Enum.ReactionContent.decoder
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.Reaction
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Reaction
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.Reaction
+databaseId : SelectionSet (Maybe Int) Github.Object.Reaction
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Reaction
+id : SelectionSet Github.Scalar.Id Github.Object.Reaction
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The reactable piece of content
 -}
-reactable : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.Reaction
+reactable : SelectionSet decodesTo Github.Interface.Reactable -> SelectionSet decodesTo Github.Object.Reaction
 reactable object_ =
-    Object.selectionField "reactable" [] object_ identity
+    Object.selectionForCompositeField "reactable" [] object_ identity
 
 
 {-| Identifies the user who created this reaction.
 -}
-user : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.Reaction
+user : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.Reaction
 user object_ =
-    Object.selectionField "user" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "user" [] object_ (identity >> Decode.nullable)

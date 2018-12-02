@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PublicKey exposing (id, key, selection)
+module Github.Object.PublicKey exposing (id, key)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,20 +18,13 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PublicKey
-selection constructor =
-    Object.selection constructor
-
-
-id : Field Github.Scalar.Id Github.Object.PublicKey
+id : SelectionSet Github.Scalar.Id Github.Object.PublicKey
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The public key string
 -}
-key : Field String Github.Object.PublicKey
+key : SelectionSet String Github.Object.PublicKey
 key =
-    Object.fieldDecoder "key" [] Decode.string
+    Object.selectionForField "key" [] Decode.string

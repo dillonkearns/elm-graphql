@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UpdatePullRequestReviewCommentPayload exposing (clientMutationId, pullRequestReviewComment, selection)
+module Github.Object.UpdatePullRequestReviewCommentPayload exposing (clientMutationId, pullRequestReviewComment)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,22 +18,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.UpdatePullRequestReviewCommentPayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.UpdatePullRequestReviewCommentPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.UpdatePullRequestReviewCommentPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The updated comment.
 -}
-pullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> Field decodesTo Github.Object.UpdatePullRequestReviewCommentPayload
+pullRequestReviewComment : SelectionSet decodesTo Github.Object.PullRequestReviewComment -> SelectionSet decodesTo Github.Object.UpdatePullRequestReviewCommentPayload
 pullRequestReviewComment object_ =
-    Object.selectionField "pullRequestReviewComment" [] object_ identity
+    Object.selectionForCompositeField "pullRequestReviewComment" [] object_ identity

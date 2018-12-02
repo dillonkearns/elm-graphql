@@ -2,9 +2,8 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object.ChatMessage exposing (character, phrase, selection)
+module Swapi.Object.ChatMessage exposing (character, phrase)
 
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,18 +19,11 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Object.ChatMessage
-selection constructor =
-    Object.selection constructor
-
-
-character : SelectionSet decodesTo Swapi.Interface.Character -> Field (Maybe decodesTo) Swapi.Object.ChatMessage
+character : SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet (Maybe decodesTo) Swapi.Object.ChatMessage
 character object_ =
-    Object.selectionField "character" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "character" [] object_ (identity >> Decode.nullable)
 
 
-phrase : Field Swapi.Enum.Phrase.Phrase Swapi.Object.ChatMessage
+phrase : SelectionSet Swapi.Enum.Phrase.Phrase Swapi.Object.ChatMessage
 phrase =
-    Object.fieldDecoder "phrase" [] Swapi.Enum.Phrase.decoder
+    Object.selectionForField "phrase" [] Swapi.Enum.Phrase.decoder

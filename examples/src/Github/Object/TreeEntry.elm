@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TreeEntry exposing (mode, name, object, oid, repository, selection, type_)
+module Github.Object.TreeEntry exposing (mode, name, object, oid, repository, type_)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,50 +18,43 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.TreeEntry
-selection constructor =
-    Object.selection constructor
-
-
 {-| Entry file mode.
 -}
-mode : Field Int Github.Object.TreeEntry
+mode : SelectionSet Int Github.Object.TreeEntry
 mode =
-    Object.fieldDecoder "mode" [] Decode.int
+    Object.selectionForField "mode" [] Decode.int
 
 
 {-| Entry file name.
 -}
-name : Field String Github.Object.TreeEntry
+name : SelectionSet String Github.Object.TreeEntry
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| Entry file object.
 -}
-object : SelectionSet decodesTo Github.Interface.GitObject -> Field (Maybe decodesTo) Github.Object.TreeEntry
+object : SelectionSet decodesTo Github.Interface.GitObject -> SelectionSet (Maybe decodesTo) Github.Object.TreeEntry
 object object_ =
-    Object.selectionField "object" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "object" [] object_ (identity >> Decode.nullable)
 
 
 {-| Entry file Git object ID.
 -}
-oid : Field Github.Scalar.GitObjectID Github.Object.TreeEntry
+oid : SelectionSet Github.Scalar.GitObjectID Github.Object.TreeEntry
 oid =
-    Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the tree entry belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.TreeEntry
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.TreeEntry
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity
 
 
 {-| Entry file type.
 -}
-type_ : Field String Github.Object.TreeEntry
+type_ : SelectionSet String Github.Object.TreeEntry
 type_ =
-    Object.fieldDecoder "type" [] Decode.string
+    Object.selectionForField "type" [] Decode.string

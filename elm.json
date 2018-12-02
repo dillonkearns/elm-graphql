@@ -10,7 +10,6 @@
         "Graphql.SelectionSet",
         "Graphql.Internal.Encode",
         "Graphql.Document",
-        "Graphql.Field",
         "Graphql.Internal.Builder.Argument",
         "Graphql.Internal.Builder.Object",
         "Graphql.OptionalArgument",

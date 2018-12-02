@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DeleteProjectPayload exposing (clientMutationId, owner, selection)
+module Github.Object.DeleteProjectPayload exposing (clientMutationId, owner)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,22 +18,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.DeleteProjectPayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.DeleteProjectPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.DeleteProjectPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The repository or organization the project was removed from.
 -}
-owner : SelectionSet decodesTo Github.Interface.ProjectOwner -> Field decodesTo Github.Object.DeleteProjectPayload
+owner : SelectionSet decodesTo Github.Interface.ProjectOwner -> SelectionSet decodesTo Github.Object.DeleteProjectPayload
 owner object_ =
-    Object.selectionField "owner" [] object_ identity
+    Object.selectionForCompositeField "owner" [] object_ identity

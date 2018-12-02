@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.LicenseRule exposing (description, key, label, selection)
+module Github.Object.LicenseRule exposing (description, key, label)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,29 +18,22 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.LicenseRule
-selection constructor =
-    Object.selection constructor
-
-
 {-| A description of the rule
 -}
-description : Field String Github.Object.LicenseRule
+description : SelectionSet String Github.Object.LicenseRule
 description =
-    Object.fieldDecoder "description" [] Decode.string
+    Object.selectionForField "description" [] Decode.string
 
 
 {-| The machine-readable rule key
 -}
-key : Field String Github.Object.LicenseRule
+key : SelectionSet String Github.Object.LicenseRule
 key =
-    Object.fieldDecoder "key" [] Decode.string
+    Object.selectionForField "key" [] Decode.string
 
 
 {-| The human-readable rule label
 -}
-label : Field String Github.Object.LicenseRule
+label : SelectionSet String Github.Object.LicenseRule
 label =
-    Object.fieldDecoder "label" [] Decode.string
+    Object.selectionForField "label" [] Decode.string

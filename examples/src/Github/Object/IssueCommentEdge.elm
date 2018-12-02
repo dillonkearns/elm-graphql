@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.IssueCommentEdge exposing (cursor, node, selection)
+module Github.Object.IssueCommentEdge exposing (cursor, node)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,22 +18,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.IssueCommentEdge
-selection constructor =
-    Object.selection constructor
-
-
 {-| A cursor for use in pagination.
 -}
-cursor : Field String Github.Object.IssueCommentEdge
+cursor : SelectionSet String Github.Object.IssueCommentEdge
 cursor =
-    Object.fieldDecoder "cursor" [] Decode.string
+    Object.selectionForField "cursor" [] Decode.string
 
 
 {-| The item at the end of the edge.
 -}
-node : SelectionSet decodesTo Github.Object.IssueComment -> Field (Maybe decodesTo) Github.Object.IssueCommentEdge
+node : SelectionSet decodesTo Github.Object.IssueComment -> SelectionSet (Maybe decodesTo) Github.Object.IssueCommentEdge
 node object_ =
-    Object.selectionField "node" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [] object_ (identity >> Decode.nullable)

@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.CommitCommentThread exposing (CommentsOptionalArguments, comments, commit, id, path, position, repository, selection)
+module Github.Object.CommitCommentThread exposing (CommentsOptionalArguments, comments, commit, id, path, position, repository)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,13 +16,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.CommitCommentThread
-selection constructor =
-    Object.selection constructor
 
 
 type alias CommentsOptionalArguments =
@@ -42,7 +34,7 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> Field decodesTo Github.Object.CommitCommentThread
+comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> SelectionSet decodesTo Github.Object.CommitCommentThread
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -52,37 +44,37 @@ comments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object_ identity
+    Object.selectionForCompositeField "comments" optionalArgs object_ identity
 
 
 {-| The commit the comments were made on.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.CommitCommentThread
+commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.CommitCommentThread
 commit object_ =
-    Object.selectionField "commit" [] object_ identity
+    Object.selectionForCompositeField "commit" [] object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.CommitCommentThread
+id : SelectionSet Github.Scalar.Id Github.Object.CommitCommentThread
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The file the comments were made on.
 -}
-path : Field (Maybe String) Github.Object.CommitCommentThread
+path : SelectionSet (Maybe String) Github.Object.CommitCommentThread
 path =
-    Object.fieldDecoder "path" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "path" [] (Decode.string |> Decode.nullable)
 
 
 {-| The position in the diff for the commit that the comment was made on.
 -}
-position : Field (Maybe Int) Github.Object.CommitCommentThread
+position : SelectionSet (Maybe Int) Github.Object.CommitCommentThread
 position =
-    Object.fieldDecoder "position" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.CommitCommentThread
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.CommitCommentThread
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity

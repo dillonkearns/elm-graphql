@@ -42,7 +42,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       {3}
@@ -87,7 +87,6 @@ prepend { apiSubmodule } moduleName fields =
     interpolate """module {0} exposing (..)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
@@ -100,12 +99,6 @@ import {2}.InputObject
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 {1}
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) {0}
-selection constructor =
-    Object.selection constructor
 """
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields

@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.0] - 2018-12-02
+
+### Changed
+
+- The `Field` module has been removed. With this change, think of a `Field` as
+  just a special case of a `SelectionSet`. The `SelectionSet` is now used
+  for both a single element or multiple (much like a single `Cmd msg` or multiple
+  with `Cmd.batch [cmd1, cmd2]`). This means that any functions you called on
+  `Field` before are now in `SelectionSet` (so it's `SelectionSet.nonNullOrFail`,
+  `SelectionSet.map`, etc).
+
+  To migrate to the new version, just follow these steps:
+
+  - Find and delete all calls to `import Graphql.Field` in your code entirely
+  - Anywhere you called `SelectionSet.fieldSelection` can simply be removed now.
+  - Anywhere you called `Field.map`, `mapOrFail`, etc., is just `SelectionSet.map`, etc. now.
+  - Remove any calls to `<GeneratedModule>.selection` and replace it with `SelectionSet.succeed`
+  - Any annotations which were `Field decodesTo typeLock`, simply change them to
+    `SelectionSet decodesTo typeLock`
+
+### Added
+
+- Add `SelectionSet.mapN` functions for an alternate syntax to the pipeline syntax
+  (starting a pipeline with `SelectionSet.succeed`).
+- New `SeletionSet.withDefault`. Just a convenience function which is equivalent
+  to `SelectionSet.map Maybe.withDefault`.
+
 ## [1.5.1] - 2018-12-01
 
 ### Fixed

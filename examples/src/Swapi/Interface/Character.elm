@@ -2,9 +2,8 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface.Character exposing (Fragments, appearsIn, avatarUrl, fragments, friends, id, maybeFragments, name, selection)
+module Swapi.Interface.Character exposing (Fragments, appearsIn, avatarUrl, fragments, friends, id, maybeFragments, name)
 
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -18,13 +17,6 @@ import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
 import Swapi.Union
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Interface.Character
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -48,7 +40,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -57,34 +49,34 @@ maybeFragments =
 
 {-| Which movies they appear in.
 -}
-appearsIn : Field (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
+appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Interface.Character
 appearsIn =
-    Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+    Object.selectionForField "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.
 -}
-avatarUrl : Field String Swapi.Interface.Character
+avatarUrl : SelectionSet String Swapi.Interface.Character
 avatarUrl =
-    Object.fieldDecoder "avatarUrl" [] Decode.string
+    Object.selectionForField "avatarUrl" [] Decode.string
 
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Interface.Character
+friends : SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet (List decodesTo) Swapi.Interface.Character
 friends object_ =
-    Object.selectionField "friends" [] object_ (identity >> Decode.list)
+    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the character.
 -}
-id : Field Swapi.Scalar.Id Swapi.Interface.Character
+id : SelectionSet Swapi.Scalar.Id Swapi.Interface.Character
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the character.
 -}
-name : Field String Swapi.Interface.Character
+name : SelectionSet String Swapi.Interface.Character
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Reactable exposing (Fragments, ReactionsOptionalArguments, databaseId, fragments, id, maybeFragments, reactionGroups, reactions, selection, viewerCanReact)
+module Github.Interface.Reactable exposing (Fragments, ReactionsOptionalArguments, databaseId, fragments, id, maybeFragments, reactionGroups, reactions, viewerCanReact)
 
 import Github.Enum.ReactionContent
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -18,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Reactable
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -54,7 +46,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -66,21 +58,21 @@ maybeFragments =
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Interface.Reactable
+databaseId : SelectionSet (Maybe Int) Github.Interface.Reactable
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Interface.Reactable
+id : SelectionSet Github.Scalar.Id Github.Interface.Reactable
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> Field (Maybe (List decodesTo)) Github.Interface.Reactable
+reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Interface.Reactable
 reactionGroups object_ =
-    Object.selectionField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -103,7 +95,7 @@ type alias ReactionsOptionalArguments =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> Field decodesTo Github.Interface.Reactable
+reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> SelectionSet decodesTo Github.Interface.Reactable
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -113,11 +105,11 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReactionOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "reactions" optionalArgs object_ identity
+    Object.selectionForCompositeField "reactions" optionalArgs object_ identity
 
 
 {-| Can user react to this subject
 -}
-viewerCanReact : Field Bool Github.Interface.Reactable
+viewerCanReact : SelectionSet Bool Github.Interface.Reactable
 viewerCanReact =
-    Object.fieldDecoder "viewerCanReact" [] Decode.bool
+    Object.selectionForField "viewerCanReact" [] Decode.bool

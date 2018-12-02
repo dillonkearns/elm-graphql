@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RemoveOutsideCollaboratorPayload exposing (clientMutationId, removedUser, selection)
+module Github.Object.RemoveOutsideCollaboratorPayload exposing (clientMutationId, removedUser)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,22 +18,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RemoveOutsideCollaboratorPayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.RemoveOutsideCollaboratorPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The user that was removed as an outside collaborator.
 -}
-removedUser : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RemoveOutsideCollaboratorPayload
+removedUser : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RemoveOutsideCollaboratorPayload
 removedUser object_ =
-    Object.selectionField "removedUser" [] object_ identity
+    Object.selectionForCompositeField "removedUser" [] object_ identity

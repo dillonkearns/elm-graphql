@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.RepositoryOwner exposing (AvatarUrlOptionalArguments, Fragments, PinnedRepositoriesOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, avatarUrl, fragments, id, login, maybeFragments, pinnedRepositories, repositories, repository, resourcePath, selection, url)
+module Github.Interface.RepositoryOwner exposing (AvatarUrlOptionalArguments, Fragments, PinnedRepositoriesOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, avatarUrl, fragments, id, login, maybeFragments, pinnedRepositories, repositories, repository, resourcePath, url)
 
 import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryPrivacy
@@ -11,7 +11,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,13 +18,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryOwner
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -49,7 +41,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -65,7 +57,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Interface.RepositoryOwner
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Interface.RepositoryOwner
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -75,19 +67,19 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-id : Field Github.Scalar.Id Github.Interface.RepositoryOwner
+id : SelectionSet Github.Scalar.Id Github.Interface.RepositoryOwner
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The username used to login.
 -}
-login : Field String Github.Interface.RepositoryOwner
+login : SelectionSet String Github.Interface.RepositoryOwner
 login =
-    Object.fieldDecoder "login" [] Decode.string
+    Object.selectionForField "login" [] Decode.string
 
 
 type alias PinnedRepositoriesOptionalArguments =
@@ -114,7 +106,7 @@ type alias PinnedRepositoriesOptionalArguments =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Interface.RepositoryOwner
+pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Interface.RepositoryOwner
 pinnedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -124,7 +116,7 @@ pinnedRepositories fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pinnedRepositories" optionalArgs object_ identity
+    Object.selectionForCompositeField "pinnedRepositories" optionalArgs object_ identity
 
 
 type alias RepositoriesOptionalArguments =
@@ -153,7 +145,7 @@ type alias RepositoriesOptionalArguments =
   - isFork - If non-null, filters repositories according to whether they are forks of another repository
 
 -}
-repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> Field decodesTo Github.Interface.RepositoryOwner
+repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Interface.RepositoryOwner
 repositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -163,7 +155,7 @@ repositories fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals.isFork Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionField "repositories" optionalArgs object_ identity
+    Object.selectionForCompositeField "repositories" optionalArgs object_ identity
 
 
 type alias RepositoryRequiredArguments =
@@ -175,20 +167,20 @@ type alias RepositoryRequiredArguments =
   - name - Name of Repository to find.
 
 -}
-repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> Field (Maybe decodesTo) Github.Interface.RepositoryOwner
+repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe decodesTo) Github.Interface.RepositoryOwner
 repository requiredArgs object_ =
-    Object.selectionField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The HTTP URL for the owner.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Interface.RepositoryOwner
+resourcePath : SelectionSet Github.Scalar.Uri Github.Interface.RepositoryOwner
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for the owner.
 -}
-url : Field Github.Scalar.Uri Github.Interface.RepositoryOwner
+url : SelectionSet Github.Scalar.Uri Github.Interface.RepositoryOwner
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

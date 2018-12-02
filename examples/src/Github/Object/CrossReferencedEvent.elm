@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.CrossReferencedEvent exposing (actor, createdAt, id, isCrossRepository, referencedAt, resourcePath, selection, source, target, url, willCloseTarget)
+module Github.Object.CrossReferencedEvent exposing (actor, createdAt, id, isCrossRepository, referencedAt, resourcePath, source, target, url, willCloseTarget)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,76 +18,69 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.CrossReferencedEvent
-selection constructor =
-    Object.selection constructor
-
-
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.CrossReferencedEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.CrossReferencedEvent
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.CrossReferencedEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
-id : Field Github.Scalar.Id Github.Object.CrossReferencedEvent
+id : SelectionSet Github.Scalar.Id Github.Object.CrossReferencedEvent
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Reference originated in a different repository.
 -}
-isCrossRepository : Field Bool Github.Object.CrossReferencedEvent
+isCrossRepository : SelectionSet Bool Github.Object.CrossReferencedEvent
 isCrossRepository =
-    Object.fieldDecoder "isCrossRepository" [] Decode.bool
+    Object.selectionForField "isCrossRepository" [] Decode.bool
 
 
 {-| Identifies when the reference was made.
 -}
-referencedAt : Field Github.Scalar.DateTime Github.Object.CrossReferencedEvent
+referencedAt : SelectionSet Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 referencedAt =
-    Object.fieldDecoder "referencedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "referencedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Object.CrossReferencedEvent
+resourcePath : SelectionSet Github.Scalar.Uri Github.Object.CrossReferencedEvent
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Issue or pull request that made the reference.
 -}
-source : SelectionSet decodesTo Github.Union.ReferencedSubject -> Field decodesTo Github.Object.CrossReferencedEvent
+source : SelectionSet decodesTo Github.Union.ReferencedSubject -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
 source object_ =
-    Object.selectionField "source" [] object_ identity
+    Object.selectionForCompositeField "source" [] object_ identity
 
 
 {-| Issue or pull request to which the reference was made.
 -}
-target : SelectionSet decodesTo Github.Union.ReferencedSubject -> Field decodesTo Github.Object.CrossReferencedEvent
+target : SelectionSet decodesTo Github.Union.ReferencedSubject -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
 target object_ =
-    Object.selectionField "target" [] object_ identity
+    Object.selectionForCompositeField "target" [] object_ identity
 
 
 {-| The HTTP URL for this pull request.
 -}
-url : Field Github.Scalar.Uri Github.Object.CrossReferencedEvent
+url : SelectionSet Github.Scalar.Uri Github.Object.CrossReferencedEvent
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Checks if the target will be closed when the source is merged.
 -}
-willCloseTarget : Field Bool Github.Object.CrossReferencedEvent
+willCloseTarget : SelectionSet Bool Github.Object.CrossReferencedEvent
 willCloseTarget =
-    Object.fieldDecoder "willCloseTarget" [] Decode.bool
+    Object.selectionForField "willCloseTarget" [] Decode.bool

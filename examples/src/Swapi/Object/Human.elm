@@ -2,9 +2,8 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object.Human exposing (appearsIn, avatarUrl, friends, homePlanet, id, name, selection)
+module Swapi.Object.Human exposing (appearsIn, avatarUrl, friends, homePlanet, id, name)
 
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,50 +19,43 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Swapi.Object.Human
-selection constructor =
-    Object.selection constructor
-
-
 {-| Which movies they appear in.
 -}
-appearsIn : Field (List Swapi.Enum.Episode.Episode) Swapi.Object.Human
+appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Object.Human
 appearsIn =
-    Object.fieldDecoder "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+    Object.selectionForField "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.
 -}
-avatarUrl : Field String Swapi.Object.Human
+avatarUrl : SelectionSet String Swapi.Object.Human
 avatarUrl =
-    Object.fieldDecoder "avatarUrl" [] Decode.string
+    Object.selectionForField "avatarUrl" [] Decode.string
 
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Swapi.Interface.Character -> Field (List decodesTo) Swapi.Object.Human
+friends : SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet (List decodesTo) Swapi.Object.Human
 friends object_ =
-    Object.selectionField "friends" [] object_ (identity >> Decode.list)
+    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.
 -}
-homePlanet : Field (Maybe String) Swapi.Object.Human
+homePlanet : SelectionSet (Maybe String) Swapi.Object.Human
 homePlanet =
-    Object.fieldDecoder "homePlanet" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "homePlanet" [] (Decode.string |> Decode.nullable)
 
 
 {-| The ID of the human.
 -}
-id : Field Swapi.Scalar.Id Swapi.Object.Human
+id : SelectionSet Swapi.Scalar.Id Swapi.Object.Human
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the human.
 -}
-name : Field String Swapi.Object.Human
+name : SelectionSet String Swapi.Object.Human
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string

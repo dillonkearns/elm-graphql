@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewDismissalAllowance exposing (actor, id, protectedBranch, selection)
+module Github.Object.ReviewDismissalAllowance exposing (actor, id, protectedBranch)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,27 +18,20 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ReviewDismissalAllowance
-selection constructor =
-    Object.selection constructor
-
-
 {-| The actor that can dismiss.
 -}
-actor : SelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor -> Field (Maybe decodesTo) Github.Object.ReviewDismissalAllowance
+actor : SelectionSet decodesTo Github.Union.ReviewDismissalAllowanceActor -> SelectionSet (Maybe decodesTo) Github.Object.ReviewDismissalAllowance
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.ReviewDismissalAllowance
+id : SelectionSet Github.Scalar.Id Github.Object.ReviewDismissalAllowance
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
-protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> Field decodesTo Github.Object.ReviewDismissalAllowance
+protectedBranch : SelectionSet decodesTo Github.Object.ProtectedBranch -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowance
 protectedBranch object_ =
-    Object.selectionField "protectedBranch" [] object_ identity
+    Object.selectionForCompositeField "protectedBranch" [] object_ identity

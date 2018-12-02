@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.SuggestedReviewer exposing (isAuthor, isCommenter, reviewer, selection)
+module Github.Object.SuggestedReviewer exposing (isAuthor, isCommenter, reviewer)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,29 +18,22 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.SuggestedReviewer
-selection constructor =
-    Object.selection constructor
-
-
 {-| Is this suggestion based on past commits?
 -}
-isAuthor : Field Bool Github.Object.SuggestedReviewer
+isAuthor : SelectionSet Bool Github.Object.SuggestedReviewer
 isAuthor =
-    Object.fieldDecoder "isAuthor" [] Decode.bool
+    Object.selectionForField "isAuthor" [] Decode.bool
 
 
 {-| Is this suggestion based on past review comments?
 -}
-isCommenter : Field Bool Github.Object.SuggestedReviewer
+isCommenter : SelectionSet Bool Github.Object.SuggestedReviewer
 isCommenter =
-    Object.fieldDecoder "isCommenter" [] Decode.bool
+    Object.selectionForField "isCommenter" [] Decode.bool
 
 
 {-| Identifies the user suggested to review the pull request.
 -}
-reviewer : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.SuggestedReviewer
+reviewer : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.SuggestedReviewer
 reviewer object_ =
-    Object.selectionField "reviewer" [] object_ identity
+    Object.selectionForCompositeField "reviewer" [] object_ identity

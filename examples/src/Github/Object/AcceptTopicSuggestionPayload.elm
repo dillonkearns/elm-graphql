@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.AcceptTopicSuggestionPayload exposing (clientMutationId, selection, topic)
+module Github.Object.AcceptTopicSuggestionPayload exposing (clientMutationId, topic)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,22 +18,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.AcceptTopicSuggestionPayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.AcceptTopicSuggestionPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.AcceptTopicSuggestionPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The accepted topic.
 -}
-topic : SelectionSet decodesTo Github.Object.Topic -> Field decodesTo Github.Object.AcceptTopicSuggestionPayload
+topic : SelectionSet decodesTo Github.Object.Topic -> SelectionSet decodesTo Github.Object.AcceptTopicSuggestionPayload
 topic object_ =
-    Object.selectionField "topic" [] object_ identity
+    Object.selectionForCompositeField "topic" [] object_ identity

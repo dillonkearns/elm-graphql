@@ -2,9 +2,8 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Object.Droid exposing (appearsIn, friends, id, name, primaryFunction, selection)
+module Normalize.Object.Droid exposing (appearsIn, friends, id, name, primaryFunction)
 
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,43 +19,36 @@ import Normalize.Scalar
 import Normalize.Union
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Normalize.Object.Droid
-selection constructor =
-    Object.selection constructor
-
-
 {-| Which movies they appear in.
 -}
-appearsIn : Field (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
+appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
 appearsIn =
-    Object.fieldDecoder "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
+    Object.selectionForField "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> Field (List decodesTo) Normalize.Object.Droid
+friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Object.Droid
 friends object_ =
-    Object.selectionField "friends" [] object_ (identity >> Decode.list)
+    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 
 
 {-| The ID of the droid.
 -}
-id : Field Normalize.Scalar.Id Normalize.Object.Droid
+id : SelectionSet Normalize.Scalar.Id Normalize.Object.Droid
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the droid.
 -}
-name : Field String Normalize.Object.Droid
+name : SelectionSet String Normalize.Object.Droid
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| The primary function of the droid.
 -}
-primaryFunction : Field (Maybe String) Normalize.Object.Droid
+primaryFunction : SelectionSet (Maybe String) Normalize.Object.Droid
 primaryFunction =
-    Object.fieldDecoder "primaryFunction" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "primaryFunction" [] (Decode.string |> Decode.nullable)

@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TeamConnection exposing (edges, nodes, pageInfo, selection, totalCount)
+module Github.Object.TeamConnection exposing (edges, nodes, pageInfo, totalCount)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,36 +18,29 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.TeamConnection
-selection constructor =
-    Object.selection constructor
-
-
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.TeamEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
+edges : SelectionSet decodesTo Github.Object.TeamEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
 edges object_ =
-    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Team -> Field (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
+nodes : SelectionSet decodesTo Github.Object.Team -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.TeamConnection
 nodes object_ =
-    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.TeamConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.TeamConnection
 pageInfo object_ =
-    Object.selectionField "pageInfo" [] object_ identity
+    Object.selectionForCompositeField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.TeamConnection
+totalCount : SelectionSet Int Github.Object.TeamConnection
 totalCount =
-    Object.fieldDecoder "totalCount" [] Decode.int
+    Object.selectionForField "totalCount" [] Decode.int

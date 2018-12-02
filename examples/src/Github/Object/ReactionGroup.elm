@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReactionGroup exposing (UsersOptionalArguments, content, createdAt, selection, subject, users, viewerHasReacted)
+module Github.Object.ReactionGroup exposing (UsersOptionalArguments, content, createdAt, subject, users, viewerHasReacted)
 
 import Github.Enum.ReactionContent
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,32 +19,25 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ReactionGroup
-selection constructor =
-    Object.selection constructor
-
-
 {-| Identifies the emoji reaction.
 -}
-content : Field Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup
+content : SelectionSet Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup
 content =
-    Object.fieldDecoder "content" [] Github.Enum.ReactionContent.decoder
+    Object.selectionForField "content" [] Github.Enum.ReactionContent.decoder
 
 
 {-| Identifies when the reaction was created.
 -}
-createdAt : Field (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
+createdAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The subject that was reacted to.
 -}
-subject : SelectionSet decodesTo Github.Interface.Reactable -> Field decodesTo Github.Object.ReactionGroup
+subject : SelectionSet decodesTo Github.Interface.Reactable -> SelectionSet decodesTo Github.Object.ReactionGroup
 subject object_ =
-    Object.selectionField "subject" [] object_ identity
+    Object.selectionForCompositeField "subject" [] object_ identity
 
 
 type alias UsersOptionalArguments =
@@ -64,7 +56,7 @@ type alias UsersOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> Field decodesTo Github.Object.ReactionGroup
+users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> SelectionSet decodesTo Github.Object.ReactionGroup
 users fillInOptionals object_ =
     let
         filledInOptionals =
@@ -74,11 +66,11 @@ users fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "users" optionalArgs object_ identity
+    Object.selectionForCompositeField "users" optionalArgs object_ identity
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.
 -}
-viewerHasReacted : Field Bool Github.Object.ReactionGroup
+viewerHasReacted : SelectionSet Bool Github.Object.ReactionGroup
 viewerHasReacted =
-    Object.fieldDecoder "viewerHasReacted" [] Decode.bool
+    Object.selectionForField "viewerHasReacted" [] Decode.bool

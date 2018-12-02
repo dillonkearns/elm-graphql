@@ -48,35 +48,37 @@ would look like this in `dillonkearns/elm-graphql` (the code in this example tha
 
 ```elm
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet exposing (SelectionSet, with)
+import Graphql.SelectionSet exposing (SelectionSet)
+import StarWars.Scalar
 import StarWars.Object
 import StarWars.Object.Human as Human
 import StarWars.Query as Query
 
 
-type alias Response =
-    { vader : Maybe Human }
-
-
-query : SelectionSet Response RootQuery
+query : SelectionSet (Maybe Human) RootQuery
 query =
-    Query.selection Response
-        |> with (Query.human { id = StarWars.Scalar.Id "1001" } humanSelection)
+    Query.human { id = StarWars.Scalar.Id "1001" } humanSelection
 
 
 type alias Human =
-    { name : String }
+    { name : String
+    , homePlanet : String
+    }
 
 
-humanSelection : SelectionSet Human Human.Human
+humanSelection : SelectionSet Human StarWars.Object.Human
 humanSelection =
-    Human.selection Human
-        |> with Human.name
+    SelectionSet.map2 Human
+        Human.name
+        Human.homePlanet
 ```
 
 GraphQL and Elm are a perfect match because GraphQL is used to enforce the types that your API takes as inputs and outputs, much like Elm's type system does within Elm. `elm-graphql` simply bridges this gap by making your Elm code aware of your GraphQL server's schema. If you are new to GraphQL, [graphql.org/learn/](http://graphql.org/learn/) is an excellent way to learn the basics.
 
-After installing the command line tool and Elm package, running `elm-graphql` just looks like
+After following the installation instructions to install the [`@dillonkearns/elm-graphql`](https://npmjs.com/package/@dillonkearns/elm-graphql)
+NPM package and the proper Elm packages (see the [Setup section](https://github.com/dillonkearns/elm-graphql#setup) for details).
+Once you've installed everything, running the `elm-graphql` code generation tool
+is as simple as this:
 
 ```bash
 elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src
@@ -104,7 +106,7 @@ If you're wondering why code is generated a certain way, you're likely to find a
 
 There's a very helpful group of people in the #graphql channel in [the Elm Slack](http://elmlang.herokuapp.com/). Don't hesitate to ask any questions about getting started, best practices, or just general GraphQL in there!
 
-## Usage
+## Setup
 
 `dillonkearns/elm-graphql` generates Elm code that allows you to build up type-safe GraphQL requests. Here are the steps to setup `dillonkearns/elm-graphql`.
 

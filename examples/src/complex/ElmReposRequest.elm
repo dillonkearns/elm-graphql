@@ -13,10 +13,9 @@ import Github.Query as Query
 import Github.Scalar
 import Github.Union
 import Github.Union.SearchResultItem
-import Graphql.Field as Field exposing (Field)
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Iso8601
 import RepoWithOwner exposing (RepoWithOwner)
 import Time exposing (Posix)
@@ -46,8 +45,7 @@ query sortOrder =
         { query = "language:Elm sort:" ++ (sortOrder |> Debug.toString |> String.toLower)
         , type_ = Github.Enum.SearchType.Repository
         }
-        searchSelection
-        |> fieldSelection
+        thing
 
 
 queryForRepos : List RepoWithOwner -> SelectionSet (List Repo) RootQuery
@@ -70,30 +68,17 @@ repoWithOwnerSelection repoWithOwner =
         { owner, repoName } =
             RepoWithOwner.ownerAndRepo repoWithOwner
     in
-    fieldSelection
-        (Query.repository
-            { owner = owner, name = repoName }
-            repositorySelection
-        )
+    Query.repository
+        { owner = owner, name = repoName }
+        repositorySelection
 
 
-searchSelection : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
-searchSelection =
-    Github.Object.SearchResultItemConnection.selection identity
-        |> with thing
-
-
-thing : Field.Field (List Repo) Github.Object.SearchResultItemConnection
+thing : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
 thing =
     Github.Object.SearchResultItemConnection.nodes searchResultSelection
-        |> Field.nonNullOrFail
-        |> Field.map (List.filterMap identity)
-        |> Field.map (List.filterMap identity)
-
-
-withDefault : a -> Field.Field (Maybe a) typeLock -> Field.Field a typeLock
-withDefault default =
-    Field.map (Maybe.withDefault default)
+        |> SelectionSet.nonNullOrFail
+        |> SelectionSet.map (List.filterMap identity)
+        |> SelectionSet.map (List.filterMap identity)
 
 
 searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
@@ -107,16 +92,16 @@ searchResultSelection =
                 | onRepository = repositorySelection |> SelectionSet.map Just
             }
     in
-    Github.Union.SearchResultItem.selection partialFragments
+    Github.Union.SearchResultItem.fragments partialFragments
 
 
 repositorySelection : SelectionSet Repo Github.Object.Repository
 repositorySelection =
-    Repository.selection Repo
-        |> with (Repository.nameWithOwner |> Field.map RepoWithOwner.repoWithOwner)
+    SelectionSet.succeed Repo
+        |> with (Repository.nameWithOwner |> SelectionSet.map RepoWithOwner.repoWithOwner)
         |> with Repository.description
         |> with stargazers
-        |> withFragment timestampsSelection
+        |> with timestampsSelection
         |> with Repository.forkCount
         |> with openIssues
         |> with (Repository.owner ownerSelection)
@@ -131,32 +116,32 @@ type alias Timestamps =
 
 timestampsSelection : SelectionSet Timestamps Github.Object.Repository
 timestampsSelection =
-    Repository.selection Timestamps
-        |> with (Repository.createdAt |> mapToDateTime)
-        |> with (Repository.updatedAt |> mapToDateTime)
+    SelectionSet.map2 Timestamps
+        (Repository.createdAt |> mapToDateTime)
+        (Repository.updatedAt |> mapToDateTime)
 
 
-mapToDateTime : Field Github.Scalar.DateTime typeLock -> Field Posix typeLock
+mapToDateTime : SelectionSet Github.Scalar.DateTime typeLock -> SelectionSet Posix typeLock
 mapToDateTime =
-    Field.mapOrFail
+    SelectionSet.mapOrFail
         (\(Github.Scalar.DateTime value) ->
             Iso8601.toTime value
                 |> Result.mapError (\_ -> "Failed to parse " ++ value ++ " as Iso8601 DateTime.")
         )
 
 
-stargazers : Field Int Github.Object.Repository
+stargazers : SelectionSet Int Github.Object.Repository
 stargazers =
     Repository.stargazers
         (\optionals -> { optionals | first = Present 0 })
-        (fieldSelection Github.Object.StargazerConnection.totalCount)
+        Github.Object.StargazerConnection.totalCount
 
 
-openIssues : Field.Field Int Github.Object.Repository
+openIssues : SelectionSet Int Github.Object.Repository
 openIssues =
     Repository.issues
         (\optionals -> { optionals | first = Present 0, states = Present [ Github.Enum.IssueState.Open ] })
-        (fieldSelection Github.Object.IssueConnection.totalCount)
+        Github.Object.IssueConnection.totalCount
 
 
 type alias Owner =
@@ -167,6 +152,6 @@ type alias Owner =
 
 ownerSelection : SelectionSet Owner Github.Interface.RepositoryOwner
 ownerSelection =
-    Github.Interface.RepositoryOwner.selection Owner
-        |> with (Github.Interface.RepositoryOwner.avatarUrl identity)
-        |> with Github.Interface.RepositoryOwner.login
+    SelectionSet.map2 Owner
+        (Github.Interface.RepositoryOwner.avatarUrl identity)
+        Github.Interface.RepositoryOwner.login

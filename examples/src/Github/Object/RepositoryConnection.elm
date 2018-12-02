@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryConnection exposing (edges, nodes, pageInfo, selection, totalCount, totalDiskUsage)
+module Github.Object.RepositoryConnection exposing (edges, nodes, pageInfo, totalCount, totalDiskUsage)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,43 +18,36 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryConnection
-selection constructor =
-    Object.selection constructor
-
-
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.RepositoryEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
+edges : SelectionSet decodesTo Github.Object.RepositoryEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
 edges object_ =
-    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Repository -> Field (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
+nodes : SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
 nodes object_ =
-    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.RepositoryConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.RepositoryConnection
 pageInfo object_ =
-    Object.selectionField "pageInfo" [] object_ identity
+    Object.selectionForCompositeField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.RepositoryConnection
+totalCount : SelectionSet Int Github.Object.RepositoryConnection
 totalCount =
-    Object.fieldDecoder "totalCount" [] Decode.int
+    Object.selectionForField "totalCount" [] Decode.int
 
 
 {-| The total size in kilobytes of all repositories in the connection.
 -}
-totalDiskUsage : Field Int Github.Object.RepositoryConnection
+totalDiskUsage : SelectionSet Int Github.Object.RepositoryConnection
 totalDiskUsage =
-    Object.fieldDecoder "totalDiskUsage" [] Decode.int
+    Object.selectionForField "totalDiskUsage" [] Decode.int

@@ -19,12 +19,12 @@ module Graphql.OptionalArgument exposing
       import Api.Query as Query
       import Graphql.Operation exposing (RootQuery)
       import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
-      import Graphql.SelectionSet exposing (SelectionSet, with)
+      import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 
 
       query : SelectionSet Response RootQuery
       query =
-          Query.selection Response
+          SelectionSet.succeed Response
               |> with (Query.human { id = "1004" } human)
               |> with (Query.human { id = "1001" } human)
               |> with

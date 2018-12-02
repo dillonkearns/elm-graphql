@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Actor exposing (AvatarUrlOptionalArguments, Fragments, avatarUrl, fragments, login, maybeFragments, resourcePath, selection, url)
+module Github.Interface.Actor exposing (AvatarUrlOptionalArguments, Fragments, avatarUrl, fragments, login, maybeFragments, resourcePath, url)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,13 +16,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.Actor
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -49,7 +41,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onBot = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -66,7 +58,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> Field Github.Scalar.Uri Github.Interface.Actor
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Interface.Actor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -76,25 +68,25 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The username of the actor.
 -}
-login : Field String Github.Interface.Actor
+login : SelectionSet String Github.Interface.Actor
 login =
-    Object.fieldDecoder "login" [] Decode.string
+    Object.selectionForField "login" [] Decode.string
 
 
 {-| The HTTP path for this actor.
 -}
-resourcePath : Field Github.Scalar.Uri Github.Interface.Actor
+resourcePath : SelectionSet Github.Scalar.Uri Github.Interface.Actor
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this actor.
 -}
-url : Field Github.Scalar.Uri Github.Interface.Actor
+url : SelectionSet Github.Scalar.Uri Github.Interface.Actor
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

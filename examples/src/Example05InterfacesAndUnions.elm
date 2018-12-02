@@ -2,11 +2,10 @@ module Example05InterfacesAndUnions exposing (main)
 
 import Browser
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -31,10 +30,10 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
-        |> with (Query.heroUnion identity heroUnionSelection)
-        |> with (Query.hero identity heroSelection)
-        |> with (Query.heroUnion identity nonExhaustiveFragment)
+    SelectionSet.map3 Response
+        (Query.heroUnion identity heroUnionSelection)
+        (Query.hero identity heroSelection)
+        (Query.heroUnion identity nonExhaustiveFragment)
 
 
 type HumanOrDroidDetails
@@ -56,9 +55,9 @@ type HumanOrDroidDetails
 
 heroUnionSelection : SelectionSet HumanOrDroidDetails Swapi.Union.CharacterUnion
 heroUnionSelection =
-    Swapi.Union.CharacterUnion.selection
-        { onHuman = Human.selection HumanDetails |> with Human.homePlanet
-        , onDroid = Droid.selection DroidDetails |> with Droid.primaryFunction
+    Swapi.Union.CharacterUnion.fragments
+        { onHuman = SelectionSet.map HumanDetails Human.homePlanet
+        , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
         }
 
 
@@ -80,17 +79,13 @@ type alias HumanOrDroidWithName =
 
 heroSelection : SelectionSet HumanOrDroidWithName Swapi.Interface.Character
 heroSelection =
-    Character.selection HumanOrDroidWithName
-        |> with Character.name
-        |> withFragment heroDetailsFragment
-
-
-heroDetailsFragment : SelectionSet HumanOrDroidDetails Swapi.Interface.Character
-heroDetailsFragment =
-    Character.fragments
-        { onHuman = Human.selection HumanDetails |> with Human.homePlanet
-        , onDroid = Droid.selection DroidDetails |> with Droid.primaryFunction
-        }
+    SelectionSet.map2 HumanOrDroidWithName
+        Character.name
+        (Character.fragments
+            { onHuman = SelectionSet.map HumanDetails Human.homePlanet
+            , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
+            }
+        )
 
 
 nonExhaustiveFragment : SelectionSet (Maybe String) Swapi.Union.CharacterUnion
@@ -99,9 +94,9 @@ nonExhaustiveFragment =
         maybeFragments =
             Swapi.Union.CharacterUnion.maybeFragments
     in
-    Swapi.Union.CharacterUnion.selection
+    Swapi.Union.CharacterUnion.fragments
         { maybeFragments
-            | onHuman = fieldSelection Human.homePlanet
+            | onHuman = Human.homePlanet
         }
 
 
@@ -109,7 +104,6 @@ makeRequest : Cmd Msg
 makeRequest =
     query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

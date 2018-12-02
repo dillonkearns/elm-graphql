@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Tree exposing (abbreviatedOid, commitResourcePath, commitUrl, entries, id, oid, repository, selection)
+module Github.Object.Tree exposing (abbreviatedOid, commitResourcePath, commitUrl, entries, id, oid, repository)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,55 +18,48 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Tree
-selection constructor =
-    Object.selection constructor
-
-
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : Field String Github.Object.Tree
+abbreviatedOid : SelectionSet String Github.Object.Tree
 abbreviatedOid =
-    Object.fieldDecoder "abbreviatedOid" [] Decode.string
+    Object.selectionForField "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : Field Github.Scalar.Uri Github.Object.Tree
+commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Tree
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : Field Github.Scalar.Uri Github.Object.Tree
+commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Tree
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of tree entries.
 -}
-entries : SelectionSet decodesTo Github.Object.TreeEntry -> Field (Maybe (List decodesTo)) Github.Object.Tree
+entries : SelectionSet decodesTo Github.Object.TreeEntry -> SelectionSet (Maybe (List decodesTo)) Github.Object.Tree
 entries object_ =
-    Object.selectionField "entries" [] object_ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "entries" [] object_ (identity >> Decode.list >> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Tree
+id : SelectionSet Github.Scalar.Id Github.Object.Tree
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
-oid : Field Github.Scalar.GitObjectID Github.Object.Tree
+oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Tree
 oid =
-    Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Tree
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Tree
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity

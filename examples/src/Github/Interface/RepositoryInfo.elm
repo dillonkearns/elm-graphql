@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.RepositoryInfo exposing (Fragments, ShortDescriptionHTMLOptionalArguments, createdAt, description, descriptionHTML, forkCount, fragments, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, maybeFragments, mirrorUrl, name, nameWithOwner, owner, pushedAt, resourcePath, selection, shortDescriptionHTML, updatedAt, url)
+module Github.Interface.RepositoryInfo exposing (Fragments, ShortDescriptionHTMLOptionalArguments, createdAt, description, descriptionHTML, forkCount, fragments, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, maybeFragments, mirrorUrl, name, nameWithOwner, owner, pushedAt, resourcePath, shortDescriptionHTML, updatedAt, url)
 
 import Github.Enum.RepositoryLockReason
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -18,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.RepositoryInfo
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -48,7 +40,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onRepositoryInvitationRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -57,149 +49,149 @@ maybeFragments =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Interface.RepositoryInfo
+createdAt : SelectionSet Github.Scalar.DateTime Github.Interface.RepositoryInfo
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The description of the repository.
 -}
-description : Field (Maybe String) Github.Interface.RepositoryInfo
+description : SelectionSet (Maybe String) Github.Interface.RepositoryInfo
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : Field Github.Scalar.Html Github.Interface.RepositoryInfo
+descriptionHTML : SelectionSet Github.Scalar.Html Github.Interface.RepositoryInfo
 descriptionHTML =
-    Object.fieldDecoder "descriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "descriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Returns how many forks there are of this repository in the whole network.
 -}
-forkCount : Field Int Github.Interface.RepositoryInfo
+forkCount : SelectionSet Int Github.Interface.RepositoryInfo
 forkCount =
-    Object.fieldDecoder "forkCount" [] Decode.int
+    Object.selectionForField "forkCount" [] Decode.int
 
 
 {-| Indicates if the repository has issues feature enabled.
 -}
-hasIssuesEnabled : Field Bool Github.Interface.RepositoryInfo
+hasIssuesEnabled : SelectionSet Bool Github.Interface.RepositoryInfo
 hasIssuesEnabled =
-    Object.fieldDecoder "hasIssuesEnabled" [] Decode.bool
+    Object.selectionForField "hasIssuesEnabled" [] Decode.bool
 
 
 {-| Indicates if the repository has wiki feature enabled.
 -}
-hasWikiEnabled : Field Bool Github.Interface.RepositoryInfo
+hasWikiEnabled : SelectionSet Bool Github.Interface.RepositoryInfo
 hasWikiEnabled =
-    Object.fieldDecoder "hasWikiEnabled" [] Decode.bool
+    Object.selectionForField "hasWikiEnabled" [] Decode.bool
 
 
 {-| The repository's URL.
 -}
-homepageUrl : Field (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
+homepageUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 homepageUrl =
-    Object.fieldDecoder "homepageUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "homepageUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Indicates if the repository is unmaintained.
 -}
-isArchived : Field Bool Github.Interface.RepositoryInfo
+isArchived : SelectionSet Bool Github.Interface.RepositoryInfo
 isArchived =
-    Object.fieldDecoder "isArchived" [] Decode.bool
+    Object.selectionForField "isArchived" [] Decode.bool
 
 
 {-| Identifies if the repository is a fork.
 -}
-isFork : Field Bool Github.Interface.RepositoryInfo
+isFork : SelectionSet Bool Github.Interface.RepositoryInfo
 isFork =
-    Object.fieldDecoder "isFork" [] Decode.bool
+    Object.selectionForField "isFork" [] Decode.bool
 
 
 {-| Indicates if the repository has been locked or not.
 -}
-isLocked : Field Bool Github.Interface.RepositoryInfo
+isLocked : SelectionSet Bool Github.Interface.RepositoryInfo
 isLocked =
-    Object.fieldDecoder "isLocked" [] Decode.bool
+    Object.selectionForField "isLocked" [] Decode.bool
 
 
 {-| Identifies if the repository is a mirror.
 -}
-isMirror : Field Bool Github.Interface.RepositoryInfo
+isMirror : SelectionSet Bool Github.Interface.RepositoryInfo
 isMirror =
-    Object.fieldDecoder "isMirror" [] Decode.bool
+    Object.selectionForField "isMirror" [] Decode.bool
 
 
 {-| Identifies if the repository is private.
 -}
-isPrivate : Field Bool Github.Interface.RepositoryInfo
+isPrivate : SelectionSet Bool Github.Interface.RepositoryInfo
 isPrivate =
-    Object.fieldDecoder "isPrivate" [] Decode.bool
+    Object.selectionForField "isPrivate" [] Decode.bool
 
 
 {-| The license associated with the repository
 -}
-license : Field (Maybe String) Github.Interface.RepositoryInfo
+license : SelectionSet (Maybe String) Github.Interface.RepositoryInfo
 license =
-    Object.fieldDecoder "license" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "license" [] (Decode.string |> Decode.nullable)
 
 
 {-| The license associated with the repository
 -}
-licenseInfo : SelectionSet decodesTo Github.Object.License -> Field (Maybe decodesTo) Github.Interface.RepositoryInfo
+licenseInfo : SelectionSet decodesTo Github.Object.License -> SelectionSet (Maybe decodesTo) Github.Interface.RepositoryInfo
 licenseInfo object_ =
-    Object.selectionField "licenseInfo" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "licenseInfo" [] object_ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
 -}
-lockReason : Field (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Interface.RepositoryInfo
+lockReason : SelectionSet (Maybe Github.Enum.RepositoryLockReason.RepositoryLockReason) Github.Interface.RepositoryInfo
 lockReason =
-    Object.fieldDecoder "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.nullable)
+    Object.selectionForField "lockReason" [] (Github.Enum.RepositoryLockReason.decoder |> Decode.nullable)
 
 
 {-| The repository's original mirror URL.
 -}
-mirrorUrl : Field (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
+mirrorUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Interface.RepositoryInfo
 mirrorUrl =
-    Object.fieldDecoder "mirrorUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "mirrorUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The name of the repository.
 -}
-name : Field String Github.Interface.RepositoryInfo
+name : SelectionSet String Github.Interface.RepositoryInfo
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| The repository's name with owner.
 -}
-nameWithOwner : Field String Github.Interface.RepositoryInfo
+nameWithOwner : SelectionSet String Github.Interface.RepositoryInfo
 nameWithOwner =
-    Object.fieldDecoder "nameWithOwner" [] Decode.string
+    Object.selectionForField "nameWithOwner" [] Decode.string
 
 
 {-| The User owner of the repository.
 -}
-owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> Field decodesTo Github.Interface.RepositoryInfo
+owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet decodesTo Github.Interface.RepositoryInfo
 owner object_ =
-    Object.selectionField "owner" [] object_ identity
+    Object.selectionForCompositeField "owner" [] object_ identity
 
 
 {-| Identifies when the repository was last pushed to.
 -}
-pushedAt : Field (Maybe Github.Scalar.DateTime) Github.Interface.RepositoryInfo
+pushedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Interface.RepositoryInfo
 pushedAt =
-    Object.fieldDecoder "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The HTTP path for this repository
 -}
-resourcePath : Field Github.Scalar.Uri Github.Interface.RepositoryInfo
+resourcePath : SelectionSet Github.Scalar.Uri Github.Interface.RepositoryInfo
 resourcePath =
-    Object.fieldDecoder "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -211,7 +203,7 @@ type alias ShortDescriptionHTMLOptionalArguments =
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> Field Github.Scalar.Html Github.Interface.RepositoryInfo
+shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> SelectionSet Github.Scalar.Html Github.Interface.RepositoryInfo
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
@@ -221,18 +213,18 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.fieldDecoder "shortDescriptionHTML" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "shortDescriptionHTML" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : Field Github.Scalar.DateTime Github.Interface.RepositoryInfo
+updatedAt : SelectionSet Github.Scalar.DateTime Github.Interface.RepositoryInfo
 updatedAt =
-    Object.fieldDecoder "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this repository
 -}
-url : Field Github.Scalar.Uri Github.Interface.RepositoryInfo
+url : SelectionSet Github.Scalar.Uri Github.Interface.RepositoryInfo
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

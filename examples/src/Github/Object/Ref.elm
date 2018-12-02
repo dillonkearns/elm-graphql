@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Ref exposing (AssociatedPullRequestsOptionalArguments, associatedPullRequests, id, name, prefix, repository, selection, target)
+module Github.Object.Ref exposing (AssociatedPullRequestsOptionalArguments, associatedPullRequests, id, name, prefix, repository, target)
 
 import Github.Enum.PullRequestState
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -18,13 +17,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Ref
-selection constructor =
-    Object.selection constructor
 
 
 type alias AssociatedPullRequestsOptionalArguments =
@@ -53,7 +45,7 @@ type alias AssociatedPullRequestsOptionalArguments =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Ref
+associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> SelectionSet decodesTo Github.Object.Ref
 associatedPullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -63,37 +55,37 @@ associatedPullRequests fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "associatedPullRequests" optionalArgs object_ identity
+    Object.selectionForCompositeField "associatedPullRequests" optionalArgs object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.Ref
+id : SelectionSet Github.Scalar.Id Github.Object.Ref
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The ref name.
 -}
-name : Field String Github.Object.Ref
+name : SelectionSet String Github.Object.Ref
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| The ref's prefix, such as `refs/heads/` or `refs/tags/`.
 -}
-prefix : Field String Github.Object.Ref
+prefix : SelectionSet String Github.Object.Ref
 prefix =
-    Object.fieldDecoder "prefix" [] Decode.string
+    Object.selectionForField "prefix" [] Decode.string
 
 
 {-| The repository the ref belongs to.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Ref
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Ref
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity
 
 
 {-| The object the ref points to.
 -}
-target : SelectionSet decodesTo Github.Interface.GitObject -> Field decodesTo Github.Object.Ref
+target : SelectionSet decodesTo Github.Interface.GitObject -> SelectionSet decodesTo Github.Object.Ref
 target object_ =
-    Object.selectionField "target" [] object_ identity
+    Object.selectionForCompositeField "target" [] object_ identity

@@ -2,9 +2,8 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Mutation exposing (SendMessageRequiredArguments, increment, selection, sendMessage)
+module Swapi.Mutation exposing (SendMessageRequiredArguments, increment, sendMessage)
 
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,17 +19,9 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-{-| Select fields to build up a top-level mutation. The request can be sent with
-functions from `Graphql.Http`.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) RootMutation
-selection constructor =
-    Object.selection constructor
-
-
-increment : Field Int RootMutation
+increment : SelectionSet Int RootMutation
 increment =
-    Object.fieldDecoder "increment" [] Decode.int
+    Object.selectionForField "increment" [] Decode.int
 
 
 type alias SendMessageRequiredArguments =
@@ -39,6 +30,6 @@ type alias SendMessageRequiredArguments =
     }
 
 
-sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Swapi.Object.ChatMessage -> Field (Maybe decodesTo) RootMutation
+sendMessage : SendMessageRequiredArguments -> SelectionSet decodesTo Swapi.Object.ChatMessage -> SelectionSet (Maybe decodesTo) RootMutation
 sendMessage requiredArgs object_ =
-    Object.selectionField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(Swapi.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (\(Swapi.Scalar.Id raw) -> Encode.string raw), Argument.required "phrase" requiredArgs.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object_ (identity >> Decode.nullable)

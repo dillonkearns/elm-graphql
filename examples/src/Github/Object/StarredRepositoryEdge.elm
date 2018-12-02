@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.StarredRepositoryEdge exposing (cursor, node, selection, starredAt)
+module Github.Object.StarredRepositoryEdge exposing (cursor, node, starredAt)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,25 +18,18 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.StarredRepositoryEdge
-selection constructor =
-    Object.selection constructor
-
-
-cursor : Field String Github.Object.StarredRepositoryEdge
+cursor : SelectionSet String Github.Object.StarredRepositoryEdge
 cursor =
-    Object.fieldDecoder "cursor" [] Decode.string
+    Object.selectionForField "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.StarredRepositoryEdge
+node : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.StarredRepositoryEdge
 node object_ =
-    Object.selectionField "node" [] object_ identity
+    Object.selectionForCompositeField "node" [] object_ identity
 
 
 {-| Identifies when the item was starred.
 -}
-starredAt : Field Github.Scalar.DateTime Github.Object.StarredRepositoryEdge
+starredAt : SelectionSet Github.Scalar.DateTime Github.Object.StarredRepositoryEdge
 starredAt =
-    Object.fieldDecoder "starredAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "starredAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

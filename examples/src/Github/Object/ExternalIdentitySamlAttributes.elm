@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ExternalIdentitySamlAttributes exposing (nameId, selection)
+module Github.Object.ExternalIdentitySamlAttributes exposing (nameId)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,15 +18,8 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.ExternalIdentitySamlAttributes
-selection constructor =
-    Object.selection constructor
-
-
 {-| The NameID of the SAML identity
 -}
-nameId : Field (Maybe String) Github.Object.ExternalIdentitySamlAttributes
+nameId : SelectionSet (Maybe String) Github.Object.ExternalIdentitySamlAttributes
 nameId =
-    Object.fieldDecoder "nameId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "nameId" [] (Decode.string |> Decode.nullable)

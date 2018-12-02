@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.ReferencedSubject exposing (Fragments, maybeFragments, selection)
+module Github.Union.ReferencedSubject exposing (Fragments, fragments, maybeFragments)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -27,10 +26,10 @@ type alias Fragments decodesTo =
 
 {-| Build up a selection for this Union by passing in a Fragments record.
 -}
-selection :
+fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Union.ReferencedSubject
-selection selections =
+fragments selections =
     Object.exhuastiveFragmentSelection
         [ Object.buildFragment "Issue" selections.onIssue
         , Object.buildFragment "PullRequest" selections.onPullRequest
@@ -40,7 +39,7 @@ selection selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)

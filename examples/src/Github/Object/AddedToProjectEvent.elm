@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.AddedToProjectEvent exposing (actor, createdAt, databaseId, id, selection)
+module Github.Object.AddedToProjectEvent exposing (actor, createdAt, databaseId, id)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,34 +18,27 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.AddedToProjectEvent
-selection constructor =
-    Object.selection constructor
-
-
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> Field (Maybe decodesTo) Github.Object.AddedToProjectEvent
+actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.AddedToProjectEvent
 actor object_ =
-    Object.selectionField "actor" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : Field Github.Scalar.DateTime Github.Object.AddedToProjectEvent
+createdAt : SelectionSet Github.Scalar.DateTime Github.Object.AddedToProjectEvent
 createdAt =
-    Object.fieldDecoder "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
-databaseId : Field (Maybe Int) Github.Object.AddedToProjectEvent
+databaseId : SelectionSet (Maybe Int) Github.Object.AddedToProjectEvent
 databaseId =
-    Object.fieldDecoder "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.AddedToProjectEvent
+id : SelectionSet Github.Scalar.Id Github.Object.AddedToProjectEvent
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

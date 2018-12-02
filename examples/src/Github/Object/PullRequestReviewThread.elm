@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PullRequestReviewThread exposing (CommentsOptionalArguments, comments, id, pullRequest, repository, selection)
+module Github.Object.PullRequestReviewThread exposing (CommentsOptionalArguments, comments, id, pullRequest, repository)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,13 +16,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.PullRequestReviewThread
-selection constructor =
-    Object.selection constructor
 
 
 type alias CommentsOptionalArguments =
@@ -42,7 +34,7 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection -> Field decodesTo Github.Object.PullRequestReviewThread
+comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -52,23 +44,23 @@ comments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionField "comments" optionalArgs object_ identity
+    Object.selectionForCompositeField "comments" optionalArgs object_ identity
 
 
-id : Field Github.Scalar.Id Github.Object.PullRequestReviewThread
+id : SelectionSet Github.Scalar.Id Github.Object.PullRequestReviewThread
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this thread.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> Field decodesTo Github.Object.PullRequestReviewThread
+pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
 pullRequest object_ =
-    Object.selectionField "pullRequest" [] object_ identity
+    Object.selectionForCompositeField "pullRequest" [] object_ identity
 
 
 {-| Identifies the repository associated with this thread.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.PullRequestReviewThread
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity

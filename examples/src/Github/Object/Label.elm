@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Label exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, color, description, id, isDefault, issues, name, pullRequests, repository, selection)
+module Github.Object.Label exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, color, description, id, isDefault, issues, name, pullRequests, repository)
 
 import Github.Enum.IssueState
 import Github.Enum.PullRequestState
@@ -11,7 +11,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -21,37 +20,30 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.Label
-selection constructor =
-    Object.selection constructor
-
-
 {-| Identifies the label color.
 -}
-color : Field String Github.Object.Label
+color : SelectionSet String Github.Object.Label
 color =
-    Object.fieldDecoder "color" [] Decode.string
+    Object.selectionForField "color" [] Decode.string
 
 
 {-| A brief description of this label.
 -}
-description : Field (Maybe String) Github.Object.Label
+description : SelectionSet (Maybe String) Github.Object.Label
 description =
-    Object.fieldDecoder "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
 
 
-id : Field Github.Scalar.Id Github.Object.Label
+id : SelectionSet Github.Scalar.Id Github.Object.Label
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates whether or not this is a default label.
 -}
-isDefault : Field Bool Github.Object.Label
+isDefault : SelectionSet Bool Github.Object.Label
 isDefault =
-    Object.fieldDecoder "isDefault" [] Decode.bool
+    Object.selectionForField "isDefault" [] Decode.bool
 
 
 type alias IssuesOptionalArguments =
@@ -76,7 +68,7 @@ type alias IssuesOptionalArguments =
   - states - A list of states to filter the issues by.
 
 -}
-issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> Field decodesTo Github.Object.Label
+issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> SelectionSet decodesTo Github.Object.Label
 issues fillInOptionals object_ =
     let
         filledInOptionals =
@@ -86,14 +78,14 @@ issues fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionField "issues" optionalArgs object_ identity
+    Object.selectionForCompositeField "issues" optionalArgs object_ identity
 
 
 {-| Identifies the label name.
 -}
-name : Field String Github.Object.Label
+name : SelectionSet String Github.Object.Label
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 type alias PullRequestsOptionalArguments =
@@ -122,7 +114,7 @@ type alias PullRequestsOptionalArguments =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> Field decodesTo Github.Object.Label
+pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> SelectionSet decodesTo Github.Object.Label
 pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -132,11 +124,11 @@ pullRequests fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionField "pullRequests" optionalArgs object_ identity
+    Object.selectionForCompositeField "pullRequests" optionalArgs object_ identity
 
 
 {-| The repository associated with this label.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.Label
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Label
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity

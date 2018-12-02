@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UnknownSignature exposing (email, isValid, payload, selection, signature, signer, state)
+module Github.Object.UnknownSignature exposing (email, isValid, payload, signature, signer, state)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,50 +19,43 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.UnknownSignature
-selection constructor =
-    Object.selection constructor
-
-
 {-| Email used to sign this object.
 -}
-email : Field String Github.Object.UnknownSignature
+email : SelectionSet String Github.Object.UnknownSignature
 email =
-    Object.fieldDecoder "email" [] Decode.string
+    Object.selectionForField "email" [] Decode.string
 
 
 {-| True if the signature is valid and verified by GitHub.
 -}
-isValid : Field Bool Github.Object.UnknownSignature
+isValid : SelectionSet Bool Github.Object.UnknownSignature
 isValid =
-    Object.fieldDecoder "isValid" [] Decode.bool
+    Object.selectionForField "isValid" [] Decode.bool
 
 
 {-| Payload for GPG signing object. Raw ODB object without the signature header.
 -}
-payload : Field String Github.Object.UnknownSignature
+payload : SelectionSet String Github.Object.UnknownSignature
 payload =
-    Object.fieldDecoder "payload" [] Decode.string
+    Object.selectionForField "payload" [] Decode.string
 
 
 {-| ASCII-armored signature header from object.
 -}
-signature : Field String Github.Object.UnknownSignature
+signature : SelectionSet String Github.Object.UnknownSignature
 signature =
-    Object.fieldDecoder "signature" [] Decode.string
+    Object.selectionForField "signature" [] Decode.string
 
 
 {-| GitHub user corresponding to the email signing this commit.
 -}
-signer : SelectionSet decodesTo Github.Object.User -> Field (Maybe decodesTo) Github.Object.UnknownSignature
+signer : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.UnknownSignature
 signer object_ =
-    Object.selectionField "signer" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "signer" [] object_ (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.
 -}
-state : Field Github.Enum.GitSignatureState.GitSignatureState Github.Object.UnknownSignature
+state : SelectionSet Github.Enum.GitSignatureState.GitSignatureState Github.Object.UnknownSignature
 state =
-    Object.fieldDecoder "state" [] Github.Enum.GitSignatureState.decoder
+    Object.selectionForField "state" [] Github.Enum.GitSignatureState.decoder

@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.BlameRange exposing (age, commit, endingLine, selection, startingLine)
+module Github.Object.BlameRange exposing (age, commit, endingLine, startingLine)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,36 +18,29 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.BlameRange
-selection constructor =
-    Object.selection constructor
-
-
 {-| Identifies the recency of the change, from 1 (new) to 10 (old). This is calculated as a 2-quantile and determines the length of distance between the median age of all the changes in the file and the recency of the current range's change.
 -}
-age : Field Int Github.Object.BlameRange
+age : SelectionSet Int Github.Object.BlameRange
 age =
-    Object.fieldDecoder "age" [] Decode.int
+    Object.selectionForField "age" [] Decode.int
 
 
 {-| Identifies the line author
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> Field decodesTo Github.Object.BlameRange
+commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.BlameRange
 commit object_ =
-    Object.selectionField "commit" [] object_ identity
+    Object.selectionForCompositeField "commit" [] object_ identity
 
 
 {-| The ending line for the range
 -}
-endingLine : Field Int Github.Object.BlameRange
+endingLine : SelectionSet Int Github.Object.BlameRange
 endingLine =
-    Object.fieldDecoder "endingLine" [] Decode.int
+    Object.selectionForField "endingLine" [] Decode.int
 
 
 {-| The starting line for the range
 -}
-startingLine : Field Int Github.Object.BlameRange
+startingLine : SelectionSet Int Github.Object.BlameRange
 startingLine =
-    Object.fieldDecoder "startingLine" [] Decode.int
+    Object.selectionForField "startingLine" [] Decode.int

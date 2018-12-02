@@ -10,11 +10,10 @@ import Github.Object.Topic
 import Github.Query as Query
 import Github.Scalar exposing (Date)
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet exposing (SelectionSet, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -36,29 +35,18 @@ type alias RepositoryInfo =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
-        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo |> Field.nonNullOrFail)
-        |> with (Query.topic { name = "" } topicId)
-
-
-topicId : SelectionSet Github.Scalar.Id Github.Object.Topic
-topicId =
-    Github.Object.Topic.selection identity |> with Github.Object.Topic.id
+    SelectionSet.succeed Response
+        |> with (Query.repository { owner = "dillonkearns", name = "mobster" } repo |> SelectionSet.nonNullOrFail)
+        |> with (Query.topic { name = "" } Github.Object.Topic.id)
 
 
 repo : SelectionSet RepositoryInfo Github.Object.Repository
 repo =
-    Repository.selection RepositoryInfo
+    SelectionSet.succeed RepositoryInfo
         |> with Repository.createdAt
         |> with (Repository.releases (\optionals -> { optionals | first = Present 2 }) releases)
         |> with (Repository.releases (\optionals -> { optionals | last = Present 10 }) releases)
-        |> with (Repository.stargazers identity stargazers)
-
-
-stargazers : SelectionSet Int Github.Object.StargazerConnection
-stargazers =
-    Github.Object.StargazerConnection.selection identity
-        |> with Github.Object.StargazerConnection.totalCount
+        |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
 type alias ReleaseInfo =
@@ -69,9 +57,9 @@ type alias ReleaseInfo =
 
 releases : SelectionSet ReleaseInfo Github.Object.ReleaseConnection
 releases =
-    Github.Object.ReleaseConnection.selection ReleaseInfo
+    SelectionSet.succeed ReleaseInfo
         |> with Github.Object.ReleaseConnection.totalCount
-        |> with (Github.Object.ReleaseConnection.nodes release |> Field.nonNullOrFail |> Field.nonNullElementsOrFail)
+        |> with (Github.Object.ReleaseConnection.nodes release |> SelectionSet.nonNullOrFail |> SelectionSet.nonNullElementsOrFail)
 
 
 type alias Release =
@@ -82,8 +70,8 @@ type alias Release =
 
 release : SelectionSet Release Github.Object.Release
 release =
-    Github.Object.Release.selection Release
-        |> with (Github.Object.Release.name |> Field.map (Maybe.withDefault ""))
+    SelectionSet.succeed Release
+        |> with (Github.Object.Release.name |> SelectionSet.map (Maybe.withDefault ""))
         |> with Github.Object.Release.url
 
 

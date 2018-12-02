@@ -2,11 +2,10 @@ module Starwars exposing (main)
 
 import Browser
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
@@ -47,31 +46,31 @@ type alias Character =
 
 hero : SelectionSet Character Swapi.Interface.Character
 hero =
-    Character.selection Character
-        |> withFragment
+    SelectionSet.succeed Character
+        |> with
             (Character.fragments
-                { onDroid = Droid.selection Droid |> with Droid.primaryFunction
-                , onHuman = Human.selection Human |> with Human.homePlanet
+                { onDroid = SelectionSet.map Droid Droid.primaryFunction
+                , onHuman = SelectionSet.map Human Human.homePlanet
                 }
             )
         |> with Character.name
         |> with Character.id
-        |> with (Character.friends (fieldSelection Character.name))
+        |> with (Character.friends Character.name)
 
 
 heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
 heroUnion =
-    CharacterUnion.selection
-        { onDroid = Droid.selection Droid |> with Droid.primaryFunction
-        , onHuman = Human.selection Human |> with Human.homePlanet
+    CharacterUnion.fragments
+        { onDroid = SelectionSet.map Droid Droid.primaryFunction
+        , onHuman = SelectionSet.map Human Human.homePlanet
         }
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
-        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> Field.nonNullOrFail)
-        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> Field.nonNullOrFail)
+    SelectionSet.succeed Response
+        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> SelectionSet.nonNullOrFail)
+        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> SelectionSet.nonNullOrFail)
         |> with
             (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
         |> with
@@ -94,9 +93,9 @@ type alias HumanLookup =
 
 human : SelectionSet HumanLookup Swapi.Object.Human
 human =
-    Human.selection HumanLookup
+    SelectionSet.succeed HumanLookup
         |> with Human.name
-        |> with (Human.appearsIn |> Field.map (List.map episodeYear))
+        |> with (Human.appearsIn |> SelectionSet.map (List.map episodeYear))
         |> with Human.id
         |> with Human.avatarUrl
         |> with Human.homePlanet
@@ -120,7 +119,6 @@ makeRequest : Cmd Msg
 makeRequest =
     query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

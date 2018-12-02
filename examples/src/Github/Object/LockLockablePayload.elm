@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.LockLockablePayload exposing (clientMutationId, lockedRecord, selection)
+module Github.Object.LockLockablePayload exposing (clientMutationId, lockedRecord)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,22 +18,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.LockLockablePayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.LockLockablePayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.LockLockablePayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The item that was locked.
 -}
-lockedRecord : SelectionSet decodesTo Github.Interface.Lockable -> Field (Maybe decodesTo) Github.Object.LockLockablePayload
+lockedRecord : SelectionSet decodesTo Github.Interface.Lockable -> SelectionSet (Maybe decodesTo) Github.Object.LockLockablePayload
 lockedRecord object_ =
-    Object.selectionField "lockedRecord" [] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "lockedRecord" [] object_ (identity >> Decode.nullable)

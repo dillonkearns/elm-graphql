@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MoveProjectColumnPayload exposing (clientMutationId, columnEdge, selection)
+module Github.Object.MoveProjectColumnPayload exposing (clientMutationId, columnEdge)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,22 +18,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.MoveProjectColumnPayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.MoveProjectColumnPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.MoveProjectColumnPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The new edge of the moved column.
 -}
-columnEdge : SelectionSet decodesTo Github.Object.ProjectColumnEdge -> Field decodesTo Github.Object.MoveProjectColumnPayload
+columnEdge : SelectionSet decodesTo Github.Object.ProjectColumnEdge -> SelectionSet decodesTo Github.Object.MoveProjectColumnPayload
 columnEdge object_ =
-    Object.selectionField "columnEdge" [] object_ identity
+    Object.selectionForCompositeField "columnEdge" [] object_ identity

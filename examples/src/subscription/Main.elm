@@ -21,14 +21,13 @@ import Swapi.Subscription as Subscription
 
 sendChatMessage : String -> Phrase -> SelectionSet () Graphql.Operation.RootMutation
 sendChatMessage characterId phrase =
-    Mutation.selection (\_ -> ())
-        |> with (Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty)
+    Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty
+        |> SelectionSet.map (\_ -> ())
 
 
 subscriptionDocument : SelectionSet ChatMessage RootSubscription
 subscriptionDocument =
-    Subscription.selection identity
-        |> with (Subscription.newMessage chatMessageSelection)
+    Subscription.newMessage chatMessageSelection
 
 
 type alias ChatMessage =
@@ -39,7 +38,7 @@ type alias ChatMessage =
 
 chatMessageSelection : SelectionSet ChatMessage Swapi.Object.ChatMessage
 chatMessageSelection =
-    Swapi.Object.ChatMessage.selection ChatMessage
+    SelectionSet.succeed ChatMessage
         |> with Swapi.Object.ChatMessage.phrase
         |> with (Swapi.Object.ChatMessage.character characterSelection)
 
@@ -52,7 +51,7 @@ type alias Character =
 
 characterSelection : SelectionSet Character Swapi.Interface.Character
 characterSelection =
-    Swapi.Interface.Character.selection Character
+    SelectionSet.succeed Character
         |> with Swapi.Interface.Character.name
         |> with Swapi.Interface.Character.avatarUrl
 

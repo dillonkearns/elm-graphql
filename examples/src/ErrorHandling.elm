@@ -2,7 +2,6 @@ module Starwars exposing (main)
 
 import Browser
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Http.GraphqlError
 import Graphql.Operation exposing (RootQuery)
@@ -26,8 +25,8 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.selection Response
-        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> Field.nonNullOrFail)
+    SelectionSet.succeed Response
+        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> SelectionSet.nonNullOrFail)
         -- |> with (Query.forcedError |> Field.nonNullOrFail)
         |> with Query.forcedError
 
@@ -38,7 +37,7 @@ type alias Human =
 
 human : SelectionSet Human Swapi.Object.Human
 human =
-    Human.selection Human
+    SelectionSet.succeed Human
         |> with Human.name
 
 

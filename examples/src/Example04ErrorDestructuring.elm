@@ -2,12 +2,11 @@ module Example04ErrorDestructuring exposing (main)
 
 import Browser
 import Graphql.Document as Document
-import Graphql.Field as Field
 import Graphql.Http
 import Graphql.Http.GraphqlError
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, fieldSelection, hardcoded, with, withFragment)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Html exposing (Html, div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -28,7 +27,6 @@ type alias Response =
 query : Id -> SelectionSet Response RootQuery
 query id =
     Query.forcedError
-        |> fieldSelection
 
 
 makeRequest : Cmd Msg
@@ -36,7 +34,6 @@ makeRequest =
     Id "1001"
         |> query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.withCredentials
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 

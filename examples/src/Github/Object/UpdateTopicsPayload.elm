@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UpdateTopicsPayload exposing (clientMutationId, invalidTopicNames, repository, selection)
+module Github.Object.UpdateTopicsPayload exposing (clientMutationId, invalidTopicNames, repository)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,29 +18,22 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.UpdateTopicsPayload
-selection constructor =
-    Object.selection constructor
-
-
 {-| A unique identifier for the client performing the mutation.
 -}
-clientMutationId : Field (Maybe String) Github.Object.UpdateTopicsPayload
+clientMutationId : SelectionSet (Maybe String) Github.Object.UpdateTopicsPayload
 clientMutationId =
-    Object.fieldDecoder "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| Names of the provided topics that are not valid.
 -}
-invalidTopicNames : Field (Maybe (List String)) Github.Object.UpdateTopicsPayload
+invalidTopicNames : SelectionSet (Maybe (List String)) Github.Object.UpdateTopicsPayload
 invalidTopicNames =
-    Object.fieldDecoder "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| The updated repository.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Object.UpdateTopicsPayload
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.UpdateTopicsPayload
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity

@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.GitObject exposing (Fragments, abbreviatedOid, commitResourcePath, commitUrl, fragments, id, maybeFragments, oid, repository, selection)
+module Github.Interface.GitObject exposing (Fragments, abbreviatedOid, commitResourcePath, commitUrl, fragments, id, maybeFragments, oid, repository)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,13 +16,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-
-
-{-| Select fields to build up a SelectionSet for this Interface.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Interface.GitObject
-selection constructor =
-    Object.selection constructor
 
 
 type alias Fragments decodesTo =
@@ -51,7 +43,7 @@ fragments selections =
 {-| Can be used to create a non-exhuastive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
-maybeFragments : Fragments (Maybe a)
+maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     { onBlob = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     , onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
@@ -62,39 +54,39 @@ maybeFragments =
 
 {-| An abbreviated version of the Git object ID
 -}
-abbreviatedOid : Field String Github.Interface.GitObject
+abbreviatedOid : SelectionSet String Github.Interface.GitObject
 abbreviatedOid =
-    Object.fieldDecoder "abbreviatedOid" [] Decode.string
+    Object.selectionForField "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : Field Github.Scalar.Uri Github.Interface.GitObject
+commitResourcePath : SelectionSet Github.Scalar.Uri Github.Interface.GitObject
 commitResourcePath =
-    Object.fieldDecoder "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : Field Github.Scalar.Uri Github.Interface.GitObject
+commitUrl : SelectionSet Github.Scalar.Uri Github.Interface.GitObject
 commitUrl =
-    Object.fieldDecoder "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-id : Field Github.Scalar.Id Github.Interface.GitObject
+id : SelectionSet Github.Scalar.Id Github.Interface.GitObject
 id =
-    Object.fieldDecoder "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
-oid : Field Github.Scalar.GitObjectID Github.Interface.GitObject
+oid : SelectionSet Github.Scalar.GitObjectID Github.Interface.GitObject
 oid =
-    Object.fieldDecoder "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> Field decodesTo Github.Interface.GitObject
+repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Interface.GitObject
 repository object_ =
-    Object.selectionField "repository" [] object_ identity
+    Object.selectionForCompositeField "repository" [] object_ identity

@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.CodeOfConduct exposing (body, key, name, selection, url)
+module Github.Object.CodeOfConduct exposing (body, key, name, url)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,36 +18,29 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.CodeOfConduct
-selection constructor =
-    Object.selection constructor
-
-
 {-| The body of the CoC
 -}
-body : Field (Maybe String) Github.Object.CodeOfConduct
+body : SelectionSet (Maybe String) Github.Object.CodeOfConduct
 body =
-    Object.fieldDecoder "body" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "body" [] (Decode.string |> Decode.nullable)
 
 
 {-| The key for the CoC
 -}
-key : Field String Github.Object.CodeOfConduct
+key : SelectionSet String Github.Object.CodeOfConduct
 key =
-    Object.fieldDecoder "key" [] Decode.string
+    Object.selectionForField "key" [] Decode.string
 
 
 {-| The formal name of the CoC
 -}
-name : Field String Github.Object.CodeOfConduct
+name : SelectionSet String Github.Object.CodeOfConduct
 name =
-    Object.fieldDecoder "name" [] Decode.string
+    Object.selectionForField "name" [] Decode.string
 
 
 {-| The path to the CoC
 -}
-url : Field (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
+url : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.CodeOfConduct
 url =
-    Object.fieldDecoder "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

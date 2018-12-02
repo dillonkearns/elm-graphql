@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TeamMemberEdge exposing (cursor, memberAccessResourcePath, memberAccessUrl, node, role, selection)
+module Github.Object.TeamMemberEdge exposing (cursor, memberAccessResourcePath, memberAccessUrl, node, role)
 
 import Github.Enum.TeamMemberRole
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,39 +19,32 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.TeamMemberEdge
-selection constructor =
-    Object.selection constructor
-
-
-cursor : Field String Github.Object.TeamMemberEdge
+cursor : SelectionSet String Github.Object.TeamMemberEdge
 cursor =
-    Object.fieldDecoder "cursor" [] Decode.string
+    Object.selectionForField "cursor" [] Decode.string
 
 
 {-| The HTTP path to the organization's member access page.
 -}
-memberAccessResourcePath : Field Github.Scalar.Uri Github.Object.TeamMemberEdge
+memberAccessResourcePath : SelectionSet Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessResourcePath =
-    Object.fieldDecoder "memberAccessResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "memberAccessResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL to the organization's member access page.
 -}
-memberAccessUrl : Field Github.Scalar.Uri Github.Object.TeamMemberEdge
+memberAccessUrl : SelectionSet Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessUrl =
-    Object.fieldDecoder "memberAccessUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "memberAccessUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
-node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.TeamMemberEdge
+node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.TeamMemberEdge
 node object_ =
-    Object.selectionField "node" [] object_ identity
+    Object.selectionForCompositeField "node" [] object_ identity
 
 
 {-| The role the member has on the team.
 -}
-role : Field Github.Enum.TeamMemberRole.TeamMemberRole Github.Object.TeamMemberEdge
+role : SelectionSet Github.Enum.TeamMemberRole.TeamMemberRole Github.Object.TeamMemberEdge
 role =
-    Object.fieldDecoder "role" [] Github.Enum.TeamMemberRole.decoder
+    Object.selectionForField "role" [] Github.Enum.TeamMemberRole.decoder

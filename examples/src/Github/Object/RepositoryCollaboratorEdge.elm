@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryCollaboratorEdge exposing (cursor, node, permission, selection)
+module Github.Object.RepositoryCollaboratorEdge exposing (cursor, node, permission)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject
@@ -10,7 +10,6 @@ import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,25 +19,18 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.RepositoryCollaboratorEdge
-selection constructor =
-    Object.selection constructor
-
-
-cursor : Field String Github.Object.RepositoryCollaboratorEdge
+cursor : SelectionSet String Github.Object.RepositoryCollaboratorEdge
 cursor =
-    Object.fieldDecoder "cursor" [] Decode.string
+    Object.selectionForField "cursor" [] Decode.string
 
 
-node : SelectionSet decodesTo Github.Object.User -> Field decodesTo Github.Object.RepositoryCollaboratorEdge
+node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RepositoryCollaboratorEdge
 node object_ =
-    Object.selectionField "node" [] object_ identity
+    Object.selectionForCompositeField "node" [] object_ identity
 
 
 {-| The permission the user has on the repository.
 -}
-permission : Field Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryCollaboratorEdge
+permission : SelectionSet Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryCollaboratorEdge
 permission =
-    Object.fieldDecoder "permission" [] Github.Enum.RepositoryPermission.decoder
+    Object.selectionForField "permission" [] Github.Enum.RepositoryPermission.decoder

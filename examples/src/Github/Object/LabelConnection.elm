@@ -2,14 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.LabelConnection exposing (edges, nodes, pageInfo, selection, totalCount)
+module Github.Object.LabelConnection exposing (edges, nodes, pageInfo, totalCount)
 
 import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
 import Github.Union
-import Graphql.Field as Field exposing (Field)
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -19,36 +18,29 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-{-| Select fields to build up a SelectionSet for this object.
--}
-selection : (a -> constructor) -> SelectionSet (a -> constructor) Github.Object.LabelConnection
-selection constructor =
-    Object.selection constructor
-
-
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.LabelEdge -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
+edges : SelectionSet decodesTo Github.Object.LabelEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
 edges object_ =
-    Object.selectionField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Label -> Field (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
+nodes : SelectionSet decodesTo Github.Object.Label -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.LabelConnection
 nodes object_ =
-    Object.selectionField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> Field decodesTo Github.Object.LabelConnection
+pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.LabelConnection
 pageInfo object_ =
-    Object.selectionField "pageInfo" [] object_ identity
+    Object.selectionForCompositeField "pageInfo" [] object_ identity
 
 
 {-| Identifies the total count of items in the connection.
 -}
-totalCount : Field Int Github.Object.LabelConnection
+totalCount : SelectionSet Int Github.Object.LabelConnection
 totalCount =
-    Object.fieldDecoder "totalCount" [] Decode.int
+    Object.selectionForField "totalCount" [] Decode.int
