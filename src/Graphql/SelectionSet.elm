@@ -35,7 +35,7 @@ For example, `SelectionSet.empty` is the most basic `SelectionSet` you could bui
 
     import Graphql.Operation exposing (RootQuery)
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
-    import Swapi.Query as Query
+    import StarWars.Query as Query
 
     query : SelectionSet () RootQuery
     query =
@@ -49,7 +49,7 @@ build a valid query to get `hello`:
 
     import Graphql.Operation exposing (RootQuery)
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
-    import Swapi.Query as Query
+    import StarWars.Query as Query
 
     query : SelectionSet Response RootQuery
     query =
@@ -321,18 +321,18 @@ Mapping is also handy when you are dealing with polymorphic GraphQL types
 (Interfaces and Unions).
 
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
-    import Swapi.Object.Droid as Droid
-    import Swapi.Object.Human as Human
-    import Swapi.Union
-    import Swapi.Union.CharacterUnion
+    import StarWars.Object.Droid as Droid
+    import StarWars.Object.Human as Human
+    import StarWars.Union
+    import StarWars.Union.CharacterUnion
 
     type HumanOrDroidDetails
         = HumanDetails (Maybe String)
         | DroidDetails (Maybe String)
 
-    heroUnionSelection : SelectionSet HumanOrDroidDetails Swapi.Union.CharacterUnion
+    heroUnionSelection : SelectionSet HumanOrDroidDetails StarWars.Union.CharacterUnion
     heroUnionSelection =
-        Swapi.Union.CharacterUnion.fragments
+        StarWars.Union.CharacterUnion.fragments
             { onHuman = SelectionSet.map HumanDetails Human.homePlanet
             , onDroid = SelectionSet.map DroidDetails Droid.primaryFunction
             }
@@ -360,7 +360,7 @@ merge the two data sets together.
 
     type alias Human =
         { name : String
-        , id : Swapi.Scalar.Id
+        , id : StarWars.Scalar.Id
         }
 
     hero : SelectionSet Hero StarWars.Object.Human
@@ -390,17 +390,17 @@ pipeline syntax (using `SelectionSet.succeed` to start the pipeline
 and `SelectionSet.with` to continue it).
 
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+    import StarWars.Interface
+    import StarWars.Interface.Character as Character
     import StarWars.Scalar
-    import Swapi.Interface
-    import Swapi.Interface.Character as Character
 
     type alias Character =
         { name : String
-        , id : Swapi.Scalar.Id
+        , id : StarWars.Scalar.Id
         , friends : List String
         }
 
-    characterSelection : SelectionSet Character Swapi.Interface.Character
+    characterSelection : SelectionSet Character StarWars.Interface.Character
     characterSelection =
         SelectionSet.map3 Character
             Character.name
@@ -590,8 +590,8 @@ an entire `SelectionSet`. This can be useful if you want hardcoded data based on
 only the type when using a polymorphic type (Interface or Union).
 
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
-    import Swapi.Interface
-    import Swapi.Interface.Character as Character
+    import StarWars.Interface
+    import StarWars.Interface.Character as Character
 
     type alias Character =
         { typename : HumanOrDroid
@@ -602,13 +602,13 @@ only the type when using a polymorphic type (Interface or Union).
         = Human
         | Droid
 
-    hero : SelectionSet Character Swapi.Interface.Character
+    hero : SelectionSet Character StarWars.Interface.Character
     hero =
         SelectionSet.succeed Character
             |> with heroType
             |> with Character.name
 
-    heroType : SelectionSet HumanOrDroid Swapi.Interface.Character
+    heroType : SelectionSet HumanOrDroid StarWars.Interface.Character
     heroType =
         Character.fragments
             { onHuman = SelectionSet.succeed Human
