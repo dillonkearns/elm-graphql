@@ -18,7 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   for both a single element or multiple (much like a single `Cmd msg` or multiple
   with `Cmd.batch [cmd1, cmd2]`). This means that any functions you called on
   `Field` before are now in `SelectionSet` (so it's `SelectionSet.nonNullOrFail`,
-  `SelectionSet.map`, etc).
+  `SelectionSet.map`, etc). The [latest docs page for `SelectionSet`](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-SelectionSet)
+  now has a nice tutorial in it that walks you through the new way that
+  `SelectionSet`s work. If you're trying to wrap your head around the
+  new design, I highly recommend you read this page!
 
   To migrate to the new version, just follow these steps:
 
