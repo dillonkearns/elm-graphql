@@ -18,15 +18,7 @@ I built this package because I wanted to have something that:
 2. Creates decoders for you in a seamless and failsafe way, and
 3. Eliminates GraphQL features in favor of Elm language constructs where possible for a simpler UX (for example, GraphQL variables & fragments should just be Elm functions, constants, lets).
 
-See an [example in action on Ellie](https://rebrand.ly/graphqelm).
-
-You can do real-time APIs using GraphQL Subscriptions and `dillonkearns/elm-graphql`.
-Just wire in the framework-specific JavaScript code for opening the WebSocket connection
-through a port. Here's a [live demo](http://www.dillonkearns.com/elm-graphql/) and its
-[source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src/subscription).
-The demo server is running Elixir/Absinthe.
-
-See more end-to-end example code in the
+See an [example in action on Ellie](https://rebrand.ly/graphqelm). See more end-to-end example code in the
 [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples)
 folder.
 
@@ -137,6 +129,13 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
    ```
 
 4. With the above in your `package.json`, running `npm run api` will generate `dillonkearns/elm-graphql` code for you to call in `./src/StarWars/`. You can now use the generated code as in this [Ellie example](https://rebrand.ly/graphqelm) or in the [`examples`](https://github.com/dillonkearns/elm-graphql/tree/master/examples) folder.
+
+## Subscriptions Support
+
+You can do real-time APIs using GraphQL Subscriptions and `dillonkearns/elm-graphql`.
+Just wire in the framework-specific JavaScript code for opening the WebSocket connection
+through a port. Here's a [live demo](http://www.dillonkearns.com/elm-graphql/) and its
+[source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src/subscription). The [demo server is running Elixir/Absinthe](https://github.com/dillonkearns/graphqelm-demo).
 
 ## Contributors
 
