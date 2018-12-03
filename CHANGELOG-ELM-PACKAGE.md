@@ -26,8 +26,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Anywhere you called `SelectionSet.fieldSelection` can simply be removed now.
   - Anywhere you called `Field.map`, `mapOrFail`, etc., is just `SelectionSet.map`, etc. now.
   - Remove any calls to `<GeneratedModule>.selection` and replace it with `SelectionSet.succeed`
+    (for Union types, the `selection` function has been renamed to `fragments`, see the last point below).
   - Any annotations which were `Field decodesTo typeLock`, simply change them to
     `SelectionSet decodesTo typeLock`
+
+- The `.selection` function for Unions has been renamed to `.fragments` to be consistent
+  with the naming for Interfaces.
 
 ### Added
 
