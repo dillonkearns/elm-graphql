@@ -1,4 +1,4 @@
-# Changelog
+# Changelog [![npm](https://img.shields.io/npm/v/@dillonkearns/elm-graphql.svg)](https://npmjs.com/package/@dillonkearns/elm-graphql)
 
 All notable changes to
 [the `@dillonkearns/elm-graphql` npm package](https://www.npmjs.com/package/@dillonkearns/elm-graphql)
