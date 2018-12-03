@@ -35,7 +35,8 @@ query {
 }
 ```
 
-would look like this in `dillonkearns/elm-graphql` (the code in this example that is prefixed with `StarWars` is auto-generated)
+would look [like this](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/ExampleFromReadme.elm)
+in `dillonkearns/elm-graphql` (the code in this example that is prefixed with `StarWars` is auto-generated)
 
 ```elm
 import Graphql.Operation exposing (RootQuery)
