@@ -37,3 +37,7 @@ For example, it is conventional to name a Union's values with all caps in GraphQ
 Elm also has to avoid reserved words in the language like, so it would convert a field name like `module` or `import` into `module_` and `import_` (See https://github.com/dillonkearns/elm-graphql/pull/41 for more in-depth discussion of this). If you want more details on the normalization behavior you can take a look at [the normalization test suite](https://github.com/dillonkearns/elm-graphql/blob/master/tests/Generator/NormalizeTests.elm).
 
 What if you have two names that `dillonkearns/elm-graphql` normalizes to the same thing, like a field called `user` and `User` (which would both turn into `user`? This is possible, but indicates that you are not following GraphQL conventions. Consider using a different naming convention. If you have a compelling reason for your naming, open an issue so we can discuss the normalization strategy.
+
+## How do I upgrade to Elm 0.19?
+
+Take a look at the [`dillonkearns/elm-graphql` Elm 0.19 upgrade guide](https://github.com/dillonkearns/elm-graphql/blob/master/docs/elm-19-upgrade.md).
