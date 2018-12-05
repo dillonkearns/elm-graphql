@@ -70,24 +70,28 @@ If we wanted to query for two top-level fields it's just as easy. Let's see how 
 
 The only difference for combining two `SelectionSet`s is that you need to define which
 function we want to use to combine the two fields together into one piece of data.
-Let's just define our own function for now, called `helloAndGoodbyeToString`.
+Let's just define our own function for now, called `welcomeMessage`.
 
     import Graphql.Operation exposing (RootQuery)
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
     import StarWars.Query
 
-    helloAndGoodbyeToString : String -> String -> String
-    helloAndGoodbyeToString helloValue goodbyeValue =
-        "greeting: "
-            ++ helloValue
-            ++ "\ngoodbye: "
-            ++ goodbyeValue
+    welcomeMessage : String -> String -> String
+    welcomeMessage hello today =
+        hello ++ "\nToday is " ++ today
 
-    hero : SelectionSet String RootQuery
-    hero =
-        SelectionSet.map2 helloAndGoodbyeToString
+    query : SelectionSet String RootQuery
+    query =
+        SelectionSet.map2 welcomeMessage
             Query.hello
-            Query.goodbye
+            Query.today
+
+    {-
+       If you run this query you'll get something like:
+
+       Hello from GraphQL!
+       Today is Wednesday, December 5
+    -}
 
 Great, we retrieved two fields! But often you don't want to combine the values
 into a primitive, you just want to store the values in some data structure
