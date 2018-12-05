@@ -545,7 +545,7 @@ into a pipeline.
 
         import StarWars.Enum.Episode as Episode exposing (Episode)
         import StarWars.Object
-        import Graphql.SelectionSet exposing (SelectionSet, with, hardcoded)
+        import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with, hardcoded)
 
         type alias Hero =
             { name : String
@@ -554,7 +554,7 @@ into a pipeline.
 
         hero : SelectionSet Hero StarWars.Interface.Character
         hero =
-            Character.commonSelection Hero
+            SelectionSet.succeed Hero
                 |> with Character.name
                 |> hardcoded "Star Wars"
 
