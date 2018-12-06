@@ -2,7 +2,15 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Scalar exposing (Id(..))
+module Normalize.Scalar exposing (CatId(..), DogId(..), Id(..))
+
+
+type CatId
+    = CatId String
+
+
+type DogId
+    = DogId String
 
 
 type Id

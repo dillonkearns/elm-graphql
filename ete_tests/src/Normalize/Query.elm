@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Query exposing (CircularInputRequiredArguments, DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, RecursiveInputRequiredArguments, TypeOptionalArguments, circularInput, droid_, greet, hero, heroUnion, human, recursiveInput, type_)
+module Normalize.Query exposing (CircularInputRequiredArguments, DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, RecursiveInputRequiredArguments, TypeOptionalArguments, circularInput, conflictingTypesUnion, droid_, greet, hero, heroUnion, human, recursiveInput, type_)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -31,6 +31,11 @@ type alias CircularInputRequiredArguments =
 circularInput : CircularInputRequiredArguments -> SelectionSet (Maybe String) RootQuery
 circularInput requiredArgs =
     Object.selectionForField (Just "String") "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
+
+
+conflictingTypesUnion : SelectionSet decodesTo Normalize.Union.ConflictingTypesUnion -> SelectionSet decodesTo RootQuery
+conflictingTypesUnion object_ =
+    Object.selectionForCompositeField "conflictingTypesUnion" [] object_ identity
 
 
 type alias DroidRequiredArguments =

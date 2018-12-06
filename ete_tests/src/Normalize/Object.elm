@@ -2,7 +2,15 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Object exposing (Droid(..), Human_(..))
+module Normalize.Object exposing (Cat(..), Dog(..), Droid(..), Human_(..), ListId(..), MaybeId(..))
+
+
+type Cat
+    = Cat
+
+
+type Dog
+    = Dog
 
 
 type Droid
@@ -11,3 +19,11 @@ type Droid
 
 type Human_
     = Human_
+
+
+type ListId
+    = ListId
+
+
+type MaybeId
+    = MaybeId
