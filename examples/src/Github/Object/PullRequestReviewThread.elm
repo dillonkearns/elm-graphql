@@ -49,7 +49,7 @@ comments fillInOptionals object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.PullRequestReviewThread
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the pull request associated with this thread.

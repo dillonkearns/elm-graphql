@@ -30,7 +30,7 @@ type alias CircularInputRequiredArguments =
 -}
 circularInput : CircularInputRequiredArguments -> SelectionSet (Maybe String) RootQuery
 circularInput requiredArgs =
-    Object.selectionForField "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
 
 
 type alias DroidRequiredArguments =
@@ -53,7 +53,7 @@ type alias GreetRequiredArguments =
 
 greet : GreetRequiredArguments -> SelectionSet String RootQuery
 greet requiredArgs =
-    Object.selectionForField "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
+    Object.selectionForField (Just "String") "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
 
 
 type alias HeroOptionalArguments =
@@ -125,7 +125,7 @@ type alias RecursiveInputRequiredArguments =
 -}
 recursiveInput : RecursiveInputRequiredArguments -> SelectionSet (Maybe String) RootQuery
 recursiveInput requiredArgs =
-    Object.selectionForField "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
 
 
 type alias TypeOptionalArguments =
@@ -142,4 +142,4 @@ type_ fillInOptionals =
             [ Argument.optional "input" filledInOptionals.input Normalize.InputObject.encodeReservedWord ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "type" optionalArgs Decode.string
+    Object.selectionForField (Just "String") "type" optionalArgs Decode.string

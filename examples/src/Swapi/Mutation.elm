@@ -21,7 +21,7 @@ import Swapi.Union
 
 increment : SelectionSet Int RootMutation
 increment =
-    Object.selectionForField "increment" [] Decode.int
+    Object.selectionForField (Just "Int") "increment" [] Decode.int
 
 
 type alias SendMessageRequiredArguments =

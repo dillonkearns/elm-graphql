@@ -22,14 +22,14 @@ import Json.Decode as Decode
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.UpdateTopicsPayload
 clientMutationId =
-    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| Names of the provided topics that are not valid.
 -}
 invalidTopicNames : SelectionSet (Maybe (List String)) Github.Object.UpdateTopicsPayload
 invalidTopicNames =
-    Object.selectionForField "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField Nothing "invalidTopicNames" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| The updated repository.

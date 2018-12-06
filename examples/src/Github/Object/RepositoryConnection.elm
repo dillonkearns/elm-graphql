@@ -43,11 +43,11 @@ pageInfo object_ =
 -}
 totalCount : SelectionSet Int Github.Object.RepositoryConnection
 totalCount =
-    Object.selectionForField "totalCount" [] Decode.int
+    Object.selectionForField (Just "Int") "totalCount" [] Decode.int
 
 
 {-| The total size in kilobytes of all repositories in the connection.
 -}
 totalDiskUsage : SelectionSet Int Github.Object.RepositoryConnection
 totalDiskUsage =
-    Object.selectionForField "totalDiskUsage" [] Decode.int
+    Object.selectionForField (Just "Int") "totalDiskUsage" [] Decode.int

@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 body : SelectionSet String Github.Object.License
 body =
-    Object.selectionForField "body" [] Decode.string
+    Object.selectionForField (Just "String") "body" [] Decode.string
 
 
 {-| The conditions set by the license
@@ -36,40 +36,40 @@ conditions object_ =
 -}
 description : SelectionSet (Maybe String) Github.Object.License
 description =
-    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| Whether the license should be featured
 -}
 featured : SelectionSet Bool Github.Object.License
 featured =
-    Object.selectionForField "featured" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "featured" [] Decode.bool
 
 
 {-| Whether the license should be displayed in license pickers
 -}
 hidden : SelectionSet Bool Github.Object.License
 hidden =
-    Object.selectionForField "hidden" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "hidden" [] Decode.bool
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.License
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Instructions on how to implement the license
 -}
 implementation : SelectionSet (Maybe String) Github.Object.License
 implementation =
-    Object.selectionForField "implementation" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "implementation" [] (Decode.string |> Decode.nullable)
 
 
 {-| The lowercased SPDX ID of the license
 -}
 key : SelectionSet String Github.Object.License
 key =
-    Object.selectionForField "key" [] Decode.string
+    Object.selectionForField (Just "String") "key" [] Decode.string
 
 
 {-| The limitations set by the license
@@ -83,14 +83,14 @@ limitations object_ =
 -}
 name : SelectionSet String Github.Object.License
 name =
-    Object.selectionForField "name" [] Decode.string
+    Object.selectionForField (Just "String") "name" [] Decode.string
 
 
 {-| Customary short name if applicable (e.g, GPLv3)
 -}
 nickname : SelectionSet (Maybe String) Github.Object.License
 nickname =
-    Object.selectionForField "nickname" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "nickname" [] (Decode.string |> Decode.nullable)
 
 
 {-| The permissions set by the license
@@ -104,11 +104,11 @@ permissions object_ =
 -}
 spdxId : SelectionSet (Maybe String) Github.Object.License
 spdxId =
-    Object.selectionForField "spdxId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "spdxId" [] (Decode.string |> Decode.nullable)
 
 
 {-| URL to the license on <https://choosealicense.com>
 -}
 url : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.License
 url =
-    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField (Just "URI") "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

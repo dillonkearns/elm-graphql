@@ -23,7 +23,7 @@ import Normalize.Union
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Droid
 appearsIn =
-    Object.selectionForField "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
+    Object.selectionForField Nothing "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the droid, or an empty list if they have none.
@@ -37,18 +37,18 @@ friends object_ =
 -}
 id : SelectionSet Normalize.Scalar.Id Normalize.Object.Droid
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the droid.
 -}
 name : SelectionSet String Normalize.Object.Droid
 name =
-    Object.selectionForField "name" [] Decode.string
+    Object.selectionForField (Just "String") "name" [] Decode.string
 
 
 {-| The primary function of the droid.
 -}
 primaryFunction : SelectionSet (Maybe String) Normalize.Object.Droid
 primaryFunction =
-    Object.selectionForField "primaryFunction" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "primaryFunction" [] (Decode.string |> Decode.nullable)

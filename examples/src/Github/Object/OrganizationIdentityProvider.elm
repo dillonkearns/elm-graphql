@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 digestMethod : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 digestMethod =
-    Object.selectionForField "digestMethod" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField (Just "URI") "digestMethod" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 type alias ExternalIdentitiesOptionalArguments =
@@ -56,21 +56,21 @@ externalIdentities fillInOptionals object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.OrganizationIdentityProvider
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The x509 certificate used by the Identity Provder to sign assertions and responses.
 -}
 idpCertificate : SelectionSet (Maybe Github.Scalar.X509Certificate) Github.Object.OrganizationIdentityProvider
 idpCertificate =
-    Object.selectionForField "idpCertificate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.X509Certificate |> Decode.nullable)
+    Object.selectionForField (Just "X509Certificate") "idpCertificate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.X509Certificate |> Decode.nullable)
 
 
 {-| The Issuer Entity ID for the SAML Identity Provider
 -}
 issuer : SelectionSet (Maybe String) Github.Object.OrganizationIdentityProvider
 issuer =
-    Object.selectionForField "issuer" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "issuer" [] (Decode.string |> Decode.nullable)
 
 
 {-| Organization this Identity Provider belongs to
@@ -84,11 +84,11 @@ organization object_ =
 -}
 signatureMethod : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 signatureMethod =
-    Object.selectionForField "signatureMethod" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField (Just "URI") "signatureMethod" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| The URL endpoint for the Identity Provider's SAML SSO.
 -}
 ssoUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.OrganizationIdentityProvider
 ssoUrl =
-    Object.selectionForField "ssoUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField (Just "URI") "ssoUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

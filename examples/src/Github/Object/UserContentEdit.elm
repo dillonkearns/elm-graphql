@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.UserContentEdit
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who edited this content,
@@ -34,11 +34,11 @@ editor object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.UserContentEdit
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.UserContentEdit
 updatedAt =
-    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

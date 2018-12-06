@@ -7,6 +7,7 @@ import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
 import Helpers.Main
+import Regex
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Enum.Language as Language

@@ -73,35 +73,35 @@ author object_ =
 -}
 authorAssociation : SelectionSet Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Interface.Comment
 authorAssociation =
-    Object.selectionForField "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
+    Object.selectionForField Nothing "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| The comment body as Markdown.
 -}
 body : SelectionSet String Github.Interface.Comment
 body =
-    Object.selectionForField "body" [] Decode.string
+    Object.selectionForField (Just "String") "body" [] Decode.string
 
 
 {-| The comment body rendered to HTML.
 -}
 bodyHTML : SelectionSet Github.Scalar.Html Github.Interface.Comment
 bodyHTML =
-    Object.selectionForField "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField (Just "HTML") "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Interface.Comment
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
 createdViaEmail : SelectionSet Bool Github.Interface.Comment
 createdViaEmail =
-    Object.selectionForField "createdViaEmail" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "createdViaEmail" [] Decode.bool
 
 
 {-| The actor who edited the comment.
@@ -113,28 +113,28 @@ editor object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Interface.Comment
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
 lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Interface.Comment
 lastEditedAt =
-    Object.selectionForField "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField (Just "DateTime") "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Interface.Comment
 publishedAt =
-    Object.selectionForField "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField (Just "DateTime") "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Interface.Comment
 updatedAt =
-    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 type alias UserContentEditsOptionalArguments =
@@ -170,4 +170,4 @@ userContentEdits fillInOptionals object_ =
 -}
 viewerDidAuthor : SelectionSet Bool Github.Interface.Comment
 viewerDidAuthor =
-    Object.selectionForField "viewerDidAuthor" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "viewerDidAuthor" [] Decode.bool

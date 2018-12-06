@@ -22,39 +22,39 @@ import Json.Decode as Decode
 -}
 gitHubServicesSha : SelectionSet String Github.Object.GitHubMetadata
 gitHubServicesSha =
-    Object.selectionForField "gitHubServicesSha" [] Decode.string
+    Object.selectionForField (Just "String") "gitHubServicesSha" [] Decode.string
 
 
 {-| IP addresses that users connect to for git operations
 -}
 gitIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 gitIpAddresses =
-    Object.selectionForField "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField Nothing "gitIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that service hooks are sent from
 -}
 hookIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 hookIpAddresses =
-    Object.selectionForField "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField Nothing "hookIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| IP addresses that the importer connects from
 -}
 importerIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 importerIpAddresses =
-    Object.selectionForField "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField Nothing "importerIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
 
 
 {-| Whether or not users are verified
 -}
 isPasswordAuthenticationVerifiable : SelectionSet Bool Github.Object.GitHubMetadata
 isPasswordAuthenticationVerifiable =
-    Object.selectionForField "isPasswordAuthenticationVerifiable" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "isPasswordAuthenticationVerifiable" [] Decode.bool
 
 
 {-| IP addresses for GitHub Pages' A records
 -}
 pagesIpAddresses : SelectionSet (Maybe (List String)) Github.Object.GitHubMetadata
 pagesIpAddresses =
-    Object.selectionForField "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)
+    Object.selectionForField Nothing "pagesIpAddresses" [] (Decode.string |> Decode.list |> Decode.nullable)

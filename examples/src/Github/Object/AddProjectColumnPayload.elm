@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.AddProjectColumnPayload
 clientMutationId =
-    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The edge from the project's column connection.

@@ -23,7 +23,7 @@ import Normalize.Union
 -}
 appearsIn : SelectionSet (List Normalize.Enum.Episode_.Episode_) Normalize.Object.Human_
 appearsIn =
-    Object.selectionForField "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
+    Object.selectionForField Nothing "appearsIn" [] (Normalize.Enum.Episode_.decoder |> Decode.list)
 
 
 {-| The friends of the human, or an empty list if they have none.
@@ -37,18 +37,18 @@ friends object_ =
 -}
 homePlanet : SelectionSet (Maybe String) Normalize.Object.Human_
 homePlanet =
-    Object.selectionForField "homePlanet" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "homePlanet" [] (Decode.string |> Decode.nullable)
 
 
 {-| The ID of the human.
 -}
 id : SelectionSet Normalize.Scalar.Id Normalize.Object.Human_
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
 
 
 {-| The name of the human.
 -}
 name : SelectionSet String Normalize.Object.Human_
 name =
-    Object.selectionForField "name" [] Decode.string
+    Object.selectionForField (Just "String") "name" [] Decode.string

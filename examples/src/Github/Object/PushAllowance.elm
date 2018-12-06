@@ -27,7 +27,7 @@ actor object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.PushAllowance
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.

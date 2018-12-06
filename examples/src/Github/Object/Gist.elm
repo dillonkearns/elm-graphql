@@ -51,33 +51,33 @@ comments fillInOptionals object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Gist
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The gist description.
 -}
 description : SelectionSet (Maybe String) Github.Object.Gist
 description =
-    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "description" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Gist
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Whether the gist is public or not.
 -}
 isPublic : SelectionSet Bool Github.Object.Gist
 isPublic =
-    Object.selectionForField "isPublic" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "isPublic" [] Decode.bool
 
 
 {-| The gist name.
 -}
 name : SelectionSet String Github.Object.Gist
 name =
-    Object.selectionForField "name" [] Decode.string
+    Object.selectionForField (Just "String") "name" [] Decode.string
 
 
 {-| The gist owner.
@@ -91,7 +91,7 @@ owner object_ =
 -}
 pushedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Gist
 pushedAt =
-    Object.selectionForField "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField (Just "DateTime") "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias StargazersOptionalArguments =
@@ -129,11 +129,11 @@ stargazers fillInOptionals object_ =
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Gist
 updatedAt =
-    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.
 -}
 viewerHasStarred : SelectionSet Bool Github.Object.Gist
 viewerHasStarred =
-    Object.selectionForField "viewerHasStarred" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "viewerHasStarred" [] Decode.bool

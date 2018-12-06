@@ -29,12 +29,12 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.UnlabeledEvent
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.UnlabeledEvent
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the label associated with the 'unlabeled' event.

@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 cursor : SelectionSet String Github.Object.RepositoryTopicEdge
 cursor =
-    Object.selectionForField "cursor" [] Decode.string
+    Object.selectionForField (Just "String") "cursor" [] Decode.string
 
 
 {-| The item at the end of the edge.

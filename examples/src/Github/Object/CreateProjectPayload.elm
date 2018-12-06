@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.CreateProjectPayload
 clientMutationId =
-    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The new project.

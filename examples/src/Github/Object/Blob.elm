@@ -22,54 +22,54 @@ import Json.Decode as Decode
 -}
 abbreviatedOid : SelectionSet String Github.Object.Blob
 abbreviatedOid =
-    Object.selectionForField "abbreviatedOid" [] Decode.string
+    Object.selectionForField (Just "String") "abbreviatedOid" [] Decode.string
 
 
 {-| Byte size of Blob object
 -}
 byteSize : SelectionSet Int Github.Object.Blob
 byteSize =
-    Object.selectionForField "byteSize" [] Decode.int
+    Object.selectionForField (Just "Int") "byteSize" [] Decode.int
 
 
 {-| The HTTP path for this Git object
 -}
 commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Blob
 commitResourcePath =
-    Object.selectionForField "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField (Just "URI") "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Blob
 commitUrl =
-    Object.selectionForField "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField (Just "URI") "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Blob
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates whether the Blob is binary or text
 -}
 isBinary : SelectionSet Bool Github.Object.Blob
 isBinary =
-    Object.selectionForField "isBinary" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "isBinary" [] Decode.bool
 
 
 {-| Indicates whether the contents is truncated
 -}
 isTruncated : SelectionSet Bool Github.Object.Blob
 isTruncated =
-    Object.selectionForField "isTruncated" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "isTruncated" [] Decode.bool
 
 
 {-| The Git object ID
 -}
 oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Blob
 oid =
-    Object.selectionForField "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField (Just "GitObjectID") "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to
@@ -83,4 +83,4 @@ repository object_ =
 -}
 text : SelectionSet (Maybe String) Github.Object.Blob
 text =
-    Object.selectionForField "text" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "text" [] (Decode.string |> Decode.nullable)

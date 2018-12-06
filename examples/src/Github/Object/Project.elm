@@ -23,28 +23,28 @@ import Json.Decode as Decode
 -}
 body : SelectionSet (Maybe String) Github.Object.Project
 body =
-    Object.selectionForField "body" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField (Just "String") "body" [] (Decode.string |> Decode.nullable)
 
 
 {-| The projects description body rendered to HTML.
 -}
 bodyHTML : SelectionSet Github.Scalar.Html Github.Object.Project
 bodyHTML =
-    Object.selectionForField "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField (Just "HTML") "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
 closed : SelectionSet Bool Github.Object.Project
 closed =
-    Object.selectionForField "closed" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
 closedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Project
 closedAt =
-    Object.selectionForField "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField (Just "DateTime") "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias ColumnsOptionalArguments =
@@ -80,7 +80,7 @@ columns fillInOptionals object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Project
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who originally created the project.
@@ -94,26 +94,26 @@ creator object_ =
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.Project
 databaseId =
-    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField (Just "Int") "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Project
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The project's name.
 -}
 name : SelectionSet String Github.Object.Project
 name =
-    Object.selectionForField "name" [] Decode.string
+    Object.selectionForField (Just "String") "name" [] Decode.string
 
 
 {-| The project's number.
 -}
 number : SelectionSet Int Github.Object.Project
 number =
-    Object.selectionForField "number" [] Decode.int
+    Object.selectionForField (Just "Int") "number" [] Decode.int
 
 
 {-| The project's owner. Currently limited to repositories and organizations.
@@ -156,32 +156,32 @@ pendingCards fillInOptionals object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Project
 resourcePath =
-    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField (Just "URI") "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Whether the project is open or closed.
 -}
 state : SelectionSet Github.Enum.ProjectState.ProjectState Github.Object.Project
 state =
-    Object.selectionForField "state" [] Github.Enum.ProjectState.decoder
+    Object.selectionForField Nothing "state" [] Github.Enum.ProjectState.decoder
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Project
 updatedAt =
-    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField (Just "DateTime") "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this project
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.Project
 url =
-    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField (Just "URI") "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the current viewer can update this object.
 -}
 viewerCanUpdate : SelectionSet Bool Github.Object.Project
 viewerCanUpdate =
-    Object.selectionForField "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField (Just "Boolean") "viewerCanUpdate" [] Decode.bool
