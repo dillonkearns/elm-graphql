@@ -41,11 +41,11 @@ scalarDecoder =
 
 {-| Refer to a field in auto-generated code.
 -}
-selectionForField : String -> List Argument -> Decoder decodesTo -> SelectionSet decodesTo lockedTo
-selectionForField fieldName args decoder =
-    SelectionSet [ leaf fieldName args ]
+selectionForField : Maybe String -> String -> List Argument -> Decoder decodesTo -> SelectionSet decodesTo lockedTo
+selectionForField scalarName fieldName args decoder =
+    SelectionSet [ leaf scalarName fieldName args ]
         (Decode.field
-            (Graphql.Document.Field.hashedAliasName (leaf fieldName args))
+            (Graphql.Document.Field.hashedAliasName (leaf scalarName fieldName args))
             decoder
         )
 
@@ -71,9 +71,9 @@ composite fieldName args fields =
     Graphql.RawField.Composite fieldName args fields
 
 
-leaf : String -> List Argument -> RawField
-leaf fieldName args =
-    Graphql.RawField.Leaf fieldName args
+leaf : Maybe String -> String -> List Argument -> RawField
+leaf sclarName fieldName args =
+    Graphql.RawField.Leaf sclarName fieldName args
 
 
 {-| Used to create FragmentSelectionSets for type-specific fragmentsin auto-generated code.
@@ -92,7 +92,7 @@ exhuastiveFragmentSelection typeSpecificSelections =
             typeSpecificSelections
                 |> List.map (\(FragmentSelectionSet typeName fields decoder) -> composite ("...on " ++ typeName) [] fields)
     in
-    SelectionSet (leaf "__typename" [] :: selections)
+    SelectionSet (Graphql.RawField.typename :: selections)
         (Decode.string
             |> Decode.field "__typename"
             |> Decode.andThen

@@ -28,7 +28,7 @@ maybeAliasHash field =
                     |> String.fromInt
                     |> Just
 
-        Leaf name arguments ->
+        Leaf maybeScalarName name arguments ->
             if List.isEmpty arguments then
                 Nothing
 
@@ -42,9 +42,26 @@ maybeAliasHash field =
 
 alias : RawField -> Maybe String
 alias field =
-    field
-        |> maybeAliasHash
-        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
+    let
+        maybeScalarAlias =
+            case field of
+                Leaf scalarName _ _ ->
+                    scalarName
+
+                _ ->
+                    Nothing
+
+        prefixValues =
+            [ maybeAliasHash field, maybeScalarAlias ]
+                |> List.filterMap identity
+    in
+    if prefixValues == [] then
+        Nothing
+
+    else
+        (Graphql.RawField.name field :: prefixValues)
+            |> String.concat
+            |> Just
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
@@ -88,7 +105,7 @@ serialize aliasName mIndentationLevel field =
                         ++ "}"
                         |> Just
 
-        Leaf fieldName args ->
+        Leaf maybeScalarName fieldName args ->
             Just (fieldName ++ Argument.serialize args)
     )
         |> Maybe.map

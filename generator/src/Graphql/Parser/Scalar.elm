@@ -1,4 +1,4 @@
-module Graphql.Parser.Scalar exposing (Scalar(..), parse)
+module Graphql.Parser.Scalar exposing (Scalar(..), parse, toString)
 
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 
@@ -28,3 +28,23 @@ parse scalarName =
 
         _ ->
             Custom (ClassCaseName.build scalarName)
+
+
+toString : Scalar -> String
+toString scalar =
+    case scalar of
+        String ->
+            "String"
+
+        Boolean ->
+            "Boolean"
+
+        Int ->
+            "Int"
+
+        Float ->
+            "Float"
+
+        Custom customScalarName ->
+            customScalarName
+                |> ClassCaseName.raw

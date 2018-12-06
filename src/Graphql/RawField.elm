@@ -5,7 +5,7 @@ import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 
 type RawField
     = Composite String (List Argument) (List RawField)
-    | Leaf String (List Argument)
+    | Leaf (Maybe String) String (List Argument)
 
 
 name : RawField -> String
@@ -14,10 +14,10 @@ name field =
         Composite fieldName argumentList fieldList ->
             fieldName
 
-        Leaf fieldName argumentList ->
+        Leaf scalarName fieldName argumentList ->
             fieldName
 
 
 typename : RawField
 typename =
-    Leaf "__typename" []
+    Leaf Nothing "__typename" []

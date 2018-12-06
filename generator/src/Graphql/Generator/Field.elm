@@ -10,6 +10,7 @@ import Graphql.Generator.ReferenceLeaf as ReferenceLeaf
 import Graphql.Generator.RequiredArgs
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import Graphql.Parser.Scalar as Scalar exposing (Scalar)
 import Graphql.Parser.Type as Type exposing (TypeReference)
 import MyDebug
 import String.Extra
@@ -286,13 +287,26 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
 
 initScalarField : List String -> TypeReference -> FieldGenerator
 initScalarField apiSubmodule typeRef =
+    let
+        scalarName =
+            case typeRef of
+                Type.TypeReference referrableType isNullable ->
+                    case referrableType of
+                        Type.Scalar scalarType ->
+                            "(Just \""
+                                ++ Scalar.toString scalarType
+                                ++ "\")"
+
+                        _ ->
+                            "Nothing"
+    in
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphql.Generator.Decoder.generateType apiSubmodule typeRef
     , decoder =
         Graphql.Generator.Decoder.generateDecoder apiSubmodule typeRef
             |> String.join " |> "
-    , otherThing = ".selectionForField"
+    , otherThing = ".selectionForField " ++ scalarName
     , letBindings = []
     , objectDecoderChain = Nothing
     , typeAliases = []
