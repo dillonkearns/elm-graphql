@@ -68,25 +68,25 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField (Just "URI") "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The username of the actor.
 -}
 login : SelectionSet String Github.Interface.Actor
 login =
-    Object.selectionForField (Just "String") "login" [] Decode.string
+    Object.selectionForField "String" "login" [] Decode.string
 
 
 {-| The HTTP path for this actor.
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Interface.Actor
 resourcePath =
-    Object.selectionForField (Just "URI") "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this actor.
 -}
 url : SelectionSet Github.Scalar.Uri Github.Interface.Actor
 url =
-    Object.selectionForField (Just "URI") "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

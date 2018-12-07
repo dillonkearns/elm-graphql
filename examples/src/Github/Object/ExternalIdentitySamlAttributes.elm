@@ -22,4 +22,4 @@ import Json.Decode as Decode
 -}
 nameId : SelectionSet (Maybe String) Github.Object.ExternalIdentitySamlAttributes
 nameId =
-    Object.selectionForField (Just "String") "nameId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "nameId" [] (Decode.string |> Decode.nullable)

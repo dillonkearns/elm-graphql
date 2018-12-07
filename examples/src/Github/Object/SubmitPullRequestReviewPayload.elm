@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.SubmitPullRequestReviewPayload
 clientMutationId =
-    Object.selectionForField (Just "String") "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The submitted pull request review.

@@ -43,4 +43,4 @@ pageInfo object_ =
 -}
 totalCount : SelectionSet Int Github.Object.PushAllowanceConnection
 totalCount =
-    Object.selectionForField (Just "Int") "totalCount" [] Decode.int
+    Object.selectionForField "Int" "totalCount" [] Decode.int

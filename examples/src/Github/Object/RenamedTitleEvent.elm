@@ -29,26 +29,26 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.RenamedTitleEvent
 createdAt =
-    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the current title of the issue or pull request.
 -}
 currentTitle : SelectionSet String Github.Object.RenamedTitleEvent
 currentTitle =
-    Object.selectionForField (Just "String") "currentTitle" [] Decode.string
+    Object.selectionForField "String" "currentTitle" [] Decode.string
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.RenamedTitleEvent
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the previous title of the issue or pull request.
 -}
 previousTitle : SelectionSet String Github.Object.RenamedTitleEvent
 previousTitle =
-    Object.selectionForField (Just "String") "previousTitle" [] Decode.string
+    Object.selectionForField "String" "previousTitle" [] Decode.string
 
 
 {-| Subject that was renamed.

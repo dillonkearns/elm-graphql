@@ -28,7 +28,7 @@ import Json.Decode as Decode
 -}
 activeLockReason : SelectionSet (Maybe Github.Enum.LockReason.LockReason) Github.Object.Issue
 activeLockReason =
-    Object.selectionForField Nothing "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe Enum.LockReason.LockReason)" "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
 
 
 type alias AssigneesOptionalArguments =
@@ -71,42 +71,42 @@ author object_ =
 -}
 authorAssociation : SelectionSet Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.Issue
 authorAssociation =
-    Object.selectionForField Nothing "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
+    Object.selectionForField "Enum.CommentAuthorAssociation.CommentAuthorAssociation" "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| Identifies the body of the issue.
 -}
 body : SelectionSet String Github.Object.Issue
 body =
-    Object.selectionForField (Just "String") "body" [] Decode.string
+    Object.selectionForField "String" "body" [] Decode.string
 
 
 {-| Identifies the body of the issue rendered to HTML.
 -}
 bodyHTML : SelectionSet Github.Scalar.Html Github.Object.Issue
 bodyHTML =
-    Object.selectionForField (Just "HTML") "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "Scalar.Html" "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the body of the issue rendered to text.
 -}
 bodyText : SelectionSet String Github.Object.Issue
 bodyText =
-    Object.selectionForField (Just "String") "bodyText" [] Decode.string
+    Object.selectionForField "String" "bodyText" [] Decode.string
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}
 closed : SelectionSet Bool Github.Object.Issue
 closed =
-    Object.selectionForField (Just "Boolean") "closed" [] Decode.bool
+    Object.selectionForField "Bool" "closed" [] Decode.bool
 
 
 {-| Identifies the date and time when the object was closed.
 -}
 closedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Issue
 closedAt =
-    Object.selectionForField (Just "DateTime") "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.DateTime)" "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 type alias CommentsOptionalArguments =
@@ -142,21 +142,21 @@ comments fillInOptionals object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Issue
 createdAt =
-    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
 createdViaEmail : SelectionSet Bool Github.Object.Issue
 createdViaEmail =
-    Object.selectionForField (Just "Boolean") "createdViaEmail" [] Decode.bool
+    Object.selectionForField "Bool" "createdViaEmail" [] Decode.bool
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.Issue
 databaseId =
-    Object.selectionForField (Just "Int") "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The actor who edited the comment.
@@ -168,7 +168,7 @@ editor object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.Issue
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 type alias LabelsOptionalArguments =
@@ -204,14 +204,14 @@ labels fillInOptionals object_ =
 -}
 lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Issue
 lastEditedAt =
-    Object.selectionForField (Just "DateTime") "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.DateTime)" "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| `true` if the object is locked
 -}
 locked : SelectionSet Bool Github.Object.Issue
 locked =
-    Object.selectionForField (Just "Boolean") "locked" [] Decode.bool
+    Object.selectionForField "Bool" "locked" [] Decode.bool
 
 
 {-| Identifies the milestone associated with the issue.
@@ -225,7 +225,7 @@ milestone object_ =
 -}
 number : SelectionSet Int Github.Object.Issue
 number =
-    Object.selectionForField (Just "Int") "number" [] Decode.int
+    Object.selectionForField "Int" "number" [] Decode.int
 
 
 type alias ParticipantsOptionalArguments =
@@ -290,7 +290,7 @@ projectCards fillInOptionals object_ =
 -}
 publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Issue
 publishedAt =
-    Object.selectionForField (Just "DateTime") "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.DateTime)" "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -344,14 +344,14 @@ repository object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Issue
 resourcePath =
-    Object.selectionForField (Just "URI") "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the state of the issue.
 -}
 state : SelectionSet Github.Enum.IssueState.IssueState Github.Object.Issue
 state =
-    Object.selectionForField Nothing "state" [] Github.Enum.IssueState.decoder
+    Object.selectionForField "Enum.IssueState.IssueState" "state" [] Github.Enum.IssueState.decoder
 
 
 type alias TimelineOptionalArguments =
@@ -389,21 +389,21 @@ timeline fillInOptionals object_ =
 -}
 title : SelectionSet String Github.Object.Issue
 title =
-    Object.selectionForField (Just "String") "title" [] Decode.string
+    Object.selectionForField "String" "title" [] Decode.string
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Issue
 updatedAt =
-    Object.selectionForField (Just "DateTime") "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this issue
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.Issue
 url =
-    Object.selectionForField (Just "URI") "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias UserContentEditsOptionalArguments =
@@ -439,39 +439,39 @@ userContentEdits fillInOptionals object_ =
 -}
 viewerCanReact : SelectionSet Bool Github.Object.Issue
 viewerCanReact =
-    Object.selectionForField (Just "Boolean") "viewerCanReact" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanReact" [] Decode.bool
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
 viewerCanSubscribe : SelectionSet Bool Github.Object.Issue
 viewerCanSubscribe =
-    Object.selectionForField (Just "Boolean") "viewerCanSubscribe" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Check if the current viewer can update this object.
 -}
 viewerCanUpdate : SelectionSet Bool Github.Object.Issue
 viewerCanUpdate =
-    Object.selectionForField (Just "Boolean") "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanUpdate" [] Decode.bool
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
 viewerCannotUpdateReasons : SelectionSet (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.Issue
 viewerCannotUpdateReasons =
-    Object.selectionForField Nothing "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+    Object.selectionForField "(List Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)" "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
 viewerDidAuthor : SelectionSet Bool Github.Object.Issue
 viewerDidAuthor =
-    Object.selectionForField (Just "Boolean") "viewerDidAuthor" [] Decode.bool
+    Object.selectionForField "Bool" "viewerDidAuthor" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
 viewerSubscription : SelectionSet Github.Enum.SubscriptionState.SubscriptionState Github.Object.Issue
 viewerSubscription =
-    Object.selectionForField Nothing "viewerSubscription" [] Github.Enum.SubscriptionState.decoder
+    Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] Github.Enum.SubscriptionState.decoder

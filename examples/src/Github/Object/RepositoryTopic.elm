@@ -20,14 +20,14 @@ import Json.Decode as Decode
 
 id : SelectionSet Github.Scalar.Id Github.Object.RepositoryTopic
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The HTTP path for this repository-topic.
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
 resourcePath =
-    Object.selectionForField (Just "URI") "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The topic.
@@ -41,4 +41,4 @@ topic object_ =
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
 url =
-    Object.selectionForField (Just "URI") "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

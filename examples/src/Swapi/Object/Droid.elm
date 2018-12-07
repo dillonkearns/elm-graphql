@@ -23,14 +23,14 @@ import Swapi.Union
 -}
 appearsIn : SelectionSet (List Swapi.Enum.Episode.Episode) Swapi.Object.Droid
 appearsIn =
-    Object.selectionForField Nothing "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
+    Object.selectionForField "(List Enum.Episode.Episode)" "appearsIn" [] (Swapi.Enum.Episode.decoder |> Decode.list)
 
 
 {-| Url to a profile picture for the character.
 -}
 avatarUrl : SelectionSet String Swapi.Object.Droid
 avatarUrl =
-    Object.selectionForField (Just "String") "avatarUrl" [] Decode.string
+    Object.selectionForField "String" "avatarUrl" [] Decode.string
 
 
 {-| The friends of the droid, or an empty list if they have none.
@@ -44,18 +44,18 @@ friends object_ =
 -}
 id : SelectionSet Swapi.Scalar.Id Swapi.Object.Droid
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
 
 
 {-| The name of the droid.
 -}
 name : SelectionSet String Swapi.Object.Droid
 name =
-    Object.selectionForField (Just "String") "name" [] Decode.string
+    Object.selectionForField "String" "name" [] Decode.string
 
 
 {-| The primary function of the droid.
 -}
 primaryFunction : SelectionSet (Maybe String) Swapi.Object.Droid
 primaryFunction =
-    Object.selectionForField (Just "String") "primaryFunction" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "primaryFunction" [] (Decode.string |> Decode.nullable)

@@ -32,21 +32,21 @@ author object_ =
 -}
 authorAssociation : SelectionSet Github.Enum.CommentAuthorAssociation.CommentAuthorAssociation Github.Object.CommitComment
 authorAssociation =
-    Object.selectionForField Nothing "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
+    Object.selectionForField "Enum.CommentAuthorAssociation.CommentAuthorAssociation" "authorAssociation" [] Github.Enum.CommentAuthorAssociation.decoder
 
 
 {-| Identifies the comment body.
 -}
 body : SelectionSet String Github.Object.CommitComment
 body =
-    Object.selectionForField (Just "String") "body" [] Decode.string
+    Object.selectionForField "String" "body" [] Decode.string
 
 
 {-| Identifies the comment body rendered to HTML.
 -}
 bodyHTML : SelectionSet Github.Scalar.Html Github.Object.CommitComment
 bodyHTML =
-    Object.selectionForField (Just "HTML") "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "Scalar.Html" "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| Identifies the commit associated with the comment, if the commit exists.
@@ -60,21 +60,21 @@ commit object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.CommitComment
 createdAt =
-    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if this comment was created via an email reply.
 -}
 createdViaEmail : SelectionSet Bool Github.Object.CommitComment
 createdViaEmail =
-    Object.selectionForField (Just "Boolean") "createdViaEmail" [] Decode.bool
+    Object.selectionForField "Bool" "createdViaEmail" [] Decode.bool
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.CommitComment
 databaseId =
-    Object.selectionForField (Just "Int") "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The actor who edited the comment.
@@ -86,35 +86,35 @@ editor object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.CommitComment
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The moment the editor made the last edit
 -}
 lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
 lastEditedAt =
-    Object.selectionForField (Just "DateTime") "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.DateTime)" "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| Identifies the file path associated with the comment.
 -}
 path : SelectionSet (Maybe String) Github.Object.CommitComment
 path =
-    Object.selectionForField (Just "String") "path" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "path" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the line position associated with the comment.
 -}
 position : SelectionSet (Maybe Int) Github.Object.CommitComment
 position =
-    Object.selectionForField (Just "Int") "position" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
 publishedAt =
-    Object.selectionForField (Just "DateTime") "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.DateTime)" "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -168,21 +168,21 @@ repository object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.CommitComment
 resourcePath =
-    Object.selectionForField (Just "URI") "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.CommitComment
 updatedAt =
-    Object.selectionForField (Just "DateTime") "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL permalink for this commit comment.
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.CommitComment
 url =
-    Object.selectionForField (Just "URI") "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 type alias UserContentEditsOptionalArguments =
@@ -218,32 +218,32 @@ userContentEdits fillInOptionals object_ =
 -}
 viewerCanDelete : SelectionSet Bool Github.Object.CommitComment
 viewerCanDelete =
-    Object.selectionForField (Just "Boolean") "viewerCanDelete" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanDelete" [] Decode.bool
 
 
 {-| Can user react to this subject
 -}
 viewerCanReact : SelectionSet Bool Github.Object.CommitComment
 viewerCanReact =
-    Object.selectionForField (Just "Boolean") "viewerCanReact" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanReact" [] Decode.bool
 
 
 {-| Check if the current viewer can update this object.
 -}
 viewerCanUpdate : SelectionSet Bool Github.Object.CommitComment
 viewerCanUpdate =
-    Object.selectionForField (Just "Boolean") "viewerCanUpdate" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanUpdate" [] Decode.bool
 
 
 {-| Reasons why the current viewer can not update this comment.
 -}
 viewerCannotUpdateReasons : SelectionSet (List Github.Enum.CommentCannotUpdateReason.CommentCannotUpdateReason) Github.Object.CommitComment
 viewerCannotUpdateReasons =
-    Object.selectionForField Nothing "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
+    Object.selectionForField "(List Enum.CommentCannotUpdateReason.CommentCannotUpdateReason)" "viewerCannotUpdateReasons" [] (Github.Enum.CommentCannotUpdateReason.decoder |> Decode.list)
 
 
 {-| Did the viewer author this comment.
 -}
 viewerDidAuthor : SelectionSet Bool Github.Object.CommitComment
 viewerDidAuthor =
-    Object.selectionForField (Just "Boolean") "viewerDidAuthor" [] Decode.bool
+    Object.selectionForField "Bool" "viewerDidAuthor" [] Decode.bool

@@ -22,18 +22,18 @@ import Json.Decode as Decode
 -}
 description : SelectionSet String Github.Object.LicenseRule
 description =
-    Object.selectionForField (Just "String") "description" [] Decode.string
+    Object.selectionForField "String" "description" [] Decode.string
 
 
 {-| The machine-readable rule key
 -}
 key : SelectionSet String Github.Object.LicenseRule
 key =
-    Object.selectionForField (Just "String") "key" [] Decode.string
+    Object.selectionForField "String" "key" [] Decode.string
 
 
 {-| The human-readable rule label
 -}
 label : SelectionSet String Github.Object.LicenseRule
 label =
-    Object.selectionForField (Just "String") "label" [] Decode.string
+    Object.selectionForField "String" "label" [] Decode.string

@@ -30,14 +30,14 @@ commit object_ =
 -}
 context : SelectionSet String Github.Object.StatusContext
 context =
-    Object.selectionForField (Just "String") "context" [] Decode.string
+    Object.selectionForField "String" "context" [] Decode.string
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.StatusContext
 createdAt =
-    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who created this status context.
@@ -51,23 +51,23 @@ creator object_ =
 -}
 description : SelectionSet (Maybe String) Github.Object.StatusContext
 description =
-    Object.selectionForField (Just "String") "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.StatusContext
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The state of this status context.
 -}
 state : SelectionSet Github.Enum.StatusState.StatusState Github.Object.StatusContext
 state =
-    Object.selectionForField Nothing "state" [] Github.Enum.StatusState.decoder
+    Object.selectionForField "Enum.StatusState.StatusState" "state" [] Github.Enum.StatusState.decoder
 
 
 {-| The URL for this status context.
 -}
 targetUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.StatusContext
 targetUrl =
-    Object.selectionForField (Just "URI") "targetUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.Uri)" "targetUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)

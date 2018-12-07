@@ -29,61 +29,61 @@ creator object_ =
 -}
 hasDismissableStaleReviews : SelectionSet Bool Github.Object.ProtectedBranch
 hasDismissableStaleReviews =
-    Object.selectionForField (Just "Boolean") "hasDismissableStaleReviews" [] Decode.bool
+    Object.selectionForField "Bool" "hasDismissableStaleReviews" [] Decode.bool
 
 
 {-| Are reviews required to update this branch.
 -}
 hasRequiredReviews : SelectionSet Bool Github.Object.ProtectedBranch
 hasRequiredReviews =
-    Object.selectionForField (Just "Boolean") "hasRequiredReviews" [] Decode.bool
+    Object.selectionForField "Bool" "hasRequiredReviews" [] Decode.bool
 
 
 {-| Are status checks required to update this branch.
 -}
 hasRequiredStatusChecks : SelectionSet Bool Github.Object.ProtectedBranch
 hasRequiredStatusChecks =
-    Object.selectionForField (Just "Boolean") "hasRequiredStatusChecks" [] Decode.bool
+    Object.selectionForField "Bool" "hasRequiredStatusChecks" [] Decode.bool
 
 
 {-| Is pushing to this branch restricted.
 -}
 hasRestrictedPushes : SelectionSet Bool Github.Object.ProtectedBranch
 hasRestrictedPushes =
-    Object.selectionForField (Just "Boolean") "hasRestrictedPushes" [] Decode.bool
+    Object.selectionForField "Bool" "hasRestrictedPushes" [] Decode.bool
 
 
 {-| Is dismissal of pull request reviews restricted.
 -}
 hasRestrictedReviewDismissals : SelectionSet Bool Github.Object.ProtectedBranch
 hasRestrictedReviewDismissals =
-    Object.selectionForField (Just "Boolean") "hasRestrictedReviewDismissals" [] Decode.bool
+    Object.selectionForField "Bool" "hasRestrictedReviewDismissals" [] Decode.bool
 
 
 {-| Are branches required to be up to date before merging.
 -}
 hasStrictRequiredStatusChecks : SelectionSet Bool Github.Object.ProtectedBranch
 hasStrictRequiredStatusChecks =
-    Object.selectionForField (Just "Boolean") "hasStrictRequiredStatusChecks" [] Decode.bool
+    Object.selectionForField "Bool" "hasStrictRequiredStatusChecks" [] Decode.bool
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.ProtectedBranch
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Can admins overwrite branch protection.
 -}
 isAdminEnforced : SelectionSet Bool Github.Object.ProtectedBranch
 isAdminEnforced =
-    Object.selectionForField (Just "Boolean") "isAdminEnforced" [] Decode.bool
+    Object.selectionForField "Bool" "isAdminEnforced" [] Decode.bool
 
 
 {-| Identifies the name of the protected branch.
 -}
 name : SelectionSet String Github.Object.ProtectedBranch
 name =
-    Object.selectionForField (Just "String") "name" [] Decode.string
+    Object.selectionForField "String" "name" [] Decode.string
 
 
 type alias PushAllowancesOptionalArguments =
@@ -126,7 +126,7 @@ repository object_ =
 -}
 requiredStatusCheckContexts : SelectionSet (Maybe (List (Maybe String))) Github.Object.ProtectedBranch
 requiredStatusCheckContexts =
-    Object.selectionForField Nothing "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe (List (Maybe String)))" "requiredStatusCheckContexts" [] (Decode.string |> Decode.nullable |> Decode.list |> Decode.nullable)
 
 
 type alias ReviewDismissalAllowancesOptionalArguments =

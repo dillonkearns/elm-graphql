@@ -29,33 +29,33 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 createdAt =
-    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.CrossReferencedEvent
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Reference originated in a different repository.
 -}
 isCrossRepository : SelectionSet Bool Github.Object.CrossReferencedEvent
 isCrossRepository =
-    Object.selectionForField (Just "Boolean") "isCrossRepository" [] Decode.bool
+    Object.selectionForField "Bool" "isCrossRepository" [] Decode.bool
 
 
 {-| Identifies when the reference was made.
 -}
 referencedAt : SelectionSet Github.Scalar.DateTime Github.Object.CrossReferencedEvent
 referencedAt =
-    Object.selectionForField (Just "DateTime") "referencedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "referencedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP path for this pull request.
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.CrossReferencedEvent
 resourcePath =
-    Object.selectionForField (Just "URI") "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Issue or pull request that made the reference.
@@ -76,11 +76,11 @@ target object_ =
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.CrossReferencedEvent
 url =
-    Object.selectionForField (Just "URI") "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Checks if the target will be closed when the source is merged.
 -}
 willCloseTarget : SelectionSet Bool Github.Object.CrossReferencedEvent
 willCloseTarget =
-    Object.selectionForField (Just "Boolean") "willCloseTarget" [] Decode.bool
+    Object.selectionForField "Bool" "willCloseTarget" [] Decode.bool

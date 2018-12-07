@@ -29,7 +29,7 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.HeadRefDeletedEvent
 createdAt =
-    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the Ref associated with the `head_ref_deleted` event.
@@ -43,12 +43,12 @@ headRef object_ =
 -}
 headRefName : SelectionSet String Github.Object.HeadRefDeletedEvent
 headRefName =
-    Object.selectionForField (Just "String") "headRefName" [] Decode.string
+    Object.selectionForField "String" "headRefName" [] Decode.string
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.HeadRefDeletedEvent
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.

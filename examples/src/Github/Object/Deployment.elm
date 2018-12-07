@@ -30,7 +30,7 @@ commit object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Deployment
 createdAt =
-    Object.selectionForField (Just "DateTime") "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -44,19 +44,19 @@ creator object_ =
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.Deployment
 databaseId =
-    Object.selectionForField (Just "Int") "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The environment to which this deployment was made.
 -}
 environment : SelectionSet (Maybe String) Github.Object.Deployment
 environment =
-    Object.selectionForField (Just "String") "environment" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "environment" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Deployment
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The latest status of this deployment.
@@ -70,7 +70,7 @@ latestStatus object_ =
 -}
 payload : SelectionSet (Maybe String) Github.Object.Deployment
 payload =
-    Object.selectionForField (Just "String") "payload" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "payload" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the repository associated with the deployment.
@@ -84,7 +84,7 @@ repository object_ =
 -}
 state : SelectionSet (Maybe Github.Enum.DeploymentState.DeploymentState) Github.Object.Deployment
 state =
-    Object.selectionForField Nothing "state" [] (Github.Enum.DeploymentState.decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe Enum.DeploymentState.DeploymentState)" "state" [] (Github.Enum.DeploymentState.decoder |> Decode.nullable)
 
 
 type alias StatusesOptionalArguments =

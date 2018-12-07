@@ -20,4 +20,4 @@ import Normalize.Union
 
 id : SelectionSet Normalize.Scalar.DogId Normalize.Object.Dog
 id =
-    Object.selectionForField (Just "DogId") "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.DogId)
+    Object.selectionForField "Scalar.DogId" "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.DogId)

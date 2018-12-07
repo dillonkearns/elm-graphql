@@ -49,7 +49,7 @@ maybeFragments =
 
 id : SelectionSet Github.Scalar.Id Github.Interface.ProjectOwner
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 type alias ProjectRequiredArguments =
@@ -105,18 +105,18 @@ projects fillInOptionals object_ =
 -}
 projectsResourcePath : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.selectionForField (Just "URI") "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL listing owners projects
 -}
 projectsUrl : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.selectionForField (Just "URI") "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Can the current viewer create new projects on this owner.
 -}
 viewerCanCreateProjects : SelectionSet Bool Github.Interface.ProjectOwner
 viewerCanCreateProjects =
-    Object.selectionForField (Just "Boolean") "viewerCanCreateProjects" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanCreateProjects" [] Decode.bool

@@ -22,25 +22,25 @@ import Json.Decode as Decode
 -}
 endCursor : SelectionSet (Maybe String) Github.Object.PageInfo
 endCursor =
-    Object.selectionForField (Just "String") "endCursor" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "endCursor" [] (Decode.string |> Decode.nullable)
 
 
 {-| When paginating forwards, are there more items?
 -}
 hasNextPage : SelectionSet Bool Github.Object.PageInfo
 hasNextPage =
-    Object.selectionForField (Just "Boolean") "hasNextPage" [] Decode.bool
+    Object.selectionForField "Bool" "hasNextPage" [] Decode.bool
 
 
 {-| When paginating backwards, are there more items?
 -}
 hasPreviousPage : SelectionSet Bool Github.Object.PageInfo
 hasPreviousPage =
-    Object.selectionForField (Just "Boolean") "hasPreviousPage" [] Decode.bool
+    Object.selectionForField "Bool" "hasPreviousPage" [] Decode.bool
 
 
 {-| When paginating backwards, the cursor to continue.
 -}
 startCursor : SelectionSet (Maybe String) Github.Object.PageInfo
 startCursor =
-    Object.selectionForField (Just "String") "startCursor" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "startCursor" [] (Decode.string |> Decode.nullable)

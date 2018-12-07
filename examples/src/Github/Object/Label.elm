@@ -24,26 +24,26 @@ import Json.Decode as Decode
 -}
 color : SelectionSet String Github.Object.Label
 color =
-    Object.selectionForField (Just "String") "color" [] Decode.string
+    Object.selectionForField "String" "color" [] Decode.string
 
 
 {-| A brief description of this label.
 -}
 description : SelectionSet (Maybe String) Github.Object.Label
 description =
-    Object.selectionForField (Just "String") "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Label
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Indicates whether or not this is a default label.
 -}
 isDefault : SelectionSet Bool Github.Object.Label
 isDefault =
-    Object.selectionForField (Just "Boolean") "isDefault" [] Decode.bool
+    Object.selectionForField "Bool" "isDefault" [] Decode.bool
 
 
 type alias IssuesOptionalArguments =
@@ -85,7 +85,7 @@ issues fillInOptionals object_ =
 -}
 name : SelectionSet String Github.Object.Label
 name =
-    Object.selectionForField (Just "String") "name" [] Decode.string
+    Object.selectionForField "String" "name" [] Decode.string
 
 
 type alias PullRequestsOptionalArguments =

@@ -22,16 +22,16 @@ import Json.Decode as Decode
 -}
 color : SelectionSet (Maybe String) Github.Object.Language
 color =
-    Object.selectionForField (Just "String") "color" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "color" [] (Decode.string |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Language
 id =
-    Object.selectionForField (Just "ID") "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The name of the current language.
 -}
 name : SelectionSet String Github.Object.Language
 name =
-    Object.selectionForField (Just "String") "name" [] Decode.string
+    Object.selectionForField "String" "name" [] Decode.string

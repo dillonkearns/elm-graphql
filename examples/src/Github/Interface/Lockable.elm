@@ -51,11 +51,11 @@ maybeFragments =
 -}
 activeLockReason : SelectionSet (Maybe Github.Enum.LockReason.LockReason) Github.Interface.Lockable
 activeLockReason =
-    Object.selectionForField Nothing "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe Enum.LockReason.LockReason)" "activeLockReason" [] (Github.Enum.LockReason.decoder |> Decode.nullable)
 
 
 {-| `true` if the object is locked
 -}
 locked : SelectionSet Bool Github.Interface.Lockable
 locked =
-    Object.selectionForField (Just "Boolean") "locked" [] Decode.bool
+    Object.selectionForField "Bool" "locked" [] Decode.bool

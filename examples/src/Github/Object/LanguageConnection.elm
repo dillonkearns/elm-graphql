@@ -43,11 +43,11 @@ pageInfo object_ =
 -}
 totalCount : SelectionSet Int Github.Object.LanguageConnection
 totalCount =
-    Object.selectionForField (Just "Int") "totalCount" [] Decode.int
+    Object.selectionForField "Int" "totalCount" [] Decode.int
 
 
 {-| The total size in bytes of files written in that language.
 -}
 totalSize : SelectionSet Int Github.Object.LanguageConnection
 totalSize =
-    Object.selectionForField (Just "Int") "totalSize" [] Decode.int
+    Object.selectionForField "Int" "totalSize" [] Decode.int

@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 cursor : SelectionSet String Github.Object.CommitEdge
 cursor =
-    Object.selectionForField (Just "String") "cursor" [] Decode.string
+    Object.selectionForField "String" "cursor" [] Decode.string
 
 
 {-| The item at the end of the edge.
