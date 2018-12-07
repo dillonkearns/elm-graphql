@@ -1,1 +1,4 @@
 dist/ binary
+ete_tests/src/Normalize/**/*    linguist-generated=true
+examples/src/Swapi/**/*    linguist-generated=true
+examples/src/Github/**/*    linguist-generated=true
