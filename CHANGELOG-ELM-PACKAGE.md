@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- Only the internal code changed in this release, so you won't need to do anything
+  to upgrade your own code besides re-running the latest CLI tool. The change
+  includes the type information of a field in its field alias hash. Since
+  the alias is now unique to each field's type and argument values, you
+  can no longer encounter validation errors when you build up a query using
+  unions or interfaces that include fields with the same names but different types.
+  See https://github.com/dillonkearns/elm-graphql/issues/95 for more details.
+
 ## [2.0.0] - 2018-12-02
 
 ### Changed
