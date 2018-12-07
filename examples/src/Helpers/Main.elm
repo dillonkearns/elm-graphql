@@ -30,11 +30,8 @@ view query model =
 
 stripAliases query =
     query
-
-
-
--- |> Regex.replace
---     (Regex.fromStringWith { multiline = True, caseInsensitive = True } "^(\\s*)\\w+: "
---         |> Maybe.withDefault Regex.never
---     )
---     (\match -> match.submatches |> List.head |> Maybe.withDefault Nothing |> Maybe.withDefault "")
+        |> Regex.replace
+            (Regex.fromStringWith { multiline = True, caseInsensitive = True } "^(\\s*)\\w+: "
+                |> Maybe.withDefault Regex.never
+            )
+            (\match -> match.submatches |> List.head |> Maybe.withDefault Nothing |> Maybe.withDefault "")
