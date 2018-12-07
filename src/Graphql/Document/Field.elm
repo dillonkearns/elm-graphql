@@ -16,7 +16,7 @@ hashedAliasName field =
 
 maybeAliasHash : RawField -> Maybe String
 maybeAliasHash field =
-    case field of
+    (case field of
         Composite name arguments children ->
             if List.isEmpty arguments then
                 Nothing
@@ -24,44 +24,24 @@ maybeAliasHash field =
             else
                 arguments
                     |> Argument.serialize
-                    |> Murmur3.hashString 0
-                    |> String.fromInt
                     |> Just
 
-        Leaf maybeScalarName name arguments ->
-            if List.isEmpty arguments then
-                Nothing
-
-            else
-                arguments
-                    |> Argument.serialize
-                    |> Murmur3.hashString 0
-                    |> String.fromInt
-                    |> Just
+        Leaf { typeString, fieldName } arguments ->
+            arguments
+                |> Argument.serialize
+                |> List.singleton
+                |> List.append [ typeString ]
+                |> String.concat
+                |> Just
+    )
+        |> Maybe.map (Murmur3.hashString 0 >> String.fromInt)
 
 
 alias : RawField -> Maybe String
 alias field =
-    let
-        maybeScalarAlias =
-            case field of
-                Leaf scalarName _ _ ->
-                    scalarName
-
-                _ ->
-                    Nothing
-
-        prefixValues =
-            [ maybeAliasHash field, maybeScalarAlias ]
-                |> List.filterMap identity
-    in
-    if prefixValues == [] then
-        Nothing
-
-    else
-        (Graphql.RawField.name field :: prefixValues)
-            |> String.concat
-            |> Just
+    field
+        |> maybeAliasHash
+        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
@@ -105,7 +85,7 @@ serialize aliasName mIndentationLevel field =
                         ++ "}"
                         |> Just
 
-        Leaf maybeScalarName fieldName args ->
+        Leaf { fieldName } args ->
             Just (fieldName ++ Argument.serialize args)
     )
         |> Maybe.map

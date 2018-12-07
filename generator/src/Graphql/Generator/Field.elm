@@ -289,16 +289,7 @@ initScalarField : List String -> TypeReference -> FieldGenerator
 initScalarField apiSubmodule typeRef =
     let
         scalarName =
-            case typeRef of
-                Type.TypeReference referrableType isNullable ->
-                    case referrableType of
-                        Type.Scalar scalarType ->
-                            "(Just \""
-                                ++ Scalar.toString scalarType
-                                ++ "\")"
-
-                        _ ->
-                            "Nothing"
+            "\"" ++ Graphql.Generator.Decoder.generateType [] typeRef ++ "\""
     in
     { annotatedArgs = []
     , fieldArgs = []
