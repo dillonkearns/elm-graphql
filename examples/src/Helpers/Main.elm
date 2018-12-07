@@ -1,9 +1,18 @@
-module Helpers.Main exposing (view)
+module Helpers.Main exposing (document, view)
 
 import Browser
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import Regex
+
+
+document { init, update, queryString } =
+    Browser.document
+        { init = init
+        , update = update
+        , subscriptions = \_ -> Sub.none
+        , view = view queryString
+        }
 
 
 view : String -> a -> Browser.Document msg
