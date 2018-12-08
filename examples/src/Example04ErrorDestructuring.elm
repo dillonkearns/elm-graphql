@@ -7,6 +7,7 @@ import Graphql.Http.GraphqlError
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Helpers.Main
 import Html exposing (Html, div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -107,11 +108,14 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program () Model Msg
+type alias Flags =
+    ()
+
+
+main : Helpers.Main.Program Flags Model Msg
 main =
-    Browser.document
+    Helpers.Main.document
         { init = init
         , update = update
-        , subscriptions = \_ -> Sub.none
-        , view = view
+        , queryString = Document.serializeQuery (query <| Id "1001")
         }

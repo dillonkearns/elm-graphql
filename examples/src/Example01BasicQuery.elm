@@ -119,7 +119,7 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program Flags Model (Helpers.Main.Msg Msg)
+main : Helpers.Main.Program Flags Model Msg
 main =
     Helpers.Main.document
         { init = init

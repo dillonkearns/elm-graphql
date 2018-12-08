@@ -6,6 +6,7 @@ import Graphql.Http
 import Graphql.Http.GraphqlError
 import Graphql.Operation exposing (RootQuery)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Helpers.Main
 import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (RemoteData)
 import Swapi.Object
@@ -63,20 +64,6 @@ init flags =
     )
 
 
-view : Model -> Html.Html Msg
-view model =
-    div []
-        [ div []
-            [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery query) ]
-            ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , pre [] [ responseDetails model |> text ]
-            ]
-        ]
-
-
 responseDetails : RemoteData (Graphql.Http.Error Response) Response -> String
 responseDetails model =
     case model of
@@ -118,11 +105,10 @@ type alias Flags =
     ()
 
 
-main : Program Flags Model Msg
+main : Helpers.Main.Program Flags Model Msg
 main =
-    Browser.document
+    Helpers.Main.document
         { init = init
         , update = update
-        , subscriptions = \_ -> Sub.none
-        , view = view >> (\mainBody -> { title = "Error Handling Demo", body = [ mainBody ] })
+        , queryString = Document.serializeQuery query
         }

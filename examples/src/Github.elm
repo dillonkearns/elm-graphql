@@ -14,6 +14,7 @@ import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+import Helpers.Main
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -98,20 +99,6 @@ init _ =
     )
 
 
-view : Model -> Html.Html Msg
-view model =
-    div []
-        [ div []
-            [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery query) ]
-            ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , PrintAny.view model
-            ]
-        ]
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -119,11 +106,14 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program () Model Msg
+type alias Flags =
+    ()
+
+
+main : Helpers.Main.Program Flags Model Msg
 main =
-    Browser.element
+    Helpers.Main.document
         { init = init
         , update = update
-        , subscriptions = \_ -> Sub.none
-        , view = view
+        , queryString = Document.serializeQuery query
         }
