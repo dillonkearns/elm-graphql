@@ -1,4 +1,4 @@
-<img src="https://cdn.rawgit.com/martimatix/logo-graphqelm/master/logo.svg" alt="dillonearns/elm-graphql logo" width="40%" align="right">
+<img src="https://cdn.jsdelivr.net/gh/martimatix/logo-graphqelm/logo.svg" alt="dillonearns/elm-graphql logo" width="40%" align="right">
 
 # dillonkearns/elm-graphql
 
