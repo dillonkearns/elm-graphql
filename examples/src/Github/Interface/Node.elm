@@ -281,4 +281,4 @@ maybeFragments =
 -}
 id : SelectionSet Github.Scalar.Id Github.Interface.Node
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

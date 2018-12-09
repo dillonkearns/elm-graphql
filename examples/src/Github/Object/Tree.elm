@@ -22,21 +22,21 @@ import Json.Decode as Decode
 -}
 abbreviatedOid : SelectionSet String Github.Object.Tree
 abbreviatedOid =
-    Object.selectionForField "abbreviatedOid" [] Decode.string
+    Object.selectionForField "String" "abbreviatedOid" [] Decode.string
 
 
 {-| The HTTP path for this Git object
 -}
 commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Tree
 commitResourcePath =
-    Object.selectionForField "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Tree
 commitUrl =
-    Object.selectionForField "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| A list of tree entries.
@@ -48,14 +48,14 @@ entries object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.Tree
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git object ID
 -}
 oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Tree
 oid =
-    Object.selectionForField "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "Scalar.GitObjectID" "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 {-| The Repository the Git object belongs to

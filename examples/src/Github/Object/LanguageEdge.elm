@@ -20,7 +20,7 @@ import Json.Decode as Decode
 
 cursor : SelectionSet String Github.Object.LanguageEdge
 cursor =
-    Object.selectionForField "cursor" [] Decode.string
+    Object.selectionForField "String" "cursor" [] Decode.string
 
 
 node : SelectionSet decodesTo Github.Object.Language -> SelectionSet decodesTo Github.Object.LanguageEdge
@@ -32,4 +32,4 @@ node object_ =
 -}
 size : SelectionSet Int Github.Object.LanguageEdge
 size =
-    Object.selectionForField "size" [] Decode.int
+    Object.selectionForField "Int" "size" [] Decode.int

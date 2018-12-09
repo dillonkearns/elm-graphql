@@ -37,51 +37,51 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Bot
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.Bot
 databaseId =
-    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.Bot
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The username of the actor.
 -}
 login : SelectionSet String Github.Object.Bot
 login =
-    Object.selectionForField "login" [] Decode.string
+    Object.selectionForField "String" "login" [] Decode.string
 
 
 {-| The HTTP path for this bot
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Bot
 resourcePath =
-    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Bot
 updatedAt =
-    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this bot
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.Bot
 url =
-    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

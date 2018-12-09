@@ -22,4 +22,4 @@ import Json.Decode as Decode
 -}
 username : SelectionSet (Maybe String) Github.Object.ExternalIdentityScimAttributes
 username =
-    Object.selectionForField "username" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "username" [] (Decode.string |> Decode.nullable)

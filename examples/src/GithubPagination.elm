@@ -16,7 +16,6 @@ import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
-import Helpers
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
 import PrintAny
@@ -79,7 +78,7 @@ searchResultSelection =
         defaults =
             Github.Union.SearchResultItem.maybeFragments
     in
-    Github.Union.SearchResultItem.selection
+    Github.Union.SearchResultItem.fragments
         { defaults | onRepository = repositorySelection |> SelectionSet.map Just }
 
 

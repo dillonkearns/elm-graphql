@@ -21,7 +21,7 @@ import Json.Decode as Decode
 
 cursor : SelectionSet String Github.Object.RepositoryCollaboratorEdge
 cursor =
-    Object.selectionForField "cursor" [] Decode.string
+    Object.selectionForField "String" "cursor" [] Decode.string
 
 
 node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.RepositoryCollaboratorEdge
@@ -33,4 +33,4 @@ node object_ =
 -}
 permission : SelectionSet Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryCollaboratorEdge
 permission =
-    Object.selectionForField "permission" [] Github.Enum.RepositoryPermission.decoder
+    Object.selectionForField "Enum.RepositoryPermission.RepositoryPermission" "permission" [] Github.Enum.RepositoryPermission.decoder

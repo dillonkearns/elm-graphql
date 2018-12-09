@@ -20,7 +20,7 @@ import Json.Decode as Decode
 
 cursor : SelectionSet String Github.Object.StargazerEdge
 cursor =
-    Object.selectionForField "cursor" [] Decode.string
+    Object.selectionForField "String" "cursor" [] Decode.string
 
 
 node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.StargazerEdge
@@ -32,4 +32,4 @@ node object_ =
 -}
 starredAt : SelectionSet Github.Scalar.DateTime Github.Object.StargazerEdge
 starredAt =
-    Object.selectionForField "starredAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "starredAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

@@ -56,21 +56,21 @@ commit object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.CommitCommentThread
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The file the comments were made on.
 -}
 path : SelectionSet (Maybe String) Github.Object.CommitCommentThread
 path =
-    Object.selectionForField "path" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "path" [] (Decode.string |> Decode.nullable)
 
 
 {-| The position in the diff for the commit that the comment was made on.
 -}
 position : SelectionSet (Maybe Int) Github.Object.CommitCommentThread
 position =
-    Object.selectionForField "position" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "position" [] (Decode.int |> Decode.nullable)
 
 
 {-| The repository associated with this node.

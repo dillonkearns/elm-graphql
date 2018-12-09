@@ -21,21 +21,21 @@ import Json.Decode as Decode
 
 cursor : SelectionSet String Github.Object.TeamMemberEdge
 cursor =
-    Object.selectionForField "cursor" [] Decode.string
+    Object.selectionForField "String" "cursor" [] Decode.string
 
 
 {-| The HTTP path to the organization's member access page.
 -}
 memberAccessResourcePath : SelectionSet Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessResourcePath =
-    Object.selectionForField "memberAccessResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "memberAccessResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL to the organization's member access page.
 -}
 memberAccessUrl : SelectionSet Github.Scalar.Uri Github.Object.TeamMemberEdge
 memberAccessUrl =
-    Object.selectionForField "memberAccessUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "memberAccessUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.TeamMemberEdge
@@ -47,4 +47,4 @@ node object_ =
 -}
 role : SelectionSet Github.Enum.TeamMemberRole.TeamMemberRole Github.Object.TeamMemberEdge
 role =
-    Object.selectionForField "role" [] Github.Enum.TeamMemberRole.decoder
+    Object.selectionForField "Enum.TeamMemberRole.TeamMemberRole" "role" [] Github.Enum.TeamMemberRole.decoder

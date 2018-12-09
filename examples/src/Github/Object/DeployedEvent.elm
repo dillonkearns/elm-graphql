@@ -29,14 +29,14 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.DeployedEvent
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.DeployedEvent
 databaseId =
-    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 {-| The deployment associated with the 'deployed' event.
@@ -48,7 +48,7 @@ deployment object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.DeployedEvent
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| PullRequest referenced by event.

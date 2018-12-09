@@ -23,14 +23,14 @@ import Json.Decode as Decode
 -}
 content : SelectionSet Github.Enum.ReactionContent.ReactionContent Github.Object.ReactionGroup
 content =
-    Object.selectionForField "content" [] Github.Enum.ReactionContent.decoder
+    Object.selectionForField "Enum.ReactionContent.ReactionContent" "content" [] Github.Enum.ReactionContent.decoder
 
 
 {-| Identifies when the reaction was created.
 -}
 createdAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.ReactionGroup
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.DateTime)" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The subject that was reacted to.
@@ -73,4 +73,4 @@ users fillInOptionals object_ =
 -}
 viewerHasReacted : SelectionSet Bool Github.Object.ReactionGroup
 viewerHasReacted =
-    Object.selectionForField "viewerHasReacted" [] Decode.bool
+    Object.selectionForField "Bool" "viewerHasReacted" [] Decode.bool

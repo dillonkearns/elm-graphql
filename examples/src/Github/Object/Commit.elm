@@ -23,14 +23,14 @@ import Json.Decode as Decode
 -}
 abbreviatedOid : SelectionSet String Github.Object.Commit
 abbreviatedOid =
-    Object.selectionForField "abbreviatedOid" [] Decode.string
+    Object.selectionForField "String" "abbreviatedOid" [] Decode.string
 
 
 {-| The number of additions in this commit.
 -}
 additions : SelectionSet Int Github.Object.Commit
 additions =
-    Object.selectionForField "additions" [] Decode.int
+    Object.selectionForField "Int" "additions" [] Decode.int
 
 
 {-| Authorship details of the commit.
@@ -44,14 +44,14 @@ author object_ =
 -}
 authoredByCommitter : SelectionSet Bool Github.Object.Commit
 authoredByCommitter =
-    Object.selectionForField "authoredByCommitter" [] Decode.bool
+    Object.selectionForField "Bool" "authoredByCommitter" [] Decode.bool
 
 
 {-| The datetime when this commit was authored.
 -}
 authoredDate : SelectionSet Github.Scalar.DateTime Github.Object.Commit
 authoredDate =
-    Object.selectionForField "authoredDate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "authoredDate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 type alias BlameRequiredArguments =
@@ -72,7 +72,7 @@ blame requiredArgs object_ =
 -}
 changedFiles : SelectionSet Int Github.Object.Commit
 changedFiles =
-    Object.selectionForField "changedFiles" [] Decode.int
+    Object.selectionForField "Int" "changedFiles" [] Decode.int
 
 
 type alias CommentsOptionalArguments =
@@ -108,28 +108,28 @@ comments fillInOptionals object_ =
 -}
 commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Commit
 commitResourcePath =
-    Object.selectionForField "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this Git object
 -}
 commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Commit
 commitUrl =
-    Object.selectionForField "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The datetime when this commit was committed.
 -}
 committedDate : SelectionSet Github.Scalar.DateTime Github.Object.Commit
 committedDate =
-    Object.selectionForField "committedDate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "committedDate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Check if commited via GitHub web UI.
 -}
 committedViaWeb : SelectionSet Bool Github.Object.Commit
 committedViaWeb =
-    Object.selectionForField "committedViaWeb" [] Decode.bool
+    Object.selectionForField "Bool" "committedViaWeb" [] Decode.bool
 
 
 {-| Committership details of the commit.
@@ -143,7 +143,7 @@ committer object_ =
 -}
 deletions : SelectionSet Int Github.Object.Commit
 deletions =
-    Object.selectionForField "deletions" [] Decode.int
+    Object.selectionForField "Int" "deletions" [] Decode.int
 
 
 type alias HistoryOptionalArguments =
@@ -185,49 +185,49 @@ history fillInOptionals object_ =
 
 id : SelectionSet Github.Scalar.Id Github.Object.Commit
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The Git commit message
 -}
 message : SelectionSet String Github.Object.Commit
 message =
-    Object.selectionForField "message" [] Decode.string
+    Object.selectionForField "String" "message" [] Decode.string
 
 
 {-| The Git commit message body
 -}
 messageBody : SelectionSet String Github.Object.Commit
 messageBody =
-    Object.selectionForField "messageBody" [] Decode.string
+    Object.selectionForField "String" "messageBody" [] Decode.string
 
 
 {-| The commit message body rendered to HTML.
 -}
 messageBodyHTML : SelectionSet Github.Scalar.Html Github.Object.Commit
 messageBodyHTML =
-    Object.selectionForField "messageBodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "Scalar.Html" "messageBodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| The Git commit message headline
 -}
 messageHeadline : SelectionSet String Github.Object.Commit
 messageHeadline =
-    Object.selectionForField "messageHeadline" [] Decode.string
+    Object.selectionForField "String" "messageHeadline" [] Decode.string
 
 
 {-| The commit message headline rendered to HTML.
 -}
 messageHeadlineHTML : SelectionSet Github.Scalar.Html Github.Object.Commit
 messageHeadlineHTML =
-    Object.selectionForField "messageHeadlineHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "Scalar.Html" "messageHeadlineHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
 
 
 {-| The Git object ID
 -}
 oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Commit
 oid =
-    Object.selectionForField "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "Scalar.GitObjectID" "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
 
 
 type alias ParentsOptionalArguments =
@@ -263,7 +263,7 @@ parents fillInOptionals object_ =
 -}
 pushedDate : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Commit
 pushedDate =
-    Object.selectionForField "pushedDate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.DateTime)" "pushedDate" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
 
 
 {-| The Repository this commit belongs to
@@ -277,7 +277,7 @@ repository object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Commit
 resourcePath =
-    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Commit signing information, if present.
@@ -298,7 +298,7 @@ status object_ =
 -}
 tarballUrl : SelectionSet Github.Scalar.Uri Github.Object.Commit
 tarballUrl =
-    Object.selectionForField "tarballUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "tarballUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Commit's root Tree
@@ -312,39 +312,39 @@ tree object_ =
 -}
 treeResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Commit
 treeResourcePath =
-    Object.selectionForField "treeResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "treeResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for the tree of this commit
 -}
 treeUrl : SelectionSet Github.Scalar.Uri Github.Object.Commit
 treeUrl =
-    Object.selectionForField "treeUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "treeUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The HTTP URL for this commit
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.Commit
 url =
-    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.
 -}
 viewerCanSubscribe : SelectionSet Bool Github.Object.Commit
 viewerCanSubscribe =
-    Object.selectionForField "viewerCanSubscribe" [] Decode.bool
+    Object.selectionForField "Bool" "viewerCanSubscribe" [] Decode.bool
 
 
 {-| Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
 -}
 viewerSubscription : SelectionSet Github.Enum.SubscriptionState.SubscriptionState Github.Object.Commit
 viewerSubscription =
-    Object.selectionForField "viewerSubscription" [] Github.Enum.SubscriptionState.decoder
+    Object.selectionForField "Enum.SubscriptionState.SubscriptionState" "viewerSubscription" [] Github.Enum.SubscriptionState.decoder
 
 
 {-| Returns a URL to download a zipball archive for a repository. Note: For private repositories, these links are temporary and expire after five minutes.
 -}
 zipballUrl : SelectionSet Github.Scalar.Uri Github.Object.Commit
 zipballUrl =
-    Object.selectionForField "zipballUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "zipballUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

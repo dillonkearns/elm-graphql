@@ -16,7 +16,7 @@ hashedAliasName field =
 
 maybeAliasHash : RawField -> Maybe String
 maybeAliasHash field =
-    case field of
+    (case field of
         Composite name arguments children ->
             if List.isEmpty arguments then
                 Nothing
@@ -24,20 +24,17 @@ maybeAliasHash field =
             else
                 arguments
                     |> Argument.serialize
-                    |> Murmur3.hashString 0
-                    |> String.fromInt
                     |> Just
 
-        Leaf name arguments ->
-            if List.isEmpty arguments then
-                Nothing
-
-            else
-                arguments
-                    |> Argument.serialize
-                    |> Murmur3.hashString 0
-                    |> String.fromInt
-                    |> Just
+        Leaf { typeString, fieldName } arguments ->
+            arguments
+                |> Argument.serialize
+                |> List.singleton
+                |> List.append [ typeString ]
+                |> String.concat
+                |> Just
+    )
+        |> Maybe.map (Murmur3.hashString 0 >> String.fromInt)
 
 
 alias : RawField -> Maybe String
@@ -88,7 +85,7 @@ serialize aliasName mIndentationLevel field =
                         ++ "}"
                         |> Just
 
-        Leaf fieldName args ->
+        Leaf { fieldName } args ->
             Just (fieldName ++ Argument.serialize args)
     )
         |> Maybe.map

@@ -40,7 +40,7 @@ content object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectCard
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The actor who created this card
@@ -54,19 +54,19 @@ creator object_ =
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.ProjectCard
 databaseId =
-    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.ProjectCard
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The card note
 -}
 note : SelectionSet (Maybe String) Github.Object.ProjectCard
 note =
-    Object.selectionForField "note" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "note" [] (Decode.string |> Decode.nullable)
 
 
 {-| The project that contains this card.
@@ -87,25 +87,25 @@ projectColumn object_ =
 -}
 resourcePath : SelectionSet Github.Scalar.Uri Github.Object.ProjectCard
 resourcePath =
-    Object.selectionForField "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
 
 
 {-| The state of ProjectCard
 -}
 state : SelectionSet (Maybe Github.Enum.ProjectCardState.ProjectCardState) Github.Object.ProjectCard
 state =
-    Object.selectionForField "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe Enum.ProjectCardState.ProjectCardState)" "state" [] (Github.Enum.ProjectCardState.decoder |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectCard
 updatedAt =
-    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| The HTTP URL for this card
 -}
 url : SelectionSet Github.Scalar.Uri Github.Object.ProjectCard
 url =
-    Object.selectionForField "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)

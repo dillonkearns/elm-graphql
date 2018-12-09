@@ -43,4 +43,4 @@ pageInfo object_ =
 -}
 totalCount : SelectionSet Int Github.Object.ReviewDismissalAllowanceConnection
 totalCount =
-    Object.selectionForField "totalCount" [] Decode.int
+    Object.selectionForField "Int" "totalCount" [] Decode.int

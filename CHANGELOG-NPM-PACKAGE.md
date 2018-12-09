@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- This change doesn't require
+  any modifications to user code. Simply re-run the latest CLI and upgrade to the
+  latest Elm package and you'll be good to go! See the 3.0.0 Elm package
+  changelog for implementation details about this change.
+
 ## [3.0.0] - 2018-12-02
 
 ## Changed

@@ -21,7 +21,7 @@ import Json.Decode as Decode
 
 id : SelectionSet Github.Scalar.Id Github.Object.RepositoryInvitation
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| The user who received the invitation.
@@ -42,7 +42,7 @@ inviter object_ =
 -}
 permission : SelectionSet Github.Enum.RepositoryPermission.RepositoryPermission Github.Object.RepositoryInvitation
 permission =
-    Object.selectionForField "permission" [] Github.Enum.RepositoryPermission.decoder
+    Object.selectionForField "Enum.RepositoryPermission.RepositoryPermission" "permission" [] Github.Enum.RepositoryPermission.decoder
 
 
 {-| The Repository the user is invited to.

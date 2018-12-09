@@ -23,7 +23,7 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.DeploymentStatus
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -44,37 +44,37 @@ deployment object_ =
 -}
 description : SelectionSet (Maybe String) Github.Object.DeploymentStatus
 description =
-    Object.selectionForField "description" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
 {-| Identifies the environment URL of the deployment.
 -}
 environmentUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
 environmentUrl =
-    Object.selectionForField "environmentUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.Uri)" "environmentUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.DeploymentStatus
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the log URL of the deployment.
 -}
 logUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
 logUrl =
-    Object.selectionForField "logUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe Scalar.Uri)" "logUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
 
 
 {-| Identifies the current state of the deployment.
 -}
 state : SelectionSet Github.Enum.DeploymentStatusState.DeploymentStatusState Github.Object.DeploymentStatus
 state =
-    Object.selectionForField "state" [] Github.Enum.DeploymentStatusState.decoder
+    Object.selectionForField "Enum.DeploymentStatusState.DeploymentStatusState" "state" [] Github.Enum.DeploymentStatusState.decoder
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.DeploymentStatus
 updatedAt =
-    Object.selectionForField "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)

@@ -86,11 +86,14 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program () Model Msg
+type alias Flags =
+    ()
+
+
+main : Helpers.Main.Program Flags Model Msg
 main =
-    Browser.document
+    Helpers.Main.document
         { init = init
         , update = update
-        , subscriptions = \_ -> Sub.none
-        , view = Helpers.Main.view (Document.serializeQuery query)
+        , queryString = Document.serializeQuery query
         }

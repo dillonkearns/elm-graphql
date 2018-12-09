@@ -1,1 +1,7 @@
 dist/ binary
+ete_tests/src/Normalize/**/*    -dist -merge
+ete_tests/src/Normalize/**/*    linguist-generated=true
+examples/src/Swapi/**/*         linguist-generated=true
+examples/src/Swapi/**/*         -dist -merge
+examples/src/Github/**/*        linguist-generated=true
+examples/src/Github/**/*        -dist -merge

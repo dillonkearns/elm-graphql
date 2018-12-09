@@ -2,8 +2,12 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Union exposing (CharacterUnion(..))
+module Normalize.Union exposing (CharacterUnion(..), ConflictingTypesUnion(..))
 
 
 type CharacterUnion
     = CharacterUnion
+
+
+type ConflictingTypesUnion
+    = ConflictingTypesUnion

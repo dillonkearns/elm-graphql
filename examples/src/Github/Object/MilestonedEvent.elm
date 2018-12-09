@@ -29,19 +29,19 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.MilestonedEvent
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.MilestonedEvent
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
 
 
 {-| Identifies the milestone title associated with the 'milestoned' event.
 -}
 milestoneTitle : SelectionSet String Github.Object.MilestonedEvent
 milestoneTitle =
-    Object.selectionForField "milestoneTitle" [] Decode.string
+    Object.selectionForField "String" "milestoneTitle" [] Decode.string
 
 
 {-| Object referenced by event.

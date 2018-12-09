@@ -5,6 +5,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootMutation)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Helpers.Main
 import Html exposing (div, h1, p, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -63,11 +64,14 @@ update msg model =
             ( response, Cmd.none )
 
 
-main : Program () Model Msg
+type alias Flags =
+    ()
+
+
+main : Helpers.Main.Program Flags Model Msg
 main =
-    Browser.element
+    Helpers.Main.document
         { init = init
         , update = update
-        , subscriptions = \_ -> Sub.none
-        , view = view
+        , queryString = Document.serializeMutation mutation
         }

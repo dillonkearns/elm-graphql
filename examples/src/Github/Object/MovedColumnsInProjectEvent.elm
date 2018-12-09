@@ -29,16 +29,16 @@ actor object_ =
 -}
 createdAt : SelectionSet Github.Scalar.DateTime Github.Object.MovedColumnsInProjectEvent
 createdAt =
-    Object.selectionForField "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
 
 
 {-| Identifies the primary key from the database.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.MovedColumnsInProjectEvent
 databaseId =
-    Object.selectionForField "databaseId" [] (Decode.int |> Decode.nullable)
+    Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
 id : SelectionSet Github.Scalar.Id Github.Object.MovedColumnsInProjectEvent
 id =
-    Object.selectionForField "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)

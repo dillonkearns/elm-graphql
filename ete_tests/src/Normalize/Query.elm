@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Query exposing (CircularInputRequiredArguments, DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, RecursiveInputRequiredArguments, TypeOptionalArguments, circularInput, droid_, greet, hero, heroUnion, human, recursiveInput, type_)
+module Normalize.Query exposing (CircularInputRequiredArguments, DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, RecursiveInputRequiredArguments, TypeOptionalArguments, circularInput, conflictingTypesUnion, droid_, greet, hero, heroUnion, human, recursiveInput, type_)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -30,7 +30,12 @@ type alias CircularInputRequiredArguments =
 -}
 circularInput : CircularInputRequiredArguments -> SelectionSet (Maybe String) RootQuery
 circularInput requiredArgs =
-    Object.selectionForField "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
+
+
+conflictingTypesUnion : SelectionSet decodesTo Normalize.Union.ConflictingTypesUnion -> SelectionSet decodesTo RootQuery
+conflictingTypesUnion object_ =
+    Object.selectionForCompositeField "conflictingTypesUnion" [] object_ identity
 
 
 type alias DroidRequiredArguments =
@@ -53,7 +58,7 @@ type alias GreetRequiredArguments =
 
 greet : GreetRequiredArguments -> SelectionSet String RootQuery
 greet requiredArgs =
-    Object.selectionForField "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
+    Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
 
 
 type alias HeroOptionalArguments =
@@ -125,7 +130,7 @@ type alias RecursiveInputRequiredArguments =
 -}
 recursiveInput : RecursiveInputRequiredArguments -> SelectionSet (Maybe String) RootQuery
 recursiveInput requiredArgs =
-    Object.selectionForField "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
 
 
 type alias TypeOptionalArguments =
@@ -142,4 +147,4 @@ type_ fillInOptionals =
             [ Argument.optional "input" filledInOptionals.input Normalize.InputObject.encodeReservedWord ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "type" optionalArgs Decode.string
+    Object.selectionForField "String" "type" optionalArgs Decode.string

@@ -22,7 +22,7 @@ import Json.Decode as Decode
 -}
 clientMutationId : SelectionSet (Maybe String) Github.Object.LockLockablePayload
 clientMutationId =
-    Object.selectionForField "clientMutationId" [] (Decode.string |> Decode.nullable)
+    Object.selectionForField "(Maybe String)" "clientMutationId" [] (Decode.string |> Decode.nullable)
 
 
 {-| The item that was locked.

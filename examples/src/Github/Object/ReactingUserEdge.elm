@@ -20,7 +20,7 @@ import Json.Decode as Decode
 
 cursor : SelectionSet String Github.Object.ReactingUserEdge
 cursor =
-    Object.selectionForField "cursor" [] Decode.string
+    Object.selectionForField "String" "cursor" [] Decode.string
 
 
 node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.ReactingUserEdge
@@ -32,4 +32,4 @@ node object_ =
 -}
 reactedAt : SelectionSet Github.Scalar.DateTime Github.Object.ReactingUserEdge
 reactedAt =
-    Object.selectionForField "reactedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "Scalar.DateTime" "reactedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
