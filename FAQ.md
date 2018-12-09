@@ -45,3 +45,26 @@ Take a look at the [`dillonkearns/elm-graphql` Elm 0.19 upgrade guide](https://g
 ## Wasn't this library called Graphqelm before?
 
 Yes, you can [read about why the name changed here](https://github.com/dillonkearns/elm-graphql/issues/23)).
+
+## How do field aliases work in `dillonkearns/elm-graphql`
+
+You may notice that "Show Aliases" is unchecked by default in the demos in the `examples` folder.
+Aliases are just a tool for telling GraphQL what field to return your data back under
+in the JSON response. But with `dillonkearns/elm-graphql`, you're not dealing with
+JSON directly. You just use `map2` or `SelectionSet.succeed` or `SelectionSet.with` functions
+to build up data structures. The JSON response details are all handled under the hood by
+the library.
+
+Sometimes GraphQL requires you to use aliases to make sure you don't make ambiguous
+queries. For example, if you make a request asking for `avatar(size: SMALL)` and
+`avatar(size: LARGE)` in the same request, then you will need to use an alias
+since they can't both come back under the JSON field `avatar` with more than
+one `avatar` data in the response.
+
+We hide aliases by default in this demos to reduce noise. But note that
+these request may be invalid without the aliases, so check "Show Aliases"
+if you would like to copy-paste the queries and execute them yourself.
+
+You can read more about how aliases are used under the hood [in this blog
+post](https://medium.com/@dillonkearns/how-elm-guides-towards-simplicity-3d34685dc33c)
+about the `dillonkearns/elm-graphql` internals.

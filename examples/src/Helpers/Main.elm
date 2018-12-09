@@ -2,8 +2,8 @@ module Helpers.Main exposing (Program, document)
 
 import Browser
 import DateFormat exposing (text)
-import Html exposing (div, h1, input, label, p, pre, text)
-import Html.Attributes exposing (type_)
+import Html exposing (a, div, h1, input, label, p, pre, text)
+import Html.Attributes exposing (href, type_)
 import Html.Events exposing (onClick)
 import PrintAny
 import Regex
@@ -91,7 +91,10 @@ view query model =
 toggleAliasesCheckbox =
     label []
         [ input [ type_ "checkbox", onClick ToggleAliases ] []
-        , text "Show Aliases"
+        , text " Show Aliases "
+        , a [ href "https://github.com/dillonkearns/elm-graphql/blob/master/FAQ.md#how-do-field-aliases-work-in-dillonkearnselm-graphql" ]
+            [ text "(?)"
+            ]
         ]
 
 
