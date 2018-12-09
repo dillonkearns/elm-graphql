@@ -27,23 +27,27 @@ longName2 =
     String.repeat 1500 "b"
 
 
+leaf fieldName arguments =
+    Leaf { typeString = "", fieldName = fieldName } arguments
+
+
 all : Test
 all =
     describe "document"
         [ test "uses GET when it is short enough" <|
             \() ->
-                document [ Composite "hero" [] [ Leaf "name" [] ] ]
+                document [ Composite "hero" [] [ leaf "name" [] ] ]
                     |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" []
                     |> Expect.equal
                         { method = QueryHelper.Get
-                        , url = "https://elm-graphql.herokuapp.com/api?query=%7Bhero%7Bname%7D%7D"
+                        , url = "https://elm-graphql.herokuapp.com/api?query=%7Bhero%7Bname0%3Aname%7D%7D"
                         , body = Http.emptyBody
                         }
         , test "uses POST when it is short enough for GET but POST is forced" <|
             \() ->
                 let
                     queryDocument =
-                        document [ Composite "hero" [] [ Leaf "name" [] ] ]
+                        document [ Composite "hero" [] [ leaf "name" [] ] ]
                 in
                 queryDocument
                     |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" []
@@ -59,8 +63,8 @@ all =
                         document
                             [ Composite "hero"
                                 []
-                                [ Leaf longName1 []
-                                , Leaf longName2 []
+                                [ leaf longName1 []
+                                , leaf longName2 []
                                 ]
                             ]
                 in
