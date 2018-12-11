@@ -54,28 +54,3 @@ defaultDecoders =
     { decoderId = Object.scalarDecoder |> Decode.map Id
     , decoderPosixTime = Object.scalarDecoder |> Decode.map PosixTime
     }
-
-
-
-{-
-
-   module ScalarDecoders exposing (..)
-
-   import Json.Decode as Decode exposing (Decoder)
-   import Swapi.Scalar exposing (defaultDecoders)
-
-   type alias Id =
-       Swapi.Scalar.Id
-
-
-   type alias PosixTime =
-       Swapi.Scalar.Id
-
-
-   decoders : Swapi.Scalar.Decoders Id PosixTime
-   decoders =
-     Swapi.Scalar.defineDecoders
-         { decoderId = defaultDecoders.decoderId
-         , decoderPosixTime = defaultDecoders.decoderPosixTime
-         }
--}
