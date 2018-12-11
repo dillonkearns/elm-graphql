@@ -115,7 +115,7 @@ human requiredArgs object_ =
 
 now : SelectionSet ScalarDecoders.PosixTime RootQuery
 now =
-    Object.selectionForField "Scalar.PosixTime" "now" [] ScalarDecoders.decoders.decoderPosixTime
+    Object.selectionForField "Scalar.PosixTime" "now" [] (ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderPosixTime)
 
 
 today : SelectionSet String RootQuery
