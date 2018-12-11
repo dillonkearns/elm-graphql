@@ -2,8 +2,12 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Scalar exposing (Id(..))
+module Swapi.Scalar exposing (Id(..), PosixTime(..))
 
 
 type Id
     = Id String
+
+
+type PosixTime
+    = PosixTime String

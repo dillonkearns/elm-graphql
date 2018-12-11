@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Query exposing (DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, droid, forcedError, greet, hello, hero, heroUnion, human, today)
+module Swapi.Query exposing (DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, droid, forcedError, greet, hello, hero, heroUnion, human, now, today)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -110,6 +110,11 @@ type alias HumanRequiredArguments =
 human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
     Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+
+
+now : SelectionSet Swapi.Scalar.PosixTime RootQuery
+now =
+    Object.selectionForField "Scalar.PosixTime" "now" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.PosixTime)
 
 
 today : SelectionSet String RootQuery
