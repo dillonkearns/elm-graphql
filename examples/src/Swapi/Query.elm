@@ -11,6 +11,7 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
+import ScalarDecoders
 import Swapi.Enum.Episode
 import Swapi.InputObject
 import Swapi.Interface
@@ -112,9 +113,9 @@ human requiredArgs object_ =
     Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
 
 
-now : SelectionSet Swapi.Scalar.PosixTime RootQuery
+now : SelectionSet ScalarDecoders.PosixTime RootQuery
 now =
-    Object.selectionForField "Scalar.PosixTime" "now" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.PosixTime)
+    Object.selectionForField "Scalar.PosixTime" "now" [] ScalarDecoders.decoders.decoderPosixTime
 
 
 today : SelectionSet String RootQuery

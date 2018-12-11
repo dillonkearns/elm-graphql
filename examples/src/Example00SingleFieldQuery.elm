@@ -15,6 +15,7 @@ import Swapi.Interface.Character as Character
 import Swapi.Object
 import Swapi.Query as Query
 import Swapi.Scalar
+import Time
 
 
 
@@ -34,12 +35,12 @@ import Swapi.Scalar
 
 
 type alias Response =
-    String
+    Int
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.hello
+    Query.now |> SelectionSet.map (Time.toSecond Time.utc)
 
 
 makeRequest : Cmd Msg
