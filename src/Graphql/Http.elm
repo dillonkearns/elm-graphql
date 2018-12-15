@@ -4,7 +4,7 @@ module Graphql.Http exposing
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
     , send, sendWithTracker, toTask
-    , mapError, ignoreParsedErrorData, discardParsedErrorData, withSimpleHttpError
+    , mapError, discardParsedErrorData, withSimpleHttpError
     , parseableErrorAsSuccess
     )
 
@@ -38,7 +38,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Map `Error`s
 
-@docs mapError, ignoreParsedErrorData, discardParsedErrorData, withSimpleHttpError
+@docs mapError, discardParsedErrorData, withSimpleHttpError
 
 
 ## Error Handling Strategies
@@ -269,14 +269,6 @@ withSimpleHttpError result =
 
                 GraphqlError possiblyParsed graphqlErrorList ->
                     GraphqlError possiblyParsed graphqlErrorList |> Err
-
-
-{-| Useful when you don't want to deal with the recovered data if there is `ParsedData`.
-Just a shorthand for `mapError` that will turn any `ParsedData` into `()`.
--}
-ignoreParsedErrorData : Error parsedData -> Error ()
-ignoreParsedErrorData error =
-    mapError (\_ -> ()) error
 
 
 {-| Useful when you don't want to deal with the recovered data if there is `ParsedData`.

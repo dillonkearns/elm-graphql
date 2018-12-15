@@ -60,6 +60,9 @@ but it would contains the same data as before.
   the default type wrapping `Graphql.Http.HttpError` instead of `Http.Error`.
   See the `Graphql.Http.withSimpleHttpError` docs if you are looking to
   combine a Graphql response with an Http response.
+- Removed `ignoreParsedErrorData` to avoid confusion. It's easier to use
+  `discardParsedErrorData`, use that function instead. It maps the entire
+  result so you don't have to use it in combination with `Graphql.Http.mapError`.
 
 ## [3.0.0] - 2018-12-08
 
