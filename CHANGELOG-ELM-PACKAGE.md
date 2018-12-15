@@ -30,7 +30,6 @@ type alias Error parsedData =
 
 type RawError parsedData httpError
     = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
-    | HttpError Http.Error
     | HttpError httpError
 
 
