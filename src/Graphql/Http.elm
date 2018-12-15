@@ -180,6 +180,25 @@ type Error parsedData
     | HttpError HttpError
 
 
+toSimpleHttpError : HttpError -> Http.Error
+toSimpleHttpError httpError =
+    case httpError of
+        BadUrl url ->
+            Http.BadUrl url
+
+        Timeout ->
+            Http.Timeout
+
+        NetworkError ->
+            Http.NetworkError
+
+        BadStatus metadata body ->
+            Http.BadStatus metadata.statusCode
+
+        BadPayload jsonError ->
+            Http.BadBody (Json.Decode.errorToString jsonError)
+
+
 type HttpError
     = BadUrl String
     | Timeout
