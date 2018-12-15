@@ -4,7 +4,7 @@ module Graphql.Http exposing
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
     , send, sendWithTracker, toTask
-    , mapError, ignoreParsedErrorData, fromHttpError, discardParsedErrorData
+    , mapError, ignoreParsedErrorData, discardParsedErrorData
     , parseableErrorAsSuccess
     )
 
@@ -177,7 +177,15 @@ See the `Graphql.Http.GraphqlError` module docs for more details.
 -}
 type Error parsedData
     = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
-    | HttpError Http.Error
+    | HttpError HttpError
+
+
+type HttpError
+    = BadUrl String
+    | Timeout
+    | NetworkError
+    | BadStatus Http.Metadata String
+    | BadPayload Json.Decode.Error
 
 
 {-| Map the error data if it is `ParsedData`.
@@ -195,13 +203,6 @@ mapError mapFn error =
 
         HttpError httpError ->
             HttpError httpError
-
-
-{-| Turn an `Http.Error` into a `Graphql.Http.Error`.
--}
-fromHttpError : Http.Error -> Error ()
-fromHttpError httpError =
-    HttpError httpError
 
 
 {-| Useful when you don't want to deal with the recovered data if there is `ParsedData`.
@@ -298,7 +299,7 @@ type alias DataResult parsedData =
     Result ( GraphqlError.PossiblyParsedData parsedData, List GraphqlError.GraphqlError ) parsedData
 
 
-convertResult : Result Http.Error (DataResult decodesTo) -> Result (Error decodesTo) decodesTo
+convertResult : Result HttpError (DataResult decodesTo) -> Result (Error decodesTo) decodesTo
 convertResult httpResult =
     case httpResult of
         Ok successOrError ->
@@ -391,11 +392,63 @@ toHttpRequestRecord resultToMessage ((Request request) as fullRequest) =
                 , headers = readyRequest.headers
                 , url = readyRequest.url
                 , body = readyRequest.body
-                , expect = Http.expectJson (convertResult >> resultToMessage) readyRequest.decoder
+                , expect = expectJson (convertResult >> resultToMessage) readyRequest.decoder
                 , timeout = readyRequest.timeout
                 , tracker = Nothing
                 }
            )
+
+
+expectJson : (Result HttpError decodesTo -> msg) -> Json.Decode.Decoder decodesTo -> Http.Expect msg
+expectJson toMsg decoder =
+    Http.expectStringResponse toMsg <|
+        \response ->
+            case response of
+                Http.BadUrl_ url ->
+                    BadUrl url |> Err
+
+                Http.Timeout_ ->
+                    Timeout |> Err
+
+                Http.NetworkError_ ->
+                    NetworkError |> Err
+
+                Http.BadStatus_ metadata body ->
+                    BadStatus metadata body |> Err
+
+                Http.GoodStatus_ metadata body ->
+                    case Json.Decode.decodeString decoder body of
+                        Ok value ->
+                            Ok value
+
+                        Err err ->
+                            BadPayload err |> Err
+
+
+jsonResolver : Json.Decode.Decoder decodesTo -> Http.Resolver HttpError decodesTo
+jsonResolver decoder =
+    Http.stringResolver <|
+        \response ->
+            case response of
+                Http.BadUrl_ url ->
+                    BadUrl url |> Err
+
+                Http.Timeout_ ->
+                    Timeout |> Err
+
+                Http.NetworkError_ ->
+                    NetworkError |> Err
+
+                Http.BadStatus_ metadata body ->
+                    BadStatus metadata body |> Err
+
+                Http.GoodStatus_ metadata body ->
+                    case Json.Decode.decodeString decoder body of
+                        Ok value ->
+                            Ok value
+
+                        Err err ->
+                            BadPayload err |> Err
 
 
 toReadyRequest : Request decodesTo -> ReadyRequest decodesTo
@@ -476,37 +529,12 @@ toTask ((Request request) as fullRequest) =
         |> Task.andThen failTaskOnHttpSuccessWithErrors
 
 
-resolver : Request decodesTo -> Http.Resolver Http.Error (DataResult decodesTo)
+resolver : Request decodesTo -> Http.Resolver HttpError (DataResult decodesTo)
 resolver request =
     request
         |> toReadyRequest
         |> .decoder
         |> jsonResolver
-
-
-jsonResolver decoder =
-    Http.stringResolver <|
-        \response ->
-            case response of
-                Http.BadUrl_ url ->
-                    Err (Http.BadUrl url)
-
-                Http.Timeout_ ->
-                    Err Http.Timeout
-
-                Http.NetworkError_ ->
-                    Err Http.NetworkError
-
-                Http.BadStatus_ metadata body ->
-                    Err (Http.BadStatus metadata.statusCode)
-
-                Http.GoodStatus_ metadata body ->
-                    case Json.Decode.decodeString decoder body of
-                        Ok value ->
-                            Ok value
-
-                        Err err ->
-                            Err (Http.BadBody (Json.Decode.errorToString err))
 
 
 failTaskOnHttpSuccessWithErrors : DataResult decodesTo -> Task (Error decodesTo) decodesTo
