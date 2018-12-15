@@ -9,6 +9,59 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- `elm/http@2.0.0` removed some important data from `Http.Error`. It's now just
+  (`BadStatus Int` rather than `BadStatus (Response String)`). See the type
+  definitions here:
+  https://package.elm-lang.org/packages/elm/http/1.0.0/Http#Error
+  https://package.elm-lang.org/packages/elm/http/latest/Http#Error
+
+  In order to allow `dillonkearns/elm-graphql` users to capture the body of
+  responses with a bad status, we need to do a major version bump.
+
+
+    In a nutshell, this change introduces a custom type that looks like this:
+
+```elm
+module Graphql.Http.Error exposing -- ..
+type alias Error parsedData =
+    RawError parsedData HttpError
+
+type RawError parsedData httpError
+    = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
+    | HttpError Http.Error
+    | HttpError httpError
+
+
+type HttpError
+    = BadUrl String
+    | Timeout
+    | NetworkError
+    | BadStatus Http.Metadata String
+    | BadPayload Json.Decode.Error
+```
+
+See the full details here: https://github.com/dillonkearns/elm-graphql/issues/89
+Note that this will only require you to change your code if you were destructuring
+the `Graphql.Http.HttpError` values. And the changes introduce a function to map
+into the old type easily:
+
+```elm
+withSimpleHttpError : Result (Error parsedData) decodesTo -> Result (RawError parsedData Http.Error) decodesTo
+```
+
+Well, not exactly the old type, the old type was `Graphql.Http.Error parsedData`,
+the new type is written out as `Graphql.Http.RawError parsedData Http.Error`,
+but it would contains the same data as before.
+
+### Removed
+
+- `Graphql.Http.fromHttpError` was removed as it no longer makes sense with
+  the default type wrapping `Graphql.Http.HttpError` instead of `Http.Error`.
+  See the `Graphql.Http.withSimpleHttpError` docs if you are looking to
+  combine a Graphql response with an Http response.
+
 ## [3.0.0] - 2018-12-08
 
 ### Changed
@@ -313,3 +366,7 @@ https://github.com/dillonkearns/elm-graphql/issues/43
 ### Fixed
 
 - Fix bug that excluded arguments when serializing leaves in document.
+
+```
+
+```
