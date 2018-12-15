@@ -1,12 +1,11 @@
 module Graphql.Http exposing
-    ( Request, Error
+    ( Request, Error, RawError(..)
     , queryRequest, mutationRequest, queryRequestWithHttpGet
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
     , send, sendWithTracker, toTask
-    , mapError, ignoreParsedErrorData, discardParsedErrorData
+    , mapError, ignoreParsedErrorData, discardParsedErrorData, withSimpleHttpError
     , parseableErrorAsSuccess
-    , RawError(..), withSimpleHttpError
     )
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
@@ -18,7 +17,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Data Types
 
-@docs Request, Error
+@docs Request, Error, RawError
 
 
 ## Begin `Request` Pipeline
@@ -39,7 +38,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Map `Error`s
 
-@docs mapError, ignoreParsedErrorData, fromHttpError, discardParsedErrorData
+@docs mapError, ignoreParsedErrorData, discardParsedErrorData, withSimpleHttpError
 
 
 ## Error Handling Strategies
@@ -173,13 +172,16 @@ mutationRequest baseUrl mutationSelectionSet =
         |> Request
 
 
-{-| Represents the two types of errors you can get, an Http error or a GraphQL error.
-See the `Graphql.Http.GraphqlError` module docs for more details.
+{-| An alias for the default kind of Error. See the `RawError` for the full
+type.
 -}
 type alias Error parsedData =
     RawError parsedData HttpError
 
 
+{-| Represents the two types of errors you can get, an Http error or a GraphQL error.
+See the `Graphql.Http.GraphqlError` module docs for more details.
+-}
 type RawError parsedData httpError
     = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
     | HttpError httpError
