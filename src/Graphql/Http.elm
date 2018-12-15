@@ -1,11 +1,12 @@
 module Graphql.Http exposing
-    ( Request, Error(..)
+    ( Request, Error
     , queryRequest, mutationRequest, queryRequestWithHttpGet
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
     , send, sendWithTracker, toTask
     , mapError, ignoreParsedErrorData, discardParsedErrorData
     , parseableErrorAsSuccess
+    , RawError(..), withSimpleHttpError
     )
 
 {-| Send requests to your GraphQL endpoint. See [this live code demo](https://rebrand.ly/graphqelm)
@@ -175,9 +176,13 @@ mutationRequest baseUrl mutationSelectionSet =
 {-| Represents the two types of errors you can get, an Http error or a GraphQL error.
 See the `Graphql.Http.GraphqlError` module docs for more details.
 -}
-type Error parsedData
+type alias Error parsedData =
+    RawError parsedData HttpError
+
+
+type RawError parsedData httpError
     = GraphqlError (GraphqlError.PossiblyParsedData parsedData) (List GraphqlError.GraphqlError)
-    | HttpError HttpError
+    | HttpError httpError
 
 
 toSimpleHttpError : HttpError -> Http.Error
@@ -222,6 +227,46 @@ mapError mapFn error =
 
         HttpError httpError ->
             HttpError httpError
+
+
+{-| Useful when you want to combine together an Http response with a Graphql
+request response.
+
+    -- this is just the type that our query decodes to
+    type alias Response =
+        { hello : String }
+
+    type Msg
+        = GotResponse (RemoteData (Graphql.Http.RawError Response Http.Error) Response)
+
+    request =
+        query
+            |> Graphql.Http.queryRequest "https://some-graphql-api.com"
+            |> Graphql.Http.send
+                (Graphql.Http.withSimpleHttpError
+                    >> RemoteData.fromResult
+                    >> GotResponse
+                )
+
+    combinedResponses =
+        RemoteData.map2 Tuple.pair
+            model.graphqlResponse
+            (model.plainHttpResponse |> RemoteData.mapError Graphql.Http.HttpError)
+
+-}
+withSimpleHttpError : Result (Error parsedData) decodesTo -> Result (RawError parsedData Http.Error) decodesTo
+withSimpleHttpError result =
+    case result of
+        Ok decodesTo ->
+            Ok decodesTo
+
+        Err error ->
+            case error of
+                HttpError httpError ->
+                    httpError |> toSimpleHttpError |> HttpError |> Err
+
+                GraphqlError possiblyParsed graphqlErrorList ->
+                    GraphqlError possiblyParsed graphqlErrorList |> Err
 
 
 {-| Useful when you don't want to deal with the recovered data if there is `ParsedData`.

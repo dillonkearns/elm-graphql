@@ -27,17 +27,22 @@ makePackagesGithubQuery reposWithOwner =
         |> ElmReposRequest.queryForRepos
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphql.Http.send (Graphql.Http.parseableErrorAsSuccess >> RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.send
+            (Graphql.Http.parseableErrorAsSuccess
+                >> Graphql.Http.withSimpleHttpError
+                >> RemoteData.fromResult
+                >> GotResponse
+            )
 
 
 type Msg
-    = GotResponse (RemoteData (Graphql.Http.Error ()) (List ElmReposRequest.Repo))
+    = GotResponse (RemoteData (Graphql.Http.RawError () Http.Error) (List ElmReposRequest.Repo))
     | SetSortOrder ElmReposRequest.SortOrder
     | GotElmPackages (RemoteData.WebData (List String))
 
 
 type alias Model =
-    { githubResponse : RemoteData (Graphql.Http.Error ()) (List ElmReposRequest.Repo)
+    { githubResponse : RemoteData (Graphql.Http.RawError () Http.Error) (List ElmReposRequest.Repo)
     , sortOrder : ElmReposRequest.SortOrder
     , elmPackages : RemoteData.WebData (List String)
     }
