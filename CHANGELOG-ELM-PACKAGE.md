@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.0] - 2018-12-15
+
 ### Changed
 
 - `elm/http@2.0.0` removed some important data from `Http.Error`. It's now just
