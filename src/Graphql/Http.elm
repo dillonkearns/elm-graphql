@@ -1,5 +1,5 @@
 module Graphql.Http exposing
-    ( Request, Error, RawError(..)
+    ( Request, HttpError(..), Error, RawError(..)
     , queryRequest, mutationRequest, queryRequestWithHttpGet
     , QueryRequestMethod(..)
     , withHeader, withTimeout, withCredentials, withQueryParams
@@ -17,7 +17,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Data Types
 
-@docs Request, Error, RawError
+@docs Request, HttpError, Error, RawError
 
 
 ## Begin `Request` Pipeline
@@ -206,6 +206,15 @@ toSimpleHttpError httpError =
             Http.BadBody (Json.Decode.errorToString jsonError)
 
 
+{-| An Http Error. A Request can fail in a few ways:
+
+  - `BadUrl` means you did not provide a valid URL.
+  - `Timeout` means it took too long to get a response.
+  - `NetworkError` means the user turned off their wifi, went in a cave, etc.
+  - `BadStatus` means you got a response back, but the status code indicates failure. The second argument in the payload is the response body.
+  - `BadPayload` means you got a response back with a nice status code, but the body of the response was something unexpected. The String in this case is a debugging message that explains what went wrong with your JSON decoder or whatever.
+
+-}
 type HttpError
     = BadUrl String
     | Timeout
