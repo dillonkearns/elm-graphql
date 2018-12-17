@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.1.0] - 2018-12-16
+
+### Added
+
+- Expose type `Graphql.Http.HttpError`
+
 ## [4.0.0] - 2018-12-15
 
 ### Changed
