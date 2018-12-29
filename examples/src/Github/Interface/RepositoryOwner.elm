@@ -32,13 +32,13 @@ fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.RepositoryOwner
 fragments selections =
-    Object.exhuastiveFragmentSelection
+    Object.exhaustiveFragmentSelection
         [ Object.buildFragment "Organization" selections.onOrganization
         , Object.buildFragment "User" selections.onUser
         ]
 
 
-{-| Can be used to create a non-exhuastive set of fragments by using the record
+{-| Can be used to create a non-exhaustive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
 maybeFragments : Fragments (Maybe decodesTo)

@@ -34,7 +34,7 @@ fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Union.SearchResultItem
 fragments selections =
-    Object.exhuastiveFragmentSelection
+    Object.exhaustiveFragmentSelection
         [ Object.buildFragment "Issue" selections.onIssue
         , Object.buildFragment "PullRequest" selections.onPullRequest
         , Object.buildFragment "Repository" selections.onRepository
@@ -44,7 +44,7 @@ fragments selections =
         ]
 
 
-{-| Can be used to create a non-exhuastive set of fragments by using the record
+{-| Can be used to create a non-exhaustive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
 maybeFragments : Fragments (Maybe decodesTo)
