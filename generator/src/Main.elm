@@ -109,7 +109,7 @@ program =
 
 scalarDecodersOption : Option.Option (Maybe String) (Maybe ModuleName) Option.BeginningOption
 scalarDecodersOption =
-    Option.optionalKeywordArg "scalar-decoders-module"
+    Option.optionalKeywordArg "scalar-decoders"
         |> Option.validateIfPresent validateModuleName
         |> Option.map (Maybe.map (String.split "."))
         |> Option.map (Maybe.map ModuleName.fromList)
