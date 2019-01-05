@@ -1,4 +1,4 @@
-module ModuleName exposing (ModuleName, fromList, toString)
+module ModuleName exposing (ModuleName, append, fromList, toString)
 
 
 type ModuleName
@@ -13,4 +13,11 @@ fromList =
 toString : ModuleName -> String
 toString (ModuleName moduleNameParts) =
     moduleNameParts
+        |> String.join "."
+
+
+append : String -> ModuleName -> String
+append string (ModuleName moduleNameParts) =
+    moduleNameParts
+        ++ [ string ]
         |> String.join "."

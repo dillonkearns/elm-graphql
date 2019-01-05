@@ -1,10 +1,11 @@
 module Graphql.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject)
 
 import Graphql.Generator.Context exposing (Context)
-import Graphql.Generator.ModuleName as ModuleName
+import Graphql.Generator.ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Scalar as Scalar
 import Graphql.Parser.Type as Type exposing (TypeReference)
+import ModuleName
 import MyDebug
 import String.Interpolate exposing (interpolate)
 
@@ -34,9 +35,8 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    [ (context.apiSubmodule ++ [ "ScalarDecoders" ])
-                        ++ [ "decoders" ]
-                        |> String.join "."
+                    [ (context.scalarDecodersModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ])))
+                        |> ModuleName.append "decoders"
                     , context.apiSubmodule
                         ++ [ "Scalar" ]
                         ++ [ "unwrapDecoders" ]
@@ -58,7 +58,7 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
             [ "identity" ]
 
         Type.EnumRef enumName ->
-            [ (ModuleName.enum { apiSubmodule = context.apiSubmodule } enumName
+            [ (Graphql.Generator.ModuleName.enum { apiSubmodule = context.apiSubmodule } enumName
                 ++ [ "decoder" ]
               )
                 |> String.join "."
@@ -136,7 +136,7 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
 
         Type.EnumRef enumName ->
             interpolate ("(Encode.enum {0})" ++ isNullableString)
-                [ ModuleName.enum { apiSubmodule = apiSubmodule } enumName
+                [ Graphql.Generator.ModuleName.enum { apiSubmodule = apiSubmodule } enumName
                     ++ [ "toString" ]
                     |> String.join "."
                 ]
@@ -146,7 +146,7 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
                 [ "encode" ++ ClassCaseName.normalized inputObjectName ]
 
               else
-                ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
+                Graphql.Generator.ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
                     ++ [ "encode" ++ ClassCaseName.normalized inputObjectName ]
              )
                 |> String.join "."
@@ -189,12 +189,19 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                 Scalar.Custom customScalarName ->
                     let
                         constructor =
-                            context.apiSubmodule
-                                ++ [ "ScalarDecoders" ]
-                                -- TODO ^ this could be the custom ScalarDecoder module, need to pass that as context
-                                ++ [ ClassCaseName.normalized customScalarName ]
-                                |> String.join "."
+                            (context.scalarDecodersModule
+                                |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+                            )
+                                |> ModuleName.append (ClassCaseName.normalized customScalarName)
 
+                        {-
+                                                       context.apiSubmodule
+                           ++ [ "ScalarDecoders" ]
+                           -- TODO ^ this could be the custom ScalarDecoder module, need to pass that as context
+                           ++ [ ClassCaseName.normalized customScalarName ]
+                           |> String.join "."
+
+                        -}
                         -- BEFORE
                         --     (Object.scalarDecoder |> Decode.map Swapi.Scalar.PosixTime)
                         -- Object.selectionForField "Scalar.PosixTime" "now" []
@@ -215,7 +222,7 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
             "decodesTo"
 
         Type.EnumRef enumName ->
-            ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
+            Graphql.Generator.ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
                 |> String.join "."
 
         Type.InputObjectRef inputObjectName ->
@@ -223,7 +230,7 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                 [ ClassCaseName.normalized inputObjectName ]
 
              else
-                ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
+                Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
                     ++ [ ClassCaseName.normalized inputObjectName ]
             )
                 |> String.join "."
