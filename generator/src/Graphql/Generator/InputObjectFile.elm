@@ -105,9 +105,9 @@ type alias {0} =
 
 
 aliasEntry : Context -> Type.Field -> ( String, String )
-aliasEntry { apiSubmodule } field =
+aliasEntry context field =
     ( CamelCaseName.normalized field.name
-    , Decoder.generateTypeForInputObject apiSubmodule field.typeRef
+    , Decoder.generateTypeForInputObject context field.typeRef
     )
 
 

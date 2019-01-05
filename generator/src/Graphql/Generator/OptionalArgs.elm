@@ -1,6 +1,7 @@
 module Graphql.Generator.OptionalArgs exposing (Result, generate)
 
 import GenerateSyntax
+import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.Decoder
 import Graphql.Generator.Let exposing (LetBinding)
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
@@ -26,8 +27,8 @@ type alias OptionalArg =
     }
 
 
-generate : List String -> List Type.Arg -> Maybe Result
-generate apiSubmodule allArgs =
+generate : Context -> List Type.Arg -> Maybe Result
+generate context allArgs =
     case List.filterMap optionalArgOrNothing allArgs of
         [] ->
             Nothing
@@ -42,16 +43,16 @@ generate apiSubmodule allArgs =
                 , letBindings =
                     [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord optionalArgs )
                     , ( "optionalArgs"
-                      , argValues apiSubmodule optionalArgs
+                      , argValues context optionalArgs
                             ++ "\n                |> List.filterMap identity"
                       )
                     ]
-                , typeAlias = { suffix = "OptionalArguments", body = typeAlias apiSubmodule optionalArgs }
+                , typeAlias = { suffix = "OptionalArguments", body = typeAlias context optionalArgs }
                 }
 
 
-argValues : List String -> List OptionalArg -> String
-argValues apiSubmodule optionalArgs =
+argValues : Context -> List OptionalArg -> String
+argValues { apiSubmodule } optionalArgs =
     let
         values =
             optionalArgs
@@ -87,13 +88,13 @@ annotation fieldName =
         [ fieldName ]
 
 
-typeAlias : List String -> List OptionalArg -> String
-typeAlias apiSubmodule optionalArgs =
+typeAlias : Context -> List OptionalArg -> String
+typeAlias context optionalArgs =
     optionalArgs
         |> List.map
             (\{ name, typeOf } ->
                 ( CamelCaseName.normalized name
-                , "OptionalArgument " ++ Graphql.Generator.Decoder.generateType apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+                , "OptionalArgument " ++ Graphql.Generator.Decoder.generateType context (Type.TypeReference typeOf Type.NonNullable)
                 )
             )
         |> GenerateSyntax.typeAlias

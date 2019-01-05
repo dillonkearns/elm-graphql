@@ -1,5 +1,6 @@
 module Graphql.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject)
 
+import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Scalar as Scalar
@@ -8,8 +9,8 @@ import MyDebug
 import String.Interpolate exposing (interpolate)
 
 
-generateDecoder : List String -> TypeReference -> List String
-generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
+generateDecoder : Context -> TypeReference -> List String
+generateDecoder context (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
             case scalar of
@@ -28,16 +29,15 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                 Scalar.Custom customScalarName ->
                     let
                         constructor =
-                            apiSubmodule
+                            context.apiSubmodule
                                 ++ [ "Scalar" ]
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    [ apiSubmodule
-                        ++ [ "ScalarDecoders" ]
+                    [ (context.apiSubmodule ++ [ "ScalarDecoders" ])
                         ++ [ "decoders" ]
                         |> String.join "."
-                    , apiSubmodule
+                    , context.apiSubmodule
                         ++ [ "Scalar" ]
                         ++ [ "unwrapDecoders" ]
                         |> String.join "."
@@ -46,7 +46,7 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                     ]
 
         Type.List listTypeRef ->
-            generateDecoder apiSubmodule listTypeRef ++ [ "Decode.list" ]
+            generateDecoder context listTypeRef ++ [ "Decode.list" ]
 
         Type.ObjectRef objectName ->
             [ "identity" ]
@@ -58,7 +58,7 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
             [ "identity" ]
 
         Type.EnumRef enumName ->
-            [ (ModuleName.enum { apiSubmodule = apiSubmodule } enumName
+            [ (ModuleName.enum { apiSubmodule = context.apiSubmodule } enumName
                 ++ [ "decoder" ]
               )
                 |> String.join "."
@@ -154,23 +154,23 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
                 ++ isNullableString
 
 
-generateType : List String -> TypeReference -> String
-generateType apiSubmodule typeRef =
-    generateTypeCommon False "Maybe" apiSubmodule typeRef
+generateType : Context -> TypeReference -> String
+generateType context typeRef =
+    generateTypeCommon False "Maybe" context typeRef
 
 
-generateType_ : Bool -> List String -> TypeReference -> String
-generateType_ fromInputObject apiSubmodule typeRef =
-    generateTypeCommon fromInputObject "Maybe" apiSubmodule typeRef
+generateType_ : Bool -> Context -> TypeReference -> String
+generateType_ fromInputObject context typeRef =
+    generateTypeCommon fromInputObject "Maybe" context typeRef
 
 
-generateTypeForInputObject : List String -> TypeReference -> String
-generateTypeForInputObject apiSubmodule typeRef =
-    generateTypeCommon True "OptionalArgument" apiSubmodule typeRef
+generateTypeForInputObject : Context -> TypeReference -> String
+generateTypeForInputObject context typeRef =
+    generateTypeCommon True "OptionalArgument" context typeRef
 
 
-generateTypeCommon : Bool -> String -> List String -> TypeReference -> String
-generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReference referrableType isNullable) =
+generateTypeCommon : Bool -> String -> Context -> TypeReference -> String
+generateTypeCommon fromInputObject nullableString context (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
             case scalar of
@@ -189,7 +189,7 @@ generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReferen
                 Scalar.Custom customScalarName ->
                     let
                         constructor =
-                            apiSubmodule
+                            context.apiSubmodule
                                 ++ [ "ScalarDecoders" ]
                                 -- TODO ^ this could be the custom ScalarDecoder module, need to pass that as context
                                 ++ [ ClassCaseName.normalized customScalarName ]
@@ -203,7 +203,7 @@ generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReferen
                     constructor
 
         Type.List typeRef ->
-            "(List " ++ generateType_ fromInputObject apiSubmodule typeRef ++ ")"
+            "(List " ++ generateType_ fromInputObject context typeRef ++ ")"
 
         Type.ObjectRef objectName ->
             "decodesTo"
@@ -215,7 +215,7 @@ generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReferen
             "decodesTo"
 
         Type.EnumRef enumName ->
-            ModuleName.enumTypeName { apiSubmodule = apiSubmodule } enumName
+            ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
                 |> String.join "."
 
         Type.InputObjectRef inputObjectName ->
@@ -223,7 +223,7 @@ generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReferen
                 [ ClassCaseName.normalized inputObjectName ]
 
              else
-                ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
+                ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
                     ++ [ ClassCaseName.normalized inputObjectName ]
             )
                 |> String.join "."
