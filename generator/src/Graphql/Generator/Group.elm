@@ -94,7 +94,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
         |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
         |> List.append
-            [ ScalarDecoders.generate options.apiSubmodule
+            [ ScalarDecoders.generate context
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery context

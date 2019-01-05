@@ -1,13 +1,14 @@
 module Graphql.Generator.ScalarDecoders exposing (generate)
 
+import Graphql.Generator.Context exposing (Context)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
 import String.Interpolate exposing (interpolate)
 
 
-generate : List String -> List TypeDefinition -> ( List String, String )
-generate apiSubmodule typeDefs =
-    ( apiSubmodule ++ [ "ScalarDecoders" ], fileContents apiSubmodule typeDefs )
+generate : Context -> List TypeDefinition -> ( List String, String )
+generate context typeDefs =
+    ( context.apiSubmodule ++ [ "ScalarDecoders" ], fileContents context typeDefs )
 
 
 include : TypeDefinition -> Bool
@@ -49,8 +50,8 @@ isScalar definableType =
             False
 
 
-fileContents : List String -> List TypeDefinition -> String
-fileContents apiSubmodule typeDefinitions =
+fileContents : Context -> List TypeDefinition -> String
+fileContents context typeDefinitions =
     let
         typesToGenerate =
             typeDefinitions
@@ -58,7 +59,7 @@ fileContents apiSubmodule typeDefinitions =
                 |> List.map (\(TypeDefinition name definableType description) -> name)
 
         moduleName =
-            apiSubmodule ++ [ "ScalarDecoders" ] |> String.join "."
+            context.apiSubmodule ++ [ "ScalarDecoders" ] |> String.join "."
     in
     if typesToGenerate == [] then
         interpolate
@@ -79,12 +80,7 @@ import Json.Decode as Decode exposing (Decoder)
 import Swapi.Scalar exposing (defaultDecoders)
 
 
-type alias Id =
-    Swapi.Scalar.Id
-
-
-type alias PosixTime =
-    Swapi.Scalar.PosixTime
+{1}
 
 
 decoders : Swapi.Scalar.Decoders Id PosixTime
@@ -96,14 +92,18 @@ decoders =
 """
             [ moduleName
             , typesToGenerate
-                |> List.map generateType
+                |> List.map (generateType context)
                 |> String.join "\n\n\n"
             ]
 
 
-generateType : ClassCaseName -> String
-generateType name =
+generateType : Context -> ClassCaseName -> String
+generateType context name =
     interpolate
-        """type {0}
-    = {0} String"""
-        [ ClassCaseName.normalized name ]
+        """type alias {0}
+    = {1}"""
+        [ ClassCaseName.normalized name
+        , context.apiSubmodule
+            ++ [ "Scalar", ClassCaseName.normalized name ]
+            |> String.join "."
+        ]
