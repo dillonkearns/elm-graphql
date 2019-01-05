@@ -73,10 +73,54 @@ placeholder =
 
     else
         interpolate
-            """module {0} exposing (..)
+            """module {0} exposing (Decoders, Id(..), PosixTime(..), defaultDecoders, defineDecoders, unwrapDecoders)
+
+
+import Graphql.Internal.Builder.Object as Object
+import Json.Decode as Decode exposing (Decoder)
 
 
 {1}
+
+
+
+defineDecoders :
+    { decoderId : Decoder decoderId
+    , decoderPosixTime : Decoder decoderPosixTime
+    }
+    -> Decoders decoderId decoderPosixTime
+defineDecoders definitions =
+    Decoders
+        { decoderId = definitions.decoderId
+        , decoderPosixTime = definitions.decoderPosixTime
+        }
+
+
+unwrapDecoders :
+    Decoders decoderId decoderPosixTime
+    ->
+        { decoderId : Decoder decoderId
+        , decoderPosixTime : Decoder decoderPosixTime
+        }
+unwrapDecoders (Decoders unwrappedDecoders) =
+    unwrappedDecoders
+
+
+type Decoders decoderId decoderPosixTime
+    = Decoders (RawDecoders decoderId decoderPosixTime)
+
+
+type alias RawDecoders decoderId decoderPosixTime =
+    { decoderId : Decoder decoderId
+    , decoderPosixTime : Decoder decoderPosixTime
+    }
+
+
+defaultDecoders : RawDecoders Id PosixTime
+defaultDecoders =
+    { decoderId = Object.scalarDecoder |> Decode.map Id
+    , decoderPosixTime = Object.scalarDecoder |> Decode.map PosixTime
+    }
 """
             [ moduleName
             , typesToGenerate
