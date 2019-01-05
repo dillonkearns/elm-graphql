@@ -33,8 +33,16 @@ generateDecoder apiSubmodule (Type.TypeReference referrableType isNullable) =
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    [ "Object.scalarDecoder"
-                    , interpolate "Decode.map {0}" [ constructor ]
+                    [ apiSubmodule
+                        ++ [ "ScalarDecoders" ]
+                        ++ [ "decoders" ]
+                        |> String.join "."
+                    , apiSubmodule
+                        ++ [ "Scalar" ]
+                        ++ [ "unwrapDecoders" ]
+                        |> String.join "."
+                    , ".decoder"
+                        ++ ClassCaseName.normalized customScalarName
                     ]
 
         Type.List listTypeRef ->
@@ -182,9 +190,15 @@ generateTypeCommon fromInputObject nullableString apiSubmodule (Type.TypeReferen
                     let
                         constructor =
                             apiSubmodule
-                                ++ [ "Scalar" ]
+                                ++ [ "ScalarDecoders" ]
+                                -- TODO ^ this could be the custom ScalarDecoder module, need to pass that as context
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
+
+                        -- BEFORE
+                        --     (Object.scalarDecoder |> Decode.map Swapi.Scalar.PosixTime)
+                        -- Object.selectionForField "Scalar.PosixTime" "now" []
+                        --  (ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderPosixTime)
                     in
                     constructor
 

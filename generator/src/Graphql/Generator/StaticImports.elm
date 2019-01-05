@@ -19,6 +19,7 @@ import {0}.Interface
 import {0}.Union
 import {0}.Scalar
 import {0}.InputObject
+import {0}.ScalarDecoders
 import Graphql.Internal.Builder.Object as Object
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)

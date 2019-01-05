@@ -16,6 +16,7 @@ import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
+import Swapi.ScalarDecoders
 import Swapi.Union
 
 
@@ -42,9 +43,9 @@ friends object_ =
 
 {-| The ID of the droid.
 -}
-id : SelectionSet Swapi.Scalar.Id Swapi.Object.Droid
+id : SelectionSet Swapi.ScalarDecoders.Id Swapi.Object.Droid
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Swapi.ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The name of the droid.

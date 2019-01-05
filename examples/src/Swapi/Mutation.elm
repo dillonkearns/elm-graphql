@@ -16,6 +16,7 @@ import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
+import Swapi.ScalarDecoders
 import Swapi.Union
 
 
@@ -25,7 +26,7 @@ increment =
 
 
 type alias SendMessageRequiredArguments =
-    { characterId : Swapi.Scalar.Id
+    { characterId : Swapi.ScalarDecoders.Id
     , phrase : Swapi.Enum.Phrase.Phrase
     }
 

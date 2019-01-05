@@ -6,7 +6,6 @@ module Swapi.Scalar exposing (Decoders, Id(..), PosixTime(..), defaultDecoders, 
 
 import Graphql.Internal.Builder.Object as Object
 import Json.Decode as Decode exposing (Decoder)
-import Time
 
 
 type Id

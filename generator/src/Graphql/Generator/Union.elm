@@ -91,6 +91,7 @@ import {1}.Interface
 import {1}.Union
 import {1}.Scalar
 import {1}.InputObject
+import {1}.ScalarDecoders
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
