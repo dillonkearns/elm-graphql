@@ -50,9 +50,9 @@ homePlanet =
 
 {-| The ID of the human.
 -}
-id : SelectionSet Swapi.ScalarDecoders.Id Swapi.Object.Human
+id : SelectionSet ScalarDecoders.Id Swapi.Object.Human
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Swapi.ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The name of the human.

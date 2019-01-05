@@ -11,12 +11,12 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
+import ScalarDecoders
 import Swapi.Enum.Episode
 import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
-import Swapi.ScalarDecoders
 import Swapi.Union
 
 
@@ -71,9 +71,9 @@ friends object_ =
 
 {-| The ID of the character.
 -}
-id : SelectionSet Swapi.ScalarDecoders.Id Swapi.Interface.Character
+id : SelectionSet ScalarDecoders.Id Swapi.Interface.Character
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Swapi.ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The name of the character.

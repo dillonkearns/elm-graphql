@@ -43,9 +43,9 @@ friends object_ =
 
 {-| The ID of the droid.
 -}
-id : SelectionSet Swapi.ScalarDecoders.Id Swapi.Object.Droid
+id : SelectionSet ScalarDecoders.Id Swapi.Object.Droid
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Swapi.ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The name of the droid.
