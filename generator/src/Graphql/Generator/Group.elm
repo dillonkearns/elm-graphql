@@ -10,6 +10,7 @@ import Graphql.Generator.Mutation
 import Graphql.Generator.Object
 import Graphql.Generator.Query
 import Graphql.Generator.Scalar as Scalar
+import Graphql.Generator.ScalarDecoders as ScalarDecoders
 import Graphql.Generator.Subscription
 import Graphql.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphql.Generator.Union
@@ -90,6 +91,15 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
         |> List.append typeLockDefinitions
         |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
+        |> List.append
+            [ ScalarDecoders.generate apiSubmodule
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery context
+                    |> excludeMutation context
+                    |> excludeSubscription context
+                )
+            ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 
