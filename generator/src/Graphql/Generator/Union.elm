@@ -1,8 +1,9 @@
 module Graphql.Generator.Union exposing (generate)
 
 import Graphql.Generator.Context exposing (Context)
-import Graphql.Generator.ModuleName as ModuleName
+import Graphql.Generator.ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
+import ModuleName
 import String.Interpolate exposing (interpolate)
 
 
@@ -60,7 +61,7 @@ aliasFieldForFragment : Context -> List String -> ClassCaseName -> String
 aliasFieldForFragment context moduleName interfaceImplementor =
     interpolate
         "on{0} : SelectionSet decodesTo {1}"
-        [ ClassCaseName.normalized interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join "." ]
+        [ ClassCaseName.normalized interfaceImplementor, Graphql.Generator.ModuleName.object context interfaceImplementor |> String.join "." ]
 
 
 exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> String
@@ -78,7 +79,7 @@ maybeFragmentEntry context moduleName interfaceImplementor =
 
 
 prepend : Context -> List String -> String
-prepend { apiSubmodule } moduleName =
+prepend context moduleName =
     interpolate """module {0} exposing (..)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -92,10 +93,14 @@ import {1}.Union
 import {1}.Scalar
 import {1}.InputObject
 import {1}.ScalarDecoders
+import {2}
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
 """
         [ moduleName |> String.join "."
-        , apiSubmodule |> String.join "."
+        , context.apiSubmodule |> String.join "."
+        , context.scalarDecodersModule
+            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+            |> ModuleName.toString
         ]
