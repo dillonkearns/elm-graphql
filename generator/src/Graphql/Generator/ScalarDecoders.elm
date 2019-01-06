@@ -86,8 +86,8 @@ import Swapi.Scalar exposing (defaultDecoders)
 decoders : {2}
 decoders =
     Swapi.Scalar.defineDecoders
-        { decoderId = defaultDecoders.decoderId
-        , decoderPosixTime = defaultDecoders.decoderPosixTime
+        {
+        {3}
         }
 """
             [ moduleName
@@ -103,6 +103,13 @@ decoders =
                             )
                         |> String.join " "
                    )
+            , typesToGenerate
+                |> List.map
+                    (\classCaseName ->
+                        interpolate "decoder{0} = defaultDecoders.decoder{0}"
+                            [ ClassCaseName.normalized classCaseName ]
+                    )
+                |> String.join "    , "
             ]
 
 
