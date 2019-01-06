@@ -83,7 +83,7 @@ import Swapi.Scalar exposing (defaultDecoders)
 {1}
 
 
-decoders : Swapi.Scalar.Decoders Id PosixTime
+decoders : {2}
 decoders =
     Swapi.Scalar.defineDecoders
         { decoderId = defaultDecoders.decoderId
@@ -94,6 +94,15 @@ decoders =
             , typesToGenerate
                 |> List.map (generateType context)
                 |> String.join "\n\n\n"
+            , (context.apiSubmodule |> String.join ".")
+                ++ ".Scalar.Decoders "
+                ++ (typesToGenerate
+                        |> List.map
+                            (\classCaseName ->
+                                ClassCaseName.normalized classCaseName
+                            )
+                        |> String.join " "
+                   )
             ]
 
 
