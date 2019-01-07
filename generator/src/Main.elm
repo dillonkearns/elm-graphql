@@ -147,6 +147,7 @@ init flags msg =
                 , outputPath = options.outputPath
                 , baseModule = options.base
                 , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
+                , customDecodersModule = options.scalarDecodersModule |> Maybe.map ModuleName.toString
                 }
             )
 
@@ -156,6 +157,7 @@ init flags msg =
                 { introspectionFilePath = options.file
                 , outputPath = options.outputPath
                 , baseModule = options.base
+                , customDecodersModule = options.scalarDecodersModule |> Maybe.map ModuleName.toString
                 }
             )
 
