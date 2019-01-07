@@ -1,4 +1,4 @@
-module Graphql.Generator.Context exposing (Context, context)
+module Graphql.Generator.Context exposing (Context, context, stub)
 
 import Dict exposing (Dict)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -31,6 +31,17 @@ type alias Context =
     , apiSubmodule : List String
     , interfaces : InterfaceLookup
     , scalarDecodersModule : Maybe ModuleName
+    }
+
+
+stub : Context
+stub =
+    { query = ClassCaseName.build "RootQueryObject"
+    , mutation = Nothing
+    , subscription = Nothing
+    , apiSubmodule = [ "Api" ]
+    , interfaces = Dict.empty
+    , scalarDecodersModule = Nothing
     }
 
 
