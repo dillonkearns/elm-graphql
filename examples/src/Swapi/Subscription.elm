@@ -4,6 +4,7 @@
 
 module Swapi.Subscription exposing (newMessage)
 
+import CustomScalarDecoders
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -15,7 +16,6 @@ import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
-import Swapi.ScalarDecoders
 import Swapi.Union
 
 

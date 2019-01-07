@@ -4,6 +4,7 @@
 
 module Swapi.Union.CharacterUnion exposing (Fragments, fragments, maybeFragments)
 
+import CustomScalarDecoders
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)

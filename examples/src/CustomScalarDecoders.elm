@@ -1,4 +1,4 @@
-module ScalarDecoders exposing (Id, PosixTime, decoders)
+module CustomScalarDecoders exposing (Id, PosixTime, decoders)
 
 import Json.Decode as Decode exposing (Decoder)
 import Swapi.Scalar exposing (defaultDecoders)
