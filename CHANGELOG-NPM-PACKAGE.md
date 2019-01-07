@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.0] - 2018-01-07
+
 ### Added
 
 - New `--scalar-decoders` flag allows you to define your scalar decoders
