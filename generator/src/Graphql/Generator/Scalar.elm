@@ -73,7 +73,7 @@ placeholder =
 
     else
         interpolate
-            """module {0} exposing (Decoders, Id(..), PosixTime(..), defaultDecoders, defineDecoders, unwrapDecoders)
+            """module {0} exposing (Decoders, {6}, defaultDecoders, defineDecoders, unwrapDecoders)
 
 
 import Graphql.Internal.Builder.Object as Object
@@ -86,34 +86,30 @@ import Json.Decode as Decode exposing (Decoder)
 
 defineDecoders :
     {2}
-    -> Decoders decoderId decoderPosixTime
+    -> Decoders {4}
 defineDecoders definitions =
     Decoders
-        { decoderId = definitions.decoderId
-        , decoderPosixTime = definitions.decoderPosixTime
-        }
+        {3}
 
 
 unwrapDecoders :
-    Decoders decoderId decoderPosixTime
+    Decoders {4}
     -> {2}
 unwrapDecoders (Decoders unwrappedDecoders) =
     unwrappedDecoders
 
 
-type Decoders decoderId decoderPosixTime
-    = Decoders (RawDecoders decoderId decoderPosixTime)
+type Decoders {4}
+    = Decoders (RawDecoders {4})
 
 
-type alias RawDecoders decoderId decoderPosixTime =
+type alias RawDecoders {4} =
     {2}
 
 
 defaultDecoders : RawDecoders Id PosixTime
 defaultDecoders =
-    { decoderId = Object.scalarDecoder |> Decode.map Id
-    , decoderPosixTime = Object.scalarDecoder |> Decode.map PosixTime
-    }
+    {5}
 """
             [ moduleName
             , typesToGenerate
@@ -129,6 +125,40 @@ defaultDecoders =
                         |> String.join "\n, "
                    )
                 ++ "}"
+            , "{"
+                ++ (typesToGenerate
+                        |> List.map
+                            (\classCaseName ->
+                                interpolate "decoder{0} = definitions.decoder{0}"
+                                    [ ClassCaseName.normalized classCaseName ]
+                            )
+                        |> String.join "\n, "
+                   )
+                ++ "}"
+            , typesToGenerate
+                |> List.map
+                    (\classCaseName ->
+                        "decoder"
+                            ++ ClassCaseName.normalized classCaseName
+                    )
+                |> String.join " "
+            , "{"
+                ++ (typesToGenerate
+                        |> List.map
+                            (\classCaseName ->
+                                interpolate "decoder{0} = Object.scalarDecoder |> Decode.map {0}"
+                                    [ ClassCaseName.normalized classCaseName ]
+                            )
+                        |> String.join "\n, "
+                   )
+                ++ "}"
+            , typesToGenerate
+                |> List.map
+                    (\classCaseName ->
+                        ClassCaseName.normalized classCaseName
+                            ++ "(..)"
+                    )
+                |> String.join ", "
             ]
 
 
