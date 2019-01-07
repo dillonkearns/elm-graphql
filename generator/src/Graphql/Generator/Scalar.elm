@@ -85,9 +85,7 @@ import Json.Decode as Decode exposing (Decoder)
 
 
 defineDecoders :
-    { decoderId : Decoder decoderId
-    , decoderPosixTime : Decoder decoderPosixTime
-    }
+    {2}
     -> Decoders decoderId decoderPosixTime
 defineDecoders definitions =
     Decoders
@@ -98,10 +96,7 @@ defineDecoders definitions =
 
 unwrapDecoders :
     Decoders decoderId decoderPosixTime
-    ->
-        { decoderId : Decoder decoderId
-        , decoderPosixTime : Decoder decoderPosixTime
-        }
+    -> {2}
 unwrapDecoders (Decoders unwrappedDecoders) =
     unwrappedDecoders
 
@@ -111,9 +106,7 @@ type Decoders decoderId decoderPosixTime
 
 
 type alias RawDecoders decoderId decoderPosixTime =
-    { decoderId : Decoder decoderId
-    , decoderPosixTime : Decoder decoderPosixTime
-    }
+    {2}
 
 
 defaultDecoders : RawDecoders Id PosixTime
@@ -126,6 +119,16 @@ defaultDecoders =
             , typesToGenerate
                 |> List.map generateType
                 |> String.join "\n\n\n"
+            , "{"
+                ++ (typesToGenerate
+                        |> List.map
+                            (\classCaseName ->
+                                interpolate "decoder{0} : Decoder decoder{0}"
+                                    [ ClassCaseName.normalized classCaseName ]
+                            )
+                        |> String.join "\n, "
+                   )
+                ++ "}"
             ]
 
 
