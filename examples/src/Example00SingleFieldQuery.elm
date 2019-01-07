@@ -35,12 +35,12 @@ import Time
 
 
 type alias Response =
-    Int
+    String
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.now |> SelectionSet.map (Time.toSecond Time.utc)
+    Query.hello
 
 
 makeRequest : Cmd Msg
