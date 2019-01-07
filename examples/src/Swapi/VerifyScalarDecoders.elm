@@ -13,6 +13,6 @@ import ScalarDecoders
 import Swapi.Scalar
 
 
-verify : Swapi.Decoders ScalarDecoders.Id ScalarDecoders.PosixTime
+verify : Swapi.Scalar.Decoders ScalarDecoders.Id ScalarDecoders.PosixTime
 verify =
     ScalarDecoders.decoders
