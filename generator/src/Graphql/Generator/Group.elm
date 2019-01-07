@@ -14,6 +14,7 @@ import Graphql.Generator.ScalarDecoders as ScalarDecoders
 import Graphql.Generator.Subscription
 import Graphql.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphql.Generator.Union
+import Graphql.Generator.VerifyScalarDecoders
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
 import ModuleName exposing (ModuleName)
@@ -95,6 +96,15 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
         |> List.append [ scalarDefinitions ]
         |> List.append
             [ ScalarDecoders.generate context
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery context
+                    |> excludeMutation context
+                    |> excludeSubscription context
+                )
+            ]
+        |> List.append
+            [ Graphql.Generator.VerifyScalarDecoders.generate context
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery context
