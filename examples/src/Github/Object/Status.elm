@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -47,9 +48,9 @@ contexts object_ =
     Object.selectionForCompositeField "contexts" [] object_ (identity >> Decode.list)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.Status
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.Status
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The combined commit status.

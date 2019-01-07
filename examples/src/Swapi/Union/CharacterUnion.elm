@@ -11,7 +11,6 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode
-import ScalarDecoders
 import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object

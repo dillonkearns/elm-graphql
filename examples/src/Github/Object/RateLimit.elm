@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -48,6 +49,6 @@ remaining =
 
 {-| The time at which the current rate limit window resets in UTC epoch seconds.
 -}
-resetAt : SelectionSet Github.Scalar.DateTime Github.Object.RateLimit
+resetAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.RateLimit
 resetAt =
-    Object.selectionForField "Scalar.DateTime" "resetAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "resetAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)

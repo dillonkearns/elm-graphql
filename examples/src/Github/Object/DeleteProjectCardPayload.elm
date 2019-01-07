@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -34,6 +35,6 @@ column object_ =
 
 {-| The deleted card ID.
 -}
-deletedCardId : SelectionSet Github.Scalar.Id Github.Object.DeleteProjectCardPayload
+deletedCardId : SelectionSet Github.ScalarDecoders.Id Github.Object.DeleteProjectCardPayload
 deletedCardId =
-    Object.selectionForField "Scalar.Id" "deletedCardId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "deletedCardId" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)

@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -27,7 +28,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Object.GitActor
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarDecoders.Uri Github.Object.GitActor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -37,14 +38,14 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "Scalar.Uri" "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The timestamp of the Git action (authoring or committing).
 -}
-date : SelectionSet (Maybe Github.Scalar.GitTimestamp) Github.Object.GitActor
+date : SelectionSet (Maybe Github.ScalarDecoders.GitTimestamp) Github.Object.GitActor
 date =
-    Object.selectionForField "(Maybe Scalar.GitTimestamp)" "date" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitTimestamp |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.GitTimestamp)" "date" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderGitTimestamp |> Decode.nullable)
 
 
 {-| The email in the Git commit.

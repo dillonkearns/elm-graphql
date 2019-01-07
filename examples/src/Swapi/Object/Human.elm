@@ -11,12 +11,12 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
-import ScalarDecoders
 import Swapi.Enum.Episode
 import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
+import Swapi.ScalarDecoders
 import Swapi.Union
 
 
@@ -50,9 +50,9 @@ homePlanet =
 
 {-| The ID of the human.
 -}
-id : SelectionSet ScalarDecoders.Id Swapi.Object.Human
+id : SelectionSet Swapi.ScalarDecoders.Id Swapi.Object.Human
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Swapi.ScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The name of the human.

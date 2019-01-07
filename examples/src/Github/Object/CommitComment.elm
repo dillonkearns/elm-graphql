@@ -11,6 +11,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -44,9 +45,9 @@ body =
 
 {-| Identifies the comment body rendered to HTML.
 -}
-bodyHTML : SelectionSet Github.Scalar.Html Github.Object.CommitComment
+bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.CommitComment
 bodyHTML =
-    Object.selectionForField "Scalar.Html" "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| Identifies the commit associated with the comment, if the commit exists.
@@ -58,9 +59,9 @@ commit object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.CommitComment
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.CommitComment
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -84,16 +85,16 @@ editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.CommitComment
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.CommitComment
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
+lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.CommitComment
 lastEditedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| Identifies the file path associated with the comment.
@@ -112,9 +113,9 @@ position =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.CommitComment
+publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.CommitComment
 publishedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -166,23 +167,23 @@ repository object_ =
 
 {-| The HTTP path permalink for this commit comment.
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.CommitComment
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.CommitComment
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.CommitComment
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.CommitComment
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL permalink for this commit comment.
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.CommitComment
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.CommitComment
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 type alias UserContentEditsOptionalArguments =

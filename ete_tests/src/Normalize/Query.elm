@@ -16,6 +16,7 @@ import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
+import Normalize.ScalarDecoders
 import Normalize.Union
 
 
@@ -39,7 +40,7 @@ conflictingTypesUnion object_ =
 
 
 type alias DroidRequiredArguments =
-    { iD_ : Normalize.Scalar.Id }
+    { iD_ : Normalize.ScalarDecoders.Id }
 
 
 {-|
@@ -106,7 +107,7 @@ heroUnion fillInOptionals object_ =
 
 
 type alias HumanRequiredArguments =
-    { id : Normalize.Scalar.Id }
+    { id : Normalize.ScalarDecoders.Id }
 
 
 {-|

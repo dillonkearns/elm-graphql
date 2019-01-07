@@ -2,7 +2,10 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Scalar exposing (CatId(..), DogId(..), Id(..))
+module Normalize.Scalar exposing (CatId(..), Decoders, DogId(..), Id(..), defaultDecoders, defineDecoders, unwrapDecoders)
+
+import Graphql.Internal.Builder.Object as Object
+import Json.Decode as Decode exposing (Decoder)
 
 
 type CatId
@@ -15,3 +18,47 @@ type DogId
 
 type Id
     = Id String
+
+
+defineDecoders :
+    { decoderCatId : Decoder decoderCatId
+    , decoderDogId : Decoder decoderDogId
+    , decoderId : Decoder decoderId
+    }
+    -> Decoders decoderCatId decoderDogId decoderId
+defineDecoders definitions =
+    Decoders
+        { decoderCatId = definitions.decoderCatId
+        , decoderDogId = definitions.decoderDogId
+        , decoderId = definitions.decoderId
+        }
+
+
+unwrapDecoders :
+    Decoders decoderCatId decoderDogId decoderId
+    ->
+        { decoderCatId : Decoder decoderCatId
+        , decoderDogId : Decoder decoderDogId
+        , decoderId : Decoder decoderId
+        }
+unwrapDecoders (Decoders unwrappedDecoders) =
+    unwrappedDecoders
+
+
+type Decoders decoderCatId decoderDogId decoderId
+    = Decoders (RawDecoders decoderCatId decoderDogId decoderId)
+
+
+type alias RawDecoders decoderCatId decoderDogId decoderId =
+    { decoderCatId : Decoder decoderCatId
+    , decoderDogId : Decoder decoderDogId
+    , decoderId : Decoder decoderId
+    }
+
+
+defaultDecoders : RawDecoders CatId DogId Id
+defaultDecoders =
+    { decoderCatId = Object.scalarDecoder |> Decode.map CatId
+    , decoderDogId = Object.scalarDecoder |> Decode.map DogId
+    , decoderId = Object.scalarDecoder |> Decode.map Id
+    }

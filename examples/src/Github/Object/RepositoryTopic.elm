@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -18,16 +19,16 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.RepositoryTopic
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.RepositoryTopic
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The HTTP path for this repository-topic.
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.RepositoryTopic
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The topic.
@@ -39,6 +40,6 @@ topic object_ =
 
 {-| The HTTP URL for this repository-topic.
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.RepositoryTopic
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.RepositoryTopic
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)

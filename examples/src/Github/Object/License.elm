@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -53,9 +54,9 @@ hidden =
     Object.selectionForField "Bool" "hidden" [] Decode.bool
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.License
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.License
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Instructions on how to implement the license
@@ -109,6 +110,6 @@ spdxId =
 
 {-| URL to the license on <https://choosealicense.com>
 -}
-url : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.License
+url : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.License
 url =
-    Object.selectionForField "(Maybe Scalar.Uri)" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)

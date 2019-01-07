@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -47,9 +48,9 @@ maybeFragments =
     }
 
 
-id : SelectionSet Github.Scalar.Id Github.Interface.ProjectOwner
+id : SelectionSet Github.ScalarDecoders.Id Github.Interface.ProjectOwner
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 type alias ProjectRequiredArguments =
@@ -103,16 +104,16 @@ projects fillInOptionals object_ =
 
 {-| The HTTP path listing owners projects
 -}
-projectsResourcePath : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
+projectsResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.selectionForField "Scalar.Uri" "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "projectsResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP URL listing owners projects
 -}
-projectsUrl : SelectionSet Github.Scalar.Uri Github.Interface.ProjectOwner
+projectsUrl : SelectionSet Github.ScalarDecoders.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.selectionForField "Scalar.Uri" "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "projectsUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Can the current viewer create new projects on this owner.

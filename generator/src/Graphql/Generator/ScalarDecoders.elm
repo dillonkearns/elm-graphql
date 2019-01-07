@@ -77,7 +77,7 @@ placeholder =
             """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
-import Swapi.Scalar exposing (defaultDecoders)
+import {4}.Scalar exposing (defaultDecoders)
 
 
 {1}
@@ -85,7 +85,7 @@ import Swapi.Scalar exposing (defaultDecoders)
 
 decoders : {2}
 decoders =
-    Swapi.Scalar.defineDecoders
+    {4}.Scalar.defineDecoders
         {
         {3}
         }
@@ -110,6 +110,7 @@ decoders =
                             [ ClassCaseName.normalized classCaseName ]
                     )
                 |> String.join "    , "
+            , context.apiSubmodule |> String.join "."
             ]
 
 

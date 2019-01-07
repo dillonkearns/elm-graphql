@@ -2,17 +2,9 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.VerifyScalarDecoders exposing (verify)
-
-{-
-   This file is intended to be used to ensure that custom scalar decoder
-   files are valid. It is compiled using `elm make` by the CLI.
--}
-
-import ScalarDecoders
-import Swapi.Scalar
+module Swapi.VerifyScalarDecoders exposing (placeholder)
 
 
-verify : Swapi.Scalar.Decoders ScalarDecoders.Id ScalarDecoders.PosixTime
-verify =
-    ScalarDecoders.decoders
+placeholder : String
+placeholder =
+    ""

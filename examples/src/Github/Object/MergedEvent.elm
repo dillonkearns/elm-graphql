@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -34,14 +35,14 @@ commit object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.MergedEvent
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.MergedEvent
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.MergedEvent
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.MergedEvent
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Identifies the Ref associated with the `merge` event.
@@ -67,13 +68,13 @@ pullRequest object_ =
 
 {-| The HTTP path for this merged event.
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.MergedEvent
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.MergedEvent
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP URL for this merged event.
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.MergedEvent
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.MergedEvent
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)

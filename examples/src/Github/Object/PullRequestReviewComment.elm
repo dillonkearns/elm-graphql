@@ -11,6 +11,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -44,9 +45,9 @@ body =
 
 {-| The comment body of this review comment rendered to HTML.
 -}
-bodyHTML : SelectionSet Github.Scalar.Html Github.Object.PullRequestReviewComment
+bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.PullRequestReviewComment
 bodyHTML =
-    Object.selectionForField "Scalar.Html" "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| The comment body of this review comment rendered as plain text.
@@ -65,9 +66,9 @@ commit object_ =
 
 {-| Identifies when the comment was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequestReviewComment
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequestReviewComment
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -93,9 +94,9 @@ diffHunk =
 
 {-| Identifies when the comment was created in a draft state.
 -}
-draftedAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequestReviewComment
+draftedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequestReviewComment
 draftedAt =
-    Object.selectionForField "Scalar.DateTime" "draftedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "draftedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The actor who edited the comment.
@@ -105,16 +106,16 @@ editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.PullRequestReviewComment
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.PullRequestReviewComment
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReviewComment
+lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequestReviewComment
 lastEditedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| Identifies the original commit associated with the comment.
@@ -147,9 +148,9 @@ position =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequestReviewComment
+publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequestReviewComment
 publishedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| The pull request associated with this review comment.
@@ -222,23 +223,23 @@ repository object_ =
 
 {-| The HTTP path permalink for this review comment.
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.PullRequestReviewComment
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequestReviewComment
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Identifies when the comment was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequestReviewComment
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequestReviewComment
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL permalink for this review comment.
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.PullRequestReviewComment
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequestReviewComment
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 type alias UserContentEditsOptionalArguments =

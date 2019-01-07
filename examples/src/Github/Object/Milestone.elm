@@ -11,6 +11,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -30,16 +31,16 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Milestone
+closedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Milestone
 closedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Milestone
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Milestone
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the actor who created the milestone.
@@ -58,14 +59,14 @@ description =
 
 {-| Identifies the due date of the milestone.
 -}
-dueOn : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Milestone
+dueOn : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Milestone
 dueOn =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "dueOn" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "dueOn" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.Milestone
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.Milestone
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 type alias IssuesOptionalArguments =
@@ -158,9 +159,9 @@ repository object_ =
 
 {-| The HTTP path for this milestone
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Milestone
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Milestone
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Identifies the state of the milestone.
@@ -179,13 +180,13 @@ title =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Milestone
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Milestone
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL for this milestone
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.Milestone
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Milestone
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)

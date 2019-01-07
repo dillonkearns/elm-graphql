@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -25,9 +26,9 @@ guid =
     Object.selectionForField "String" "guid" [] Decode.string
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.ExternalIdentity
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.ExternalIdentity
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Organization invitation for this SCIM-provisioned external identity

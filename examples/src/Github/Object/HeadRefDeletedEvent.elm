@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -27,9 +28,9 @@ actor object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.HeadRefDeletedEvent
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.HeadRefDeletedEvent
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the Ref associated with the `head_ref_deleted` event.
@@ -46,9 +47,9 @@ headRefName =
     Object.selectionForField "String" "headRefName" [] Decode.string
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.HeadRefDeletedEvent
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.HeadRefDeletedEvent
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| PullRequest referenced by event.

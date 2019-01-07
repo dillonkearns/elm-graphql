@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -27,9 +28,9 @@ clientMutationId =
 
 {-| The deleted column ID.
 -}
-deletedColumnId : SelectionSet Github.Scalar.Id Github.Object.DeleteProjectColumnPayload
+deletedColumnId : SelectionSet Github.ScalarDecoders.Id Github.Object.DeleteProjectColumnPayload
 deletedColumnId =
-    Object.selectionForField "Scalar.Id" "deletedColumnId" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "deletedColumnId" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The project the deleted column was in.

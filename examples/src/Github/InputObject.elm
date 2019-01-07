@@ -46,7 +46,7 @@ buildAcceptTopicSuggestionInput required fillOptionals =
 
 
 type alias AcceptTopicSuggestionInputRequiredFields =
-    { repositoryId : Github.Scalar.Id
+    { repositoryId : Github.ScalarDecoders.Id
     , name : String
     }
 
@@ -59,7 +59,7 @@ type alias AcceptTopicSuggestionInputOptionalFields =
 -}
 type alias AcceptTopicSuggestionInput =
     { clientMutationId : OptionalArgument String
-    , repositoryId : Github.Scalar.Id
+    , repositoryId : Github.ScalarDecoders.Id
     , name : String
     }
 
@@ -83,7 +83,7 @@ buildAddCommentInput required fillOptionals =
 
 
 type alias AddCommentInputRequiredFields =
-    { subjectId : Github.Scalar.Id
+    { subjectId : Github.ScalarDecoders.Id
     , body : String
     }
 
@@ -96,7 +96,7 @@ type alias AddCommentInputOptionalFields =
 -}
 type alias AddCommentInput =
     { clientMutationId : OptionalArgument String
-    , subjectId : Github.Scalar.Id
+    , subjectId : Github.ScalarDecoders.Id
     , body : String
     }
 
@@ -120,12 +120,12 @@ buildAddProjectCardInput required fillOptionals =
 
 
 type alias AddProjectCardInputRequiredFields =
-    { projectColumnId : Github.Scalar.Id }
+    { projectColumnId : Github.ScalarDecoders.Id }
 
 
 type alias AddProjectCardInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , contentId : OptionalArgument Github.Scalar.Id
+    , contentId : OptionalArgument Github.ScalarDecoders.Id
     , note : OptionalArgument String
     }
 
@@ -134,8 +134,8 @@ type alias AddProjectCardInputOptionalFields =
 -}
 type alias AddProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , projectColumnId : Github.Scalar.Id
-    , contentId : OptionalArgument Github.Scalar.Id
+    , projectColumnId : Github.ScalarDecoders.Id
+    , contentId : OptionalArgument Github.ScalarDecoders.Id
     , note : OptionalArgument String
     }
 
@@ -159,7 +159,7 @@ buildAddProjectColumnInput required fillOptionals =
 
 
 type alias AddProjectColumnInputRequiredFields =
-    { projectId : Github.Scalar.Id
+    { projectId : Github.ScalarDecoders.Id
     , name : String
     }
 
@@ -172,7 +172,7 @@ type alias AddProjectColumnInputOptionalFields =
 -}
 type alias AddProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , projectId : Github.Scalar.Id
+    , projectId : Github.ScalarDecoders.Id
     , name : String
     }
 
@@ -196,17 +196,17 @@ buildAddPullRequestReviewCommentInput required fillOptionals =
 
 
 type alias AddPullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id
+    { pullRequestReviewId : Github.ScalarDecoders.Id
     , body : String
     }
 
 
 type alias AddPullRequestReviewCommentInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
     , path : OptionalArgument String
     , position : OptionalArgument Int
-    , inReplyTo : OptionalArgument Github.Scalar.Id
+    , inReplyTo : OptionalArgument Github.ScalarDecoders.Id
     }
 
 
@@ -214,12 +214,12 @@ type alias AddPullRequestReviewCommentInputOptionalFields =
 -}
 type alias AddPullRequestReviewCommentInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.Scalar.Id
-    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , pullRequestReviewId : Github.ScalarDecoders.Id
+    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
     , body : String
     , path : OptionalArgument String
     , position : OptionalArgument Int
-    , inReplyTo : OptionalArgument Github.Scalar.Id
+    , inReplyTo : OptionalArgument Github.ScalarDecoders.Id
     }
 
 
@@ -242,12 +242,12 @@ buildAddPullRequestReviewInput required fillOptionals =
 
 
 type alias AddPullRequestReviewInputRequiredFields =
-    { pullRequestId : Github.Scalar.Id }
+    { pullRequestId : Github.ScalarDecoders.Id }
 
 
 type alias AddPullRequestReviewInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
     , body : OptionalArgument String
     , event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     , comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment))
@@ -258,8 +258,8 @@ type alias AddPullRequestReviewInputOptionalFields =
 -}
 type alias AddPullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestId : Github.Scalar.Id
-    , commitOID : OptionalArgument Github.Scalar.GitObjectID
+    , pullRequestId : Github.ScalarDecoders.Id
+    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
     , body : OptionalArgument String
     , event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     , comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment))
@@ -285,7 +285,7 @@ buildAddReactionInput required fillOptionals =
 
 
 type alias AddReactionInputRequiredFields =
-    { subjectId : Github.Scalar.Id
+    { subjectId : Github.ScalarDecoders.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -298,7 +298,7 @@ type alias AddReactionInputOptionalFields =
 -}
 type alias AddReactionInput =
     { clientMutationId : OptionalArgument String
-    , subjectId : Github.Scalar.Id
+    , subjectId : Github.ScalarDecoders.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -322,7 +322,7 @@ buildAddStarInput required fillOptionals =
 
 
 type alias AddStarInputRequiredFields =
-    { starrableId : Github.Scalar.Id }
+    { starrableId : Github.ScalarDecoders.Id }
 
 
 type alias AddStarInputOptionalFields =
@@ -333,7 +333,7 @@ type alias AddStarInputOptionalFields =
 -}
 type alias AddStarInput =
     { clientMutationId : OptionalArgument String
-    , starrableId : Github.Scalar.Id
+    , starrableId : Github.ScalarDecoders.Id
     }
 
 
@@ -356,7 +356,7 @@ buildCommitAuthor fillOptionals =
 
 
 type alias CommitAuthorOptionalFields =
-    { id : OptionalArgument Github.Scalar.Id
+    { id : OptionalArgument Github.ScalarDecoders.Id
     , emails : OptionalArgument (List String)
     }
 
@@ -364,7 +364,7 @@ type alias CommitAuthorOptionalFields =
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
-    { id : OptionalArgument Github.Scalar.Id
+    { id : OptionalArgument Github.ScalarDecoders.Id
     , emails : OptionalArgument (List String)
     }
 
@@ -388,7 +388,7 @@ buildCreateProjectInput required fillOptionals =
 
 
 type alias CreateProjectInputRequiredFields =
-    { ownerId : Github.Scalar.Id
+    { ownerId : Github.ScalarDecoders.Id
     , name : String
     }
 
@@ -403,7 +403,7 @@ type alias CreateProjectInputOptionalFields =
 -}
 type alias CreateProjectInput =
     { clientMutationId : OptionalArgument String
-    , ownerId : Github.Scalar.Id
+    , ownerId : Github.ScalarDecoders.Id
     , name : String
     , body : OptionalArgument String
     }
@@ -428,7 +428,7 @@ buildDeclineTopicSuggestionInput required fillOptionals =
 
 
 type alias DeclineTopicSuggestionInputRequiredFields =
-    { repositoryId : Github.Scalar.Id
+    { repositoryId : Github.ScalarDecoders.Id
     , name : String
     , reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason
     }
@@ -442,7 +442,7 @@ type alias DeclineTopicSuggestionInputOptionalFields =
 -}
 type alias DeclineTopicSuggestionInput =
     { clientMutationId : OptionalArgument String
-    , repositoryId : Github.Scalar.Id
+    , repositoryId : Github.ScalarDecoders.Id
     , name : String
     , reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason
     }
@@ -467,7 +467,7 @@ buildDeleteProjectCardInput required fillOptionals =
 
 
 type alias DeleteProjectCardInputRequiredFields =
-    { cardId : Github.Scalar.Id }
+    { cardId : Github.ScalarDecoders.Id }
 
 
 type alias DeleteProjectCardInputOptionalFields =
@@ -478,7 +478,7 @@ type alias DeleteProjectCardInputOptionalFields =
 -}
 type alias DeleteProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , cardId : Github.Scalar.Id
+    , cardId : Github.ScalarDecoders.Id
     }
 
 
@@ -501,7 +501,7 @@ buildDeleteProjectColumnInput required fillOptionals =
 
 
 type alias DeleteProjectColumnInputRequiredFields =
-    { columnId : Github.Scalar.Id }
+    { columnId : Github.ScalarDecoders.Id }
 
 
 type alias DeleteProjectColumnInputOptionalFields =
@@ -512,7 +512,7 @@ type alias DeleteProjectColumnInputOptionalFields =
 -}
 type alias DeleteProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , columnId : Github.Scalar.Id
+    , columnId : Github.ScalarDecoders.Id
     }
 
 
@@ -535,7 +535,7 @@ buildDeleteProjectInput required fillOptionals =
 
 
 type alias DeleteProjectInputRequiredFields =
-    { projectId : Github.Scalar.Id }
+    { projectId : Github.ScalarDecoders.Id }
 
 
 type alias DeleteProjectInputOptionalFields =
@@ -546,7 +546,7 @@ type alias DeleteProjectInputOptionalFields =
 -}
 type alias DeleteProjectInput =
     { clientMutationId : OptionalArgument String
-    , projectId : Github.Scalar.Id
+    , projectId : Github.ScalarDecoders.Id
     }
 
 
@@ -569,7 +569,7 @@ buildDeletePullRequestReviewInput required fillOptionals =
 
 
 type alias DeletePullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id }
+    { pullRequestReviewId : Github.ScalarDecoders.Id }
 
 
 type alias DeletePullRequestReviewInputOptionalFields =
@@ -580,7 +580,7 @@ type alias DeletePullRequestReviewInputOptionalFields =
 -}
 type alias DeletePullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.Scalar.Id
+    , pullRequestReviewId : Github.ScalarDecoders.Id
     }
 
 
@@ -603,7 +603,7 @@ buildDismissPullRequestReviewInput required fillOptionals =
 
 
 type alias DismissPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id
+    { pullRequestReviewId : Github.ScalarDecoders.Id
     , message : String
     }
 
@@ -616,7 +616,7 @@ type alias DismissPullRequestReviewInputOptionalFields =
 -}
 type alias DismissPullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.Scalar.Id
+    , pullRequestReviewId : Github.ScalarDecoders.Id
     , message : String
     }
 
@@ -750,7 +750,7 @@ buildLockLockableInput required fillOptionals =
 
 
 type alias LockLockableInputRequiredFields =
-    { lockableId : Github.Scalar.Id }
+    { lockableId : Github.ScalarDecoders.Id }
 
 
 type alias LockLockableInputOptionalFields =
@@ -763,7 +763,7 @@ type alias LockLockableInputOptionalFields =
 -}
 type alias LockLockableInput =
     { clientMutationId : OptionalArgument String
-    , lockableId : Github.Scalar.Id
+    , lockableId : Github.ScalarDecoders.Id
     , lockReason : OptionalArgument Github.Enum.LockReason.LockReason
     }
 
@@ -814,14 +814,14 @@ buildMoveProjectCardInput required fillOptionals =
 
 
 type alias MoveProjectCardInputRequiredFields =
-    { cardId : Github.Scalar.Id
-    , columnId : Github.Scalar.Id
+    { cardId : Github.ScalarDecoders.Id
+    , columnId : Github.ScalarDecoders.Id
     }
 
 
 type alias MoveProjectCardInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , afterCardId : OptionalArgument Github.Scalar.Id
+    , afterCardId : OptionalArgument Github.ScalarDecoders.Id
     }
 
 
@@ -829,9 +829,9 @@ type alias MoveProjectCardInputOptionalFields =
 -}
 type alias MoveProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , cardId : Github.Scalar.Id
-    , columnId : Github.Scalar.Id
-    , afterCardId : OptionalArgument Github.Scalar.Id
+    , cardId : Github.ScalarDecoders.Id
+    , columnId : Github.ScalarDecoders.Id
+    , afterCardId : OptionalArgument Github.ScalarDecoders.Id
     }
 
 
@@ -854,12 +854,12 @@ buildMoveProjectColumnInput required fillOptionals =
 
 
 type alias MoveProjectColumnInputRequiredFields =
-    { columnId : Github.Scalar.Id }
+    { columnId : Github.ScalarDecoders.Id }
 
 
 type alias MoveProjectColumnInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , afterColumnId : OptionalArgument Github.Scalar.Id
+    , afterColumnId : OptionalArgument Github.ScalarDecoders.Id
     }
 
 
@@ -867,8 +867,8 @@ type alias MoveProjectColumnInputOptionalFields =
 -}
 type alias MoveProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , columnId : Github.Scalar.Id
-    , afterColumnId : OptionalArgument Github.Scalar.Id
+    , columnId : Github.ScalarDecoders.Id
+    , afterColumnId : OptionalArgument Github.ScalarDecoders.Id
     }
 
 
@@ -999,8 +999,8 @@ buildRemoveOutsideCollaboratorInput required fillOptionals =
 
 
 type alias RemoveOutsideCollaboratorInputRequiredFields =
-    { userId : Github.Scalar.Id
-    , organizationId : Github.Scalar.Id
+    { userId : Github.ScalarDecoders.Id
+    , organizationId : Github.ScalarDecoders.Id
     }
 
 
@@ -1012,8 +1012,8 @@ type alias RemoveOutsideCollaboratorInputOptionalFields =
 -}
 type alias RemoveOutsideCollaboratorInput =
     { clientMutationId : OptionalArgument String
-    , userId : Github.Scalar.Id
-    , organizationId : Github.Scalar.Id
+    , userId : Github.ScalarDecoders.Id
+    , organizationId : Github.ScalarDecoders.Id
     }
 
 
@@ -1036,7 +1036,7 @@ buildRemoveReactionInput required fillOptionals =
 
 
 type alias RemoveReactionInputRequiredFields =
-    { subjectId : Github.Scalar.Id
+    { subjectId : Github.ScalarDecoders.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -1049,7 +1049,7 @@ type alias RemoveReactionInputOptionalFields =
 -}
 type alias RemoveReactionInput =
     { clientMutationId : OptionalArgument String
-    , subjectId : Github.Scalar.Id
+    , subjectId : Github.ScalarDecoders.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -1073,7 +1073,7 @@ buildRemoveStarInput required fillOptionals =
 
 
 type alias RemoveStarInputRequiredFields =
-    { starrableId : Github.Scalar.Id }
+    { starrableId : Github.ScalarDecoders.Id }
 
 
 type alias RemoveStarInputOptionalFields =
@@ -1084,7 +1084,7 @@ type alias RemoveStarInputOptionalFields =
 -}
 type alias RemoveStarInput =
     { clientMutationId : OptionalArgument String
-    , starrableId : Github.Scalar.Id
+    , starrableId : Github.ScalarDecoders.Id
     }
 
 
@@ -1134,13 +1134,13 @@ buildRequestReviewsInput required fillOptionals =
 
 
 type alias RequestReviewsInputRequiredFields =
-    { pullRequestId : Github.Scalar.Id }
+    { pullRequestId : Github.ScalarDecoders.Id }
 
 
 type alias RequestReviewsInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , userIds : OptionalArgument (List Github.Scalar.Id)
-    , teamIds : OptionalArgument (List Github.Scalar.Id)
+    , userIds : OptionalArgument (List Github.ScalarDecoders.Id)
+    , teamIds : OptionalArgument (List Github.ScalarDecoders.Id)
     , union : OptionalArgument Bool
     }
 
@@ -1149,9 +1149,9 @@ type alias RequestReviewsInputOptionalFields =
 -}
 type alias RequestReviewsInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestId : Github.Scalar.Id
-    , userIds : OptionalArgument (List Github.Scalar.Id)
-    , teamIds : OptionalArgument (List Github.Scalar.Id)
+    , pullRequestId : Github.ScalarDecoders.Id
+    , userIds : OptionalArgument (List Github.ScalarDecoders.Id)
+    , teamIds : OptionalArgument (List Github.ScalarDecoders.Id)
     , union : OptionalArgument Bool
     }
 
@@ -1202,7 +1202,7 @@ buildSubmitPullRequestReviewInput required fillOptionals =
 
 
 type alias SubmitPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id
+    { pullRequestReviewId : Github.ScalarDecoders.Id
     , event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     }
 
@@ -1217,7 +1217,7 @@ type alias SubmitPullRequestReviewInputOptionalFields =
 -}
 type alias SubmitPullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.Scalar.Id
+    , pullRequestReviewId : Github.ScalarDecoders.Id
     , event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     , body : OptionalArgument String
     }
@@ -1296,7 +1296,7 @@ buildUpdateProjectCardInput required fillOptionals =
 
 
 type alias UpdateProjectCardInputRequiredFields =
-    { projectCardId : Github.Scalar.Id
+    { projectCardId : Github.ScalarDecoders.Id
     , note : String
     }
 
@@ -1309,7 +1309,7 @@ type alias UpdateProjectCardInputOptionalFields =
 -}
 type alias UpdateProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , projectCardId : Github.Scalar.Id
+    , projectCardId : Github.ScalarDecoders.Id
     , note : String
     }
 
@@ -1333,7 +1333,7 @@ buildUpdateProjectColumnInput required fillOptionals =
 
 
 type alias UpdateProjectColumnInputRequiredFields =
-    { projectColumnId : Github.Scalar.Id
+    { projectColumnId : Github.ScalarDecoders.Id
     , name : String
     }
 
@@ -1346,7 +1346,7 @@ type alias UpdateProjectColumnInputOptionalFields =
 -}
 type alias UpdateProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , projectColumnId : Github.Scalar.Id
+    , projectColumnId : Github.ScalarDecoders.Id
     , name : String
     }
 
@@ -1370,7 +1370,7 @@ buildUpdateProjectInput required fillOptionals =
 
 
 type alias UpdateProjectInputRequiredFields =
-    { projectId : Github.Scalar.Id }
+    { projectId : Github.ScalarDecoders.Id }
 
 
 type alias UpdateProjectInputOptionalFields =
@@ -1386,7 +1386,7 @@ type alias UpdateProjectInputOptionalFields =
 -}
 type alias UpdateProjectInput =
     { clientMutationId : OptionalArgument String
-    , projectId : Github.Scalar.Id
+    , projectId : Github.ScalarDecoders.Id
     , name : OptionalArgument String
     , body : OptionalArgument String
     , state : OptionalArgument Github.Enum.ProjectState.ProjectState
@@ -1413,7 +1413,7 @@ buildUpdatePullRequestReviewCommentInput required fillOptionals =
 
 
 type alias UpdatePullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewCommentId : Github.Scalar.Id
+    { pullRequestReviewCommentId : Github.ScalarDecoders.Id
     , body : String
     }
 
@@ -1426,7 +1426,7 @@ type alias UpdatePullRequestReviewCommentInputOptionalFields =
 -}
 type alias UpdatePullRequestReviewCommentInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewCommentId : Github.Scalar.Id
+    , pullRequestReviewCommentId : Github.ScalarDecoders.Id
     , body : String
     }
 
@@ -1450,7 +1450,7 @@ buildUpdatePullRequestReviewInput required fillOptionals =
 
 
 type alias UpdatePullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.Scalar.Id
+    { pullRequestReviewId : Github.ScalarDecoders.Id
     , body : String
     }
 
@@ -1463,7 +1463,7 @@ type alias UpdatePullRequestReviewInputOptionalFields =
 -}
 type alias UpdatePullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.Scalar.Id
+    , pullRequestReviewId : Github.ScalarDecoders.Id
     , body : String
     }
 
@@ -1487,7 +1487,7 @@ buildUpdateSubscriptionInput required fillOptionals =
 
 
 type alias UpdateSubscriptionInputRequiredFields =
-    { subscribableId : Github.Scalar.Id
+    { subscribableId : Github.ScalarDecoders.Id
     , state : Github.Enum.SubscriptionState.SubscriptionState
     }
 
@@ -1500,7 +1500,7 @@ type alias UpdateSubscriptionInputOptionalFields =
 -}
 type alias UpdateSubscriptionInput =
     { clientMutationId : OptionalArgument String
-    , subscribableId : Github.Scalar.Id
+    , subscribableId : Github.ScalarDecoders.Id
     , state : Github.Enum.SubscriptionState.SubscriptionState
     }
 
@@ -1524,7 +1524,7 @@ buildUpdateTopicsInput required fillOptionals =
 
 
 type alias UpdateTopicsInputRequiredFields =
-    { repositoryId : Github.Scalar.Id
+    { repositoryId : Github.ScalarDecoders.Id
     , topicNames : List String
     }
 
@@ -1537,7 +1537,7 @@ type alias UpdateTopicsInputOptionalFields =
 -}
 type alias UpdateTopicsInput =
     { clientMutationId : OptionalArgument String
-    , repositoryId : Github.Scalar.Id
+    , repositoryId : Github.ScalarDecoders.Id
     , topicNames : List String
     }
 

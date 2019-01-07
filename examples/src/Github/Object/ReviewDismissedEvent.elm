@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -28,9 +29,9 @@ actor object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ReviewDismissedEvent
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ReviewDismissedEvent
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the primary key from the database.
@@ -40,9 +41,9 @@ databaseId =
     Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.ReviewDismissedEvent
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.ReviewDismissedEvent
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Identifies the message associated with the 'review\_dismissed' event.
@@ -54,9 +55,9 @@ message =
 
 {-| The message associated with the event, rendered to HTML.
 -}
-messageHtml : SelectionSet Github.Scalar.Html Github.Object.ReviewDismissedEvent
+messageHtml : SelectionSet Github.ScalarDecoders.Html Github.Object.ReviewDismissedEvent
 messageHtml =
-    Object.selectionForField "Scalar.Html" "messageHtml" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "messageHtml" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| Identifies the previous state of the review with the 'review\_dismissed' event.
@@ -82,9 +83,9 @@ pullRequestCommit object_ =
 
 {-| The HTTP path for this review dismissed event.
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.ReviewDismissedEvent
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.ReviewDismissedEvent
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Identifies the review associated with the 'review\_dismissed' event.
@@ -96,6 +97,6 @@ review object_ =
 
 {-| The HTTP URL for this review dismissed event.
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.ReviewDismissedEvent
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.ReviewDismissedEvent
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
