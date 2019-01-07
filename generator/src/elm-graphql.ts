@@ -7,6 +7,7 @@ import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
+import * as childProcess from "child_process";
 import {
   removeGenerated,
   isGenerated,
@@ -124,10 +125,51 @@ function onDataAvailable(data: {}, outputPath: string, baseModule: string[]) {
     );
     writeIntrospectionFile(baseModule, outputPath);
     applyElmFormat(prependBasePath("/", baseModule, outputPath));
+    verifyCustomDecodersFileIsValid(outputPath, baseModule);
     console.log("Success!");
-    process.exit(0);
   });
   app.ports.generateFiles.send(data);
+}
+
+function verifyCustomDecodersFileIsValid(
+  outputPath: string,
+  baseModule: string[]
+) {
+  const verifyDecodersFile = path.join(
+    outputPath,
+    ...baseModule,
+    "VerifyScalarDecoders.elm"
+  );
+
+  try {
+    childProcess.execSync(`elm make ${verifyDecodersFile} --output=/dev/null`, {
+      stdio: "pipe"
+    });
+  } catch (error) {
+    console.error(error.message);
+
+    console.error(`--------------------------------------------
+INVALID SCALAR DECODERS FILE
+--------------------------------------------
+
+Your file is invalid. Check the following:
+    * You have a module called \`MyCustomScalarDecoder\`
+    * The module is somewhere in your path (check the \`source-directories\` in your \`elm.json\`)
+
+    To get a valid file, you can start by copy-pasting \`Swapi.ScalarDecoders\`. Then change the module name to \`YourCustomThingy\` and you have a valid starting point!
+
+    You must:
+    * Have a type for every custom scalar
+    * Expose each of these types
+    * Expose a \`decoders\` value
+
+    Here are some details that might help you debug the issue. Remember, you can always
+    copy-paste \`Swapi.ScalarDecoders\` to get a valid file.
+
+    After you've copy pasted the template file, or tried fixing the file,
+    re-run this CLI command to make sure it is valid.
+    `);
+  }
 }
 
 function writeGeneratedFiles(
