@@ -107,7 +107,7 @@ type alias RawDecoders {4} =
     {2}
 
 
-defaultDecoders : RawDecoders Id PosixTime
+defaultDecoders : RawDecoders {7}
 defaultDecoders =
     {5}
 """
@@ -159,6 +159,12 @@ defaultDecoders =
                             ++ "(..)"
                     )
                 |> String.join ", "
+            , typesToGenerate
+                |> List.map
+                    (\classCaseName ->
+                        ClassCaseName.normalized classCaseName
+                    )
+                |> String.join " "
             ]
 
 
