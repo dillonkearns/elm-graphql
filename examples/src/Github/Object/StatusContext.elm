@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -35,9 +36,9 @@ context =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.StatusContext
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.StatusContext
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The actor who created this status context.
@@ -54,9 +55,9 @@ description =
     Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.StatusContext
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.StatusContext
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The state of this status context.
@@ -68,6 +69,6 @@ state =
 
 {-| The URL for this status context.
 -}
-targetUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.StatusContext
+targetUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.StatusContext
 targetUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "targetUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "targetUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)

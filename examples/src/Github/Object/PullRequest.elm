@@ -16,6 +16,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -99,9 +100,9 @@ baseRefName =
 
 {-| Identifies the oid of the base ref associated with the pull request, even if the ref has been deleted.
 -}
-baseRefOid : SelectionSet Github.Scalar.GitObjectID Github.Object.PullRequest
+baseRefOid : SelectionSet Github.ScalarDecoders.GitObjectID Github.Object.PullRequest
 baseRefOid =
-    Object.selectionForField "Scalar.GitObjectID" "baseRefOid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "ScalarDecoders.GitObjectID" "baseRefOid" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderGitObjectID)
 
 
 {-| Identifies the body of the pull request.
@@ -113,9 +114,9 @@ body =
 
 {-| Identifies the body of the pull request rendered to HTML.
 -}
-bodyHTML : SelectionSet Github.Scalar.Html Github.Object.PullRequest
+bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.PullRequest
 bodyHTML =
-    Object.selectionForField "Scalar.Html" "bodyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| Identifies the body of the pull request rendered to text.
@@ -141,9 +142,9 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
+closedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequest
 closedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "closedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 type alias CommentsOptionalArguments =
@@ -206,9 +207,9 @@ commits fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequest
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequest
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -255,9 +256,9 @@ headRefName =
 
 {-| Identifies the oid of the head ref associated with the pull request, even if the ref has been deleted.
 -}
-headRefOid : SelectionSet Github.Scalar.GitObjectID Github.Object.PullRequest
+headRefOid : SelectionSet Github.ScalarDecoders.GitObjectID Github.Object.PullRequest
 headRefOid =
-    Object.selectionForField "Scalar.GitObjectID" "headRefOid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "ScalarDecoders.GitObjectID" "headRefOid" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderGitObjectID)
 
 
 {-| The repository associated with this pull request's head Ref.
@@ -274,9 +275,9 @@ headRepositoryOwner object_ =
     Object.selectionForCompositeField "headRepositoryOwner" [] object_ (identity >> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.PullRequest
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.PullRequest
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The head and base repositories are different.
@@ -317,9 +318,9 @@ labels fillInOptionals object_ =
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
+lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequest
 lastEditedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "lastEditedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| `true` if the pull request is locked
@@ -352,9 +353,9 @@ merged =
 
 {-| The date and time that the pull request was merged.
 -}
-mergedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
+mergedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequest
 mergedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "mergedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "mergedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| Identifies the milestone associated with the pull request.
@@ -438,9 +439,9 @@ projectCards fillInOptionals object_ =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.PullRequest
+publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequest
 publishedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -492,23 +493,23 @@ repository object_ =
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.PullRequest
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequest
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP path for reverting this pull request.
 -}
-revertResourcePath : SelectionSet Github.Scalar.Uri Github.Object.PullRequest
+revertResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequest
 revertResourcePath =
-    Object.selectionForField "Scalar.Uri" "revertResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "revertResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP URL for reverting this pull request.
 -}
-revertUrl : SelectionSet Github.Scalar.Uri Github.Object.PullRequest
+revertUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequest
 revertUrl =
-    Object.selectionForField "Scalar.Uri" "revertUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "revertUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 type alias ReviewRequestsOptionalArguments =
@@ -592,7 +593,7 @@ type alias TimelineOptionalArguments =
     , after : OptionalArgument String
     , last : OptionalArgument Int
     , before : OptionalArgument String
-    , since : OptionalArgument Github.Scalar.DateTime
+    , since : OptionalArgument Github.ScalarDecoders.DateTime
     }
 
 
@@ -627,16 +628,16 @@ title =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.PullRequest
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequest
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL for this pull request.
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.PullRequest
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequest
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 type alias UserContentEditsOptionalArguments =

@@ -14,6 +14,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -33,7 +34,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.Scalar.Uri Github.Object.User
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarDecoders.Uri Github.Object.User
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -43,7 +44,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "Scalar.Uri" "avatarUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The user's public profile bio.
@@ -55,9 +56,9 @@ bio =
 
 {-| The user's public profile bio as HTML.
 -}
-bioHTML : SelectionSet Github.Scalar.Html Github.Object.User
+bioHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.User
 bioHTML =
-    Object.selectionForField "Scalar.Html" "bioHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "bioHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 type alias CommitCommentsOptionalArguments =
@@ -98,9 +99,9 @@ company =
 
 {-| The user's public profile company as HTML.
 -}
-companyHTML : SelectionSet Github.Scalar.Html Github.Object.User
+companyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.User
 companyHTML =
-    Object.selectionForField "Scalar.Html" "companyHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "companyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 type alias ContributedRepositoriesOptionalArguments =
@@ -142,9 +143,9 @@ contributedRepositories fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.User
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.User
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the primary key from the database.
@@ -295,9 +296,9 @@ gists fillInOptionals object_ =
     Object.selectionForCompositeField "gists" optionalArgs object_ identity
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.User
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.User
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Whether or not this user is a participant in the GitHub Security Bug Bounty.
@@ -676,9 +677,9 @@ repository requiredArgs object_ =
 
 {-| The HTTP path for this user
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.User
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.User
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 type alias StarredRepositoriesOptionalArguments =
@@ -716,16 +717,16 @@ starredRepositories fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.User
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.User
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL for this user
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.User
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.User
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Whether or not the viewer is able to follow the user.
@@ -781,6 +782,6 @@ watching fillInOptionals object_ =
 
 {-| A URL pointing to the user's public website/blog.
 -}
-websiteUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.User
+websiteUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.User
 websiteUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "websiteUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "websiteUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)

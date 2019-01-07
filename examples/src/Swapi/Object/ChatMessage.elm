@@ -4,6 +4,7 @@
 
 module Swapi.Object.ChatMessage exposing (character, phrase)
 
+import CustomScalarDecoders
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)

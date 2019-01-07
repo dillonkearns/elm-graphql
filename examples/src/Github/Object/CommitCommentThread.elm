@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -54,9 +55,9 @@ commit object_ =
     Object.selectionForCompositeField "commit" [] object_ identity
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.CommitCommentThread
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.CommitCommentThread
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The file the comments were made on.

@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -27,21 +28,21 @@ abbreviatedOid =
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Tag
+commitResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Tag
 commitResourcePath =
-    Object.selectionForField "Scalar.Uri" "commitResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "commitResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : SelectionSet Github.Scalar.Uri Github.Object.Tag
+commitUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Tag
 commitUrl =
-    Object.selectionForField "Scalar.Uri" "commitUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "commitUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.Tag
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.Tag
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The Git tag message.
@@ -60,9 +61,9 @@ name =
 
 {-| The Git object ID
 -}
-oid : SelectionSet Github.Scalar.GitObjectID Github.Object.Tag
+oid : SelectionSet Github.ScalarDecoders.GitObjectID Github.Object.Tag
 oid =
-    Object.selectionForField "Scalar.GitObjectID" "oid" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitObjectID)
+    Object.selectionForField "ScalarDecoders.GitObjectID" "oid" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderGitObjectID)
 
 
 {-| The Repository the Git object belongs to

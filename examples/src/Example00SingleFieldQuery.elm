@@ -15,6 +15,7 @@ import Swapi.Interface.Character as Character
 import Swapi.Object
 import Swapi.Query as Query
 import Swapi.Scalar
+import Time
 
 
 

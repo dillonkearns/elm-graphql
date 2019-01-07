@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -30,6 +31,6 @@ node object_ =
 
 {-| Identifies when the item was starred.
 -}
-starredAt : SelectionSet Github.Scalar.DateTime Github.Object.StargazerEdge
+starredAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.StargazerEdge
 starredAt =
-    Object.selectionForField "Scalar.DateTime" "starredAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "starredAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)

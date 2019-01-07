@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -27,9 +28,9 @@ author object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Release
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Release
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the description of the release.
@@ -39,9 +40,9 @@ description =
     Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.Release
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.Release
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Whether or not the release is a draft
@@ -67,9 +68,9 @@ name =
 
 {-| Identifies the date and time when the release was created.
 -}
-publishedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Release
+publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Release
 publishedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "publishedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 type alias ReleaseAssetsOptionalArguments =
@@ -105,9 +106,9 @@ releaseAssets fillInOptionals object_ =
 
 {-| The HTTP path for this issue
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Release
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Release
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The Git tag the release points to
@@ -119,13 +120,13 @@ tag object_ =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Release
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Release
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL for this issue
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.Release
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Release
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)

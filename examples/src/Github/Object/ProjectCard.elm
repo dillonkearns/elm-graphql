@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -38,9 +39,9 @@ content object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectCard
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ProjectCard
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The actor who created this card
@@ -57,9 +58,9 @@ databaseId =
     Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.ProjectCard
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.ProjectCard
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The card note
@@ -85,9 +86,9 @@ projectColumn object_ =
 
 {-| The HTTP path for this card
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.ProjectCard
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.ProjectCard
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The state of ProjectCard
@@ -99,13 +100,13 @@ state =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.ProjectCard
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ProjectCard
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL for this card
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.ProjectCard
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.ProjectCard
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)

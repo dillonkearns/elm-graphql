@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -21,9 +22,9 @@ import Json.Decode as Decode
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.DeploymentStatus
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.DeploymentStatus
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -49,21 +50,21 @@ description =
 
 {-| Identifies the environment URL of the deployment.
 -}
-environmentUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
+environmentUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.DeploymentStatus
 environmentUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "environmentUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "environmentUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.DeploymentStatus
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.DeploymentStatus
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Identifies the log URL of the deployment.
 -}
-logUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.DeploymentStatus
+logUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.DeploymentStatus
 logUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "logUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "logUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| Identifies the current state of the deployment.
@@ -75,6 +76,6 @@ state =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.DeploymentStatus
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.DeploymentStatus
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)

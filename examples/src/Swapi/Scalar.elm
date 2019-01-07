@@ -2,7 +2,10 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Scalar exposing (Id(..), PosixTime(..))
+module Swapi.Scalar exposing (Decoders, Id(..), PosixTime(..), defaultDecoders, defineDecoders, unwrapDecoders)
+
+import Graphql.Internal.Builder.Object as Object
+import Json.Decode as Decode exposing (Decoder)
 
 
 type Id
@@ -11,3 +14,42 @@ type Id
 
 type PosixTime
     = PosixTime String
+
+
+defineDecoders :
+    { decoderId : Decoder decoderId
+    , decoderPosixTime : Decoder decoderPosixTime
+    }
+    -> Decoders decoderId decoderPosixTime
+defineDecoders definitions =
+    Decoders
+        { decoderId = definitions.decoderId
+        , decoderPosixTime = definitions.decoderPosixTime
+        }
+
+
+unwrapDecoders :
+    Decoders decoderId decoderPosixTime
+    ->
+        { decoderId : Decoder decoderId
+        , decoderPosixTime : Decoder decoderPosixTime
+        }
+unwrapDecoders (Decoders unwrappedDecoders) =
+    unwrappedDecoders
+
+
+type Decoders decoderId decoderPosixTime
+    = Decoders (RawDecoders decoderId decoderPosixTime)
+
+
+type alias RawDecoders decoderId decoderPosixTime =
+    { decoderId : Decoder decoderId
+    , decoderPosixTime : Decoder decoderPosixTime
+    }
+
+
+defaultDecoders : RawDecoders Id PosixTime
+defaultDecoders =
+    { decoderId = Object.scalarDecoder |> Decode.map Id
+    , decoderPosixTime = Object.scalarDecoder |> Decode.map PosixTime
+    }

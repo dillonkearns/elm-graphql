@@ -16,6 +16,7 @@ import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
+import Normalize.ScalarDecoders
 import Normalize.Union
 
 
@@ -42,9 +43,9 @@ homePlanet =
 
 {-| The ID of the human.
 -}
-id : SelectionSet Normalize.Scalar.Id Normalize.Object.Human_
+id : SelectionSet Normalize.ScalarDecoders.Id Normalize.Object.Human_
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Normalize.ScalarDecoders.decoders |> Normalize.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The name of the human.

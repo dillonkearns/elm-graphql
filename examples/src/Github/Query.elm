@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -118,8 +119,8 @@ type alias MarketplaceListingsOptionalArguments =
     , before : OptionalArgument String
     , categorySlug : OptionalArgument String
     , viewerCanAdmin : OptionalArgument Bool
-    , adminId : OptionalArgument Github.Scalar.Id
-    , organizationId : OptionalArgument Github.Scalar.Id
+    , adminId : OptionalArgument Github.ScalarDecoders.Id
+    , organizationId : OptionalArgument Github.ScalarDecoders.Id
     , allStates : OptionalArgument Bool
     , slugs : OptionalArgument (List (Maybe String))
     , primaryCategoryOnly : OptionalArgument Bool
@@ -177,7 +178,7 @@ meta object_ =
 
 
 type alias NodeRequiredArguments =
-    { id : Github.Scalar.Id }
+    { id : Github.ScalarDecoders.Id }
 
 
 {-| Fetches an object given its ID.
@@ -191,7 +192,7 @@ node requiredArgs object_ =
 
 
 type alias NodesRequiredArguments =
-    { ids : List Github.Scalar.Id }
+    { ids : List Github.ScalarDecoders.Id }
 
 
 {-| Lookup nodes by a list of IDs.
@@ -279,7 +280,7 @@ repositoryOwner requiredArgs object_ =
 
 
 type alias ResourceRequiredArguments =
-    { url : Github.Scalar.Uri }
+    { url : Github.ScalarDecoders.Uri }
 
 
 {-| Lookup resource by a URL.

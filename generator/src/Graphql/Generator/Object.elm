@@ -5,6 +5,7 @@ import Graphql.Generator.Field as FieldGenerator
 import Graphql.Generator.Imports as Imports
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type
+import ModuleName
 import String.Interpolate exposing (interpolate)
 
 
@@ -15,7 +16,7 @@ generate context name moduleName fields =
 
 
 prepend : Context -> List String -> List Type.Field -> String
-prepend { apiSubmodule } moduleName fields =
+prepend ({ apiSubmodule } as context) moduleName fields =
     interpolate """module {0} exposing (..)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
@@ -28,6 +29,7 @@ import {2}.Interface
 import {2}.Union
 import {2}.Scalar
 import {2}.InputObject
+import {3}
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 {1}
@@ -35,4 +37,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields
         , apiSubmodule |> String.join "."
+        , context.scalarDecodersModule
+            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+            |> ModuleName.toString
         ]

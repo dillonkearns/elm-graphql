@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -25,9 +26,9 @@ commit object_ =
     Object.selectionForCompositeField "commit" [] object_ identity
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.PullRequestCommit
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.PullRequestCommit
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The pull request this commit belongs to
@@ -39,13 +40,13 @@ pullRequest object_ =
 
 {-| The HTTP path for this pull request commit
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.PullRequestCommit
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequestCommit
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP URL for this pull request commit
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.PullRequestCommit
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequestCommit
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)

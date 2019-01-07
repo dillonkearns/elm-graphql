@@ -19,6 +19,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -127,9 +128,9 @@ commitComments fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.Repository
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Repository
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the primary key from the database.
@@ -215,9 +216,9 @@ description =
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : SelectionSet Github.Scalar.Html Github.Object.Repository
+descriptionHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.Repository
 descriptionHTML =
-    Object.selectionForField "Scalar.Html" "descriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "descriptionHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| The number of kilobytes this repository occupies on disk.
@@ -287,14 +288,14 @@ hasWikiEnabled =
 
 {-| The repository's URL.
 -}
-homepageUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.Repository
+homepageUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.Repository
 homepageUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "homepageUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "homepageUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.Repository
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.Repository
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -570,9 +571,9 @@ milestones fillInOptionals object_ =
 
 {-| The repository's original mirror URL.
 -}
-mirrorUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.Repository
+mirrorUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.Repository
 mirrorUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "mirrorUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "mirrorUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| The name of the repository.
@@ -590,7 +591,7 @@ nameWithOwner =
 
 
 type alias ObjectOptionalArguments =
-    { oid : OptionalArgument Github.Scalar.GitObjectID
+    { oid : OptionalArgument Github.ScalarDecoders.GitObjectID
     , expression : OptionalArgument String
     }
 
@@ -686,16 +687,16 @@ projects fillInOptionals object_ =
 
 {-| The HTTP path listing repository's projects
 -}
-projectsResourcePath : SelectionSet Github.Scalar.Uri Github.Object.Repository
+projectsResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Repository
 projectsResourcePath =
-    Object.selectionForField "Scalar.Uri" "projectsResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "projectsResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP URL listing repository's projects
 -}
-projectsUrl : SelectionSet Github.Scalar.Uri Github.Object.Repository
+projectsUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Repository
 projectsUrl =
-    Object.selectionForField "Scalar.Uri" "projectsUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "projectsUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 type alias ProtectedBranchesOptionalArguments =
@@ -782,9 +783,9 @@ pullRequests fillInOptionals object_ =
 
 {-| Identifies when the repository was last pushed to.
 -}
-pushedAt : SelectionSet (Maybe Github.Scalar.DateTime) Github.Object.Repository
+pushedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Repository
 pushedAt =
-    Object.selectionForField "(Maybe Scalar.DateTime)" "pushedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "pushedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
 
 
 type alias RefRequiredArguments =
@@ -915,9 +916,9 @@ repositoryTopics fillInOptionals object_ =
 
 {-| The HTTP path for this repository
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.Repository
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Repository
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -929,7 +930,7 @@ type alias ShortDescriptionHTMLOptionalArguments =
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> SelectionSet Github.Scalar.Html Github.Object.Repository
+shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> SelectionSet Github.ScalarDecoders.Html Github.Object.Repository
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
@@ -939,14 +940,14 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "Scalar.Html" "shortDescriptionHTML" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "shortDescriptionHTML" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| The SSH URL to clone this repository
 -}
-sshUrl : SelectionSet Github.Scalar.GitSSHRemote Github.Object.Repository
+sshUrl : SelectionSet Github.ScalarDecoders.GitSSHRemote Github.Object.Repository
 sshUrl =
-    Object.selectionForField "Scalar.GitSSHRemote" "sshUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.GitSSHRemote)
+    Object.selectionForField "ScalarDecoders.GitSSHRemote" "sshUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderGitSSHRemote)
 
 
 type alias StargazersOptionalArguments =
@@ -982,16 +983,16 @@ stargazers fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.Scalar.DateTime Github.Object.Repository
+updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Repository
 updatedAt =
-    Object.selectionForField "Scalar.DateTime" "updatedAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| The HTTP URL for this repository
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.Repository
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Repository
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Indicates whether the viewer has admin permissions on this repository.

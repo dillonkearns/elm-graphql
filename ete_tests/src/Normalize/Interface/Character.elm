@@ -16,6 +16,7 @@ import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
+import Normalize.ScalarDecoders
 import Normalize.Union
 
 
@@ -63,9 +64,9 @@ friends object_ =
 
 {-| The ID of the character.
 -}
-id : SelectionSet Normalize.Scalar.Id Normalize.Interface.Character
+id : SelectionSet Normalize.ScalarDecoders.Id Normalize.Interface.Character
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Normalize.ScalarDecoders.decoders |> Normalize.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The name of the character.

@@ -130,13 +130,13 @@ fieldArgsString { fieldArgs } =
 toFieldGenerator : Context -> Type.Field -> FieldGenerator
 toFieldGenerator ({ apiSubmodule } as context) field =
     init context field.name field.typeRef
-        |> addRequiredArgs field apiSubmodule field.args
-        |> addOptionalArgs field apiSubmodule field.args
+        |> addRequiredArgs field context field.args
+        |> addOptionalArgs field context field.args
 
 
-addRequiredArgs : Type.Field -> List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
-addRequiredArgs field apiSubmodule args fieldGenerator =
-    case Graphql.Generator.RequiredArgs.generate apiSubmodule args of
+addRequiredArgs : Type.Field -> Context -> List Type.Arg -> FieldGenerator -> FieldGenerator
+addRequiredArgs field context args fieldGenerator =
+    case Graphql.Generator.RequiredArgs.generate context args of
         Just { annotation, list, typeAlias } ->
             { fieldGenerator
                 | fieldArgs = [ list ]
@@ -156,9 +156,9 @@ addRequiredArgs field apiSubmodule args fieldGenerator =
             fieldGenerator
 
 
-addOptionalArgs : Type.Field -> List String -> List Type.Arg -> FieldGenerator -> FieldGenerator
-addOptionalArgs field apiSubmodule args fieldGenerator =
-    case Graphql.Generator.OptionalArgs.generate apiSubmodule args of
+addOptionalArgs : Type.Field -> Context -> List Type.Arg -> FieldGenerator -> FieldGenerator
+addOptionalArgs field context args fieldGenerator =
+    case Graphql.Generator.OptionalArgs.generate context args of
         Just { annotatedArg, letBindings, typeAlias } ->
             { fieldGenerator
                 | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
@@ -183,7 +183,7 @@ type ObjectOrInterface
 
 
 objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
-objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
+objectThing context typeRef refName objectOrInterface =
     let
         typeLock =
             case ReferenceLeaf.get typeRef of
@@ -209,13 +209,13 @@ objectThing ({ apiSubmodule } as context) typeRef refName objectOrInterface =
     in
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphql.Generator.Decoder.generateType apiSubmodule typeRef
+    , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
     , decoder = "object_"
     , otherThing = ".selectionForCompositeField"
     , letBindings = []
     , objectDecoderChain =
         " ("
-            ++ (Graphql.Generator.Decoder.generateDecoder apiSubmodule typeRef
+            ++ (Graphql.Generator.Decoder.generateDecoder context typeRef
                     |> String.join " >> "
                )
             ++ ")"
@@ -279,23 +279,23 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
             objectThing context typeRef refName Interface
 
         EnumLeaf ->
-            initScalarField apiSubmodule typeRef
+            initScalarField context typeRef
 
         ScalarLeaf ->
-            initScalarField apiSubmodule typeRef
+            initScalarField context typeRef
 
 
-initScalarField : List String -> TypeReference -> FieldGenerator
-initScalarField apiSubmodule typeRef =
+initScalarField : Context -> TypeReference -> FieldGenerator
+initScalarField context typeRef =
     let
         scalarName =
-            "\"" ++ Graphql.Generator.Decoder.generateType [] typeRef ++ "\""
+            "\"" ++ Graphql.Generator.Decoder.generateType { context | apiSubmodule = [] } typeRef ++ "\""
     in
     { annotatedArgs = []
     , fieldArgs = []
-    , decoderAnnotation = Graphql.Generator.Decoder.generateType apiSubmodule typeRef
+    , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
     , decoder =
-        Graphql.Generator.Decoder.generateDecoder apiSubmodule typeRef
+        Graphql.Generator.Decoder.generateDecoder context typeRef
             |> String.join " |> "
     , otherThing = ".selectionForField " ++ scalarName
     , letBindings = []

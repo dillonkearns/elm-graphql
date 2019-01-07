@@ -9,6 +9,7 @@ import Graphql.Parser
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
+import ModuleName exposing (ModuleName(..))
 import MyDebug
 import Ports
 import Result.Extra
@@ -23,9 +24,9 @@ type alias Model =
     ()
 
 
-run : List String -> Json.Encode.Value -> Cmd msg
-run baseModule introspectionQueryJson =
-    case Decode.decodeValue (Graphql.Parser.decoder baseModule) introspectionQueryJson of
+run : { apiSubmodule : List String, scalarDecodersModule : Maybe ModuleName } -> Json.Encode.Value -> Cmd msg
+run options introspectionQueryJson =
+    case Decode.decodeValue (Graphql.Parser.decoder options) introspectionQueryJson of
         Ok fields ->
             fields
                 |> Json.Encode.Extra.dict identity Json.Encode.string
@@ -47,6 +48,7 @@ type alias UrlArgs =
     , outputPath : String
     , excludeDeprecated : Bool
     , headers : Dict.Dict String String
+    , scalarDecodersModule : Maybe ModuleName
     }
 
 
@@ -54,6 +56,7 @@ type alias FileArgs =
     { file : String
     , base : List String
     , outputPath : String
+    , scalarDecodersModule : Maybe ModuleName
     }
 
 
@@ -90,6 +93,7 @@ program =
                     (Option.keywordArgList "header"
                         |> Option.validateMap parseHeaders
                     )
+                |> with scalarDecodersOption
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
             )
@@ -98,8 +102,17 @@ program =
                 |> with (Option.requiredKeywordArg "introspection-file")
                 |> with baseOption
                 |> with outputPathOption
+                |> with scalarDecodersOption
                 |> OptionsParser.map FromFile
             )
+
+
+scalarDecodersOption : Option.Option (Maybe String) (Maybe ModuleName) Option.BeginningOption
+scalarDecodersOption =
+    Option.optionalKeywordArg "scalar-decoders"
+        |> Option.validateIfPresent validateModuleName
+        |> Option.map (Maybe.map (String.split "."))
+        |> Option.map (Maybe.map ModuleName.fromList)
 
 
 outputPathOption : Option.Option (Maybe String) String Option.BeginningOption
@@ -110,10 +123,13 @@ outputPathOption =
 baseOption : Option.Option (Maybe String) (List String) Option.BeginningOption
 baseOption =
     Option.optionalKeywordArg "base"
-        |> Option.validateIfPresent
-            (Cli.Validate.regex "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$")
+        |> Option.validateIfPresent validateModuleName
         |> Option.map (Maybe.map (String.split "."))
         |> Option.withDefault [ "Api" ]
+
+
+validateModuleName =
+    Cli.Validate.regex "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
 
 
 type alias Flags =
@@ -131,6 +147,7 @@ init flags msg =
                 , outputPath = options.outputPath
                 , baseModule = options.base
                 , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
+                , customDecodersModule = options.scalarDecodersModule |> Maybe.map ModuleName.toString
                 }
             )
 
@@ -140,6 +157,7 @@ init flags msg =
                 { introspectionFilePath = options.file
                 , outputPath = options.outputPath
                 , baseModule = options.base
+                , customDecodersModule = options.scalarDecodersModule |> Maybe.map ModuleName.toString
                 }
             )
 
@@ -149,15 +167,15 @@ update cliOptions msg model =
     case msg of
         GenerateFiles introspectionJson ->
             let
-                baseModule =
+                ( baseModule, scalarDecodersModule ) =
                     case cliOptions of
-                        FromUrl { base } ->
-                            base
+                        FromUrl options ->
+                            ( options.base, options.scalarDecodersModule )
 
-                        FromFile { base } ->
-                            base
+                        FromFile options ->
+                            ( options.base, options.scalarDecodersModule )
             in
-            ( (), run baseModule introspectionJson )
+            ( (), run { apiSubmodule = baseModule, scalarDecodersModule = scalarDecodersModule } introspectionJson )
 
 
 main : Program.StatefulProgram Model Msg CliOptions {}

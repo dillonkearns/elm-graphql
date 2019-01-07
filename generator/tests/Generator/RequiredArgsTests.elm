@@ -2,6 +2,7 @@ module Generator.RequiredArgsTests exposing (all)
 
 import Expect
 import GenerateSyntax
+import Graphql.Generator.Context as Context
 import Graphql.Generator.RequiredArgs as RequiredArgs
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.Scalar as Scalar
@@ -15,7 +16,7 @@ all =
         [ test "no arguments" <|
             \() ->
                 []
-                    |> RequiredArgs.generate []
+                    |> RequiredArgs.generate Context.stub
                     |> Expect.equal Nothing
         , test "all nullable arguments" <|
             \() ->
@@ -24,12 +25,12 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
-                    |> RequiredArgs.generate []
+                    |> RequiredArgs.generate Context.stub
                     |> Expect.equal Nothing
         , test "single primitive" <|
             \() ->
                 [ idArg ]
-                    |> RequiredArgs.generate []
+                    |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = """{ id : String }"""
                         , list = """[ Argument.required "id" requiredArgs.id (Encode.string) ]"""
@@ -37,7 +38,7 @@ all =
         , test "composite" <|
             \() ->
                 [ numbersArg ]
-                    |> RequiredArgs.generate []
+                    |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = """{ numbers : (List Int) }"""
                         , list = """[ Argument.required "numbers" requiredArgs.numbers (Encode.int |> Encode.list) ]"""
@@ -45,7 +46,7 @@ all =
         , test "multiple primitives" <|
             \() ->
                 [ idArg, nameArg ]
-                    |> RequiredArgs.generate []
+                    |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = GenerateSyntax.typeAlias [ ( "id", "String" ), ( "name", "String" ) ]
                         , list = """[ Argument.required "id" requiredArgs.id (Encode.string), Argument.required "name" requiredArgs.name (Encode.string) ]"""
@@ -57,7 +58,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
                 ]
-                    |> RequiredArgs.generate []
+                    |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = "{ type_ : String }"
                         , list = """[ Argument.required "type" requiredArgs.type_ (Encode.string) ]"""

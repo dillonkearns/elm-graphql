@@ -9,6 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -58,9 +59,9 @@ associatedPullRequests fillInOptionals object_ =
     Object.selectionForCompositeField "associatedPullRequests" optionalArgs object_ identity
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.Ref
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.Ref
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| The ref name.

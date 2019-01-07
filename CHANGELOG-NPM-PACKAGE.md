@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- New `--scalar-decoders` flag allows you to define your scalar decoders
+  in a custom module. See [pull request #101](https://github.com/dillonkearns/elm-graphql/pull/101).
+
 ## [3.0.1] - 2018-12-08
 
 ### Changed

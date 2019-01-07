@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -27,9 +28,9 @@ actor object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.Scalar.DateTime Github.Object.RenamedTitleEvent
+createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.RenamedTitleEvent
 createdAt =
-    Object.selectionForField "Scalar.DateTime" "createdAt" [] (Object.scalarDecoder |> Decode.map Github.Scalar.DateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
 
 
 {-| Identifies the current title of the issue or pull request.
@@ -39,9 +40,9 @@ currentTitle =
     Object.selectionForField "String" "currentTitle" [] Decode.string
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.RenamedTitleEvent
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.RenamedTitleEvent
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| Identifies the previous title of the issue or pull request.

@@ -4,6 +4,7 @@
 
 module Swapi.Mutation exposing (SendMessageRequiredArguments, increment, sendMessage)
 
+import CustomScalarDecoders
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -25,7 +26,7 @@ increment =
 
 
 type alias SendMessageRequiredArguments =
-    { characterId : Swapi.Scalar.Id
+    { characterId : CustomScalarDecoders.Id
     , phrase : Swapi.Enum.Phrase.Phrase
     }
 

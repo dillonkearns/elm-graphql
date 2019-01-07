@@ -1,6 +1,7 @@
 module Graphql.Generator.RequiredArgs exposing (Result, generate)
 
 import GenerateSyntax
+import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.Decoder
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.Type as Type
@@ -14,8 +15,8 @@ type alias Result =
     }
 
 
-generate : List String -> List Type.Arg -> Maybe Result
-generate apiSubmodule args =
+generate : Context -> List Type.Arg -> Maybe Result
+generate context args =
     let
         requiredArgs : List RequiredArg
         requiredArgs =
@@ -27,8 +28,8 @@ generate apiSubmodule args =
     else
         Just
             { annotation = \fieldName -> interpolate "{0}RequiredArguments" [ fieldName ]
-            , list = requiredArgsString apiSubmodule requiredArgs
-            , typeAlias = { body = requiredArgsAnnotation apiSubmodule requiredArgs, suffix = "RequiredArguments" }
+            , list = requiredArgsString context requiredArgs
+            , typeAlias = { body = requiredArgsAnnotation context requiredArgs, suffix = "RequiredArguments" }
             }
 
 
@@ -53,8 +54,8 @@ requiredArgOrNothing { name, typeRef } =
             Nothing
 
 
-requiredArgsString : List String -> List RequiredArg -> String
-requiredArgsString apiSubmodule requiredArgs =
+requiredArgsString : Context -> List RequiredArg -> String
+requiredArgsString { apiSubmodule } requiredArgs =
     let
         requiredArgContents =
             List.map (requiredArgString apiSubmodule) requiredArgs
@@ -72,15 +73,15 @@ requiredArgString apiSubmodule { name, referrableType, typeRef } =
         ]
 
 
-requiredArgsAnnotation : List String -> List RequiredArg -> String
-requiredArgsAnnotation apiSubmodule requiredArgs =
+requiredArgsAnnotation : Context -> List RequiredArg -> String
+requiredArgsAnnotation context requiredArgs =
     requiredArgs
-        |> List.map (requiredArgAnnotation apiSubmodule)
+        |> List.map (requiredArgAnnotation context)
         |> GenerateSyntax.typeAlias
 
 
-requiredArgAnnotation : List String -> RequiredArg -> ( String, String )
-requiredArgAnnotation apiSubmodule { name, typeRef } =
+requiredArgAnnotation : Context -> RequiredArg -> ( String, String )
+requiredArgAnnotation context { name, typeRef } =
     ( name |> CamelCaseName.normalized
-    , Graphql.Generator.Decoder.generateType apiSubmodule typeRef
+    , Graphql.Generator.Decoder.generateType context typeRef
     )

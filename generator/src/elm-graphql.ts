@@ -7,6 +7,7 @@ import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
+import * as childProcess from "child_process";
 import {
   removeGenerated,
   isGenerated,
@@ -44,11 +45,13 @@ app.ports.introspectSchemaFromFile.subscribe(
   ({
     introspectionFilePath,
     outputPath,
-    baseModule
+    baseModule,
+    customDecodersModule
   }: {
     introspectionFilePath: string;
     outputPath: string;
     baseModule: string[];
+    customDecodersModule: string | null;
   }) => {
     warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
     const introspectionFileJson = JSON.parse(
@@ -57,7 +60,8 @@ app.ports.introspectSchemaFromFile.subscribe(
     onDataAvailable(
       introspectionFileJson.data || introspectionFileJson,
       outputPath,
-      baseModule
+      baseModule,
+      customDecodersModule
     );
   }
 );
@@ -68,13 +72,15 @@ app.ports.introspectSchemaFromUrl.subscribe(
     excludeDeprecated,
     outputPath,
     baseModule,
-    headers
+    headers,
+    customDecodersModule
   }: {
     graphqlUrl: string;
     excludeDeprecated: boolean;
     outputPath: string;
     baseModule: string[];
     headers: {};
+    customDecodersModule: string | null;
   }) => {
     warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
 
@@ -85,7 +91,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     })
       .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
       .then(data => {
-        onDataAvailable(data, outputPath, baseModule);
+        onDataAvailable(data, outputPath, baseModule, customDecodersModule);
       })
       .catch(err => {
         console.log(err.response || err);
@@ -104,7 +110,12 @@ function makeEmptyDirectories(
   });
 }
 
-function onDataAvailable(data: {}, outputPath: string, baseModule: string[]) {
+function onDataAvailable(
+  data: {},
+  outputPath: string,
+  baseModule: string[],
+  customDecodersModule: string | null
+) {
   console.log("Generating files...");
   app.ports.generatedFiles.subscribe(async function(generatedFile: {
     [s: string]: string;
@@ -124,10 +135,71 @@ function onDataAvailable(data: {}, outputPath: string, baseModule: string[]) {
     );
     writeIntrospectionFile(baseModule, outputPath);
     applyElmFormat(prependBasePath("/", baseModule, outputPath));
+    if (customDecodersModule) {
+      verifyCustomDecodersFileIsValid(
+        outputPath,
+        baseModule,
+        customDecodersModule
+      );
+    }
     console.log("Success!");
-    process.exit(0);
   });
   app.ports.generateFiles.send(data);
+}
+
+function verifyCustomDecodersFileIsValid(
+  outputPath: string,
+  baseModule: string[],
+  customDecodersModule: string
+) {
+  const verifyDecodersFile = path.join(
+    outputPath,
+    ...baseModule,
+    "VerifyScalarDecoders.elm"
+  );
+
+  try {
+    childProcess.execSync(`elm make ${verifyDecodersFile} --output=/dev/null`, {
+      stdio: "pipe"
+    });
+  } catch (error) {
+    console.error(error.message);
+
+    console.error(`--------------------------------------------
+        INVALID SCALAR DECODERS FILE
+--------------------------------------------
+
+Your custom scalar decoders module, \`${customDecodersModule}\`, is invalid.
+
+This is because either:
+
+1) This is the first time you've run this CLI with the \`--scalar-decoders\` option.
+  In this case, get a valid file, you can start by copy-pasting \`${baseModule.join(
+    "."
+  )}.ScalarDecoders\`. Then change the module name to \`${customDecodersModule}\`
+  and you have a valid starting point!
+2) You added or renamed a Custom Scalar in your GraphQL schema.
+   To handle the new Custom Scalar, you can copy the relevant entries from \`${customDecodersModule}\`.
+
+Check the following:
+    * You have a module called \`${customDecodersModule}\`
+    * The module is somewhere in your elm path (check the \`source-directories\` in your \`elm.json\`)
+
+    You must:
+    * Have a type for every custom scalar
+    * Expose each of these types
+    * Expose a \`decoders\` value
+
+    Above the dashes (----) there are some details that might help you debug the issue. Remember, you can always
+    copy-paste the \`${baseModule.join(
+      "."
+    )}.ScalarDecoders\` module to get a valid file.
+
+    After you've copy pasted the template file, or tried fixing the file,
+    re-run this CLI command to make sure it is valid.
+    `);
+    process.exit(1);
+  }
 }
 
 function writeGeneratedFiles(

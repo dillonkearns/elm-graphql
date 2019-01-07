@@ -2,6 +2,7 @@ module Generator.OptionalArgsTests exposing (all)
 
 import Expect
 import GenerateSyntax
+import Graphql.Generator.Context as Context
 import Graphql.Generator.Let exposing (LetBinding)
 import Graphql.Generator.OptionalArgs as OptionalArgs
 import Graphql.Parser.CamelCaseName as CamelCaseName
@@ -17,7 +18,7 @@ all =
         [ test "no args" <|
             \() ->
                 []
-                    |> OptionalArgs.generate [ "Api" ]
+                    |> OptionalArgs.generate Context.stub
                     |> Expect.equal Nothing
         , test "no optional args, only required" <|
             \() ->
@@ -26,7 +27,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
                   }
                 ]
-                    |> OptionalArgs.generate [ "Api" ]
+                    |> OptionalArgs.generate Context.stub
                     |> Expect.equal Nothing
         , test "with an optional string arg" <|
             \() ->
@@ -35,7 +36,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate [ "Api" ]
+                    |> OptionalArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = "{ contains : OptionalArgument String }"
                         , letBindings =
@@ -55,7 +56,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate [ "Api" ]
+                    |> OptionalArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = GenerateSyntax.typeAlias [ ( "id", "OptionalArgument String" ), ( "contains", "OptionalArgument String" ) ]
                         , letBindings =
@@ -71,7 +72,7 @@ all =
                   , typeRef = Type.TypeReference (Type.Scalar Scalar.Int) Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate [ "Api" ]
+                    |> OptionalArgs.generate Context.stub
                     |> expectResult
                         { letBindings =
                             [ ( "filledInOptionals", "fillInOptionals { first = Absent }" )
@@ -87,7 +88,7 @@ all =
                   , typeRef = Type.TypeReference ("Episode" |> ClassCaseName.build |> Type.EnumRef) Type.Nullable
                   }
                 ]
-                    |> OptionalArgs.generate [ "Api" ]
+                    |> OptionalArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = "{ episode : OptionalArgument Api.Enum.Episode.Episode }"
                         , letBindings =

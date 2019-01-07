@@ -2,7 +2,7 @@ module Generator.ModuleNameTests exposing (all)
 
 import Dict
 import Expect
-import Graphql.Generator.Context as Context
+import Graphql.Generator.Context as Context exposing (stub)
 import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Test exposing (..)
@@ -14,14 +14,9 @@ all =
         [ test "use RootQuery module name" <|
             \() ->
                 ModuleName.object
-                    (Context.context
-                        { query = "RootQueryType"
-                        , mutation = Nothing
-                        , subscription = Nothing
-                        , apiSubmodule = [ "Api" ]
-                        , interfaces = Dict.empty
-                        }
-                    )
+                    { stub
+                        | query = "RootQueryType" |> ClassCaseName.build
+                    }
                     (ClassCaseName.build "RootQueryType")
                     |> Expect.equal [ "RootQuery" ]
         ]

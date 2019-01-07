@@ -14,6 +14,7 @@ import Normalize.Enum.Language
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
+import Normalize.ScalarDecoders
 import Normalize.Union
 
 

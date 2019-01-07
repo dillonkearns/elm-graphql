@@ -8,6 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
+import Github.ScalarDecoders
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -20,30 +21,30 @@ import Json.Decode as Decode
 
 {-| URL to the listing owner's company site.
 -}
-companyUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+companyUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.MarketplaceListing
 companyUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "companyUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "companyUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| The HTTP path for configuring access to the listing's integration or OAuth app
 -}
-configurationResourcePath : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceListing
+configurationResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceListing
 configurationResourcePath =
-    Object.selectionForField "Scalar.Uri" "configurationResourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "configurationResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP URL for configuring access to the listing's integration or OAuth app
 -}
-configurationUrl : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceListing
+configurationUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceListing
 configurationUrl =
-    Object.selectionForField "Scalar.Uri" "configurationUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "configurationUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| URL to the listing's documentation.
 -}
-documentationUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+documentationUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.MarketplaceListing
 documentationUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "documentationUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "documentationUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| The listing's detailed description.
@@ -55,9 +56,9 @@ extendedDescription =
 
 {-| The listing's detailed description rendered to HTML.
 -}
-extendedDescriptionHTML : SelectionSet Github.Scalar.Html Github.Object.MarketplaceListing
+extendedDescriptionHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.MarketplaceListing
 extendedDescriptionHTML =
-    Object.selectionForField "Scalar.Html" "extendedDescriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "extendedDescriptionHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| The listing's introductory description.
@@ -69,9 +70,9 @@ fullDescription =
 
 {-| The listing's introductory description rendered to HTML.
 -}
-fullDescriptionHTML : SelectionSet Github.Scalar.Html Github.Object.MarketplaceListing
+fullDescriptionHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.MarketplaceListing
 fullDescriptionHTML =
-    Object.selectionForField "Scalar.Html" "fullDescriptionHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "fullDescriptionHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
 {-| Whether this listing has been submitted for review from GitHub for approval to be displayed in the Marketplace.
@@ -104,21 +105,21 @@ howItWorks =
 
 {-| The listing's technical description rendered to HTML.
 -}
-howItWorksHTML : SelectionSet Github.Scalar.Html Github.Object.MarketplaceListing
+howItWorksHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.MarketplaceListing
 howItWorksHTML =
-    Object.selectionForField "Scalar.Html" "howItWorksHTML" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Html)
+    Object.selectionForField "ScalarDecoders.Html" "howItWorksHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
 
 
-id : SelectionSet Github.Scalar.Id Github.Object.MarketplaceListing
+id : SelectionSet Github.ScalarDecoders.Id Github.Object.MarketplaceListing
 id =
-    Object.selectionForField "Scalar.Id" "id" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Id)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
 
 
 {-| URL to install the product to the viewer's account or organization.
 -}
-installationUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+installationUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.MarketplaceListing
 installationUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "installationUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "installationUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| Whether this listing's app has been installed for the current viewer
@@ -179,7 +180,7 @@ type alias LogoUrlOptionalArguments =
   - size - The size in pixels of the resulting square image.
 
 -}
-logoUrl : (LogoUrlOptionalArguments -> LogoUrlOptionalArguments) -> SelectionSet (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+logoUrl : (LogoUrlOptionalArguments -> LogoUrlOptionalArguments) -> SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.MarketplaceListing
 logoUrl fillInOptionals =
     let
         filledInOptionals =
@@ -189,7 +190,7 @@ logoUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "(Maybe Scalar.Uri)" "logoUrl" optionalArgs (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "logoUrl" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| The listing's full name.
@@ -208,9 +209,9 @@ normalizedShortDescription =
 
 {-| URL to the listing's detailed pricing.
 -}
-pricingUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+pricingUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.MarketplaceListing
 pricingUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "pricingUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "pricingUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| The category that best describes the listing.
@@ -222,16 +223,16 @@ primaryCategory object_ =
 
 {-| URL to the listing's privacy policy.
 -}
-privacyPolicyUrl : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceListing
+privacyPolicyUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceListing
 privacyPolicyUrl =
-    Object.selectionForField "Scalar.Uri" "privacyPolicyUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "privacyPolicyUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The HTTP path for the Marketplace listing.
 -}
-resourcePath : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceListing
+resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceListing
 resourcePath =
-    Object.selectionForField "Scalar.Uri" "resourcePath" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| The URLs for the listing's screenshots.
@@ -264,9 +265,9 @@ slug =
 
 {-| URL to the listing's status page.
 -}
-statusUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+statusUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.MarketplaceListing
 statusUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "statusUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "statusUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| An email address for support for this listing's app.
@@ -278,23 +279,23 @@ supportEmail =
 
 {-| Either a URL or an email address for support for this listing's app.
 -}
-supportUrl : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceListing
+supportUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceListing
 supportUrl =
-    Object.selectionForField "Scalar.Uri" "supportUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "supportUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| URL to the listing's terms of service.
 -}
-termsOfServiceUrl : SelectionSet (Maybe Github.Scalar.Uri) Github.Object.MarketplaceListing
+termsOfServiceUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.MarketplaceListing
 termsOfServiceUrl =
-    Object.selectionForField "(Maybe Scalar.Uri)" "termsOfServiceUrl" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "termsOfServiceUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
 
 
 {-| The HTTP URL for the Marketplace listing.
 -}
-url : SelectionSet Github.Scalar.Uri Github.Object.MarketplaceListing
+url : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceListing
 url =
-    Object.selectionForField "Scalar.Uri" "url" [] (Object.scalarDecoder |> Decode.map Github.Scalar.Uri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
 
 
 {-| Can the current viewer add plans for this Marketplace listing.

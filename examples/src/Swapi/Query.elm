@@ -4,6 +4,7 @@
 
 module Swapi.Query exposing (DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, droid, forcedError, greet, hello, hero, heroUnion, human, now, today)
 
+import CustomScalarDecoders
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -20,7 +21,7 @@ import Swapi.Union
 
 
 type alias DroidRequiredArguments =
-    { id : Swapi.Scalar.Id }
+    { id : CustomScalarDecoders.Id }
 
 
 {-|
@@ -99,7 +100,7 @@ heroUnion fillInOptionals object_ =
 
 
 type alias HumanRequiredArguments =
-    { id : Swapi.Scalar.Id }
+    { id : CustomScalarDecoders.Id }
 
 
 {-|
@@ -112,9 +113,9 @@ human requiredArgs object_ =
     Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (\(Swapi.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
 
 
-now : SelectionSet Swapi.Scalar.PosixTime RootQuery
+now : SelectionSet CustomScalarDecoders.PosixTime RootQuery
 now =
-    Object.selectionForField "Scalar.PosixTime" "now" [] (Object.scalarDecoder |> Decode.map Swapi.Scalar.PosixTime)
+    Object.selectionForField "CustomScalarDecoders.PosixTime" "now" [] (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderPosixTime)
 
 
 today : SelectionSet String RootQuery

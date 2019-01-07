@@ -15,9 +15,10 @@ import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
+import Normalize.ScalarDecoders
 import Normalize.Union
 
 
-id : SelectionSet Normalize.Scalar.CatId Normalize.Object.Cat
+id : SelectionSet Normalize.ScalarDecoders.CatId Normalize.Object.Cat
 id =
-    Object.selectionForField "Scalar.CatId" "id" [] (Object.scalarDecoder |> Decode.map Normalize.Scalar.CatId)
+    Object.selectionForField "ScalarDecoders.CatId" "id" [] (Normalize.ScalarDecoders.decoders |> Normalize.Scalar.unwrapDecoders |> .decoderCatId)

@@ -10,11 +10,14 @@ import Graphql.Generator.Mutation
 import Graphql.Generator.Object
 import Graphql.Generator.Query
 import Graphql.Generator.Scalar as Scalar
+import Graphql.Generator.ScalarDecoders as ScalarDecoders
 import Graphql.Generator.Subscription
 import Graphql.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphql.Generator.Union
+import Graphql.Generator.VerifyScalarDecoders
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
+import ModuleName exposing (ModuleName)
 
 
 type alias IntrospectionData =
@@ -54,20 +57,21 @@ interfacePossibleTypesDict typeDefs =
         |> Dict.fromList
 
 
-generateFiles : List String -> IntrospectionData -> Dict String String
-generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectName, subscriptionObjectName } =
+generateFiles : { apiSubmodule : List String, scalarDecodersModule : Maybe ModuleName } -> IntrospectionData -> Dict String String
+generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, subscriptionObjectName } =
     let
         context : Context
         context =
             { query = ClassCaseName.build queryObjectName
             , mutation = mutationObjectName |> Maybe.map ClassCaseName.build
             , subscription = subscriptionObjectName |> Maybe.map ClassCaseName.build
-            , apiSubmodule = apiSubmodule
+            , apiSubmodule = options.apiSubmodule
             , interfaces = interfacePossibleTypesDict typeDefinitions
+            , scalarDecodersModule = options.scalarDecodersModule
             }
 
         typeLockDefinitions =
-            TypeLockDefinitions.generate apiSubmodule
+            TypeLockDefinitions.generate options.apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery context
@@ -76,7 +80,7 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
                 )
 
         scalarDefinitions =
-            Scalar.generate apiSubmodule
+            Scalar.generate options.apiSubmodule
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery context
@@ -90,6 +94,24 @@ generateFiles apiSubmodule { typeDefinitions, queryObjectName, mutationObjectNam
         |> List.append typeLockDefinitions
         |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
+        |> List.append
+            [ ScalarDecoders.generate context
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery context
+                    |> excludeMutation context
+                    |> excludeSubscription context
+                )
+            ]
+        |> List.append
+            [ Graphql.Generator.VerifyScalarDecoders.generate context
+                (typeDefinitions
+                    |> excludeBuiltIns
+                    |> excludeQuery context
+                    |> excludeMutation context
+                    |> excludeSubscription context
+                )
+            ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 

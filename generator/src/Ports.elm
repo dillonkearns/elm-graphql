@@ -24,6 +24,7 @@ port introspectSchemaFromFile :
     { introspectionFilePath : String
     , outputPath : String
     , baseModule : List String
+    , customDecodersModule : Maybe String
     }
     -> Cmd msg
 
@@ -34,6 +35,7 @@ port introspectSchemaFromUrl :
     , baseModule : List String
     , outputPath : String
     , headers : Json.Encode.Value
+    , customDecodersModule : Maybe String
     }
     -> Cmd msg
 
