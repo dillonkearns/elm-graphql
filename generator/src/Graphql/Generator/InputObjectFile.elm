@@ -10,6 +10,7 @@ import Graphql.Generator.InputObjectLoops as InputObjectLoops
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
+import ModuleName
 import String.Interpolate exposing (interpolate)
 
 
@@ -170,12 +171,16 @@ import {1}.Object
 import {1}.Interface
 import {1}.Union
 import {1}.Scalar
+import {2}
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 {0}
 """
         [ Imports.importsString apiSubmodule (moduleName context) fields
         , apiSubmodule |> String.join "."
+        , context.scalarDecodersModule
+            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+            |> ModuleName.toString
         ]
 
 

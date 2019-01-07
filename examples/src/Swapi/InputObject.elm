@@ -14,6 +14,7 @@ import Swapi.Enum.Language
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
+import Swapi.ScalarDecoders
 import Swapi.Union
 
 
