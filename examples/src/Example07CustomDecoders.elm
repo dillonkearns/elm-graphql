@@ -1,4 +1,4 @@
-module Example00SingleFieldQuery exposing (main)
+module Example07CustomDecoders exposing (main)
 
 import Browser
 import Graphql.Document as Document
