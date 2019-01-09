@@ -68,3 +68,19 @@ if you would like to copy-paste the queries and execute them yourself.
 You can read more about how aliases are used under the hood [in this blog
 post](https://medium.com/@dillonkearns/how-elm-guides-towards-simplicity-3d34685dc33c)
 about the `dillonkearns/elm-graphql` internals.
+
+## Why are all my scalars Strings? How do I turn it into other types like Float or Time.Posix?
+`dillonkearns/elm-graphql` deserializes custom scalars into `String`s because scalars are a blindspot in GraphQL. At the moment, there's no way to express what underlying type you use to represent your Scalars in your GraphQL Schema. This is just an area of GraphQL that isn't type-safe yet for some reason. But there is a proposal to allow you (but not require you) to specify the base primitive you use to represent your scalars. See this issue for more on that pending GraphQL Spec change: https://github.com/dillonkearns/elm-graphql/issues/39
+
+
+As for the type wrappers, like `type Numeric = Numeric String`, the reason for that type wrapper is that it allows you to make certain assumptions given a particular Scalar type. If it was just a raw String, then the compiler wouldn't be able to help ensure that if you write a function to transform a particular scalar, you only use it for that scalar and not any other string by mistake.
+
+There are two ways to turn your Custom Scalars into the data types you want.
+1. Use the Custom Scalar Decoders feature of `dillonkearns/elm-graphql`. Look at [this example and mini-tutorial](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Example07CustomDecoders.elm) to see how and what the resulting code looks like.
+
+2. Or you can unwrap the default scalar wrapper type using [`SelectionSet.map`](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-SelectionSet#map). The result looks something like this:
+
+```elm
+  Query.someNumericField
+  |> SelectionSet.map (\(Api.Scalar.Numeric rawNumeric) -> String.toFloat rawNumeric |> Maybe.withDefault 0)
+```
