@@ -44,7 +44,7 @@ Take a look at the [`dillonkearns/elm-graphql` Elm 0.19 upgrade guide](https://g
 
 ## Wasn't this library called Graphqelm before?
 
-Yes, you can [read about why the name changed here](https://github.com/dillonkearns/elm-graphql/issues/23)).
+Yes, you can [read about why the name changed here](https://github.com/dillonkearns/elm-graphql/issues/23).
 
 ## How do field aliases work in `dillonkearns/elm-graphql`
 
