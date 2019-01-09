@@ -4,7 +4,7 @@ If your GraphQL schema has a nullable field, `dillonkearns/elm-graphql` will gen
 
 The best way to get rid of these `Maybe`s is to make the fields non-nullable (for example, turn a `string` field into a `string!` field or a `[int]` into a `[int!]!`).
 
-If you are unable to change your schema and make the nullable fields non-nullable, you can use the `Graphql.Field.nonNullOrFail` function (see [the `Graphql.Field` docs](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-Field#)). Be aware that the entire response will fail to decode if you do get a null back in a field where you used `nonNullOrFail`.
+If you are unable to change your schema and make the nullable fields non-nullable, you can use [`Graphql.SelectionSet.nonNullOrFail`](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-SelectionSet#nonNullOrFail). Be aware that the entire response will fail to decode if you do get a null back in a field where you used `nonNullOrFail`.
 
 ### What if the `Maybe`s are inside of a list?
 
