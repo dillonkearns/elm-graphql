@@ -19,6 +19,6 @@ type alias PosixTime =
 decoders : Swapi.Scalar.Decoders Id PosixTime
 decoders =
     Swapi.Scalar.defineDecoders
-        { decoderId = defaultDecoders.decoderId
-        , decoderPosixTime = defaultDecoders.decoderPosixTime
+        { codecId = defaultDecoders.codecId
+        , codecPosixTime = defaultDecoders.codecPosixTime
         }

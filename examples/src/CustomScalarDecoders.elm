@@ -17,8 +17,14 @@ type alias PosixTime =
 decoders : Swapi.Scalar.Decoders Id PosixTime
 decoders =
     Swapi.Scalar.defineDecoders
-        { decoderId = Decode.string
-        , decoderPosixTime = Decode.int |> Decode.map Time.millisToPosix
+        { codecId =
+            { encoder = Encode.string
+            , decoder = Decode.string
+            }
+        , codecPosixTime =
+            { encoder = Time.posixToMillis >> Encode.int
+            , decoder = Decode.int |> Decode.map Time.millisToPosix
+            }
         }
 
 
