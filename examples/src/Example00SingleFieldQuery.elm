@@ -13,6 +13,7 @@ import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Interface.Character as Character
 import Swapi.Object
+import Swapi.Object.Human
 import Swapi.Query as Query
 import Swapi.Scalar
 import Time
@@ -35,12 +36,12 @@ import Time
 
 
 type alias Response =
-    String
+    Maybe String
 
 
 query : SelectionSet Response RootQuery
 query =
-    Query.hello
+    Query.human { id = 1001 } Swapi.Object.Human.name
 
 
 makeRequest : Cmd Msg
