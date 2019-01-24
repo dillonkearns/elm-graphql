@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `SelectionSet.list` lets you combine a `List` of
+  `SelectionSet value typeLock`s into a single `SelectionSet (List value) typeLock`.
+- `SelectionSet.dict` lets you combine a `List` of
+  `(String, SelectionSet value typeLock)`s into a single `SelectionSet (Dict String value) typeLock`.
+  The `String`s in the list are used as the key in the `Dict`.
+
 ## [4.1.0] - 2018-12-16
 
 ### Added

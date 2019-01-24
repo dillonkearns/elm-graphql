@@ -6,6 +6,7 @@ module Graphql.SelectionSet exposing
     , empty
     , SelectionSet(..), FragmentSelectionSet(..)
     , mapOrFail, nonNullOrFail, nonNullElementsOrFail
+    , list, dict
     )
 
 {-| The auto-generated code from the `@dillonkearns/elm-graphql` CLI provides
@@ -269,8 +270,14 @@ take a look at the
 
 @docs mapOrFail, nonNullOrFail, nonNullElementsOrFail
 
+
+## Collections of SelectionSets
+
+@docs list, dict
+
 -}
 
+import Dict exposing (Dict)
 import Graphql.Document.Field
 import Graphql.RawField as RawField exposing (RawField)
 import Json.Decode as Decode exposing (Decoder)
@@ -609,6 +616,75 @@ only the type when using a polymorphic type (Interface or Union).
 succeed : a -> SelectionSet a typeLock
 succeed constructor =
     SelectionSet [] (Decode.succeed constructor)
+
+
+{-| Combine a `List` of `SelectionSet`s into a single `SelectionSet`.
+Note that the `SelectionSet`s must first be coerced into the same type if they
+are not already. Usually you'll just want to use `map2` and other functions in
+that section of these docs.
+
+    import Graphql.Operation exposing (RootQuery)
+    import Graphql.OptionalArgument exposing (OptionalArgument(..))
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+    import Swapi.Enum.Episode as Episode exposing (Episode)
+    import Swapi.Interface.Character as Character
+    import Swapi.Query as Query
+
+    heros : SelectionSet (List String) RootQuery
+    heros =
+        Episode.list
+            |> List.map
+                (\episode ->
+                    Query.hero
+                        (\optionals -> { optionals | episode = Present episode })
+                        Character.name
+                )
+            |> SelectionSet.list
+
+-}
+list : List (SelectionSet a typeLock) -> SelectionSet (List a) typeLock
+list selections =
+    selections
+        |> List.foldl (map2 (::)) (empty |> map (\_ -> []))
+        |> map List.reverse
+
+
+{-| Combine several `SelectionSet`s into a single `SelectionSet`. The
+`String`s are used as the `Dict` keys and the result of the `SelectionSet`s
+will be the values in the `Dict`. Note that the `SelectionSet`s must first
+be coerced into the same type if they are not already. Usually you'll just
+want to use `map2` and other functions in that section of these docs.
+
+    import Graphql.Operation exposing (RootQuery)
+    import Graphql.OptionalArgument exposing (OptionalArgument(..))
+    import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+    import Swapi.Enum.Episode as Episode exposing (Episode)
+    import Swapi.Interface.Character as Character
+    import Swapi.Query as Query
+
+    herosDict : SelectionSet (Dict String String) RootQuery
+    herosDict =
+        Episode.list
+            |> List.map
+                (\episode ->
+                    ( Episode.toString episode
+                    , Query.hero
+                        (\optionals -> { optionals | episode = Present episode })
+                        Character.name
+                    )
+                )
+            |> SelectionSet.dict
+
+-}
+dict : List ( String, SelectionSet a typeLock ) -> SelectionSet (Dict String a) typeLock
+dict selections =
+    selections
+        |> List.foldl combineDict (empty |> map (\_ -> Dict.empty))
+
+
+combineDict : ( String, SelectionSet a typeLock ) -> SelectionSet (Dict String a) typeLock -> SelectionSet (Dict String a) typeLock
+combineDict ( key, selection ) acc =
+    map2 (Dict.insert key) selection acc
 
 
 {-| If the map function provided returns an `Ok` `Result`, it will map to that value.
