@@ -4,7 +4,7 @@
 
 module Swapi.InputObject exposing (Greeting, GreetingOptionalFields, GreetingOptions, GreetingOptionsOptionalFields, GreetingRequiredFields, buildGreeting, buildGreetingOptions, encodeGreeting, encodeGreetingOptions)
 
-import CustomScalarDecoders
+import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)

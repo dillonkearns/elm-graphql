@@ -73,7 +73,7 @@ placeholder =
 
     else
         interpolate
-            """module {0} exposing (Decoders, {6}, defaultDecoders, defineDecoders, unwrapDecoders)
+            """module {0} exposing (Decoders, {6}, defaultCodecs, defineCodecs, unwrapCodecs)
 
 
 import Graphql.Internal.Builder.Object as Object
@@ -84,18 +84,18 @@ import Json.Decode as Decode exposing (Decoder)
 
 
 
-defineDecoders :
+defineCodecs :
     {2}
     -> Decoders {4}
-defineDecoders definitions =
+defineCodecs definitions =
     Decoders
         {3}
 
 
-unwrapDecoders :
+unwrapCodecs :
     Decoders {4}
     -> {2}
-unwrapDecoders (Decoders unwrappedDecoders) =
+unwrapCodecs (Decoders unwrappedDecoders) =
     unwrappedDecoders
 
 
@@ -107,8 +107,8 @@ type alias RawDecoders {4} =
     {2}
 
 
-defaultDecoders : RawDecoders {7}
-defaultDecoders =
+defaultCodecs : RawDecoders {7}
+defaultCodecs =
     {5}
 """
             [ moduleName

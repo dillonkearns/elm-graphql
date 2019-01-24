@@ -28,7 +28,7 @@ guid =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.ExternalIdentity
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| Organization invitation for this SCIM-provisioned external identity

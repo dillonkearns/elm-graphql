@@ -30,7 +30,7 @@ author object_ =
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Release
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| Identifies the description of the release.
@@ -42,7 +42,7 @@ description =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.Release
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| Whether or not the release is a draft
@@ -70,7 +70,7 @@ name =
 -}
 publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Release
 publishedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
 
 
 type alias ReleaseAssetsOptionalArguments =
@@ -108,7 +108,7 @@ releaseAssets fillInOptionals object_ =
 -}
 resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Release
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
 
 
 {-| The Git tag the release points to
@@ -122,11 +122,11 @@ tag object_ =
 -}
 updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Release
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| The HTTP URL for this issue
 -}
 url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Release
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)

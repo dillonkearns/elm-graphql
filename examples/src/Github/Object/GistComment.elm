@@ -46,14 +46,14 @@ body =
 -}
 bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.GistComment
 bodyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
+    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderHtml)
 
 
 {-| Identifies the date and time when the object was created.
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.GistComment
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -86,28 +86,28 @@ gist object_ =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.GistComment
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| The moment the editor made the last edit
 -}
 lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.GistComment
 lastEditedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
 publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.GistComment
 publishedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
 updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.GistComment
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 type alias UserContentEditsOptionalArguments =

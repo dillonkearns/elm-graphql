@@ -37,7 +37,7 @@ description =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.Label
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| Indicates whether or not this is a default label.

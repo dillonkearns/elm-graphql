@@ -5,7 +5,7 @@
 module Swapi.ScalarDecoders exposing (Id, PosixTime, decoders)
 
 import Json.Decode as Decode exposing (Decoder)
-import Swapi.Scalar exposing (defaultDecoders)
+import Swapi.Scalar exposing (defaultCodecs)
 
 
 type alias Id =
@@ -18,7 +18,7 @@ type alias PosixTime =
 
 decoders : Swapi.Scalar.Decoders Id PosixTime
 decoders =
-    Swapi.Scalar.defineDecoders
-        { codecId = defaultDecoders.codecId
-        , codecPosixTime = defaultDecoders.codecPosixTime
+    Swapi.Scalar.defineCodecs
+        { codecId = defaultCodecs.codecId
+        , codecPosixTime = defaultCodecs.codecPosixTime
         }

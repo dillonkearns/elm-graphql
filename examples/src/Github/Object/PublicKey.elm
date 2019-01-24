@@ -21,7 +21,7 @@ import Json.Decode as Decode
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.PublicKey
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| The public key string

@@ -4,7 +4,7 @@
 
 module Swapi.Object.Droid exposing (appearsIn, avatarUrl, friends, id, name, primaryFunction)
 
-import CustomScalarDecoders
+import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -43,9 +43,9 @@ friends object_ =
 
 {-| The ID of the droid.
 -}
-id : SelectionSet CustomScalarDecoders.Id Swapi.Object.Droid
+id : SelectionSet CustomScalarCodecs.Id Swapi.Object.Droid
 id =
-    Object.selectionForField "CustomScalarDecoders.Id" "id" [] (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.decoders |> Swapi.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| The name of the droid.

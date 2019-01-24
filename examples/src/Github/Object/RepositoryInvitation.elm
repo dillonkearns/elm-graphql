@@ -22,7 +22,7 @@ import Json.Decode as Decode
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.RepositoryInvitation
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| The user who received the invitation.

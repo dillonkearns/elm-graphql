@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Scalar exposing (Decoders, Id(..), PosixTime(..), defaultDecoders, defineDecoders, unwrapDecoders)
+module Swapi.Scalar exposing (Decoders, Id(..), PosixTime(..), defaultCodecs, defineCodecs, unwrapCodecs)
 
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,25 +17,25 @@ type PosixTime
     = PosixTime String
 
 
-defineDecoders :
+defineCodecs :
     { codecId : Codec valueId
     , codecPosixTime : Codec valuePosixTime
     }
     -> Decoders valueId valuePosixTime
-defineDecoders definitions =
+defineCodecs definitions =
     Decoders
         { codecId = definitions.codecId
         , codecPosixTime = definitions.codecPosixTime
         }
 
 
-unwrapDecoders :
+unwrapCodecs :
     Decoders valueId valuePosixTime
     ->
         { codecId : Codec valueId
         , codecPosixTime : Codec valuePosixTime
         }
-unwrapDecoders (Decoders unwrappedDecoders) =
+unwrapCodecs (Decoders unwrappedDecoders) =
     unwrappedDecoders
 
 
@@ -55,8 +55,8 @@ type alias Codec elmValue =
     }
 
 
-defaultDecoders : RawDecoders Id PosixTime
-defaultDecoders =
+defaultCodecs : RawDecoders Id PosixTime
+defaultCodecs =
     { codecId = Codec (\(Id rawId) -> Encode.string rawId) (Object.scalarDecoder |> Decode.map Id)
     , codecPosixTime = Codec (\(PosixTime rawId) -> Encode.string rawId) (Object.scalarDecoder |> Decode.map PosixTime)
     }

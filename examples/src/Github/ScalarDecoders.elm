@@ -4,7 +4,7 @@
 
 module Github.ScalarDecoders exposing (Date, DateTime, GitObjectID, GitSSHRemote, GitTimestamp, Html, Id, Uri, X509Certificate, decoders)
 
-import Github.Scalar exposing (defaultDecoders)
+import Github.Scalar exposing (defaultCodecs)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -46,14 +46,14 @@ type alias X509Certificate =
 
 decoders : Github.Scalar.Decoders Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
 decoders =
-    Github.Scalar.defineDecoders
-        { decoderDate = defaultDecoders.decoderDate
-        , decoderDateTime = defaultDecoders.decoderDateTime
-        , decoderGitObjectID = defaultDecoders.decoderGitObjectID
-        , decoderGitSSHRemote = defaultDecoders.decoderGitSSHRemote
-        , decoderGitTimestamp = defaultDecoders.decoderGitTimestamp
-        , decoderHtml = defaultDecoders.decoderHtml
-        , decoderId = defaultDecoders.decoderId
-        , decoderUri = defaultDecoders.decoderUri
-        , decoderX509Certificate = defaultDecoders.decoderX509Certificate
+    Github.Scalar.defineCodecs
+        { decoderDate = defaultCodecs.decoderDate
+        , decoderDateTime = defaultCodecs.decoderDateTime
+        , decoderGitObjectID = defaultCodecs.decoderGitObjectID
+        , decoderGitSSHRemote = defaultCodecs.decoderGitSSHRemote
+        , decoderGitTimestamp = defaultCodecs.decoderGitTimestamp
+        , decoderHtml = defaultCodecs.decoderHtml
+        , decoderId = defaultCodecs.decoderId
+        , decoderUri = defaultCodecs.decoderUri
+        , decoderX509Certificate = defaultCodecs.decoderX509Certificate
         }

@@ -44,4 +44,4 @@ name =
 -}
 url : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.CodeOfConduct
 url =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)

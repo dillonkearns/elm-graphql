@@ -86,7 +86,7 @@ body =
 -}
 bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.Issue
 bodyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
+    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderHtml)
 
 
 {-| Identifies the body of the issue rendered to text.
@@ -107,7 +107,7 @@ closed =
 -}
 closedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Issue
 closedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
 
 
 type alias CommentsOptionalArguments =
@@ -143,7 +143,7 @@ comments fillInOptionals object_ =
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Issue
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| Check if this comment was created via an email reply.
@@ -169,7 +169,7 @@ editor object_ =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.Issue
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 type alias LabelsOptionalArguments =
@@ -205,7 +205,7 @@ labels fillInOptionals object_ =
 -}
 lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Issue
 lastEditedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
 
 
 {-| `true` if the object is locked
@@ -291,7 +291,7 @@ projectCards fillInOptionals object_ =
 -}
 publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Issue
 publishedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -345,7 +345,7 @@ repository object_ =
 -}
 resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Issue
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
 
 
 {-| Identifies the state of the issue.
@@ -397,14 +397,14 @@ title =
 -}
 updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Issue
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| The HTTP URL for this issue
 -}
 url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Issue
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
 
 
 type alias UserContentEditsOptionalArguments =

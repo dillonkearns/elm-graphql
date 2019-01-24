@@ -64,4 +64,4 @@ closed =
 -}
 closedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Interface.Closable
 closedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)

@@ -28,7 +28,7 @@ actor object_ =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.ReviewDismissalAllowance
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| Identifies the protected branch associated with the allowed user or team.

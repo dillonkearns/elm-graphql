@@ -49,7 +49,7 @@ maybeFragments =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Interface.Starrable
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 type alias StargazersOptionalArguments =

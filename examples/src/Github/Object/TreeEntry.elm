@@ -44,7 +44,7 @@ object object_ =
 -}
 oid : SelectionSet Github.ScalarDecoders.GitObjectID Github.Object.TreeEntry
 oid =
-    Object.selectionForField "ScalarDecoders.GitObjectID" "oid" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderGitObjectID)
+    Object.selectionForField "ScalarDecoders.GitObjectID" "oid" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderGitObjectID)
 
 
 {-| The Repository the tree entry belongs to

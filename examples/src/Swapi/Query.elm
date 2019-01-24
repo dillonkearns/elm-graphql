@@ -4,7 +4,7 @@
 
 module Swapi.Query exposing (DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, droid, forcedError, greet, hello, hero, heroUnion, human, now, today)
 
-import CustomScalarDecoders
+import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -21,7 +21,7 @@ import Swapi.Union
 
 
 type alias DroidRequiredArguments =
-    { id : CustomScalarDecoders.Id }
+    { id : CustomScalarCodecs.Id }
 
 
 {-|
@@ -31,7 +31,7 @@ type alias DroidRequiredArguments =
 -}
 droid : DroidRequiredArguments -> SelectionSet decodesTo Swapi.Object.Droid -> SelectionSet (Maybe decodesTo) RootQuery
 droid requiredArgs object_ =
-    Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .codecId |> .encoder) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.decoders |> Swapi.Scalar.unwrapCodecs |> .codecId |> .encoder) ] object_ (identity >> Decode.nullable)
 
 
 {-| Getting this field will result in an error.
@@ -100,7 +100,7 @@ heroUnion fillInOptionals object_ =
 
 
 type alias HumanRequiredArguments =
-    { id : CustomScalarDecoders.Id }
+    { id : CustomScalarCodecs.Id }
 
 
 {-|
@@ -110,12 +110,12 @@ type alias HumanRequiredArguments =
 -}
 human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
-    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .codecId |> .encoder) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.decoders |> Swapi.Scalar.unwrapCodecs |> .codecId |> .encoder) ] object_ (identity >> Decode.nullable)
 
 
-now : SelectionSet CustomScalarDecoders.PosixTime RootQuery
+now : SelectionSet CustomScalarCodecs.PosixTime RootQuery
 now =
-    Object.selectionForField "CustomScalarDecoders.PosixTime" "now" [] (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .codecPosixTime |> .decoder)
+    Object.selectionForField "CustomScalarCodecs.PosixTime" "now" [] (CustomScalarCodecs.decoders |> Swapi.Scalar.unwrapCodecs |> .codecPosixTime |> .decoder)
 
 
 today : SelectionSet String RootQuery

@@ -9,10 +9,10 @@ module Swapi.VerifyScalarDecoders exposing (verify)
    files are valid. It is compiled using `elm make` by the CLI.
 -}
 
-import CustomScalarDecoders
+import CustomScalarCodecs
 import Swapi.Scalar
 
 
-verify : Swapi.Scalar.Decoders CustomScalarDecoders.Id CustomScalarDecoders.PosixTime
+verify : Swapi.Scalar.Decoders CustomScalarCodecs.Id CustomScalarCodecs.PosixTime
 verify =
-    CustomScalarDecoders.decoders
+    CustomScalarCodecs.decoders

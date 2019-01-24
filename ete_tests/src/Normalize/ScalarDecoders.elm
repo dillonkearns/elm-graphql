@@ -5,7 +5,7 @@
 module Normalize.ScalarDecoders exposing (CatId, DogId, Id, decoders)
 
 import Json.Decode as Decode exposing (Decoder)
-import Normalize.Scalar exposing (defaultDecoders)
+import Normalize.Scalar exposing (defaultCodecs)
 
 
 type alias CatId =
@@ -22,8 +22,8 @@ type alias Id =
 
 decoders : Normalize.Scalar.Decoders CatId DogId Id
 decoders =
-    Normalize.Scalar.defineDecoders
-        { decoderCatId = defaultDecoders.decoderCatId
-        , decoderDogId = defaultDecoders.decoderDogId
-        , decoderId = defaultDecoders.decoderId
+    Normalize.Scalar.defineCodecs
+        { decoderCatId = defaultCodecs.decoderCatId
+        , decoderDogId = defaultCodecs.decoderDogId
+        , decoderId = defaultCodecs.decoderId
         }

@@ -52,7 +52,7 @@ comments fillInOptionals object_ =
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Gist
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| The gist description.
@@ -64,7 +64,7 @@ description =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.Gist
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| Whether the gist is public or not.
@@ -92,7 +92,7 @@ owner object_ =
 -}
 pushedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Gist
 pushedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "pushedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "pushedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
 
 
 type alias StargazersOptionalArguments =
@@ -130,7 +130,7 @@ stargazers fillInOptionals object_ =
 -}
 updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Gist
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.

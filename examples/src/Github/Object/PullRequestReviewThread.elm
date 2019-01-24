@@ -50,7 +50,7 @@ comments fillInOptionals object_ =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.PullRequestReviewThread
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| Identifies the pull request associated with this thread.

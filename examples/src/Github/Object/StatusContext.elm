@@ -38,7 +38,7 @@ context =
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.StatusContext
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| The actor who created this status context.
@@ -57,7 +57,7 @@ description =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.StatusContext
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| The state of this status context.
@@ -71,4 +71,4 @@ state =
 -}
 targetUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.StatusContext
 targetUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "targetUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "targetUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)

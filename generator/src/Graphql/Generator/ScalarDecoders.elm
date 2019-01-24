@@ -77,7 +77,7 @@ placeholder =
             """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
-import {4}.Scalar exposing (defaultDecoders)
+import {4}.Scalar exposing (defaultCodecs)
 
 
 {1}
@@ -85,7 +85,7 @@ import {4}.Scalar exposing (defaultDecoders)
 
 decoders : {2}
 decoders =
-    {4}.Scalar.defineDecoders
+    {4}.Scalar.defineCodecs
         {
         {3}
         }
@@ -106,7 +106,7 @@ decoders =
             , typesToGenerate
                 |> List.map
                     (\classCaseName ->
-                        interpolate "decoder{0} = defaultDecoders.decoder{0}"
+                        interpolate "decoder{0} = defaultCodecs.decoder{0}"
                             [ ClassCaseName.normalized classCaseName ]
                     )
                 |> String.join "    , "

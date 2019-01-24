@@ -51,4 +51,4 @@ remaining =
 -}
 resetAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.RateLimit
 resetAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "resetAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "resetAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)

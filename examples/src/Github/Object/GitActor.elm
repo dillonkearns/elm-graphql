@@ -38,14 +38,14 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
 
 
 {-| The timestamp of the Git action (authoring or committing).
 -}
 date : SelectionSet (Maybe Github.ScalarDecoders.GitTimestamp) Github.Object.GitActor
 date =
-    Object.selectionForField "(Maybe ScalarDecoders.GitTimestamp)" "date" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderGitTimestamp |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.GitTimestamp)" "date" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderGitTimestamp |> Decode.nullable)
 
 
 {-| The email in the Git commit.

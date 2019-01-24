@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Scalar exposing (Date(..), DateTime(..), Decoders, GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..), defaultDecoders, defineDecoders, unwrapDecoders)
+module Github.Scalar exposing (Date(..), DateTime(..), Decoders, GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..), defaultCodecs, defineCodecs, unwrapCodecs)
 
 import Graphql.Internal.Builder.Object as Object
 import Json.Decode as Decode exposing (Decoder)
@@ -44,7 +44,7 @@ type X509Certificate
     = X509Certificate String
 
 
-defineDecoders :
+defineCodecs :
     { decoderDate : Decoder decoderDate
     , decoderDateTime : Decoder decoderDateTime
     , decoderGitObjectID : Decoder decoderGitObjectID
@@ -56,7 +56,7 @@ defineDecoders :
     , decoderX509Certificate : Decoder decoderX509Certificate
     }
     -> Decoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate
-defineDecoders definitions =
+defineCodecs definitions =
     Decoders
         { decoderDate = definitions.decoderDate
         , decoderDateTime = definitions.decoderDateTime
@@ -70,7 +70,7 @@ defineDecoders definitions =
         }
 
 
-unwrapDecoders :
+unwrapCodecs :
     Decoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate
     ->
         { decoderDate : Decoder decoderDate
@@ -83,7 +83,7 @@ unwrapDecoders :
         , decoderUri : Decoder decoderUri
         , decoderX509Certificate : Decoder decoderX509Certificate
         }
-unwrapDecoders (Decoders unwrappedDecoders) =
+unwrapCodecs (Decoders unwrappedDecoders) =
     unwrappedDecoders
 
 
@@ -104,8 +104,8 @@ type alias RawDecoders decoderDate decoderDateTime decoderGitObjectID decoderGit
     }
 
 
-defaultDecoders : RawDecoders Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
-defaultDecoders =
+defaultCodecs : RawDecoders Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
+defaultCodecs =
     { decoderDate = Object.scalarDecoder |> Decode.map Date
     , decoderDateTime = Object.scalarDecoder |> Decode.map DateTime
     , decoderGitObjectID = Object.scalarDecoder |> Decode.map GitObjectID

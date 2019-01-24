@@ -66,7 +66,7 @@ databaseId =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Interface.Reactable
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| A list of reactions grouped by content left on the subject.

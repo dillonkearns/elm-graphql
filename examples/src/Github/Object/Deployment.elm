@@ -31,7 +31,7 @@ commit object_ =
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Deployment
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -57,7 +57,7 @@ environment =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.Deployment
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
 
 
 {-| The latest status of this deployment.

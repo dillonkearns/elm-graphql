@@ -39,7 +39,7 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                         |> ModuleName.append "decoders"
                     , context.apiSubmodule
                         ++ [ "Scalar" ]
-                        ++ [ "unwrapDecoders" ]
+                        ++ [ "unwrapCodecs" ]
                         |> String.join "."
                     , ".decoder"
                         ++ ClassCaseName.normalized customScalarName
