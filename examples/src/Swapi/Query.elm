@@ -31,7 +31,7 @@ type alias DroidRequiredArguments =
 -}
 droid : DroidRequiredArguments -> SelectionSet decodesTo Swapi.Object.Droid -> SelectionSet (Maybe decodesTo) RootQuery
 droid requiredArgs object_ =
-    Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id CustomScalarDecoders.encoders.encoderId ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .codecId |> .encoder) ] object_ (identity >> Decode.nullable)
 
 
 {-| Getting this field will result in an error.
@@ -110,7 +110,7 @@ type alias HumanRequiredArguments =
 -}
 human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
-    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id CustomScalarDecoders.encoders.encoderId ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .codecId |> .encoder) ] object_ (identity >> Decode.nullable)
 
 
 now : SelectionSet CustomScalarDecoders.PosixTime RootQuery

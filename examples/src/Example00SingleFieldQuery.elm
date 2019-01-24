@@ -41,7 +41,7 @@ type alias Response =
 
 query : SelectionSet Response RootQuery
 query =
-    Query.human { id = "1001" } Swapi.Object.Human.name
+    Query.human { id = 1001 } Swapi.Object.Human.name
 
 
 makeRequest : Cmd Msg

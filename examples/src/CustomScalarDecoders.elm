@@ -1,4 +1,4 @@
-module CustomScalarDecoders exposing (Id, PosixTime, decoders, encoders)
+module CustomScalarDecoders exposing (Id, PosixTime, decoders)
 
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
@@ -7,7 +7,7 @@ import Time
 
 
 type alias Id =
-    String
+    Int
 
 
 type alias PosixTime =
@@ -18,18 +18,11 @@ decoders : Swapi.Scalar.Decoders Id PosixTime
 decoders =
     Swapi.Scalar.defineDecoders
         { codecId =
-            { encoder = Encode.string
-            , decoder = Decode.string
+            { encoder = Encode.int
+            , decoder = Decode.int
             }
         , codecPosixTime =
             { encoder = Time.posixToMillis >> Encode.int
             , decoder = Decode.int |> Decode.map Time.millisToPosix
             }
         }
-
-
-encoders : { encoderId : String -> Value, encoderPosixTime : Int -> Value }
-encoders =
-    { encoderId = Encode.string
-    , encoderPosixTime = Encode.int
-    }
