@@ -88,10 +88,10 @@ unwrapCodecs (Decoders unwrappedDecoders) =
 
 
 type Decoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate
-    = Decoders (RawDecoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate)
+    = Decoders (RawCodecs decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate)
 
 
-type alias RawDecoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate =
+type alias RawCodecs decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate =
     { decoderDate : Decoder decoderDate
     , decoderDateTime : Decoder decoderDateTime
     , decoderGitObjectID : Decoder decoderGitObjectID
@@ -104,7 +104,7 @@ type alias RawDecoders decoderDate decoderDateTime decoderGitObjectID decoderGit
     }
 
 
-defaultCodecs : RawDecoders Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
+defaultCodecs : RawCodecs Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
 defaultCodecs =
     { decoderDate = Object.scalarDecoder |> Decode.map Date
     , decoderDateTime = Object.scalarDecoder |> Decode.map DateTime

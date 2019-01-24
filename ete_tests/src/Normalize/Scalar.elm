@@ -46,17 +46,17 @@ unwrapCodecs (Decoders unwrappedDecoders) =
 
 
 type Decoders decoderCatId decoderDogId decoderId
-    = Decoders (RawDecoders decoderCatId decoderDogId decoderId)
+    = Decoders (RawCodecs decoderCatId decoderDogId decoderId)
 
 
-type alias RawDecoders decoderCatId decoderDogId decoderId =
+type alias RawCodecs decoderCatId decoderDogId decoderId =
     { decoderCatId : Decoder decoderCatId
     , decoderDogId : Decoder decoderDogId
     , decoderId : Decoder decoderId
     }
 
 
-defaultCodecs : RawDecoders CatId DogId Id
+defaultCodecs : RawCodecs CatId DogId Id
 defaultCodecs =
     { decoderCatId = Object.scalarDecoder |> Decode.map CatId
     , decoderDogId = Object.scalarDecoder |> Decode.map DogId
