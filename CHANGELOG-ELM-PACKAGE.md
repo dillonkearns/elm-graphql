@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.0] - 2018-01-25
+
 ### Added
 
 - `SelectionSet.list` lets you combine a `List` of
