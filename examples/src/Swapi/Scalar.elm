@@ -57,6 +57,12 @@ type alias Codec elmValue =
 
 defaultCodecs : RawCodecs Id PosixTime
 defaultCodecs =
-    { codecId = Codec (\(Id rawId) -> Encode.string rawId) (Object.scalarDecoder |> Decode.map Id)
-    , codecPosixTime = Codec (\(PosixTime rawId) -> Encode.string rawId) (Object.scalarDecoder |> Decode.map PosixTime)
+    { codecId =
+        { encoder = \(Id rawId) -> Encode.string rawId
+        , decoder = Object.scalarDecoder |> Decode.map Id
+        }
+    , codecPosixTime =
+        { encoder = \(PosixTime rawId) -> Encode.string rawId
+        , decoder = Object.scalarDecoder |> Decode.map PosixTime
+        }
     }
