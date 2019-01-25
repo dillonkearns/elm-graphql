@@ -2,10 +2,11 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Scalar exposing (Codecs, Id(..), PosixTime(..), defaultCodecs, defineCodecs, unwrapCodecs)
+module Swapi.Scalar exposing (Codecs, Id(..), PosixTime(..), defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
 import Graphql.Codec exposing (Codec)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Internal.Encode
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
@@ -35,6 +36,10 @@ unwrapCodecs :
         }
 unwrapCodecs (Codecs unwrappedCodecs) =
     unwrappedCodecs
+
+
+unwrapEncoder getter (Codecs unwrappedCodecs) =
+    (unwrappedCodecs |> getter |> .encoder) >> Graphql.Internal.Encode.fromJson
 
 
 type Codecs valueId valuePosixTime

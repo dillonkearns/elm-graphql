@@ -120,13 +120,13 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
                                 ++ [ "Scalar" ]
                                 |> String.join "."
                     in
-                    -- interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ] ++ isNullableString
-                    interpolate "({0} |> {2}.unwrapCodecs |> .codec{1} |> .encoder)"
+                    interpolate "({0} |> {2}.unwrapEncoder .codec{1})"
                         [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
                             |> ModuleName.append "codecs"
                         , ClassCaseName.normalized customScalarName
                         , constructor
                         ]
+                        ++ isNullableString
 
         Type.List typeRef ->
             generateEncoder_ context forInputObject typeRef ++ isNullableString ++ " |> Encode.list"

@@ -73,11 +73,12 @@ placeholder =
 
     else
         interpolate
-            """module {0} exposing (Codecs, {6}, defaultCodecs, defineCodecs, unwrapCodecs)
+            """module {0} exposing (Codecs, {6}, defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
 
 import Graphql.Internal.Builder.Object as Object
 import Json.Decode as Decode exposing (Decoder)
+import Graphql.Internal.Encode
 import Json.Encode as Encode
 import Graphql.Codec exposing (Codec)
 
@@ -96,6 +97,10 @@ unwrapCodecs :
     -> {2}
 unwrapCodecs (Codecs unwrappedCodecs) =
     unwrappedCodecs
+
+
+unwrapEncoder getter (Codecs unwrappedCodecs) =
+    (unwrappedCodecs |> getter |> .encoder) >> Graphql.Internal.Encode.fromJson
 
 
 type Codecs {4}
