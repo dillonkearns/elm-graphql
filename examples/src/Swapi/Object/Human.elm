@@ -52,7 +52,7 @@ homePlanet =
 -}
 id : SelectionSet CustomScalarCodecs.Id Swapi.Object.Human
 id =
-    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.decoders |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the human.

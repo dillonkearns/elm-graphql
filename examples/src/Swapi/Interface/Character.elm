@@ -73,7 +73,7 @@ friends object_ =
 -}
 id : SelectionSet CustomScalarCodecs.Id Swapi.Interface.Character
 id =
-    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.decoders |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the character.

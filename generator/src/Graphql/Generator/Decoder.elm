@@ -36,13 +36,14 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                                 |> String.join "."
                     in
                     [ (context.scalarDecodersModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ])))
-                        |> ModuleName.append "decoders"
+                        |> ModuleName.append "codecs"
                     , context.apiSubmodule
                         ++ [ "Scalar" ]
                         ++ [ "unwrapCodecs" ]
                         |> String.join "."
-                    , ".decoder"
+                    , ".codec"
                         ++ ClassCaseName.normalized customScalarName
+                    , ".decoder"
                     ]
 
         Type.List listTypeRef ->
