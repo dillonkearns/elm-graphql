@@ -85,9 +85,9 @@ import {3}.Scalar
 import {1}
 
 
-verify : {3}.Scalar.Decoders {2}
+verify : {3}.Scalar.Codecs {2}
 verify =
-    {1}.decoders
+    {1}.codecs
 """
                 [ moduleName
                 , scalarDecodersModule |> ModuleName.toString

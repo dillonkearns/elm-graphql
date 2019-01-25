@@ -13,6 +13,6 @@ import CustomScalarCodecs
 import Swapi.Scalar
 
 
-verify : Swapi.Scalar.Decoders CustomScalarCodecs.Id CustomScalarCodecs.PosixTime
+verify : Swapi.Scalar.Codecs CustomScalarCodecs.Id CustomScalarCodecs.PosixTime
 verify =
-    CustomScalarCodecs.decoders
+    CustomScalarCodecs.codecs
