@@ -128,6 +128,7 @@ baseOption =
         |> Option.withDefault [ "Api" ]
 
 
+validateModuleName : String -> Cli.Validate.ValidationResult
 validateModuleName =
     Cli.Validate.regex "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
 

@@ -77,18 +77,18 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
            )
 
 
-generateEncoderLowLevel : List String -> Type.ReferrableType -> String
-generateEncoderLowLevel apiSubmodule referrableType =
-    generateEncoder_ True apiSubmodule (Type.TypeReference referrableType Type.NonNullable)
+generateEncoderLowLevel : Context -> Type.ReferrableType -> String
+generateEncoderLowLevel context referrableType =
+    generateEncoder_ context True (Type.TypeReference referrableType Type.NonNullable)
 
 
-generateEncoder : List String -> TypeReference -> String
-generateEncoder =
-    generateEncoder_ False
+generateEncoder : Context -> TypeReference -> String
+generateEncoder context =
+    generateEncoder_ context False
 
 
-generateEncoder_ : Bool -> List String -> TypeReference -> String
-generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType isNullable) =
+generateEncoder_ : Context -> Bool -> TypeReference -> String
+generateEncoder_ context forInputObject (Type.TypeReference referrableType isNullable) =
     let
         isNullableString =
             case isNullable of
@@ -116,15 +116,20 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
                 Scalar.Custom customScalarName ->
                     let
                         constructor =
-                            apiSubmodule
+                            context.apiSubmodule
                                 ++ [ "Scalar" ]
-                                ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ] ++ isNullableString
+                    -- interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ] ++ isNullableString
+                    interpolate "({0} |> {2}.unwrapCodecs |> .codec{1} |> .encoder)"
+                        [ (context.scalarDecodersModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ])))
+                            |> ModuleName.append "codecs"
+                        , ClassCaseName.normalized customScalarName
+                        , constructor
+                        ]
 
         Type.List typeRef ->
-            generateEncoder_ forInputObject apiSubmodule typeRef ++ isNullableString ++ " |> Encode.list"
+            generateEncoder_ context forInputObject typeRef ++ isNullableString ++ " |> Encode.list"
 
         Type.ObjectRef objectName ->
             MyDebug.crash "I don't expect to see object references as argument types."
@@ -137,7 +142,7 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
 
         Type.EnumRef enumName ->
             interpolate ("(Encode.enum {0})" ++ isNullableString)
-                [ Graphql.Generator.ModuleName.enum { apiSubmodule = apiSubmodule } enumName
+                [ Graphql.Generator.ModuleName.enum context enumName
                     ++ [ "toString" ]
                     |> String.join "."
                 ]
@@ -147,7 +152,7 @@ generateEncoder_ forInputObject apiSubmodule (Type.TypeReference referrableType 
                 [ "encode" ++ ClassCaseName.normalized inputObjectName ]
 
               else
-                Graphql.Generator.ModuleName.inputObject { apiSubmodule = apiSubmodule } inputObjectName
+                Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
                     ++ [ "encode" ++ ClassCaseName.normalized inputObjectName ]
              )
                 |> String.join "."

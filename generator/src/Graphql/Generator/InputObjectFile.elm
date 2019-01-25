@@ -143,7 +143,7 @@ encoderForField context field =
 
 
 encoderFunction : Context -> Type.Field -> String
-encoderFunction { apiSubmodule } field =
+encoderFunction context field =
     case field.typeRef of
         Type.TypeReference referrableType isNullable ->
             let
@@ -156,7 +156,7 @@ encoderFunction { apiSubmodule } field =
                             interpolate " |> Encode.optional input.{0}" [ CamelCaseName.normalized field.name ]
             in
             interpolate "({0}) {1}"
-                [ Decoder.generateEncoderLowLevel apiSubmodule referrableType
+                [ Decoder.generateEncoderLowLevel context referrableType
                 , filledOptionalsRecord_
                 ]
 
