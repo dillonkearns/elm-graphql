@@ -17,16 +17,19 @@ type PosixTime
     = PosixTime String
 
 
+type alias Codec elmValue =
+    { encoder : elmValue -> Value
+    , decoder : Decoder elmValue
+    }
+
+
 defineCodecs :
     { codecId : Codec valueId
     , codecPosixTime : Codec valuePosixTime
     }
     -> Codecs valueId valuePosixTime
 defineCodecs definitions =
-    Codecs
-        { codecId = definitions.codecId
-        , codecPosixTime = definitions.codecPosixTime
-        }
+    Codecs definitions
 
 
 unwrapCodecs :
@@ -35,8 +38,8 @@ unwrapCodecs :
         { codecId : Codec valueId
         , codecPosixTime : Codec valuePosixTime
         }
-unwrapCodecs (Codecs unwrappedDecoders) =
-    unwrappedDecoders
+unwrapCodecs (Codecs unwrappedCodecs) =
+    unwrappedCodecs
 
 
 type Codecs valueId valuePosixTime
@@ -49,20 +52,14 @@ type alias RawCodecs valueId valuePosixTime =
     }
 
 
-type alias Codec elmValue =
-    { encoder : elmValue -> Value
-    , decoder : Decoder elmValue
-    }
-
-
 defaultCodecs : RawCodecs Id PosixTime
 defaultCodecs =
     { codecId =
-        { encoder = \(Id rawId) -> Encode.string rawId
+        { encoder = \(Id raw) -> Encode.string raw
         , decoder = Object.scalarDecoder |> Decode.map Id
         }
     , codecPosixTime =
-        { encoder = \(PosixTime rawId) -> Encode.string rawId
+        { encoder = \(PosixTime raw) -> Encode.string raw
         , decoder = Object.scalarDecoder |> Decode.map PosixTime
         }
     }

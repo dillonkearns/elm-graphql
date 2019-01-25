@@ -78,18 +78,21 @@ placeholder =
 
 import Graphql.Internal.Builder.Object as Object
 import Json.Decode as Decode exposing (Decoder)
+import Graphql.Internal.Encode as Encode exposing (Value)
 
 
 {1}
 
-
+type alias Codec elmValue =
+    { encoder : elmValue -> Value
+    , decoder : Decoder elmValue
+    }
 
 defineCodecs :
     {2}
     -> Codecs {4}
 defineCodecs definitions =
-    Codecs
-        {3}
+    Codecs definitions
 
 
 unwrapCodecs :
@@ -119,26 +122,17 @@ defaultCodecs =
                 ++ (typesToGenerate
                         |> List.map
                             (\classCaseName ->
-                                interpolate "decoder{0} : Decoder decoder{0}"
+                                interpolate "codec{0} : Codec value{0}"
                                     [ ClassCaseName.normalized classCaseName ]
                             )
                         |> String.join "\n, "
                    )
                 ++ "}"
-            , "{"
-                ++ (typesToGenerate
-                        |> List.map
-                            (\classCaseName ->
-                                interpolate "decoder{0} = definitions.decoder{0}"
-                                    [ ClassCaseName.normalized classCaseName ]
-                            )
-                        |> String.join "\n, "
-                   )
-                ++ "}"
+            , "" -- TODO remove this
             , typesToGenerate
                 |> List.map
                     (\classCaseName ->
-                        "decoder"
+                        "value"
                             ++ ClassCaseName.normalized classCaseName
                     )
                 |> String.join " "
@@ -146,8 +140,9 @@ defaultCodecs =
                 ++ (typesToGenerate
                         |> List.map
                             (\classCaseName ->
-                                interpolate "decoder{0} = Object.scalarDecoder |> Decode.map {0}"
-                                    [ ClassCaseName.normalized classCaseName ]
+                                interpolate "codec{0} =\n  { encoder = \\({0} raw) -> Encode.string raw\n , decoder = Object.scalarDecoder |> Decode.map {0} }"
+                                    [ ClassCaseName.normalized classCaseName
+                                    ]
                             )
                         |> String.join "\n, "
                    )
