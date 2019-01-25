@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Expose type `Graphql.Codec` (for use with the `--scalar-codecs` CLI flag,
+  see [this example](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Example07CustomCodecs.elm)).
+
 ## [4.1.0] - 2018-12-16
 
 ### Added
