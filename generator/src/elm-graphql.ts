@@ -136,7 +136,7 @@ function onDataAvailable(
     writeIntrospectionFile(baseModule, outputPath);
     applyElmFormat(prependBasePath("/", baseModule, outputPath));
     if (customDecodersModule) {
-      verifyCustomDecodersFileIsValid(
+      verifyCustomCodecsFileIsValid(
         outputPath,
         baseModule,
         customDecodersModule
@@ -147,7 +147,7 @@ function onDataAvailable(
   app.ports.generateFiles.send(data);
 }
 
-function verifyCustomDecodersFileIsValid(
+function verifyCustomCodecsFileIsValid(
   outputPath: string,
   baseModule: string[],
   customDecodersModule: string
@@ -173,7 +173,7 @@ Your custom scalar decoders module, \`${customDecodersModule}\`, is invalid.
 
 This is because either:
 
-1) This is the first time you've run this CLI with the \`--scalar-decoders\` option.
+1) This is the first time you've run this CLI with the \`--scalar-codecs\` option.
   In this case, get a valid file, you can start by copy-pasting \`${baseModule.join(
     "."
   )}.ScalarDecoders\`. Then change the module name to \`${customDecodersModule}\`
