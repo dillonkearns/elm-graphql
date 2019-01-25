@@ -1,6 +1,7 @@
 port module Main exposing (main)
 
 import Browser
+import CustomScalarCodecs
 import Graphql.Document
 import Graphql.Http
 import Graphql.Operation exposing (RootSubscription)
@@ -19,9 +20,9 @@ import Swapi.Scalar
 import Swapi.Subscription as Subscription
 
 
-sendChatMessage : String -> Phrase -> SelectionSet () Graphql.Operation.RootMutation
+sendChatMessage : CustomScalarCodecs.Id -> Phrase -> SelectionSet () Graphql.Operation.RootMutation
 sendChatMessage characterId phrase =
-    Mutation.sendMessage { characterId = Swapi.Scalar.Id characterId, phrase = phrase } SelectionSet.empty
+    Mutation.sendMessage { characterId = characterId, phrase = phrase } SelectionSet.empty
         |> SelectionSet.map (\_ -> ())
 
 
@@ -58,7 +59,7 @@ characterSelection =
 
 type alias Model =
     { data : List ChatMessage
-    , characterId : String
+    , characterId : CustomScalarCodecs.Id
     , subscriptionStatus : SubscriptionStatus
     }
 
@@ -68,7 +69,7 @@ type Msg
     | SubscriptionDataReceived Json.Decode.Value
     | SentMessage (Result (Graphql.Http.Error ()) ())
       -- | SubscriptionStatusChanged Graphql.Subscription.Status
-    | ChangeCharacter String
+    | ChangeCharacter CustomScalarCodecs.Id
     | NewSubscriptionStatus SubscriptionStatus ()
 
 
@@ -84,7 +85,7 @@ init flags =
       -- , graphqlSubscriptionModel =
       --       graphqlSubscriptionModel
       --           |> Graphql.Subscription.onStatusChanged SubscriptionStatusChanged
-      , characterId = "1001"
+      , characterId = CustomScalarCodecs.Id 1001
       , subscriptionStatus = NotConnected
       }
     , createSubscriptions (subscriptionDocument |> Graphql.Document.serializeSubscription)
@@ -144,7 +145,7 @@ link { url, content } =
         [ text content ]
 
 
-characterRadioButton : ( String, String ) -> Html.Html Msg
+characterRadioButton : ( CustomScalarCodecs.Id, String ) -> Html.Html Msg
 characterRadioButton ( characterId, characterName ) =
     label []
         [ input
@@ -164,16 +165,20 @@ messageButtons =
     div [] (List.map messageButton Phrase.list)
 
 
-characters : List ( String, String )
+characters : List ( CustomScalarCodecs.Id, String )
 characters =
-    [ ( "1000", "Luke" )
-    , ( "1001", "Vader" )
-    , ( "1002", "Han" )
-    , ( "1003", "Leia" )
-    , ( "1004", "Tarkin" )
-    , ( "2000", "Threepio" )
-    , ( "2001", "Artoo" )
+    [ character 1000 "Luke"
+    , character 1001 "Vader"
+    , character 1002 "Han"
+    , character 1003 "Leia"
+    , character 1004 "Tarkin"
+    , character 2000 "Threepio"
+    , character 2001 "Artoo"
     ]
+
+
+character id name =
+    ( CustomScalarCodecs.Id id, name )
 
 
 messageButton : Phrase -> Html.Html Msg
@@ -186,13 +191,13 @@ chatMessagesView model =
     ul []
         (model
             |> List.map
-                (\{ phrase, character } ->
+                (\chatMessage ->
                     let
                         characterName =
-                            character |> Maybe.map .name |> Maybe.withDefault ""
+                            chatMessage.character |> Maybe.map .name |> Maybe.withDefault ""
 
                         avatar =
-                            character |> Maybe.map .avatarUrl |> Maybe.withDefault ""
+                            chatMessage.character |> Maybe.map .avatarUrl |> Maybe.withDefault ""
                     in
                     li []
                         [ img
@@ -201,7 +206,7 @@ chatMessagesView model =
                             , src avatar
                             ]
                             []
-                        , (characterName ++ ": " ++ (phrase |> phraseToString)) |> text
+                        , (characterName ++ ": " ++ (chatMessage.phrase |> phraseToString)) |> text
                         ]
                 )
         )
