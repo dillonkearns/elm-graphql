@@ -15,10 +15,10 @@ import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
-import Normalize.ScalarDecoders
+import Normalize.ScalarCodecs
 import Normalize.Union
 
 
-id : SelectionSet (Maybe (List (Maybe Normalize.ScalarDecoders.DogId))) Normalize.Object.ListId
+id : SelectionSet (Maybe (List (Maybe Normalize.ScalarCodecs.DogId))) Normalize.Object.ListId
 id =
-    Object.selectionForField "(Maybe (List (Maybe ScalarDecoders.DogId)))" "id" [] (Normalize.ScalarDecoders.codecs |> Normalize.Scalar.unwrapCodecs |> .codecDogId |> .decoder |> Decode.nullable |> Decode.list |> Decode.nullable)
+    Object.selectionForField "(Maybe (List (Maybe ScalarCodecs.DogId)))" "id" [] (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapCodecs |> .codecDogId |> .decoder |> Decode.nullable |> Decode.list |> Decode.nullable)

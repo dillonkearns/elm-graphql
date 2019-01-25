@@ -9,7 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -29,9 +29,9 @@ body =
 
 {-| The projects description body rendered to HTML.
 -}
-bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.Project
+bodyHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.Project
 bodyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| `true` if the object is closed (definition of closed may depend on type)
@@ -43,9 +43,9 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Project
+closedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.Project
 closedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "closedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 type alias ColumnsOptionalArguments =
@@ -79,9 +79,9 @@ columns fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Project
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Project
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who originally created the project.
@@ -98,9 +98,9 @@ databaseId =
     Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Project
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Project
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The project's name.
@@ -155,9 +155,9 @@ pendingCards fillInOptionals object_ =
 
 {-| The HTTP path for this project
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Project
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Project
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Whether the project is open or closed.
@@ -169,16 +169,16 @@ state =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Project
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Project
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this project
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Project
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Project
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Check if the current viewer can update this object.

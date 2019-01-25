@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -35,14 +35,14 @@ commit object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.MergedEvent
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.MergedEvent
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.MergedEvent
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.MergedEvent
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the Ref associated with the `merge` event.
@@ -68,13 +68,13 @@ pullRequest object_ =
 
 {-| The HTTP path for this merged event.
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.MergedEvent
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.MergedEvent
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this merged event.
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.MergedEvent
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.MergedEvent
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

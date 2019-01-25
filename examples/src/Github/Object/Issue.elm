@@ -14,7 +14,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -84,9 +84,9 @@ body =
 
 {-| Identifies the body of the issue rendered to HTML.
 -}
-bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.Issue
+bodyHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.Issue
 bodyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the body of the issue rendered to text.
@@ -105,9 +105,9 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Issue
+closedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.Issue
 closedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "closedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 type alias CommentsOptionalArguments =
@@ -141,9 +141,9 @@ comments fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Issue
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Issue
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Check if this comment was created via an email reply.
@@ -167,9 +167,9 @@ editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Issue
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Issue
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 type alias LabelsOptionalArguments =
@@ -203,9 +203,9 @@ labels fillInOptionals object_ =
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Issue
+lastEditedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.Issue
 lastEditedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "lastEditedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| `true` if the object is locked
@@ -289,9 +289,9 @@ projectCards fillInOptionals object_ =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Issue
+publishedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.Issue
 publishedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "publishedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -343,9 +343,9 @@ repository object_ =
 
 {-| The HTTP path for this issue
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Issue
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Issue
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the state of the issue.
@@ -360,7 +360,7 @@ type alias TimelineOptionalArguments =
     , after : OptionalArgument String
     , last : OptionalArgument Int
     , before : OptionalArgument String
-    , since : OptionalArgument Github.ScalarDecoders.DateTime
+    , since : OptionalArgument Github.ScalarCodecs.DateTime
     }
 
 
@@ -380,7 +380,7 @@ timeline fillInOptionals object_ =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, since = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .encoder) ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .encoder) ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "timeline" optionalArgs object_ identity
@@ -395,16 +395,16 @@ title =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Issue
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Issue
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this issue
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Issue
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Issue
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias UserContentEditsOptionalArguments =

@@ -14,7 +14,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -34,7 +34,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarDecoders.Uri Github.Object.User
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarCodecs.Uri Github.Object.User
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -44,7 +44,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The user's public profile bio.
@@ -56,9 +56,9 @@ bio =
 
 {-| The user's public profile bio as HTML.
 -}
-bioHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.User
+bioHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.User
 bioHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bioHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "bioHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 type alias CommitCommentsOptionalArguments =
@@ -99,9 +99,9 @@ company =
 
 {-| The user's public profile company as HTML.
 -}
-companyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.User
+companyHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.User
 companyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "companyHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "companyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 type alias ContributedRepositoriesOptionalArguments =
@@ -143,9 +143,9 @@ contributedRepositories fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.User
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.User
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -296,9 +296,9 @@ gists fillInOptionals object_ =
     Object.selectionForCompositeField "gists" optionalArgs object_ identity
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.User
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.User
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Whether or not this user is a participant in the GitHub Security Bug Bounty.
@@ -677,9 +677,9 @@ repository requiredArgs object_ =
 
 {-| The HTTP path for this user
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.User
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.User
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias StarredRepositoriesOptionalArguments =
@@ -717,16 +717,16 @@ starredRepositories fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.User
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.User
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this user
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.User
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.User
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Whether or not the viewer is able to follow the user.
@@ -782,6 +782,6 @@ watching fillInOptionals object_ =
 
 {-| A URL pointing to the user's public website/blog.
 -}
-websiteUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.User
+websiteUrl : SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.User
 websiteUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "websiteUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "websiteUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)

@@ -11,7 +11,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -45,9 +45,9 @@ body =
 
 {-| The comment body of this review comment rendered to HTML.
 -}
-bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.PullRequestReviewComment
+bodyHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.PullRequestReviewComment
 bodyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| The comment body of this review comment rendered as plain text.
@@ -66,9 +66,9 @@ commit object_ =
 
 {-| Identifies when the comment was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequestReviewComment
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.PullRequestReviewComment
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Check if this comment was created via an email reply.
@@ -94,9 +94,9 @@ diffHunk =
 
 {-| Identifies when the comment was created in a draft state.
 -}
-draftedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequestReviewComment
+draftedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.PullRequestReviewComment
 draftedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "draftedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "draftedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who edited the comment.
@@ -106,16 +106,16 @@ editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.PullRequestReviewComment
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.PullRequestReviewComment
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequestReviewComment
+lastEditedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.PullRequestReviewComment
 lastEditedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "lastEditedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| Identifies the original commit associated with the comment.
@@ -148,9 +148,9 @@ position =
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.PullRequestReviewComment
+publishedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.PullRequestReviewComment
 publishedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "publishedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| The pull request associated with this review comment.
@@ -223,23 +223,23 @@ repository object_ =
 
 {-| The HTTP path permalink for this review comment.
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequestReviewComment
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.PullRequestReviewComment
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies when the comment was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.PullRequestReviewComment
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.PullRequestReviewComment
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL permalink for this review comment.
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.PullRequestReviewComment
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.PullRequestReviewComment
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias UserContentEditsOptionalArguments =

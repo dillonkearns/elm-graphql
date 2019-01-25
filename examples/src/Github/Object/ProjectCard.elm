@@ -9,7 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -39,9 +39,9 @@ content object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ProjectCard
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ProjectCard
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The actor who created this card
@@ -58,9 +58,9 @@ databaseId =
     Object.selectionForField "(Maybe Int)" "databaseId" [] (Decode.int |> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.ProjectCard
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.ProjectCard
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The card note
@@ -86,9 +86,9 @@ projectColumn object_ =
 
 {-| The HTTP path for this card
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.ProjectCard
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.ProjectCard
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The state of ProjectCard
@@ -100,13 +100,13 @@ state =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ProjectCard
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.ProjectCard
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this card
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.ProjectCard
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.ProjectCard
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

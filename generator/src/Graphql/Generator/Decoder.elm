@@ -35,7 +35,7 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                                 ++ [ ClassCaseName.normalized customScalarName ]
                                 |> String.join "."
                     in
-                    [ (context.scalarDecodersModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ])))
+                    [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
                         |> ModuleName.append "codecs"
                     , context.apiSubmodule
                         ++ [ "Scalar" ]
@@ -122,7 +122,7 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
                     in
                     -- interpolate "(\\({0} raw) -> Encode.string raw)" [ constructor ] ++ isNullableString
                     interpolate "({0} |> {2}.unwrapCodecs |> .codec{1} |> .encoder)"
-                        [ (context.scalarDecodersModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ])))
+                        [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
                             |> ModuleName.append "codecs"
                         , ClassCaseName.normalized customScalarName
                         , constructor
@@ -193,8 +193,8 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                     "Float"
 
                 Scalar.Custom customScalarName ->
-                    (context.scalarDecodersModule
-                        |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+                    (context.scalarCodecsModule
+                        |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
                     )
                         |> ModuleName.append (ClassCaseName.normalized customScalarName)
 

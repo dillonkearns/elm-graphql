@@ -1,4 +1,4 @@
-module Graphql.Generator.ScalarDecoders exposing (generate)
+module Graphql.Generator.ScalarCodecs exposing (generate)
 
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -8,7 +8,7 @@ import String.Interpolate exposing (interpolate)
 
 generate : Context -> List TypeDefinition -> ( List String, String )
 generate context typeDefs =
-    ( context.apiSubmodule ++ [ "ScalarDecoders" ], fileContents context typeDefs )
+    ( context.apiSubmodule ++ [ "ScalarCodecs" ], fileContents context typeDefs )
 
 
 include : TypeDefinition -> Bool
@@ -59,7 +59,7 @@ fileContents context typeDefinitions =
                 |> List.map (\(TypeDefinition name definableType description) -> name)
 
         moduleName =
-            context.apiSubmodule ++ [ "ScalarDecoders" ] |> String.join "."
+            context.apiSubmodule ++ [ "ScalarCodecs" ] |> String.join "."
     in
     if typesToGenerate == [] then
         interpolate

@@ -10,7 +10,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -35,9 +35,9 @@ description =
     Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Label
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Label
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Indicates whether or not this is a default label.

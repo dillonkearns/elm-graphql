@@ -7,7 +7,7 @@ import Json.Decode as Decode exposing (Decoder)
 import ModuleName exposing (ModuleName)
 
 
-decoder : { apiSubmodule : List String, scalarDecodersModule : Maybe ModuleName } -> Decoder (Dict String String)
+decoder : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> Decoder (Dict String String)
 decoder options =
     Decode.map4 sortedIntrospectionData
         (Type.decoder

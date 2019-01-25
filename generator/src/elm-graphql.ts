@@ -155,7 +155,7 @@ function verifyCustomCodecsFileIsValid(
   const verifyDecodersFile = path.join(
     outputPath,
     ...baseModule,
-    "VerifyScalarDecoders.elm"
+    "VerifyScalarCodecs.elm"
   );
 
   try {
@@ -176,7 +176,7 @@ This is because either:
 1) This is the first time you've run this CLI with the \`--scalar-codecs\` option.
   In this case, get a valid file, you can start by copy-pasting \`${baseModule.join(
     "."
-  )}.ScalarDecoders\`. Then change the module name to \`${customDecodersModule}\`
+  )}.ScalarCodecs\`. Then change the module name to \`${customDecodersModule}\`
   and you have a valid starting point!
 2) You added or renamed a Custom Scalar in your GraphQL schema.
    To handle the new Custom Scalar, you can copy the relevant entries from \`${customDecodersModule}\`.
@@ -193,7 +193,7 @@ Check the following:
     Above the dashes (----) there are some details that might help you debug the issue. Remember, you can always
     copy-paste the \`${baseModule.join(
       "."
-    )}.ScalarDecoders\` module to get a valid file.
+    )}.ScalarCodecs\` module to get a valid file.
 
     After you've copy pasted the template file, or tried fixing the file,
     re-run this CLI command to make sure it is valid.

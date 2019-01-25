@@ -11,16 +11,16 @@ context :
     , subscription : Maybe String
     , apiSubmodule : List String
     , interfaces : InterfaceLookup
-    , scalarDecodersModule : Maybe ModuleName
+    , scalarCodecsModule : Maybe ModuleName
     }
     -> Context
-context { query, mutation, apiSubmodule, interfaces, subscription, scalarDecodersModule } =
+context { query, mutation, apiSubmodule, interfaces, subscription, scalarCodecsModule } =
     { query = ClassCaseName.build query
     , mutation = mutation |> Maybe.map ClassCaseName.build
     , subscription = subscription |> Maybe.map ClassCaseName.build
     , apiSubmodule = apiSubmodule
     , interfaces = interfaces
-    , scalarDecodersModule = scalarDecodersModule
+    , scalarCodecsModule = scalarCodecsModule
     }
 
 
@@ -30,7 +30,7 @@ type alias Context =
     , subscription : Maybe ClassCaseName
     , apiSubmodule : List String
     , interfaces : InterfaceLookup
-    , scalarDecodersModule : Maybe ModuleName
+    , scalarCodecsModule : Maybe ModuleName
     }
 
 
@@ -41,7 +41,7 @@ stub =
     , subscription = Nothing
     , apiSubmodule = [ "Api" ]
     , interfaces = Dict.empty
-    , scalarDecodersModule = Nothing
+    , scalarCodecsModule = Nothing
     }
 
 

@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -42,9 +42,9 @@ object object_ =
 
 {-| Entry file Git object ID.
 -}
-oid : SelectionSet Github.ScalarDecoders.GitObjectID Github.Object.TreeEntry
+oid : SelectionSet Github.ScalarCodecs.GitObjectID Github.Object.TreeEntry
 oid =
-    Object.selectionForField "ScalarDecoders.GitObjectID" "oid" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+    Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the tree entry belongs to

@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -35,21 +35,21 @@ byteSize =
 
 {-| The HTTP path for this Git object
 -}
-commitResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Blob
+commitResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Blob
 commitResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "commitResourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "commitResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this Git object
 -}
-commitUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Blob
+commitUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Blob
 commitUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "commitUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "commitUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Blob
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Blob
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Indicates whether the Blob is binary or text
@@ -68,9 +68,9 @@ isTruncated =
 
 {-| The Git object ID
 -}
-oid : SelectionSet Github.ScalarDecoders.GitObjectID Github.Object.Blob
+oid : SelectionSet Github.ScalarCodecs.GitObjectID Github.Object.Blob
 oid =
-    Object.selectionForField "ScalarDecoders.GitObjectID" "oid" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
+    Object.selectionForField "ScalarCodecs.GitObjectID" "oid" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .decoder)
 
 
 {-| The Repository the Git object belongs to

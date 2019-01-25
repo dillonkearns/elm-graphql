@@ -9,7 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -22,9 +22,9 @@ import Json.Decode as Decode
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.RepositoryInvitationRepository
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.RepositoryInvitationRepository
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The description of the repository.
@@ -36,9 +36,9 @@ description =
 
 {-| The description of the repository rendered to HTML.
 -}
-descriptionHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.RepositoryInvitationRepository
+descriptionHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.RepositoryInvitationRepository
 descriptionHTML =
-    Object.selectionForField "ScalarDecoders.Html" "descriptionHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "descriptionHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Returns how many forks there are of this repository in the whole network.
@@ -64,9 +64,9 @@ hasWikiEnabled =
 
 {-| The repository's URL.
 -}
-homepageUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.RepositoryInvitationRepository
+homepageUrl : SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.RepositoryInvitationRepository
 homepageUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "homepageUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "homepageUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 {-| Indicates if the repository is unmaintained.
@@ -127,9 +127,9 @@ lockReason =
 
 {-| The repository's original mirror URL.
 -}
-mirrorUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.RepositoryInvitationRepository
+mirrorUrl : SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.RepositoryInvitationRepository
 mirrorUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "mirrorUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "mirrorUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 {-| The name of the repository.
@@ -155,16 +155,16 @@ owner object_ =
 
 {-| Identifies when the repository was last pushed to.
 -}
-pushedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.RepositoryInvitationRepository
+pushedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.RepositoryInvitationRepository
 pushedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "pushedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "pushedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| The HTTP path for this repository
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.RepositoryInvitationRepository
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.RepositoryInvitationRepository
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias ShortDescriptionHTMLOptionalArguments =
@@ -176,7 +176,7 @@ type alias ShortDescriptionHTMLOptionalArguments =
   - limit - How many characters to return.
 
 -}
-shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> SelectionSet Github.ScalarDecoders.Html Github.Object.RepositoryInvitationRepository
+shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments) -> SelectionSet Github.ScalarCodecs.Html Github.Object.RepositoryInvitationRepository
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =
@@ -186,18 +186,18 @@ shortDescriptionHTML fillInOptionals =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarDecoders.Html" "shortDescriptionHTML" optionalArgs (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.RepositoryInvitationRepository
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.RepositoryInvitationRepository
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this repository
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.RepositoryInvitationRepository
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.RepositoryInvitationRepository
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

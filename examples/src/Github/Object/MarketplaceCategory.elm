@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -49,9 +49,9 @@ primaryListingCount =
 
 {-| The HTTP path for this Marketplace category.
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceCategory
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceCategory
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| How many Marketplace listings have this as their secondary category.
@@ -70,6 +70,6 @@ slug =
 
 {-| The HTTP URL for this Marketplace category.
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceCategory
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.MarketplaceCategory
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

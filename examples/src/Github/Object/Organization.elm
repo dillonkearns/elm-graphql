@@ -13,7 +13,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -33,7 +33,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -43,7 +43,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -67,9 +67,9 @@ email =
     Object.selectionForField "(Maybe String)" "email" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Organization
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Organization
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The organization's public profile location.
@@ -124,16 +124,16 @@ name =
 
 {-| The HTTP path creating a new team
 -}
-newTeamResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+newTeamResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 newTeamResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "newTeamResourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "newTeamResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL creating a new team
 -}
-newTeamUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+newTeamUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 newTeamUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "newTeamUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "newTeamUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The billing email for the organization.
@@ -231,16 +231,16 @@ projects fillInOptionals object_ =
 
 {-| The HTTP path listing organization's projects
 -}
-projectsResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+projectsResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 projectsResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "projectsResourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "projectsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing organization's projects
 -}
-projectsUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+projectsUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 projectsUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "projectsUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "projectsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias RepositoriesOptionalArguments =
@@ -298,9 +298,9 @@ repository requiredArgs object_ =
 
 {-| The HTTP path for this user
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The Organization's SAML Identity Providers
@@ -369,23 +369,23 @@ teams fillInOptionals object_ =
 
 {-| The HTTP path listing organization's teams
 -}
-teamsResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+teamsResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 teamsResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "teamsResourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "teamsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing organization's teams
 -}
-teamsUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+teamsUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 teamsUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "teamsUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "teamsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this user
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Organization
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Organization is adminable by the viewer.
@@ -425,6 +425,6 @@ viewerIsAMember =
 
 {-| The organization's public profile URL.
 -}
-websiteUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.Organization
+websiteUrl : SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.Organization
 websiteUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "websiteUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "websiteUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)

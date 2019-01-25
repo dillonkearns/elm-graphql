@@ -92,7 +92,7 @@ import {1}.Interface
 import {1}.Union
 import {1}.Scalar
 import {1}.InputObject
-import {1}.ScalarDecoders
+import {1}.ScalarCodecs
 import {2}
 import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -100,7 +100,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 """
         [ moduleName |> String.join "."
         , context.apiSubmodule |> String.join "."
-        , context.scalarDecodersModule
-            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+        , context.scalarCodecsModule
+            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
             |> ModuleName.toString
         ]

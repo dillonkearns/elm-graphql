@@ -9,7 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -27,16 +27,16 @@ cursor =
 
 {-| The HTTP path to the organization's member access page.
 -}
-memberAccessResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.TeamMemberEdge
+memberAccessResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.TeamMemberEdge
 memberAccessResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "memberAccessResourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "memberAccessResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL to the organization's member access page.
 -}
-memberAccessUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.TeamMemberEdge
+memberAccessUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.TeamMemberEdge
 memberAccessUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "memberAccessUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "memberAccessUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 node : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.TeamMemberEdge

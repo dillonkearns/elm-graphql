@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -42,6 +42,6 @@ name =
 
 {-| The path to the CoC
 -}
-url : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.CodeOfConduct
+url : SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.CodeOfConduct
 url =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)

@@ -9,7 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -29,9 +29,9 @@ content =
 
 {-| Identifies when the reaction was created.
 -}
-createdAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.ReactionGroup
+createdAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.ReactionGroup
 createdAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| The subject that was reacted to.

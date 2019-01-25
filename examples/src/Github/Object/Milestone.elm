@@ -11,7 +11,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -31,16 +31,16 @@ closed =
 
 {-| Identifies the date and time when the object was closed.
 -}
-closedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Milestone
+closedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.Milestone
 closedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "closedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "closedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Milestone
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Milestone
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the actor who created the milestone.
@@ -59,14 +59,14 @@ description =
 
 {-| Identifies the due date of the milestone.
 -}
-dueOn : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Milestone
+dueOn : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.Milestone
 dueOn =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "dueOn" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "dueOn" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Milestone
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Milestone
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 type alias IssuesOptionalArguments =
@@ -159,9 +159,9 @@ repository object_ =
 
 {-| The HTTP path for this milestone
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Milestone
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Milestone
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the state of the milestone.
@@ -180,13 +180,13 @@ title =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Milestone
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Milestone
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this milestone
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Milestone
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Milestone
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

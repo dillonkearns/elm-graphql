@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -50,9 +50,9 @@ comments fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Gist
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Gist
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The gist description.
@@ -62,9 +62,9 @@ description =
     Object.selectionForField "(Maybe String)" "description" [] (Decode.string |> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Gist
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Gist
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Whether the gist is public or not.
@@ -90,9 +90,9 @@ owner object_ =
 
 {-| Identifies when the gist was last pushed to.
 -}
-pushedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.Gist
+pushedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.Gist
 pushedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "pushedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "pushedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 type alias StargazersOptionalArguments =
@@ -128,9 +128,9 @@ stargazers fillInOptionals object_ =
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Gist
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Gist
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.

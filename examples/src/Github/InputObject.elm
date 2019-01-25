@@ -26,7 +26,7 @@ import Github.Enum.TopicSuggestionDeclineReason
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -47,7 +47,7 @@ buildAcceptTopicSuggestionInput required fillOptionals =
 
 
 type alias AcceptTopicSuggestionInputRequiredFields =
-    { repositoryId : Github.ScalarDecoders.Id
+    { repositoryId : Github.ScalarCodecs.Id
     , name : String
     }
 
@@ -60,7 +60,7 @@ type alias AcceptTopicSuggestionInputOptionalFields =
 -}
 type alias AcceptTopicSuggestionInput =
     { clientMutationId : OptionalArgument String
-    , repositoryId : Github.ScalarDecoders.Id
+    , repositoryId : Github.ScalarCodecs.Id
     , name : String
     }
 
@@ -70,7 +70,7 @@ type alias AcceptTopicSuggestionInput =
 encodeAcceptTopicSuggestionInput : AcceptTopicSuggestionInput -> Value
 encodeAcceptTopicSuggestionInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
 buildAddCommentInput : AddCommentInputRequiredFields -> (AddCommentInputOptionalFields -> AddCommentInputOptionalFields) -> AddCommentInput
@@ -84,7 +84,7 @@ buildAddCommentInput required fillOptionals =
 
 
 type alias AddCommentInputRequiredFields =
-    { subjectId : Github.ScalarDecoders.Id
+    { subjectId : Github.ScalarCodecs.Id
     , body : String
     }
 
@@ -97,7 +97,7 @@ type alias AddCommentInputOptionalFields =
 -}
 type alias AddCommentInput =
     { clientMutationId : OptionalArgument String
-    , subjectId : Github.ScalarDecoders.Id
+    , subjectId : Github.ScalarCodecs.Id
     , body : String
     }
 
@@ -107,7 +107,7 @@ type alias AddCommentInput =
 encodeAddCommentInput : AddCommentInput -> Value
 encodeAddCommentInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subjectId |> Just ), ( "body", Encode.string input.body |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subjectId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 buildAddProjectCardInput : AddProjectCardInputRequiredFields -> (AddProjectCardInputOptionalFields -> AddProjectCardInputOptionalFields) -> AddProjectCardInput
@@ -121,12 +121,12 @@ buildAddProjectCardInput required fillOptionals =
 
 
 type alias AddProjectCardInputRequiredFields =
-    { projectColumnId : Github.ScalarDecoders.Id }
+    { projectColumnId : Github.ScalarCodecs.Id }
 
 
 type alias AddProjectCardInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , contentId : OptionalArgument Github.ScalarDecoders.Id
+    , contentId : OptionalArgument Github.ScalarCodecs.Id
     , note : OptionalArgument String
     }
 
@@ -135,8 +135,8 @@ type alias AddProjectCardInputOptionalFields =
 -}
 type alias AddProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , projectColumnId : Github.ScalarDecoders.Id
-    , contentId : OptionalArgument Github.ScalarDecoders.Id
+    , projectColumnId : Github.ScalarCodecs.Id
+    , contentId : OptionalArgument Github.ScalarCodecs.Id
     , note : OptionalArgument String
     }
 
@@ -146,7 +146,7 @@ type alias AddProjectCardInput =
 encodeAddProjectCardInput : AddProjectCardInput -> Value
 encodeAddProjectCardInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectColumnId |> Just ), ( "contentId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.contentId ), ( "note", Encode.string |> Encode.optional input.note ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectColumnId |> Just ), ( "contentId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.contentId ), ( "note", Encode.string |> Encode.optional input.note ) ]
 
 
 buildAddProjectColumnInput : AddProjectColumnInputRequiredFields -> (AddProjectColumnInputOptionalFields -> AddProjectColumnInputOptionalFields) -> AddProjectColumnInput
@@ -160,7 +160,7 @@ buildAddProjectColumnInput required fillOptionals =
 
 
 type alias AddProjectColumnInputRequiredFields =
-    { projectId : Github.ScalarDecoders.Id
+    { projectId : Github.ScalarCodecs.Id
     , name : String
     }
 
@@ -173,7 +173,7 @@ type alias AddProjectColumnInputOptionalFields =
 -}
 type alias AddProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , projectId : Github.ScalarDecoders.Id
+    , projectId : Github.ScalarCodecs.Id
     , name : String
     }
 
@@ -183,7 +183,7 @@ type alias AddProjectColumnInput =
 encodeAddProjectColumnInput : AddProjectColumnInput -> Value
 encodeAddProjectColumnInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectId |> Just ), ( "name", Encode.string input.name |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
 buildAddPullRequestReviewCommentInput : AddPullRequestReviewCommentInputRequiredFields -> (AddPullRequestReviewCommentInputOptionalFields -> AddPullRequestReviewCommentInputOptionalFields) -> AddPullRequestReviewCommentInput
@@ -197,17 +197,17 @@ buildAddPullRequestReviewCommentInput required fillOptionals =
 
 
 type alias AddPullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewId : Github.ScalarDecoders.Id
+    { pullRequestReviewId : Github.ScalarCodecs.Id
     , body : String
     }
 
 
 type alias AddPullRequestReviewCommentInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
+    , commitOID : OptionalArgument Github.ScalarCodecs.GitObjectID
     , path : OptionalArgument String
     , position : OptionalArgument Int
-    , inReplyTo : OptionalArgument Github.ScalarDecoders.Id
+    , inReplyTo : OptionalArgument Github.ScalarCodecs.Id
     }
 
 
@@ -215,12 +215,12 @@ type alias AddPullRequestReviewCommentInputOptionalFields =
 -}
 type alias AddPullRequestReviewCommentInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.ScalarDecoders.Id
-    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
+    , pullRequestReviewId : Github.ScalarCodecs.Id
+    , commitOID : OptionalArgument Github.ScalarCodecs.GitObjectID
     , body : String
     , path : OptionalArgument String
     , position : OptionalArgument Int
-    , inReplyTo : OptionalArgument Github.ScalarDecoders.Id
+    , inReplyTo : OptionalArgument Github.ScalarCodecs.Id
     }
 
 
@@ -229,7 +229,7 @@ type alias AddPullRequestReviewCommentInput =
 encodeAddPullRequestReviewCommentInput : AddPullRequestReviewCommentInput -> Value
 encodeAddPullRequestReviewCommentInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "commitOID", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .encoder) |> Encode.optional input.commitOID ), ( "body", Encode.string input.body |> Just ), ( "path", Encode.string |> Encode.optional input.path ), ( "position", Encode.int |> Encode.optional input.position ), ( "inReplyTo", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.inReplyTo ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "commitOID", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .encoder) |> Encode.optional input.commitOID ), ( "body", Encode.string input.body |> Just ), ( "path", Encode.string |> Encode.optional input.path ), ( "position", Encode.int |> Encode.optional input.position ), ( "inReplyTo", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.inReplyTo ) ]
 
 
 buildAddPullRequestReviewInput : AddPullRequestReviewInputRequiredFields -> (AddPullRequestReviewInputOptionalFields -> AddPullRequestReviewInputOptionalFields) -> AddPullRequestReviewInput
@@ -243,12 +243,12 @@ buildAddPullRequestReviewInput required fillOptionals =
 
 
 type alias AddPullRequestReviewInputRequiredFields =
-    { pullRequestId : Github.ScalarDecoders.Id }
+    { pullRequestId : Github.ScalarCodecs.Id }
 
 
 type alias AddPullRequestReviewInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
+    , commitOID : OptionalArgument Github.ScalarCodecs.GitObjectID
     , body : OptionalArgument String
     , event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     , comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment))
@@ -259,8 +259,8 @@ type alias AddPullRequestReviewInputOptionalFields =
 -}
 type alias AddPullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestId : Github.ScalarDecoders.Id
-    , commitOID : OptionalArgument Github.ScalarDecoders.GitObjectID
+    , pullRequestId : Github.ScalarCodecs.Id
+    , commitOID : OptionalArgument Github.ScalarCodecs.GitObjectID
     , body : OptionalArgument String
     , event : OptionalArgument Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     , comments : OptionalArgument (List (Maybe DraftPullRequestReviewComment))
@@ -272,7 +272,7 @@ type alias AddPullRequestReviewInput =
 encodeAddPullRequestReviewInput : AddPullRequestReviewInput -> Value
 encodeAddPullRequestReviewInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestId |> Just ), ( "commitOID", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .encoder) |> Encode.optional input.commitOID ), ( "body", Encode.string |> Encode.optional input.body ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString |> Encode.optional input.event ), ( "comments", (encodeDraftPullRequestReviewComment |> Encode.maybe |> Encode.list) |> Encode.optional input.comments ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestId |> Just ), ( "commitOID", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .encoder) |> Encode.optional input.commitOID ), ( "body", Encode.string |> Encode.optional input.body ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString |> Encode.optional input.event ), ( "comments", (encodeDraftPullRequestReviewComment |> Encode.maybe |> Encode.list) |> Encode.optional input.comments ) ]
 
 
 buildAddReactionInput : AddReactionInputRequiredFields -> (AddReactionInputOptionalFields -> AddReactionInputOptionalFields) -> AddReactionInput
@@ -286,7 +286,7 @@ buildAddReactionInput required fillOptionals =
 
 
 type alias AddReactionInputRequiredFields =
-    { subjectId : Github.ScalarDecoders.Id
+    { subjectId : Github.ScalarCodecs.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -299,7 +299,7 @@ type alias AddReactionInputOptionalFields =
 -}
 type alias AddReactionInput =
     { clientMutationId : OptionalArgument String
-    , subjectId : Github.ScalarDecoders.Id
+    , subjectId : Github.ScalarCodecs.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -309,7 +309,7 @@ type alias AddReactionInput =
 encodeAddReactionInput : AddReactionInput -> Value
 encodeAddReactionInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
 buildAddStarInput : AddStarInputRequiredFields -> (AddStarInputOptionalFields -> AddStarInputOptionalFields) -> AddStarInput
@@ -323,7 +323,7 @@ buildAddStarInput required fillOptionals =
 
 
 type alias AddStarInputRequiredFields =
-    { starrableId : Github.ScalarDecoders.Id }
+    { starrableId : Github.ScalarCodecs.Id }
 
 
 type alias AddStarInputOptionalFields =
@@ -334,7 +334,7 @@ type alias AddStarInputOptionalFields =
 -}
 type alias AddStarInput =
     { clientMutationId : OptionalArgument String
-    , starrableId : Github.ScalarDecoders.Id
+    , starrableId : Github.ScalarCodecs.Id
     }
 
 
@@ -343,7 +343,7 @@ type alias AddStarInput =
 encodeAddStarInput : AddStarInput -> Value
 encodeAddStarInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.starrableId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.starrableId |> Just ) ]
 
 
 buildCommitAuthor : (CommitAuthorOptionalFields -> CommitAuthorOptionalFields) -> CommitAuthor
@@ -357,7 +357,7 @@ buildCommitAuthor fillOptionals =
 
 
 type alias CommitAuthorOptionalFields =
-    { id : OptionalArgument Github.ScalarDecoders.Id
+    { id : OptionalArgument Github.ScalarCodecs.Id
     , emails : OptionalArgument (List String)
     }
 
@@ -365,7 +365,7 @@ type alias CommitAuthorOptionalFields =
 {-| Type for the CommitAuthor input object.
 -}
 type alias CommitAuthor =
-    { id : OptionalArgument Github.ScalarDecoders.Id
+    { id : OptionalArgument Github.ScalarCodecs.Id
     , emails : OptionalArgument (List String)
     }
 
@@ -375,7 +375,7 @@ type alias CommitAuthor =
 encodeCommitAuthor : CommitAuthor -> Value
 encodeCommitAuthor input =
     Encode.maybeObject
-        [ ( "id", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list) |> Encode.optional input.emails ) ]
+        [ ( "id", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list) |> Encode.optional input.emails ) ]
 
 
 buildCreateProjectInput : CreateProjectInputRequiredFields -> (CreateProjectInputOptionalFields -> CreateProjectInputOptionalFields) -> CreateProjectInput
@@ -389,7 +389,7 @@ buildCreateProjectInput required fillOptionals =
 
 
 type alias CreateProjectInputRequiredFields =
-    { ownerId : Github.ScalarDecoders.Id
+    { ownerId : Github.ScalarCodecs.Id
     , name : String
     }
 
@@ -404,7 +404,7 @@ type alias CreateProjectInputOptionalFields =
 -}
 type alias CreateProjectInput =
     { clientMutationId : OptionalArgument String
-    , ownerId : Github.ScalarDecoders.Id
+    , ownerId : Github.ScalarCodecs.Id
     , name : String
     , body : OptionalArgument String
     }
@@ -415,7 +415,7 @@ type alias CreateProjectInput =
 encodeCreateProjectInput : CreateProjectInput -> Value
 encodeCreateProjectInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "ownerId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.ownerId |> Just ), ( "name", Encode.string input.name |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "ownerId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.ownerId |> Just ), ( "name", Encode.string input.name |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
 buildDeclineTopicSuggestionInput : DeclineTopicSuggestionInputRequiredFields -> (DeclineTopicSuggestionInputOptionalFields -> DeclineTopicSuggestionInputOptionalFields) -> DeclineTopicSuggestionInput
@@ -429,7 +429,7 @@ buildDeclineTopicSuggestionInput required fillOptionals =
 
 
 type alias DeclineTopicSuggestionInputRequiredFields =
-    { repositoryId : Github.ScalarDecoders.Id
+    { repositoryId : Github.ScalarCodecs.Id
     , name : String
     , reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason
     }
@@ -443,7 +443,7 @@ type alias DeclineTopicSuggestionInputOptionalFields =
 -}
 type alias DeclineTopicSuggestionInput =
     { clientMutationId : OptionalArgument String
-    , repositoryId : Github.ScalarDecoders.Id
+    , repositoryId : Github.ScalarCodecs.Id
     , name : String
     , reason : Github.Enum.TopicSuggestionDeclineReason.TopicSuggestionDeclineReason
     }
@@ -454,7 +454,7 @@ type alias DeclineTopicSuggestionInput =
 encodeDeclineTopicSuggestionInput : DeclineTopicSuggestionInput -> Value
 encodeDeclineTopicSuggestionInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ), ( "reason", Encode.enum Github.Enum.TopicSuggestionDeclineReason.toString input.reason |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ), ( "reason", Encode.enum Github.Enum.TopicSuggestionDeclineReason.toString input.reason |> Just ) ]
 
 
 buildDeleteProjectCardInput : DeleteProjectCardInputRequiredFields -> (DeleteProjectCardInputOptionalFields -> DeleteProjectCardInputOptionalFields) -> DeleteProjectCardInput
@@ -468,7 +468,7 @@ buildDeleteProjectCardInput required fillOptionals =
 
 
 type alias DeleteProjectCardInputRequiredFields =
-    { cardId : Github.ScalarDecoders.Id }
+    { cardId : Github.ScalarCodecs.Id }
 
 
 type alias DeleteProjectCardInputOptionalFields =
@@ -479,7 +479,7 @@ type alias DeleteProjectCardInputOptionalFields =
 -}
 type alias DeleteProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , cardId : Github.ScalarDecoders.Id
+    , cardId : Github.ScalarCodecs.Id
     }
 
 
@@ -488,7 +488,7 @@ type alias DeleteProjectCardInput =
 encodeDeleteProjectCardInput : DeleteProjectCardInput -> Value
 encodeDeleteProjectCardInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.cardId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.cardId |> Just ) ]
 
 
 buildDeleteProjectColumnInput : DeleteProjectColumnInputRequiredFields -> (DeleteProjectColumnInputOptionalFields -> DeleteProjectColumnInputOptionalFields) -> DeleteProjectColumnInput
@@ -502,7 +502,7 @@ buildDeleteProjectColumnInput required fillOptionals =
 
 
 type alias DeleteProjectColumnInputRequiredFields =
-    { columnId : Github.ScalarDecoders.Id }
+    { columnId : Github.ScalarCodecs.Id }
 
 
 type alias DeleteProjectColumnInputOptionalFields =
@@ -513,7 +513,7 @@ type alias DeleteProjectColumnInputOptionalFields =
 -}
 type alias DeleteProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , columnId : Github.ScalarDecoders.Id
+    , columnId : Github.ScalarCodecs.Id
     }
 
 
@@ -522,7 +522,7 @@ type alias DeleteProjectColumnInput =
 encodeDeleteProjectColumnInput : DeleteProjectColumnInput -> Value
 encodeDeleteProjectColumnInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.columnId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.columnId |> Just ) ]
 
 
 buildDeleteProjectInput : DeleteProjectInputRequiredFields -> (DeleteProjectInputOptionalFields -> DeleteProjectInputOptionalFields) -> DeleteProjectInput
@@ -536,7 +536,7 @@ buildDeleteProjectInput required fillOptionals =
 
 
 type alias DeleteProjectInputRequiredFields =
-    { projectId : Github.ScalarDecoders.Id }
+    { projectId : Github.ScalarCodecs.Id }
 
 
 type alias DeleteProjectInputOptionalFields =
@@ -547,7 +547,7 @@ type alias DeleteProjectInputOptionalFields =
 -}
 type alias DeleteProjectInput =
     { clientMutationId : OptionalArgument String
-    , projectId : Github.ScalarDecoders.Id
+    , projectId : Github.ScalarCodecs.Id
     }
 
 
@@ -556,7 +556,7 @@ type alias DeleteProjectInput =
 encodeDeleteProjectInput : DeleteProjectInput -> Value
 encodeDeleteProjectInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectId |> Just ) ]
 
 
 buildDeletePullRequestReviewInput : DeletePullRequestReviewInputRequiredFields -> (DeletePullRequestReviewInputOptionalFields -> DeletePullRequestReviewInputOptionalFields) -> DeletePullRequestReviewInput
@@ -570,7 +570,7 @@ buildDeletePullRequestReviewInput required fillOptionals =
 
 
 type alias DeletePullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.ScalarDecoders.Id }
+    { pullRequestReviewId : Github.ScalarCodecs.Id }
 
 
 type alias DeletePullRequestReviewInputOptionalFields =
@@ -581,7 +581,7 @@ type alias DeletePullRequestReviewInputOptionalFields =
 -}
 type alias DeletePullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.ScalarDecoders.Id
+    , pullRequestReviewId : Github.ScalarCodecs.Id
     }
 
 
@@ -590,7 +590,7 @@ type alias DeletePullRequestReviewInput =
 encodeDeletePullRequestReviewInput : DeletePullRequestReviewInput -> Value
 encodeDeletePullRequestReviewInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ) ]
 
 
 buildDismissPullRequestReviewInput : DismissPullRequestReviewInputRequiredFields -> (DismissPullRequestReviewInputOptionalFields -> DismissPullRequestReviewInputOptionalFields) -> DismissPullRequestReviewInput
@@ -604,7 +604,7 @@ buildDismissPullRequestReviewInput required fillOptionals =
 
 
 type alias DismissPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.ScalarDecoders.Id
+    { pullRequestReviewId : Github.ScalarCodecs.Id
     , message : String
     }
 
@@ -617,7 +617,7 @@ type alias DismissPullRequestReviewInputOptionalFields =
 -}
 type alias DismissPullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.ScalarDecoders.Id
+    , pullRequestReviewId : Github.ScalarCodecs.Id
     , message : String
     }
 
@@ -627,7 +627,7 @@ type alias DismissPullRequestReviewInput =
 encodeDismissPullRequestReviewInput : DismissPullRequestReviewInput -> Value
 encodeDismissPullRequestReviewInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "message", Encode.string input.message |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "message", Encode.string input.message |> Just ) ]
 
 
 buildDraftPullRequestReviewComment : DraftPullRequestReviewCommentRequiredFields -> DraftPullRequestReviewComment
@@ -751,7 +751,7 @@ buildLockLockableInput required fillOptionals =
 
 
 type alias LockLockableInputRequiredFields =
-    { lockableId : Github.ScalarDecoders.Id }
+    { lockableId : Github.ScalarCodecs.Id }
 
 
 type alias LockLockableInputOptionalFields =
@@ -764,7 +764,7 @@ type alias LockLockableInputOptionalFields =
 -}
 type alias LockLockableInput =
     { clientMutationId : OptionalArgument String
-    , lockableId : Github.ScalarDecoders.Id
+    , lockableId : Github.ScalarCodecs.Id
     , lockReason : OptionalArgument Github.Enum.LockReason.LockReason
     }
 
@@ -774,7 +774,7 @@ type alias LockLockableInput =
 encodeLockLockableInput : LockLockableInput -> Value
 encodeLockLockableInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "lockableId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.lockableId |> Just ), ( "lockReason", Encode.enum Github.Enum.LockReason.toString |> Encode.optional input.lockReason ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "lockableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.lockableId |> Just ), ( "lockReason", Encode.enum Github.Enum.LockReason.toString |> Encode.optional input.lockReason ) ]
 
 
 buildMilestoneOrder : MilestoneOrderRequiredFields -> MilestoneOrder
@@ -815,14 +815,14 @@ buildMoveProjectCardInput required fillOptionals =
 
 
 type alias MoveProjectCardInputRequiredFields =
-    { cardId : Github.ScalarDecoders.Id
-    , columnId : Github.ScalarDecoders.Id
+    { cardId : Github.ScalarCodecs.Id
+    , columnId : Github.ScalarCodecs.Id
     }
 
 
 type alias MoveProjectCardInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , afterCardId : OptionalArgument Github.ScalarDecoders.Id
+    , afterCardId : OptionalArgument Github.ScalarCodecs.Id
     }
 
 
@@ -830,9 +830,9 @@ type alias MoveProjectCardInputOptionalFields =
 -}
 type alias MoveProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , cardId : Github.ScalarDecoders.Id
-    , columnId : Github.ScalarDecoders.Id
-    , afterCardId : OptionalArgument Github.ScalarDecoders.Id
+    , cardId : Github.ScalarCodecs.Id
+    , columnId : Github.ScalarCodecs.Id
+    , afterCardId : OptionalArgument Github.ScalarCodecs.Id
     }
 
 
@@ -841,7 +841,7 @@ type alias MoveProjectCardInput =
 encodeMoveProjectCardInput : MoveProjectCardInput -> Value
 encodeMoveProjectCardInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.cardId |> Just ), ( "columnId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.columnId |> Just ), ( "afterCardId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.afterCardId ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.cardId |> Just ), ( "columnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.columnId |> Just ), ( "afterCardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.afterCardId ) ]
 
 
 buildMoveProjectColumnInput : MoveProjectColumnInputRequiredFields -> (MoveProjectColumnInputOptionalFields -> MoveProjectColumnInputOptionalFields) -> MoveProjectColumnInput
@@ -855,12 +855,12 @@ buildMoveProjectColumnInput required fillOptionals =
 
 
 type alias MoveProjectColumnInputRequiredFields =
-    { columnId : Github.ScalarDecoders.Id }
+    { columnId : Github.ScalarCodecs.Id }
 
 
 type alias MoveProjectColumnInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , afterColumnId : OptionalArgument Github.ScalarDecoders.Id
+    , afterColumnId : OptionalArgument Github.ScalarCodecs.Id
     }
 
 
@@ -868,8 +868,8 @@ type alias MoveProjectColumnInputOptionalFields =
 -}
 type alias MoveProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , columnId : Github.ScalarDecoders.Id
-    , afterColumnId : OptionalArgument Github.ScalarDecoders.Id
+    , columnId : Github.ScalarCodecs.Id
+    , afterColumnId : OptionalArgument Github.ScalarCodecs.Id
     }
 
 
@@ -878,7 +878,7 @@ type alias MoveProjectColumnInput =
 encodeMoveProjectColumnInput : MoveProjectColumnInput -> Value
 encodeMoveProjectColumnInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.columnId |> Just ), ( "afterColumnId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.afterColumnId ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.columnId |> Just ), ( "afterColumnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.optional input.afterColumnId ) ]
 
 
 buildProjectOrder : ProjectOrderRequiredFields -> ProjectOrder
@@ -1000,8 +1000,8 @@ buildRemoveOutsideCollaboratorInput required fillOptionals =
 
 
 type alias RemoveOutsideCollaboratorInputRequiredFields =
-    { userId : Github.ScalarDecoders.Id
-    , organizationId : Github.ScalarDecoders.Id
+    { userId : Github.ScalarCodecs.Id
+    , organizationId : Github.ScalarCodecs.Id
     }
 
 
@@ -1013,8 +1013,8 @@ type alias RemoveOutsideCollaboratorInputOptionalFields =
 -}
 type alias RemoveOutsideCollaboratorInput =
     { clientMutationId : OptionalArgument String
-    , userId : Github.ScalarDecoders.Id
-    , organizationId : Github.ScalarDecoders.Id
+    , userId : Github.ScalarCodecs.Id
+    , organizationId : Github.ScalarCodecs.Id
     }
 
 
@@ -1023,7 +1023,7 @@ type alias RemoveOutsideCollaboratorInput =
 encodeRemoveOutsideCollaboratorInput : RemoveOutsideCollaboratorInput -> Value
 encodeRemoveOutsideCollaboratorInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "userId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.userId |> Just ), ( "organizationId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.organizationId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "userId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.userId |> Just ), ( "organizationId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.organizationId |> Just ) ]
 
 
 buildRemoveReactionInput : RemoveReactionInputRequiredFields -> (RemoveReactionInputOptionalFields -> RemoveReactionInputOptionalFields) -> RemoveReactionInput
@@ -1037,7 +1037,7 @@ buildRemoveReactionInput required fillOptionals =
 
 
 type alias RemoveReactionInputRequiredFields =
-    { subjectId : Github.ScalarDecoders.Id
+    { subjectId : Github.ScalarCodecs.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -1050,7 +1050,7 @@ type alias RemoveReactionInputOptionalFields =
 -}
 type alias RemoveReactionInput =
     { clientMutationId : OptionalArgument String
-    , subjectId : Github.ScalarDecoders.Id
+    , subjectId : Github.ScalarCodecs.Id
     , content : Github.Enum.ReactionContent.ReactionContent
     }
 
@@ -1060,7 +1060,7 @@ type alias RemoveReactionInput =
 encodeRemoveReactionInput : RemoveReactionInput -> Value
 encodeRemoveReactionInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
 buildRemoveStarInput : RemoveStarInputRequiredFields -> (RemoveStarInputOptionalFields -> RemoveStarInputOptionalFields) -> RemoveStarInput
@@ -1074,7 +1074,7 @@ buildRemoveStarInput required fillOptionals =
 
 
 type alias RemoveStarInputRequiredFields =
-    { starrableId : Github.ScalarDecoders.Id }
+    { starrableId : Github.ScalarCodecs.Id }
 
 
 type alias RemoveStarInputOptionalFields =
@@ -1085,7 +1085,7 @@ type alias RemoveStarInputOptionalFields =
 -}
 type alias RemoveStarInput =
     { clientMutationId : OptionalArgument String
-    , starrableId : Github.ScalarDecoders.Id
+    , starrableId : Github.ScalarCodecs.Id
     }
 
 
@@ -1094,7 +1094,7 @@ type alias RemoveStarInput =
 encodeRemoveStarInput : RemoveStarInput -> Value
 encodeRemoveStarInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.starrableId |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.starrableId |> Just ) ]
 
 
 buildRepositoryOrder : RepositoryOrderRequiredFields -> RepositoryOrder
@@ -1135,13 +1135,13 @@ buildRequestReviewsInput required fillOptionals =
 
 
 type alias RequestReviewsInputRequiredFields =
-    { pullRequestId : Github.ScalarDecoders.Id }
+    { pullRequestId : Github.ScalarCodecs.Id }
 
 
 type alias RequestReviewsInputOptionalFields =
     { clientMutationId : OptionalArgument String
-    , userIds : OptionalArgument (List Github.ScalarDecoders.Id)
-    , teamIds : OptionalArgument (List Github.ScalarDecoders.Id)
+    , userIds : OptionalArgument (List Github.ScalarCodecs.Id)
+    , teamIds : OptionalArgument (List Github.ScalarCodecs.Id)
     , union : OptionalArgument Bool
     }
 
@@ -1150,9 +1150,9 @@ type alias RequestReviewsInputOptionalFields =
 -}
 type alias RequestReviewsInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestId : Github.ScalarDecoders.Id
-    , userIds : OptionalArgument (List Github.ScalarDecoders.Id)
-    , teamIds : OptionalArgument (List Github.ScalarDecoders.Id)
+    , pullRequestId : Github.ScalarCodecs.Id
+    , userIds : OptionalArgument (List Github.ScalarCodecs.Id)
+    , teamIds : OptionalArgument (List Github.ScalarCodecs.Id)
     , union : OptionalArgument Bool
     }
 
@@ -1162,7 +1162,7 @@ type alias RequestReviewsInput =
 encodeRequestReviewsInput : RequestReviewsInput -> Value
 encodeRequestReviewsInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestId |> Just ), ( "userIds", ((Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.list) |> Encode.optional input.userIds ), ( "teamIds", ((Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.list) |> Encode.optional input.teamIds ), ( "union", Encode.bool |> Encode.optional input.union ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestId |> Just ), ( "userIds", ((Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.list) |> Encode.optional input.userIds ), ( "teamIds", ((Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.list) |> Encode.optional input.teamIds ), ( "union", Encode.bool |> Encode.optional input.union ) ]
 
 
 buildStarOrder : StarOrderRequiredFields -> StarOrder
@@ -1203,7 +1203,7 @@ buildSubmitPullRequestReviewInput required fillOptionals =
 
 
 type alias SubmitPullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.ScalarDecoders.Id
+    { pullRequestReviewId : Github.ScalarCodecs.Id
     , event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     }
 
@@ -1218,7 +1218,7 @@ type alias SubmitPullRequestReviewInputOptionalFields =
 -}
 type alias SubmitPullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.ScalarDecoders.Id
+    , pullRequestReviewId : Github.ScalarCodecs.Id
     , event : Github.Enum.PullRequestReviewEvent.PullRequestReviewEvent
     , body : OptionalArgument String
     }
@@ -1229,7 +1229,7 @@ type alias SubmitPullRequestReviewInput =
 encodeSubmitPullRequestReviewInput : SubmitPullRequestReviewInput -> Value
 encodeSubmitPullRequestReviewInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString input.event |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString input.event |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
 buildTeamOrder : TeamOrderRequiredFields -> TeamOrder
@@ -1297,7 +1297,7 @@ buildUpdateProjectCardInput required fillOptionals =
 
 
 type alias UpdateProjectCardInputRequiredFields =
-    { projectCardId : Github.ScalarDecoders.Id
+    { projectCardId : Github.ScalarCodecs.Id
     , note : String
     }
 
@@ -1310,7 +1310,7 @@ type alias UpdateProjectCardInputOptionalFields =
 -}
 type alias UpdateProjectCardInput =
     { clientMutationId : OptionalArgument String
-    , projectCardId : Github.ScalarDecoders.Id
+    , projectCardId : Github.ScalarCodecs.Id
     , note : String
     }
 
@@ -1320,7 +1320,7 @@ type alias UpdateProjectCardInput =
 encodeUpdateProjectCardInput : UpdateProjectCardInput -> Value
 encodeUpdateProjectCardInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectCardId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectCardId |> Just ), ( "note", Encode.string input.note |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectCardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectCardId |> Just ), ( "note", Encode.string input.note |> Just ) ]
 
 
 buildUpdateProjectColumnInput : UpdateProjectColumnInputRequiredFields -> (UpdateProjectColumnInputOptionalFields -> UpdateProjectColumnInputOptionalFields) -> UpdateProjectColumnInput
@@ -1334,7 +1334,7 @@ buildUpdateProjectColumnInput required fillOptionals =
 
 
 type alias UpdateProjectColumnInputRequiredFields =
-    { projectColumnId : Github.ScalarDecoders.Id
+    { projectColumnId : Github.ScalarCodecs.Id
     , name : String
     }
 
@@ -1347,7 +1347,7 @@ type alias UpdateProjectColumnInputOptionalFields =
 -}
 type alias UpdateProjectColumnInput =
     { clientMutationId : OptionalArgument String
-    , projectColumnId : Github.ScalarDecoders.Id
+    , projectColumnId : Github.ScalarCodecs.Id
     , name : String
     }
 
@@ -1357,7 +1357,7 @@ type alias UpdateProjectColumnInput =
 encodeUpdateProjectColumnInput : UpdateProjectColumnInput -> Value
 encodeUpdateProjectColumnInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectColumnId |> Just ), ( "name", Encode.string input.name |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectColumnId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
 buildUpdateProjectInput : UpdateProjectInputRequiredFields -> (UpdateProjectInputOptionalFields -> UpdateProjectInputOptionalFields) -> UpdateProjectInput
@@ -1371,7 +1371,7 @@ buildUpdateProjectInput required fillOptionals =
 
 
 type alias UpdateProjectInputRequiredFields =
-    { projectId : Github.ScalarDecoders.Id }
+    { projectId : Github.ScalarCodecs.Id }
 
 
 type alias UpdateProjectInputOptionalFields =
@@ -1387,7 +1387,7 @@ type alias UpdateProjectInputOptionalFields =
 -}
 type alias UpdateProjectInput =
     { clientMutationId : OptionalArgument String
-    , projectId : Github.ScalarDecoders.Id
+    , projectId : Github.ScalarCodecs.Id
     , name : OptionalArgument String
     , body : OptionalArgument String
     , state : OptionalArgument Github.Enum.ProjectState.ProjectState
@@ -1400,7 +1400,7 @@ type alias UpdateProjectInput =
 encodeUpdateProjectInput : UpdateProjectInput -> Value
 encodeUpdateProjectInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectId |> Just ), ( "name", Encode.string |> Encode.optional input.name ), ( "body", Encode.string |> Encode.optional input.body ), ( "state", Encode.enum Github.Enum.ProjectState.toString |> Encode.optional input.state ), ( "public", Encode.bool |> Encode.optional input.public ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.projectId |> Just ), ( "name", Encode.string |> Encode.optional input.name ), ( "body", Encode.string |> Encode.optional input.body ), ( "state", Encode.enum Github.Enum.ProjectState.toString |> Encode.optional input.state ), ( "public", Encode.bool |> Encode.optional input.public ) ]
 
 
 buildUpdatePullRequestReviewCommentInput : UpdatePullRequestReviewCommentInputRequiredFields -> (UpdatePullRequestReviewCommentInputOptionalFields -> UpdatePullRequestReviewCommentInputOptionalFields) -> UpdatePullRequestReviewCommentInput
@@ -1414,7 +1414,7 @@ buildUpdatePullRequestReviewCommentInput required fillOptionals =
 
 
 type alias UpdatePullRequestReviewCommentInputRequiredFields =
-    { pullRequestReviewCommentId : Github.ScalarDecoders.Id
+    { pullRequestReviewCommentId : Github.ScalarCodecs.Id
     , body : String
     }
 
@@ -1427,7 +1427,7 @@ type alias UpdatePullRequestReviewCommentInputOptionalFields =
 -}
 type alias UpdatePullRequestReviewCommentInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewCommentId : Github.ScalarDecoders.Id
+    , pullRequestReviewCommentId : Github.ScalarCodecs.Id
     , body : String
     }
 
@@ -1437,7 +1437,7 @@ type alias UpdatePullRequestReviewCommentInput =
 encodeUpdatePullRequestReviewCommentInput : UpdatePullRequestReviewCommentInput -> Value
 encodeUpdatePullRequestReviewCommentInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewCommentId |> Just ), ( "body", Encode.string input.body |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewCommentId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 buildUpdatePullRequestReviewInput : UpdatePullRequestReviewInputRequiredFields -> (UpdatePullRequestReviewInputOptionalFields -> UpdatePullRequestReviewInputOptionalFields) -> UpdatePullRequestReviewInput
@@ -1451,7 +1451,7 @@ buildUpdatePullRequestReviewInput required fillOptionals =
 
 
 type alias UpdatePullRequestReviewInputRequiredFields =
-    { pullRequestReviewId : Github.ScalarDecoders.Id
+    { pullRequestReviewId : Github.ScalarCodecs.Id
     , body : String
     }
 
@@ -1464,7 +1464,7 @@ type alias UpdatePullRequestReviewInputOptionalFields =
 -}
 type alias UpdatePullRequestReviewInput =
     { clientMutationId : OptionalArgument String
-    , pullRequestReviewId : Github.ScalarDecoders.Id
+    , pullRequestReviewId : Github.ScalarCodecs.Id
     , body : String
     }
 
@@ -1474,7 +1474,7 @@ type alias UpdatePullRequestReviewInput =
 encodeUpdatePullRequestReviewInput : UpdatePullRequestReviewInput -> Value
 encodeUpdatePullRequestReviewInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "body", Encode.string input.body |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.pullRequestReviewId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
 buildUpdateSubscriptionInput : UpdateSubscriptionInputRequiredFields -> (UpdateSubscriptionInputOptionalFields -> UpdateSubscriptionInputOptionalFields) -> UpdateSubscriptionInput
@@ -1488,7 +1488,7 @@ buildUpdateSubscriptionInput required fillOptionals =
 
 
 type alias UpdateSubscriptionInputRequiredFields =
-    { subscribableId : Github.ScalarDecoders.Id
+    { subscribableId : Github.ScalarCodecs.Id
     , state : Github.Enum.SubscriptionState.SubscriptionState
     }
 
@@ -1501,7 +1501,7 @@ type alias UpdateSubscriptionInputOptionalFields =
 -}
 type alias UpdateSubscriptionInput =
     { clientMutationId : OptionalArgument String
-    , subscribableId : Github.ScalarDecoders.Id
+    , subscribableId : Github.ScalarCodecs.Id
     , state : Github.Enum.SubscriptionState.SubscriptionState
     }
 
@@ -1511,7 +1511,7 @@ type alias UpdateSubscriptionInput =
 encodeUpdateSubscriptionInput : UpdateSubscriptionInput -> Value
 encodeUpdateSubscriptionInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subscribableId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subscribableId |> Just ), ( "state", Encode.enum Github.Enum.SubscriptionState.toString input.state |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subscribableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.subscribableId |> Just ), ( "state", Encode.enum Github.Enum.SubscriptionState.toString input.state |> Just ) ]
 
 
 buildUpdateTopicsInput : UpdateTopicsInputRequiredFields -> (UpdateTopicsInputOptionalFields -> UpdateTopicsInputOptionalFields) -> UpdateTopicsInput
@@ -1525,7 +1525,7 @@ buildUpdateTopicsInput required fillOptionals =
 
 
 type alias UpdateTopicsInputRequiredFields =
-    { repositoryId : Github.ScalarDecoders.Id
+    { repositoryId : Github.ScalarCodecs.Id
     , topicNames : List String
     }
 
@@ -1538,7 +1538,7 @@ type alias UpdateTopicsInputOptionalFields =
 -}
 type alias UpdateTopicsInput =
     { clientMutationId : OptionalArgument String
-    , repositoryId : Github.ScalarDecoders.Id
+    , repositoryId : Github.ScalarCodecs.Id
     , topicNames : List String
     }
 
@@ -1548,4 +1548,4 @@ type alias UpdateTopicsInput =
 encodeUpdateTopicsInput : UpdateTopicsInput -> Value
 encodeUpdateTopicsInput input =
     Encode.maybeObject
-        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.repositoryId |> Just ), ( "topicNames", (Encode.string |> Encode.list) input.topicNames |> Just ) ]
+        [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) input.repositoryId |> Just ), ( "topicNames", (Encode.string |> Encode.list) input.topicNames |> Just ) ]

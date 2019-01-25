@@ -16,7 +16,7 @@ import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Object
 import Swapi.Scalar
-import Swapi.ScalarDecoders
+import Swapi.ScalarCodecs
 import Swapi.Union
 
 

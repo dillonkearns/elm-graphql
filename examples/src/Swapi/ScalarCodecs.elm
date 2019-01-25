@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.ScalarDecoders exposing (Id, PosixTime, codecs)
+module Swapi.ScalarCodecs exposing (Id, PosixTime, codecs)
 
 import Json.Decode as Decode exposing (Decoder)
 import Swapi.Scalar exposing (defaultCodecs)
