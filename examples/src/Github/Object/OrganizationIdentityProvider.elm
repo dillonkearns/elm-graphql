@@ -23,7 +23,7 @@ import Json.Decode as Decode
 -}
 digestMethod : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.OrganizationIdentityProvider
 digestMethod =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "digestMethod" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "digestMethod" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 type alias ExternalIdentitiesOptionalArguments =
@@ -57,14 +57,14 @@ externalIdentities fillInOptionals object_ =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.OrganizationIdentityProvider
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The x509 certificate used by the Identity Provder to sign assertions and responses.
 -}
 idpCertificate : SelectionSet (Maybe Github.ScalarDecoders.X509Certificate) Github.Object.OrganizationIdentityProvider
 idpCertificate =
-    Object.selectionForField "(Maybe ScalarDecoders.X509Certificate)" "idpCertificate" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderX509Certificate |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.X509Certificate)" "idpCertificate" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecX509Certificate |> .decoder |> Decode.nullable)
 
 
 {-| The Issuer Entity ID for the SAML Identity Provider
@@ -85,11 +85,11 @@ organization object_ =
 -}
 signatureMethod : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.OrganizationIdentityProvider
 signatureMethod =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "signatureMethod" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "signatureMethod" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 {-| The URL endpoint for the Identity Provider's SAML SSO.
 -}
 ssoUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.OrganizationIdentityProvider
 ssoUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "ssoUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "ssoUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)

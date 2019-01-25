@@ -44,7 +44,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "avatarUrl" optionalArgs (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The user's public profile bio.
@@ -58,7 +58,7 @@ bio =
 -}
 bioHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.User
 bioHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bioHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderHtml)
+    Object.selectionForField "ScalarDecoders.Html" "bioHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 type alias CommitCommentsOptionalArguments =
@@ -101,7 +101,7 @@ company =
 -}
 companyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.User
 companyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "companyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderHtml)
+    Object.selectionForField "ScalarDecoders.Html" "companyHTML" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 type alias ContributedRepositoriesOptionalArguments =
@@ -145,7 +145,7 @@ contributedRepositories fillInOptionals object_ =
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.User
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the primary key from the database.
@@ -298,7 +298,7 @@ gists fillInOptionals object_ =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.User
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Whether or not this user is a participant in the GitHub Security Bug Bounty.
@@ -679,7 +679,7 @@ repository requiredArgs object_ =
 -}
 resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.User
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias StarredRepositoriesOptionalArguments =
@@ -719,14 +719,14 @@ starredRepositories fillInOptionals object_ =
 -}
 updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.User
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this user
 -}
 url : SelectionSet Github.ScalarDecoders.Uri Github.Object.User
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Whether or not the viewer is able to follow the user.
@@ -784,4 +784,4 @@ watching fillInOptionals object_ =
 -}
 websiteUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.User
 websiteUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "websiteUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "websiteUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)

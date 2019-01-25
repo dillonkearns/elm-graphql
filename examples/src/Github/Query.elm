@@ -164,7 +164,7 @@ marketplaceListings fillInOptionals object_ =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Encode.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Encode.bool, Argument.optional "adminId" filledInOptionals.adminId (\(Github.Scalar.Id raw) -> Encode.string raw), Argument.optional "organizationId" filledInOptionals.organizationId (\(Github.Scalar.Id raw) -> Encode.string raw), Argument.optional "allStates" filledInOptionals.allStates Encode.bool, Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Encode.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Encode.bool ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Encode.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Encode.bool, Argument.optional "adminId" filledInOptionals.adminId (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder), Argument.optional "organizationId" filledInOptionals.organizationId (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder), Argument.optional "allStates" filledInOptionals.allStates Encode.bool, Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Encode.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "marketplaceListings" optionalArgs object_ identity
@@ -188,7 +188,7 @@ type alias NodeRequiredArguments =
 -}
 node : NodeRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> SelectionSet (Maybe decodesTo) RootQuery
 node requiredArgs object_ =
-    Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs.id (\(Github.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs.id (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) ] object_ (identity >> Decode.nullable)
 
 
 type alias NodesRequiredArguments =
@@ -202,7 +202,7 @@ type alias NodesRequiredArguments =
 -}
 nodes : NodesRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> SelectionSet (List (Maybe decodesTo)) RootQuery
 nodes requiredArgs object_ =
-    Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs.ids ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) ] object_ (identity >> Decode.nullable >> Decode.list)
+    Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs.ids ((Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .encoder) |> Encode.list) ] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 type alias OrganizationRequiredArguments =
@@ -290,7 +290,7 @@ type alias ResourceRequiredArguments =
 -}
 resource : ResourceRequiredArguments -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable -> SelectionSet (Maybe decodesTo) RootQuery
 resource requiredArgs object_ =
-    Object.selectionForCompositeField "resource" [ Argument.required "url" requiredArgs.url (\(Github.Scalar.Uri raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "resource" [ Argument.required "url" requiredArgs.url (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .encoder) ] object_ (identity >> Decode.nullable)
 
 
 type alias SearchOptionalArguments =

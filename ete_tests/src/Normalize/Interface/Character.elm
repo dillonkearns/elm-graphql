@@ -66,7 +66,7 @@ friends object_ =
 -}
 id : SelectionSet Normalize.ScalarDecoders.Id Normalize.Interface.Character
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Normalize.ScalarDecoders.decoders |> Normalize.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Normalize.ScalarDecoders.codecs |> Normalize.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the character.

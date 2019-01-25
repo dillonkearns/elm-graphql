@@ -2,9 +2,11 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Scalar exposing (CatId(..), Decoders, DogId(..), Id(..), defaultCodecs, defineCodecs, unwrapCodecs)
+module Normalize.Scalar exposing (CatId(..), Codecs, DogId(..), Id(..), defaultCodecs, defineCodecs, unwrapCodecs)
 
+import Graphql.Codec exposing (Codec)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Internal.Encode as Encode exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
 
 
@@ -21,44 +23,49 @@ type Id
 
 
 defineCodecs :
-    { decoderCatId : Decoder decoderCatId
-    , decoderDogId : Decoder decoderDogId
-    , decoderId : Decoder decoderId
+    { codecCatId : Codec valueCatId
+    , codecDogId : Codec valueDogId
+    , codecId : Codec valueId
     }
-    -> Decoders decoderCatId decoderDogId decoderId
+    -> Codecs valueCatId valueDogId valueId
 defineCodecs definitions =
-    Decoders
-        { decoderCatId = definitions.decoderCatId
-        , decoderDogId = definitions.decoderDogId
-        , decoderId = definitions.decoderId
-        }
+    Codecs definitions
 
 
 unwrapCodecs :
-    Decoders decoderCatId decoderDogId decoderId
+    Codecs valueCatId valueDogId valueId
     ->
-        { decoderCatId : Decoder decoderCatId
-        , decoderDogId : Decoder decoderDogId
-        , decoderId : Decoder decoderId
+        { codecCatId : Codec valueCatId
+        , codecDogId : Codec valueDogId
+        , codecId : Codec valueId
         }
-unwrapCodecs (Decoders unwrappedDecoders) =
-    unwrappedDecoders
+unwrapCodecs (Codecs unwrappedCodecs) =
+    unwrappedCodecs
 
 
-type Decoders decoderCatId decoderDogId decoderId
-    = Decoders (RawCodecs decoderCatId decoderDogId decoderId)
+type Codecs valueCatId valueDogId valueId
+    = Codecs (RawCodecs valueCatId valueDogId valueId)
 
 
-type alias RawCodecs decoderCatId decoderDogId decoderId =
-    { decoderCatId : Decoder decoderCatId
-    , decoderDogId : Decoder decoderDogId
-    , decoderId : Decoder decoderId
+type alias RawCodecs valueCatId valueDogId valueId =
+    { codecCatId : Codec valueCatId
+    , codecDogId : Codec valueDogId
+    , codecId : Codec valueId
     }
 
 
 defaultCodecs : RawCodecs CatId DogId Id
 defaultCodecs =
-    { decoderCatId = Object.scalarDecoder |> Decode.map CatId
-    , decoderDogId = Object.scalarDecoder |> Decode.map DogId
-    , decoderId = Object.scalarDecoder |> Decode.map Id
+    { codecCatId =
+        { encoder = \(CatId raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map CatId
+        }
+    , codecDogId =
+        { encoder = \(DogId raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map DogId
+        }
+    , codecId =
+        { encoder = \(Id raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map Id
+        }
     }

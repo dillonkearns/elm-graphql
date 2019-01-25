@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.ScalarDecoders exposing (Date, DateTime, GitObjectID, GitSSHRemote, GitTimestamp, Html, Id, Uri, X509Certificate, decoders)
+module Github.ScalarDecoders exposing (Date, DateTime, GitObjectID, GitSSHRemote, GitTimestamp, Html, Id, Uri, X509Certificate, codecs)
 
 import Github.Scalar exposing (defaultCodecs)
 import Json.Decode as Decode exposing (Decoder)
@@ -44,16 +44,16 @@ type alias X509Certificate =
     Github.Scalar.X509Certificate
 
 
-decoders : Github.Scalar.Decoders Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
-decoders =
+codecs : Github.Scalar.Codecs Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
+codecs =
     Github.Scalar.defineCodecs
-        { decoderDate = defaultCodecs.decoderDate
-        , decoderDateTime = defaultCodecs.decoderDateTime
-        , decoderGitObjectID = defaultCodecs.decoderGitObjectID
-        , decoderGitSSHRemote = defaultCodecs.decoderGitSSHRemote
-        , decoderGitTimestamp = defaultCodecs.decoderGitTimestamp
-        , decoderHtml = defaultCodecs.decoderHtml
-        , decoderId = defaultCodecs.decoderId
-        , decoderUri = defaultCodecs.decoderUri
-        , decoderX509Certificate = defaultCodecs.decoderX509Certificate
+        { codecDate = defaultCodecs.codecDate
+        , codecDateTime = defaultCodecs.codecDateTime
+        , codecGitObjectID = defaultCodecs.codecGitObjectID
+        , codecGitSSHRemote = defaultCodecs.codecGitSSHRemote
+        , codecGitTimestamp = defaultCodecs.codecGitTimestamp
+        , codecHtml = defaultCodecs.codecHtml
+        , codecId = defaultCodecs.codecId
+        , codecUri = defaultCodecs.codecUri
+        , codecX509Certificate = defaultCodecs.codecX509Certificate
         }

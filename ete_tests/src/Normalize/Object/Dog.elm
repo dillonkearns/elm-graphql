@@ -21,4 +21,4 @@ import Normalize.Union
 
 id : SelectionSet Normalize.ScalarDecoders.DogId Normalize.Object.Dog
 id =
-    Object.selectionForField "ScalarDecoders.DogId" "id" [] (Normalize.ScalarDecoders.decoders |> Normalize.Scalar.unwrapCodecs |> .decoderDogId)
+    Object.selectionForField "ScalarDecoders.DogId" "id" [] (Normalize.ScalarDecoders.codecs |> Normalize.Scalar.unwrapCodecs |> .codecDogId |> .decoder)

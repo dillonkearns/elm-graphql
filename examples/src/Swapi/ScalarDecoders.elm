@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.ScalarDecoders exposing (Id, PosixTime, decoders)
+module Swapi.ScalarDecoders exposing (Id, PosixTime, codecs)
 
 import Json.Decode as Decode exposing (Decoder)
 import Swapi.Scalar exposing (defaultCodecs)
@@ -16,8 +16,8 @@ type alias PosixTime =
     Swapi.Scalar.PosixTime
 
 
-decoders : Swapi.Scalar.Codecs Id PosixTime
-decoders =
+codecs : Swapi.Scalar.Codecs Id PosixTime
+codecs =
     Swapi.Scalar.defineCodecs
         { codecId = defaultCodecs.codecId
         , codecPosixTime = defaultCodecs.codecPosixTime

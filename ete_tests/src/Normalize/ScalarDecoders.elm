@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.ScalarDecoders exposing (CatId, DogId, Id, decoders)
+module Normalize.ScalarDecoders exposing (CatId, DogId, Id, codecs)
 
 import Json.Decode as Decode exposing (Decoder)
 import Normalize.Scalar exposing (defaultCodecs)
@@ -20,10 +20,10 @@ type alias Id =
     Normalize.Scalar.Id
 
 
-decoders : Normalize.Scalar.Decoders CatId DogId Id
-decoders =
+codecs : Normalize.Scalar.Codecs CatId DogId Id
+codecs =
     Normalize.Scalar.defineCodecs
-        { decoderCatId = defaultCodecs.decoderCatId
-        , decoderDogId = defaultCodecs.decoderDogId
-        , decoderId = defaultCodecs.decoderId
+        { codecCatId = defaultCodecs.codecCatId
+        , codecDogId = defaultCodecs.codecDogId
+        , codecId = defaultCodecs.codecId
         }

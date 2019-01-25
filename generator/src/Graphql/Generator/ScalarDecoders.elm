@@ -83,8 +83,8 @@ import {4}.Scalar exposing (defaultCodecs)
 {1}
 
 
-decoders : {2}
-decoders =
+codecs : {2}
+codecs =
     {4}.Scalar.defineCodecs
         {
         {3}

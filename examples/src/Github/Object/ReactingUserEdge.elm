@@ -33,4 +33,4 @@ node object_ =
 -}
 reactedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ReactingUserEdge
 reactedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "reactedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "reactedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

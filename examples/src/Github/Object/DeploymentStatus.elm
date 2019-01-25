@@ -24,7 +24,7 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.DeploymentStatus
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Identifies the actor who triggered the deployment.
@@ -52,19 +52,19 @@ description =
 -}
 environmentUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.DeploymentStatus
 environmentUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "environmentUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "environmentUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.DeploymentStatus
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the log URL of the deployment.
 -}
 logUrl : SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.DeploymentStatus
 logUrl =
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "logUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "logUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 {-| Identifies the current state of the deployment.
@@ -78,4 +78,4 @@ state =
 -}
 updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.DeploymentStatus
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)

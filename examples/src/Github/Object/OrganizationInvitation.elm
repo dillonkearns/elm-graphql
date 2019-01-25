@@ -25,7 +25,7 @@ import Json.Decode as Decode
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.OrganizationInvitation
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The email address of the user invited to the organization.
@@ -37,7 +37,7 @@ email =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.OrganizationInvitation
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The type of invitation that was sent (e.g. email, user).

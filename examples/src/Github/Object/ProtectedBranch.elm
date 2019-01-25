@@ -70,7 +70,7 @@ hasStrictRequiredStatusChecks =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.ProtectedBranch
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Can admins overwrite branch protection.

@@ -31,7 +31,7 @@ content =
 -}
 createdAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.ReactionGroup
 createdAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| The subject that was reacted to.

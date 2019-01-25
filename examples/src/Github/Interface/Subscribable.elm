@@ -59,7 +59,7 @@ maybeFragments =
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Interface.Subscribable
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Check if the viewer is able to change their subscription status for the repository.

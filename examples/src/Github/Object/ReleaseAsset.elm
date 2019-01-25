@@ -30,7 +30,7 @@ contentType =
 -}
 createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ReleaseAsset
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The number of times this asset was downloaded
@@ -44,12 +44,12 @@ downloadCount =
 -}
 downloadUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.ReleaseAsset
 downloadUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "downloadUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "downloadUrl" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 id : SelectionSet Github.ScalarDecoders.Id Github.Object.ReleaseAsset
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderId)
+    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the title of the release asset.
@@ -77,7 +77,7 @@ size =
 -}
 updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.ReleaseAsset
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The user that performed the upload
@@ -91,4 +91,4 @@ uploadedBy object_ =
 -}
 url : SelectionSet Github.ScalarDecoders.Uri Github.Object.ReleaseAsset
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

@@ -51,7 +51,7 @@ primaryListingCount =
 -}
 resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceCategory
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| How many Marketplace listings have this as their secondary category.
@@ -72,4 +72,4 @@ slug =
 -}
 url : SelectionSet Github.ScalarDecoders.Uri Github.Object.MarketplaceCategory
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderUri)
+    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

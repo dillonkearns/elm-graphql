@@ -21,4 +21,4 @@ import Normalize.Union
 
 id : SelectionSet (Maybe Normalize.ScalarDecoders.DogId) Normalize.Object.MaybeId
 id =
-    Object.selectionForField "(Maybe ScalarDecoders.DogId)" "id" [] (Normalize.ScalarDecoders.decoders |> Normalize.Scalar.unwrapCodecs |> .decoderDogId |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarDecoders.DogId)" "id" [] (Normalize.ScalarDecoders.codecs |> Normalize.Scalar.unwrapCodecs |> .codecDogId |> .decoder |> Decode.nullable)

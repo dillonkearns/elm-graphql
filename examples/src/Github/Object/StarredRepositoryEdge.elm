@@ -33,4 +33,4 @@ node object_ =
 -}
 starredAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.StarredRepositoryEdge
 starredAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "starredAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapCodecs |> .decoderDateTime)
+    Object.selectionForField "ScalarDecoders.DateTime" "starredAt" [] (Github.ScalarDecoders.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
