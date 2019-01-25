@@ -95,7 +95,7 @@ decoders =
                 |> List.map (generateType context)
                 |> String.join "\n\n\n"
             , (context.apiSubmodule |> String.join ".")
-                ++ ".Scalar.Decoders "
+                ++ ".Scalar.Codecs "
                 ++ (typesToGenerate
                         |> List.map
                             (\classCaseName ->
@@ -106,7 +106,7 @@ decoders =
             , typesToGenerate
                 |> List.map
                     (\classCaseName ->
-                        interpolate "decoder{0} = defaultCodecs.decoder{0}"
+                        interpolate "codec{0} = defaultCodecs.codec{0}"
                             [ ClassCaseName.normalized classCaseName ]
                     )
                 |> String.join "    , "
