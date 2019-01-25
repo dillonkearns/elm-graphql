@@ -178,7 +178,7 @@ history fillInOptionals object_ =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author Github.InputObject.encodeCommitAuthor, Argument.optional "since" filledInOptionals.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitTimestamp |> .encoder), Argument.optional "until" filledInOptionals.until (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitTimestamp |> .encoder) ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author Github.InputObject.encodeCommitAuthor, Argument.optional "since" filledInOptionals.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp), Argument.optional "until" filledInOptionals.until (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp) ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "history" optionalArgs object_ identity

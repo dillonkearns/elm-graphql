@@ -609,7 +609,7 @@ object fillInOptionals object_ =
             fillInOptionals { oid = Absent, expression = Absent }
 
         optionalArgs =
-            [ Argument.optional "oid" filledInOptionals.oid (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecGitObjectID |> .encoder), Argument.optional "expression" filledInOptionals.expression Encode.string ]
+            [ Argument.optional "oid" filledInOptionals.oid (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitObjectID), Argument.optional "expression" filledInOptionals.expression Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "object" optionalArgs object_ (identity >> Decode.nullable)

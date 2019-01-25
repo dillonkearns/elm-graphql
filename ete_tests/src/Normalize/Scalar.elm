@@ -2,10 +2,11 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Scalar exposing (CatId(..), Codecs, DogId(..), Id(..), defaultCodecs, defineCodecs, unwrapCodecs)
+module Normalize.Scalar exposing (CatId(..), Codecs, DogId(..), Id(..), defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
 import Graphql.Codec exposing (Codec)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Internal.Encode
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
@@ -41,6 +42,10 @@ unwrapCodecs :
         }
 unwrapCodecs (Codecs unwrappedCodecs) =
     unwrappedCodecs
+
+
+unwrapEncoder getter (Codecs unwrappedCodecs) =
+    (unwrappedCodecs |> getter |> .encoder) >> Graphql.Internal.Encode.fromJson
 
 
 type Codecs valueCatId valueDogId valueId

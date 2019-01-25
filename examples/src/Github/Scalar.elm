@@ -2,10 +2,11 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Scalar exposing (Codecs, Date(..), DateTime(..), GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..), defaultCodecs, defineCodecs, unwrapCodecs)
+module Github.Scalar exposing (Codecs, Date(..), DateTime(..), GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..), defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
 import Graphql.Codec exposing (Codec)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Internal.Encode
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
@@ -77,6 +78,10 @@ unwrapCodecs :
         }
 unwrapCodecs (Codecs unwrappedCodecs) =
     unwrappedCodecs
+
+
+unwrapEncoder getter (Codecs unwrappedCodecs) =
+    (unwrappedCodecs |> getter |> .encoder) >> Graphql.Internal.Encode.fromJson
 
 
 type Codecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate
