@@ -14,7 +14,7 @@ type alias PosixTime =
     Time.Posix
 
 
-codecs : Swapi.Scalar.Decoders Id PosixTime
+codecs : Swapi.Scalar.Codecs Id PosixTime
 codecs =
     Swapi.Scalar.defineCodecs
         { codecId =
