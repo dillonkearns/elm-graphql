@@ -79,14 +79,10 @@ placeholder =
 import Graphql.Internal.Builder.Object as Object
 import Json.Decode as Decode exposing (Decoder)
 import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.Codec exposing (Codec)
 
 
 {1}
-
-type alias Codec elmValue =
-    { encoder : elmValue -> Value
-    , decoder : Decoder elmValue
-    }
 
 defineCodecs :
     {2}

@@ -4,6 +4,7 @@
 
 module Swapi.Scalar exposing (Codecs, Id(..), PosixTime(..), defaultCodecs, defineCodecs, unwrapCodecs)
 
+import Graphql.Codec exposing (Codec)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Json.Decode as Decode exposing (Decoder)
@@ -15,12 +16,6 @@ type Id
 
 type PosixTime
     = PosixTime String
-
-
-type alias Codec elmValue =
-    { encoder : elmValue -> Value
-    , decoder : Decoder elmValue
-    }
 
 
 defineCodecs :
