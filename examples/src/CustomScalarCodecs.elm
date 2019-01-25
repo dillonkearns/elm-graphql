@@ -23,7 +23,15 @@ codecs =
             , decoder =
                 Decode.string
                     |> Decode.map String.toInt
-                    |> Decode.map (Maybe.withDefault 0)
+                    |> Decode.andThen
+                        (\maybeParsedId ->
+                            case maybeParsedId of
+                                Just parsedId ->
+                                    Decode.succeed parsedId
+
+                                Nothing ->
+                                    Decode.fail "Could not parse ID as an Int."
+                        )
                     |> Decode.map Id
             }
         , codecPosixTime =
