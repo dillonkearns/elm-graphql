@@ -78,7 +78,7 @@ placeholder =
 
 import Graphql.Internal.Builder.Object as Object
 import Json.Decode as Decode exposing (Decoder)
-import Graphql.Internal.Encode as Encode exposing (Value)
+import Json.Encode as Encode
 import Graphql.Codec exposing (Codec)
 
 
