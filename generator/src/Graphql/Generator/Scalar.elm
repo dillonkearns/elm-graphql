@@ -73,42 +73,46 @@ placeholder =
 
     else
         interpolate
-            """module {0} exposing (Decoders, {6}, defaultDecoders, defineDecoders, unwrapDecoders)
+            """module {0} exposing (Codecs, {6}, defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
 
 import Graphql.Internal.Builder.Object as Object
 import Json.Decode as Decode exposing (Decoder)
+import Graphql.Internal.Encode
+import Json.Encode as Encode
+import Graphql.Codec exposing (Codec)
 
 
 {1}
 
-
-
-defineDecoders :
+defineCodecs :
     {2}
-    -> Decoders {4}
-defineDecoders definitions =
-    Decoders
-        {3}
+    -> Codecs {4}
+defineCodecs definitions =
+    Codecs definitions
 
 
-unwrapDecoders :
-    Decoders {4}
+unwrapCodecs :
+    Codecs {4}
     -> {2}
-unwrapDecoders (Decoders unwrappedDecoders) =
-    unwrappedDecoders
+unwrapCodecs (Codecs unwrappedCodecs) =
+    unwrappedCodecs
 
 
-type Decoders {4}
-    = Decoders (RawDecoders {4})
+unwrapEncoder getter (Codecs unwrappedCodecs) =
+    (unwrappedCodecs |> getter |> .encoder) >> Graphql.Internal.Encode.fromJson
 
 
-type alias RawDecoders {4} =
+type Codecs {4}
+    = Codecs (RawCodecs {4})
+
+
+type alias RawCodecs {4} =
     {2}
 
 
-defaultDecoders : RawDecoders {7}
-defaultDecoders =
+defaultCodecs : RawCodecs {7}
+defaultCodecs =
     {5}
 """
             [ moduleName
@@ -119,26 +123,17 @@ defaultDecoders =
                 ++ (typesToGenerate
                         |> List.map
                             (\classCaseName ->
-                                interpolate "decoder{0} : Decoder decoder{0}"
+                                interpolate "codec{0} : Codec value{0}"
                                     [ ClassCaseName.normalized classCaseName ]
                             )
                         |> String.join "\n, "
                    )
                 ++ "}"
-            , "{"
-                ++ (typesToGenerate
-                        |> List.map
-                            (\classCaseName ->
-                                interpolate "decoder{0} = definitions.decoder{0}"
-                                    [ ClassCaseName.normalized classCaseName ]
-                            )
-                        |> String.join "\n, "
-                   )
-                ++ "}"
+            , "" -- TODO remove this
             , typesToGenerate
                 |> List.map
                     (\classCaseName ->
-                        "decoder"
+                        "value"
                             ++ ClassCaseName.normalized classCaseName
                     )
                 |> String.join " "
@@ -146,8 +141,9 @@ defaultDecoders =
                 ++ (typesToGenerate
                         |> List.map
                             (\classCaseName ->
-                                interpolate "decoder{0} = Object.scalarDecoder |> Decode.map {0}"
-                                    [ ClassCaseName.normalized classCaseName ]
+                                interpolate "codec{0} =\n  { encoder = \\({0} raw) -> Encode.string raw\n , decoder = Object.scalarDecoder |> Decode.map {0} }"
+                                    [ ClassCaseName.normalized classCaseName
+                                    ]
                             )
                         |> String.join "\n, "
                    )

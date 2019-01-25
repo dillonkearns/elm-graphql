@@ -52,23 +52,23 @@ generate context allArgs =
 
 
 argValues : Context -> List OptionalArg -> String
-argValues { apiSubmodule } optionalArgs =
+argValues context optionalArgs =
     let
         values =
             optionalArgs
-                |> List.map (argValue apiSubmodule)
+                |> List.map (argValue context)
                 |> String.join ", "
     in
     interpolate "[ {0} ]" [ values ]
 
 
-argValue : List String -> OptionalArg -> String
-argValue apiSubmodule { name, typeOf } =
+argValue : Context -> OptionalArg -> String
+argValue context { name, typeOf } =
     interpolate
         """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
         [ CamelCaseName.raw name
         , CamelCaseName.normalized name
-        , Graphql.Generator.Decoder.generateEncoder apiSubmodule (Type.TypeReference typeOf Type.NonNullable)
+        , Graphql.Generator.Decoder.generateEncoder context (Type.TypeReference typeOf Type.NonNullable)
         ]
 
 

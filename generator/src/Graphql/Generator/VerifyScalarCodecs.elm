@@ -1,4 +1,4 @@
-module Graphql.Generator.VerifyScalarDecoders exposing (generate)
+module Graphql.Generator.VerifyScalarCodecs exposing (generate)
 
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -9,7 +9,7 @@ import String.Interpolate exposing (interpolate)
 
 generate : Context -> List TypeDefinition -> ( List String, String )
 generate context typeDefs =
-    ( context.apiSubmodule ++ [ "VerifyScalarDecoders" ], fileContents context typeDefs )
+    ( context.apiSubmodule ++ [ "VerifyScalarCodecs" ], fileContents context typeDefs )
 
 
 include : TypeDefinition -> Bool
@@ -51,7 +51,7 @@ fileContents context typeDefinitions =
                 |> List.map (\(TypeDefinition name definableType description) -> name)
 
         moduleName =
-            context.apiSubmodule ++ [ "VerifyScalarDecoders" ] |> String.join "."
+            context.apiSubmodule ++ [ "VerifyScalarCodecs" ] |> String.join "."
 
         placeholderCode =
             interpolate
@@ -64,14 +64,14 @@ placeholder =
 """
                 [ moduleName ]
     in
-    case ( typesToGenerate, context.scalarDecodersModule ) of
+    case ( typesToGenerate, context.scalarCodecsModule ) of
         ( _, Nothing ) ->
             placeholderCode
 
         ( [], _ ) ->
             placeholderCode
 
-        ( _, Just scalarDecodersModule ) ->
+        ( _, Just scalarCodecsModule ) ->
             interpolate
                 """module {0} exposing (..)
 
@@ -85,18 +85,18 @@ import {3}.Scalar
 import {1}
 
 
-verify : {3}.Scalar.Decoders {2}
+verify : {3}.Scalar.Codecs {2}
 verify =
-    {1}.decoders
+    {1}.codecs
 """
                 [ moduleName
-                , scalarDecodersModule |> ModuleName.toString
+                , scalarCodecsModule |> ModuleName.toString
                 , typesToGenerate
                     |> List.map
                         (\classCaseName ->
                             ModuleName.append
                                 (ClassCaseName.normalized classCaseName)
-                                scalarDecodersModule
+                                scalarCodecsModule
                         )
                     |> String.join " "
                 , context.apiSubmodule |> String.join "."

@@ -4,7 +4,7 @@
 
 module Swapi.Interface.Character exposing (Fragments, appearsIn, avatarUrl, fragments, friends, id, maybeFragments, name)
 
-import CustomScalarDecoders
+import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -71,9 +71,9 @@ friends object_ =
 
 {-| The ID of the character.
 -}
-id : SelectionSet CustomScalarDecoders.Id Swapi.Interface.Character
+id : SelectionSet CustomScalarCodecs.Id Swapi.Interface.Character
 id =
-    Object.selectionForField "CustomScalarDecoders.Id" "id" [] (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the character.

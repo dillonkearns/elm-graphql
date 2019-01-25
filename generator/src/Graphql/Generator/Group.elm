@@ -10,11 +10,11 @@ import Graphql.Generator.Mutation
 import Graphql.Generator.Object
 import Graphql.Generator.Query
 import Graphql.Generator.Scalar as Scalar
-import Graphql.Generator.ScalarDecoders as ScalarDecoders
+import Graphql.Generator.ScalarCodecs as ScalarCodecs
 import Graphql.Generator.Subscription
 import Graphql.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphql.Generator.Union
-import Graphql.Generator.VerifyScalarDecoders
+import Graphql.Generator.VerifyScalarCodecs
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
 import ModuleName exposing (ModuleName)
@@ -57,7 +57,7 @@ interfacePossibleTypesDict typeDefs =
         |> Dict.fromList
 
 
-generateFiles : { apiSubmodule : List String, scalarDecodersModule : Maybe ModuleName } -> IntrospectionData -> Dict String String
+generateFiles : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Dict String String
 generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, subscriptionObjectName } =
     let
         context : Context
@@ -67,7 +67,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
             , subscription = subscriptionObjectName |> Maybe.map ClassCaseName.build
             , apiSubmodule = options.apiSubmodule
             , interfaces = interfacePossibleTypesDict typeDefinitions
-            , scalarDecodersModule = options.scalarDecodersModule
+            , scalarCodecsModule = options.scalarCodecsModule
             }
 
         typeLockDefinitions =
@@ -95,7 +95,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
         |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
         |> List.append
-            [ ScalarDecoders.generate context
+            [ ScalarCodecs.generate context
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery context
@@ -104,7 +104,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
                 )
             ]
         |> List.append
-            [ Graphql.Generator.VerifyScalarDecoders.generate context
+            [ Graphql.Generator.VerifyScalarCodecs.generate context
                 (typeDefinitions
                     |> excludeBuiltIns
                     |> excludeQuery context

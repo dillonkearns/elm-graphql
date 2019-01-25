@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -82,13 +82,13 @@ maybeFragments =
 
 {-| The HTML path to this resource.
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Interface.UniformResourceLocatable
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Interface.UniformResourceLocatable
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The URL to this resource.
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Interface.UniformResourceLocatable
+url : SelectionSet Github.ScalarCodecs.Uri Github.Interface.UniformResourceLocatable
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)

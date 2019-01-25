@@ -143,7 +143,7 @@ encoderForField context field =
 
 
 encoderFunction : Context -> Type.Field -> String
-encoderFunction { apiSubmodule } field =
+encoderFunction context field =
     case field.typeRef of
         Type.TypeReference referrableType isNullable ->
             let
@@ -156,7 +156,7 @@ encoderFunction { apiSubmodule } field =
                             interpolate " |> Encode.optional input.{0}" [ CamelCaseName.normalized field.name ]
             in
             interpolate "({0}) {1}"
-                [ Decoder.generateEncoderLowLevel apiSubmodule referrableType
+                [ Decoder.generateEncoderLowLevel context referrableType
                 , filledOptionalsRecord_
                 ]
 
@@ -178,8 +178,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 """
         [ Imports.importsString apiSubmodule (moduleName context) fields
         , apiSubmodule |> String.join "."
-        , context.scalarDecodersModule
-            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+        , context.scalarCodecsModule
+            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
             |> ModuleName.toString
         ]
 

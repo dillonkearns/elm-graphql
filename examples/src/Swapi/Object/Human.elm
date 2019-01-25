@@ -4,7 +4,7 @@
 
 module Swapi.Object.Human exposing (appearsIn, avatarUrl, friends, homePlanet, id, name)
 
-import CustomScalarDecoders
+import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -50,9 +50,9 @@ homePlanet =
 
 {-| The ID of the human.
 -}
-id : SelectionSet CustomScalarDecoders.Id Swapi.Object.Human
+id : SelectionSet CustomScalarCodecs.Id Swapi.Object.Human
 id =
-    Object.selectionForField "CustomScalarDecoders.Id" "id" [] (CustomScalarDecoders.decoders |> Swapi.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "CustomScalarCodecs.Id" "id" [] (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| The name of the human.

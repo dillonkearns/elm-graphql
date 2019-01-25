@@ -8,7 +8,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -28,14 +28,14 @@ actor object_ =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.CrossReferencedEvent
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.CrossReferencedEvent
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.CrossReferencedEvent
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.CrossReferencedEvent
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Reference originated in a different repository.
@@ -47,16 +47,16 @@ isCrossRepository =
 
 {-| Identifies when the reference was made.
 -}
-referencedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.CrossReferencedEvent
+referencedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.CrossReferencedEvent
 referencedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "referencedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarCodecs.DateTime" "referencedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP path for this pull request.
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.CrossReferencedEvent
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.CrossReferencedEvent
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Issue or pull request that made the reference.
@@ -75,9 +75,9 @@ target object_ =
 
 {-| The HTTP URL for this pull request.
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.CrossReferencedEvent
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.CrossReferencedEvent
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Checks if the target will be closed when the source is merged.

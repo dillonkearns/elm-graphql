@@ -9,7 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -119,8 +119,8 @@ type alias MarketplaceListingsOptionalArguments =
     , before : OptionalArgument String
     , categorySlug : OptionalArgument String
     , viewerCanAdmin : OptionalArgument Bool
-    , adminId : OptionalArgument Github.ScalarDecoders.Id
-    , organizationId : OptionalArgument Github.ScalarDecoders.Id
+    , adminId : OptionalArgument Github.ScalarCodecs.Id
+    , organizationId : OptionalArgument Github.ScalarCodecs.Id
     , allStates : OptionalArgument Bool
     , slugs : OptionalArgument (List (Maybe String))
     , primaryCategoryOnly : OptionalArgument Bool
@@ -164,7 +164,7 @@ marketplaceListings fillInOptionals object_ =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Encode.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Encode.bool, Argument.optional "adminId" filledInOptionals.adminId (\(Github.Scalar.Id raw) -> Encode.string raw), Argument.optional "organizationId" filledInOptionals.organizationId (\(Github.Scalar.Id raw) -> Encode.string raw), Argument.optional "allStates" filledInOptionals.allStates Encode.bool, Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Encode.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Encode.bool ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Encode.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Encode.bool, Argument.optional "adminId" filledInOptionals.adminId (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId), Argument.optional "organizationId" filledInOptionals.organizationId (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId), Argument.optional "allStates" filledInOptionals.allStates Encode.bool, Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Encode.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "marketplaceListings" optionalArgs object_ identity
@@ -178,7 +178,7 @@ meta object_ =
 
 
 type alias NodeRequiredArguments =
-    { id : Github.ScalarDecoders.Id }
+    { id : Github.ScalarCodecs.Id }
 
 
 {-| Fetches an object given its ID.
@@ -188,11 +188,11 @@ type alias NodeRequiredArguments =
 -}
 node : NodeRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> SelectionSet (Maybe decodesTo) RootQuery
 node requiredArgs object_ =
-    Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs.id (\(Github.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs.id (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
 
 
 type alias NodesRequiredArguments =
-    { ids : List Github.ScalarDecoders.Id }
+    { ids : List Github.ScalarCodecs.Id }
 
 
 {-| Lookup nodes by a list of IDs.
@@ -202,7 +202,7 @@ type alias NodesRequiredArguments =
 -}
 nodes : NodesRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> SelectionSet (List (Maybe decodesTo)) RootQuery
 nodes requiredArgs object_ =
-    Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs.ids ((\(Github.Scalar.Id raw) -> Encode.string raw) |> Encode.list) ] object_ (identity >> Decode.nullable >> Decode.list)
+    Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs.ids ((Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.list) ] object_ (identity >> Decode.nullable >> Decode.list)
 
 
 type alias OrganizationRequiredArguments =
@@ -280,7 +280,7 @@ repositoryOwner requiredArgs object_ =
 
 
 type alias ResourceRequiredArguments =
-    { url : Github.ScalarDecoders.Uri }
+    { url : Github.ScalarCodecs.Uri }
 
 
 {-| Lookup resource by a URL.
@@ -290,7 +290,7 @@ type alias ResourceRequiredArguments =
 -}
 resource : ResourceRequiredArguments -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable -> SelectionSet (Maybe decodesTo) RootQuery
 resource requiredArgs object_ =
-    Object.selectionForCompositeField "resource" [ Argument.required "url" requiredArgs.url (\(Github.Scalar.Uri raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "resource" [ Argument.required "url" requiredArgs.url (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecUri) ] object_ (identity >> Decode.nullable)
 
 
 type alias SearchOptionalArguments =

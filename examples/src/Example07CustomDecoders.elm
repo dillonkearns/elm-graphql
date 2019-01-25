@@ -1,4 +1,4 @@
-module Example07CustomDecoders exposing (main)
+module Example07CustomCodecs exposing (main)
 
 import Browser
 import Graphql.Document as Document
@@ -21,18 +21,18 @@ import Time
 
 {-
 
-   If we generated this code without specifying `--scalar-decoders CustomScalarDecoders`
+   If we generated this code without specifying `--scalar-codecs CustomScalarCodecs`
    then all scalars in our schema would be deseriarlized as a Strings.
    Note that the default decoder checks if it is a primitive type, and
    serializes that primitive to a String. See the full implementation:
    https://github.com/dillonkearns/elm-graphql/blob/376e8ed0992584d9de0a9da539833c41dbeca4dd/src/Graphql/Internal/Builder/Object.elm#L21-L40
 
-   Since we supplied a custom decoder with `--scalar-decoders CustomScalarDecoders`,
+   Since we supplied a custom decoder with `--scalar-codecs CustomScalarCodecs`,
    it uses the decoder specified in that file for our schema's `PosixTime` scalar.
    So when we grab `Query.now`, instead of gettting back the default, which is
    a simple type wrapper like this: `type PosixTime = PosixTime String`, we get
    back an actual Elm `Time.Posix`. See the decoder specified in this file:
-   https://github.com/dillonkearns/elm-graphql/blob/scalar-decoders/examples/src/CustomScalarDecoders.elm
+   https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/CustomScalarCodecs.elm
 
    Since we have a `Posix.Time`, we can use some functions that require a `Posix.Time`,
    in this case `Time.toSecond Time.utc <Posix.Time value>`.

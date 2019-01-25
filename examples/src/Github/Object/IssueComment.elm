@@ -11,7 +11,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -45,9 +45,9 @@ body =
 
 {-| The comment body rendered to HTML.
 -}
-bodyHTML : SelectionSet Github.ScalarDecoders.Html Github.Object.IssueComment
+bodyHTML : SelectionSet Github.ScalarCodecs.Html Github.Object.IssueComment
 bodyHTML =
-    Object.selectionForField "ScalarDecoders.Html" "bodyHTML" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderHtml)
+    Object.selectionForField "ScalarCodecs.Html" "bodyHTML" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the body of the issue rendered to text.
@@ -59,9 +59,9 @@ bodyText =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.IssueComment
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.IssueComment
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| Check if this comment was created via an email reply.
@@ -85,9 +85,9 @@ editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.IssueComment
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.IssueComment
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 {-| Identifies the issue associated with the comment.
@@ -99,16 +99,16 @@ issue object_ =
 
 {-| The moment the editor made the last edit
 -}
-lastEditedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.IssueComment
+lastEditedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.IssueComment
 lastEditedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "lastEditedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "lastEditedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| Identifies when the comment was published at.
 -}
-publishedAt : SelectionSet (Maybe Github.ScalarDecoders.DateTime) Github.Object.IssueComment
+publishedAt : SelectionSet (Maybe Github.ScalarCodecs.DateTime) Github.Object.IssueComment
 publishedAt =
-    Object.selectionForField "(Maybe ScalarDecoders.DateTime)" "publishedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.DateTime)" "publishedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder |> Decode.nullable)
 
 
 {-| Returns the pull request associated with the comment, if this comment was made on a
@@ -168,23 +168,23 @@ repository object_ =
 
 {-| The HTTP path for this issue comment
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.IssueComment
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.IssueComment
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.IssueComment
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.IssueComment
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this issue comment
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.IssueComment
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.IssueComment
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 type alias UserContentEditsOptionalArguments =

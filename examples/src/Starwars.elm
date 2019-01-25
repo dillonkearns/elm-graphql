@@ -1,6 +1,7 @@
 module Starwars exposing (main)
 
 import Browser
+import CustomScalarCodecs
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
@@ -40,23 +41,22 @@ type HumanOrDroid
 type alias Character =
     { details : HumanOrDroid
     , name : String
-    , id : Swapi.Scalar.Id
+    , id : CustomScalarCodecs.Id
     , friends : List String
     }
 
 
 hero : SelectionSet Character Swapi.Interface.Character
 hero =
-    SelectionSet.succeed Character
-        |> with
-            (Character.fragments
-                { onDroid = SelectionSet.map Droid Droid.primaryFunction
-                , onHuman = SelectionSet.map Human Human.homePlanet
-                }
-            )
-        |> with Character.name
-        |> with Character.id
-        |> with (Character.friends Character.name)
+    SelectionSet.map4 Character
+        (Character.fragments
+            { onDroid = SelectionSet.map Droid Droid.primaryFunction
+            , onHuman = SelectionSet.map Human Human.homePlanet
+            }
+        )
+        Character.name
+        Character.id
+        (Character.friends Character.name)
 
 
 heroUnion : SelectionSet HumanOrDroid Swapi.Union.CharacterUnion
@@ -69,23 +69,20 @@ heroUnion =
 
 query : SelectionSet Response RootQuery
 query =
-    SelectionSet.succeed Response
-        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> SelectionSet.nonNullOrFail)
-        |> with (Query.human { id = Swapi.Scalar.Id "1004" } human |> SelectionSet.nonNullOrFail)
-        |> with
-            (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
-        |> with
-            (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
-        |> with
-            (Query.greet
-                { input = Swapi.InputObject.buildGreeting { name = "Chewie" } (\optionals -> { optionals | language = Present Language.Es }) }
-            )
+    SelectionSet.map5 Response
+        (Query.human { id = CustomScalarCodecs.Id 1001 } human |> SelectionSet.nonNullOrFail)
+        (Query.human { id = CustomScalarCodecs.Id 1004 } human |> SelectionSet.nonNullOrFail)
+        (Query.hero (\optionals -> { optionals | episode = Present Episode.Empire }) hero)
+        (Query.heroUnion (\optionals -> { optionals | episode = Present Episode.Empire }) heroUnion)
+        (Query.greet
+            { input = Swapi.InputObject.buildGreeting { name = "Chewie" } (\optionals -> { optionals | language = Present Language.Es }) }
+        )
 
 
 type alias HumanLookup =
     { name : String
     , yearsActive : List Int
-    , id : Swapi.Scalar.Id
+    , id : CustomScalarCodecs.Id
     , avatarUrl : String
     , homePlanet : Maybe String
     , friends : List Character
@@ -94,13 +91,13 @@ type alias HumanLookup =
 
 human : SelectionSet HumanLookup Swapi.Object.Human
 human =
-    SelectionSet.succeed HumanLookup
-        |> with Human.name
-        |> with (Human.appearsIn |> SelectionSet.map (List.map episodeYear))
-        |> with Human.id
-        |> with Human.avatarUrl
-        |> with Human.homePlanet
-        |> with (Human.friends hero)
+    SelectionSet.map6 HumanLookup
+        Human.name
+        (Human.appearsIn |> SelectionSet.map (List.map episodeYear))
+        Human.id
+        Human.avatarUrl
+        Human.homePlanet
+        (Human.friends hero)
 
 
 episodeYear : Episode -> Int

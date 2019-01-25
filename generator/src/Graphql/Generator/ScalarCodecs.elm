@@ -1,4 +1,4 @@
-module Graphql.Generator.ScalarDecoders exposing (generate)
+module Graphql.Generator.ScalarCodecs exposing (generate)
 
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -8,7 +8,7 @@ import String.Interpolate exposing (interpolate)
 
 generate : Context -> List TypeDefinition -> ( List String, String )
 generate context typeDefs =
-    ( context.apiSubmodule ++ [ "ScalarDecoders" ], fileContents context typeDefs )
+    ( context.apiSubmodule ++ [ "ScalarCodecs" ], fileContents context typeDefs )
 
 
 include : TypeDefinition -> Bool
@@ -59,7 +59,7 @@ fileContents context typeDefinitions =
                 |> List.map (\(TypeDefinition name definableType description) -> name)
 
         moduleName =
-            context.apiSubmodule ++ [ "ScalarDecoders" ] |> String.join "."
+            context.apiSubmodule ++ [ "ScalarCodecs" ] |> String.join "."
     in
     if typesToGenerate == [] then
         interpolate
@@ -77,15 +77,15 @@ placeholder =
             """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
-import {4}.Scalar exposing (defaultDecoders)
+import {4}.Scalar exposing (defaultCodecs)
 
 
 {1}
 
 
-decoders : {2}
-decoders =
-    {4}.Scalar.defineDecoders
+codecs : {2}
+codecs =
+    {4}.Scalar.defineCodecs
         {
         {3}
         }
@@ -95,7 +95,7 @@ decoders =
                 |> List.map (generateType context)
                 |> String.join "\n\n\n"
             , (context.apiSubmodule |> String.join ".")
-                ++ ".Scalar.Decoders "
+                ++ ".Scalar.Codecs "
                 ++ (typesToGenerate
                         |> List.map
                             (\classCaseName ->
@@ -106,7 +106,7 @@ decoders =
             , typesToGenerate
                 |> List.map
                     (\classCaseName ->
-                        interpolate "decoder{0} = defaultDecoders.decoder{0}"
+                        interpolate "codec{0} = defaultCodecs.codec{0}"
                             [ ClassCaseName.normalized classCaseName ]
                     )
                 |> String.join "    , "

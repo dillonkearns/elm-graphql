@@ -2,10 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Scalar exposing (Date(..), DateTime(..), Decoders, GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..), defaultDecoders, defineDecoders, unwrapDecoders)
+module Github.Scalar exposing (Codecs, Date(..), DateTime(..), GitObjectID(..), GitSSHRemote(..), GitTimestamp(..), Html(..), Id(..), Uri(..), X509Certificate(..), defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
+import Graphql.Codec exposing (Codec)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Internal.Encode
 import Json.Decode as Decode exposing (Decoder)
+import Json.Encode as Encode
 
 
 type Date
@@ -44,75 +47,96 @@ type X509Certificate
     = X509Certificate String
 
 
-defineDecoders :
-    { decoderDate : Decoder decoderDate
-    , decoderDateTime : Decoder decoderDateTime
-    , decoderGitObjectID : Decoder decoderGitObjectID
-    , decoderGitSSHRemote : Decoder decoderGitSSHRemote
-    , decoderGitTimestamp : Decoder decoderGitTimestamp
-    , decoderHtml : Decoder decoderHtml
-    , decoderId : Decoder decoderId
-    , decoderUri : Decoder decoderUri
-    , decoderX509Certificate : Decoder decoderX509Certificate
+defineCodecs :
+    { codecDate : Codec valueDate
+    , codecDateTime : Codec valueDateTime
+    , codecGitObjectID : Codec valueGitObjectID
+    , codecGitSSHRemote : Codec valueGitSSHRemote
+    , codecGitTimestamp : Codec valueGitTimestamp
+    , codecHtml : Codec valueHtml
+    , codecId : Codec valueId
+    , codecUri : Codec valueUri
+    , codecX509Certificate : Codec valueX509Certificate
     }
-    -> Decoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate
-defineDecoders definitions =
-    Decoders
-        { decoderDate = definitions.decoderDate
-        , decoderDateTime = definitions.decoderDateTime
-        , decoderGitObjectID = definitions.decoderGitObjectID
-        , decoderGitSSHRemote = definitions.decoderGitSSHRemote
-        , decoderGitTimestamp = definitions.decoderGitTimestamp
-        , decoderHtml = definitions.decoderHtml
-        , decoderId = definitions.decoderId
-        , decoderUri = definitions.decoderUri
-        , decoderX509Certificate = definitions.decoderX509Certificate
-        }
+    -> Codecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate
+defineCodecs definitions =
+    Codecs definitions
 
 
-unwrapDecoders :
-    Decoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate
+unwrapCodecs :
+    Codecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate
     ->
-        { decoderDate : Decoder decoderDate
-        , decoderDateTime : Decoder decoderDateTime
-        , decoderGitObjectID : Decoder decoderGitObjectID
-        , decoderGitSSHRemote : Decoder decoderGitSSHRemote
-        , decoderGitTimestamp : Decoder decoderGitTimestamp
-        , decoderHtml : Decoder decoderHtml
-        , decoderId : Decoder decoderId
-        , decoderUri : Decoder decoderUri
-        , decoderX509Certificate : Decoder decoderX509Certificate
+        { codecDate : Codec valueDate
+        , codecDateTime : Codec valueDateTime
+        , codecGitObjectID : Codec valueGitObjectID
+        , codecGitSSHRemote : Codec valueGitSSHRemote
+        , codecGitTimestamp : Codec valueGitTimestamp
+        , codecHtml : Codec valueHtml
+        , codecId : Codec valueId
+        , codecUri : Codec valueUri
+        , codecX509Certificate : Codec valueX509Certificate
         }
-unwrapDecoders (Decoders unwrappedDecoders) =
-    unwrappedDecoders
+unwrapCodecs (Codecs unwrappedCodecs) =
+    unwrappedCodecs
 
 
-type Decoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate
-    = Decoders (RawDecoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate)
+unwrapEncoder getter (Codecs unwrappedCodecs) =
+    (unwrappedCodecs |> getter |> .encoder) >> Graphql.Internal.Encode.fromJson
 
 
-type alias RawDecoders decoderDate decoderDateTime decoderGitObjectID decoderGitSSHRemote decoderGitTimestamp decoderHtml decoderId decoderUri decoderX509Certificate =
-    { decoderDate : Decoder decoderDate
-    , decoderDateTime : Decoder decoderDateTime
-    , decoderGitObjectID : Decoder decoderGitObjectID
-    , decoderGitSSHRemote : Decoder decoderGitSSHRemote
-    , decoderGitTimestamp : Decoder decoderGitTimestamp
-    , decoderHtml : Decoder decoderHtml
-    , decoderId : Decoder decoderId
-    , decoderUri : Decoder decoderUri
-    , decoderX509Certificate : Decoder decoderX509Certificate
+type Codecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate
+    = Codecs (RawCodecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate)
+
+
+type alias RawCodecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate =
+    { codecDate : Codec valueDate
+    , codecDateTime : Codec valueDateTime
+    , codecGitObjectID : Codec valueGitObjectID
+    , codecGitSSHRemote : Codec valueGitSSHRemote
+    , codecGitTimestamp : Codec valueGitTimestamp
+    , codecHtml : Codec valueHtml
+    , codecId : Codec valueId
+    , codecUri : Codec valueUri
+    , codecX509Certificate : Codec valueX509Certificate
     }
 
 
-defaultDecoders : RawDecoders Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
-defaultDecoders =
-    { decoderDate = Object.scalarDecoder |> Decode.map Date
-    , decoderDateTime = Object.scalarDecoder |> Decode.map DateTime
-    , decoderGitObjectID = Object.scalarDecoder |> Decode.map GitObjectID
-    , decoderGitSSHRemote = Object.scalarDecoder |> Decode.map GitSSHRemote
-    , decoderGitTimestamp = Object.scalarDecoder |> Decode.map GitTimestamp
-    , decoderHtml = Object.scalarDecoder |> Decode.map Html
-    , decoderId = Object.scalarDecoder |> Decode.map Id
-    , decoderUri = Object.scalarDecoder |> Decode.map Uri
-    , decoderX509Certificate = Object.scalarDecoder |> Decode.map X509Certificate
+defaultCodecs : RawCodecs Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
+defaultCodecs =
+    { codecDate =
+        { encoder = \(Date raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map Date
+        }
+    , codecDateTime =
+        { encoder = \(DateTime raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map DateTime
+        }
+    , codecGitObjectID =
+        { encoder = \(GitObjectID raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map GitObjectID
+        }
+    , codecGitSSHRemote =
+        { encoder = \(GitSSHRemote raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map GitSSHRemote
+        }
+    , codecGitTimestamp =
+        { encoder = \(GitTimestamp raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map GitTimestamp
+        }
+    , codecHtml =
+        { encoder = \(Html raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map Html
+        }
+    , codecId =
+        { encoder = \(Id raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map Id
+        }
+    , codecUri =
+        { encoder = \(Uri raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map Uri
+        }
+    , codecX509Certificate =
+        { encoder = \(X509Certificate raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map X509Certificate
+        }
     }

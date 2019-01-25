@@ -1,6 +1,7 @@
 module Example00SingleFieldQuery exposing (main)
 
 import Browser
+import CustomScalarCodecs
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
@@ -13,6 +14,7 @@ import Swapi.InputObject
 import Swapi.Interface
 import Swapi.Interface.Character as Character
 import Swapi.Object
+import Swapi.Object.Human
 import Swapi.Query as Query
 import Swapi.Scalar
 import Time
@@ -35,12 +37,12 @@ import Time
 
 
 type alias Response =
-    String
+    Maybe CustomScalarCodecs.Id
 
 
-query : SelectionSet Response RootQuery
+query : SelectionSet (Maybe CustomScalarCodecs.Id) RootQuery
 query =
-    Query.hello
+    Query.human { id = CustomScalarCodecs.Id 1001 } Swapi.Object.Human.id
 
 
 makeRequest : Cmd Msg

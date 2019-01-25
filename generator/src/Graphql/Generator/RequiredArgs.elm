@@ -55,21 +55,21 @@ requiredArgOrNothing { name, typeRef } =
 
 
 requiredArgsString : Context -> List RequiredArg -> String
-requiredArgsString { apiSubmodule } requiredArgs =
+requiredArgsString context requiredArgs =
     let
         requiredArgContents =
-            List.map (requiredArgString apiSubmodule) requiredArgs
+            List.map (requiredArgString context) requiredArgs
     in
     "[ " ++ (requiredArgContents |> String.join ", ") ++ " ]"
 
 
-requiredArgString : List String -> RequiredArg -> String
-requiredArgString apiSubmodule { name, referrableType, typeRef } =
+requiredArgString : Context -> RequiredArg -> String
+requiredArgString context { name, referrableType, typeRef } =
     interpolate
         "Argument.required \"{0}\" requiredArgs.{1} ({2})"
         [ name |> CamelCaseName.raw
         , name |> CamelCaseName.normalized
-        , Graphql.Generator.Decoder.generateEncoder apiSubmodule typeRef
+        , Graphql.Generator.Decoder.generateEncoder context typeRef
         ]
 
 

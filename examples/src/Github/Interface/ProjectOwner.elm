@@ -9,7 +9,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -48,9 +48,9 @@ maybeFragments =
     }
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Interface.ProjectOwner
+id : SelectionSet Github.ScalarCodecs.Id Github.Interface.ProjectOwner
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 type alias ProjectRequiredArguments =
@@ -104,16 +104,16 @@ projects fillInOptionals object_ =
 
 {-| The HTTP path listing owners projects
 -}
-projectsResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Interface.ProjectOwner
+projectsResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Interface.ProjectOwner
 projectsResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "projectsResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "projectsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL listing owners projects
 -}
-projectsUrl : SelectionSet Github.ScalarDecoders.Uri Github.Interface.ProjectOwner
+projectsUrl : SelectionSet Github.ScalarCodecs.Uri Github.Interface.ProjectOwner
 projectsUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "projectsUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "projectsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Can the current viewer create new projects on this owner.

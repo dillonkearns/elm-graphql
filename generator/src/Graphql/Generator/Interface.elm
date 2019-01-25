@@ -105,7 +105,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
         [ moduleName |> String.join "."
         , Imports.importsString apiSubmodule moduleName fields
         , apiSubmodule |> String.join "."
-        , context.scalarDecodersModule
-            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarDecoders" ]))
+        , context.scalarCodecsModule
+            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
             |> ModuleName.toString
         ]

@@ -16,7 +16,7 @@ import Normalize.InputObject
 import Normalize.Interface
 import Normalize.Object
 import Normalize.Scalar
-import Normalize.ScalarDecoders
+import Normalize.ScalarCodecs
 import Normalize.Union
 
 
@@ -40,7 +40,7 @@ conflictingTypesUnion object_ =
 
 
 type alias DroidRequiredArguments =
-    { iD_ : Normalize.ScalarDecoders.Id }
+    { iD_ : Normalize.ScalarCodecs.Id }
 
 
 {-|
@@ -50,7 +50,7 @@ type alias DroidRequiredArguments =
 -}
 droid_ : DroidRequiredArguments -> SelectionSet decodesTo Normalize.Object.Droid -> SelectionSet (Maybe decodesTo) RootQuery
 droid_ requiredArgs object_ =
-    Object.selectionForCompositeField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
 
 
 type alias GreetRequiredArguments =
@@ -107,7 +107,7 @@ heroUnion fillInOptionals object_ =
 
 
 type alias HumanRequiredArguments =
-    { id : Normalize.ScalarDecoders.Id }
+    { id : Normalize.ScalarCodecs.Id }
 
 
 {-|
@@ -117,7 +117,7 @@ type alias HumanRequiredArguments =
 -}
 human : HumanRequiredArguments -> SelectionSet decodesTo Normalize.Object.Human_ -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
-    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (\(Normalize.Scalar.Id raw) -> Encode.string raw) ] object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
 
 
 type alias RecursiveInputRequiredArguments =

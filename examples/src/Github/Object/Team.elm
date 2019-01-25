@@ -12,7 +12,7 @@ import Github.InputObject
 import Github.Interface
 import Github.Object
 import Github.Scalar
-import Github.ScalarDecoders
+import Github.ScalarCodecs
 import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -61,7 +61,7 @@ type alias AvatarUrlOptionalArguments =
   - size - The size in pixels of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet (Maybe Github.ScalarDecoders.Uri) Github.Object.Team
+avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.Team
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -71,7 +71,7 @@ avatarUrl fillInOptionals =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "(Maybe ScalarDecoders.Uri)" "avatarUrl" optionalArgs (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "avatarUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 type alias ChildTeamsOptionalArguments =
@@ -118,9 +118,9 @@ combinedSlug =
 
 {-| Identifies the date and time when the object was created.
 -}
-createdAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Team
+createdAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Team
 createdAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "createdAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarCodecs.DateTime" "createdAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The description of the team.
@@ -132,21 +132,21 @@ description =
 
 {-| The HTTP path for editing this team
 -}
-editTeamResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+editTeamResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 editTeamResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "editTeamResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "editTeamResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for editing this team
 -}
-editTeamUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+editTeamUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 editTeamUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "editTeamUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "editTeamUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
-id : SelectionSet Github.ScalarDecoders.Id Github.Object.Team
+id : SelectionSet Github.ScalarCodecs.Id Github.Object.Team
 id =
-    Object.selectionForField "ScalarDecoders.Id" "id" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderId)
+    Object.selectionForField "ScalarCodecs.Id" "id" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecId |> .decoder)
 
 
 type alias InvitationsOptionalArguments =
@@ -215,16 +215,16 @@ members fillInOptionals object_ =
 
 {-| The HTTP path for the team' members
 -}
-membersResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+membersResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 membersResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "membersResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "membersResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for the team' members
 -}
-membersUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+membersUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 membersUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "membersUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "membersUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The name of the team.
@@ -236,16 +236,16 @@ name =
 
 {-| The HTTP path creating a new team
 -}
-newTeamResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+newTeamResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 newTeamResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "newTeamResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "newTeamResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL creating a new team
 -}
-newTeamUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+newTeamUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 newTeamUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "newTeamUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "newTeamUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The organization that owns this team.
@@ -304,23 +304,23 @@ repositories fillInOptionals object_ =
 
 {-| The HTTP path for this team's repositories
 -}
-repositoriesResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+repositoriesResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 repositoriesResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "repositoriesResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "repositoriesResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this team's repositories
 -}
-repositoriesUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+repositoriesUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 repositoriesUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "repositoriesUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "repositoriesUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP path for this team
 -}
-resourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+resourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 resourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "resourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "resourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The slug corresponding to the team.
@@ -332,30 +332,30 @@ slug =
 
 {-| The HTTP path for this team's teams
 -}
-teamsResourcePath : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+teamsResourcePath : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 teamsResourcePath =
-    Object.selectionForField "ScalarDecoders.Uri" "teamsResourcePath" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "teamsResourcePath" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The HTTP URL for this team's teams
 -}
-teamsUrl : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+teamsUrl : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 teamsUrl =
-    Object.selectionForField "ScalarDecoders.Uri" "teamsUrl" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "teamsUrl" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.
 -}
-updatedAt : SelectionSet Github.ScalarDecoders.DateTime Github.Object.Team
+updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Team
 updatedAt =
-    Object.selectionForField "ScalarDecoders.DateTime" "updatedAt" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderDateTime)
+    Object.selectionForField "ScalarCodecs.DateTime" "updatedAt" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecDateTime |> .decoder)
 
 
 {-| The HTTP URL for this team
 -}
-url : SelectionSet Github.ScalarDecoders.Uri Github.Object.Team
+url : SelectionSet Github.ScalarCodecs.Uri Github.Object.Team
 url =
-    Object.selectionForField "ScalarDecoders.Uri" "url" [] (Github.ScalarDecoders.decoders |> Github.Scalar.unwrapDecoders |> .decoderUri)
+    Object.selectionForField "ScalarCodecs.Uri" "url" [] (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Team is adminable by the viewer.

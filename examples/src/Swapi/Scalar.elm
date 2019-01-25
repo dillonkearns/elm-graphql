@@ -2,10 +2,13 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Scalar exposing (Decoders, Id(..), PosixTime(..), defaultDecoders, defineDecoders, unwrapDecoders)
+module Swapi.Scalar exposing (Codecs, Id(..), PosixTime(..), defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
+import Graphql.Codec exposing (Codec)
 import Graphql.Internal.Builder.Object as Object
+import Graphql.Internal.Encode
 import Json.Decode as Decode exposing (Decoder)
+import Json.Encode as Encode
 
 
 type Id
@@ -16,40 +19,47 @@ type PosixTime
     = PosixTime String
 
 
-defineDecoders :
-    { decoderId : Decoder decoderId
-    , decoderPosixTime : Decoder decoderPosixTime
+defineCodecs :
+    { codecId : Codec valueId
+    , codecPosixTime : Codec valuePosixTime
     }
-    -> Decoders decoderId decoderPosixTime
-defineDecoders definitions =
-    Decoders
-        { decoderId = definitions.decoderId
-        , decoderPosixTime = definitions.decoderPosixTime
-        }
+    -> Codecs valueId valuePosixTime
+defineCodecs definitions =
+    Codecs definitions
 
 
-unwrapDecoders :
-    Decoders decoderId decoderPosixTime
+unwrapCodecs :
+    Codecs valueId valuePosixTime
     ->
-        { decoderId : Decoder decoderId
-        , decoderPosixTime : Decoder decoderPosixTime
+        { codecId : Codec valueId
+        , codecPosixTime : Codec valuePosixTime
         }
-unwrapDecoders (Decoders unwrappedDecoders) =
-    unwrappedDecoders
+unwrapCodecs (Codecs unwrappedCodecs) =
+    unwrappedCodecs
 
 
-type Decoders decoderId decoderPosixTime
-    = Decoders (RawDecoders decoderId decoderPosixTime)
+unwrapEncoder getter (Codecs unwrappedCodecs) =
+    (unwrappedCodecs |> getter |> .encoder) >> Graphql.Internal.Encode.fromJson
 
 
-type alias RawDecoders decoderId decoderPosixTime =
-    { decoderId : Decoder decoderId
-    , decoderPosixTime : Decoder decoderPosixTime
+type Codecs valueId valuePosixTime
+    = Codecs (RawCodecs valueId valuePosixTime)
+
+
+type alias RawCodecs valueId valuePosixTime =
+    { codecId : Codec valueId
+    , codecPosixTime : Codec valuePosixTime
     }
 
 
-defaultDecoders : RawDecoders Id PosixTime
-defaultDecoders =
-    { decoderId = Object.scalarDecoder |> Decode.map Id
-    , decoderPosixTime = Object.scalarDecoder |> Decode.map PosixTime
+defaultCodecs : RawCodecs Id PosixTime
+defaultCodecs =
+    { codecId =
+        { encoder = \(Id raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map Id
+        }
+    , codecPosixTime =
+        { encoder = \(PosixTime raw) -> Encode.string raw
+        , decoder = Object.scalarDecoder |> Decode.map PosixTime
+        }
     }

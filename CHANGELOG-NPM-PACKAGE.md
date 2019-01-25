@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- The code now for the scalar codecs file
+  includes custom Encoders (not just Decoders). Before this, you would
+  get an error if you tried to use custom decoders but your Custom Scalar
+  was passed somewhere as an argument
+  (see [#109](https://github.com/dillonkearns/elm-graphql/issues/109)).
+
+### Changed
+
+- Renamed `--scalar-decoders` flag to `--scalar-codecs`.
+
 ## [3.1.0] - 2018-01-07
 
 ### Added
