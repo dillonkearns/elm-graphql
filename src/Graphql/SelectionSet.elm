@@ -36,7 +36,6 @@ For example, `SelectionSet.empty` is the most basic `SelectionSet` you could bui
 
     import Graphql.Operation exposing (RootQuery)
     import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
-    import StarWars.Query as Query
 
     query : SelectionSet () RootQuery
     query =
