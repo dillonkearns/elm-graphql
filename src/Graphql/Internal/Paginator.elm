@@ -10,11 +10,15 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-fromSetup : Direction -> SelectionSet (CurrentPage String) pageInfo
+fromSetup : Direction -> SelectionSet (CurrentPage String) connection
 fromSetup paginatorSetup =
-    Graphql.SelectionSet.map2 CurrentPage
-        endCursor
-        hasNextPage
+    let
+        object_ =
+            Graphql.SelectionSet.map2 CurrentPage
+                endCursor
+                hasNextPage
+    in
+    Object.selectionForCompositeField "pageInfo" [] object_ identity
 
 
 {-| When paginating forwards, the cursor to continue.
