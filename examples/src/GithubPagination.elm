@@ -16,7 +16,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatorSetup exposing (CurrentPage, PaginatorSetup(..))
+import Graphql.PaginatorSetup exposing (CurrentPage, PaginatedData, PaginatorSetup(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
@@ -25,13 +25,7 @@ import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    Paginator (List Repo) String
-
-
-type alias Paginator dataType cursorType =
-    { data : dataType
-    , paginationData : CurrentPage cursorType
-    }
+    PaginatedData (List Repo) String
 
 
 
@@ -70,7 +64,7 @@ query cursor =
         { query = "language:Elm"
         , type_ = Github.Enum.SearchType.Repository
         }
-        (SelectionSet.map2 Paginator
+        (SelectionSet.map2 PaginatedData
             searchResultFieldEdges
             (Github.Object.SearchResultItemConnection.pageInfo
                 (Github.Object.PageInfo.fromSetup setup)
@@ -89,7 +83,7 @@ newThing cursor =
         { query = "language:Elm"
         , type_ = Github.Enum.SearchType.Repository
         }
-        (SelectionSet.map2 Paginator
+        (SelectionSet.map2 PaginatedData
             searchResultFieldEdges
             (Github.Object.SearchResultItemConnection.pageInfo
                 (Github.Object.PageInfo.fromSetup setup)
@@ -184,8 +178,8 @@ update msg model =
         GetNextPage ->
             case model of
                 (RemoteData.Success successResponse) :: rest ->
-                    if successResponse.paginationData.done then
-                        ( RemoteData.Loading :: model, makeRequest successResponse.paginationData.cursor )
+                    if successResponse.currentPage.done then
+                        ( RemoteData.Loading :: model, makeRequest successResponse.currentPage.cursor )
 
                     else
                         ( model, Cmd.none )
