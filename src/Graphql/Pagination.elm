@@ -4,10 +4,10 @@ import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(.
 
 
 init : Direction -> List data -> PaginatedData data cursor
-init paginatorSetup initialData =
+init direction initialData =
     { data = initialData
     , currentPage = { cursor = Nothing, done = False }
-    , direction = paginatorSetup
+    , direction = direction
     }
 
 

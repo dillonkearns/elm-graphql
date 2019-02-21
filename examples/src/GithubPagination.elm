@@ -21,7 +21,6 @@ import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
 import PrintAny
-import RemoteData exposing (RemoteData)
 
 
 type alias Response =
@@ -34,7 +33,7 @@ type alias Response =
 -- second query, Cursor, no count (use from previous)
 
 
-query : Int -> PaginatedData any String -> SelectionSet Response RootQuery
+query : Int -> PaginatedData Repo String -> SelectionSet Response RootQuery
 query pageSize paginator =
     let
         setup =
@@ -87,12 +86,12 @@ repositorySelection =
         |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
-makeRequest : Int -> PaginatedData any String -> Cmd Msg
+makeRequest : Int -> PaginatedData Repo String -> Cmd Msg
 makeRequest pageSize paginator =
     query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphql.Http.send (\result -> result |> RemoteData.fromResult |> GotResponse)
+        |> Graphql.Http.send GotResponse
 
 
 type Msg
@@ -104,7 +103,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , data : PaginatedData RemoteDataResponse String
+    , data : PaginatedData Repo String
     }
 
 
@@ -117,12 +116,12 @@ type alias Model =
 
 
 type alias RemoteDataResponse =
-    RemoteData (Graphql.Http.Error Response) Response
+    Result (Graphql.Http.Error Response) Response
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    Pagination.init Forward [ RemoteData.Loading ]
+    Pagination.init Forward []
         |> (\paginator ->
                 ( { pageSize = 1
                   , data = paginator
@@ -137,7 +136,8 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery (query model.pageSize model.data)) ]
+
+            -- , pre [] [ text (Document.serializeQuery (query model.pageSize model.data)) ]
             ]
         , div []
             [ button [ onClick GetNextPage ] [ text <| "Load next " ++ String.fromInt model.pageSize ++ " item(s)..." ]
@@ -154,29 +154,12 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetNextPage ->
-            case model.data.data of
-                (RemoteData.Success successResponse) :: rest ->
-                    if successResponse.currentPage.done then
-                        let
-                            modelData =
-                                model.data
-                        in
-                        ( { model | data = { modelData | data = RemoteData.Loading :: model.data.data } }, makeRequest model.pageSize successResponse )
-
-                    else
-                        ( model, Cmd.none )
-
-                _ ->
-                    ( model, Cmd.none )
+            ( model, makeRequest model.pageSize model.data )
 
         GotResponse response ->
-            case model.data.data of
-                head :: rest ->
-                    let
-                        modelData =
-                            model.data
-                    in
-                    ( { model | data = { modelData | data = response :: rest } }, Cmd.none )
+            case response of
+                Ok successData ->
+                    ( { model | data = successData }, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
