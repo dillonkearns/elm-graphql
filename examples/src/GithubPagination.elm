@@ -33,6 +33,25 @@ type alias Paginator dataType cursorType =
     }
 
 
+
+-- first query -> No Cursor, just count (first or last)
+-- Result comes back -> Get a cursor, maintain the count
+-- second query, Cursor, no count (use from previous)
+
+
+type PaginationContinuation cursor
+    = Forward { first : Int } { after : cursor }
+    | Backward { last : Int } { before : cursor }
+
+
+paginationArguments : Maybe String -> Query.SearchOptionalArguments -> Query.SearchOptionalArguments
+paginationArguments maybeCursor optionals =
+    { optionals
+        | first = Present 1
+        , after = OptionalArgument.fromMaybe maybeCursor
+    }
+
+
 query : Maybe String -> SelectionSet Response RootQuery
 query cursor =
     Query.search
