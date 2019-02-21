@@ -32,25 +32,6 @@ type alias Response =
 -- first query -> No Cursor, just count (first or last)
 -- Result comes back -> Get a cursor, maintain the count
 -- second query, Cursor, no count (use from previous)
--- type PaginationContinuation cursor
---     = Forward { first : Int } { after : cursor }
---     | Backward { last : Int } { before : cursor }
-
-
-paginationArguments : Maybe String -> PaginatorSetup -> Query.SearchOptionalArguments -> Query.SearchOptionalArguments
-paginationArguments maybeCursor paginationSetup optionals =
-    case paginationSetup of
-        Forward { first } ->
-            { optionals
-                | first = Present first
-                , after = OptionalArgument.fromMaybe maybeCursor
-            }
-
-        Backward { last } ->
-            { optionals
-                | last = Present last
-                , before = OptionalArgument.fromMaybe maybeCursor
-            }
 
 
 query : Maybe String -> SelectionSet Response RootQuery
