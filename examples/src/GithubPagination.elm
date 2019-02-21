@@ -59,36 +59,13 @@ query cursor =
         setup =
             Forward { first = 1 }
     in
-    Query.search
-        (paginationArguments cursor setup)
-        { query = "language:Elm"
-        , type_ = Github.Enum.SearchType.Repository
-        }
-        (SelectionSet.map2 PaginatedData
-            searchResultFieldEdges
-            (Github.Object.SearchResultItemConnection.pageInfo
-                (Github.Object.PageInfo.fromSetup setup)
-            )
-        )
-
-
-newThing cursor =
-    let
-        setup =
-            Forward { first = 1 }
-    in
     Query.searchPaginated cursor
         setup
         identity
         { query = "language:Elm"
         , type_ = Github.Enum.SearchType.Repository
         }
-        (SelectionSet.map2 PaginatedData
-            searchResultFieldEdges
-            (Github.Object.SearchResultItemConnection.pageInfo
-                (Github.Object.PageInfo.fromSetup setup)
-            )
-        )
+        searchResultFieldEdges
 
 
 searchResultFieldEdges : SelectionSet (List Repo) Github.Object.SearchResultItemConnection

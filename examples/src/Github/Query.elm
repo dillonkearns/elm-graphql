@@ -14,9 +14,10 @@ import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.Internal.Paginator
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatorSetup as PaginatorSetup exposing (CurrentPage, PaginatorSetup(..))
+import Graphql.PaginatorSetup as PaginatorSetup exposing (CurrentPage, PaginatedData, PaginatorSetup(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
@@ -337,7 +338,7 @@ searchPaginated :
     -> (SearchOptionalArguments -> SearchOptionalArguments)
     -> SearchRequiredArguments
     -> SelectionSet decodesTo Github.Object.SearchResultItemConnection
-    -> SelectionSet decodesTo RootQuery
+    -> SelectionSet (PaginatedData decodesTo String) RootQuery
 searchPaginated cursor paginatorSetup fillInOptionals requiredArgs object_ =
     -- let
     --     foo =
@@ -347,7 +348,13 @@ searchPaginated cursor paginatorSetup fillInOptionals requiredArgs object_ =
     --                 (Github.Object.PageInfo.fromSetup setup)
     --             )
     -- in
-    search (fillInOptionals >> PaginatorSetup.addPageInfo cursor paginatorSetup) requiredArgs object_
+    search (fillInOptionals >> PaginatorSetup.addPageInfo cursor paginatorSetup)
+        requiredArgs
+        (Graphql.SelectionSet.map2 PaginatedData
+            object_
+            -- (Github.Object.SearchResultItemConnection.pageInfo (Github.Object.PageInfo.fromSetup setup))
+            (Graphql.Internal.Paginator.fromSetup paginatorSetup)
+        )
 
 
 type alias TopicRequiredArguments =
