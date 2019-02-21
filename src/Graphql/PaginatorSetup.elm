@@ -4,7 +4,7 @@ import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(.
 
 
 type alias PaginatedData data cursor =
-    { data : data
+    { data : List data
     , currentPage : CurrentPage cursor
     }
 

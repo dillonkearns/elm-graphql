@@ -25,7 +25,7 @@ import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    PaginatedData (List Repo) String
+    PaginatedData Repo String
 
 
 

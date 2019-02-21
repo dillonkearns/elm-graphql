@@ -337,22 +337,13 @@ searchPaginated :
     -> PaginatorSetup
     -> (SearchOptionalArguments -> SearchOptionalArguments)
     -> SearchRequiredArguments
-    -> SelectionSet decodesTo Github.Object.SearchResultItemConnection
+    -> SelectionSet (List decodesTo) Github.Object.SearchResultItemConnection
     -> SelectionSet (PaginatedData decodesTo String) RootQuery
 searchPaginated cursor paginatorSetup fillInOptionals requiredArgs object_ =
-    -- let
-    --     foo =
-    --         Graphql.SelectionSet.map2 Paginator
-    --             searchResultFieldEdges
-    --             (Github.Object.SearchResultItemConnection.pageInfo
-    --                 (Github.Object.PageInfo.fromSetup setup)
-    --             )
-    -- in
     search (fillInOptionals >> PaginatorSetup.addPageInfo cursor paginatorSetup)
         requiredArgs
         (Graphql.SelectionSet.map2 PaginatedData
             object_
-            -- (Github.Object.SearchResultItemConnection.pageInfo (Github.Object.PageInfo.fromSetup setup))
             (Graphql.Internal.Paginator.fromSetup paginatorSetup)
         )
 
