@@ -18,7 +18,7 @@ import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.PaginatorSetup as PaginatorSetup exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
-import Html exposing (button, div, h1, p, pre, text)
+import Html exposing (button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
 import PrintAny
 import RemoteData exposing (RemoteData)
@@ -34,13 +34,13 @@ type alias Response =
 -- second query, Cursor, no count (use from previous)
 
 
-query : PaginatedData any String -> SelectionSet Response RootQuery
-query paginator =
+query : Int -> PaginatedData any String -> SelectionSet Response RootQuery
+query pageSize paginator =
     let
         setup =
             Forward
     in
-    Query.searchPaginated 1
+    Query.searchPaginated pageSize
         paginator
         identity
         { query = "language:Elm", type_ = Github.Enum.SearchType.Repository }
@@ -87,9 +87,9 @@ repositorySelection =
         |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
-makeRequest : PaginatedData any String -> Cmd Msg
-makeRequest paginator =
-    query paginator
+makeRequest : Int -> PaginatedData any String -> Cmd Msg
+makeRequest pageSize paginator =
+    query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphql.Http.send (\result -> result |> RemoteData.fromResult |> GotResponse)
@@ -98,11 +98,14 @@ makeRequest paginator =
 type Msg
     = GotResponse RemoteDataResponse
     | GetNextPage
+    | CountChanged String
 
 
 type alias Model =
     -- List RemoteDataResponse
-    PaginatedData RemoteDataResponse String
+    { pageSize : Int
+    , data : PaginatedData RemoteDataResponse String
+    }
 
 
 
@@ -120,7 +123,13 @@ type alias RemoteDataResponse =
 init : Flags -> ( Model, Cmd Msg )
 init flags =
     PaginatorSetup.init Forward [ RemoteData.Loading ]
-        |> (\paginator -> ( paginator, makeRequest paginator ))
+        |> (\paginator ->
+                ( { pageSize = 1
+                  , data = paginator
+                  }
+                , makeRequest 1 paginator
+                )
+           )
 
 
 view : Model -> Html.Html Msg
@@ -128,12 +137,15 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery (query model)) ]
+            , pre [] [ text (Document.serializeQuery (query model.pageSize model.data)) ]
             ]
-        , div [] [ button [ onClick GetNextPage ] [ text "Load next page..." ] ]
+        , div []
+            [ button [ onClick GetNextPage ] [ text <| "Load next " ++ String.fromInt model.pageSize ++ " item(s)..." ]
+            , input [ Html.Events.onInput CountChanged ] []
+            ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view (model.data |> List.reverse)
+            , PrintAny.view (model.data.data |> List.reverse)
             ]
         ]
 
@@ -142,10 +154,14 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetNextPage ->
-            case model.data of
+            case model.data.data of
                 (RemoteData.Success successResponse) :: rest ->
                     if successResponse.currentPage.done then
-                        ( { model | data = RemoteData.Loading :: model.data }, makeRequest successResponse )
+                        let
+                            modelData =
+                                model.data
+                        in
+                        ( { model | data = { modelData | data = RemoteData.Loading :: model.data.data } }, makeRequest model.pageSize successResponse )
 
                     else
                         ( model, Cmd.none )
@@ -154,11 +170,23 @@ update msg model =
                     ( model, Cmd.none )
 
         GotResponse response ->
-            case model.data of
+            case model.data.data of
                 head :: rest ->
-                    ( { model | data = response :: rest }, Cmd.none )
+                    let
+                        modelData =
+                            model.data
+                    in
+                    ( { model | data = { modelData | data = response :: rest } }, Cmd.none )
 
                 _ ->
+                    ( model, Cmd.none )
+
+        CountChanged newPageSizeString ->
+            case newPageSizeString |> String.toInt of
+                Just newPageSize ->
+                    ( { model | pageSize = newPageSize }, Cmd.none )
+
+                Nothing ->
                     ( model, Cmd.none )
 
 
