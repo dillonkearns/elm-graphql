@@ -27,12 +27,6 @@ type alias Response =
     PaginatedData Repo String
 
 
-
--- first query -> No Cursor, just count (first or last)
--- Result comes back -> Get a cursor, maintain the count
--- second query, Cursor, no count (use from previous)
-
-
 query : Int -> PaginatedData Repo String -> SelectionSet Response RootQuery
 query pageSize paginator =
     let
