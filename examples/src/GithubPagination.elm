@@ -61,40 +61,21 @@ paginationArguments maybeCursor paginationSetup optionals =
 
 query : Maybe String -> SelectionSet Response RootQuery
 query cursor =
+    let
+        setup =
+            Forward { first = 1 }
+    in
     Query.search
-        (paginationArguments cursor (Forward { first = 1 }))
+        (paginationArguments cursor setup)
         { query = "language:Elm"
         , type_ = Github.Enum.SearchType.Repository
         }
         (SelectionSet.map2 Paginator
             searchResultFieldEdges
             (Github.Object.SearchResultItemConnection.pageInfo
-                (Github.Object.PageInfo.fromSetup (Forward { first = 1 }))
+                (Github.Object.PageInfo.fromSetup setup)
             )
         )
-
-
-searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
-searchSelection =
-    SelectionSet.map2 Paginator
-        searchResultFieldEdges
-        (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
-
-
-searchPageInfoSelection : SelectionSet (CurrentPage String) Github.Object.PageInfo
-searchPageInfoSelection =
-    -- SelectionSet.succeed PaginationData
-    --     |> with Github.Object.PageInfo.endCursor
-    --     |> with Github.Object.PageInfo.hasNextPage
-    Github.Object.PageInfo.fromSetup (Forward { first = 1 })
-
-
-searchResultFieldNodes : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
-searchResultFieldNodes =
-    Github.Object.SearchResultItemConnection.nodes searchResultSelection
-        |> SelectionSet.nonNullOrFail
-        |> SelectionSet.nonNullElementsOrFail
-        |> SelectionSet.nonNullElementsOrFail
 
 
 searchResultFieldEdges : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
