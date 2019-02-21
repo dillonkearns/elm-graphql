@@ -342,9 +342,10 @@ searchPaginated :
 searchPaginated cursor paginatorSetup fillInOptionals requiredArgs object_ =
     search (fillInOptionals >> PaginatorSetup.addPageInfo cursor paginatorSetup)
         requiredArgs
-        (Graphql.SelectionSet.map2 PaginatedData
+        (Graphql.SelectionSet.map3 PaginatedData
             object_
             (Graphql.Internal.Paginator.fromSetup paginatorSetup)
+            (Graphql.SelectionSet.succeed paginatorSetup)
         )
 
 
