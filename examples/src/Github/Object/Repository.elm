@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Repository exposing (AssignableUsersOptionalArguments, CollaboratorsOptionalArguments, CommitCommentsOptionalArguments, DeployKeysOptionalArguments, DeploymentsOptionalArguments, ForksOptionalArguments, IssueOrPullRequestRequiredArguments, IssueRequiredArguments, IssuesOptionalArguments, LabelRequiredArguments, LabelsOptionalArguments, LanguagesOptionalArguments, MentionableUsersOptionalArguments, MilestoneRequiredArguments, MilestonesOptionalArguments, ObjectOptionalArguments, ProjectRequiredArguments, ProjectsOptionalArguments, ProtectedBranchesOptionalArguments, PullRequestRequiredArguments, PullRequestsOptionalArguments, RefRequiredArguments, RefsOptionalArguments, RefsRequiredArguments, ReleaseRequiredArguments, ReleasesOptionalArguments, RepositoryTopicsOptionalArguments, ShortDescriptionHTMLOptionalArguments, StargazersOptionalArguments, WatchersOptionalArguments, assignableUsers, codeOfConduct, collaborators, commitComments, createdAt, databaseId, defaultBranchRef, deployKeys, deployments, description, descriptionHTML, diskUsage, forkCount, forks, hasIssuesEnabled, hasWikiEnabled, homepageUrl, id, isArchived, isFork, isLocked, isMirror, isPrivate, issue, issueOrPullRequest, issues, label, labels, languages, license, licenseInfo, lockReason, mentionableUsers, milestone, milestones, mirrorUrl, name, nameWithOwner, object, owner, parent, primaryLanguage, project, projects, projectsResourcePath, projectsUrl, protectedBranches, pullRequest, pullRequests, pushedAt, ref, refs, release, releases, repositoryTopics, resourcePath, shortDescriptionHTML, sshUrl, stargazers, updatedAt, url, viewerCanAdminister, viewerCanCreateProjects, viewerCanSubscribe, viewerCanUpdateTopics, viewerHasStarred, viewerPermission, viewerSubscription, watchers)
+module Github.Object.Repository exposing (AssignableUsersOptionalArguments, CollaboratorsOptionalArguments, CommitCommentsOptionalArguments, DeployKeysOptionalArguments, DeploymentsOptionalArguments, ForksOptionalArguments, IssueOrPullRequestRequiredArguments, IssueRequiredArguments, IssuesOptionalArguments, LabelRequiredArguments, LabelsOptionalArguments, LanguagesOptionalArguments, MentionableUsersOptionalArguments, MilestoneRequiredArguments, MilestonesOptionalArguments, ObjectOptionalArguments, ProjectRequiredArguments, ProjectsOptionalArguments, ProtectedBranchesOptionalArguments, PullRequestRequiredArguments, PullRequestsOptionalArguments, RefRequiredArguments, RefsOptionalArguments, RefsRequiredArguments, ReleaseRequiredArguments, ReleasesOptionalArguments, RepositoryTopicsOptionalArguments, ShortDescriptionHTMLOptionalArguments, StargazersOptionalArguments, WatchersOptionalArguments, assignableUsers, codeOfConduct, collaborators, commitComments, createdAt, databaseId, defaultBranchRef, deployKeys, deployments, description, descriptionHTML, diskUsage, forkCount, forks, hasIssuesEnabled, hasWikiEnabled, homepageUrl, id, isArchived, isFork, isLocked, isMirror, isPrivate, issue, issueOrPullRequest, issues, label, labels, languages, license, licenseInfo, lockReason, mentionableUsers, milestone, milestones, mirrorUrl, name, nameWithOwner, object, owner, parent, primaryLanguage, project, projects, projectsResourcePath, projectsUrl, protectedBranches, pullRequest, pullRequests, pushedAt, ref, refs, release, releases, repositoryTopics, resourcePath, shortDescriptionHTML, sshUrl, stargazers, stargazersPaginated, updatedAt, url, viewerCanAdminister, viewerCanCreateProjects, viewerCanSubscribe, viewerCanUpdateTopics, viewerHasStarred, viewerPermission, viewerSubscription, watchers)
 
 import Github.Enum.CollaboratorAffiliation
 import Github.Enum.IssueState
@@ -24,8 +24,10 @@ import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
+import Graphql.Internal.Paginator
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.Pagination as Pagination exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -979,6 +981,21 @@ stargazers fillInOptionals object_ =
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "stargazers" optionalArgs object_ identity
+
+
+stargazersPaginated :
+    Int
+    -> PaginatedData decodesTo String
+    -> (StargazersOptionalArguments -> StargazersOptionalArguments)
+    -> SelectionSet (List decodesTo) Github.Object.StargazerConnection
+    -> SelectionSet (PaginatedData decodesTo String) Github.Object.Repository
+stargazersPaginated pageSize paginator fillInOptionals object_ =
+    stargazers (fillInOptionals >> Pagination.addPageInfo pageSize paginator.currentPage.cursor paginator.direction)
+        (Graphql.SelectionSet.map3 PaginatedData
+            (object_ |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
+            (Graphql.Internal.Paginator.fromSetup paginator.direction)
+            (Graphql.SelectionSet.succeed paginator.direction)
+        )
 
 
 {-| Identifies the date and time when the object was last updated.
