@@ -62,9 +62,7 @@ query cursor =
     Query.searchPaginated cursor
         setup
         identity
-        { query = "language:Elm"
-        , type_ = Github.Enum.SearchType.Repository
-        }
+        { query = "language:Elm", type_ = Github.Enum.SearchType.Repository }
         searchResultFieldEdges
 
 
