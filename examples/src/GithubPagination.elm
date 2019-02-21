@@ -6,6 +6,7 @@ import Github.Object
 import Github.Object.PageInfo
 import Github.Object.Repository as Repository
 import Github.Object.SearchResultItemConnection
+import Github.Object.SearchResultItemEdge
 import Github.Object.StargazerConnection
 import Github.Query as Query
 import Github.Scalar
@@ -23,7 +24,7 @@ import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    Paginator (List (Maybe (Maybe Repo))) String
+    Paginator (List Repo) String
 
 
 type alias Paginator dataType cursorType =
@@ -50,7 +51,7 @@ query cursor =
 searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
 searchSelection =
     SelectionSet.succeed Paginator
-        |> with searchResultField
+        |> with searchResultFieldEdges
         |> with (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
 
 
@@ -67,9 +68,23 @@ searchPageInfoSelection =
         |> with Github.Object.PageInfo.hasNextPage
 
 
-searchResultField : SelectionSet (List (Maybe (Maybe Repo))) Github.Object.SearchResultItemConnection
-searchResultField =
-    Github.Object.SearchResultItemConnection.nodes searchResultSelection |> SelectionSet.nonNullOrFail
+searchResultFieldNodes : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
+searchResultFieldNodes =
+    Github.Object.SearchResultItemConnection.nodes searchResultSelection
+        |> SelectionSet.nonNullOrFail
+        |> SelectionSet.nonNullElementsOrFail
+        |> SelectionSet.nonNullElementsOrFail
+
+
+searchResultFieldEdges : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
+searchResultFieldEdges =
+    Github.Object.SearchResultItemConnection.edges
+        (Github.Object.SearchResultItemEdge.node searchResultSelection
+            |> SelectionSet.nonNullOrFail
+        )
+        |> SelectionSet.nonNullOrFail
+        |> SelectionSet.nonNullElementsOrFail
+        |> SelectionSet.nonNullElementsOrFail
 
 
 searchResultSelection : SelectionSet (Maybe Repo) Github.Union.SearchResultItem
