@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PageInfo exposing (endCursor, hasNextPage, hasPreviousPage, startCursor)
+module Github.Object.PageInfo exposing (endCursor, fromSetup, hasNextPage, hasPreviousPage, startCursor)
 
 import Github.InputObject
 import Github.Interface
@@ -15,8 +15,20 @@ import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.PaginatorSetup exposing (CurrentPage, PaginatorSetup(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
+
+
+fromSetup : PaginatorSetup -> SelectionSet (CurrentPage String) Github.Object.PageInfo
+fromSetup paginatorSetup =
+    Graphql.SelectionSet.map2 CurrentPage
+        endCursor
+        hasNextPage
+
+
+
+-- SelectionSet.empty
 
 
 {-| When paginating forwards, the cursor to continue.

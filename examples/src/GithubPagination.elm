@@ -16,6 +16,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
+import Graphql.PaginatorSetup exposing (CurrentPage, PaginatorSetup(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
@@ -29,7 +30,7 @@ type alias Response =
 
 type alias Paginator dataType cursorType =
     { data : dataType
-    , paginationData : PaginationData cursorType
+    , paginationData : CurrentPage cursorType
     }
 
 
@@ -42,12 +43,7 @@ type alias Paginator dataType cursorType =
 --     | Backward { last : Int } { before : cursor }
 
 
-type PaginationSetup
-    = Forward { first : Int }
-    | Backward { last : Int }
-
-
-paginationArguments : Maybe String -> PaginationSetup -> Query.SearchOptionalArguments -> Query.SearchOptionalArguments
+paginationArguments : Maybe String -> PaginatorSetup -> Query.SearchOptionalArguments -> Query.SearchOptionalArguments
 paginationArguments maybeCursor paginationSetup optionals =
     case paginationSetup of
         Forward { first } ->
@@ -70,27 +66,27 @@ query cursor =
         { query = "language:Elm"
         , type_ = Github.Enum.SearchType.Repository
         }
-        searchSelection
+        (SelectionSet.map2 Paginator
+            searchResultFieldEdges
+            (Github.Object.SearchResultItemConnection.pageInfo
+                (Github.Object.PageInfo.fromSetup (Forward { first = 1 }))
+            )
+        )
 
 
 searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
 searchSelection =
-    SelectionSet.succeed Paginator
-        |> with searchResultFieldEdges
-        |> with (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
+    SelectionSet.map2 Paginator
+        searchResultFieldEdges
+        (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
 
 
-type alias PaginationData cursorType =
-    { cursor : Maybe cursorType
-    , hasNextPage : Bool
-    }
-
-
-searchPageInfoSelection : SelectionSet (PaginationData String) Github.Object.PageInfo
+searchPageInfoSelection : SelectionSet (CurrentPage String) Github.Object.PageInfo
 searchPageInfoSelection =
-    SelectionSet.succeed PaginationData
-        |> with Github.Object.PageInfo.endCursor
-        |> with Github.Object.PageInfo.hasNextPage
+    -- SelectionSet.succeed PaginationData
+    --     |> with Github.Object.PageInfo.endCursor
+    --     |> with Github.Object.PageInfo.hasNextPage
+    Github.Object.PageInfo.fromSetup (Forward { first = 1 })
 
 
 searchResultFieldNodes : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
@@ -188,7 +184,7 @@ update msg model =
         GetNextPage ->
             case model of
                 (RemoteData.Success successResponse) :: rest ->
-                    if successResponse.paginationData.hasNextPage then
+                    if successResponse.paginationData.done then
                         ( RemoteData.Loading :: model, makeRequest successResponse.paginationData.cursor )
 
                     else
