@@ -41,8 +41,7 @@ query paginator =
             Forward
     in
     Query.searchPaginated 1
-        paginator.currentPage.cursor
-        paginator.direction
+        paginator
         identity
         { query = "language:Elm", type_ = Github.Enum.SearchType.Repository }
         searchResultFieldEdges
