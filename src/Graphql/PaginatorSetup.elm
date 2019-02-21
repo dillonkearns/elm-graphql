@@ -1,9 +1,9 @@
-module Graphql.PaginatorSetup exposing (CurrentPage, PageInfo, PaginatedData, PaginatorSetup(..), addPageInfo, init)
+module Graphql.PaginatorSetup exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, init)
 
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 
 
-init : PaginatorSetup -> List data -> PaginatedData data cursor
+init : Direction -> List data -> PaginatedData data cursor
 init paginatorSetup initialData =
     { data = initialData
     , currentPage = { cursor = Nothing, done = False }
@@ -14,7 +14,7 @@ init paginatorSetup initialData =
 type alias PaginatedData data cursor =
     { data : List data
     , currentPage : CurrentPage cursor
-    , setup : PaginatorSetup
+    , setup : Direction
     }
 
 
@@ -29,7 +29,7 @@ type alias PageInfo pageInfo cursor =
 
 {-| TODO
 -}
-addPageInfo : Maybe cursor -> PaginatorSetup -> PageInfo pageInfo cursor -> PageInfo pageInfo cursor
+addPageInfo : Maybe cursor -> Direction -> PageInfo pageInfo cursor -> PageInfo pageInfo cursor
 addPageInfo maybeCursor paginationSetup optionals =
     case paginationSetup of
         Forward { first } ->
@@ -47,7 +47,7 @@ addPageInfo maybeCursor paginationSetup optionals =
 
 {-| Uses [the relay protocol](https://facebook.github.io/relay/graphql/connections.htm).
 -}
-type PaginatorSetup
+type Direction
     = Forward { first : Int }
     | Backward { last : Int }
 

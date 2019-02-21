@@ -16,7 +16,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatorSetup as PaginatorSetup exposing (CurrentPage, PaginatedData, PaginatorSetup(..))
+import Graphql.PaginatorSetup as PaginatorSetup exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
