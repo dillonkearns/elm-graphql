@@ -16,7 +16,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatorSetup exposing (CurrentPage, PaginatedData, PaginatorSetup(..))
+import Graphql.PaginatorSetup as PaginatorSetup exposing (CurrentPage, PaginatedData, PaginatorSetup(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, p, pre, text)
 import Html.Events exposing (onClick)
@@ -101,7 +101,8 @@ type Msg
 
 
 type alias Model =
-    List RemoteDataResponse
+    -- List RemoteDataResponse
+    PaginatedData RemoteDataResponse String
 
 
 type alias RemoteDataResponse =
@@ -110,7 +111,7 @@ type alias RemoteDataResponse =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( [ RemoteData.Loading ], makeRequest Nothing )
+    ( PaginatorSetup.init (Forward { first = 1 }) [ RemoteData.Loading ], makeRequest Nothing )
 
 
 view : Model -> Html.Html Msg
@@ -123,7 +124,7 @@ view model =
         , div [] [ button [ onClick GetNextPage ] [ text "Load next page..." ] ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view (model |> List.reverse)
+            , PrintAny.view (model.data |> List.reverse)
             ]
         ]
 
@@ -132,10 +133,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetNextPage ->
-            case model of
+            case model.data of
                 (RemoteData.Success successResponse) :: rest ->
                     if successResponse.currentPage.done then
-                        ( RemoteData.Loading :: model, makeRequest successResponse.currentPage.cursor )
+                        ( { model | data = RemoteData.Loading :: model.data }, makeRequest successResponse.currentPage.cursor )
 
                     else
                         ( model, Cmd.none )
@@ -144,9 +145,9 @@ update msg model =
                     ( model, Cmd.none )
 
         GotResponse response ->
-            case model of
+            case model.data of
                 head :: rest ->
-                    ( response :: rest, Cmd.none )
+                    ( { model | data = response :: rest }, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )

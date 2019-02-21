@@ -1,6 +1,14 @@
-module Graphql.PaginatorSetup exposing (CurrentPage, PageInfo, PaginatedData, PaginatorSetup(..), addPageInfo)
+module Graphql.PaginatorSetup exposing (CurrentPage, PageInfo, PaginatedData, PaginatorSetup(..), addPageInfo, init)
 
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
+
+
+init : PaginatorSetup -> List data -> PaginatedData data cursor
+init paginatorSetup initialData =
+    { data = initialData
+    , currentPage = { cursor = Nothing, done = False }
+    , setup = paginatorSetup
+    }
 
 
 type alias PaginatedData data cursor =
