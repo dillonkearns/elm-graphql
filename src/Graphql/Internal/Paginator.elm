@@ -1,13 +1,25 @@
-module Graphql.Internal.Paginator exposing (fromSetup)
+module Graphql.Internal.Paginator exposing (fromSetup, selectionSet)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.Pagination exposing (CurrentPage, Direction(..))
+import Graphql.Pagination as Pagination exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
+
+
+selectionSet :
+    Int
+    -> PaginatedData decodesTo String
+    -> SelectionSet (List decodesTo) typeLock
+    -> SelectionSet (PaginatedData decodesTo String) typeLock
+selectionSet pageSize paginator selection =
+    Graphql.SelectionSet.map3 PaginatedData
+        (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
+        (fromSetup paginator.direction)
+        (Graphql.SelectionSet.succeed paginator.direction)
 
 
 fromSetup : Direction -> SelectionSet (CurrentPage String) connection

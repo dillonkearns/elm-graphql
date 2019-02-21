@@ -991,11 +991,7 @@ stargazersPaginated :
     -> SelectionSet (PaginatedData decodesTo String) Github.Object.Repository
 stargazersPaginated pageSize paginator fillInOptionals object_ =
     stargazers (fillInOptionals >> Pagination.addPageInfo pageSize paginator.currentPage.cursor paginator.direction)
-        (Graphql.SelectionSet.map3 PaginatedData
-            (object_ |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
-            (Graphql.Internal.Paginator.fromSetup paginator.direction)
-            (Graphql.SelectionSet.succeed paginator.direction)
-        )
+        (Graphql.Internal.Paginator.selectionSet pageSize paginator object_)
 
 
 {-| Identifies the date and time when the object was last updated.
