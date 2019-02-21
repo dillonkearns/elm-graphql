@@ -167,7 +167,7 @@ view model =
         , div [] [ button [ onClick GetNextPage ] [ text "Load next page..." ] ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view model
+            , PrintAny.view (model |> List.reverse)
             ]
         ]
 
