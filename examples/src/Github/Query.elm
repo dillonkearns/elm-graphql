@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Query exposing (CodeOfConductRequiredArguments, LicenseRequiredArguments, MarketplaceCategoriesOptionalArguments, MarketplaceCategoryRequiredArguments, MarketplaceListingRequiredArguments, MarketplaceListingsOptionalArguments, NodeRequiredArguments, NodesRequiredArguments, OrganizationRequiredArguments, RateLimitOptionalArguments, RepositoryOwnerRequiredArguments, RepositoryRequiredArguments, ResourceRequiredArguments, SearchOptionalArguments, SearchRequiredArguments, TopicRequiredArguments, UserRequiredArguments, codeOfConduct, codesOfConduct, license, licenses, marketplaceCategories, marketplaceCategory, marketplaceListing, marketplaceListings, meta, node, nodes, organization, rateLimit, relay, repository, repositoryOwner, resource, search, topic, user, viewer)
+module Github.Query exposing (CodeOfConductRequiredArguments, LicenseRequiredArguments, MarketplaceCategoriesOptionalArguments, MarketplaceCategoryRequiredArguments, MarketplaceListingRequiredArguments, MarketplaceListingsOptionalArguments, NodeRequiredArguments, NodesRequiredArguments, OrganizationRequiredArguments, RateLimitOptionalArguments, RepositoryOwnerRequiredArguments, RepositoryRequiredArguments, ResourceRequiredArguments, SearchOptionalArguments, SearchRequiredArguments, TopicRequiredArguments, UserRequiredArguments, codeOfConduct, codesOfConduct, license, licenses, marketplaceCategories, marketplaceCategory, marketplaceListing, marketplaceListings, meta, node, nodes, organization, rateLimit, relay, repository, repositoryOwner, resource, search, searchPaginated, topic, user, viewer)
 
 import Github.Enum.SearchType
 import Github.InputObject
@@ -16,6 +16,7 @@ import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.PaginatorSetup as PaginatorSetup exposing (CurrentPage, PaginatorSetup(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
@@ -328,6 +329,17 @@ search fillInOptionals requiredArgs object_ =
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "search" (optionalArgs ++ [ Argument.required "query" requiredArgs.query Encode.string, Argument.required "type" requiredArgs.type_ (Encode.enum Github.Enum.SearchType.toString) ]) object_ identity
+
+
+searchPaginated :
+    Maybe String
+    -> PaginatorSetup
+    -> (SearchOptionalArguments -> SearchOptionalArguments)
+    -> SearchRequiredArguments
+    -> SelectionSet decodesTo Github.Object.SearchResultItemConnection
+    -> SelectionSet decodesTo RootQuery
+searchPaginated cursor paginatorSetup fillInOptionals =
+    search (fillInOptionals >> PaginatorSetup.addPageInfo cursor paginatorSetup)
 
 
 type alias TopicRequiredArguments =
