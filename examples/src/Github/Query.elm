@@ -333,14 +333,15 @@ search fillInOptionals requiredArgs object_ =
 
 
 searchPaginated :
-    Maybe String
+    Int
+    -> Maybe String
     -> Direction
     -> (SearchOptionalArguments -> SearchOptionalArguments)
     -> SearchRequiredArguments
     -> SelectionSet (List decodesTo) Github.Object.SearchResultItemConnection
     -> SelectionSet (PaginatedData decodesTo String) RootQuery
-searchPaginated cursor paginatorSetup fillInOptionals requiredArgs object_ =
-    search (fillInOptionals >> PaginatorSetup.addPageInfo cursor paginatorSetup)
+searchPaginated pageSize cursor paginatorSetup fillInOptionals requiredArgs object_ =
+    search (fillInOptionals >> PaginatorSetup.addPageInfo pageSize cursor paginatorSetup)
         requiredArgs
         (Graphql.SelectionSet.map3 PaginatedData
             object_

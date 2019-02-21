@@ -7,14 +7,14 @@ init : Direction -> List data -> PaginatedData data cursor
 init paginatorSetup initialData =
     { data = initialData
     , currentPage = { cursor = Nothing, done = False }
-    , setup = paginatorSetup
+    , direction = paginatorSetup
     }
 
 
 type alias PaginatedData data cursor =
     { data : List data
     , currentPage : CurrentPage cursor
-    , setup : Direction
+    , direction : Direction
     }
 
 
@@ -29,18 +29,18 @@ type alias PageInfo pageInfo cursor =
 
 {-| TODO
 -}
-addPageInfo : Maybe cursor -> Direction -> PageInfo pageInfo cursor -> PageInfo pageInfo cursor
-addPageInfo maybeCursor paginationSetup optionals =
+addPageInfo : Int -> Maybe cursor -> Direction -> PageInfo pageInfo cursor -> PageInfo pageInfo cursor
+addPageInfo pageSize maybeCursor paginationSetup optionals =
     case paginationSetup of
-        Forward { first } ->
+        Forward ->
             { optionals
-                | first = Present first
+                | first = Present pageSize
                 , after = OptionalArgument.fromMaybe maybeCursor
             }
 
-        Backward { last } ->
+        Backward ->
             { optionals
-                | last = Present last
+                | last = Present pageSize
                 , before = OptionalArgument.fromMaybe maybeCursor
             }
 
@@ -48,8 +48,8 @@ addPageInfo maybeCursor paginationSetup optionals =
 {-| Uses [the relay protocol](https://facebook.github.io/relay/graphql/connections.htm).
 -}
 type Direction
-    = Forward { first : Int }
-    | Backward { last : Int }
+    = Forward
+    | Backward
 
 
 type alias CurrentPage cursorType =

@@ -34,14 +34,15 @@ type alias Response =
 -- second query, Cursor, no count (use from previous)
 
 
-query : Maybe String -> SelectionSet Response RootQuery
-query cursor =
+query : PaginatedData any String -> SelectionSet Response RootQuery
+query paginator =
     let
         setup =
-            Forward { first = 1 }
+            Forward
     in
-    Query.searchPaginated cursor
-        setup
+    Query.searchPaginated 1
+        paginator.currentPage.cursor
+        paginator.direction
         identity
         { query = "language:Elm", type_ = Github.Enum.SearchType.Repository }
         searchResultFieldEdges
@@ -87,9 +88,9 @@ repositorySelection =
         |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
-makeRequest : Maybe String -> Cmd Msg
-makeRequest cursor =
-    query cursor
+makeRequest : PaginatedData any String -> Cmd Msg
+makeRequest paginator =
+    query paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
         |> Graphql.Http.send (\result -> result |> RemoteData.fromResult |> GotResponse)
@@ -105,13 +106,22 @@ type alias Model =
     PaginatedData RemoteDataResponse String
 
 
+
+-- type PaginatedRemoteData data
+--     = NotLoading
+--     | Loading data
+--     | MoreToLoad data
+--     | AllLoaded
+
+
 type alias RemoteDataResponse =
     RemoteData (Graphql.Http.Error Response) Response
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( PaginatorSetup.init (Forward { first = 1 }) [ RemoteData.Loading ], makeRequest Nothing )
+    PaginatorSetup.init Forward [ RemoteData.Loading ]
+        |> (\paginator -> ( paginator, makeRequest paginator ))
 
 
 view : Model -> Html.Html Msg
@@ -119,7 +129,7 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery (query Nothing)) ]
+            , pre [] [ text (Document.serializeQuery (query model)) ]
             ]
         , div [] [ button [ onClick GetNextPage ] [ text "Load next page..." ] ]
         , div []
@@ -136,7 +146,7 @@ update msg model =
             case model.data of
                 (RemoteData.Success successResponse) :: rest ->
                     if successResponse.currentPage.done then
-                        ( { model | data = RemoteData.Loading :: model.data }, makeRequest successResponse.currentPage.cursor )
+                        ( { model | data = RemoteData.Loading :: model.data }, makeRequest successResponse )
 
                     else
                         ( model, Cmd.none )
