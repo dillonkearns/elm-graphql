@@ -31,10 +31,6 @@ type alias Response =
 
 query : Int -> PaginatedData Stargazer String -> SelectionSet Response RootQuery
 query pageSize paginator =
-    let
-        setup =
-            Forward
-    in
     Query.repository { owner = "dillonkearns", name = "elm-graphql" }
         (Repository.stargazersPaginated
             pageSize
