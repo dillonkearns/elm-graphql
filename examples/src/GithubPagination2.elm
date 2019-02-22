@@ -79,7 +79,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , data : PaginatedData Stargazer String
+    , paginator : PaginatedData Stargazer String
     }
 
 
@@ -92,7 +92,7 @@ init flags =
     Pagination.init Forward []
         |> (\paginator ->
                 ( { pageSize = 1
-                  , data = paginator
+                  , paginator = paginator
                   }
                 , makeRequest 1 paginator
                 )
@@ -114,7 +114,7 @@ view model =
             ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view (model.data.data |> List.reverse)
+            , PrintAny.view (model.paginator.data |> List.reverse)
             ]
         ]
 
@@ -123,7 +123,7 @@ paginationDetailsView : Model -> Html msg
 paginationDetailsView model =
     div []
         [ "Loaded "
-            ++ (model.data.data
+            ++ (model.paginator.data
                     |> List.length
                     |> String.fromInt
                )
@@ -135,7 +135,7 @@ paginationDetailsView model =
 
 doneView model =
     Html.text
-        (if model.data.currentPage.hasNextPage then
+        (if model.paginator.currentPage.hasNextPage then
             "..."
 
          else
@@ -147,12 +147,12 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetNextPage ->
-            ( model, makeRequest model.pageSize model.data )
+            ( model, makeRequest model.pageSize model.paginator )
 
         GotResponse response ->
             case response of
                 Ok successData ->
-                    ( { model | data = successData }, Cmd.none )
+                    ( { model | paginator = successData }, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
