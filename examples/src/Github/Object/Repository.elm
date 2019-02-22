@@ -987,11 +987,16 @@ stargazersPaginated :
     Int
     -> PaginatedData decodesTo String
     -> (StargazersOptionalArguments -> StargazersOptionalArguments)
-    -> SelectionSet (List decodesTo) Github.Object.StargazerConnection
+    -> SelectionSet decodesTo Github.Object.StargazerEdge
     -> SelectionSet (PaginatedData decodesTo String) Github.Object.Repository
 stargazersPaginated pageSize paginator fillInOptionals object_ =
     stargazers (fillInOptionals >> Pagination.addPageInfo pageSize paginator.currentPage.cursor paginator.direction)
-        (Graphql.Internal.Paginator.selectionSet pageSize paginator object_)
+        (Graphql.Internal.Paginator.selectionSet pageSize paginator (stargazerEdges object_))
+
+
+stargazerEdges : SelectionSet decodesTo Github.Object.StargazerEdge -> SelectionSet (List decodesTo) Github.Object.StargazerConnection
+stargazerEdges object_ =
+    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.list)
 
 
 {-| Identifies the date and time when the object was last updated.

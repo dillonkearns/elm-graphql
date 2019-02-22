@@ -47,15 +47,13 @@ type alias Stargazer =
     }
 
 
-stargazerSelection : SelectionSet (List Stargazer) Github.Object.StargazerConnection
+stargazerSelection : SelectionSet Stargazer Github.Object.StargazerEdge
 stargazerSelection =
-    Github.Object.StargazerConnection.edges
-        (SelectionSet.map2 Stargazer
-            (Github.Object.StargazerEdge.node Github.Object.User.login)
-            Github.Object.StargazerEdge.starredAt
-        )
-        |> SelectionSet.nonNullOrFail
-        |> SelectionSet.nonNullElementsOrFail
+    SelectionSet.map2 Stargazer
+        -- you can grab core data from the Node like this
+        (Github.Object.StargazerEdge.node Github.Object.User.login)
+        -- plus you can grab meta-data from the "Edge" (represents the relationship)
+        Github.Object.StargazerEdge.starredAt
 
 
 makeRequest : Int -> PaginatedData Stargazer String -> Cmd Msg
