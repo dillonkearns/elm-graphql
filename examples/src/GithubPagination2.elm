@@ -121,16 +121,25 @@ view model =
 
 paginationDetailsView : Model -> Html msg
 paginationDetailsView model =
-    doneView model
+    div []
+        [ "Loaded "
+            ++ (model.data.data
+                    |> List.length
+                    |> String.fromInt
+               )
+            ++ " so far"
+            |> text
+        , doneView model
+        ]
 
 
 doneView model =
     Html.text
         (if model.data.currentPage.hasNextPage then
-            "Loading..."
+            "..."
 
          else
-            "✅"
+            " ✅"
         )
 
 
