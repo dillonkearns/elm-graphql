@@ -6,7 +6,7 @@ import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(.
 init : Direction -> List data -> PaginatedData data cursor
 init direction initialData =
     { data = initialData
-    , currentPage = { cursor = Nothing, done = False }
+    , currentPage = { cursor = Nothing, hasNextPage = True }
     , direction = direction
     }
 
@@ -54,5 +54,5 @@ type Direction
 
 type alias CurrentPage cursorType =
     { cursor : Maybe cursorType
-    , done : Bool
+    , hasNextPage : Bool
     }

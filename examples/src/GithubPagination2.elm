@@ -20,7 +20,7 @@ import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.Pagination as Pagination exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
-import Html exposing (button, div, h1, input, p, pre, text)
+import Html exposing (Html, button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
 import PrintAny
 
@@ -99,7 +99,7 @@ init flags =
            )
 
 
-view : Model -> Html.Html Msg
+view : Model -> Html Msg
 view model =
     div []
         [ div []
@@ -110,12 +110,28 @@ view model =
         , div []
             [ button [ onClick GetNextPage ] [ text <| "Load next " ++ String.fromInt model.pageSize ++ " item(s)..." ]
             , input [ Html.Events.onInput CountChanged ] []
+            , paginationDetailsView model
             ]
         , div []
             [ h1 [] [ text "Response" ]
             , PrintAny.view (model.data.data |> List.reverse)
             ]
         ]
+
+
+paginationDetailsView : Model -> Html msg
+paginationDetailsView model =
+    doneView model
+
+
+doneView model =
+    Html.text
+        (if model.data.currentPage.hasNextPage then
+            "Loading..."
+
+         else
+            "✅"
+        )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
