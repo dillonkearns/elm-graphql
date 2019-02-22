@@ -26,9 +26,16 @@ fromSetup : Direction -> SelectionSet (CurrentPage String) connection
 fromSetup paginatorSetup =
     let
         object_ =
-            Graphql.SelectionSet.map2 CurrentPage
-                endCursor
-                hasNextPage
+            case paginatorSetup of
+                Forward ->
+                    Graphql.SelectionSet.map2 CurrentPage
+                        endCursor
+                        hasNextPage
+
+                Backward ->
+                    Graphql.SelectionSet.map2 CurrentPage
+                        startCursor
+                        hasPreviousPage
     in
     Object.selectionForCompositeField "pageInfo" [] object_ identity
 

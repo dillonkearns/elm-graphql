@@ -42,7 +42,7 @@ query pageSize paginator =
 
 
 type alias Stargazer =
-    { name : String
+    { login : String
     , starredAt : Github.Scalar.DateTime
     }
 
@@ -51,7 +51,7 @@ stargazerSelection : SelectionSet (List Stargazer) Github.Object.StargazerConnec
 stargazerSelection =
     Github.Object.StargazerConnection.edges
         (SelectionSet.map2 Stargazer
-            (Github.Object.StargazerEdge.node (Github.Object.User.name |> SelectionSet.withDefault "???"))
+            (Github.Object.StargazerEdge.node Github.Object.User.login)
             Github.Object.StargazerEdge.starredAt
         )
         |> SelectionSet.nonNullOrFail
@@ -85,7 +85,7 @@ type alias RemoteDataResponse =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    Pagination.init Forward []
+    Pagination.init Backward []
         |> (\paginator ->
                 ( { pageSize = 1
                   , paginator = paginator
