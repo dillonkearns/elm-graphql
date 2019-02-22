@@ -26,10 +26,10 @@ import PrintAny
 
 
 type alias Response =
-    PaginatedData StarGazer String
+    PaginatedData Stargazer String
 
 
-query : Int -> PaginatedData StarGazer String -> SelectionSet Response RootQuery
+query : Int -> PaginatedData Stargazer String -> SelectionSet Response RootQuery
 query pageSize paginator =
     let
         setup =
@@ -45,18 +45,24 @@ query pageSize paginator =
         |> SelectionSet.nonNullOrFail
 
 
-stargazerSelection : SelectionSet (List String) Github.Object.StargazerConnection
+type alias Stargazer =
+    { name : String
+    , starredAt : Github.Scalar.DateTime
+    }
+
+
+stargazerSelection : SelectionSet (List Stargazer) Github.Object.StargazerConnection
 stargazerSelection =
-    Github.Object.StargazerConnection.edges (Github.Object.StargazerEdge.node (Github.Object.User.name |> SelectionSet.withDefault "???"))
+    Github.Object.StargazerConnection.edges
+        (SelectionSet.map2 Stargazer
+            (Github.Object.StargazerEdge.node (Github.Object.User.name |> SelectionSet.withDefault "???"))
+            Github.Object.StargazerEdge.starredAt
+        )
         |> SelectionSet.nonNullOrFail
         |> SelectionSet.nonNullElementsOrFail
 
 
-type alias StarGazer =
-    String
-
-
-makeRequest : Int -> PaginatedData StarGazer String -> Cmd Msg
+makeRequest : Int -> PaginatedData Stargazer String -> Cmd Msg
 makeRequest pageSize paginator =
     query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
@@ -73,7 +79,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , data : PaginatedData StarGazer String
+    , data : PaginatedData Stargazer String
     }
 
 
