@@ -135,7 +135,7 @@ paginationDetailsView model =
 
 doneView model =
     Html.text
-        (if model.paginator.currentPage.hasNextPage then
+        (if model.paginator.currentPage.isLoading then
             "..."
 
          else
