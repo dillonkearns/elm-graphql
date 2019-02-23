@@ -7,13 +7,15 @@ import Graphql.Parser.Type as Type exposing (IsNullable(..), TypeDefinition(..),
 import Test exposing (Test, describe, test)
 
 
+type DetectionResult
+    = Miss
+    | SpecViolation
+    | Match
 
--- TypeReference ReferrableType IsNullable
 
-
-isConnection : TypeDefinition -> Bool
-isConnection typeReference =
-    False
+isConnection : TypeDefinition -> DetectionResult
+isConnection (TypeDefinition typeName definableType description) =
+    Miss
 
 
 field : String -> String -> Type.Field
@@ -35,6 +37,15 @@ all =
                         (Type.InputObjectType [ field "String" "hello" ])
                         Nothing
                         |> isConnection
-                        |> Expect.false "Should not detect Scalars as Connections."
+                        |> Expect.equal Miss
+            ]
+        , describe "objects"
+            [ test "Object with correct name violates convention, should warn" <|
+                \() ->
+                    TypeDefinition (ClassCaseName.build "StargazerConnection")
+                        (Type.InputObjectType [ field "String" "hello" ])
+                        Nothing
+                        |> isConnection
+                        |> Expect.equal SpecViolation
             ]
         ]
