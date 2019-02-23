@@ -15,7 +15,11 @@ type DetectionResult
 
 isConnection : TypeDefinition -> DetectionResult
 isConnection (TypeDefinition typeName definableType description) =
-    Miss
+    if typeName |> ClassCaseName.raw |> String.endsWith "Connection" then
+        SpecViolation
+
+    else
+        Miss
 
 
 field : String -> String -> Type.Field
