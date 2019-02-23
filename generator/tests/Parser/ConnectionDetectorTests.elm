@@ -38,7 +38,7 @@ all =
             [ test "Object with correct name violates convention, should warn" <|
                 \() ->
                     isConnection
-                        (typeDefinition "StargazerConnection" (Type.InputObjectType [ field "String" "hello" ]))
+                        (typeDefinition "StargazerConnection" (Type.ObjectType [ fieldNew "totalCount" (Type.Scalar Scalar.Int) NonNullable ]))
                         []
                         |> Expect.equal SpecViolation
 
