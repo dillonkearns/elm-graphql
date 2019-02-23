@@ -3,7 +3,7 @@ module Parser.ConnectionDetectorTests exposing (all)
 import Expect
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
-import Graphql.Parser.Type as Type exposing (IsNullable(..), TypeDefinition(..), TypeReference(..))
+import Graphql.Parser.Type as Type exposing (DefinableType, IsNullable(..), TypeDefinition(..), TypeReference(..))
 import Test exposing (Test, describe, test)
 
 
@@ -79,5 +79,6 @@ all =
         ]
 
 
+typeDefinition : String -> DefinableType -> TypeDefinition
 typeDefinition classCaseName definableType =
     TypeDefinition (ClassCaseName.build classCaseName) definableType Nothing
