@@ -37,19 +37,47 @@ all =
         [ describe "non-objects"
             [ test "scalar is not a Connection" <|
                 \() ->
-                    TypeDefinition (ClassCaseName.build "SomeInputObject")
+                    typeDefinition "SomeInputObject"
                         (Type.InputObjectType [ field "String" "hello" ])
-                        Nothing
                         |> isConnection
                         |> Expect.equal Miss
             ]
         , describe "objects"
             [ test "Object with correct name violates convention, should warn" <|
                 \() ->
-                    TypeDefinition (ClassCaseName.build "StargazerConnection")
+                    typeDefinition "StargazerConnection"
                         (Type.InputObjectType [ field "String" "hello" ])
-                        Nothing
+                        |> isConnection
+                        |> Expect.equal SpecViolation
+
+            {-
+               {
+                 repository(owner: "dillonkearns", name: "elm-graphql") {
+                   stargazers(first: 10, after: null) {
+                     totalCount
+                     pageInfo {
+                       hasNextPage
+                       endCursor
+                     }
+                     edges {
+                       node {
+                         login
+                       }
+                       starredAt
+                     }
+                   }
+                 }
+               }
+
+            -}
+            , test "strict spec match" <|
+                \() ->
+                    typeDefinition "StargazerConnection" (Type.InputObjectType [ field "String" "hello" ])
                         |> isConnection
                         |> Expect.equal SpecViolation
             ]
         ]
+
+
+typeDefinition classCaseName definableType =
+    TypeDefinition (ClassCaseName.build classCaseName) definableType Nothing
