@@ -70,23 +70,18 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
             , scalarCodecsModule = options.scalarCodecsModule
             }
 
+        definitionsWithExclusions =
+            typeDefinitions
+                |> excludeBuiltIns
+                |> excludeQuery context
+                |> excludeMutation context
+                |> excludeSubscription context
+
         typeLockDefinitions =
-            TypeLockDefinitions.generate options.apiSubmodule
-                (typeDefinitions
-                    |> excludeBuiltIns
-                    |> excludeQuery context
-                    |> excludeMutation context
-                    |> excludeSubscription context
-                )
+            TypeLockDefinitions.generate options.apiSubmodule definitionsWithExclusions
 
         scalarDefinitions =
-            Scalar.generate options.apiSubmodule
-                (typeDefinitions
-                    |> excludeBuiltIns
-                    |> excludeQuery context
-                    |> excludeMutation context
-                    |> excludeSubscription context
-                )
+            Scalar.generate options.apiSubmodule definitionsWithExclusions
     in
     typeDefinitions
         |> excludeBuiltIns
@@ -95,23 +90,9 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
         |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
         |> List.append
-            [ ScalarCodecs.generate context
-                (typeDefinitions
-                    |> excludeBuiltIns
-                    |> excludeQuery context
-                    |> excludeMutation context
-                    |> excludeSubscription context
-                )
-            ]
+            [ ScalarCodecs.generate context definitionsWithExclusions ]
         |> List.append
-            [ Graphql.Generator.VerifyScalarCodecs.generate context
-                (typeDefinitions
-                    |> excludeBuiltIns
-                    |> excludeQuery context
-                    |> excludeMutation context
-                    |> excludeSubscription context
-                )
-            ]
+            [ Graphql.Generator.VerifyScalarCodecs.generate context definitionsWithExclusions ]
         |> List.map (Tuple.mapFirst moduleToFileName)
         |> Dict.fromList
 
