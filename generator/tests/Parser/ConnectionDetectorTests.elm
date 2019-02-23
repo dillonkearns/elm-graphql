@@ -13,8 +13,8 @@ type DetectionResult
     | Match
 
 
-isConnection : TypeDefinition -> DetectionResult
-isConnection (TypeDefinition typeName definableType description) =
+isConnection : TypeDefinition -> List TypeDefinition -> DetectionResult
+isConnection (TypeDefinition typeName definableType description) allDefinitions =
     if typeName |> ClassCaseName.raw |> String.endsWith "Connection" then
         SpecViolation
 
@@ -37,17 +37,17 @@ all =
         [ describe "non-objects"
             [ test "scalar is not a Connection" <|
                 \() ->
-                    typeDefinition "SomeInputObject"
-                        (Type.InputObjectType [ field "String" "hello" ])
-                        |> isConnection
+                    isConnection
+                        (typeDefinition "SomeInputObject" (Type.InputObjectType [ field "String" "hello" ]))
+                        []
                         |> Expect.equal Miss
             ]
         , describe "objects"
             [ test "Object with correct name violates convention, should warn" <|
                 \() ->
-                    typeDefinition "StargazerConnection"
-                        (Type.InputObjectType [ field "String" "hello" ])
-                        |> isConnection
+                    isConnection
+                        (typeDefinition "StargazerConnection" (Type.InputObjectType [ field "String" "hello" ]))
+                        []
                         |> Expect.equal SpecViolation
 
             {-
@@ -72,8 +72,10 @@ all =
             -}
             , test "strict spec match" <|
                 \() ->
-                    typeDefinition "StargazerConnection" (Type.InputObjectType [ field "String" "hello" ])
-                        |> isConnection
+                    isConnection
+                        (typeDefinition "StargazerConnection" (Type.ObjectType [ field "PageInfo" "pageInfo" ]))
+                        [ typeDefinition "StargazerEdge" (Type.InputObjectType [ field "String" "hello" ])
+                        ]
                         |> Expect.equal SpecViolation
             ]
         ]
