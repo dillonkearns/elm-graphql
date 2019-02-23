@@ -3,6 +3,7 @@ module Parser.ConnectionDetectorTests exposing (all)
 import Expect
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
+import Graphql.Parser.Scalar as Scalar
 import Graphql.Parser.Type as Type exposing (DefinableType, IsNullable(..), TypeDefinition(..), TypeReference(..))
 import Test exposing (Test, describe, test)
 
@@ -20,15 +21,6 @@ isConnection (TypeDefinition typeName definableType description) allDefinitions 
 
     else
         Miss
-
-
-field : String -> String -> Type.Field
-field inputObjectName fieldName =
-    { name = CamelCaseName.build fieldName
-    , description = Nothing
-    , typeRef = TypeReference (Type.InputObjectRef (ClassCaseName.build inputObjectName)) NonNullable
-    , args = []
-    }
 
 
 all : Test
@@ -74,7 +66,8 @@ all =
                 \() ->
                     isConnection
                         (typeDefinition "StargazerConnection" (Type.ObjectType [ field "PageInfo" "pageInfo" ]))
-                        [ typeDefinition "StargazerEdge" (Type.InputObjectType [ field "String" "hello" ])
+                        [ strictPageInfoDefinition
+                        , typeDefinition "StargazerEdge" (Type.InputObjectType [ field "String" "hello" ])
                         ]
                         |> Expect.equal SpecViolation
             ]
@@ -84,3 +77,33 @@ all =
 typeDefinition : String -> DefinableType -> TypeDefinition
 typeDefinition classCaseName definableType =
     TypeDefinition (ClassCaseName.build classCaseName) definableType Nothing
+
+
+strictPageInfoDefinition : TypeDefinition
+strictPageInfoDefinition =
+    typeDefinition "PageInfo"
+        (Type.ObjectType
+            [ fieldNew "hasPreviousPage" (Type.Scalar Scalar.Boolean) NonNullable
+            , fieldNew "hasNextPage" (Type.Scalar Scalar.Boolean) NonNullable
+            , fieldNew "startCursor" (Type.Scalar Scalar.String) Nullable
+            , fieldNew "endCursor" (Type.Scalar Scalar.String) Nullable
+            ]
+        )
+
+
+fieldNew : String -> Type.ReferrableType -> IsNullable -> Type.Field
+fieldNew fieldName reference isNullable =
+    { name = CamelCaseName.build fieldName
+    , description = Nothing
+    , typeRef = TypeReference reference isNullable
+    , args = []
+    }
+
+
+field : String -> String -> Type.Field
+field inputObjectName fieldName =
+    { name = CamelCaseName.build fieldName
+    , description = Nothing
+    , typeRef = TypeReference (Type.InputObjectRef (ClassCaseName.build inputObjectName)) NonNullable
+    , args = []
+    }
