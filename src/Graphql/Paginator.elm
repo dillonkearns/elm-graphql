@@ -5,14 +5,15 @@ import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(.
 import Graphql.SelectionSet exposing (SelectionSet)
 
 
-moreToLoad : Paginator direction data -> Bool
-moreToLoad (Paginator paginator) =
-    paginator.currentPage.isLoading
+type Paginator direction data
+    = Paginator (PaginatorRecord data)
 
 
-data : Paginator direction data -> List data
-data (Paginator paginator) =
-    paginator.data
+type alias PaginatorRecord data =
+    { data : List data
+    , currentPage : CurrentPage
+    , direction : Direction
+    }
 
 
 forward : Paginator Forward data
@@ -33,6 +34,16 @@ backward =
         }
 
 
+moreToLoad : Paginator direction data -> Bool
+moreToLoad (Paginator paginator) =
+    paginator.currentPage.isLoading
+
+
+data : Paginator direction data -> List data
+data (Paginator paginator) =
+    paginator.data
+
+
 selectionSet :
     Int
     -> Paginator direction decodesTo
@@ -44,17 +55,6 @@ selectionSet pageSize (Paginator paginator) selection =
         Graphql.Internal.Paginator.forwardSelection
         (Graphql.SelectionSet.succeed paginator.direction)
         |> Graphql.SelectionSet.map Paginator
-
-
-type Paginator direction data
-    = Paginator (PaginatorRecord data)
-
-
-type alias PaginatorRecord data =
-    { data : List data
-    , currentPage : CurrentPage
-    , direction : Direction
-    }
 
 
 type alias PageInfo pageInfo =
