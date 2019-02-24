@@ -16,7 +16,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatedData as Pagination exposing (CurrentPage, Direction(..), PaginatedData)
+import Graphql.PaginatedData as PaginatedData exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
@@ -29,10 +29,6 @@ type alias Response =
 
 query : Int -> PaginatedData Repo -> SelectionSet Response RootQuery
 query pageSize paginator =
-    let
-        setup =
-            Forward
-    in
     Query.searchPaginated pageSize
         paginator
         identity
@@ -115,7 +111,7 @@ type alias RemoteDataResponse =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    Pagination.init Forward []
+    PaginatedData.forward
         |> (\paginator ->
                 ( { pageSize = 1
                   , data = paginator

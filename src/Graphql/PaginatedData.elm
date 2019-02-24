@@ -1,13 +1,13 @@
-module Graphql.PaginatedData exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, init)
+module Graphql.PaginatedData exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, forward)
 
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 
 
-init : Direction -> List data -> PaginatedData data
-init direction initialData =
-    { data = initialData
+forward : PaginatedData data
+forward =
+    { data = []
     , currentPage = { cursor = Nothing, isLoading = True }
-    , direction = direction
+    , direction = PaginateForward
     }
 
 

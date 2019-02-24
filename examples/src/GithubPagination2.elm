@@ -83,7 +83,7 @@ type alias RemoteDataResponse =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    PaginatedData.init PaginateBackward []
+    PaginatedData.forward
         |> (\paginator ->
                 ( { pageSize = 1
                   , paginator = paginator
