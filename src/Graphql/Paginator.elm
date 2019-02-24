@@ -1,32 +1,32 @@
-module Graphql.PaginatedData exposing (Direction(..), PageInfo, PaginatedData, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
+module Graphql.Paginator exposing (Direction(..), PageInfo, Paginator, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
 
 import Graphql.Internal.Paginator exposing (CurrentPage)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 
 
-moreToLoad : PaginatedData data -> Bool
-moreToLoad (PaginatedData paginator) =
+moreToLoad : Paginator data -> Bool
+moreToLoad (Paginator paginator) =
     paginator.currentPage.isLoading
 
 
-data : PaginatedData data -> List data
-data (PaginatedData paginator) =
+data : Paginator data -> List data
+data (Paginator paginator) =
     paginator.data
 
 
-forward : PaginatedData data
+forward : Paginator data
 forward =
-    PaginatedData
+    Paginator
         { data = []
         , currentPage = { cursor = Nothing, isLoading = True }
         , direction = PaginateForward
         }
 
 
-backward : PaginatedData data
+backward : Paginator data
 backward =
-    PaginatedData
+    Paginator
         { data = []
         , currentPage = { cursor = Nothing, isLoading = True }
         , direction = PaginateBackward
@@ -35,22 +35,22 @@ backward =
 
 selectionSet :
     Int
-    -> PaginatedData decodesTo
+    -> Paginator decodesTo
     -> SelectionSet (List decodesTo) typeLock
-    -> SelectionSet (PaginatedData decodesTo) typeLock
-selectionSet pageSize (PaginatedData paginator) selection =
-    Graphql.SelectionSet.map3 PaginatedDataRecord
+    -> SelectionSet (Paginator decodesTo) typeLock
+selectionSet pageSize (Paginator paginator) selection =
+    Graphql.SelectionSet.map3 PaginatorRecord
         (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
         Graphql.Internal.Paginator.forwardSelection
         (Graphql.SelectionSet.succeed paginator.direction)
-        |> Graphql.SelectionSet.map PaginatedData
+        |> Graphql.SelectionSet.map Paginator
 
 
-type PaginatedData data
-    = PaginatedData (PaginatedDataRecord data)
+type Paginator data
+    = Paginator (PaginatorRecord data)
 
 
-type alias PaginatedDataRecord data =
+type alias PaginatorRecord data =
     { data : List data
     , currentPage : CurrentPage
     , direction : Direction
@@ -68,8 +68,8 @@ type alias PageInfo pageInfo =
 
 {-| TODO
 -}
-addPageInfo : Int -> PaginatedData data -> PageInfo pageInfo -> PageInfo pageInfo
-addPageInfo pageSize (PaginatedData paginator) optionals =
+addPageInfo : Int -> Paginator data -> PageInfo pageInfo -> PageInfo pageInfo
+addPageInfo pageSize (Paginator paginator) optionals =
     case paginator.direction of
         PaginateForward ->
             { optionals

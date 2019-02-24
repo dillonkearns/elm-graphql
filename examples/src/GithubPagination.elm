@@ -16,7 +16,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatedData as PaginatedData exposing (CurrentPage, Direction(..), PaginatedData)
+import Graphql.Paginator as Paginator exposing (CurrentPage, Direction(..), Paginator)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
@@ -24,10 +24,10 @@ import PrintAny
 
 
 type alias Response =
-    PaginatedData Repo
+    Paginator Repo
 
 
-query : Int -> PaginatedData Repo -> SelectionSet Response RootQuery
+query : Int -> Paginator Repo -> SelectionSet Response RootQuery
 query pageSize paginator =
     Query.searchPaginated pageSize
         paginator
@@ -76,7 +76,7 @@ repositorySelection =
         |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
-makeRequest : Int -> PaginatedData Repo -> Cmd Msg
+makeRequest : Int -> Paginator Repo -> Cmd Msg
 makeRequest pageSize paginator =
     query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
@@ -93,7 +93,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , data : PaginatedData Repo
+    , data : Paginator Repo
     }
 
 
@@ -111,7 +111,7 @@ type alias RemoteDataResponse =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    PaginatedData.forward
+    Paginator.forward
         |> (\paginator ->
                 ( { pageSize = 1
                   , data = paginator

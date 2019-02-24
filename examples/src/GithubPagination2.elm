@@ -17,7 +17,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatedData as PaginatedData exposing (Direction(..), PaginatedData)
+import Graphql.Paginator as Paginator exposing (Direction(..), Paginator)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (Html, button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
@@ -25,10 +25,10 @@ import PrintAny
 
 
 type alias Response =
-    PaginatedData Stargazer
+    Paginator Stargazer
 
 
-query : Int -> PaginatedData Stargazer -> SelectionSet Response RootQuery
+query : Int -> Paginator Stargazer -> SelectionSet Response RootQuery
 query pageSize paginator =
     Query.repository { owner = "dillonkearns", name = "elm-graphql" }
         (Repository.stargazersPaginated
@@ -55,7 +55,7 @@ stargazerSelection =
         Github.Object.StargazerEdge.starredAt
 
 
-makeRequest : Int -> PaginatedData Stargazer -> Cmd Msg
+makeRequest : Int -> Paginator Stargazer -> Cmd Msg
 makeRequest pageSize paginator =
     query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
@@ -72,7 +72,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , paginator : PaginatedData Stargazer
+    , paginator : Paginator Stargazer
     }
 
 
@@ -82,7 +82,7 @@ type alias RemoteDataResponse =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    PaginatedData.forward
+    Paginator.forward
         |> (\paginator ->
                 ( { pageSize = 1
                   , paginator = paginator
@@ -107,7 +107,7 @@ view model =
             ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view (model.paginator |> PaginatedData.data |> List.reverse)
+            , PrintAny.view (model.paginator |> Paginator.data |> List.reverse)
             ]
         ]
 
@@ -117,7 +117,7 @@ paginationDetailsView model =
     div []
         [ "Loaded "
             ++ (model.paginator
-                    |> PaginatedData.data
+                    |> Paginator.data
                     |> List.length
                     |> String.fromInt
                )
@@ -129,7 +129,7 @@ paginationDetailsView model =
 
 doneView model =
     Html.text
-        (if model.paginator |> PaginatedData.moreToLoad then
+        (if model.paginator |> Paginator.moreToLoad then
             "..."
 
          else
