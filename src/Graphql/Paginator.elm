@@ -52,7 +52,13 @@ selectionSet :
 selectionSet pageSize (Paginator paginator) selection =
     Graphql.SelectionSet.map3 PaginatorRecord
         (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
-        Graphql.Internal.Paginator.forwardSelection
+        (case paginator.direction of
+            PaginateForward ->
+                Graphql.Internal.Paginator.forwardSelection
+
+            PaginateBackward ->
+                Graphql.Internal.Paginator.backwardSelection
+        )
         (Graphql.SelectionSet.succeed paginator.direction)
         |> Graphql.SelectionSet.map Paginator
 
