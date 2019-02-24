@@ -27,12 +27,12 @@ fromSetup paginatorSetup =
     let
         object_ =
             case paginatorSetup of
-                Forward ->
+                PaginateForward ->
                     Graphql.SelectionSet.map2 CurrentPage
                         endCursor
                         hasNextPage
 
-                Backward ->
+                PaginateBackward ->
                     Graphql.SelectionSet.map2 CurrentPage
                         startCursor
                         hasPreviousPage

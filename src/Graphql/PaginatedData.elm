@@ -32,24 +32,32 @@ type alias PageInfo pageInfo cursor =
 addPageInfo : Int -> Maybe cursor -> Direction -> PageInfo pageInfo cursor -> PageInfo pageInfo cursor
 addPageInfo pageSize maybeCursor paginationSetup optionals =
     case paginationSetup of
-        Forward ->
+        PaginateForward ->
             { optionals
                 | first = Present pageSize
                 , after = OptionalArgument.fromMaybe maybeCursor
             }
 
-        Backward ->
+        PaginateBackward ->
             { optionals
                 | last = Present pageSize
                 , before = OptionalArgument.fromMaybe maybeCursor
             }
 
 
+type Forward
+    = Forward
+
+
+type Backward
+    = Backward
+
+
 {-| Uses [the relay protocol](https://facebook.github.io/relay/graphql/connections.htm).
 -}
 type Direction
-    = Forward
-    | Backward
+    = PaginateForward
+    | PaginateBackward
 
 
 type alias CurrentPage =
