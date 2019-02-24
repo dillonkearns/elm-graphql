@@ -15,7 +15,7 @@ import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.Pagination exposing (CurrentPage, Direction(..))
+import Graphql.PaginatedData exposing (CurrentPage, Direction(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 

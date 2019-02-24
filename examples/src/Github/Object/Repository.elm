@@ -27,7 +27,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Internal.Paginator
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.Pagination as Pagination exposing (CurrentPage, Direction(..), PaginatedData)
+import Graphql.PaginatedData as PaginatedData exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -990,7 +990,7 @@ stargazersPaginated :
     -> SelectionSet decodesTo Github.Object.StargazerEdge
     -> SelectionSet (PaginatedData decodesTo) Github.Object.Repository
 stargazersPaginated pageSize paginator fillInOptionals object_ =
-    stargazers (fillInOptionals >> Pagination.addPageInfo pageSize paginator.currentPage.cursor paginator.direction)
+    stargazers (fillInOptionals >> PaginatedData.addPageInfo pageSize paginator.currentPage.cursor paginator.direction)
         (Graphql.Internal.Paginator.selectionSet pageSize paginator (stargazerEdges object_))
 
 

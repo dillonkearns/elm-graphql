@@ -1,4 +1,4 @@
-module Graphql.Pagination exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, init)
+module Graphql.PaginatedData exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, init)
 
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 
