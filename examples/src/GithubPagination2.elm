@@ -70,7 +70,6 @@ type Msg
 
 
 type alias Model =
-    -- List RemoteDataResponse
     { pageSize : Int
     , paginator : Paginator Paginator.Forward Stargazer
     }
