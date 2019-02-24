@@ -1,4 +1,4 @@
-module Graphql.PaginatedData exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, forward)
+module Graphql.PaginatedData exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, backward, forward)
 
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 
@@ -8,6 +8,14 @@ forward =
     { data = []
     , currentPage = { cursor = Nothing, isLoading = True }
     , direction = PaginateForward
+    }
+
+
+backward : PaginatedData data
+backward =
+    { data = []
+    , currentPage = { cursor = Nothing, isLoading = True }
+    , direction = PaginateBackward
     }
 
 
