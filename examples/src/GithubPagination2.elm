@@ -25,10 +25,10 @@ import PrintAny
 
 
 type alias Response =
-    Paginator Stargazer
+    Paginator Paginator.Forward Stargazer
 
 
-query : Int -> Paginator Stargazer -> SelectionSet Response RootQuery
+query : Int -> Paginator Paginator.Forward Stargazer -> SelectionSet Response RootQuery
 query pageSize paginator =
     Query.repository { owner = "dillonkearns", name = "elm-graphql" }
         (Repository.stargazersPaginated
@@ -55,7 +55,7 @@ stargazerSelection =
         Github.Object.StargazerEdge.starredAt
 
 
-makeRequest : Int -> Paginator Stargazer -> Cmd Msg
+makeRequest : Int -> Paginator Paginator.Forward Stargazer -> Cmd Msg
 makeRequest pageSize paginator =
     query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
@@ -72,7 +72,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , paginator : Paginator Stargazer
+    , paginator : Paginator Paginator.Forward Stargazer
     }
 
 

@@ -1,21 +1,21 @@
-module Graphql.Paginator exposing (Direction(..), PageInfo, Paginator, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
+module Graphql.Paginator exposing (Backward, Direction(..), Forward, PageInfo, Paginator, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
 
 import Graphql.Internal.Paginator exposing (CurrentPage)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 
 
-moreToLoad : Paginator data -> Bool
+moreToLoad : Paginator direction data -> Bool
 moreToLoad (Paginator paginator) =
     paginator.currentPage.isLoading
 
 
-data : Paginator data -> List data
+data : Paginator direction data -> List data
 data (Paginator paginator) =
     paginator.data
 
 
-forward : Paginator data
+forward : Paginator Forward data
 forward =
     Paginator
         { data = []
@@ -24,7 +24,7 @@ forward =
         }
 
 
-backward : Paginator data
+backward : Paginator Backward data
 backward =
     Paginator
         { data = []
@@ -35,9 +35,9 @@ backward =
 
 selectionSet :
     Int
-    -> Paginator decodesTo
+    -> Paginator direction decodesTo
     -> SelectionSet (List decodesTo) typeLock
-    -> SelectionSet (Paginator decodesTo) typeLock
+    -> SelectionSet (Paginator direction decodesTo) typeLock
 selectionSet pageSize (Paginator paginator) selection =
     Graphql.SelectionSet.map3 PaginatorRecord
         (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
@@ -46,7 +46,7 @@ selectionSet pageSize (Paginator paginator) selection =
         |> Graphql.SelectionSet.map Paginator
 
 
-type Paginator data
+type Paginator direction data
     = Paginator (PaginatorRecord data)
 
 
@@ -68,7 +68,7 @@ type alias PageInfo pageInfo =
 
 {-| TODO
 -}
-addPageInfo : Int -> Paginator data -> PageInfo pageInfo -> PageInfo pageInfo
+addPageInfo : Int -> Paginator direction data -> PageInfo pageInfo -> PageInfo pageInfo
 addPageInfo pageSize (Paginator paginator) optionals =
     case paginator.direction of
         PaginateForward ->

@@ -985,10 +985,10 @@ stargazers fillInOptionals object_ =
 
 stargazersPaginated :
     Int
-    -> Paginator decodesTo
+    -> Paginator direction decodesTo
     -> (StargazersOptionalArguments -> StargazersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.StargazerEdge
-    -> SelectionSet (Paginator decodesTo) Github.Object.Repository
+    -> SelectionSet (Paginator direction decodesTo) Github.Object.Repository
 stargazersPaginated pageSize paginator fillInOptionals object_ =
     stargazers (fillInOptionals >> Paginator.addPageInfo pageSize paginator)
         (Paginator.selectionSet pageSize paginator (stargazerEdges object_))
