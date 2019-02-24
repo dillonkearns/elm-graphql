@@ -1,55 +1,86 @@
-module Graphql.PaginatedData exposing (CurrentPage, Direction(..), PageInfo, PaginatedData, addPageInfo, backward, forward)
+module Graphql.PaginatedData exposing (Direction(..), PageInfo, PaginatedData, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
 
+import Graphql.Internal.Paginator exposing (CurrentPage)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
+import Graphql.SelectionSet exposing (SelectionSet)
+
+
+moreToLoad : PaginatedData data -> Bool
+moreToLoad (PaginatedData paginator) =
+    paginator.currentPage.isLoading
+
+
+data : PaginatedData data -> List data
+data (PaginatedData paginator) =
+    paginator.data
 
 
 forward : PaginatedData data
 forward =
-    { data = []
-    , currentPage = { cursor = Nothing, isLoading = True }
-    , direction = PaginateForward
-    }
+    PaginatedData
+        { data = []
+        , currentPage = { cursor = Nothing, isLoading = True }
+        , direction = PaginateForward
+        }
 
 
 backward : PaginatedData data
 backward =
-    { data = []
-    , currentPage = { cursor = Nothing, isLoading = True }
-    , direction = PaginateBackward
-    }
+    PaginatedData
+        { data = []
+        , currentPage = { cursor = Nothing, isLoading = True }
+        , direction = PaginateBackward
+        }
 
 
-type alias PaginatedData data =
+selectionSet :
+    Int
+    -> PaginatedData decodesTo
+    -> SelectionSet (List decodesTo) typeLock
+    -> SelectionSet (PaginatedData decodesTo) typeLock
+selectionSet pageSize (PaginatedData paginator) selection =
+    Graphql.SelectionSet.map3 PaginatedDataRecord
+        (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
+        Graphql.Internal.Paginator.forwardSelection
+        (Graphql.SelectionSet.succeed paginator.direction)
+        |> Graphql.SelectionSet.map PaginatedData
+
+
+type PaginatedData data
+    = PaginatedData (PaginatedDataRecord data)
+
+
+type alias PaginatedDataRecord data =
     { data : List data
     , currentPage : CurrentPage
     , direction : Direction
     }
 
 
-type alias PageInfo pageInfo cursor =
+type alias PageInfo pageInfo =
     { pageInfo
         | first : OptionalArgument Int
         , last : OptionalArgument Int
-        , before : OptionalArgument cursor
-        , after : OptionalArgument cursor
+        , before : OptionalArgument String
+        , after : OptionalArgument String
     }
 
 
 {-| TODO
 -}
-addPageInfo : Int -> Maybe cursor -> Direction -> PageInfo pageInfo cursor -> PageInfo pageInfo cursor
-addPageInfo pageSize maybeCursor paginationSetup optionals =
-    case paginationSetup of
+addPageInfo : Int -> PaginatedData data -> PageInfo pageInfo -> PageInfo pageInfo
+addPageInfo pageSize (PaginatedData paginator) optionals =
+    case paginator.direction of
         PaginateForward ->
             { optionals
                 | first = Present pageSize
-                , after = OptionalArgument.fromMaybe maybeCursor
+                , after = OptionalArgument.fromMaybe paginator.currentPage.cursor
             }
 
         PaginateBackward ->
             { optionals
                 | last = Present pageSize
-                , before = OptionalArgument.fromMaybe maybeCursor
+                , before = OptionalArgument.fromMaybe paginator.currentPage.cursor
             }
 
 
@@ -66,9 +97,3 @@ type Backward
 type Direction
     = PaginateForward
     | PaginateBackward
-
-
-type alias CurrentPage =
-    { cursor : Maybe String
-    , isLoading : Bool
-    }

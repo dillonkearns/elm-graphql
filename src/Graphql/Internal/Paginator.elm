@@ -1,41 +1,38 @@
-module Graphql.Internal.Paginator exposing (fromSetup, selectionSet)
+module Graphql.Internal.Paginator exposing (CurrentPage, backwardSelection, forwardSelection)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatedData as PaginatedData exposing (CurrentPage, Direction(..), PaginatedData)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-selectionSet :
-    Int
-    -> PaginatedData decodesTo
-    -> SelectionSet (List decodesTo) typeLock
-    -> SelectionSet (PaginatedData decodesTo) typeLock
-selectionSet pageSize paginator selection =
-    Graphql.SelectionSet.map3 PaginatedData
-        (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
-        (fromSetup paginator.direction)
-        (Graphql.SelectionSet.succeed paginator.direction)
+type alias CurrentPage =
+    { cursor : Maybe String
+    , isLoading : Bool
+    }
 
 
-fromSetup : Direction -> SelectionSet CurrentPage connection
-fromSetup paginatorSetup =
+forwardSelection : SelectionSet CurrentPage connection
+forwardSelection =
     let
         object_ =
-            case paginatorSetup of
-                PaginateForward ->
-                    Graphql.SelectionSet.map2 CurrentPage
-                        endCursor
-                        hasNextPage
+            Graphql.SelectionSet.map2 CurrentPage
+                endCursor
+                hasNextPage
+    in
+    Object.selectionForCompositeField "pageInfo" [] object_ identity
 
-                PaginateBackward ->
-                    Graphql.SelectionSet.map2 CurrentPage
-                        startCursor
-                        hasPreviousPage
+
+backwardSelection : SelectionSet CurrentPage connection
+backwardSelection =
+    let
+        object_ =
+            Graphql.SelectionSet.map2 CurrentPage
+                startCursor
+                hasPreviousPage
     in
     Object.selectionForCompositeField "pageInfo" [] object_ identity
 

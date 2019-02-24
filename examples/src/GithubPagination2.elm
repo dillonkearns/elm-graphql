@@ -3,7 +3,6 @@ module GithubPagination2 exposing (main)
 import Browser
 import Github.Enum.SearchType
 import Github.Object
-import Github.Object.PageInfo
 import Github.Object.Repository as Repository
 import Github.Object.SearchResultItemConnection
 import Github.Object.SearchResultItemEdge
@@ -18,7 +17,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatedData as PaginatedData exposing (CurrentPage, Direction(..), PaginatedData)
+import Graphql.PaginatedData as PaginatedData exposing (Direction(..), PaginatedData)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (Html, button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
@@ -108,7 +107,7 @@ view model =
             ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view (model.paginator.data |> List.reverse)
+            , PrintAny.view (model.paginator |> PaginatedData.data |> List.reverse)
             ]
         ]
 
@@ -117,7 +116,8 @@ paginationDetailsView : Model -> Html msg
 paginationDetailsView model =
     div []
         [ "Loaded "
-            ++ (model.paginator.data
+            ++ (model.paginator
+                    |> PaginatedData.data
                     |> List.length
                     |> String.fromInt
                )
@@ -129,7 +129,7 @@ paginationDetailsView model =
 
 doneView model =
     Html.text
-        (if model.paginator.currentPage.isLoading then
+        (if model.paginator |> PaginatedData.moreToLoad then
             "..."
 
          else

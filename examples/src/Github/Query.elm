@@ -17,7 +17,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Internal.Paginator
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.PaginatedData as PaginatedData exposing (CurrentPage, Direction(..), PaginatedData)
+import Graphql.PaginatedData as PaginatedData exposing (Direction(..), PaginatedData)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
@@ -340,9 +340,9 @@ searchPaginated :
     -> SelectionSet (List decodesTo) Github.Object.SearchResultItemConnection
     -> SelectionSet (PaginatedData decodesTo) RootQuery
 searchPaginated pageSize paginator fillInOptionals requiredArgs object_ =
-    search (fillInOptionals >> PaginatedData.addPageInfo pageSize paginator.currentPage.cursor paginator.direction)
+    search (fillInOptionals >> PaginatedData.addPageInfo pageSize paginator)
         requiredArgs
-        (Graphql.Internal.Paginator.selectionSet pageSize paginator object_)
+        (PaginatedData.selectionSet pageSize paginator object_)
 
 
 type alias TopicRequiredArguments =
