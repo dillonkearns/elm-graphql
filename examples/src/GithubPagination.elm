@@ -24,10 +24,10 @@ import PrintAny
 
 
 type alias Response =
-    PaginatedData Repo String
+    PaginatedData Repo
 
 
-query : Int -> PaginatedData Repo String -> SelectionSet Response RootQuery
+query : Int -> PaginatedData Repo -> SelectionSet Response RootQuery
 query pageSize paginator =
     let
         setup =
@@ -80,7 +80,7 @@ repositorySelection =
         |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
-makeRequest : Int -> PaginatedData Repo String -> Cmd Msg
+makeRequest : Int -> PaginatedData Repo -> Cmd Msg
 makeRequest pageSize paginator =
     query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
@@ -97,7 +97,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , data : PaginatedData Repo String
+    , data : PaginatedData Repo
     }
 
 

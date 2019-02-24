@@ -3,7 +3,7 @@ module Graphql.Pagination exposing (CurrentPage, Direction(..), PageInfo, Pagina
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 
 
-init : Direction -> List data -> PaginatedData data cursor
+init : Direction -> List data -> PaginatedData data
 init direction initialData =
     { data = initialData
     , currentPage = { cursor = Nothing, isLoading = True }
@@ -11,9 +11,9 @@ init direction initialData =
     }
 
 
-type alias PaginatedData data cursor =
+type alias PaginatedData data =
     { data : List data
-    , currentPage : CurrentPage cursor
+    , currentPage : CurrentPage
     , direction : Direction
     }
 
@@ -52,7 +52,7 @@ type Direction
     | Backward
 
 
-type alias CurrentPage cursorType =
-    { cursor : Maybe cursorType
+type alias CurrentPage =
+    { cursor : Maybe String
     , isLoading : Bool
     }

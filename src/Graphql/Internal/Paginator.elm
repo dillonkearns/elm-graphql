@@ -12,9 +12,9 @@ import Json.Decode as Decode
 
 selectionSet :
     Int
-    -> PaginatedData decodesTo String
+    -> PaginatedData decodesTo
     -> SelectionSet (List decodesTo) typeLock
-    -> SelectionSet (PaginatedData decodesTo String) typeLock
+    -> SelectionSet (PaginatedData decodesTo) typeLock
 selectionSet pageSize paginator selection =
     Graphql.SelectionSet.map3 PaginatedData
         (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
@@ -22,7 +22,7 @@ selectionSet pageSize paginator selection =
         (Graphql.SelectionSet.succeed paginator.direction)
 
 
-fromSetup : Direction -> SelectionSet (CurrentPage String) connection
+fromSetup : Direction -> SelectionSet CurrentPage connection
 fromSetup paginatorSetup =
     let
         object_ =

@@ -334,11 +334,11 @@ search fillInOptionals requiredArgs object_ =
 
 searchPaginated :
     Int
-    -> PaginatedData decodesTo String
+    -> PaginatedData decodesTo
     -> (SearchOptionalArguments -> SearchOptionalArguments)
     -> SearchRequiredArguments
     -> SelectionSet (List decodesTo) Github.Object.SearchResultItemConnection
-    -> SelectionSet (PaginatedData decodesTo String) RootQuery
+    -> SelectionSet (PaginatedData decodesTo) RootQuery
 searchPaginated pageSize paginator fillInOptionals requiredArgs object_ =
     search (fillInOptionals >> Pagination.addPageInfo pageSize paginator.currentPage.cursor paginator.direction)
         requiredArgs

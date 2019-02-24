@@ -20,7 +20,7 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-fromSetup : Direction -> SelectionSet (CurrentPage String) Github.Object.PageInfo
+fromSetup : Direction -> SelectionSet CurrentPage Github.Object.PageInfo
 fromSetup paginatorSetup =
     Graphql.SelectionSet.map2 CurrentPage
         endCursor
