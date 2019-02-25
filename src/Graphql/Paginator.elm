@@ -1,4 +1,4 @@
-module Graphql.Paginator exposing (Backward, Direction(..), Forward, PageInfo, Paginator, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
+module Graphql.Paginator exposing (Backward, Forward, PageInfo, Paginator, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
 
 import Graphql.Internal.Paginator exposing (CurrentPage)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))

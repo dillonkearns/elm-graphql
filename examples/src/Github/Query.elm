@@ -17,7 +17,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Internal.Paginator
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.Paginator as Paginator exposing (Backward, Direction(..), Forward, Paginator)
+import Graphql.Paginator as Paginator exposing (Backward, Forward, Paginator)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 
