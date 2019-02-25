@@ -8,6 +8,7 @@ import Graphql.Internal.Builder.Object as Object
 import Graphql.Paginator as Paginator exposing (Paginator)
 import Graphql.SelectionSet as SelectionSet
 import Json.Decode as Decode
+import String.Interpolate exposing (interpolate)
 import Test exposing (Test, describe, test)
 
 
@@ -16,40 +17,47 @@ all =
     describe "pagination"
         [ test "reverse pagination items are added in correct order" <|
             \() ->
-                """
-                {
-  "data": {
-        "edges": [
-          {
-            "node": {
-              "login3832528868": "3rd"
-            },
-            "starredAt987198633": "2019-02-24T21:49:48Z"
-          },
-          {
-            "node": {
-              "login3832528868": "2nd"
-            },
-            "starredAt987198633": "2019-02-24T23:30:53Z"
-          },
-          {
-            "node": {
-              "login3832528868": "1st"
-            },
-            "starredAt987198633": "2019-02-25T00:26:03Z"
-          }
-        ],
-        "pageInfo": {
-          "startCursor12867311": "Y3Vyc29yOnYyOpIAzglq1vk=",
-          "hasPreviousPage3880003826": true
-        }
-  }
-}
-                """
+                pageOfRequests "3rd" "2nd" "1st"
                     |> Decode.decodeString
                         (Paginator.selectionSet 3 Paginator.backward edgesSelection |> Graphql.Document.decoder)
                     |> expectPaginator (ExpectStillLoading [ "3rd", "2nd", "1st" ])
         ]
+
+
+pageOfRequests : String -> String -> String -> String
+pageOfRequests item1 item2 item3 =
+    interpolate
+        """
+                        {
+          "data": {
+                "edges": [
+                  {
+                    "node": {
+                      "login3832528868": "{0}"
+                    },
+                    "starredAt987198633": "2019-02-24T21:49:48Z"
+                  },
+                  {
+                    "node": {
+                      "login3832528868": "{1}"
+                    },
+                    "starredAt987198633": "2019-02-24T23:30:53Z"
+                  },
+                  {
+                    "node": {
+                      "login3832528868": "{2}"
+                    },
+                    "starredAt987198633": "2019-02-25T00:26:03Z"
+                  }
+                ],
+                "pageInfo": {
+                  "startCursor12867311": "Y3Vyc29yOnYyOpIAzglq1vk=",
+                  "hasPreviousPage3880003826": true
+                }
+          }
+        }
+                        """
+        [ item1, item2, item3 ]
 
 
 edgesSelection =
