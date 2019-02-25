@@ -3,7 +3,6 @@ module GithubPagination exposing (main)
 import Browser
 import Github.Enum.SearchType
 import Github.Object
-import Github.Object.PageInfo
 import Github.Object.Repository as Repository
 import Github.Object.SearchResultItemConnection
 import Github.Object.SearchResultItemEdge
@@ -16,7 +15,7 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.Paginator as Paginator exposing (CurrentPage, Direction(..), Paginator)
+import Graphql.Paginator as Paginator exposing (Direction(..), Paginator)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Html exposing (button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
@@ -24,10 +23,10 @@ import PrintAny
 
 
 type alias Response =
-    Paginator Repo
+    Paginator Paginator.Forward Repo
 
 
-query : Int -> Paginator Repo -> SelectionSet Response RootQuery
+query : Int -> Paginator Paginator.Forward Repo -> SelectionSet Response RootQuery
 query pageSize paginator =
     Query.searchPaginated pageSize
         paginator
@@ -76,7 +75,7 @@ repositorySelection =
         |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
-makeRequest : Int -> Paginator Repo -> Cmd Msg
+makeRequest : Int -> Paginator Paginator.Forward Repo -> Cmd Msg
 makeRequest pageSize paginator =
     query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
@@ -93,7 +92,7 @@ type Msg
 type alias Model =
     -- List RemoteDataResponse
     { pageSize : Int
-    , data : Paginator Repo
+    , data : Paginator Paginator.Forward Repo
     }
 
 
@@ -135,7 +134,7 @@ view model =
             ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view (model.data.data |> List.reverse)
+            , PrintAny.view (model.data |> Paginator.data |> List.reverse)
             ]
         ]
 
