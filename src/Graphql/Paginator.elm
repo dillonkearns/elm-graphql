@@ -21,7 +21,7 @@ forward =
     Paginator
         { data = []
         , currentPage = { cursor = Nothing, isLoading = True }
-        , direction = PaginateForward
+        , direction = Forward
         }
 
 
@@ -30,7 +30,7 @@ backward =
     Paginator
         { data = []
         , currentPage = { cursor = Nothing, isLoading = True }
-        , direction = PaginateBackward
+        , direction = Backward
         }
 
 
@@ -53,10 +53,10 @@ selectionSet pageSize (Paginator paginator) selection =
     Graphql.SelectionSet.map3 PaginatorRecord
         (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
         (case paginator.direction of
-            PaginateForward ->
+            Forward ->
                 Graphql.Internal.Paginator.forwardSelection
 
-            PaginateBackward ->
+            Backward ->
                 Graphql.Internal.Paginator.backwardSelection
         )
         (Graphql.SelectionSet.succeed paginator.direction)
@@ -77,13 +77,13 @@ type alias PageInfo pageInfo =
 addPageInfo : Int -> Paginator direction data -> PageInfo pageInfo -> PageInfo pageInfo
 addPageInfo pageSize (Paginator paginator) optionals =
     case paginator.direction of
-        PaginateForward ->
+        Forward ->
             { optionals
                 | first = Present pageSize
                 , after = OptionalArgument.fromMaybe paginator.currentPage.cursor
             }
 
-        PaginateBackward ->
+        Backward ->
             { optionals
                 | last = Present pageSize
                 , before = OptionalArgument.fromMaybe paginator.currentPage.cursor
@@ -91,15 +91,15 @@ addPageInfo pageSize (Paginator paginator) optionals =
 
 
 type Forward
-    = Forward
+    = ForwardValue
 
 
 type Backward
-    = Backward
+    = BackwardValue
 
 
 {-| Uses [the relay protocol](https://facebook.github.io/relay/graphql/connections.htm).
 -}
 type Direction
-    = PaginateForward
-    | PaginateBackward
+    = Forward
+    | Backward
