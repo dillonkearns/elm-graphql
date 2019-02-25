@@ -42,6 +42,7 @@ moreToLoad (Paginator paginator) =
 nodes : Paginator direction node -> List node
 nodes (Paginator paginator) =
     paginator.nodes
+        |> List.reverse
 
 
 selectionSet :
@@ -54,7 +55,7 @@ selectionSet pageSize (Paginator paginator) selection =
         (selection
             |> Graphql.SelectionSet.map
                 (\newNodes ->
-                    paginator.nodes ++ newNodes
+                    newNodes ++ paginator.nodes
                 )
         )
         (case paginator.direction of
