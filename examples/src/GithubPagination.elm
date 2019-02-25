@@ -134,7 +134,7 @@ view model =
             ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view (model.data |> Paginator.data |> List.reverse)
+            , PrintAny.view (model.data |> Paginator.nodes |> List.reverse)
             ]
         ]
 

@@ -1,4 +1,4 @@
-module Graphql.Paginator exposing (Backward, Forward, PageInfo, Paginator, addPageInfo, backward, data, forward, moreToLoad, selectionSet)
+module Graphql.Paginator exposing (Backward, Forward, PageInfo, Paginator, addPageInfo, backward, forward, moreToLoad, nodes, selectionSet)
 
 import Graphql.Internal.Paginator exposing (CurrentPage)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
@@ -10,25 +10,25 @@ type Paginator direction data
 
 
 type alias PaginatorRecord data =
-    { data : List data
+    { nodes : List data
     , currentPage : CurrentPage
     , direction : Direction
     }
 
 
-forward : Paginator Forward data
+forward : Paginator Forward node
 forward =
     Paginator
-        { data = []
+        { nodes = []
         , currentPage = { cursor = Nothing, isLoading = True }
         , direction = Forward
         }
 
 
-backward : Paginator Backward data
+backward : Paginator Backward node
 backward =
     Paginator
-        { data = []
+        { nodes = []
         , currentPage = { cursor = Nothing, isLoading = True }
         , direction = Backward
         }
@@ -39,9 +39,9 @@ moreToLoad (Paginator paginator) =
     paginator.currentPage.isLoading
 
 
-data : Paginator direction data -> List data
-data (Paginator paginator) =
-    paginator.data
+nodes : Paginator direction node -> List node
+nodes (Paginator paginator) =
+    paginator.nodes
 
 
 selectionSet :
@@ -51,7 +51,12 @@ selectionSet :
     -> SelectionSet (Paginator direction decodesTo) typeLock
 selectionSet pageSize (Paginator paginator) selection =
     Graphql.SelectionSet.map3 PaginatorRecord
-        (selection |> Graphql.SelectionSet.map (\newList -> paginator.data ++ newList))
+        (selection
+            |> Graphql.SelectionSet.map
+                (\newNodes ->
+                    paginator.nodes ++ newNodes
+                )
+        )
         (case paginator.direction of
             Forward ->
                 Graphql.Internal.Paginator.forwardSelection
