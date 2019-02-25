@@ -22,19 +22,19 @@ all =
         "edges": [
           {
             "node": {
-              "login3832528868": "nickbytes"
+              "login3832528868": "3rd"
             },
             "starredAt987198633": "2019-02-24T21:49:48Z"
           },
           {
             "node": {
-              "login3832528868": "achou11"
+              "login3832528868": "2nd"
             },
             "starredAt987198633": "2019-02-24T23:30:53Z"
           },
           {
             "node": {
-              "login3832528868": "boxtim"
+              "login3832528868": "1st"
             },
             "starredAt987198633": "2019-02-25T00:26:03Z"
           }
@@ -49,11 +49,19 @@ all =
                     |> Decode.decodeString
                         (Paginator.selectionSet 2
                             Paginator.backward
-                            (Object.selectionForCompositeField "edges" [] SelectionSet.empty (identity >> Decode.list))
+                            (Object.selectionForCompositeField "edges" [] loginFieldTotal (identity >> Decode.list))
                             |> Graphql.Document.decoder
                         )
-                    |> expectNodes [ (), (), () ]
+                    |> expectNodes [ "3rd", "2nd", "1st" ]
         ]
+
+
+loginFieldTotal =
+    Object.selectionForCompositeField "node" [] loginField identity
+
+
+loginField =
+    Object.selectionForField "String" "login" [] Decode.string
 
 
 expectNodes : List node -> Result error (Paginator direction node) -> Expect.Expectation
