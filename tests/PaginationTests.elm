@@ -47,8 +47,8 @@ all =
 }
                 """
                     |> Decode.decodeString
-                        (Paginator.selectionSet 2 Paginator.backward edgesSelection |> Graphql.Document.decoder)
-                    |> expectNodes [ "3rd", "2nd", "1st" ]
+                        (Paginator.selectionSet 3 Paginator.backward edgesSelection |> Graphql.Document.decoder)
+                    |> expectPaginator (ExpectStillLoading [ "3rd", "2nd", "1st" ])
         ]
 
 
@@ -64,11 +64,27 @@ loginField =
     Object.selectionForField "String" "login" [] Decode.string
 
 
-expectNodes : List node -> Result error (Paginator direction node) -> Expect.Expectation
-expectNodes expectedNodes result =
-    case result of
-        Ok paginator ->
-            paginator |> Paginator.nodes |> Expect.equal expectedNodes
+type PaginationExpection node
+    = ExpectStillLoading (List node)
 
-        Err error ->
-            Expect.fail (Debug.toString error)
+
+
+-- | ExpectDoneLoading (List node)
+
+
+expectPaginator : PaginationExpection node -> Result error (Paginator direction node) -> Expect.Expectation
+expectPaginator expectation result =
+    case expectation of
+        ExpectStillLoading expectedNodes ->
+            case result of
+                Ok paginator ->
+                    { moreToLoad = paginator |> Paginator.moreToLoad
+                    , nodes = paginator |> Paginator.nodes
+                    }
+                        |> Expect.equal
+                            { moreToLoad = True
+                            , nodes = expectedNodes
+                            }
+
+                Err error ->
+                    Expect.fail (Debug.toString error)
