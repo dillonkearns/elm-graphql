@@ -47,13 +47,13 @@ all =
 }
                 """
                     |> Decode.decodeString
-                        (Paginator.selectionSet 2
-                            Paginator.backward
-                            (Object.selectionForCompositeField "edges" [] loginFieldTotal (identity >> Decode.list))
-                            |> Graphql.Document.decoder
-                        )
+                        (Paginator.selectionSet 2 Paginator.backward edgesSelection |> Graphql.Document.decoder)
                     |> expectNodes [ "3rd", "2nd", "1st" ]
         ]
+
+
+edgesSelection =
+    Object.selectionForCompositeField "edges" [] loginFieldTotal (identity >> Decode.list)
 
 
 loginFieldTotal =
