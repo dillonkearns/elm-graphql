@@ -52,7 +52,7 @@ all =
                             (Object.selectionForCompositeField "edges" [] SelectionSet.empty (identity >> Decode.list))
                             |> Graphql.Document.decoder
                         )
-                    |> expectNodes []
+                    |> expectNodes [ (), (), () ]
         ]
 
 
