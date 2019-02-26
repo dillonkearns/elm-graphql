@@ -18,17 +18,17 @@ all =
         [ describe "backward"
             [ test "reverse pagination items are added in correct order" <|
                 \() ->
-                    backwardPageOfRequests "3rd" "2nd" "1st"
+                    backwardPageOfRequests "4" "5" "6"
                         |> Decode.decodeString
                             (Paginator.selectionSet 3 Paginator.backward edgesSelection |> Graphql.Document.decoder)
-                        |> expectPaginator (ExpectStillLoading [ "1st", "2nd", "3rd" ])
+                        |> expectPaginator (ExpectStillLoading [ "4", "5", "6" ])
             , test "reverse pagination items are added in correct order after second request" <|
                 \() ->
-                    backwardPageOfRequests "3rd" "2nd" "1st"
+                    backwardPageOfRequests "4" "5" "6"
                         |> Decode.decodeString (Paginator.selectionSet 3 Paginator.backward edgesSelection |> Graphql.Document.decoder)
                         |> Result.andThen
                             (\paginator ->
-                                backwardPageOfRequests "6" "5" "4"
+                                backwardPageOfRequests "1st" "2nd" "3rd"
                                     |> Decode.decodeString (Paginator.selectionSet 3 paginator edgesSelection |> Graphql.Document.decoder)
                             )
                         |> expectPaginator (ExpectStillLoading [ "1st", "2nd", "3rd", "4", "5", "6" ])
@@ -36,7 +36,7 @@ all =
         , describe "forward"
             [ test "paginated items are added in correct order" <|
                 \() ->
-                    forwardPageOfRequests "3rd" "2nd" "1st"
+                    forwardPageOfRequests "1st" "2nd" "3rd"
                         |> Decode.decodeString
                             (Paginator.selectionSet 3 Paginator.forward edgesSelection |> Graphql.Document.decoder)
                         |> expectPaginator (ExpectDoneLoading [ "1st", "2nd", "3rd" ])
