@@ -56,7 +56,7 @@ selectionSet pageSize (Paginator paginator) selection =
                 (\newNodes ->
                     case paginator.direction of
                         Forward ->
-                            newNodes ++ paginator.nodes
+                            paginator.nodes ++ newNodes
 
                         Backward ->
                             newNodes ++ paginator.nodes

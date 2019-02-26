@@ -40,6 +40,16 @@ all =
                         |> Decode.decodeString
                             (Paginator.selectionSet 3 Paginator.forward edgesSelection |> Graphql.Document.decoder)
                         |> expectPaginator (ExpectDoneLoading [ "1st", "2nd", "3rd" ])
+            , test "second page is added in correct order" <|
+                \() ->
+                    forwardPageOfRequests "1st" "2nd" "3rd"
+                        |> Decode.decodeString (Paginator.selectionSet 3 Paginator.forward edgesSelection |> Graphql.Document.decoder)
+                        |> Result.andThen
+                            (\paginator ->
+                                forwardPageOfRequests "4" "5" "6"
+                                    |> Decode.decodeString (Paginator.selectionSet 3 paginator edgesSelection |> Graphql.Document.decoder)
+                            )
+                        |> expectPaginator (ExpectDoneLoading [ "1st", "2nd", "3rd", "4", "5", "6" ])
             ]
         ]
 

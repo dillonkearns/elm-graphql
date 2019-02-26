@@ -80,7 +80,7 @@ type alias RemoteDataResponse =
 
 
 initialPageSize =
-    100
+    1
 
 
 init : Flags -> ( Model, Cmd Msg )
