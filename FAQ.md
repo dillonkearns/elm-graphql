@@ -10,6 +10,8 @@ If you are unable to change your schema and make the nullable fields non-nullabl
 
 Again, ideally you could change your schema (e.g. `[string]!` becomes `[string!]!`). If that's not possible, take a look at the `Graphql.Field.nonNullElementsOrFail` function to turn a `List (Maybe something)` into a `List something` (see [the `Graphql.Field` docs](http://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-Field#)).
 
+Take a look at the [section about this from the official GraphQL docs](https://graphql.org/learn/schema/#lists-and-non-null).
+
 ## Why do I get an error when I don't provide an Optional Argument? According to the schema it's optional.
 
 This is very common, if you look at your schema you will probably find that the optional argument is marked as nullable (i.e. it doesn't end with a `!`). And in GraphQL, a nullable argument is exactly what an optional argument is, see http://facebook.github.io/graphql/October2016/#sec-Required-Non-Null-Arguments
