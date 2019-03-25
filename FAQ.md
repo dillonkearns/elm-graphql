@@ -87,3 +87,8 @@ There are two ways to turn your Custom Scalars into the data types you want.
   Query.someNumericField
   |> SelectionSet.map (\(Api.Scalar.Numeric rawNumeric) -> String.toFloat rawNumeric |> Maybe.withDefault 0)
 ```
+
+## Why is there a custom `Graphql.Http.HttpError` type? How do I turn it into `Http.Error`?
+`elm/http@2.0.0` introduced a change to the `Http.Error` type where `BadStatus` went from containing the status code and the message to *only* containing the status code. Some users need that bit of data (the message for a bad status response). In order to prevent losing information, we needed to define a custom `HttpError` type for `elm-graphql`. See the full discussion [on this issue](https://github.com/dillonkearns/elm-graphql/issues/89).
+
+You can use [`withSimpleHttpError`](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-Http#withSimpleHttpError) to turn the data type from a `Graphql.Http.HttpError` into a standard `Http.Error`. See [the example in the docs for `withSimpleHttpError`](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-Http#withSimpleHttpError) for details on how to use that function.
