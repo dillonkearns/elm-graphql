@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Enum.Episode exposing (Episode(..), decoder, list, toString)
+module Swapi.Enum.Episode exposing (Episode(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         Newhope ->
             "NEWHOPE"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe Episode
+fromString enumString =
+    case enumString of
+        "EMPIRE" ->
+            Just Empire
+
+        "JEDI" ->
+            Just Jedi
+
+        "NEWHOPE" ->
+            Just Newhope
+
+        _ ->
+            Nothing

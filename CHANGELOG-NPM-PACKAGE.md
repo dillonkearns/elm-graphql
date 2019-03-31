@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.3.0] - 2018-03-31
+
+### Added
+
+- Generate `fromString` for Enums. This function is the inverse of the Enum `toString` helper.
+  So `NewHope |> Episode.toString |> Episode.fromString == Just NewHope`.
+
 ## [3.2.0] - 2018-01-25
 
 ### Fixed

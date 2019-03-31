@@ -31,6 +31,8 @@ import Json.Decode as Decode exposing (Decoder)
         ++ enumDecoder enumName enumValues
         ++ "\n\n"
         ++ enumToString enumName enumValues
+        ++ "\n\n"
+        ++ enumFromString enumName enumValues
 
 
 enumType : ClassCaseName -> List EnumValue -> String
@@ -72,6 +74,34 @@ toString enum =
 {1}"""
         [ ClassCaseName.normalized enumName
         , List.map toStringCase enumValues |> String.join "\n\n"
+        ]
+
+
+enumFromString : ClassCaseName -> List EnumValue -> String
+enumFromString enumName enumValues =
+    interpolate
+        """{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe {0}
+fromString enumString =
+    case enumString of
+{1}
+        _ ->
+                Nothing
+"""
+        [ ClassCaseName.normalized enumName
+        , List.map fromStringCase enumValues |> String.join "\n\n"
+        ]
+
+
+fromStringCase : EnumValue -> String
+fromStringCase enumValue =
+    interpolate
+        """        "{0}" ->
+                Just {1}
+"""
+        [ enumValue.name |> ClassCaseName.raw
+        , enumValue.name |> ClassCaseName.normalized
         ]
 
 
