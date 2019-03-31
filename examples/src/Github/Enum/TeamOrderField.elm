@@ -44,7 +44,16 @@ toString enum =
             "NAME"
 
 
-{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+{-| Convert from a String representation to an elm representation enum.
+This is the inverse of the Enum `toString` function. So you can call `toString` and then convert back `fromString` safely.
+
+    Swapi.Enum.Episode.NewHope
+        |> Swapi.Enum.Episode.toString
+        |> Swapi.Enum.Episode.fromString
+        == Just NewHope
+
+This can be useful for generating Strings to use for <select> menus to check which item was selected.
+
 -}
 fromString : String -> Maybe TeamOrderField
 fromString enumString =
