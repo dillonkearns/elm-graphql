@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.MergeableState exposing (MergeableState(..), decoder, list, toString)
+module Github.Enum.MergeableState exposing (MergeableState(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         Unknown ->
             "UNKNOWN"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe MergeableState
+fromString enumString =
+    case enumString of
+        "MERGEABLE" ->
+            Just Mergeable
+
+        "CONFLICTING" ->
+            Just Conflicting
+
+        "UNKNOWN" ->
+            Just Unknown
+
+        _ ->
+            Nothing

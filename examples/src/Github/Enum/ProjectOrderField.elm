@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ProjectOrderField exposing (ProjectOrderField(..), decoder, list, toString)
+module Github.Enum.ProjectOrderField exposing (ProjectOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         Name ->
             "NAME"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe ProjectOrderField
+fromString enumString =
+    case enumString of
+        "CREATED_AT" ->
+            Just CreatedAt
+
+        "UPDATED_AT" ->
+            Just UpdatedAt
+
+        "NAME" ->
+            Just Name
+
+        _ ->
+            Nothing

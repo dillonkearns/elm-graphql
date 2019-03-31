@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.DeploymentState exposing (DeploymentState(..), decoder, list, toString)
+module Github.Enum.DeploymentState exposing (DeploymentState(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -90,3 +90,33 @@ toString enum =
 
         Pending ->
             "PENDING"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe DeploymentState
+fromString enumString =
+    case enumString of
+        "ABANDONED" ->
+            Just Abandoned
+
+        "ACTIVE" ->
+            Just Active
+
+        "DESTROYED" ->
+            Just Destroyed
+
+        "ERROR" ->
+            Just Error
+
+        "FAILURE" ->
+            Just Failure
+
+        "INACTIVE" ->
+            Just Inactive
+
+        "PENDING" ->
+            Just Pending
+
+        _ ->
+            Nothing

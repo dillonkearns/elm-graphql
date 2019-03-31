@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.StatusState exposing (StatusState(..), decoder, list, toString)
+module Github.Enum.StatusState exposing (StatusState(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -74,3 +74,27 @@ toString enum =
 
         Success ->
             "SUCCESS"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe StatusState
+fromString enumString =
+    case enumString of
+        "EXPECTED" ->
+            Just Expected
+
+        "ERROR" ->
+            Just Error
+
+        "FAILURE" ->
+            Just Failure
+
+        "PENDING" ->
+            Just Pending
+
+        "SUCCESS" ->
+            Just Success
+
+        _ ->
+            Nothing

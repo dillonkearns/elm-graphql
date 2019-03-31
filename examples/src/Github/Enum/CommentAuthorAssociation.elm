@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.CommentAuthorAssociation exposing (CommentAuthorAssociation(..), decoder, list, toString)
+module Github.Enum.CommentAuthorAssociation exposing (CommentAuthorAssociation(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -90,3 +90,33 @@ toString enum =
 
         None ->
             "NONE"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe CommentAuthorAssociation
+fromString enumString =
+    case enumString of
+        "MEMBER" ->
+            Just Member
+
+        "OWNER" ->
+            Just Owner
+
+        "COLLABORATOR" ->
+            Just Collaborator
+
+        "CONTRIBUTOR" ->
+            Just Contributor
+
+        "FIRST_TIME_CONTRIBUTOR" ->
+            Just FirstTimeContributor
+
+        "FIRST_TIMER" ->
+            Just FirstTimer
+
+        "NONE" ->
+            Just None
+
+        _ ->
+            Nothing

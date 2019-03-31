@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.OrderDirection exposing (OrderDirection(..), decoder, list, toString)
+module Github.Enum.OrderDirection exposing (OrderDirection(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -50,3 +50,18 @@ toString enum =
 
         Desc ->
             "DESC"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe OrderDirection
+fromString enumString =
+    case enumString of
+        "ASC" ->
+            Just Asc
+
+        "DESC" ->
+            Just Desc
+
+        _ ->
+            Nothing

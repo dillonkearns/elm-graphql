@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.IssueOrderField exposing (IssueOrderField(..), decoder, list, toString)
+module Github.Enum.IssueOrderField exposing (IssueOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         Comments ->
             "COMMENTS"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe IssueOrderField
+fromString enumString =
+    case enumString of
+        "CREATED_AT" ->
+            Just CreatedAt
+
+        "UPDATED_AT" ->
+            Just UpdatedAt
+
+        "COMMENTS" ->
+            Just Comments
+
+        _ ->
+            Nothing

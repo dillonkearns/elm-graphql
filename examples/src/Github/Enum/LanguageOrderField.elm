@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.LanguageOrderField exposing (LanguageOrderField(..), decoder, list, toString)
+module Github.Enum.LanguageOrderField exposing (LanguageOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -42,3 +42,15 @@ toString enum =
     case enum of
         Size ->
             "SIZE"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe LanguageOrderField
+fromString enumString =
+    case enumString of
+        "SIZE" ->
+            Just Size
+
+        _ ->
+            Nothing

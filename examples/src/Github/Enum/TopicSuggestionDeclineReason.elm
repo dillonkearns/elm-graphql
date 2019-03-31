@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TopicSuggestionDeclineReason exposing (TopicSuggestionDeclineReason(..), decoder, list, toString)
+module Github.Enum.TopicSuggestionDeclineReason exposing (TopicSuggestionDeclineReason(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -66,3 +66,24 @@ toString enum =
 
         TooGeneral ->
             "TOO_GENERAL"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe TopicSuggestionDeclineReason
+fromString enumString =
+    case enumString of
+        "NOT_RELEVANT" ->
+            Just NotRelevant
+
+        "TOO_SPECIFIC" ->
+            Just TooSpecific
+
+        "PERSONAL_PREFERENCE" ->
+            Just PersonalPreference
+
+        "TOO_GENERAL" ->
+            Just TooGeneral
+
+        _ ->
+            Nothing

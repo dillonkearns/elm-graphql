@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryPermission exposing (RepositoryPermission(..), decoder, list, toString)
+module Github.Enum.RepositoryPermission exposing (RepositoryPermission(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         Read ->
             "READ"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe RepositoryPermission
+fromString enumString =
+    case enumString of
+        "ADMIN" ->
+            Just Admin
+
+        "WRITE" ->
+            Just Write
+
+        "READ" ->
+            Just Read
+
+        _ ->
+            Nothing

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestPubSubTopic exposing (PullRequestPubSubTopic(..), decoder, list, toString)
+module Github.Enum.PullRequestPubSubTopic exposing (PullRequestPubSubTopic(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         HeadRef ->
             "HEAD_REF"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe PullRequestPubSubTopic
+fromString enumString =
+    case enumString of
+        "UPDATED" ->
+            Just Updated
+
+        "MARKASREAD" ->
+            Just Markasread
+
+        "HEAD_REF" ->
+            Just HeadRef
+
+        _ ->
+            Nothing

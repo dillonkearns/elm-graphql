@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.SearchType exposing (SearchType(..), decoder, list, toString)
+module Github.Enum.SearchType exposing (SearchType(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         User ->
             "USER"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe SearchType
+fromString enumString =
+    case enumString of
+        "ISSUE" ->
+            Just Issue
+
+        "REPOSITORY" ->
+            Just Repository
+
+        "USER" ->
+            Just User
+
+        _ ->
+            Nothing

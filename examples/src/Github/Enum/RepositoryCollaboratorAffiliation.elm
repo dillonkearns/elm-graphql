@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryCollaboratorAffiliation exposing (RepositoryCollaboratorAffiliation(..), decoder, list, toString)
+module Github.Enum.RepositoryCollaboratorAffiliation exposing (RepositoryCollaboratorAffiliation(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -50,3 +50,18 @@ toString enum =
 
         Outside ->
             "OUTSIDE"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe RepositoryCollaboratorAffiliation
+fromString enumString =
+    case enumString of
+        "ALL" ->
+            Just All
+
+        "OUTSIDE" ->
+            Just Outside
+
+        _ ->
+            Nothing

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryContributionType exposing (RepositoryContributionType(..), decoder, list, toString)
+module Github.Enum.RepositoryContributionType exposing (RepositoryContributionType(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -74,3 +74,27 @@ toString enum =
 
         PullRequestReview ->
             "PULL_REQUEST_REVIEW"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe RepositoryContributionType
+fromString enumString =
+    case enumString of
+        "COMMIT" ->
+            Just Commit
+
+        "ISSUE" ->
+            Just Issue
+
+        "PULL_REQUEST" ->
+            Just PullRequest
+
+        "REPOSITORY" ->
+            Just Repository
+
+        "PULL_REQUEST_REVIEW" ->
+            Just PullRequestReview
+
+        _ ->
+            Nothing

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RefOrderField exposing (RefOrderField(..), decoder, list, toString)
+module Github.Enum.RefOrderField exposing (RefOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -50,3 +50,18 @@ toString enum =
 
         Alphabetical ->
             "ALPHABETICAL"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe RefOrderField
+fromString enumString =
+    case enumString of
+        "TAG_COMMIT_DATE" ->
+            Just TagCommitDate
+
+        "ALPHABETICAL" ->
+            Just Alphabetical
+
+        _ ->
+            Nothing

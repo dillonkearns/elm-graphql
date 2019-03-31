@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TeamOrderField exposing (TeamOrderField(..), decoder, list, toString)
+module Github.Enum.TeamOrderField exposing (TeamOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -42,3 +42,15 @@ toString enum =
     case enum of
         Name ->
             "NAME"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe TeamOrderField
+fromString enumString =
+    case enumString of
+        "NAME" ->
+            Just Name
+
+        _ ->
+            Nothing

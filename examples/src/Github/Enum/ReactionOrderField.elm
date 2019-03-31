@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReactionOrderField exposing (ReactionOrderField(..), decoder, list, toString)
+module Github.Enum.ReactionOrderField exposing (ReactionOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -42,3 +42,15 @@ toString enum =
     case enum of
         CreatedAt ->
             "CREATED_AT"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe ReactionOrderField
+fromString enumString =
+    case enumString of
+        "CREATED_AT" ->
+            Just CreatedAt
+
+        _ ->
+            Nothing

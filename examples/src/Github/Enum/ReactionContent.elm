@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReactionContent exposing (ReactionContent(..), decoder, list, toString)
+module Github.Enum.ReactionContent exposing (ReactionContent(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -82,3 +82,30 @@ toString enum =
 
         Heart ->
             "HEART"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe ReactionContent
+fromString enumString =
+    case enumString of
+        "THUMBS_UP" ->
+            Just ThumbsUp
+
+        "THUMBS_DOWN" ->
+            Just ThumbsDown
+
+        "LAUGH" ->
+            Just Laugh
+
+        "HOORAY" ->
+            Just Hooray
+
+        "CONFUSED" ->
+            Just Confused
+
+        "HEART" ->
+            Just Heart
+
+        _ ->
+            Nothing

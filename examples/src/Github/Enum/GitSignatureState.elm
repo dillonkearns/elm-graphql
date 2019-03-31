@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.GitSignatureState exposing (GitSignatureState(..), decoder, list, toString)
+module Github.Enum.GitSignatureState exposing (GitSignatureState(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -138,3 +138,51 @@ toString enum =
 
         ExpiredKey ->
             "EXPIRED_KEY"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe GitSignatureState
+fromString enumString =
+    case enumString of
+        "VALID" ->
+            Just Valid
+
+        "INVALID" ->
+            Just Invalid
+
+        "MALFORMED_SIG" ->
+            Just MalformedSig
+
+        "UNKNOWN_KEY" ->
+            Just UnknownKey
+
+        "BAD_EMAIL" ->
+            Just BadEmail
+
+        "UNVERIFIED_EMAIL" ->
+            Just UnverifiedEmail
+
+        "NO_USER" ->
+            Just NoUser
+
+        "UNKNOWN_SIG_TYPE" ->
+            Just UnknownSigType
+
+        "UNSIGNED" ->
+            Just Unsigned
+
+        "GPGVERIFY_UNAVAILABLE" ->
+            Just GpgverifyUnavailable
+
+        "GPGVERIFY_ERROR" ->
+            Just GpgverifyError
+
+        "NOT_SIGNING_KEY" ->
+            Just NotSigningKey
+
+        "EXPIRED_KEY" ->
+            Just ExpiredKey
+
+        _ ->
+            Nothing

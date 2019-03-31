@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.CommentCannotUpdateReason exposing (CommentCannotUpdateReason(..), decoder, list, toString)
+module Github.Enum.CommentCannotUpdateReason exposing (CommentCannotUpdateReason(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -74,3 +74,27 @@ toString enum =
 
         VerifiedEmailRequired ->
             "VERIFIED_EMAIL_REQUIRED"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe CommentCannotUpdateReason
+fromString enumString =
+    case enumString of
+        "INSUFFICIENT_ACCESS" ->
+            Just InsufficientAccess
+
+        "LOCKED" ->
+            Just Locked
+
+        "LOGIN_REQUIRED" ->
+            Just LoginRequired
+
+        "MAINTENANCE" ->
+            Just Maintenance
+
+        "VERIFIED_EMAIL_REQUIRED" ->
+            Just VerifiedEmailRequired
+
+        _ ->
+            Nothing

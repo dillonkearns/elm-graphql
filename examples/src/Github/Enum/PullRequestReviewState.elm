@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestReviewState exposing (PullRequestReviewState(..), decoder, list, toString)
+module Github.Enum.PullRequestReviewState exposing (PullRequestReviewState(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -74,3 +74,27 @@ toString enum =
 
         Dismissed ->
             "DISMISSED"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe PullRequestReviewState
+fromString enumString =
+    case enumString of
+        "PENDING" ->
+            Just Pending
+
+        "COMMENTED" ->
+            Just Commented
+
+        "APPROVED" ->
+            Just Approved
+
+        "CHANGES_REQUESTED" ->
+            Just ChangesRequested
+
+        "DISMISSED" ->
+            Just Dismissed
+
+        _ ->
+            Nothing

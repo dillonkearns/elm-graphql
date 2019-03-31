@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.GistOrderField exposing (GistOrderField(..), decoder, list, toString)
+module Github.Enum.GistOrderField exposing (GistOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         PushedAt ->
             "PUSHED_AT"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe GistOrderField
+fromString enumString =
+    case enumString of
+        "CREATED_AT" ->
+            Just CreatedAt
+
+        "UPDATED_AT" ->
+            Just UpdatedAt
+
+        "PUSHED_AT" ->
+            Just PushedAt
+
+        _ ->
+            Nothing

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryOrderField exposing (RepositoryOrderField(..), decoder, list, toString)
+module Github.Enum.RepositoryOrderField exposing (RepositoryOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -74,3 +74,27 @@ toString enum =
 
         Stargazers ->
             "STARGAZERS"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe RepositoryOrderField
+fromString enumString =
+    case enumString of
+        "CREATED_AT" ->
+            Just CreatedAt
+
+        "UPDATED_AT" ->
+            Just UpdatedAt
+
+        "PUSHED_AT" ->
+            Just PushedAt
+
+        "NAME" ->
+            Just Name
+
+        "STARGAZERS" ->
+            Just Stargazers
+
+        _ ->
+            Nothing

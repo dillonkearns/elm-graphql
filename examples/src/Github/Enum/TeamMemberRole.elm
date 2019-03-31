@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TeamMemberRole exposing (TeamMemberRole(..), decoder, list, toString)
+module Github.Enum.TeamMemberRole exposing (TeamMemberRole(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -50,3 +50,18 @@ toString enum =
 
         Member ->
             "MEMBER"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe TeamMemberRole
+fromString enumString =
+    case enumString of
+        "MAINTAINER" ->
+            Just Maintainer
+
+        "MEMBER" ->
+            Just Member
+
+        _ ->
+            Nothing

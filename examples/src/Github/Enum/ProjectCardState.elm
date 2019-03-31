@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ProjectCardState exposing (ProjectCardState(..), decoder, list, toString)
+module Github.Enum.ProjectCardState exposing (ProjectCardState(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         Redacted ->
             "REDACTED"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe ProjectCardState
+fromString enumString =
+    case enumString of
+        "CONTENT_ONLY" ->
+            Just ContentOnly
+
+        "NOTE_ONLY" ->
+            Just NoteOnly
+
+        "REDACTED" ->
+            Just Redacted
+
+        _ ->
+            Nothing

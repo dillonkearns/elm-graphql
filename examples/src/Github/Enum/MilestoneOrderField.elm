@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.MilestoneOrderField exposing (MilestoneOrderField(..), decoder, list, toString)
+module Github.Enum.MilestoneOrderField exposing (MilestoneOrderField(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -66,3 +66,24 @@ toString enum =
 
         Number ->
             "NUMBER"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe MilestoneOrderField
+fromString enumString =
+    case enumString of
+        "DUE_DATE" ->
+            Just DueDate
+
+        "CREATED_AT" ->
+            Just CreatedAt
+
+        "UPDATED_AT" ->
+            Just UpdatedAt
+
+        "NUMBER" ->
+            Just Number
+
+        _ ->
+            Nothing

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.CollaboratorAffiliation exposing (CollaboratorAffiliation(..), decoder, list, toString)
+module Github.Enum.CollaboratorAffiliation exposing (CollaboratorAffiliation(..), decoder, fromString, list, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -58,3 +58,21 @@ toString enum =
 
         All ->
             "ALL"
+
+
+{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+-}
+fromString : String -> Maybe CollaboratorAffiliation
+fromString enumString =
+    case enumString of
+        "OUTSIDE" ->
+            Just Outside
+
+        "DIRECT" ->
+            Just Direct
+
+        "ALL" ->
+            Just All
+
+        _ ->
+            Nothing
