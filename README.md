@@ -76,7 +76,7 @@ elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/
 If headers are required, such as a Bearer Token, the `--header` flag can be supplied.
 
 ```bash
-elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src 'headerKey: header value'
+elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src --header 'headerKey: header value'
 ```
 
 ## Learning Resources
