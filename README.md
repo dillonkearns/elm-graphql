@@ -87,6 +87,10 @@ If you're just starting out, here are some great resources:
 
 ([Skip to 13:06](https://youtu.be/memIRXFSNkU?t=786) to go straight to the `dillonkearns/elm-graphql` demo).
 
+- My 10-minute video tutorial on how to leverage Custom Scalars in `elm-graphql` using the Scalar Codecs feature.
+[![Scalar Codecs Tutorial](./assets/scalar-codecs-tutorial.png)](https://incrementalelm.com/scalar-codecs-tutorial)
+
+
 - There are a couple of chapters so far in [The Official `dillonkearns/elm-graphql` Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
 - [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
 - [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
