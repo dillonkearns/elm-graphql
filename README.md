@@ -81,9 +81,13 @@ elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/
 
 ## Learning Resources
 
-If you're just starting out, here are some great resources:
+- There is a thorough tutorial in [the `SelectionSet` docs](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/Graphql-SelectionSet). `SelectionSet`s are the core concept in this library, so I recommend reading through the whole page (it's not very long!).
 
-- My Elm Conf 2018 talk goes into the philosophy behind `dillonkearns/elm-graphql` [![Types Without Borders Elm Conf Talk](https://img.youtube.com/vi/memIRXFSNkU/0.jpg)](https://www.youtube.com/watch?v=memIRXFSNkU)
+- The [`examples/`](https://github.com/dillonkearns/elm-graphql/tree/master/examples) folder is another great place to start.
+
+- If you want to learn more GraphQL basics, this is a great tutorial, and a short read: [graphql.org/learn/](http://graphql.org/learn/)
+
+- My Elm Conf 2018 talk goes into the philosophy behind `dillonkearns/elm-graphql` [![Types Without Borders Elm Conf Talk](https://img.youtube.com/vi/memIRXFSNkU/1.jpg)](https://www.youtube.com/watch?v=memIRXFSNkU)
 
 ([Skip to 13:06](https://youtu.be/memIRXFSNkU?t=786) to go straight to the `dillonkearns/elm-graphql` demo).
 
