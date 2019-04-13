@@ -14,10 +14,10 @@ type DetectionResult
     | Match
 
 
-isConnection : TypeDefinition -> List TypeDefinition -> DetectionResult
-isConnection (TypeDefinition typeName definableType description) allDefinitions =
-    if typeName |> ClassCaseName.raw |> String.endsWith "Connection" then
-        SpecViolation
+isConnection : Type.Field -> List TypeDefinition -> DetectionResult
+isConnection candidateField allDefinitions =
+    if CamelCaseName.raw candidateField.name == "stargazers" then
+        Match
 
     else
         Miss
@@ -30,46 +30,43 @@ all =
             [ test "scalar is not a Connection" <|
                 \() ->
                     isConnection
-                        (typeDefinition "SomeInputObject" (Type.InputObjectType [ field "String" "hello" ]))
+                        (field "String" "hello")
                         []
                         |> Expect.equal Miss
             ]
         , describe "objects"
-            [ test "Object with correct name violates convention, should warn" <|
-                \() ->
-                    isConnection
-                        (typeDefinition "StargazerConnection" (Type.ObjectType [ fieldNew "totalCount" (Type.Scalar Scalar.Int) NonNullable ]))
-                        []
-                        |> Expect.equal SpecViolation
-
-            {-
-               {
-                 repository(owner: "dillonkearns", name: "elm-graphql") {
-                   stargazers(first: 10, after: null) {
-                     totalCount
-                     pageInfo {
-                       hasNextPage
-                       endCursor
-                     }
-                     edges {
-                       node {
-                         login
+            [ -- test "Object with correct name violates convention, should warn" <|
+              --     \() ->
+              --         isConnection
+              --             (fieldNew "totalCount" (Type.Scalar Scalar.Int) NonNullable)
+              --             []
+              --             |> Expect.equal SpecViolation
+              {-
+                 {
+                   repository(owner: "dillonkearns", name: "elm-graphql") {
+                     stargazers(first: 10, after: null) {
+                       totalCount
+                       pageInfo {
+                         hasNextPage
+                         endCursor
                        }
-                       starredAt
+                       edges {
+                         node {
+                           login
+                         }
+                         starredAt
+                       }
                      }
                    }
                  }
-               }
 
-            -}
-            , test "strict spec match" <|
+              -}
+              test "strict spec match" <|
                 \() ->
                     isConnection
-                        (typeDefinition "StargazerConnection" (Type.ObjectType [ field "PageInfo" "pageInfo" ]))
-                        [ strictPageInfoDefinition
-                        , typeDefinition "StargazerEdge" (Type.InputObjectType [ field "String" "hello" ])
-                        ]
-                        |> Expect.equal SpecViolation
+                        properField
+                        properConnectionExample
+                        |> Expect.equal Match
             ]
         ]
 
@@ -125,16 +122,7 @@ properConnectionExample =
         Nothing
     , TypeDefinition (ClassCaseName.build "Query")
         (ObjectType
-            [ { args =
-                    [ { description = Nothing, name = CamelCaseName.build "after", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-                    , { description = Nothing, name = CamelCaseName.build "before", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-                    , { description = Nothing, name = CamelCaseName.build "first", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
-                    , { description = Nothing, name = CamelCaseName.build "last", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
-                    ]
-              , description = Just ""
-              , name = CamelCaseName.build "stargazers"
-              , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
-              }
+            [ properField
             ]
         )
         Nothing
@@ -142,3 +130,16 @@ properConnectionExample =
     , TypeDefinition (ClassCaseName.build "StargazerEdge") (ObjectType [ { args = [], description = Just "", name = CamelCaseName.build "cursor", typeRef = TypeReference (Type.Scalar Scalar.String) NonNullable }, { args = [], description = Just "", name = CamelCaseName.build "node", typeRef = TypeReference (ObjectRef "User") NonNullable } ]) Nothing
     , TypeDefinition (ClassCaseName.build "User") (ObjectType [ { args = [], description = Just "", name = CamelCaseName.build "name", typeRef = TypeReference (Type.Scalar Scalar.String) NonNullable } ]) Nothing
     ]
+
+
+properField =
+    { args =
+        [ { description = Nothing, name = CamelCaseName.build "after", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+        , { description = Nothing, name = CamelCaseName.build "before", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+        , { description = Nothing, name = CamelCaseName.build "first", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
+        , { description = Nothing, name = CamelCaseName.build "last", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
+        ]
+    , description = Just ""
+    , name = CamelCaseName.build "stargazers"
+    , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
+    }
