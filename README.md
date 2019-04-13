@@ -87,17 +87,18 @@ elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/
 
 - If you want to learn more GraphQL basics, this is a great tutorial, and a short read: [graphql.org/learn/](http://graphql.org/learn/)
 
-- My Elm Conf 2018 talk goes into the philosophy behind `dillonkearns/elm-graphql` [![Types Without Borders Elm Conf Talk](https://img.youtube.com/vi/memIRXFSNkU/1.jpg)](https://www.youtube.com/watch?v=memIRXFSNkU)
+- My Elm Conf 2018 talk goes into the philosophy behind `dillonkearns/elm-graphql`
+
+[![Types Without Borders Elm Conf Talk](./assets/types-without-borders.png)](https://www.youtube.com/watch?v=memIRXFSNkU)
 
 ([Skip to 13:06](https://youtu.be/memIRXFSNkU?t=786) to go straight to the `dillonkearns/elm-graphql` demo).
 
 - My 10-minute video tutorial on how to leverage Custom Scalars in `elm-graphql` using the Scalar Codecs feature.
-[![Scalar Codecs Tutorial](./assets/scalar-codecs-tutorial.png)](https://incrementalelm.com/scalar-codecs-tutorial)
+  [![Scalar Codecs Tutorial](./assets/scalar-codecs-tutorial.png)](https://incrementalelm.com/scalar-codecs-tutorial)
 
-
-- There are a couple of chapters so far in [The Official `dillonkearns/elm-graphql` Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
-- [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
-- [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
+* There are a couple of chapters so far in [The Official `dillonkearns/elm-graphql` Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
+* [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
+* [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
 
 If you're wondering why code is generated a certain way, you're likely to find an answer in the [Frequently Asked Questions (FAQ)](https://github.com/dillonkearns/elm-graphql/blob/master/FAQ.md).
 
