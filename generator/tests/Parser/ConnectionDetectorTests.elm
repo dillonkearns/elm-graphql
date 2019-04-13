@@ -169,12 +169,19 @@ properConnectionExample =
 
 properField =
     { args =
-        [ { description = Nothing, name = CamelCaseName.build "after", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-        , { description = Nothing, name = CamelCaseName.build "before", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-        , { description = Nothing, name = CamelCaseName.build "first", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
-        , { description = Nothing, name = CamelCaseName.build "last", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
+        [ buildArg "after" (Type.Scalar Scalar.String) Nullable
+        , buildArg "before" (Type.Scalar Scalar.String) Nullable
+        , buildArg "first" (Type.Scalar Scalar.Int) Nullable
+        , buildArg "last" (Type.Scalar Scalar.Int) Nullable
         ]
     , description = Nothing
     , name = CamelCaseName.build "stargazers"
     , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
+    }
+
+
+buildArg name topLevelType isNullable =
+    { description = Nothing
+    , name = CamelCaseName.build name
+    , typeRef = TypeReference topLevelType isNullable
     }
