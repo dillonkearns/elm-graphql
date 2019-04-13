@@ -4,7 +4,7 @@ import Expect
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Scalar as Scalar
-import Graphql.Parser.Type as Type exposing (DefinableType, IsNullable(..), TypeDefinition(..), TypeReference(..))
+import Graphql.Parser.Type as Type exposing (DefinableType(..), IsNullable(..), ReferrableType(..), TypeDefinition(..), TypeReference(..))
 import Test exposing (Test, describe, test)
 
 
@@ -107,3 +107,38 @@ field inputObjectName fieldName =
     , typeRef = TypeReference (Type.InputObjectRef (ClassCaseName.build inputObjectName)) NonNullable
     , args = []
     }
+
+
+properConnectionExample =
+    [ TypeDefinition (ClassCaseName.build "PageInfo")
+        (ObjectType
+            [ { args = [], description = Just "", name = CamelCaseName.build "endCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+            , { args = [], description = Just "", name = CamelCaseName.build "hasNextPage", typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable }
+            , { args = []
+              , description = Just ""
+              , name = CamelCaseName.build "hasPreviousPage"
+              , typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable
+              }
+            , { args = [], description = Just "", name = CamelCaseName.build "starCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+            ]
+        )
+        Nothing
+    , TypeDefinition (ClassCaseName.build "Query")
+        (ObjectType
+            [ { args =
+                    [ { description = Nothing, name = CamelCaseName.build "after", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+                    , { description = Nothing, name = CamelCaseName.build "before", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+                    , { description = Nothing, name = CamelCaseName.build "first", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
+                    , { description = Nothing, name = CamelCaseName.build "last", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
+                    ]
+              , description = Just ""
+              , name = CamelCaseName.build "stargazers"
+              , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
+              }
+            ]
+        )
+        Nothing
+    , TypeDefinition (ClassCaseName.build "StargazerConnection") (ObjectType [ { args = [], description = Just "", name = CamelCaseName.build "edges", typeRef = TypeReference (List (TypeReference (ObjectRef "StargazerEdge") Nullable)) Nullable }, { args = [], description = Just "", name = CamelCaseName.build "pageInfo", typeRef = TypeReference (ObjectRef "PageInfo") NonNullable }, { args = [], description = Just "", name = CamelCaseName.build "totalCount", typeRef = TypeReference (Type.Scalar Scalar.Int) NonNullable } ]) Nothing
+    , TypeDefinition (ClassCaseName.build "StargazerEdge") (ObjectType [ { args = [], description = Just "", name = CamelCaseName.build "cursor", typeRef = TypeReference (Type.Scalar Scalar.String) NonNullable }, { args = [], description = Just "", name = CamelCaseName.build "node", typeRef = TypeReference (ObjectRef "User") NonNullable } ]) Nothing
+    , TypeDefinition (ClassCaseName.build "User") (ObjectType [ { args = [], description = Just "", name = CamelCaseName.build "name", typeRef = TypeReference (Type.Scalar Scalar.String) NonNullable } ]) Nothing
+    ]
