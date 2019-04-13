@@ -25,12 +25,12 @@ isConnection candidateField allDefinitions =
 
 hasPageInfo : List TypeDefinition -> Bool
 hasPageInfo allDefinitions =
-    List.any (\def -> defIsPageInfo def)
+    List.any (\def -> isPageInfo def)
         allDefinitions
 
 
-defIsPageInfo : TypeDefinition -> Bool
-defIsPageInfo (TypeDefinition name typeDef description) =
+isPageInfo : TypeDefinition -> Bool
+isPageInfo (TypeDefinition name typeDef description) =
     ClassCaseName.raw name
         == "PageInfo"
         && (case typeDef of
@@ -101,18 +101,18 @@ all =
         , describe "has page info"
             [ test "same name but doesn't match" <|
                 \() ->
-                    hasPageInfo
-                        [ TypeDefinition (ClassCaseName.build "PageInfo")
+                    isPageInfo
+                        (TypeDefinition (ClassCaseName.build "PageInfo")
                             (ObjectType
                                 [ { args = [], description = Nothing, name = CamelCaseName.build "notRealPageInfo", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
                                 ]
                             )
                             Nothing
-                        ]
+                        )
                         |> Expect.equal False
             , test "present" <|
                 \() ->
-                    hasPageInfo [ properPageInfo ]
+                    isPageInfo properPageInfo
                         |> Expect.equal True
             ]
         ]
