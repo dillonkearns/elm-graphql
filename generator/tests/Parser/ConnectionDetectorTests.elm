@@ -123,8 +123,8 @@ typeDefinition classCaseName definableType =
     TypeDefinition (ClassCaseName.build classCaseName) definableType Nothing
 
 
-strictPageInfoDefinition : TypeDefinition
-strictPageInfoDefinition =
+properPageInfo : TypeDefinition
+properPageInfo =
     typeDefinition "PageInfo"
         (Type.ObjectType
             [ fieldNew "hasPreviousPage" (Type.Scalar Scalar.Boolean) NonNullable
@@ -178,19 +178,3 @@ properField =
     , name = CamelCaseName.build "stargazers"
     , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
     }
-
-
-properPageInfo =
-    TypeDefinition (ClassCaseName.build "PageInfo")
-        (ObjectType
-            [ { args = [], description = Just "", name = CamelCaseName.build "endCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-            , { args = [], description = Just "", name = CamelCaseName.build "hasNextPage", typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable }
-            , { args = []
-              , description = Just ""
-              , name = CamelCaseName.build "hasPreviousPage"
-              , typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable
-              }
-            , { args = [], description = Just "", name = CamelCaseName.build "starCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-            ]
-        )
-        Nothing
