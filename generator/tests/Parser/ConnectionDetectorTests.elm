@@ -185,3 +185,14 @@ buildArg name topLevelType isNullable =
     , name = CamelCaseName.build name
     , typeRef = TypeReference topLevelType isNullable
     }
+
+
+
+{-
+   https://github.com/facebook/relay/blob/master/website/spec/Connections.md
+
+   - Object type
+   - Ends in "Connection"
+   - Has "edges" field, List of edge type
+   - Has "pageInfo" field, non-null, of type PageInfo
+-}
