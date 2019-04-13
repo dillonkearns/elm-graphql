@@ -16,11 +16,19 @@ type DetectionResult
 
 isConnection : Type.Field -> List TypeDefinition -> DetectionResult
 isConnection candidateField allDefinitions =
-    if CamelCaseName.raw candidateField.name == "stargazers" then
+    if hasArgs candidateField then
         Match
 
     else
         Miss
+
+
+hasArgs candidateField =
+    hasArg "first" candidateField.args
+
+
+hasArg argName args =
+    List.filter (\arg -> CamelCaseName.raw arg.name == argName) args /= []
 
 
 all : Test
@@ -139,7 +147,7 @@ properField =
         , { description = Nothing, name = CamelCaseName.build "first", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
         , { description = Nothing, name = CamelCaseName.build "last", typeRef = TypeReference (Type.Scalar Scalar.Int) Nullable }
         ]
-    , description = Just ""
+    , description = Nothing
     , name = CamelCaseName.build "stargazers"
     , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
     }
