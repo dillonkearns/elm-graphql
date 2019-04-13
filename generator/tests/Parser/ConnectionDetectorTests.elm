@@ -23,8 +23,30 @@ isConnection candidateField allDefinitions =
         Miss
 
 
+hasPageInfo : List TypeDefinition -> Bool
+hasPageInfo allDefinitions =
+    List.any (\def -> defIsPageInfo def)
+        allDefinitions
+
+
+defIsPageInfo : TypeDefinition -> Bool
+defIsPageInfo (TypeDefinition name typeDef description) =
+    ClassCaseName.raw name
+        == "PageInfo"
+        && (case typeDef of
+                Type.ObjectType fields ->
+                    List.any (\currentField -> CamelCaseName.raw currentField.name == "endCursor") fields
+
+                _ ->
+                    False
+           )
+
+
 hasArgs candidateField =
     hasArg "first" candidateField.args
+        && hasArg "last" candidateField.args
+        && hasArg "after" candidateField.args
+        && hasArg "before" candidateField.args
 
 
 hasArg argName args =
@@ -76,6 +98,23 @@ all =
                         properConnectionExample
                         |> Expect.equal Match
             ]
+        , describe "has page info"
+            [ test "same name but doesn't match" <|
+                \() ->
+                    hasPageInfo
+                        [ TypeDefinition (ClassCaseName.build "PageInfo")
+                            (ObjectType
+                                [ { args = [], description = Nothing, name = CamelCaseName.build "notRealPageInfo", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+                                ]
+                            )
+                            Nothing
+                        ]
+                        |> Expect.equal False
+            , test "present" <|
+                \() ->
+                    hasPageInfo [ properPageInfo ]
+                        |> Expect.equal True
+            ]
         ]
 
 
@@ -115,19 +154,7 @@ field inputObjectName fieldName =
 
 
 properConnectionExample =
-    [ TypeDefinition (ClassCaseName.build "PageInfo")
-        (ObjectType
-            [ { args = [], description = Just "", name = CamelCaseName.build "endCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-            , { args = [], description = Just "", name = CamelCaseName.build "hasNextPage", typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable }
-            , { args = []
-              , description = Just ""
-              , name = CamelCaseName.build "hasPreviousPage"
-              , typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable
-              }
-            , { args = [], description = Just "", name = CamelCaseName.build "starCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
-            ]
-        )
-        Nothing
+    [ properPageInfo
     , TypeDefinition (ClassCaseName.build "Query")
         (ObjectType
             [ properField
@@ -151,3 +178,19 @@ properField =
     , name = CamelCaseName.build "stargazers"
     , typeRef = TypeReference (ObjectRef "StargazerConnection") NonNullable
     }
+
+
+properPageInfo =
+    TypeDefinition (ClassCaseName.build "PageInfo")
+        (ObjectType
+            [ { args = [], description = Just "", name = CamelCaseName.build "endCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+            , { args = [], description = Just "", name = CamelCaseName.build "hasNextPage", typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable }
+            , { args = []
+              , description = Just ""
+              , name = CamelCaseName.build "hasPreviousPage"
+              , typeRef = TypeReference (Type.Scalar Scalar.Boolean) NonNullable
+              }
+            , { args = [], description = Just "", name = CamelCaseName.build "starCursor", typeRef = TypeReference (Type.Scalar Scalar.String) Nullable }
+            ]
+        )
+        Nothing
