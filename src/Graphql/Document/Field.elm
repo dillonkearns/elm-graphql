@@ -27,37 +27,28 @@ maybeAliasHash field =
                     |> Just
 
         Leaf { typeString, fieldName } arguments ->
-            arguments
-                |> Argument.serialize
-                |> List.singleton
-                |> List.append [ typeString ]
-                |> String.concat
-                |> Just
+            -- __typename fields never takes arguments or has a different type,
+            -- so they don't need to be aliased
+            -- see https://github.com/dillonkearns/elm-graphql/issues/120
+            if fieldName == "__typename" then
+                Nothing
+
+            else
+                arguments
+                    |> Argument.serialize
+                    |> List.singleton
+                    |> List.append [ typeString ]
+                    |> String.concat
+                    |> Just
     )
         |> Maybe.map (Murmur3.hashString 0 >> String.fromInt)
 
 
 alias : RawField -> Maybe String
 alias field =
-    let
-        defaultAlias =
-            field
-                |> maybeAliasHash
-                |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
-    in
-    case field of
-        -- __typename is a special beast which needn't be aliased,
-        -- and if aliased, may cause trouble for tooling which
-        -- assumes it won't be
-        Leaf { typeString, fieldName } arguments ->
-            if fieldName == "__typename" then
-                Nothing
-
-            else
-                defaultAlias
-
-        _ ->
-            defaultAlias
+    field
+        |> maybeAliasHash
+        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
