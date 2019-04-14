@@ -177,13 +177,8 @@ addOptionalArgs field context args fieldGenerator =
             fieldGenerator
 
 
-type ObjectOrInterface
-    = Object
-    | Interface
-
-
-objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
-objectThing context typeRef refName objectOrInterface =
+objectThing : Context -> TypeReference -> String -> FieldGenerator
+objectThing context typeRef refName =
     let
         typeLock =
             case ReferenceLeaf.get typeRef of
@@ -270,13 +265,13 @@ init : Context -> CamelCaseName -> TypeReference -> FieldGenerator
 init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
-            objectThing context typeRef refName Object
+            objectThing context typeRef refName
 
         InterfaceLeaf refName ->
-            objectThing context typeRef refName Interface
+            objectThing context typeRef refName
 
         UnionLeaf refName ->
-            objectThing context typeRef refName Interface
+            objectThing context typeRef refName
 
         EnumLeaf ->
             initScalarField context typeRef
