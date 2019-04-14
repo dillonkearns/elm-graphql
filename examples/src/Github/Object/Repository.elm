@@ -983,6 +983,25 @@ stargazers fillInOptionals object_ =
     Object.selectionForCompositeField "stargazers" optionalArgs object_ identity
 
 
+stargazers2 :
+    Int
+    -> Paginator direction decodesTo
+    -> (StargazersOptionalArguments -> StargazersOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.StargazerEdge
+    -> SelectionSet (Paginator direction decodesTo) Github.Object.Repository
+stargazers2 pageSize paginator fillInOptionals object_ =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
+                |> Paginator.addPageInfo pageSize paginator
+
+        optionalArgs =
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
+                |> List.filterMap identity
+    in
+    Object.selectionForCompositeField "stargazers" optionalArgs (Paginator.selectionSet pageSize paginator (stargazerEdges object_)) identity
+
+
 stargazersPaginated :
     Int
     -> Paginator direction decodesTo
