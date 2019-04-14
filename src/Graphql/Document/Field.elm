@@ -39,9 +39,23 @@ maybeAliasHash field =
 
 alias : RawField -> Maybe String
 alias field =
-    field
-        |> maybeAliasHash
-        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
+    let
+        defaultAlias =
+            field
+                |> maybeAliasHash
+                |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
+    in
+    case field of
+        -- __typename is a special beast which needn't be aliased,
+        -- and if aliased, may cause trouble for tooling which
+        -- assumes it won't be
+        Leaf { typeString, fieldName } arguments ->
+            if fieldName == "__typename" then
+                Just "__typename"
+            else
+               defaultAlias
+        _ ->
+            defaultAlias
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
