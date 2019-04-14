@@ -127,6 +127,59 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
+toPaginatorFieldGenerator : Context -> Type.Field -> FieldGenerator
+toPaginatorFieldGenerator ({ apiSubmodule } as context) field =
+    init context field.name field.typeRef
+        |> addRequiredArgs field context field.args
+        |> addOptionalArgs field context field.args
+
+
+paginatorGenerator : Context -> TypeReference -> String -> FieldGenerator
+paginatorGenerator context typeRef refName =
+    let
+        typeLock =
+            case ReferenceLeaf.get typeRef of
+                ReferenceLeaf.Object ->
+                    ModuleName.object context (ClassCaseName.build refName) |> String.join "."
+
+                ReferenceLeaf.Interface ->
+                    ModuleName.interface context (ClassCaseName.build refName) |> String.join "."
+
+                ReferenceLeaf.Enum ->
+                    MyDebug.crash "TODO"
+
+                ReferenceLeaf.Union ->
+                    ModuleName.union context (ClassCaseName.build refName) |> String.join "."
+
+                ReferenceLeaf.Scalar ->
+                    MyDebug.crash "TODO"
+
+        objectArgAnnotation =
+            interpolate
+                "SelectionSet decodesTo {0}"
+                [ typeLock ]
+    in
+    { annotatedArgs = []
+    , fieldArgs = []
+    , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
+    , decoder = "object_"
+    , otherThing = ".selectionForCompositeField"
+    , letBindings = []
+    , objectDecoderChain =
+        " ("
+            ++ (Graphql.Generator.Decoder.generateDecoder context typeRef
+                    |> String.join " >> "
+               )
+            ++ ")"
+            |> Just
+    , typeAliases = []
+    }
+        |> prependArg
+            { annotation = objectArgAnnotation
+            , arg = "object_"
+            }
+
+
 toFieldGenerator : Context -> Type.Field -> FieldGenerator
 toFieldGenerator ({ apiSubmodule } as context) field =
     init context field.name field.typeRef
@@ -234,13 +287,18 @@ type LeafRef
     | UnionLeaf String
     | EnumLeaf
     | ScalarLeaf
+    | PaginatorLeaf String
 
 
 leafType : TypeReference -> LeafRef
 leafType (Type.TypeReference referrableType isNullable) =
     case referrableType of
         Type.ObjectRef refName ->
-            ObjectLeaf refName
+            if refName |> String.endsWith "Connection" then
+                PaginatorLeaf refName
+
+            else
+                ObjectLeaf refName
 
         Type.InterfaceRef refName ->
             InterfaceLeaf refName
@@ -278,6 +336,9 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
 
         ScalarLeaf ->
             initScalarField context typeRef
+
+        PaginatorLeaf connectionName ->
+            paginatorGenerator context typeRef connectionName
 
 
 initScalarField : Context -> TypeReference -> FieldGenerator
