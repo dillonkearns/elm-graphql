@@ -51,9 +51,11 @@ alias field =
         -- assumes it won't be
         Leaf { typeString, fieldName } arguments ->
             if fieldName == "__typename" then
-                Just "__typename"
+                Nothing
+
             else
-               defaultAlias
+                defaultAlias
+
         _ ->
             defaultAlias
 
