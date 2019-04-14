@@ -142,16 +142,7 @@ paginatorGenerator context typeRef refName =
                 ReferenceLeaf.Object ->
                     ModuleName.object context (ClassCaseName.build refName) |> String.join "."
 
-                ReferenceLeaf.Interface ->
-                    ModuleName.interface context (ClassCaseName.build refName) |> String.join "."
-
-                ReferenceLeaf.Enum ->
-                    MyDebug.crash "TODO"
-
-                ReferenceLeaf.Union ->
-                    ModuleName.union context (ClassCaseName.build refName) |> String.join "."
-
-                ReferenceLeaf.Scalar ->
+                _ ->
                     MyDebug.crash "TODO"
 
         objectArgAnnotation =
