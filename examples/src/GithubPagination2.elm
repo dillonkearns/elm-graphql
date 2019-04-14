@@ -25,7 +25,7 @@ import PrintAny
 
 
 type alias Response =
-    Paginator Paginator.Forward Stargazer
+    ( Int, Paginator Paginator.Forward Stargazer )
 
 
 
@@ -35,28 +35,32 @@ type alias Response =
 query :
     Int
     -> Paginator Paginator.Forward Stargazer
-    -> SelectionSet (Paginator Paginator.Forward Stargazer) RootQuery
+    -> SelectionSet ( Int, Paginator Paginator.Forward Stargazer ) RootQuery
 query pageSize paginator =
     Query.repository { owner = "dillonkearns", name = "elm-graphql" }
         (Repository.stargazers3
             pageSize
             paginator
             identity
-            (connectionSelection paginator)
+            (SelectionSet.map2 Tuple.pair
+                Github.Object.StargazerConnection.totalCount
+                (connectionSelection paginator)
+            )
         )
         |> SelectionSet.nonNullOrFail
 
 
-queryOld : Int -> Paginator Paginator.Forward Stargazer -> SelectionSet Response RootQuery
-queryOld pageSize paginator =
-    Query.repository { owner = "dillonkearns", name = "elm-graphql" }
-        (Repository.stargazersPaginated
-            pageSize
-            paginator
-            identity
-            stargazerSelection
-        )
-        |> SelectionSet.nonNullOrFail
+
+-- queryOld : Int -> Paginator Paginator.Forward Stargazer -> SelectionSet Response RootQuery
+-- queryOld pageSize paginator =
+--     Query.repository { owner = "dillonkearns", name = "elm-graphql" }
+--         (Repository.stargazersPaginated
+--             pageSize
+--             paginator
+--             identity
+--             stargazerSelection
+--         )
+--         |> SelectionSet.nonNullOrFail
 
 
 type alias Stargazer =
@@ -98,6 +102,7 @@ type Msg
 type alias Model =
     { pageSize : Int
     , paginator : Paginator Paginator.Forward Stargazer
+    , totalCount : Int
     }
 
 
@@ -115,6 +120,7 @@ init flags =
         |> (\paginator ->
                 ( { pageSize = initialPageSize
                   , paginator = paginator
+                  , totalCount = -1
                   }
                 , makeRequest initialPageSize paginator
                 )
@@ -130,7 +136,8 @@ view model =
             -- , pre [] [ text (Document.serializeQuery (query model.pageSize model.data)) ]
             ]
         , div []
-            [ button [ onClick GetNextPage ] [ text <| "Load next " ++ String.fromInt model.pageSize ++ " item(s)..." ]
+            [ p [] [ text <| String.fromInt model.totalCount ]
+            , button [ onClick GetNextPage ] [ text <| "Load next " ++ String.fromInt model.pageSize ++ " item(s)..." ]
             , input [ Html.Events.onInput CountChanged ] []
             , paginationDetailsView model
             ]
@@ -174,8 +181,8 @@ update msg model =
 
         GotResponse response ->
             case response of
-                Ok successData ->
-                    ( { model | paginator = successData }, Cmd.none )
+                Ok ( totalCount, successData ) ->
+                    ( { model | totalCount = totalCount, paginator = successData }, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
