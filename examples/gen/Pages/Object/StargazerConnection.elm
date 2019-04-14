@@ -20,9 +20,9 @@ import Pages.Union
 
 
 {-| -}
-edges : SelectionSet decodesTo Pages.Object.StargazerEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Pages.Object.StargazerConnection
+edges : SelectionSet decodesTo Pages.Object.StargazerEdge -> SelectionSet (List decodesTo) Pages.Object.StargazerConnection
 edges object_ =
-    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.list)
 
 
 {-| -}

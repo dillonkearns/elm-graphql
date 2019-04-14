@@ -9,11 +9,13 @@ import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.Paginator as Paginator exposing (Paginator)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode exposing (Decoder)
 import Pages.InputObject
 import Pages.Interface
 import Pages.Object
+import Pages.Object.StargazerConnection
 import Pages.Scalar
 import Pages.ScalarCodecs
 import Pages.Union
@@ -35,14 +37,20 @@ type alias StargazersOptionalArguments =
   - last -
 
 -}
-stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Pages.Object.StargazerConnection -> SelectionSet decodesTo RootQuery
-stargazers fillInOptionals object_ =
+stargazers :
+    Int
+    -> Paginator direction decodesTo
+    -> (StargazersOptionalArguments -> StargazersOptionalArguments)
+    -> SelectionSet decodesTo Pages.Object.StargazerEdge
+    -> SelectionSet (Paginator direction decodesTo) Pages.Object.User
+stargazers pageSize paginator fillInOptionals object_ =
     let
         filledInOptionals =
-            fillInOptionals { after = Absent, before = Absent, first = Absent, last = Absent }
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+                |> Paginator.addPageInfo pageSize paginator
 
         optionalArgs =
-            [ Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "last" filledInOptionals.last Encode.int ]
+            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "stargazers" optionalArgs object_ identity
+    Object.selectionForCompositeField "stargazers" optionalArgs (Paginator.selectionSet pageSize paginator (Pages.Object.StargazerConnection.edges object_)) identity
