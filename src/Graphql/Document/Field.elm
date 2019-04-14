@@ -14,7 +14,7 @@ hashedAliasName field =
         |> Maybe.withDefault (Graphql.RawField.name field)
 
 
-maybeAliasHash : RawField -> Maybe String
+maybeAliasHash : RawField -> Maybe Int
 maybeAliasHash field =
     (case field of
         Composite name arguments children ->
@@ -41,14 +41,14 @@ maybeAliasHash field =
                     |> String.concat
                     |> Just
     )
-        |> Maybe.map (Murmur3.hashString 0 >> String.fromInt)
+        |> Maybe.map (Murmur3.hashString 0)
 
 
 alias : RawField -> Maybe String
 alias field =
     field
         |> maybeAliasHash
-        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
+        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ String.fromInt aliasHash)
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
