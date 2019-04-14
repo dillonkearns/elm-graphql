@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.StargazerConnection exposing (edges, nodes, pageInfo, totalCount)
+module Github.Object.StargazerConnection exposing (edges, edgesPaginator, nodes, pageInfo, totalCount)
 
 import Github.InputObject
 import Github.Interface
@@ -15,6 +15,7 @@ import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.Paginator as Paginator exposing (Paginator)
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
@@ -45,3 +46,13 @@ pageInfo object_ =
 totalCount : SelectionSet Int Github.Object.StargazerConnection
 totalCount =
     Object.selectionForField "Int" "totalCount" [] Decode.int
+
+
+edgesPaginator :
+    Paginator direction decodesTo
+    -> SelectionSet decodesTo Github.Object.StargazerEdge
+    -> SelectionSet (Paginator direction decodesTo) Github.Object.StargazerConnection
+edgesPaginator paginator object_ =
+    Paginator.selectionSet
+        paginator
+        (Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.list))

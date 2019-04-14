@@ -47,11 +47,10 @@ nodes (Paginator paginator) =
 
 
 selectionSet :
-    Int
-    -> Paginator direction decodesTo
+    Paginator direction decodesTo
     -> SelectionSet (List decodesTo) typeLock
     -> SelectionSet (Paginator direction decodesTo) typeLock
-selectionSet pageSize (Paginator paginator) selection =
+selectionSet (Paginator paginator) selection =
     Graphql.SelectionSet.map3 PaginatorRecord
         (selection
             |> Graphql.SelectionSet.map

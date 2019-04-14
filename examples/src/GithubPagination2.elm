@@ -28,8 +28,27 @@ type alias Response =
     Paginator Paginator.Forward Stargazer
 
 
-query : Int -> Paginator Paginator.Forward Stargazer -> SelectionSet Response RootQuery
+
+-- queryNew : Int -> Paginator Paginator.Forward Stargazer -> SelectionSet Response RootQuery
+
+
+query :
+    Int
+    -> Paginator Paginator.Forward Stargazer
+    -> SelectionSet (Paginator Paginator.Forward Stargazer) RootQuery
 query pageSize paginator =
+    Query.repository { owner = "dillonkearns", name = "elm-graphql" }
+        (Repository.stargazers3
+            pageSize
+            paginator
+            identity
+            (connectionSelection paginator)
+        )
+        |> SelectionSet.nonNullOrFail
+
+
+queryOld : Int -> Paginator Paginator.Forward Stargazer -> SelectionSet Response RootQuery
+queryOld pageSize paginator =
     Query.repository { owner = "dillonkearns", name = "elm-graphql" }
         (Repository.stargazersPaginated
             pageSize
@@ -44,6 +63,13 @@ type alias Stargazer =
     { login : String
     , starredAt : Github.Scalar.DateTime
     }
+
+
+connectionSelection :
+    Paginator Paginator.Forward Stargazer
+    -> SelectionSet (Paginator Paginator.Forward Stargazer) Github.Object.StargazerConnection
+connectionSelection paginator =
+    Github.Object.StargazerConnection.edgesPaginator paginator stargazerSelection
 
 
 stargazerSelection : SelectionSet Stargazer Github.Object.StargazerEdge

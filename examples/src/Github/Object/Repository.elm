@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Repository exposing (AssignableUsersOptionalArguments, CollaboratorsOptionalArguments, CommitCommentsOptionalArguments, DeployKeysOptionalArguments, DeploymentsOptionalArguments, ForksOptionalArguments, IssueOrPullRequestRequiredArguments, IssueRequiredArguments, IssuesOptionalArguments, LabelRequiredArguments, LabelsOptionalArguments, LanguagesOptionalArguments, MentionableUsersOptionalArguments, MilestoneRequiredArguments, MilestonesOptionalArguments, ObjectOptionalArguments, ProjectRequiredArguments, ProjectsOptionalArguments, ProtectedBranchesOptionalArguments, PullRequestRequiredArguments, PullRequestsOptionalArguments, RefRequiredArguments, RefsOptionalArguments, RefsRequiredArguments, ReleaseRequiredArguments, ReleasesOptionalArguments, RepositoryTopicsOptionalArguments, ShortDescriptionHTMLOptionalArguments, StargazersOptionalArguments, WatchersOptionalArguments, assignableUsers, codeOfConduct, collaborators, commitComments, createdAt, databaseId, defaultBranchRef, deployKeys, deployments, description, descriptionHTML, diskUsage, forkCount, forks, hasIssuesEnabled, hasWikiEnabled, homepageUrl, id, isArchived, isFork, isLocked, isMirror, isPrivate, issue, issueOrPullRequest, issues, label, labels, languages, license, licenseInfo, lockReason, mentionableUsers, milestone, milestones, mirrorUrl, name, nameWithOwner, object, owner, parent, primaryLanguage, project, projects, projectsResourcePath, projectsUrl, protectedBranches, pullRequest, pullRequests, pushedAt, ref, refs, release, releases, repositoryTopics, resourcePath, shortDescriptionHTML, sshUrl, stargazers, stargazersPaginated, updatedAt, url, viewerCanAdminister, viewerCanCreateProjects, viewerCanSubscribe, viewerCanUpdateTopics, viewerHasStarred, viewerPermission, viewerSubscription, watchers)
+module Github.Object.Repository exposing (AssignableUsersOptionalArguments, CollaboratorsOptionalArguments, CommitCommentsOptionalArguments, DeployKeysOptionalArguments, DeploymentsOptionalArguments, ForksOptionalArguments, IssueOrPullRequestRequiredArguments, IssueRequiredArguments, IssuesOptionalArguments, LabelRequiredArguments, LabelsOptionalArguments, LanguagesOptionalArguments, MentionableUsersOptionalArguments, MilestoneRequiredArguments, MilestonesOptionalArguments, ObjectOptionalArguments, ProjectRequiredArguments, ProjectsOptionalArguments, ProtectedBranchesOptionalArguments, PullRequestRequiredArguments, PullRequestsOptionalArguments, RefRequiredArguments, RefsOptionalArguments, RefsRequiredArguments, ReleaseRequiredArguments, ReleasesOptionalArguments, RepositoryTopicsOptionalArguments, ShortDescriptionHTMLOptionalArguments, StargazersOptionalArguments, WatchersOptionalArguments, assignableUsers, codeOfConduct, collaborators, commitComments, createdAt, databaseId, defaultBranchRef, deployKeys, deployments, description, descriptionHTML, diskUsage, forkCount, forks, hasIssuesEnabled, hasWikiEnabled, homepageUrl, id, isArchived, isFork, isLocked, isMirror, isPrivate, issue, issueOrPullRequest, issues, label, labels, languages, license, licenseInfo, lockReason, mentionableUsers, milestone, milestones, mirrorUrl, name, nameWithOwner, object, owner, parent, primaryLanguage, project, projects, projectsResourcePath, projectsUrl, protectedBranches, pullRequest, pullRequests, pushedAt, ref, refs, release, releases, repositoryTopics, resourcePath, shortDescriptionHTML, sshUrl, stargazers, stargazers3, stargazersPaginated, updatedAt, url, viewerCanAdminister, viewerCanCreateProjects, viewerCanSubscribe, viewerCanUpdateTopics, viewerHasStarred, viewerPermission, viewerSubscription, watchers)
 
 import Github.Enum.CollaboratorAffiliation
 import Github.Enum.IssueState
@@ -993,14 +993,32 @@ stargazers2 pageSize paginator fillInOptionals object_ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
-                |> Paginator.addPageInfo pageSize paginator
 
         optionalArgs =
             [ Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
                 |> List.append (Paginator.pageInfoOptionalArgs pageSize paginator)
     in
-    Object.selectionForCompositeField "stargazers" optionalArgs (Paginator.selectionSet pageSize paginator (stargazerEdges object_)) identity
+    Object.selectionForCompositeField "stargazers" optionalArgs (Paginator.selectionSet paginator (stargazerEdges object_)) identity
+
+
+stargazers3 :
+    Int
+    -> Paginator direction decodesTo
+    -> (StargazersOptionalArguments -> StargazersOptionalArguments)
+    -> SelectionSet finalDecodesTo Github.Object.StargazerConnection
+    -> SelectionSet finalDecodesTo Github.Object.Repository
+stargazers3 pageSize paginator fillInOptionals object_ =
+    let
+        filledInOptionals =
+            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
+
+        optionalArgs =
+            [ Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
+                |> List.filterMap identity
+                |> List.append (Paginator.pageInfoOptionalArgs pageSize paginator)
+    in
+    Object.selectionForCompositeField "stargazers" optionalArgs object_ identity
 
 
 stargazersPaginated :
@@ -1011,7 +1029,7 @@ stargazersPaginated :
     -> SelectionSet (Paginator direction decodesTo) Github.Object.Repository
 stargazersPaginated pageSize paginator fillInOptionals object_ =
     stargazers (fillInOptionals >> Paginator.addPageInfo pageSize paginator)
-        (Paginator.selectionSet pageSize paginator (stargazerEdges object_))
+        (Paginator.selectionSet paginator (stargazerEdges object_))
 
 
 stargazerEdges : SelectionSet decodesTo Github.Object.StargazerEdge -> SelectionSet (List decodesTo) Github.Object.StargazerConnection
