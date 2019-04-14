@@ -996,8 +996,9 @@ stargazers2 pageSize paginator fillInOptionals object_ =
                 |> Paginator.addPageInfo pageSize paginator
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
+            [ Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
                 |> List.filterMap identity
+                |> List.append (Paginator.pageInfoOptionalArgs pageSize paginator)
     in
     Object.selectionForCompositeField "stargazers" optionalArgs (Paginator.selectionSet pageSize paginator (stargazerEdges object_)) identity
 

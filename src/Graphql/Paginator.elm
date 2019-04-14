@@ -1,5 +1,7 @@
-module Graphql.Paginator exposing (Backward, Forward, PageInfo, Paginator, addPageInfo, backward, forward, moreToLoad, nodes, selectionSet)
+module Graphql.Paginator exposing (Backward, Forward, PageInfo, Paginator, addPageInfo, backward, forward, moreToLoad, nodes, pageInfoOptionalArgs, selectionSet)
 
+import Graphql.Internal.Builder.Argument exposing (Argument)
+import Graphql.Internal.Encode
 import Graphql.Internal.Paginator exposing (CurrentPage)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
@@ -98,6 +100,22 @@ addPageInfo pageSize (Paginator paginator) optionals =
                 | last = Present pageSize
                 , before = OptionalArgument.fromMaybe paginator.currentPage.cursor
             }
+
+
+pageInfoOptionalArgs : Int -> Paginator direction data -> List Argument
+pageInfoOptionalArgs pageSize (Paginator paginator) =
+    case paginator.direction of
+        Forward ->
+            [ Graphql.Internal.Builder.Argument.Argument "first" (Graphql.Internal.Encode.int pageSize) |> Just
+            , Maybe.map (\cursor -> Graphql.Internal.Builder.Argument.Argument "after" (Graphql.Internal.Encode.string cursor)) paginator.currentPage.cursor
+            ]
+                |> List.filterMap identity
+
+        Backward ->
+            [ Graphql.Internal.Builder.Argument.Argument "last" (Graphql.Internal.Encode.int pageSize) |> Just
+            , Maybe.map (\cursor -> Graphql.Internal.Builder.Argument.Argument "before" (Graphql.Internal.Encode.string cursor)) paginator.currentPage.cursor
+            ]
+                |> List.filterMap identity
 
 
 type Forward
