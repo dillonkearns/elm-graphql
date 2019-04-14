@@ -153,7 +153,7 @@ paginatorGenerator context typeRef refName =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
-    , decoder = "object_"
+    , decoder = "(Paginator.selectionSet pageSize paginator (Pages.Object.StargazerConnection.edges object_))"
     , otherThing = ".selectionForCompositeField"
     , letBindings = []
     , objectDecoderChain =
@@ -168,6 +168,14 @@ paginatorGenerator context typeRef refName =
         |> prependArg
             { annotation = objectArgAnnotation
             , arg = "object_"
+            }
+        |> prependArg
+            { annotation = "Paginator direction decodesTo"
+            , arg = "paginator"
+            }
+        |> prependArg
+            { annotation = "Int"
+            , arg = "pageSize"
             }
 
 
