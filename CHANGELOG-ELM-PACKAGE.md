@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.1] - 2018-04-17
+
+### Changed
+
+- Don't use field aliases for \_\_typename fields (see [PR #121](https://github.com/dillonkearns/elm-graphql/pull/121)).
+
 ## [4.2.0] - 2018-01-25
 
 ### Added
