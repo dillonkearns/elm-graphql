@@ -14,7 +14,7 @@ hashedAliasName field =
         |> Maybe.withDefault (Graphql.RawField.name field)
 
 
-maybeAliasHash : RawField -> Maybe String
+maybeAliasHash : RawField -> Maybe Int
 maybeAliasHash field =
     (case field of
         Composite name arguments children ->
@@ -27,21 +27,28 @@ maybeAliasHash field =
                     |> Just
 
         Leaf { typeString, fieldName } arguments ->
-            arguments
-                |> Argument.serialize
-                |> List.singleton
-                |> List.append [ typeString ]
-                |> String.concat
-                |> Just
+            -- __typename fields never takes arguments or has a different type,
+            -- so they don't need to be aliased
+            -- see https://github.com/dillonkearns/elm-graphql/issues/120
+            if fieldName == "__typename" then
+                Nothing
+
+            else
+                arguments
+                    |> Argument.serialize
+                    |> List.singleton
+                    |> List.append [ typeString ]
+                    |> String.concat
+                    |> Just
     )
-        |> Maybe.map (Murmur3.hashString 0 >> String.fromInt)
+        |> Maybe.map (Murmur3.hashString 0)
 
 
 alias : RawField -> Maybe String
 alias field =
     field
         |> maybeAliasHash
-        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ aliasHash)
+        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ String.fromInt aliasHash)
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String

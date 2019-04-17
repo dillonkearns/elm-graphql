@@ -100,7 +100,7 @@ all =
                     |> Expect.equal """query {
   topLevel {
     ...on Droid {
-      __typename0: __typename
+      __typename
     }
   }
 }"""
@@ -110,7 +110,7 @@ all =
                     document []
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
-  __typename0: __typename
+  __typename
 }"""
             , test "nested empty query" <|
                 \() ->
@@ -120,7 +120,7 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   viewer {
-    __typename0: __typename
+    __typename
   }
 }"""
             ]
