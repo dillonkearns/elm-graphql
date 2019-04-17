@@ -127,6 +127,58 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
+toPaginatorFieldGenerator : Context -> Type.Field -> FieldGenerator
+toPaginatorFieldGenerator ({ apiSubmodule } as context) field =
+    init context field.name field.typeRef
+        |> addRequiredArgs field context field.args
+        |> addOptionalArgs field context field.args
+
+
+paginatorGenerator : Context -> TypeReference -> String -> FieldGenerator
+paginatorGenerator context typeRef refName =
+    let
+        typeLock =
+            case ReferenceLeaf.get typeRef of
+                ReferenceLeaf.Object ->
+                    ModuleName.object context (ClassCaseName.build refName) |> String.join "."
+
+                _ ->
+                    MyDebug.crash "TODO"
+
+        objectArgAnnotation =
+            interpolate
+                "SelectionSet decodesTo {0}"
+                [ typeLock ]
+    in
+    { annotatedArgs = []
+    , fieldArgs = []
+    , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
+    , decoder = "(Paginator.selectionSet pageSize paginator (Pages.Object.StargazerConnection.edges object_))"
+    , otherThing = ".selectionForCompositeField"
+    , letBindings = []
+    , objectDecoderChain =
+        " ("
+            ++ (Graphql.Generator.Decoder.generateDecoder context typeRef
+                    |> String.join " >> "
+               )
+            ++ ")"
+            |> Just
+    , typeAliases = []
+    }
+        |> prependArg
+            { annotation = objectArgAnnotation
+            , arg = "object_"
+            }
+        |> prependArg
+            { annotation = "Paginator direction decodesTo"
+            , arg = "paginator"
+            }
+        |> prependArg
+            { annotation = "Int"
+            , arg = "pageSize"
+            }
+
+
 toFieldGenerator : Context -> Type.Field -> FieldGenerator
 toFieldGenerator ({ apiSubmodule } as context) field =
     init context field.name field.typeRef
@@ -177,13 +229,8 @@ addOptionalArgs field context args fieldGenerator =
             fieldGenerator
 
 
-type ObjectOrInterface
-    = Object
-    | Interface
-
-
-objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
-objectThing context typeRef refName objectOrInterface =
+objectThing : Context -> TypeReference -> String -> FieldGenerator
+objectThing context typeRef refName =
     let
         typeLock =
             case ReferenceLeaf.get typeRef of
@@ -239,13 +286,18 @@ type LeafRef
     | UnionLeaf String
     | EnumLeaf
     | ScalarLeaf
+    | PaginatorLeaf String
 
 
 leafType : TypeReference -> LeafRef
 leafType (Type.TypeReference referrableType isNullable) =
     case referrableType of
         Type.ObjectRef refName ->
-            ObjectLeaf refName
+            if refName |> String.endsWith "Connection" then
+                PaginatorLeaf refName
+
+            else
+                ObjectLeaf refName
 
         Type.InterfaceRef refName ->
             InterfaceLeaf refName
@@ -270,19 +322,22 @@ init : Context -> CamelCaseName -> TypeReference -> FieldGenerator
 init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
     case leafType typeRef of
         ObjectLeaf refName ->
-            objectThing context typeRef refName Object
+            objectThing context typeRef refName
 
         InterfaceLeaf refName ->
-            objectThing context typeRef refName Interface
+            objectThing context typeRef refName
 
         UnionLeaf refName ->
-            objectThing context typeRef refName Interface
+            objectThing context typeRef refName
 
         EnumLeaf ->
             initScalarField context typeRef
 
         ScalarLeaf ->
             initScalarField context typeRef
+
+        PaginatorLeaf connectionName ->
+            paginatorGenerator context typeRef connectionName
 
 
 initScalarField : Context -> TypeReference -> FieldGenerator

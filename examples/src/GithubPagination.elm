@@ -3,7 +3,6 @@ module GithubPagination exposing (main)
 import Browser
 import Github.Enum.SearchType
 import Github.Object
-import Github.Object.PageInfo
 import Github.Object.Repository as Repository
 import Github.Object.SearchResultItemConnection
 import Github.Object.SearchResultItemEdge
@@ -16,64 +15,24 @@ import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
+import Graphql.Paginator as Paginator exposing (Paginator)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
-import Html exposing (button, div, h1, p, pre, text)
+import Html exposing (button, div, h1, input, p, pre, text)
 import Html.Events exposing (onClick)
 import PrintAny
-import RemoteData exposing (RemoteData)
 
 
 type alias Response =
-    Paginator (List Repo) String
+    Paginator Paginator.Forward Repo
 
 
-type alias Paginator dataType cursorType =
-    { data : dataType
-    , paginationData : PaginationData cursorType
-    }
-
-
-query : Maybe String -> SelectionSet Response RootQuery
-query cursor =
-    Query.search
-        (\optionals ->
-            { optionals
-                | first = Present 1
-                , after = OptionalArgument.fromMaybe cursor
-            }
-        )
-        { query = "language:Elm"
-        , type_ = Github.Enum.SearchType.Repository
-        }
-        searchSelection
-
-
-searchSelection : SelectionSet Response Github.Object.SearchResultItemConnection
-searchSelection =
-    SelectionSet.succeed Paginator
-        |> with searchResultFieldEdges
-        |> with (Github.Object.SearchResultItemConnection.pageInfo searchPageInfoSelection)
-
-
-type alias PaginationData cursorType =
-    { cursor : Maybe cursorType
-    , hasNextPage : Bool
-    }
-
-
-searchPageInfoSelection : SelectionSet (PaginationData String) Github.Object.PageInfo
-searchPageInfoSelection =
-    SelectionSet.succeed PaginationData
-        |> with Github.Object.PageInfo.endCursor
-        |> with Github.Object.PageInfo.hasNextPage
-
-
-searchResultFieldNodes : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
-searchResultFieldNodes =
-    Github.Object.SearchResultItemConnection.nodes searchResultSelection
-        |> SelectionSet.nonNullOrFail
-        |> SelectionSet.nonNullElementsOrFail
-        |> SelectionSet.nonNullElementsOrFail
+query : Int -> Paginator Paginator.Forward Repo -> SelectionSet Response RootQuery
+query pageSize paginator =
+    Query.searchPaginated pageSize
+        paginator
+        identity
+        { query = "language:Elm", type_ = Github.Enum.SearchType.Repository }
+        searchResultFieldEdges
 
 
 searchResultFieldEdges : SelectionSet (List Repo) Github.Object.SearchResultItemConnection
@@ -116,30 +75,49 @@ repositorySelection =
         |> with (Repository.stargazers identity Github.Object.StargazerConnection.totalCount)
 
 
-makeRequest : Maybe String -> Cmd Msg
-makeRequest cursor =
-    query cursor
+makeRequest : Int -> Paginator Paginator.Forward Repo -> Cmd Msg
+makeRequest pageSize paginator =
+    query pageSize paginator
         |> Graphql.Http.queryRequest "https://api.github.com/graphql"
         |> Graphql.Http.withHeader "authorization" "Bearer dbd4c239b0bbaa40ab0ea291fa811775da8f5b59"
-        |> Graphql.Http.send (\result -> result |> RemoteData.fromResult |> GotResponse)
+        |> Graphql.Http.send GotResponse
 
 
 type Msg
     = GotResponse RemoteDataResponse
     | GetNextPage
+    | CountChanged String
 
 
 type alias Model =
-    List RemoteDataResponse
+    -- List RemoteDataResponse
+    { pageSize : Int
+    , data : Paginator Paginator.Forward Repo
+    }
+
+
+
+-- type PaginatedRemoteData data
+--     = NotLoading
+--     | Loading data
+--     | MoreToLoad data
+--     | AllLoaded
 
 
 type alias RemoteDataResponse =
-    RemoteData (Graphql.Http.Error Response) Response
+    Result (Graphql.Http.Error Response) Response
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( [ RemoteData.Loading ], makeRequest Nothing )
+    Paginator.forward
+        |> (\paginator ->
+                ( { pageSize = 1
+                  , data = paginator
+                  }
+                , makeRequest 1 paginator
+                )
+           )
 
 
 view : Model -> Html.Html Msg
@@ -147,12 +125,16 @@ view model =
     div []
         [ div []
             [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeQuery (query Nothing)) ]
+
+            -- , pre [] [ text (Document.serializeQuery (query model.pageSize model.data)) ]
             ]
-        , div [] [ button [ onClick GetNextPage ] [ text "Load next page..." ] ]
+        , div []
+            [ button [ onClick GetNextPage ] [ text <| "Load next " ++ String.fromInt model.pageSize ++ " item(s)..." ]
+            , input [ Html.Events.onInput CountChanged ] []
+            ]
         , div []
             [ h1 [] [ text "Response" ]
-            , PrintAny.view model
+            , PrintAny.view (model.data |> Paginator.nodes)
             ]
         ]
 
@@ -161,23 +143,22 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetNextPage ->
-            case model of
-                (RemoteData.Success successResponse) :: rest ->
-                    if successResponse.paginationData.hasNextPage then
-                        ( RemoteData.Loading :: model, makeRequest successResponse.paginationData.cursor )
+            ( model, makeRequest model.pageSize model.data )
 
-                    else
-                        ( model, Cmd.none )
+        GotResponse response ->
+            case response of
+                Ok successData ->
+                    ( { model | data = successData }, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
 
-        GotResponse response ->
-            case model of
-                head :: rest ->
-                    ( response :: rest, Cmd.none )
+        CountChanged newPageSizeString ->
+            case newPageSizeString |> String.toInt of
+                Just newPageSize ->
+                    ( { model | pageSize = newPageSize }, Cmd.none )
 
-                _ ->
+                Nothing ->
                     ( model, Cmd.none )
 
 

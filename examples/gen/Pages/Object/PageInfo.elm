@@ -2,14 +2,8 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PageInfo exposing (endCursor, hasNextPage, hasPreviousPage, startCursor)
+module Pages.Object.PageInfo exposing (endCursor, hasNextPage, hasPreviousPage, starCursor)
 
-import Github.InputObject
-import Github.Interface
-import Github.Object
-import Github.Scalar
-import Github.ScalarCodecs
-import Github.Union
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
 import Graphql.Internal.Encode as Encode exposing (Value)
@@ -17,31 +11,33 @@ import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
+import Pages.InputObject
+import Pages.Interface
+import Pages.Object
+import Pages.Scalar
+import Pages.ScalarCodecs
+import Pages.Union
 
 
-{-| When paginating forwards, the cursor to continue.
--}
-endCursor : SelectionSet (Maybe String) Github.Object.PageInfo
+{-| -}
+endCursor : SelectionSet (Maybe String) Pages.Object.PageInfo
 endCursor =
     Object.selectionForField "(Maybe String)" "endCursor" [] (Decode.string |> Decode.nullable)
 
 
-{-| When paginating forwards, are there more items?
--}
-hasNextPage : SelectionSet Bool Github.Object.PageInfo
+{-| -}
+hasNextPage : SelectionSet Bool Pages.Object.PageInfo
 hasNextPage =
     Object.selectionForField "Bool" "hasNextPage" [] Decode.bool
 
 
-{-| When paginating backwards, are there more items?
--}
-hasPreviousPage : SelectionSet Bool Github.Object.PageInfo
+{-| -}
+hasPreviousPage : SelectionSet Bool Pages.Object.PageInfo
 hasPreviousPage =
     Object.selectionForField "Bool" "hasPreviousPage" [] Decode.bool
 
 
-{-| When paginating backwards, the cursor to continue.
--}
-startCursor : SelectionSet (Maybe String) Github.Object.PageInfo
-startCursor =
-    Object.selectionForField "(Maybe String)" "startCursor" [] (Decode.string |> Decode.nullable)
+{-| -}
+starCursor : SelectionSet (Maybe String) Pages.Object.PageInfo
+starCursor =
+    Object.selectionForField "(Maybe String)" "starCursor" [] (Decode.string |> Decode.nullable)
