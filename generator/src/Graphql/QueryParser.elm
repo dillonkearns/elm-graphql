@@ -159,7 +159,7 @@ field =
         |= succeed Nothing --alias TBD
         |= name
         |= oneOf
-            [ Parser.map Just selectionSet
+            [ Parser.backtrackable (Parser.map Just selectionSet)
             , succeed Nothing
             ]
         |> Parser.map Field
@@ -180,11 +180,13 @@ alias =
 selectionSet : Parser (List Selection)
 selectionSet =
   succeed identity
+    |. spaces
     |. symbol "{"
     |. spaces
     |= loop [] fieldsHelper
     |. spaces
     |. symbol "}"
+    |. spaces
 
 
 fieldsHelper : List Selection -> Parser (Step (List Selection) (List Selection))
@@ -194,8 +196,6 @@ fieldsHelper revStmts =
             |. spaces
             |= field
             |. spaces
-            -- |. symbol "\n"
-            -- |. spaces
         , succeed ()
             |> map (\_ -> Parser.Done (List.reverse revStmts))
         ]
