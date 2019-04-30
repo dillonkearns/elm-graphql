@@ -40,6 +40,7 @@ run options introspectionQueryJson =
 type CliOptions
     = FromUrl UrlArgs
     | FromFile FileArgs
+    | ParserTest UrlArgs
 
 
 type alias UrlArgs =
@@ -83,6 +84,20 @@ parseHeader header =
 program : Program.Config CliOptions
 program =
     Program.config
+        |> Program.add
+            (OptionsParser.build UrlArgs
+                |> with (Option.requiredPositionalArg "url")
+                |> with baseOption
+                |> with outputPathOption
+                |> with (Option.flag "exclude-deprecated")
+                |> with
+                    (Option.keywordArgList "header"
+                        |> Option.validateMap parseHeaders
+                    )
+                |> with scalarCodecsOption
+                |> OptionsParser.withDoc "generate files based on the schema at `url`"
+                |> OptionsParser.map ParserTest
+            )
         |> Program.add
             (OptionsParser.build UrlArgs
                 |> with (Option.requiredPositionalArg "url")
@@ -161,6 +176,18 @@ init flags msg =
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
                 }
             )
+    
+        ParserTest options ->
+            ( ()
+            , Ports.introspectSchemaFromUrl
+                { graphqlUrl = options.url
+                , excludeDeprecated = options.excludeDeprecated
+                , outputPath = options.outputPath
+                , baseModule = options.base
+                , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
+                , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                }
+            )
 
 
 update : CliOptions -> Msg -> Model -> ( Model, Cmd Msg )
@@ -174,6 +201,8 @@ update cliOptions msg model =
                             ( options.base, options.scalarCodecsModule )
 
                         FromFile options ->
+                            ( options.base, options.scalarCodecsModule )
+                        ParserTest options ->
                             ( options.base, options.scalarCodecsModule )
             in
             ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } introspectionJson )
