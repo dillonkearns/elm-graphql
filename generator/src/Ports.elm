@@ -31,6 +31,7 @@ port introspectSchemaFromFile :
 
 port introspectSchemaFromUrl :
     { excludeDeprecated : Bool
+    , queryFile : Maybe String
     , graphqlUrl : String
     , baseModule : List String
     , outputPath : String
@@ -40,7 +41,7 @@ port introspectSchemaFromUrl :
     -> Cmd msg
 
 
-port generateFiles : (Json.Encode.Value -> msg) -> Sub msg
+port generateFiles : ({ queryFile: Maybe String, introspectionData: Json.Encode.Value } -> msg) -> Sub msg
 
 
 port generatedFiles : Json.Encode.Value -> Cmd msg

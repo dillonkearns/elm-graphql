@@ -149,19 +149,6 @@ name =
         }
 
 
-
--- selectionSet : Parser SelectionSet
--- selectionSet =
---   Parser.sequence
---     { start = "{"
---     , separator = "\n"
---     , end = "}"
---     , spaces = spaces
---     , item = field
---     , trailing = Parser.Optional
---     }
-
-
 field : Parser Selection
 field =
     Parser.succeed FieldType
@@ -213,8 +200,8 @@ fieldsHelper revStmts =
 --utility from Result extra
 combine = List.foldr (Result.map2 (::)) (Ok [])
 --
-transform : String -> IntrospectionData -> Result String String
-transform query introspectionData =
+transform : IntrospectionData -> String -> Result String String
+transform introspectionData query  =
     let
         nameToTypeDef =
             introspectionData.typeDefinitions

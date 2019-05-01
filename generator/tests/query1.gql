@@ -1,0 +1,9 @@
+query {
+  user {
+    email
+    name
+    settings {
+      emailNotificationWeekly
+    }
+  }
+}

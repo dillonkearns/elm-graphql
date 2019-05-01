@@ -59,6 +59,7 @@ app.ports.introspectSchemaFromFile.subscribe(
     );
     onDataAvailable(
       introspectionFileJson.data || introspectionFileJson,
+      null,
       outputPath,
       baseModule,
       customDecodersModule
@@ -71,6 +72,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     graphqlUrl,
     excludeDeprecated,
     outputPath,
+    queryFile,
     baseModule,
     headers,
     customDecodersModule
@@ -78,6 +80,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     graphqlUrl: string;
     excludeDeprecated: boolean;
     outputPath: string;
+    queryFile : string | null;
     baseModule: string[];
     headers: {};
     customDecodersModule: string | null;
@@ -91,7 +94,11 @@ app.ports.introspectSchemaFromUrl.subscribe(
     })
       .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
       .then(data => {
-        onDataAvailable(data, outputPath, baseModule, customDecodersModule);
+        let queryFileContent = null
+        if (queryFile) {
+          queryFileContent = fs.readFileSync(queryFile).toString()
+        }
+        onDataAvailable(data, queryFileContent, outputPath, baseModule, customDecodersModule);
       })
       .catch(err => {
         console.log(err.response || err);
@@ -112,6 +119,7 @@ function makeEmptyDirectories(
 
 function onDataAvailable(
   data: {},
+  queryFile: string | null,
   outputPath: string,
   baseModule: string[],
   customDecodersModule: string | null
@@ -144,7 +152,7 @@ function onDataAvailable(
     }
     console.log("Success!");
   });
-  app.ports.generateFiles.send(data);
+  app.ports.generateFiles.send({queryFile, introspectionData:data});
 }
 
 function verifyCustomCodecsFileIsValid(

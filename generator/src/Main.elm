@@ -4,8 +4,10 @@ import Cli.Option as Option
 import Cli.OptionsParser as OptionsParser exposing (OptionsParser, with)
 import Cli.Program as Program
 import Cli.Validate
+import Debug
 import Dict
 import Graphql.Parser
+import Graphql.QueryParser
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
@@ -14,34 +16,26 @@ import MyDebug
 import Ports
 import Result.Extra
 import String.Interpolate exposing (interpolate)
-import Graphql.QueryParser
-import Debug
+
 
 type Msg
-    = GenerateFiles Json.Encode.Value
+    = GenerateFiles { queryFile : Maybe String, introspectionData : Json.Encode.Value }
 
 
 type alias Model =
     ()
 
 
-run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> Json.Encode.Value -> Cmd msg
-run options introspectionQueryJson =
-    case Decode.decodeValue (Graphql.Parser.decoder) introspectionQueryJson of
+run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> { queryFile : Maybe String, introspectionData : Json.Encode.Value } -> Cmd msg
+run options { queryFile, introspectionData } =
+    case Decode.decodeValue Graphql.Parser.decoder introspectionData of
         Ok introspectData ->
             let
-                query = 
-                    """
-                        query {
-                            user {
-                                email
-                            }
-                        }
-                    """
-                
-                transformResult = Debug.log "transformResult!!" (Graphql.QueryParser.transform query introspectData)
+                transformResult =
+                    queryFile
+                        |> Maybe.map (Graphql.QueryParser.transform introspectData)
+                        |> Debug.log "transformResult!!"
             in
-            
             introspectData
                 |> Graphql.Parser.encoder options
                 |> Json.Encode.Extra.dict identity Json.Encode.string
@@ -55,12 +49,23 @@ run options introspectionQueryJson =
 type CliOptions
     = FromUrl UrlArgs
     | FromFile FileArgs
-    | ParserTest UrlArgs
+    | ParserTest ParserTestArgs
 
 
 type alias UrlArgs =
     { url : String
     , base : List String
+    , outputPath : String
+    , excludeDeprecated : Bool
+    , headers : Dict.Dict String String
+    , scalarCodecsModule : Maybe ModuleName
+    }
+
+
+type alias ParserTestArgs =
+    { url : String
+    , base : List String
+    , queryFile : String
     , outputPath : String
     , excludeDeprecated : Bool
     , headers : Dict.Dict String String
@@ -100,9 +105,10 @@ program : Program.Config CliOptions
 program =
     Program.config
         |> Program.add
-            (OptionsParser.build UrlArgs
+            (OptionsParser.buildSubCommand "test" ParserTestArgs
                 |> with (Option.requiredPositionalArg "url")
                 |> with baseOption
+                |> with queryFileOption
                 |> with outputPathOption
                 |> with (Option.flag "exclude-deprecated")
                 |> with
@@ -158,6 +164,11 @@ baseOption =
         |> Option.withDefault [ "Api" ]
 
 
+queryFileOption : Option.Option String String Option.BeginningOption
+queryFileOption =
+    Option.requiredKeywordArg "queryFile"
+
+
 validateModuleName : String -> Cli.Validate.ValidationResult
 validateModuleName =
     Cli.Validate.regex "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
@@ -176,6 +187,7 @@ init flags msg =
                 { graphqlUrl = options.url
                 , excludeDeprecated = options.excludeDeprecated
                 , outputPath = options.outputPath
+                , queryFile = Nothing
                 , baseModule = options.base
                 , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
@@ -191,7 +203,7 @@ init flags msg =
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
                 }
             )
-    
+
         ParserTest options ->
             ( ()
             , Ports.introspectSchemaFromUrl
@@ -199,6 +211,7 @@ init flags msg =
                 , excludeDeprecated = options.excludeDeprecated
                 , outputPath = options.outputPath
                 , baseModule = options.base
+                , queryFile = Just options.queryFile
                 , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
                 }
@@ -208,7 +221,7 @@ init flags msg =
 update : CliOptions -> Msg -> Model -> ( Model, Cmd Msg )
 update cliOptions msg model =
     case msg of
-        GenerateFiles introspectionJson ->
+        GenerateFiles result ->
             let
                 ( baseModule, scalarCodecsModule ) =
                     case cliOptions of
@@ -217,10 +230,11 @@ update cliOptions msg model =
 
                         FromFile options ->
                             ( options.base, options.scalarCodecsModule )
+
                         ParserTest options ->
                             ( options.base, options.scalarCodecsModule )
             in
-            ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } introspectionJson )
+            ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } result )
 
 
 main : Program.StatefulProgram Model Msg CliOptions {}
