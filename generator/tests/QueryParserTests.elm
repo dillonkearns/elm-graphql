@@ -10,7 +10,7 @@ import Test exposing (Test, describe, only, test)
 all : Test
 all =
     describe "parser - top-level"
-        [ test "parse anything" <|
+        [ test "parse ba" <|
             \() ->
                 """
                  query {

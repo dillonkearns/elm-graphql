@@ -2,7 +2,7 @@
   "name": "@dillonkearns/elm-graphql",
   "version": "3.4.0",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --debug",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "elm-test && cd generator && elm-test",

@@ -25,7 +25,7 @@ module.exports = {
             loader: "elm-webpack-loader",
             options: {
               cwd: "./generator",
-              optimize: true
+              // optimize: true
             }
           }
         ]

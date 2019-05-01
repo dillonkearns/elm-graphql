@@ -14,7 +14,8 @@ import MyDebug
 import Ports
 import Result.Extra
 import String.Interpolate exposing (interpolate)
-
+import Graphql.QueryParser
+import Debug
 
 type Msg
     = GenerateFiles Json.Encode.Value
@@ -26,9 +27,23 @@ type alias Model =
 
 run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> Json.Encode.Value -> Cmd msg
 run options introspectionQueryJson =
-    case Decode.decodeValue (Graphql.Parser.decoder options) introspectionQueryJson of
-        Ok fields ->
-            fields
+    case Decode.decodeValue (Graphql.Parser.decoder) introspectionQueryJson of
+        Ok introspectData ->
+            let
+                query = 
+                    """
+                        query {
+                            user {
+                                email
+                            }
+                        }
+                    """
+                
+                transformResult = Debug.log "transformResult!!" (Graphql.QueryParser.transform query introspectData)
+            in
+            
+            introspectData
+                |> Graphql.Parser.encoder options
                 |> Json.Encode.Extra.dict identity Json.Encode.string
                 |> Ports.generatedFiles
 
