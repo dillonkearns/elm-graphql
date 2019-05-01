@@ -216,9 +216,6 @@ combine = List.foldr (Result.map2 (::)) (Ok [])
 transform : String -> IntrospectionData -> Result String String
 transform query introspectionData =
     let
-        -- _ = Debug.log "introspectionData" introspectionData
-
- 
         nameToTypeDef =
             introspectionData.typeDefinitions
                 |> List.map (\((TypeDefinition className _ _) as typeDef) -> 
@@ -226,64 +223,58 @@ transform query introspectionData =
                 )
                 |> Dict.fromList
 
-
         findTypeDef rootName =
             Dict.get rootName nameToTypeDef
 
-        selectionToString : TypeDefinition -> Selection -> Result String String
-        selectionToString ((TypeDefinition classCaseName definableType _) as parentTypeDef) (Field fieldType) =
+        selectionSetToString : TypeDefinition -> SelectionSet -> Result String String
+        selectionSetToString ((TypeDefinition classCaseName definableType _) as typeDef) selectionSet_ =
             let
-                maybeFieldTypeDef = 
-                    case definableType of
-                        ObjectType fields ->
-                            fields
-                                |> List.map (\field_ -> (CamelCaseName.raw field_.name, field_))
-                                |> Dict.fromList
-                                |> Dict.get fieldType.name
-                        _ ->
-                            Nothing
+                class = ClassCaseName.raw classCaseName
             in
-            case maybeFieldTypeDef of
-                Nothing -> Err ("Can't resolve " ++ fieldType.name)
-                Just fieldTypeDef ->
-                    let
-                        camelCaseName = CamelCaseName.raw fieldTypeDef.name
-                    in
+            selectionSet_
+                |> List.map (\((Field fieldType) as selection) -> 
                     case fieldType.selectionSet of
-                        Nothing -> --scalar
-                            Ok camelCaseName
-                        Just selectionSet_ ->
+                        Nothing ->
+                            Ok ("|> with " ++ class ++ "." ++ fieldType.name)
+                        Just selectionSet__ ->
                             let
+                                maybeFieldTypeRef = 
+                                    case definableType of
+                                        ObjectType fields ->
+                                            fields
+                                                |> List.map (\field_ -> (CamelCaseName.raw field_.name, field_))
+                                                |> Dict.fromList
+                                                |> Dict.get fieldType.name
+                                                |> Maybe.map .typeRef
+                                        _ ->
+                                            Nothing
+                                
                                 typeName =
-                                    case fieldTypeDef.typeRef of 
-                                        TypeReference (ObjectRef str) _ -> str
+                                    case maybeFieldTypeRef of 
+                                        Just (TypeReference (ObjectRef str) _ )-> str
                                         _ -> "foo"
 
                                 maybeSubFieldTypeDef = findTypeDef typeName
                             in
                             case maybeSubFieldTypeDef of
-                                Nothing -> Err ("Can't resolve " ++ (CamelCaseName.raw fieldTypeDef.name) ++ " : " ++ typeName)
-                                Just ((TypeDefinition classCaseName_ definableType_ _) as subFieldTypeDef) ->
-                                    let
-                                        class = ClassCaseName.raw classCaseName_
-                                    in
-                                    selectionSet_
-                                        |> List.map (selectionToString subFieldTypeDef
-                                            >> Result.map (\str -> "|> with " ++ camelCaseName ++ "." ++ str)
-                                        )
-                                        |> combine
-                                        |> Result.map (String.join "\n")
-                                        |> Result.andThen (\childStr ->
-                                            Ok("SelectionSet.succeed "++ class ++"\n"
-                                            ++ childStr
-                                            ++ "\n)")
-                                        )
+                                Nothing -> Err ("Can't resolve " ++ fieldType.name)
+                                Just fieldTypeDef ->
+                                    selectionSetToString fieldTypeDef selectionSet__
+                                        |> Result.map (\str -> "|> with " ++ class ++ "." ++ fieldType.name ++ " (\n" ++ str ++ "\n)")
+                )
+                |> combine
+                |> Result.map (String.join "\n")
+                |> Result.andThen (\childStr ->
+                    Ok("SelectionSet.succeed "++ class ++ "\n"
+                    ++ childStr)
+                )
                 
         opDefToString : OperationDefintion -> Result String String
         opDefToString opDef =
             case opDef of 
                 Operation operationRecord ->
                     let
+                        selectionSet_ = operationRecord.selectionSet
                         maybeFieldName = 
                             case operationRecord.type_ of
                                 Query -> 
@@ -298,20 +289,8 @@ transform query introspectionData =
                                 |> Maybe.andThen findTypeDef
                     in
                     case maybeTypeDef of
-                        Just ((TypeDefinition classCaseName definableType _) as typeDef) ->
-                            let
-                                 class = ClassCaseName.raw classCaseName
-                            in
-                            operationRecord.selectionSet
-                                |> List.map (\((Field fieldType) as selection) -> selectionToString typeDef selection
-                                    |> Result.map (\str -> "|> with " ++ class ++ "." ++ fieldType.name ++ "(" ++ str ++ ")")
-                                )
-                                |> combine
-                                |> Result.map (String.join "\n")
-                                |> Result.andThen (\childStr ->
-                                    Ok("SelectionSet.succeed PageData\n"
-                                    ++ childStr)
-                                )
+                        Just typeDef ->
+                            selectionSetToString typeDef selectionSet_
                         Nothing -> 
                             Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
 
