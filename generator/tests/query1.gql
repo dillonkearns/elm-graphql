@@ -1,9 +1,10 @@
 query {
-  user {
-    email
+  team {
+    id
     name
-    settings {
-      emailNotificationWeekly
+    lead {
+      fullName
+      email
     }
   }
 }

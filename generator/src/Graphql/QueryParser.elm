@@ -1,5 +1,13 @@
-module Graphql.QueryParser exposing (..)
+module Graphql.QueryParser exposing (FieldType, ListType, Name, NamedType(..), NonNullType(..), OperationDefintion(..), OperationRecord, OperationType(..), Selection(..), SelectionSet, Type(..), VariableDefinition, alias, combine, field, fieldsHelper, name, operation, operationType, parse, parser, selectionSet, transform)
 
+---
+
+import Debug
+import Dict
+import Graphql.Generator.Group exposing (IntrospectionData)
+import Graphql.Parser.CamelCaseName as CamelCaseName
+import Graphql.Parser.ClassCaseName as ClassCaseName
+import Graphql.Parser.Type exposing (..)
 import Parser
     exposing
         ( (|.)
@@ -15,15 +23,8 @@ import Parser
         , succeed
         , symbol
         )
-import Set
+import Set exposing (Set)
 
-import Debug
-import Dict
-import Graphql.Parser.Type exposing (..)
-import  Graphql.Parser.ClassCaseName as ClassCaseName
-import  Graphql.Parser.CamelCaseName as CamelCaseName
----
-import Graphql.Generator.Group exposing (IntrospectionData)
 
 
 -- Name :: /[_A-Za-z][_0-9A-Za-z]*/
@@ -108,8 +109,10 @@ type alias FieldType =
     , selectionSet : Maybe SelectionSet
     }
 
+
 parse query =
     Parser.run parser query
+
 
 parser : Parser OperationDefintion
 parser =
@@ -152,7 +155,8 @@ name =
 field : Parser Selection
 field =
     Parser.succeed FieldType
-        |= succeed Nothing --alias TBD
+        |= succeed Nothing
+        --alias TBD
         |= name
         |= oneOf
             [ Parser.backtrackable (Parser.map Just selectionSet)
@@ -175,14 +179,14 @@ alias =
 
 selectionSet : Parser (List Selection)
 selectionSet =
-  succeed identity
-    |. spaces
-    |. symbol "{"
-    |. spaces
-    |= loop [] fieldsHelper
-    |. spaces
-    |. symbol "}"
-    |. spaces
+    succeed identity
+        |. spaces
+        |. symbol "{"
+        |. spaces
+        |= loop [] fieldsHelper
+        |. spaces
+        |. symbol "}"
+        |. spaces
 
 
 fieldsHelper : List Selection -> Parser (Step (List Selection) (List Selection))
@@ -196,98 +200,157 @@ fieldsHelper revStmts =
             |> map (\_ -> Parser.Done (List.reverse revStmts))
         ]
 
+
+
 ------ this will all get moved out
 --utility from Result extra
-combine = List.foldr (Result.map2 (::)) (Ok [])
+
+
+combine =
+    List.foldr (Result.map2 (::)) (Ok [])
+
+
+
 --
+
+
 transform : IntrospectionData -> String -> Result String String
-transform introspectionData query  =
+transform introspectionData query =
     let
         nameToTypeDef =
             introspectionData.typeDefinitions
-                |> List.map (\((TypeDefinition className _ _) as typeDef) -> 
-                    (ClassCaseName.raw className, typeDef)
-                )
+                |> List.map
+                    (\((TypeDefinition className _ _) as typeDef) ->
+                        ( ClassCaseName.raw className, typeDef )
+                    )
                 |> Dict.fromList
 
         findTypeDef rootName =
             Dict.get rootName nameToTypeDef
 
-        selectionSetToString : TypeDefinition -> SelectionSet -> Result String String
+        selectionSetToString : TypeDefinition -> SelectionSet -> Result String { imports : Set String, body : String }
         selectionSetToString ((TypeDefinition classCaseName definableType _) as typeDef) selectionSet_ =
             let
-                class = ClassCaseName.raw classCaseName
+                class =
+                    ClassCaseName.raw classCaseName
             in
             selectionSet_
-                |> List.map (\((Field fieldType) as selection) -> 
-                    case fieldType.selectionSet of
-                        Nothing ->
-                            Ok ("|> with " ++ class ++ "." ++ fieldType.name)
-                        Just selectionSet__ ->
-                            let
-                                maybeFieldTypeRef = 
-                                    case definableType of
-                                        ObjectType fields ->
-                                            fields
-                                                |> List.map (\field_ -> (CamelCaseName.raw field_.name, field_))
-                                                |> Dict.fromList
-                                                |> Dict.get fieldType.name
-                                                |> Maybe.map .typeRef
-                                        _ ->
-                                            Nothing
-                                
-                                typeName =
-                                    case maybeFieldTypeRef of 
-                                        Just (TypeReference (ObjectRef str) _ )-> str
-                                        _ -> "foo"
+                |> List.map
+                    (\((Field fieldType) as selection) ->
+                        case fieldType.selectionSet of
+                            Nothing ->
+                                Ok
+                                    { imports = Set.singleton class
+                                    , body = "|> with " ++ class ++ "." ++ fieldType.name
+                                    }
 
-                                maybeSubFieldTypeDef = findTypeDef typeName
-                            in
-                            case maybeSubFieldTypeDef of
-                                Nothing -> Err ("Can't resolve " ++ fieldType.name)
-                                Just fieldTypeDef ->
-                                    selectionSetToString fieldTypeDef selectionSet__
-                                        |> Result.map (\str -> "|> with " ++ class ++ "." ++ fieldType.name ++ " (\n" ++ str ++ "\n)")
-                )
+                            Just selectionSet__ ->
+                                let
+                                    maybeFieldTypeRef =
+                                        case definableType of
+                                            ObjectType fields ->
+                                                fields
+                                                    |> List.map (\field_ -> ( CamelCaseName.raw field_.name, field_ ))
+                                                    |> Dict.fromList
+                                                    |> Dict.get fieldType.name
+                                                    |> Maybe.map .typeRef
+
+                                            _ ->
+                                                Nothing
+
+                                    typeName =
+                                        case maybeFieldTypeRef of
+                                            Just (TypeReference (ObjectRef str) _) ->
+                                                str
+
+                                            _ ->
+                                                "foo"
+
+                                    maybeSubFieldTypeDef =
+                                        findTypeDef typeName
+                                in
+                                case maybeSubFieldTypeDef of
+                                    Nothing ->
+                                        Err ("Can't resolve " ++ fieldType.name)
+
+                                    Just fieldTypeDef ->
+                                        selectionSetToString fieldTypeDef selectionSet__
+                                            |> Result.map
+                                                (\{ imports, body } ->
+                                                    { imports =
+                                                        imports
+                                                            |> Set.insert class
+                                                    , body = "|> with " ++ class ++ "." ++ fieldType.name ++ " (\n" ++ body ++ "\n)"
+                                                    }
+                                                )
+                    )
                 |> combine
-                |> Result.map (String.join "\n")
-                |> Result.andThen (\childStr ->
-                    Ok("SelectionSet.succeed "++ class ++ "\n"
-                    ++ childStr)
-                )
-                
-        opDefToString : OperationDefintion -> Result String String
+                |> Result.map
+                    (\results ->
+                        { imports =
+                            results
+                                |> List.map .imports
+                                |> List.foldl Set.union Set.empty
+                        , body =
+                            results
+                                |> List.map .body
+                                |> String.join "\n"
+                        }
+                    )
+                |> Result.andThen
+                    (\{ imports, body } ->
+                        Ok
+                            { imports =
+                                imports
+                                    |> Set.insert class
+                            , body = "SelectionSet.succeed " ++ class ++ "\n" ++ body
+                            }
+                    )
+
+        opDefToString : OperationDefintion -> Result String { imports : Set String, body : String }
         opDefToString opDef =
-            case opDef of 
+            case opDef of
                 Operation operationRecord ->
                     let
-                        selectionSet_ = operationRecord.selectionSet
-                        maybeFieldName = 
+                        selectionSet_ =
+                            operationRecord.selectionSet
+
+                        maybeFieldName =
                             case operationRecord.type_ of
-                                Query -> 
+                                Query ->
                                     Just introspectionData.queryObjectName
+
                                 Mutation ->
                                     introspectionData.mutationObjectName
+
                                 Subscription ->
                                     introspectionData.subscriptionObjectName
 
-                        maybeTypeDef = 
-                           maybeFieldName
+                        maybeTypeDef =
+                            maybeFieldName
                                 |> Maybe.andThen findTypeDef
                     in
                     case maybeTypeDef of
                         Just typeDef ->
                             selectionSetToString typeDef selectionSet_
-                        Nothing -> 
+
+                        Nothing ->
                             Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
 
-                _ -> Err "Unsupported root level structure"
+                _ ->
+                    Err "Unsupported root level structure"
     in
     parse query
         |> Result.mapError (always "Parser Error")
         |> Result.andThen opDefToString
-        |> Result.map (\str ->
-          "module Foo exposing (..)\n\n" ++
-          "import Graphql.SelectionSet as SelectionSet exposing (hardcoded, with)\n\n" ++
-          "selection = " ++ str
-        )
+        |> Result.map
+            (\{ imports, body } ->
+                "module Foo exposing (..)\n\n"
+                    ++ "import Graphql.SelectionSet as SelectionSet exposing (hardcoded, with)\n\n"
+                    ++ (Set.toList imports
+                            |> List.map ((++) "import ")
+                            |> String.join "\n"
+                       )
+                    ++ "\n\nselection = "
+                    ++ body
+            )
