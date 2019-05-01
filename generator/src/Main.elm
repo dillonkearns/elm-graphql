@@ -2,6 +2,9 @@ port module Main exposing (main)
 
 import Cli.Option as Option
 import Cli.OptionsParser as OptionsParser exposing (OptionsParser, with)
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Group as Group
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Cli.Program as Program
 import Cli.Validate
 import Debug
@@ -31,9 +34,19 @@ run options { queryFile, introspectionData } =
     case Decode.decodeValue Graphql.Parser.decoder introspectionData of
         Ok introspectData ->
             let
+                context : Context
+                context =
+                    { query = ClassCaseName.build introspectData.queryObjectName
+                    , mutation = introspectData.mutationObjectName |> Maybe.map ClassCaseName.build
+                    , subscription = introspectData.subscriptionObjectName |> Maybe.map ClassCaseName.build
+                    , apiSubmodule = options.apiSubmodule
+                    , interfaces = Group.interfacePossibleTypesDict introspectData.typeDefinitions
+                    , scalarCodecsModule = options.scalarCodecsModule
+                    }
+
                 maybeQuerySelectionFileContents =
                     queryFile
-                        |> Maybe.map (Graphql.QueryParser.transform introspectData)
+                        |> Maybe.map (Graphql.QueryParser.transform introspectData context)
                         |> Debug.log "transformResult!!"
                         |> Maybe.andThen Result.toMaybe
             in

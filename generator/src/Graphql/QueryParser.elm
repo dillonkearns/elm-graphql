@@ -3,8 +3,11 @@ module Graphql.QueryParser exposing (FieldType, ListType, Name, NamedType(..), N
 ---
 
 import Debug
-import Dict
+import Dict exposing (Dict)
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Decoder as Decoder
 import Graphql.Generator.Group exposing (IntrospectionData)
+import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Type exposing (..)
@@ -214,9 +217,16 @@ combine =
 --
 
 
-transform : IntrospectionData -> String -> Result String String
-transform introspectionData query =
+type alias RecordContext =
+    Dict String (List { fieldName : String, fieldType : String })
+
+
+transform : IntrospectionData -> Context -> String -> Result String String
+transform introspectionData context query =
     let
+        moduleName typeDef =
+            ModuleName.generate context typeDef
+
         nameToTypeDef =
             introspectionData.typeDefinitions
                 |> List.map
@@ -228,61 +238,79 @@ transform introspectionData query =
         findTypeDef rootName =
             Dict.get rootName nameToTypeDef
 
-        selectionSetToString : TypeDefinition -> SelectionSet -> Result String { imports : Set String, body : String }
-        selectionSetToString ((TypeDefinition classCaseName definableType _) as typeDef) selectionSet_ =
+        selectionSetToString : TypeDefinition -> RecordContext -> SelectionSet -> Result String { imports : Set String, body : String, correspondElmType : { fieldName : String, fieldType : String }, recordContext : RecordContext }
+        selectionSetToString ((TypeDefinition classCaseName definableType _) as typeDef) recordContext selectionSet_ =
             let
-                class =
-                    ClassCaseName.raw classCaseName
+                targetRecordName =
+                    ClassCaseName.raw classCaseName ++ "Record"
+
+                modulePath =
+                    moduleName typeDef
+                        |> String.join "."
             in
             selectionSet_
                 |> List.map
                     (\((Field fieldType) as selection) ->
-                        case fieldType.selectionSet of
+                        let
+                            maybeFieldTypeRef =
+                                case definableType of
+                                    ObjectType fields ->
+                                        fields
+                                            |> List.map (\field_ -> ( CamelCaseName.raw field_.name, field_ ))
+                                            |> Dict.fromList
+                                            |> Dict.get fieldType.name
+                                            |> Maybe.map .typeRef
+
+                                    _ ->
+                                        Nothing
+                        in
+                        case maybeFieldTypeRef of
                             Nothing ->
-                                Ok
-                                    { imports = Set.singleton class
-                                    , body = "|> with " ++ class ++ "." ++ fieldType.name
-                                    }
+                                Err ("No such type for field: " ++ fieldType.name)
 
-                            Just selectionSet__ ->
-                                let
-                                    maybeFieldTypeRef =
-                                        case definableType of
-                                            ObjectType fields ->
-                                                fields
-                                                    |> List.map (\field_ -> ( CamelCaseName.raw field_.name, field_ ))
-                                                    |> Dict.fromList
-                                                    |> Dict.get fieldType.name
-                                                    |> Maybe.map .typeRef
-
-                                            _ ->
-                                                Nothing
-
-                                    typeName =
-                                        case maybeFieldTypeRef of
-                                            Just (TypeReference (ObjectRef str) _) ->
-                                                str
-
-                                            _ ->
-                                                "foo"
-
-                                    maybeSubFieldTypeDef =
-                                        findTypeDef typeName
-                                in
-                                case maybeSubFieldTypeDef of
+                            Just fieldTypeRef ->
+                                case fieldType.selectionSet of
                                     Nothing ->
-                                        Err ("Can't resolve " ++ fieldType.name)
+                                        --scalar case
+                                        Ok
+                                            { imports = Set.singleton modulePath
+                                            , body = "|> with " ++ modulePath ++ "." ++ fieldType.name
+                                            , correspondElmType =
+                                                { fieldName = fieldType.name
+                                                , fieldType = Decoder.generateType context fieldTypeRef
+                                                }
+                                            , recordContext = recordContext
+                                            }
 
-                                    Just fieldTypeDef ->
-                                        selectionSetToString fieldTypeDef selectionSet__
-                                            |> Result.map
-                                                (\{ imports, body } ->
-                                                    { imports =
-                                                        imports
-                                                            |> Set.insert class
-                                                    , body = "|> with " ++ class ++ "." ++ fieldType.name ++ " (\n" ++ body ++ "\n)"
-                                                    }
-                                                )
+                                    Just selectionSet__ ->
+                                        let
+                                            typeName =
+                                                case maybeFieldTypeRef of
+                                                    Just (TypeReference (ObjectRef str) _) ->
+                                                        str
+
+                                                    _ ->
+                                                        "foo0"
+
+                                            maybeSubFieldTypeDef =
+                                                findTypeDef typeName
+                                        in
+                                        case maybeSubFieldTypeDef of
+                                            Nothing ->
+                                                Err ("Can't resolve " ++ fieldType.name)
+
+                                            Just fieldTypeDef ->
+                                                selectionSetToString fieldTypeDef recordContext selectionSet__
+                                                    |> Result.map
+                                                        (\result ->
+                                                            { imports =
+                                                                result.imports
+                                                                    |> Set.insert modulePath
+                                                            , body = "|> with " ++ modulePath ++ "." ++ fieldType.name ++ " (\n" ++ result.body ++ "\n)"
+                                                            , correspondElmType = { fieldName = fieldType.name, fieldType = result.correspondElmType.fieldType }
+                                                            , recordContext = result.recordContext
+                                                            }
+                                                        )
                     )
                 |> combine
                 |> Result.map
@@ -295,19 +323,34 @@ transform introspectionData query =
                             results
                                 |> List.map .body
                                 |> String.join "\n"
+                        , correspondElmType = { fieldName = "foo", fieldType = "foo1" }
+                        , recordContext =
+                            results
+                                |> List.map .recordContext
+                                |> List.foldl
+                                    (Dict.merge
+                                        (\key a -> Dict.insert key a)
+                                        (\key a b -> Dict.insert key a)
+                                        (\key b -> Dict.insert key b)
+                                        Dict.empty
+                                    )
+                                    Dict.empty
+                                |>  Dict.insert targetRecordName (results |> List.map .correspondElmType)
                         }
                     )
                 |> Result.andThen
-                    (\{ imports, body } ->
+                    (\result ->
                         Ok
                             { imports =
-                                imports
-                                    |> Set.insert class
-                            , body = "SelectionSet.succeed " ++ class ++ "\n" ++ body
+                                result.imports
+                                    |> Set.insert modulePath
+                            , body = "SelectionSet.succeed " ++ targetRecordName ++ "\n" ++ result.body
+                            , correspondElmType = { fieldName = "foo", fieldType = targetRecordName }
+                            , recordContext = result.recordContext
                             }
                     )
 
-        opDefToString : OperationDefintion -> Result String { imports : Set String, body : String }
+        opDefToString : OperationDefintion -> Result String { imports : Set String, body : String, recordContext : RecordContext }
         opDefToString opDef =
             case opDef of
                 Operation operationRecord ->
@@ -332,7 +375,8 @@ transform introspectionData query =
                     in
                     case maybeTypeDef of
                         Just typeDef ->
-                            selectionSetToString typeDef selectionSet_
+                            selectionSetToString typeDef Dict.empty selectionSet_
+                                |> Result.map (\{ imports, body, correspondElmType, recordContext } -> { imports = imports, body = body, recordContext = recordContext })
 
                         Nothing ->
                             Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
@@ -344,13 +388,35 @@ transform introspectionData query =
         |> Result.mapError (always "Parser Error")
         |> Result.andThen opDefToString
         |> Result.map
-            (\{ imports, body } ->
+            (\{ imports, body, recordContext } ->
                 "module Foo exposing (..)\n\n"
                     ++ "import Graphql.SelectionSet as SelectionSet exposing (hardcoded, with)\n\n"
                     ++ (Set.toList imports
                             |> List.map ((++) "import ")
                             |> String.join "\n"
                        )
+                    ++ encodeRecords recordContext
                     ++ "\n\nselection = "
                     ++ body
             )
+
+
+encodeRecords : Dict String (List { fieldName : String, fieldType : String }) -> String
+encodeRecords recordNameToDefinition =
+    recordNameToDefinition
+        |> Dict.toList
+        |> List.map
+            (\( recordName, fields ) ->
+                "\ntype alias "
+                    ++ recordName
+                    ++ " =\n{"
+                    ++ (fields
+                            |> List.map
+                                (\{ fieldName, fieldType } ->
+                                    fieldName ++ " : " ++ fieldType
+                                )
+                            |> String.join "\n,"
+                       )
+                    ++ "\n}"
+            )
+        |> String.join "\n"

@@ -1,10 +1,13 @@
 query {
+  user {
+    email
+  }
   team {
     id
     name
     lead {
       fullName
-      email
+      primaryEmail
     }
   }
 }
