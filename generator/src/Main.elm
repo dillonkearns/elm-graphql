@@ -31,13 +31,21 @@ run options { queryFile, introspectionData } =
     case Decode.decodeValue Graphql.Parser.decoder introspectionData of
         Ok introspectData ->
             let
-                transformResult =
+                maybeQuerySelectionFileContents =
                     queryFile
                         |> Maybe.map (Graphql.QueryParser.transform introspectData)
                         |> Debug.log "transformResult!!"
+                        |> Maybe.andThen Result.toMaybe
             in
             introspectData
                 |> Graphql.Parser.encoder options
+                |> (\dict ->
+                    maybeQuerySelectionFileContents
+                        |> Maybe.map(\querySelectionFileContents ->
+                            Dict.insert "FOO.elm" (querySelectionFileContents) dict
+                        )
+                        |> Maybe.withDefault dict
+                )
                 |> Json.Encode.Extra.dict identity Json.Encode.string
                 |> Ports.generatedFiles
 

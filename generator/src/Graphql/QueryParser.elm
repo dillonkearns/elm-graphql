@@ -286,3 +286,8 @@ transform introspectionData query  =
     parse query
         |> Result.mapError (always "Parser Error")
         |> Result.andThen opDefToString
+        |> Result.map (\str ->
+          "module Foo exposing (..)\n\n" ++
+          "import Graphql.SelectionSet as SelectionSet exposing (hardcoded, with)\n\n" ++
+          "selection = " ++ str
+        )

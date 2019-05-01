@@ -218,6 +218,7 @@ function writeGeneratedFiles(
 ): Promise<void>[] {
   return Object.entries(generatedFile).map(([fileName, fileContents]) => {
     const filePath = path.join(outputPath, fileName);
+    console.log(filePath)
     return fs.writeFile(filePath, targetComment + fileContents);
   });
 }
