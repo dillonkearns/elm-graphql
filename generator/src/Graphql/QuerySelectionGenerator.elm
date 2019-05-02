@@ -72,6 +72,31 @@ transform options introspectionData context query =
 
                                     _ ->
                                         Nothing
+                            
+                            argumentString = fieldType.arguments
+                                |> List.map (\argument ->
+                                    argument.name ++ " = " ++
+                                    case argument.value of 
+                                        Variable name -> "UNIMPLEMENTED"
+                                        IntValue int -> String.fromInt int
+                                        FloatValue float -> String.fromFloat float
+                                        StringValue str -> str
+                                        BooleanValue b -> if b then "True" else "False"
+                                        NullValue  -> "UNIMPLEMENTED"
+                                        EnumValue name -> "UNIMPLEMENTED"
+                                        ListValue values ->  "UNIMPLEMENTED"
+                                        ObjectValue objectValues ->  "UNIMPLEMENTED"
+                                )
+                                |> String.join ","
+                                
+                            fullyQualifiedFieldSelector =
+                                modulePath ++ "." ++ fieldType.name ++
+                                    if List.isEmpty fieldType.arguments then
+                                        ""
+                                    else
+                                        "{" ++ argumentString ++ "}"
+                            
+                            
                         in
                         case maybeFieldTypeRef of
                             Nothing ->
@@ -101,7 +126,7 @@ transform options introspectionData context query =
                                         --scalar case
                                         Ok
                                             { imports = Set.singleton modulePath
-                                            , body = "|> with " ++ modulePath ++ "." ++ fieldType.name
+                                            , body = "|> with " ++ fullyQualifiedFieldSelector
                                             , correspondElmType =
                                                 { fieldName = fieldType.name
                                                 , fieldType = (if nullable then "Maybe " else "") ++ Decoder.generateType context typeRef
@@ -116,8 +141,11 @@ transform options introspectionData context query =
                                                     { imports =
                                                         result.imports
                                                             |> Set.insert modulePath
-                                                    , body = "|> with (" ++ modulePath ++ "." ++ fieldType.name ++ " (\n" ++ result.body ++ "\n))"
-                                                    , correspondElmType = { fieldName = fieldType.name, fieldType = (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType }
+                                                    , body = "|> with (" ++ fullyQualifiedFieldSelector ++ " (\n" ++ result.body ++ "\n))"
+                                                    , correspondElmType = 
+                                                        { fieldName = fieldType.name
+                                                        , fieldType = (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType 
+                                                        }
                                                     , recordContext = result.recordContext
                                                     }
                                                 )
