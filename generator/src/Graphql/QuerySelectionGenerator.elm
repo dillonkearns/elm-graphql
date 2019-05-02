@@ -10,6 +10,7 @@ import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Type as Type exposing (IsNullable(..), DefinableType(..), TypeReference(..), TypeDefinition(..), ReferrableType(..))
 import ModuleName exposing (ModuleName(..))
+import Graphql.Parser.Scalar as Scalar
 
 import Set exposing (Set)
 import Graphql.QueryParser exposing (..)
@@ -76,48 +77,50 @@ transform options introspectionData context query =
                             Nothing ->
                                 Err ("No such type for field: " ++ fieldType.name)
 
-                            Just fieldTypeRef ->
-                                case fieldType.selectionSet of
-                                    Nothing ->
+                            Just ((TypeReference referrableType isNullable) as typeRef) ->
+                                let
+                                    nullable = isNullable == Nullable
+                                    
+                                    typeName =
+                                        case referrableType of
+                                            ObjectRef str -> 
+                                                str
+                                            Scalar scalar -> 
+                                                Scalar.toString scalar
+                                            _ ->
+                                                "foo0"
+                                    
+                                    maybeSubFieldTypeDef =
+                                        findTypeDef typeName
+                                in
+                                case (maybeSubFieldTypeDef, fieldType.selectionSet) of
+                                    ( Nothing, _ ) ->
+                                        Err ("Can't resolve " ++ fieldType.name ++ " of type " ++ typeName)
+
+                                    ( _, Nothing ) ->
                                         --scalar case
                                         Ok
                                             { imports = Set.singleton modulePath
                                             , body = "|> with " ++ modulePath ++ "." ++ fieldType.name
                                             , correspondElmType =
                                                 { fieldName = fieldType.name
-                                                , fieldType = Decoder.generateType context fieldTypeRef
+                                                , fieldType = (if nullable then "Maybe " else "") ++ Decoder.generateType context typeRef
                                                 }
                                             , recordContext = recordContext
                                             }
 
-                                    Just selectionSet__ ->
-                                        let
-                                            (typeName, nullable) =
-                                                case maybeFieldTypeRef of
-                                                    Just (TypeReference (ObjectRef str) isNullable) ->
-                                                        (str, isNullable == Nullable)
-                                                    _ ->
-                                                        ("foo0", False)
-
-                                            maybeSubFieldTypeDef =
-                                                findTypeDef typeName
-                                        in
-                                        case maybeSubFieldTypeDef of
-                                            Nothing ->
-                                                Err ("Can't resolve " ++ fieldType.name)
-
-                                            Just fieldTypeDef ->
-                                                selectionSetToString fieldTypeDef recordContext selectionSet__
-                                                    |> Result.map
-                                                        (\result ->
-                                                            { imports =
-                                                                result.imports
-                                                                    |> Set.insert modulePath
-                                                            , body = "|> with (" ++ modulePath ++ "." ++ fieldType.name ++ " (\n" ++ result.body ++ "\n))"
-                                                            , correspondElmType = { fieldName = fieldType.name, fieldType = (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType }
-                                                            , recordContext = result.recordContext
-                                                            }
-                                                        )
+                                    (Just fieldTypeDef, Just selectionSet__ ) ->
+                                        selectionSetToString fieldTypeDef recordContext selectionSet__
+                                            |> Result.map
+                                                (\result ->
+                                                    { imports =
+                                                        result.imports
+                                                            |> Set.insert modulePath
+                                                    , body = "|> with (" ++ modulePath ++ "." ++ fieldType.name ++ " (\n" ++ result.body ++ "\n))"
+                                                    , correspondElmType = { fieldName = fieldType.name, fieldType = (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType }
+                                                    , recordContext = result.recordContext
+                                                    }
+                                                )
                     )
                 |> combine
                 |> Result.map
