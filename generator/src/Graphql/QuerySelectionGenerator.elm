@@ -114,7 +114,7 @@ transform options introspectionData context query =
                                                             { imports =
                                                                 result.imports
                                                                     |> Set.insert modulePath
-                                                            , body = "|> with " ++ modulePath ++ "." ++ fieldType.name ++ " (\n" ++ result.body ++ "\n)"
+                                                            , body = "|> with (" ++ modulePath ++ "." ++ fieldType.name ++ " (\n" ++ result.body ++ "\n))"
                                                             , correspondElmType = { fieldName = fieldType.name, fieldType = result.correspondElmType.fieldType }
                                                             , recordContext = result.recordContext
                                                             }
@@ -207,7 +207,7 @@ transform options introspectionData context query =
                 in
                 
                 "module "++ modulePath ++" exposing (..)\n\n"
-                    ++ "import Graphql.SelectionSet as SelectionSet exposing (hardcoded, with)\n"
+                    ++ "import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)\n"
                     ++ "import Graphql.Operation exposing (RootQuery)\n"
                     ++ (Set.toList imports
                             |> List.map ((++) "import ")
