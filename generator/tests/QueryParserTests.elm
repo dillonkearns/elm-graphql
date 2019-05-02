@@ -3,7 +3,7 @@ module QueryParserTests exposing (all)
 import Expect
 import Graphql.QueryParser exposing (..)
 import Json.Decode as Decode exposing (Decoder)
-import Parser
+import Parser exposing (..)
 import Test exposing (Test, describe, only, test)
 
 
@@ -14,8 +14,9 @@ all =
             \() ->
                 """
                  query {
-                   foo {
+                   foo(id: 5) {
                      bar
+                     baz(name: $flup)
                    }
                  }
                """
@@ -29,11 +30,19 @@ all =
                                     [ Field
                                         { alias = Nothing
                                         , name = "foo"
+                                        , arguments = [{ name = "id", value = IntValue 5}]
                                         , selectionSet =
                                             Just
                                                 [ Field
                                                     { alias = Nothing
                                                     , name = "bar"
+                                                    , arguments = []
+                                                    , selectionSet = Nothing
+                                                    }
+                                                ,  Field
+                                                    { alias = Nothing
+                                                    , name = "baz"
+                                                    , arguments = [{name = "name", value = Variable "flup"}]
                                                     , selectionSet = Nothing
                                                     }
                                                 ]

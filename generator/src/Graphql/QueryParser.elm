@@ -11,6 +11,7 @@ module Graphql.QueryParser exposing
     , SelectionSet
     , Type(..)
     , VariableDefinition
+    , Value(..)
     , parse
     )
 
@@ -29,7 +30,7 @@ import Parser
         , (|=)
         , Parser
         , Step
-        , Trailing
+        , Trailing(..)
         , float
         , loop
         , map
@@ -40,7 +41,7 @@ import Parser
         )
 import Set exposing (Set)
 
-
+-- https://github.com/graphql/graphql-spec/blob/master/spec/Section%202%20--%20Language.md
 
 -- Name :: /[_A-Za-z][_0-9A-Za-z]*/
 
@@ -118,12 +119,27 @@ type Selection
 type alias FieldType =
     { alias : Maybe Name
     , name : Name
-
-    -- , arguments: List Argument TBD
+    , arguments: List Argument
     -- , directives: List Directive TBD
     , selectionSet : Maybe SelectionSet
     }
 
+
+type Value 
+    = Variable Name
+    | IntValue Int
+    | FloatValue Float
+    | StringValue String
+    | BooleanValue Bool
+    | NullValue 
+    | EnumValue Name
+    | ListValue (List Value)
+    | ObjectValue (List (Name, Value))
+
+type alias Argument =
+    { name : Name
+    , value : Value
+    }
 
 parse query =
     Parser.run parser query
@@ -170,15 +186,58 @@ name =
 field : Parser Selection
 field =
     Parser.succeed FieldType
-        |= succeed Nothing
-        --alias TBD
+        |= succeed Nothing --alias TBD
+        |. spaces
         |= name
+        |. spaces
+        |= optionalArguments
+        |. spaces
         |= oneOf
             [ Parser.backtrackable (Parser.map Just selectionSet)
             , succeed Nothing
             ]
         |> Parser.map Field
 
+optionalArguments : Parser (List Argument)
+optionalArguments =
+    oneOf
+        [ arguments
+        , succeed []
+        ]
+
+arguments : Parser (List Argument)
+arguments =
+    Parser.sequence
+        { start = "("
+        , separator = ","
+        , end = ")"
+        , spaces = spaces
+        , item = argument
+        , trailing = Forbidden
+        }
+
+argument : Parser Argument
+argument =
+    succeed Argument
+        |= name
+        |. spaces
+        |. symbol ":"
+        |. spaces
+        |= value
+
+
+kvp : Parser ( Name, Value )
+kvp =
+    kvp_ (always value)
+
+kvp_ : (() -> Parser Value) -> Parser ( Name, Value )
+kvp_ valueParser =
+    succeed (\a b -> (a,b))
+        |= name
+        |. spaces
+        |. symbol ":"
+        |. spaces
+        |= Parser.lazy valueParser
 
 alias : Parser (Maybe Name)
 alias =
@@ -187,10 +246,55 @@ alias =
         , succeed Nothing
         ]
 
+value : Parser Value
+value =
+    oneOf
+        [ variable
+        , Parser.map IntValue Parser.int
+        , Parser.map FloatValue Parser.float
+        , Parser.map StringValue (Parser.getChompedString <| Parser.succeed ()
+            |. symbol "\""
+            |. Parser.chompWhile (\c -> c /= '\u{000D}' && c /= '\n' && c /= '"')
+            |. symbol "\"")
+        , Parser.oneOf
+            [ Parser.map (always (BooleanValue True)) (symbol "true")
+            , Parser.map (always (BooleanValue False)) (symbol "false")
+            ]
+        , Parser.map (always NullValue) (symbol "null")
+        , Parser.map EnumValue name
+        , listValue (\() -> value)
+        , objectValue (\() -> value)
+        ]
 
+variable : Parser Value
+variable =
+    succeed Variable
+        |. symbol "$"
+        |= name
 
--- selectionSet : Parser SelectionSet
+listValue : (() -> Parser Value) -> Parser Value
+listValue valueParser =
+    Parser.map ListValue <|
+        Parser.sequence
+            { start = "["
+            , separator = ""
+            , end = "]"
+            , spaces = spaces
+            , item = Parser.lazy valueParser
+            , trailing = Optional
+            }
 
+objectValue : (() -> Parser Value) -> Parser Value
+objectValue valueParser =
+    Parser.map ObjectValue <|
+        Parser.sequence
+            { start = "{"
+            , separator = ""
+            , end = "}"
+            , spaces = spaces
+            , item = kvp_ valueParser
+            , trailing = Optional
+            }
 
 selectionSet : Parser (List Selection)
 selectionSet =
