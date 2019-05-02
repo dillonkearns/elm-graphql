@@ -29,6 +29,11 @@ type alias Model =
     ()
 
 
+moduleToFileName : List String -> String
+moduleToFileName modulePath =
+    (modulePath |> String.join "/")
+        ++ ".elm"
+
 run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> { queryFile : Maybe String, introspectionData : Json.Encode.Value } -> Cmd msg
 run options { queryFile, introspectionData } =
     case Decode.decodeValue Graphql.Parser.decoder introspectionData of
@@ -46,16 +51,18 @@ run options { queryFile, introspectionData } =
 
                 maybeQuerySelectionFileContents =
                     queryFile
-                        |> Maybe.map (Graphql.QuerySelectionGenerator.transform introspectData context)
+                        |> Maybe.map (Graphql.QuerySelectionGenerator.transform options introspectData context)
                         |> Debug.log "transformResult!!"
                         |> Maybe.andThen Result.toMaybe
+                
+                fileName = moduleToFileName (List.append options.apiSubmodule ["Foo"])
             in
             introspectData
                 |> Graphql.Parser.encoder options
                 |> (\dict ->
                     maybeQuerySelectionFileContents
                         |> Maybe.map(\querySelectionFileContents ->
-                            Dict.insert "FOO.elm" (querySelectionFileContents) dict
+                            Dict.insert fileName (querySelectionFileContents) dict
                         )
                         |> Maybe.withDefault dict
                 )

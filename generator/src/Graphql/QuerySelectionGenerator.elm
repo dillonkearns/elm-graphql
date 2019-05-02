@@ -9,6 +9,7 @@ import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Type as Type exposing (DefinableType(..), TypeReference(..), TypeDefinition(..), ReferrableType(..))
+import ModuleName exposing (ModuleName(..))
 
 import Set exposing (Set)
 import Graphql.QueryParser exposing (..)
@@ -28,8 +29,8 @@ type alias RecordContext =
     Dict String (List { fieldName : String, fieldType : String })
 
 
-transform : IntrospectionData -> Context -> String -> Result String String
-transform introspectionData context query =
+transform : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Context -> String -> Result String String
+transform options introspectionData context query =
     let
         moduleName typeDef =
             ModuleName.generate context typeDef
@@ -157,7 +158,7 @@ transform introspectionData context query =
                             }
                     )
 
-        opDefToString : OperationDefintion -> Result String { imports : Set String, body : String, recordContext : RecordContext }
+        opDefToString : OperationDefintion -> Result String { imports : Set String, body : String, recordContext : RecordContext, correspondElmType : { fieldName : String, fieldType : String } }
         opDefToString opDef =
             case opDef of
                 Operation operationRecord ->
@@ -183,7 +184,9 @@ transform introspectionData context query =
                     case maybeTypeDef of
                         Just typeDef ->
                             selectionSetToString typeDef Dict.empty selectionSet_
-                                |> Result.map (\{ imports, body, correspondElmType, recordContext } -> { imports = imports, body = body, recordContext = recordContext })
+                            --     |> Result.map (\{ imports, body, correspondElmType, recordContext } -> 
+                            --     { imports = imports, body = body, recordContext = recordContext }
+                            -- )
 
                         Nothing ->
                             Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
@@ -195,15 +198,24 @@ transform introspectionData context query =
         |> Result.mapError (always "Parser Error")
         |> Result.andThen opDefToString
         |> Result.map
-            (\{ imports, body, recordContext } ->
-                "module Foo exposing (..)\n\n"
-                    ++ "import Graphql.SelectionSet as SelectionSet exposing (hardcoded, with)\n\n"
+            (\{ imports, body, recordContext, correspondElmType } ->
+                let
+                    modulePath = 
+                        List.append options.apiSubmodule [ "Foo" ]
+                            |> String.join "."
+
+                in
+                
+                "module "++ modulePath ++" exposing (..)\n\n"
+                    ++ "import Graphql.SelectionSet as SelectionSet exposing (hardcoded, with)\n"
+                    ++ "import Graphql.Operation exposing (RootQuery)\n"
                     ++ (Set.toList imports
                             |> List.map ((++) "import ")
                             |> String.join "\n"
                        )
                     ++ encodeRecords recordContext
-                    ++ "\n\nselection = "
+                    ++ "\n\nselection : SelectionSet "++ correspondElmType.fieldType ++ " RootQuery"
+                    ++ "\nselection = "
                     ++ body
             )
 
