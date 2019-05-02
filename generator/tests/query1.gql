@@ -2,7 +2,7 @@ query {
   user {
     email
   }
-  team {
+  team(id: "3") {
     id
     name
     lead {

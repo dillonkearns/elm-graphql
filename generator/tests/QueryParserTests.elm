@@ -19,7 +19,7 @@ all =
                    }
                  }
                """
-                    |> Parser.run Graphql.QueryParser.parser
+                    |> Graphql.QueryParser.parse
                     |> Expect.equal
                         (Ok
                             (Operation
