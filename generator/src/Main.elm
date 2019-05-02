@@ -10,7 +10,7 @@ import Cli.Validate
 import Debug
 import Dict
 import Graphql.Parser
-import Graphql.QueryParser
+import Graphql.QuerySelectionGenerator
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
@@ -46,7 +46,7 @@ run options { queryFile, introspectionData } =
 
                 maybeQuerySelectionFileContents =
                     queryFile
-                        |> Maybe.map (Graphql.QueryParser.transform introspectData context)
+                        |> Maybe.map (Graphql.QuerySelectionGenerator.transform introspectData context)
                         |> Debug.log "transformResult!!"
                         |> Maybe.andThen Result.toMaybe
             in
