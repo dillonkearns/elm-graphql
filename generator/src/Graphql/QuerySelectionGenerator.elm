@@ -8,7 +8,7 @@ import Graphql.Generator.Group exposing (IntrospectionData)
 import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
-import Graphql.Parser.Type as Type exposing (DefinableType(..), TypeReference(..), TypeDefinition(..), ReferrableType(..))
+import Graphql.Parser.Type as Type exposing (IsNullable(..), DefinableType(..), TypeReference(..), TypeDefinition(..), ReferrableType(..))
 import ModuleName exposing (ModuleName(..))
 
 import Set exposing (Set)
@@ -92,13 +92,12 @@ transform options introspectionData context query =
 
                                     Just selectionSet__ ->
                                         let
-                                            typeName =
+                                            (typeName, nullable) =
                                                 case maybeFieldTypeRef of
-                                                    Just (TypeReference (ObjectRef str) _) ->
-                                                        str
-
+                                                    Just (TypeReference (ObjectRef str) isNullable) ->
+                                                        (str, isNullable == Nullable)
                                                     _ ->
-                                                        "foo0"
+                                                        ("foo0", False)
 
                                             maybeSubFieldTypeDef =
                                                 findTypeDef typeName
@@ -115,7 +114,7 @@ transform options introspectionData context query =
                                                                 result.imports
                                                                     |> Set.insert modulePath
                                                             , body = "|> with (" ++ modulePath ++ "." ++ fieldType.name ++ " (\n" ++ result.body ++ "\n))"
-                                                            , correspondElmType = { fieldName = fieldType.name, fieldType = result.correspondElmType.fieldType }
+                                                            , correspondElmType = { fieldName = fieldType.name, fieldType = (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType }
                                                             , recordContext = result.recordContext
                                                             }
                                                         )
