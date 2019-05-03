@@ -88,84 +88,80 @@ typeRefToType (TypeReference referrableType nullable) =
             _ ->
                 "foo0"
 
-selectionSetToString : Context -> IntrospectionData -> TypeDefinition -> RecordContext -> SelectionSet -> Result String { imports : Set String, body : String, correspondElmType : { fieldName : String, fieldType : String }, recordContext : RecordContext }
-selectionSetToString context introspectionData ((TypeDefinition classCaseName definableType maybeDescription) as typeDef) recordContext selectionSet_ =
+
+fieldToResult context introspectionData recordContext modulePath fieldType ((TypeReference referrableType isNullable) as typeRef) =
+    let            
+        fullyQualifiedFieldSelector =
+            modulePath ++ "." ++ fieldType.name ++
+                if List.isEmpty fieldType.arguments then
+                    ""
+                else
+                    "{" ++ (argumentsToString fieldType.arguments) ++ "}"
+   
+        nullable = isNullable == Nullable
+    
+        typeName = typeRefToString typeRef
+
+        maybeSubFieldTypeDef =
+            findTypeDef introspectionData (typeRefToType typeRef)
+    in
+    case (maybeSubFieldTypeDef, fieldType.selectionSet) of
+        ( Nothing, _ ) ->
+            Err ("Can't resolve " ++ fieldType.name ++ " of type " ++ typeName)
+
+        ( _, Nothing ) ->
+            --scalar case
+            Ok
+                { imports = Set.singleton modulePath
+                , body = "|> with " ++ fullyQualifiedFieldSelector
+                , correspondElmType =
+                    { fieldName = fieldType.name
+                    , fieldType = typeName
+                    }
+                , recordContext = recordContext
+                }
+
+        (Just fieldTypeDef, Just selectionSet__ ) ->
+            selectionSetToString context introspectionData recordContext fieldTypeDef selectionSet__
+                |> Result.map
+                    (\result ->
+                        { imports =
+                            result.imports
+                                |> Set.insert modulePath
+                        , body = "|> with (" ++ fullyQualifiedFieldSelector ++ " (\n" ++ result.body ++ "\n))"
+                        , correspondElmType = 
+                            { fieldName = fieldType.name
+                            , fieldType = typeName -- (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType 
+                            }
+                        , recordContext = result.recordContext
+                        }
+                    )
+
+selectionSetToString : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> Result String { imports : Set String, body : String, correspondElmType : { fieldName : String, fieldType : String }, recordContext : RecordContext }
+selectionSetToString context introspectionData recordContext ((TypeDefinition classCaseName definableType maybeDescription) as parentTypeDef) selectionSet =
     let
         targetRecordName =
             ClassCaseName.raw classCaseName ++ "Record"
 
         modulePath =
-            moduleName context typeDef
+            moduleName context parentTypeDef
                 |> String.join "."
     in
-    selectionSet_
-        |> List.map
-            (\((Field fieldType) as selection) ->
-                let
-                    maybeFieldTypeRef =
-                        case definableType of
-                            ObjectType fields ->
-                                fields
-                                    |> List.map (\field_ -> ( CamelCaseName.raw field_.name, field_ ))
-                                    |> Dict.fromList
-                                    |> Dict.get fieldType.name
-                                    |> Maybe.map .typeRef
+    selectionSet
+        |> List.map (\(Field fieldType) -> 
+            case definableType of
+                ObjectType fields ->
+                    fields
+                        |> List.map (\field_ -> ( CamelCaseName.raw field_.name, field_ ))
+                        |> Dict.fromList
+                        |> Dict.get fieldType.name
+                        |> Maybe.map .typeRef
+                        |> Maybe.map (fieldToResult context introspectionData recordContext modulePath fieldType)
+                        |> Maybe.withDefault (Err "Couldn't resolve selection type")
 
-                            _ ->
-                                Nothing
-                        
-                    fullyQualifiedFieldSelector =
-                        modulePath ++ "." ++ fieldType.name ++
-                            if List.isEmpty fieldType.arguments then
-                                ""
-                            else
-                                "{" ++ (argumentsToString fieldType.arguments) ++ "}"
-                in
-                case maybeFieldTypeRef of
-                    Nothing ->
-                        Err ("No such type for field: " ++ fieldType.name)
-
-                    Just ((TypeReference referrableType isNullable) as typeRef) ->
-                        let
-                            nullable = isNullable == Nullable
-                        
-                            typeName = typeRefToString typeRef
-
-                            maybeSubFieldTypeDef =
-                                findTypeDef introspectionData (typeRefToType typeRef)
-                        in
-                        case (maybeSubFieldTypeDef, fieldType.selectionSet) of
-                            ( Nothing, _ ) ->
-                                Err ("Can't resolve " ++ fieldType.name ++ " of type " ++ typeName)
-
-                            ( _, Nothing ) ->
-                                --scalar case
-                                Ok
-                                    { imports = Set.singleton modulePath
-                                    , body = "|> with " ++ fullyQualifiedFieldSelector
-                                    , correspondElmType =
-                                        { fieldName = fieldType.name
-                                        , fieldType = typeName
-                                        }
-                                    , recordContext = recordContext
-                                    }
-
-                            (Just fieldTypeDef, Just selectionSet__ ) ->
-                                selectionSetToString context introspectionData fieldTypeDef recordContext selectionSet__
-                                    |> Result.map
-                                        (\result ->
-                                            { imports =
-                                                result.imports
-                                                    |> Set.insert modulePath
-                                            , body = "|> with (" ++ fullyQualifiedFieldSelector ++ " (\n" ++ result.body ++ "\n))"
-                                            , correspondElmType = 
-                                                { fieldName = fieldType.name
-                                                , fieldType = typeName -- (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType 
-                                                }
-                                            , recordContext = result.recordContext
-                                            }
-                                        )
-            )
+                _ ->
+                    Err "UnsupportedType"
+        )
         |> combine
         |> Result.map
             (\results ->
@@ -207,38 +203,25 @@ selectionSetToString context introspectionData ((TypeDefinition classCaseName de
 opDefToString : Context -> IntrospectionData -> OperationDefintion -> Result String { imports : Set String, body : String, recordContext : RecordContext, correspondElmType : { fieldName : String, fieldType : String } }
 opDefToString context introspectionData opDef =
     case opDef of
+        SelectionSet selectionSet -> Err "Unsupported root level structure"
         Operation operationRecord ->
             let
-                selectionSet_ =
-                    operationRecord.selectionSet
+                selectionSet = operationRecord.selectionSet
 
                 maybeFieldName =
                     case operationRecord.type_ of
-                        Query ->
-                            Just introspectionData.queryObjectName
-
-                        Mutation ->
-                            introspectionData.mutationObjectName
-
-                        Subscription ->
-                            introspectionData.subscriptionObjectName
+                        Query -> Just introspectionData.queryObjectName
+                        Mutation -> introspectionData.mutationObjectName
+                        Subscription -> introspectionData.subscriptionObjectName
 
                 maybeTypeDef =
                     maybeFieldName
                         |> Maybe.andThen (findTypeDef introspectionData)
             in
             case maybeTypeDef of
+                Nothing ->  Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
                 Just typeDef ->
-                    selectionSetToString context introspectionData typeDef Dict.empty selectionSet_
-                    --     |> Result.map (\{ imports, body, correspondElmType, recordContext } -> 
-                    --     { imports = imports, body = body, recordContext = recordContext }
-                    -- )
-
-                Nothing ->
-                    Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
-
-        _ ->
-            Err "Unsupported root level structure"
+                    selectionSetToString context introspectionData  Dict.empty typeDef selectionSet
 
 transform : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Context -> String -> Result String String
 transform options introspectionData context query =
