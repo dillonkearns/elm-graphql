@@ -10,4 +10,9 @@ query {
       primaryEmail
     }
   }
+  organization {
+    teams {
+      name
+    }
+  }
 }

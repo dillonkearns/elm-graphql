@@ -13,6 +13,7 @@ module Graphql.QueryParser exposing
     , VariableDefinition
     , Value(..)
     , parse
+    , Argument
     )
 
 import Debug
