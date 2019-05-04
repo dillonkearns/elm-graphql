@@ -1,8 +1,8 @@
-query {
+query($teamId: ID!) {
   user {
     email
   }
-  team(id: "3") {
+  team(id: $teamId) {
     id
     name
     lead {

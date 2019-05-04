@@ -1,8 +1,6 @@
 module Graphql.QueryParser exposing 
     ( FieldType
-    , ListType
     , Name
-    , NamedType(..)
     , NonNullType(..)
     , OperationDefintion(..)
     , OperationRecord
@@ -59,8 +57,7 @@ type OperationDefintion
 type alias OperationRecord =
     { type_ : OperationType
     , name : Maybe Name
-
-    -- , variableDefinitions : List VariableDefinition TBD
+    , variableDefinitions : List VariableDefinition
     -- , directives: List Directive TBD
     , selectionSet : SelectionSet
     }
@@ -74,8 +71,6 @@ type OperationType
 
 
 -- VariableDefinition : Variable : Type DefaultValue? Directives[Const]?
-
-
 type alias VariableDefinition =
     { variable : Name
     , type_ : Type
@@ -86,22 +81,14 @@ type alias VariableDefinition =
 
 
 type Type
-    = NamedType NamedType
-    | ListType ListType
+    = NamedType Name
+    | ListType Type
     | NonNullType NonNullType
 
 
-type NamedType
-    = Name
-
-
-type alias ListType =
-    List Type
-
-
 type NonNullType
-    = NonNullNamedType NamedType
-    | NonNullListType ListType
+    = NonNullNamedType Name
+    | NonNullListType Type
 
 
 type alias SelectionSet =
@@ -162,9 +149,63 @@ operation =
         |. spaces
         |= alias
         |. spaces
+        |= oneOf
+            [ variableDefinitions
+            , succeed []
+            ]
+        |. spaces
         |= selectionSet
         |. spaces
 
+variableDefinitions : Parser (List VariableDefinition)
+variableDefinitions =
+    Parser.sequence
+        { start = "("
+        , separator = ","
+        , end = ")"
+        , spaces = spaces
+        , item = variableDefinition
+        , trailing = Forbidden
+        }
+
+variableDefinition : Parser VariableDefinition
+variableDefinition = 
+    Parser.succeed VariableDefinition
+        |. spaces
+        |. symbol "$"
+        |= name
+        |. spaces
+        |. symbol ":"
+        |. spaces
+        |= type_
+        |. spaces
+
+type_ : Parser Type
+type_ =
+    oneOf
+        [ Parser.backtrackable (Parser.map ListType (listType (\_ -> type_)))
+        , Parser.backtrackable (Parser.map NonNullType (nonNullType (\_ -> type_)))
+        , Parser.backtrackable (Parser.map NamedType name)
+        ]
+
+listType : (() -> Parser Type) -> Parser Type
+listType typeParser =
+    succeed identity
+        |. symbol "["
+        |. spaces
+        |= Parser.lazy typeParser
+        |. spaces
+        |. symbol "]"
+
+
+nonNullType : (() -> Parser Type) -> Parser NonNullType
+nonNullType typeParser =
+    succeed identity
+        |= oneOf 
+            [ Parser.map NonNullNamedType name
+            , Parser.map NonNullListType (listType typeParser) 
+            ]
+        |. symbol "!"
 
 operationType : Parser OperationType
 operationType =

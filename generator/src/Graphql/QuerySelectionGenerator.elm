@@ -12,9 +12,32 @@ import Graphql.Parser.Type as Type exposing (IsNullable(..), DefinableType(..), 
 import ModuleName exposing (ModuleName(..))
 import Graphql.Parser.Scalar as Scalar
 import Result.Extra as Result
-
+import Parser
 import Set exposing (Set)
 import Graphql.QueryParser exposing (..)
+
+deadEndToString : Parser.DeadEnd -> String
+deadEndToString deadend = 
+  problemToString deadend.problem ++ " at row " ++ String.fromInt deadend.row ++ ", col " ++ String.fromInt deadend.col
+
+
+problemToString : Parser.Problem -> String 
+problemToString p = 
+  case p of 
+   Parser.Expecting s -> "expecting '" ++ s ++ "'"
+   Parser.ExpectingInt -> "expecting int" 
+   Parser.ExpectingHex -> "expecting hex" 
+   Parser.ExpectingOctal -> "expecting octal" 
+   Parser.ExpectingBinary -> "expecting binary" 
+   Parser.ExpectingFloat -> "expecting float" 
+   Parser.ExpectingNumber -> "expecting number" 
+   Parser.ExpectingVariable -> "expecting variable" 
+   Parser.ExpectingSymbol s -> "expecting symbol '" ++ s ++ "'"
+   Parser.ExpectingKeyword s -> "expecting keyword '" ++ s ++ "'"
+   Parser.ExpectingEnd -> "expecting end" 
+   Parser.UnexpectedChar -> "unexpected char" 
+   Parser.Problem s -> "problem " ++ s 
+   Parser.BadRepeat -> "bad repeat" 
 
 incrementUntilUnique dict desiredName iteration =
     let
@@ -371,7 +394,7 @@ translateOperationDefinition context introspectionData opDef =
 transform : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Context -> String -> Result String String
 transform options introspectionData context query =
     parse query
-        |> Result.mapError (always "Parser Error")
+        |> Result.mapError (\deadEnds -> String.concat (List.intersperse "; " (List.map deadEndToString deadEnds)))
         |> Result.andThen (translateOperationDefinition context introspectionData)
         |> Result.map
             (\{ imports, body, recordContext, elmRecordField } ->
