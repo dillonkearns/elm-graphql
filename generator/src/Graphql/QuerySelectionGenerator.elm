@@ -90,8 +90,8 @@ typeRefToType (TypeReference referrableType nullable) =
             _ ->
                 "foo0"
 
-fieldToResult : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> TypeReference -> TranslationResult
-fieldToResult context introspectionData recordContext modulePath fieldType typeRef =
+translateField : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> TypeReference -> TranslationResult
+translateField context introspectionData recordContext modulePath fieldType typeRef =
     let            
         fullyQualifiedFieldSelector =
             modulePath ++ "." ++ fieldType.name ++
@@ -122,7 +122,7 @@ fieldToResult context introspectionData recordContext modulePath fieldType typeR
                 }
 
         (Just fieldTypeDef, Just selectionSet__ ) ->
-            selectionSetToString context introspectionData recordContext fieldTypeDef selectionSet__
+            translateSelectionSet context introspectionData recordContext fieldTypeDef selectionSet__
                 |> Result.map
                     (\result ->
                         { imports =
@@ -137,8 +137,8 @@ fieldToResult context introspectionData recordContext modulePath fieldType typeR
                         }
                     )
 
-selectionSetToString : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> TranslationResult
-selectionSetToString context introspectionData recordContext ((TypeDefinition classCaseName definableType maybeDescription) as parentTypeDef) selectionSet =
+translateSelectionSet : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> TranslationResult
+translateSelectionSet context introspectionData recordContext ((TypeDefinition classCaseName definableType maybeDescription) as parentTypeDef) selectionSet =
     let
         targetRecordName =
             ClassCaseName.raw classCaseName ++ "Record"
@@ -156,7 +156,7 @@ selectionSetToString context introspectionData recordContext ((TypeDefinition cl
                         |> Dict.fromList
                         |> Dict.get fieldType.name
                         |> Maybe.map .typeRef
-                        |> Maybe.map (fieldToResult context introspectionData recordContext modulePath fieldType)
+                        |> Maybe.map (translateField context introspectionData recordContext modulePath fieldType)
                         |> Maybe.withDefault (Err "Couldn't resolve selection type")
 
                 _ ->
@@ -200,8 +200,8 @@ selectionSetToString context introspectionData recordContext ((TypeDefinition cl
                     }
             )
 
-opDefToString : Context -> IntrospectionData -> OperationDefintion -> TranslationResult
-opDefToString context introspectionData opDef =
+translateOperationDefinition : Context -> IntrospectionData -> OperationDefintion -> TranslationResult
+translateOperationDefinition context introspectionData opDef =
     case opDef of
         SelectionSet selectionSet -> Err "Unsupported root level structure"
         Operation operationRecord ->
@@ -221,13 +221,13 @@ opDefToString context introspectionData opDef =
             case maybeTypeDef of
                 Nothing ->  Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
                 Just typeDef ->
-                    selectionSetToString context introspectionData  Dict.empty typeDef selectionSet
+                    translateSelectionSet context introspectionData  Dict.empty typeDef selectionSet
 
 transform : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Context -> String -> Result String String
 transform options introspectionData context query =
     parse query
         |> Result.mapError (always "Parser Error")
-        |> Result.andThen (opDefToString context introspectionData)
+        |> Result.andThen (translateOperationDefinition context introspectionData)
         |> Result.map
             (\{ imports, body, recordContext, correspondElmType } ->
                 let
