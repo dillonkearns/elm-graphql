@@ -2,7 +2,7 @@ query($teamId: ID!) {
   user {
     email
   }
-  team(id: $teamId) {
+  team(id: "3") {
     id
     name
     lead {

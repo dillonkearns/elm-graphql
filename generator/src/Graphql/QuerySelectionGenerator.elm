@@ -74,32 +74,25 @@ argumentToString (argument, argType) =
     let
         (TypeReference referrableType isNullable) = argType.typeRef
 
-        maybeCustomConstructor = 
+        wrapValueBasedOnType = 
             case referrableType of
                 Scalar(Scalar.Custom(className)) ->
-                    Just (ClassCaseName.normalized className)
-                _ -> Nothing
+                    (\value -> (ClassCaseName.normalized className) ++ "(" ++ value ++ ")")
+                _ -> identity
 
         argumentValueString = 
             case argument.value of 
-                Variable name -> "UNIMPLEMENTED"
-                IntValue int -> String.fromInt int
-                FloatValue float -> String.fromFloat float
-                StringValue str -> str
-                BooleanValue b -> if b then "True" else "False"
+                Variable name -> name
+                IntValue int -> String.fromInt int |> wrapValueBasedOnType
+                FloatValue float -> String.fromFloat float |> wrapValueBasedOnType
+                StringValue str -> str |> wrapValueBasedOnType
+                BooleanValue b -> if b then "True" else "False" |> wrapValueBasedOnType
                 NullValue  -> "UNIMPLEMENTED"
                 EnumValue name -> "UNIMPLEMENTED"
                 ListValue values ->  "UNIMPLEMENTED"
                 ObjectValue objectValues ->  "UNIMPLEMENTED"
-        
-        wrappedValue =
-            maybeCustomConstructor
-                |> Maybe.map (\customConstructor -> 
-                    customConstructor ++ "(" ++ argumentValueString ++ ")"
-                )
-                |> Maybe.withDefault argumentValueString
     in
-    argument.name ++ " = " ++ wrappedValue
+    argument.name ++ " = " ++ argumentValueString
         
 
 moduleName context typeDef =
@@ -118,6 +111,14 @@ findTypeDef introspectionData rootName =
 
 typeDefinitionToString (TypeDefinition classCaseName definableType maybeDescription) =
     ClassCaseName.raw classCaseName
+
+typeToString type_ = 
+    case type_ of
+        NamedType name -> "Maybe " ++ name
+        ListType type__ -> "Maybe (List ("++ (typeToString type__)++"))"
+        NonNullType(NonNullNamedType name) -> name
+        NonNullType(NonNullListType type__) -> "List ("++ (typeToString type__)++")"
+
 
 translateArguments : List Argument -> List Type.Arg -> Result String String
 translateArguments arguments argumentTypes =
@@ -368,7 +369,7 @@ translateSelectionSet context introspectionData recordContextOriginal ((TypeDefi
                 )
        
 
-translateOperationDefinition : Context -> IntrospectionData -> OperationDefintion -> TranslationResult
+translateOperationDefinition : Context -> IntrospectionData -> OperationDefintion -> Result String { imports : Set String, body : String, recordContext: RecordContext}
 translateOperationDefinition context introspectionData opDef =
     case opDef of
         SelectionSet selectionSet -> Err "Unsupported root level structure"
@@ -385,11 +386,36 @@ translateOperationDefinition context introspectionData opDef =
                 maybeTypeDef =
                     maybeFieldName
                         |> Maybe.andThen (findTypeDef introspectionData)
+
+                variableNames =
+                    operationRecord.variableDefinitions
+                        |> List.map .variable
+                        |> String.join " "
+
+                variableTypes =
+                    operationRecord.variableDefinitions
+                        |> List.map .type_
+                        |> List.map typeToString
             in
             case maybeTypeDef of
                 Nothing ->  Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
                 Just typeDef ->
-                    translateSelectionSet context introspectionData  Dict.empty typeDef selectionSet
+                    translateSelectionSet context introspectionData Dict.empty typeDef selectionSet
+                        |> Result.map (\result ->
+                            let
+                                typeSignature = 
+                                    (variableTypes++["SelectionSet "++ result.elmRecordField.type_ ++ " RootQuery"])
+                                        |> String.join " -> "
+                            in
+                            
+                            { imports = result.imports
+                            , recordContext = result.recordContext
+                            , body = 
+                                "\n\nselection : " ++ typeSignature ++
+                                "\nselection " ++ variableNames ++ " = " ++
+                                result.body
+                            }
+                        )
 
 transform : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Context -> String -> Result String String
 transform options introspectionData context query =
@@ -397,12 +423,11 @@ transform options introspectionData context query =
         |> Result.mapError (\deadEnds -> String.concat (List.intersperse "; " (List.map deadEndToString deadEnds)))
         |> Result.andThen (translateOperationDefinition context introspectionData)
         |> Result.map
-            (\{ imports, body, recordContext, elmRecordField } ->
+            (\{ imports, body, recordContext } ->
                 let
                     modulePath = 
                         List.append options.apiSubmodule [ "Foo" ]
                             |> String.join "."
-
                 in
                 "module "++ modulePath ++" exposing (..)\n\n"
                     ++ "import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)\n"
@@ -418,8 +443,6 @@ transform options introspectionData context query =
                             |> String.join "\n"
                        )
                     ++ encodeRecords recordContext
-                    ++ "\n\nselection : SelectionSet "++ elmRecordField.type_ ++ " RootQuery"
-                    ++ "\nselection = "
                     ++ body
             )
 
