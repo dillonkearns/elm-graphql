@@ -21,7 +21,18 @@ import Graphql.QueryParser exposing (..)
 combine =
     List.foldr (Result.map2 (::)) (Ok [])
 
-
+incrementUntilUnique dict desiredName iteration =
+    let
+        candidateName =
+            if iteration == 0 then
+                desiredName   
+            else
+                desiredName ++ (String.fromInt iteration)
+    in
+    case Dict.get candidateName dict of
+        Nothing -> candidateName
+        Just _ -> --collision
+            incrementUntilUnique dict desiredName (iteration +1)
 
 --
 type alias ElmRecordField =  { name : String, type_ : String }
@@ -81,48 +92,42 @@ typeRefToString (TypeReference referrableType nullable) =
             _ ->
                 "foo0"
     in
-        case nullable of
-            Nullable -> "Maybe (" ++ typeName ++ ")"
-            NonNullable -> typeName
+    case nullable of
+        Nullable -> "Maybe (" ++ typeName ++ ")"
+        NonNullable -> typeName
 
 
-typeRefToType (TypeReference referrableType nullable) =
-        case referrableType of
-            ObjectRef str -> 
-                str
-            Scalar scalar -> 
-                Scalar.toString scalar
-            List typeRef ->
-                typeRefToType typeRef
-            _ ->
-                "foo0"
+typeRefToTypeString (TypeReference referrableType nullable) =
+    case referrableType of
+        ObjectRef str -> 
+            str
+        Scalar scalar -> 
+            Scalar.toString scalar
+        List typeRef ->
+            typeRefToTypeString typeRef
+        _ ->
+            "foo0"
 
 typeDefinitionToString (TypeDefinition classCaseName definableType maybeDescription) =
     ClassCaseName.raw classCaseName
 
--- referrable modifies a DEFINED type, by making it list/optional
--- a definedtype you SELECT against
-
-translateField : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> TypeDefinition -> TranslationResult
-translateField context introspectionData recordContext modulePath fieldType typeDefinition =
+translateField : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> Type.Field -> TypeDefinition -> TranslationResult
+translateField context introspectionData recordContext modulePath fieldType field typeDefinition =
     let            
         fullyQualifiedFieldSelector =
             modulePath ++ "." ++ fieldType.name ++
-                if List.isEmpty fieldType.arguments then
-                    ""
-                else
-                    "{" ++ (argumentsToString fieldType.arguments) ++ "}"
-
-        typeName = typeDefinitionToString typeDefinition
-        -- typeName = typeRefToString typeRef
-
-        -- maybeSubFieldTypeDef =
-        --     findTypeDef introspectionData (typeRefToType typeRef)
+            (case field.args of 
+                [] -> ""
+                args -> 
+                    -- tbd - handle proper cases of required/optional/combo args
+                    -- this just happens to work for my test case for now
+                    if List.isEmpty fieldType.arguments then
+                        " identity"
+                    else
+                        " {" ++ (argumentsToString fieldType.arguments) ++ "}"
+            )
     in
     case fieldType.selectionSet of
-        -- ( Nothing, _ ) ->
-        --     Err ("Can't resolve " ++ fieldType.name ++ " of type " ++ typeName)
-
         Nothing ->
             --scalar case
             Ok
@@ -130,13 +135,13 @@ translateField context introspectionData recordContext modulePath fieldType type
                 , body = "|> with " ++ fullyQualifiedFieldSelector
                 , elmRecordField =
                     { name = fieldType.name
-                    , type_ = typeName
+                    , type_ = typeDefinitionToString typeDefinition
                     }
                 , recordContext = recordContext
                 }
 
-        Just selectionSet__ ->
-            translateSelectionSet context introspectionData recordContext typeDefinition selectionSet__
+        Just selectionSet ->
+            translateSelectionSet context introspectionData recordContext typeDefinition selectionSet
                 |> Result.map
                     (\result ->
                         { imports =
@@ -151,68 +156,134 @@ translateField context introspectionData recordContext modulePath fieldType type
                         }
                     )
 
-translateSelectionSet : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> TranslationResult
-translateSelectionSet context introspectionData recordContext ((TypeDefinition classCaseName definableType maybeDescription) as parentTypeDef) selectionSet =
-    let
-        targetRecordName =
-            ClassCaseName.raw classCaseName ++ "Record"
 
+translateTypeReference : TypeReference -> { decorateElmType : String -> String, className : Maybe String }
+translateTypeReference (TypeReference referableType isNullable) =
+    let
+        applyNullableModifier type_ =
+            case isNullable of
+                Nullable -> "Maybe (" ++ type_ ++ ")"
+                NonNullable -> type_
+    in
+    (case referableType of 
+        ObjectRef str -> { decorateElmType = identity, className = Just str }
+        Scalar scalar ->
+            { decorateElmType = identity 
+            , className = Just (Scalar.toString scalar)
+            }
+        List typeReference ->
+            let
+                { decorateElmType, className } = translateTypeReference typeReference
+            in
+            { decorateElmType =  (\elmType_ -> "List (" ++ elmType_ ++ ")")
+            , className = className
+            }
+        _ ->
+            { decorateElmType = identity, className = Nothing}
+    )
+    |> (\res ->
+        { decorateElmType = res.decorateElmType >> applyNullableModifier
+        , className = res.className
+        }
+    )
+
+translateSelectionSet : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> TranslationResult
+translateSelectionSet context introspectionData recordContext ((TypeDefinition classCaseName definableType maybeDescription) as typeDef) selectionSet =
+    let
         modulePath =
-            moduleName context parentTypeDef
+            moduleName context typeDef
                 |> String.join "."
     in
-    selectionSet
-        |> List.map (\(Field fieldType) -> 
-            case definableType of
-                ObjectType fields ->
+    case definableType of
+        ScalarType -> Err "Unsupported ScalarType type on selection set"
+        InterfaceType _ _ -> Err "Unsupported InterfaceType type on selection set"
+        UnionType _ -> Err "Unsupported UnionType type on selection set"
+        EnumType _ -> Err "Unsupported EnumType type on selection set"
+        InputObjectType _ -> Err "Unsupported InputObjectType type on selection set"
+        ObjectType fields ->
+            let
+                fieldNameToField =
                     fields
-                        |> List.map (\field_ -> ( CamelCaseName.raw field_.name, field_ ))
+                        |> List.map (\field -> ( CamelCaseName.raw field.name, field ))
                         |> Dict.fromList
-                        |> Dict.get fieldType.name
-                        |> Maybe.andThen (.typeRef >> typeRefToType >> findTypeDef introspectionData)
-                        |> Maybe.map (translateField context introspectionData recordContext modulePath fieldType)
-                        |> Maybe.withDefault (Err "Couldn't resolve selection type")
+            in
+            selectionSet
+                |> List.map (\(Field fieldSelection) -> 
+                    let
+                        maybeField =
+                            fieldNameToField
+                                |> Dict.get fieldSelection.name
+                    in
+                    case maybeField of 
+                        Nothing -> Err ("Unable to resolve field " ++ fieldSelection.name)
+                        Just field ->
+                            let
+                                { decorateElmType, className } = translateTypeReference field.typeRef
+                            
+                                maybeTypeDefinition = 
+                                    className
+                                        |> Maybe.andThen (findTypeDef introspectionData)
+                            in
+                            case maybeTypeDefinition of
+                                Nothing -> Err "Couldn't resolve field's type"
+                                Just fieldTypeDef ->
+                                    translateField context introspectionData recordContext modulePath fieldSelection field fieldTypeDef
+                                        |> Result.map (\result ->
+                                            { imports = result.imports
+                                            , body = result.body
+                                            , elmRecordField = 
+                                                { name = result.elmRecordField.name
+                                                , type_ = decorateElmType result.elmRecordField.type_ 
+                                                }
+                                            , recordContext = result.recordContext
+                                            }
+                                        )
+                )
+                |> combine
+                |> Result.map
+                    (\results ->
+                        let
+                            imports =
+                                results
+                                    |> List.map .imports
+                                    |> List.foldl Set.union Set.empty
+                                    |> Set.insert modulePath
+                            body =
+                                results
+                                    |> List.map .body
+                                    |> String.join "\n"
+                            
+                            newRecordContext =
+                                results
+                                    |> List.map .recordContext
+                                    |> (List.foldl
+                                        (\d1 d2 ->
+                                            Dict.merge
+                                                (Dict.insert)
+                                                (\key a b -> 
+                                                    Dict.insert key a
+                                                        >> Dict.insert (key ++ "2") b -- doing this breaks resolution later
+                                                )
+                                                (Dict.insert)
+                                                d1
+                                                d2
+                                                Dict.empty
+                                        )
+                                        Dict.empty)
+ 
+                            targetRecordName =
+                                incrementUntilUnique newRecordContext (ClassCaseName.raw classCaseName ++ "Record") 0
 
-                _ ->
-                    Err "UnsupportedType"
-        )
-        |> combine
-        |> Result.map
-            (\results ->
-                { imports =
-                    results
-                        |> List.map .imports
-                        |> List.foldl Set.union Set.empty
-                , body =
-                    results
-                        |> List.map .body
-                        |> String.join "\n"
-                , correspondElmType = { fieldName = "foo", fieldType = "foo1" }
-                , recordContext =
-                    results
-                        |> List.map .recordContext
-                        |> List.foldl
-                            (Dict.merge
-                                (\key a -> Dict.insert key a)
-                                (\key a b -> Dict.insert key a)
-                                (\key b -> Dict.insert key b)
-                                Dict.empty
-                            )
-                            Dict.empty
-                        |>  Dict.insert targetRecordName (results |> List.map .elmRecordField)
-                }
-            )
-        |> Result.andThen
-            (\result ->
-                Ok
-                    { imports =
-                        result.imports
-                            |> Set.insert modulePath
-                    , body = "SelectionSet.succeed " ++ targetRecordName ++ "\n" ++ result.body
-                    , elmRecordField = { name = "foo", type_ = targetRecordName }
-                    , recordContext = result.recordContext
-                    }
-            )
+                        in
+                            { imports = imports
+                            , body = "SelectionSet.succeed " ++ targetRecordName ++ "\n" ++ body
+                            , elmRecordField = { name = "foo", type_ = targetRecordName }
+                            , recordContext = 
+                                newRecordContext 
+                                    |> Dict.insert targetRecordName (results |> List.map .elmRecordField)
+                            }
+                    )
+       
 
 translateOperationDefinition : Context -> IntrospectionData -> OperationDefintion -> TranslationResult
 translateOperationDefinition context introspectionData opDef =
