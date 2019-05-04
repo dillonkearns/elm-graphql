@@ -46,25 +46,38 @@ type alias TranslationResult =
     Result String Translation
     
 
-argumentToString : Argument -> String
-argumentToString argument =
-    argument.name ++ " = " ++
-        case argument.value of 
-            Variable name -> "UNIMPLEMENTED"
-            IntValue int -> String.fromInt int
-            FloatValue float -> String.fromFloat float
-            StringValue str -> str
-            BooleanValue b -> if b then "True" else "False"
-            NullValue  -> "UNIMPLEMENTED"
-            EnumValue name -> "UNIMPLEMENTED"
-            ListValue values ->  "UNIMPLEMENTED"
-            ObjectValue objectValues ->  "UNIMPLEMENTED"
+argumentToString : (Argument, Type.Arg)-> String
+argumentToString (argument, argType) =
+    let
+        (TypeReference referrableType isNullable) = argType.typeRef
 
-argumentsToString : List Argument -> String
-argumentsToString arguments =
-    arguments
-        |> List.map argumentToString
-        |> String.join ","
+        maybeCustomConstructor = 
+            case referrableType of
+                Scalar(Scalar.Custom(className)) ->
+                    Just (ClassCaseName.normalized className)
+                _ -> Nothing
+
+        argumentValueString = 
+            case argument.value of 
+                Variable name -> "UNIMPLEMENTED"
+                IntValue int -> String.fromInt int
+                FloatValue float -> String.fromFloat float
+                StringValue str -> str
+                BooleanValue b -> if b then "True" else "False"
+                NullValue  -> "UNIMPLEMENTED"
+                EnumValue name -> "UNIMPLEMENTED"
+                ListValue values ->  "UNIMPLEMENTED"
+                ObjectValue objectValues ->  "UNIMPLEMENTED"
+        
+        wrappedValue =
+            maybeCustomConstructor
+                |> Maybe.map (\customConstructor -> 
+                    customConstructor ++ "(" ++ argumentValueString ++ ")"
+                )
+                |> Maybe.withDefault argumentValueString
+    in
+    argument.name ++ " = " ++ wrappedValue
+        
 
 moduleName context typeDef =
     ModuleName.generate context typeDef
@@ -82,10 +95,6 @@ findTypeDef introspectionData rootName =
 
 typeDefinitionToString (TypeDefinition classCaseName definableType maybeDescription) =
     ClassCaseName.raw classCaseName
-
-translateArgument : Argument -> Type.Arg -> String
-translateArgument argument argType =
-    argumentToString argument
 
 translateArguments : List Argument -> List Type.Arg -> Result String String
 translateArguments arguments argumentTypes =
@@ -137,7 +146,7 @@ translateArguments arguments argumentTypes =
                         "(\\optionalArgs -> " ++
                         "{ optionalArgs | " ++
                             (optionalArgAndTypes
-                                |> List.map (Tuple.first >> argumentToString)
+                                |> List.map argumentToString
                                 |> String.join ",") ++
                         "})"
                     
@@ -149,7 +158,7 @@ translateArguments arguments argumentTypes =
                     else
                         "{" ++
                             (requiredArgsAndTypes
-                                |> List.map (Tuple.first >> argumentToString)
+                                |> List.map argumentToString
                                 |> String.join ","
                             ) ++
                         "}"
@@ -376,6 +385,11 @@ transform options introspectionData context query =
                     ++ "import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)\n"
                     ++ "import Graphql.OptionalArgument exposing (OptionalArgument(..), fromMaybe)\n"
                     ++ "import Graphql.Operation exposing (RootQuery)\n"
+                    ++ (context.scalarCodecsModule
+                        |> Maybe.map ModuleName.toString
+                        |> Maybe.map (\path -> "import " ++ path ++ " exposing (..)\n")
+                        |> Maybe.withDefault ""
+                    )
                     ++ (Set.toList imports
                             |> List.map ((++) "import ")
                             |> String.join "\n"
