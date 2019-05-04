@@ -24,11 +24,18 @@ combine =
 
 
 --
+type alias ElmRecordField =  { name : String, type_ : String }
 
 type alias RecordContext =
-    Dict String (List { fieldName : String, fieldType : String })
+    Dict String (List ElmRecordField)
 
-type alias TranslationResult = Result String { imports : Set String, body : String, correspondElmType : { fieldName : String, fieldType : String }, recordContext : RecordContext } 
+type alias TranslationResult = 
+    Result String 
+        { imports : Set String
+        , body : String
+        , elmRecordField : ElmRecordField
+        , recordContext : RecordContext 
+        } 
 
 argumentsToString : List Argument -> String
 argumentsToString arguments =
@@ -90,8 +97,14 @@ typeRefToType (TypeReference referrableType nullable) =
             _ ->
                 "foo0"
 
-translateField : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> TypeReference -> TranslationResult
-translateField context introspectionData recordContext modulePath fieldType typeRef =
+typeDefinitionToString (TypeDefinition classCaseName definableType maybeDescription) =
+    ClassCaseName.raw classCaseName
+
+-- referrable modifies a DEFINED type, by making it list/optional
+-- a definedtype you SELECT against
+
+translateField : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> TypeDefinition -> TranslationResult
+translateField context introspectionData recordContext modulePath fieldType typeDefinition =
     let            
         fullyQualifiedFieldSelector =
             modulePath ++ "." ++ fieldType.name ++
@@ -99,39 +112,40 @@ translateField context introspectionData recordContext modulePath fieldType type
                     ""
                 else
                     "{" ++ (argumentsToString fieldType.arguments) ++ "}"
-   
-        typeName = typeRefToString typeRef
 
-        maybeSubFieldTypeDef =
-            findTypeDef introspectionData (typeRefToType typeRef)
+        typeName = typeDefinitionToString typeDefinition
+        -- typeName = typeRefToString typeRef
+
+        -- maybeSubFieldTypeDef =
+        --     findTypeDef introspectionData (typeRefToType typeRef)
     in
-    case (maybeSubFieldTypeDef, fieldType.selectionSet) of
-        ( Nothing, _ ) ->
-            Err ("Can't resolve " ++ fieldType.name ++ " of type " ++ typeName)
+    case fieldType.selectionSet of
+        -- ( Nothing, _ ) ->
+        --     Err ("Can't resolve " ++ fieldType.name ++ " of type " ++ typeName)
 
-        ( _, Nothing ) ->
+        Nothing ->
             --scalar case
             Ok
-                { imports = Set.singleton modulePath
+                { imports = Set.singleton modulePath -- for now, scalars won't contribute any new imports, but could later
                 , body = "|> with " ++ fullyQualifiedFieldSelector
-                , correspondElmType =
-                    { fieldName = fieldType.name
-                    , fieldType = typeName
+                , elmRecordField =
+                    { name = fieldType.name
+                    , type_ = typeName
                     }
                 , recordContext = recordContext
                 }
 
-        (Just fieldTypeDef, Just selectionSet__ ) ->
-            translateSelectionSet context introspectionData recordContext fieldTypeDef selectionSet__
+        Just selectionSet__ ->
+            translateSelectionSet context introspectionData recordContext typeDefinition selectionSet__
                 |> Result.map
                     (\result ->
                         { imports =
                             result.imports
                                 |> Set.insert modulePath
                         , body = "|> with (" ++ fullyQualifiedFieldSelector ++ " (\n" ++ result.body ++ "\n))"
-                        , correspondElmType = 
-                            { fieldName = fieldType.name
-                            , fieldType = typeName -- (if nullable then "Maybe " else "") ++ result.correspondElmType.fieldType 
+                        , elmRecordField = 
+                            { name = fieldType.name
+                            , type_ = result.elmRecordField.type_ 
                             }
                         , recordContext = result.recordContext
                         }
@@ -155,7 +169,7 @@ translateSelectionSet context introspectionData recordContext ((TypeDefinition c
                         |> List.map (\field_ -> ( CamelCaseName.raw field_.name, field_ ))
                         |> Dict.fromList
                         |> Dict.get fieldType.name
-                        |> Maybe.map .typeRef
+                        |> Maybe.andThen (.typeRef >> typeRefToType >> findTypeDef introspectionData)
                         |> Maybe.map (translateField context introspectionData recordContext modulePath fieldType)
                         |> Maybe.withDefault (Err "Couldn't resolve selection type")
 
@@ -185,7 +199,7 @@ translateSelectionSet context introspectionData recordContext ((TypeDefinition c
                                 Dict.empty
                             )
                             Dict.empty
-                        |>  Dict.insert targetRecordName (results |> List.map .correspondElmType)
+                        |>  Dict.insert targetRecordName (results |> List.map .elmRecordField)
                 }
             )
         |> Result.andThen
@@ -195,7 +209,7 @@ translateSelectionSet context introspectionData recordContext ((TypeDefinition c
                         result.imports
                             |> Set.insert modulePath
                     , body = "SelectionSet.succeed " ++ targetRecordName ++ "\n" ++ result.body
-                    , correspondElmType = { fieldName = "foo", fieldType = targetRecordName }
+                    , elmRecordField = { name = "foo", type_ = targetRecordName }
                     , recordContext = result.recordContext
                     }
             )
@@ -229,7 +243,7 @@ transform options introspectionData context query =
         |> Result.mapError (always "Parser Error")
         |> Result.andThen (translateOperationDefinition context introspectionData)
         |> Result.map
-            (\{ imports, body, recordContext, correspondElmType } ->
+            (\{ imports, body, recordContext, elmRecordField } ->
                 let
                     modulePath = 
                         List.append options.apiSubmodule [ "Foo" ]
@@ -244,7 +258,7 @@ transform options introspectionData context query =
                             |> String.join "\n"
                        )
                     ++ encodeRecords recordContext
-                    ++ "\n\nselection : SelectionSet "++ correspondElmType.fieldType ++ " RootQuery"
+                    ++ "\n\nselection : SelectionSet "++ elmRecordField.type_ ++ " RootQuery"
                     ++ "\nselection = "
                     ++ body
             )
@@ -261,8 +275,8 @@ encodeRecords recordNameToDefinition =
                     ++ " =\n{"
                     ++ (fields
                             |> List.map
-                                (\{ fieldName, fieldType } ->
-                                    fieldName ++ " : " ++ fieldType
+                                (\{ name, type_ } ->
+                                    name ++ " : " ++ type_
                                 )
                             |> String.join "\n,"
                        )
