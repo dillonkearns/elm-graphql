@@ -28,6 +28,8 @@ combine =
 type alias RecordContext =
     Dict String (List { fieldName : String, fieldType : String })
 
+type alias TranslationResult = Result String { imports : Set String, body : String, correspondElmType : { fieldName : String, fieldType : String }, recordContext : RecordContext } 
+
 argumentsToString : List Argument -> String
 argumentsToString arguments =
     arguments
@@ -88,8 +90,8 @@ typeRefToType (TypeReference referrableType nullable) =
             _ ->
                 "foo0"
 
-
-fieldToResult context introspectionData recordContext modulePath fieldType ((TypeReference referrableType isNullable) as typeRef) =
+fieldToResult : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> TypeReference -> TranslationResult
+fieldToResult context introspectionData recordContext modulePath fieldType typeRef =
     let            
         fullyQualifiedFieldSelector =
             modulePath ++ "." ++ fieldType.name ++
@@ -98,8 +100,6 @@ fieldToResult context introspectionData recordContext modulePath fieldType ((Typ
                 else
                     "{" ++ (argumentsToString fieldType.arguments) ++ "}"
    
-        nullable = isNullable == Nullable
-    
         typeName = typeRefToString typeRef
 
         maybeSubFieldTypeDef =
@@ -137,7 +137,7 @@ fieldToResult context introspectionData recordContext modulePath fieldType ((Typ
                         }
                     )
 
-selectionSetToString : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> Result String { imports : Set String, body : String, correspondElmType : { fieldName : String, fieldType : String }, recordContext : RecordContext }
+selectionSetToString : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> TranslationResult
 selectionSetToString context introspectionData recordContext ((TypeDefinition classCaseName definableType maybeDescription) as parentTypeDef) selectionSet =
     let
         targetRecordName =
@@ -200,7 +200,7 @@ selectionSetToString context introspectionData recordContext ((TypeDefinition cl
                     }
             )
 
-opDefToString : Context -> IntrospectionData -> OperationDefintion -> Result String { imports : Set String, body : String, recordContext : RecordContext, correspondElmType : { fieldName : String, fieldType : String } }
+opDefToString : Context -> IntrospectionData -> OperationDefintion -> TranslationResult
 opDefToString context introspectionData opDef =
     case opDef of
         SelectionSet selectionSet -> Err "Unsupported root level structure"
@@ -250,7 +250,7 @@ transform options introspectionData context query =
             )
 
 
-encodeRecords : Dict String (List { fieldName : String, fieldType : String }) -> String
+encodeRecords : RecordContext -> String
 encodeRecords recordNameToDefinition =
     recordNameToDefinition
         |> Dict.toList
