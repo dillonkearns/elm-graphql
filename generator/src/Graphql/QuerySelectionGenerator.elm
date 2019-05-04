@@ -11,6 +11,7 @@ import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Type as Type exposing (IsNullable(..), DefinableType(..), TypeReference(..), TypeDefinition(..), ReferrableType(..))
 import ModuleName exposing (ModuleName(..))
 import Graphql.Parser.Scalar as Scalar
+import Result.Extra as Result
 
 import Set exposing (Set)
 import Graphql.QueryParser exposing (..)
@@ -40,13 +41,16 @@ type alias ElmRecordField =  { name : String, type_ : String }
 type alias RecordContext =
     Dict String (List ElmRecordField)
 
+type alias Translation = 
+    { imports : Set String
+    , body : String
+    , elmRecordField : ElmRecordField
+    , recordContext : RecordContext 
+    } 
+
 type alias TranslationResult = 
-    Result String 
-        { imports : Set String
-        , body : String
-        , elmRecordField : ElmRecordField
-        , recordContext : RecordContext 
-        } 
+    Result String Translation
+        
 
 argumentsToString : List Argument -> String
 argumentsToString arguments =
@@ -188,7 +192,7 @@ translateTypeReference (TypeReference referableType isNullable) =
     )
 
 translateSelectionSet : Context -> IntrospectionData -> RecordContext -> TypeDefinition ->  SelectionSet -> TranslationResult
-translateSelectionSet context introspectionData recordContext ((TypeDefinition classCaseName definableType maybeDescription) as typeDef) selectionSet =
+translateSelectionSet context introspectionData recordContextOriginal ((TypeDefinition classCaseName definableType maybeDescription) as typeDef) selectionSet =
     let
         modulePath =
             moduleName context typeDef
@@ -206,16 +210,16 @@ translateSelectionSet context introspectionData recordContext ((TypeDefinition c
                     fields
                         |> List.map (\field -> ( CamelCaseName.raw field.name, field ))
                         |> Dict.fromList
-            in
-            selectionSet
-                |> List.map (\(Field fieldSelection) -> 
+                
+                accumulateFieldResults : Selection -> { recordContext : RecordContext, translatedFields : List TranslationResult } -> { recordContext : RecordContext, translatedFields : List TranslationResult }
+                accumulateFieldResults (Field fieldSelection) accumContext  =
                     let
                         maybeField =
                             fieldNameToField
                                 |> Dict.get fieldSelection.name
                     in
                     case maybeField of 
-                        Nothing -> Err ("Unable to resolve field " ++ fieldSelection.name)
+                        Nothing -> { accumContext | translatedFields = accumContext.translatedFields ++ [ Err ("Unable to resolve field " ++ fieldSelection.name) ] }
                         Just field ->
                             let
                                 { decorateElmType, className } = translateTypeReference field.typeRef
@@ -225,64 +229,70 @@ translateSelectionSet context introspectionData recordContext ((TypeDefinition c
                                         |> Maybe.andThen (findTypeDef introspectionData)
                             in
                             case maybeTypeDefinition of
-                                Nothing -> Err "Couldn't resolve field's type"
+                                Nothing -> { accumContext | translatedFields = accumContext.translatedFields ++ [  Err "Couldn't resolve field's type" ] }
                                 Just fieldTypeDef ->
-                                    translateField context introspectionData recordContext modulePath fieldSelection field fieldTypeDef
-                                        |> Result.map (\result ->
-                                            { imports = result.imports
-                                            , body = result.body
-                                            , elmRecordField = 
-                                                { name = result.elmRecordField.name
-                                                , type_ = decorateElmType result.elmRecordField.type_ 
+                                    let
+                                        translatedFieldResult = translateField context introspectionData accumContext.recordContext modulePath fieldSelection field fieldTypeDef
+                                            |> Result.map (\translation ->
+                                                { translation |
+                                                    elmRecordField = 
+                                                        { name = translation.elmRecordField.name
+                                                        , type_ = decorateElmType translation.elmRecordField.type_
+                                                        }
                                                 }
-                                            , recordContext = result.recordContext
-                                            }
-                                        )
-                )
-                |> combine
-                |> Result.map
-                    (\results ->
-                        let
-                            imports =
-                                results
-                                    |> List.map .imports
-                                    |> List.foldl Set.union Set.empty
-                                    |> Set.insert modulePath
-                            body =
-                                results
-                                    |> List.map .body
-                                    |> String.join "\n"
-                            
-                            newRecordContext =
-                                results
-                                    |> List.map .recordContext
-                                    |> (List.foldl
-                                        (\d1 d2 ->
-                                            Dict.merge
-                                                (Dict.insert)
-                                                (\key a b -> 
-                                                    Dict.insert key a
-                                                        >> Dict.insert (key ++ "2") b -- doing this breaks resolution later
-                                                )
-                                                (Dict.insert)
-                                                d1
-                                                d2
-                                                Dict.empty
-                                        )
-                                        Dict.empty)
- 
-                            targetRecordName =
-                                incrementUntilUnique newRecordContext (ClassCaseName.raw classCaseName ++ "Record") 0
+                                            )
 
-                        in
-                            { imports = imports
-                            , body = "SelectionSet.succeed " ++ targetRecordName ++ "\n" ++ body
-                            , elmRecordField = { name = "foo", type_ = targetRecordName }
-                            , recordContext = 
-                                newRecordContext 
-                                    |> Dict.insert targetRecordName (results |> List.map .elmRecordField)
+                                        recordContext_ = 
+                                            translatedFieldResult
+                                                |> Result.map .recordContext
+                                                |> Result.withDefault accumContext.recordContext
+                                        
+
+                                    in
+                                    { recordContext =  recordContext_
+                                    , translatedFields = accumContext.translatedFields ++ [ translatedFieldResult ]
+                                    }
+            in
+            -- if we FOLD over children, vs map + combine, we can thread the global
+            -- record name context through and avoid complicated type name collision 
+            -- resolution
+            selectionSet
+                |> List.foldl accumulateFieldResults { recordContext = recordContextOriginal, translatedFields = [] } 
+                |> (\accumulatedFieldResults ->
+                    -- let's do a quick translation to err if any of the fields errd
+                    Result.combine accumulatedFieldResults.translatedFields
+                        |> Result.map (\translations ->
+                            { recordContext = accumulatedFieldResults.recordContext
+                            , translations = translations
                             }
-                    )
+                        )
+                )
+                |> Result.map (\{ recordContext, translations } ->
+                    let
+                        imports =
+                            translations
+                                |> List.map .imports
+                                |> List.foldl Set.union Set.empty
+                                |> Set.insert modulePath
+                        body =
+                            translations
+                                |> List.map .body
+                                |> String.join "\n"
+
+                        newRecordName =
+                            incrementUntilUnique recordContext (ClassCaseName.raw classCaseName ++ "Record") 0
+
+                        newRecordFields =
+                            translations |> List.map .elmRecordField
+                    in
+                        { imports = imports
+                        , body = "SelectionSet.succeed " ++ newRecordName ++ "\n" ++ body
+                        , elmRecordField = { name = "foo", type_ = newRecordName }
+                        , recordContext = 
+                            recordContext 
+                                |> Dict.insert newRecordName newRecordFields
+                        }
+                )
        
 
 translateOperationDefinition : Context -> IntrospectionData -> OperationDefintion -> TranslationResult
@@ -323,6 +333,7 @@ transform options introspectionData context query =
                 in
                 "module "++ modulePath ++" exposing (..)\n\n"
                     ++ "import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)\n"
+                    ++ "import Graphql.OptionalArgument exposing (OptionalArgument(..), fromMaybe)\n"
                     ++ "import Graphql.Operation exposing (RootQuery)\n"
                     ++ (Set.toList imports
                             |> List.map ((++) "import ")
