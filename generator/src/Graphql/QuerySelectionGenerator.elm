@@ -16,12 +16,6 @@ import Result.Extra as Result
 import Set exposing (Set)
 import Graphql.QueryParser exposing (..)
 
---utility from Result extra
-
-
-combine =
-    List.foldr (Result.map2 (::)) (Ok [])
-
 incrementUntilUnique dict desiredName iteration =
     let
         candidateName =
@@ -50,24 +44,26 @@ type alias Translation =
 
 type alias TranslationResult = 
     Result String Translation
-        
+    
+
+argumentToString : Argument -> String
+argumentToString argument =
+    argument.name ++ " = " ++
+        case argument.value of 
+            Variable name -> "UNIMPLEMENTED"
+            IntValue int -> String.fromInt int
+            FloatValue float -> String.fromFloat float
+            StringValue str -> str
+            BooleanValue b -> if b then "True" else "False"
+            NullValue  -> "UNIMPLEMENTED"
+            EnumValue name -> "UNIMPLEMENTED"
+            ListValue values ->  "UNIMPLEMENTED"
+            ObjectValue objectValues ->  "UNIMPLEMENTED"
 
 argumentsToString : List Argument -> String
 argumentsToString arguments =
     arguments
-        |> List.map (\argument ->
-            argument.name ++ " = " ++
-            case argument.value of 
-                Variable name -> "UNIMPLEMENTED"
-                IntValue int -> String.fromInt int
-                FloatValue float -> String.fromFloat float
-                StringValue str -> str
-                BooleanValue b -> if b then "True" else "False"
-                NullValue  -> "UNIMPLEMENTED"
-                EnumValue name -> "UNIMPLEMENTED"
-                ListValue values ->  "UNIMPLEMENTED"
-                ObjectValue objectValues ->  "UNIMPLEMENTED"
-        )
+        |> List.map argumentToString
         |> String.join ","
 
 moduleName context typeDef =
@@ -84,81 +80,126 @@ nameToTypeDef introspectionData =
 findTypeDef introspectionData rootName =
     Dict.get rootName (nameToTypeDef introspectionData)
 
-typeRefToString (TypeReference referrableType nullable) =
-    let
-        typeName = case referrableType of
-            ObjectRef str -> 
-                str
-            Scalar scalar -> 
-                Scalar.toString scalar
-            List typeRef ->
-                "List (" ++ typeRefToString typeRef ++ ")"
-            _ ->
-                "foo0"
-    in
-    case nullable of
-        Nullable -> "Maybe (" ++ typeName ++ ")"
-        NonNullable -> typeName
-
-
-typeRefToTypeString (TypeReference referrableType nullable) =
-    case referrableType of
-        ObjectRef str -> 
-            str
-        Scalar scalar -> 
-            Scalar.toString scalar
-        List typeRef ->
-            typeRefToTypeString typeRef
-        _ ->
-            "foo0"
-
 typeDefinitionToString (TypeDefinition classCaseName definableType maybeDescription) =
     ClassCaseName.raw classCaseName
 
+translateArgument : Argument -> Type.Arg -> String
+translateArgument argument argType =
+    argumentToString argument
+
+translateArguments : List Argument -> List Type.Arg -> Result String String
+translateArguments arguments argumentTypes =
+    let
+        hasAnyOptionalArgs =
+            argumentTypes
+                |> List.any isArgumentOptional
+        
+        hasAnyRequiredArgs = 
+            argumentTypes
+                    |> List.any (isArgumentOptional >> not)
+
+        argNameToType =
+            argumentTypes
+                |> List.map (\arg -> (CamelCaseName.raw arg.name, arg))
+                |> Dict.fromList
+
+        isArgumentOptional arg =
+            case arg.typeRef of
+                TypeReference referableType Nullable ->
+                    True
+                TypeReference referableType NonNullable ->
+                    False
+
+        split argsAndTypes =
+            List.partition (Tuple.second >> isArgumentOptional) argsAndTypes
+
+        argAndTypesResults =
+            arguments
+                |> List.map (\arg -> 
+                    Dict.get arg.name argNameToType
+                        |> Maybe.map (\argType -> Ok (arg, argType))
+                        |> Maybe.withDefault (Err ("Can't resolve type for arg " ++ arg.name))
+                )
+    in
+    Result.combine argAndTypesResults
+        |> Result.map (\argsAndTypes ->
+            let
+                (optionalArgAndTypes, requiredArgsAndTypes) = split argsAndTypes
+
+                -- Optional arguments are in the form of a function that modifies
+                -- a record pre-populated with default values
+                optionalArgumentCode =
+                    if not hasAnyOptionalArgs then
+                        ""
+                    else if List.isEmpty optionalArgAndTypes then
+                        "identity"
+                    else
+                        "(\\optionalArgs -> " ++
+                        "{ optionalArgs | " ++
+                            (optionalArgAndTypes
+                                |> List.map (Tuple.first >> argumentToString)
+                                |> String.join ",") ++
+                        "})"
+                    
+                requiredArgumentCode = 
+                    if not hasAnyRequiredArgs then
+                        ""
+                    else if List.isEmpty requiredArgsAndTypes then
+                        ""
+                    else
+                        "{" ++
+                            (requiredArgsAndTypes
+                                |> List.map (Tuple.first >> argumentToString)
+                                |> String.join ","
+                            ) ++
+                        "}"
+            in
+             " " ++ optionalArgumentCode ++ " " ++ requiredArgumentCode
+        )
+
 translateField : Context -> IntrospectionData -> RecordContext -> String -> FieldType -> Type.Field -> TypeDefinition -> TranslationResult
 translateField context introspectionData recordContext modulePath fieldType field typeDefinition =
-    let            
-        fullyQualifiedFieldSelector =
-            modulePath ++ "." ++ fieldType.name ++
-            (case field.args of 
-                [] -> ""
-                args -> 
-                    -- tbd - handle proper cases of required/optional/combo args
-                    -- this just happens to work for my test case for now
-                    if List.isEmpty fieldType.arguments then
-                        " identity"
-                    else
-                        " {" ++ (argumentsToString fieldType.arguments) ++ "}"
+    let
+        fullyQualifiedFieldSelectorResult = translateArguments fieldType.arguments field.args
+            |> Result.map (\translatedArguments ->
+                modulePath ++ "." ++ fieldType.name ++
+                (case field.args of 
+                    [] -> ""
+                    args -> translatedArguments
+                )
             )
     in
-    case fieldType.selectionSet of
-        Nothing ->
-            --scalar case
-            Ok
-                { imports = Set.singleton modulePath -- for now, scalars won't contribute any new imports, but could later
-                , body = "|> with " ++ fullyQualifiedFieldSelector
-                , elmRecordField =
-                    { name = fieldType.name
-                    , type_ = typeDefinitionToString typeDefinition
-                    }
-                , recordContext = recordContext
-                }
-
-        Just selectionSet ->
-            translateSelectionSet context introspectionData recordContext typeDefinition selectionSet
-                |> Result.map
-                    (\result ->
-                        { imports =
-                            result.imports
-                                |> Set.insert modulePath
-                        , body = "|> with (" ++ fullyQualifiedFieldSelector ++ " (\n" ++ result.body ++ "\n))"
-                        , elmRecordField = 
+    fullyQualifiedFieldSelectorResult
+        |> Result.andThen(\fullyQualifiedFieldSelector -> 
+            case fieldType.selectionSet of
+                Nothing ->
+                    --scalar case
+                    Ok
+                        { imports = Set.singleton modulePath -- for now, scalars won't contribute any new imports, but could later
+                        , body = "|> with " ++ fullyQualifiedFieldSelector
+                        , elmRecordField =
                             { name = fieldType.name
-                            , type_ = result.elmRecordField.type_ 
+                            , type_ = typeDefinitionToString typeDefinition
                             }
-                        , recordContext = result.recordContext
+                        , recordContext = recordContext
                         }
-                    )
+
+                Just selectionSet ->
+                    translateSelectionSet context introspectionData recordContext typeDefinition selectionSet
+                        |> Result.map
+                            (\result ->
+                                { imports =
+                                    result.imports
+                                        |> Set.insert modulePath
+                                , body = "|> with (" ++ fullyQualifiedFieldSelector ++ " (\n" ++ result.body ++ "\n))"
+                                , elmRecordField = 
+                                    { name = fieldType.name
+                                    , type_ = result.elmRecordField.type_ 
+                                    }
+                                , recordContext = result.recordContext
+                                }
+                            )
+        )
 
 
 translateTypeReference : TypeReference -> { decorateElmType : String -> String, className : Maybe String }
