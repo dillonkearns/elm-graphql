@@ -15,6 +15,8 @@ import Result.Extra as Result
 import Parser
 import Set exposing (Set)
 import Graphql.QueryParser exposing (..)
+import Graphql.Generator.Normalize as Normalize
+
 
 deadEndToString : Parser.DeadEnd -> String
 deadEndToString deadend = 
@@ -396,6 +398,7 @@ translateOperationDefinition context introspectionData opDef =
                     operationRecord.variableDefinitions
                         |> List.map .type_
                         |> List.map typeToString
+                        |> List.map Normalize.capitalized
             in
             case maybeTypeDef of
                 Nothing ->  Err ("Can't find " ++ (maybeFieldName |> Maybe.withDefault "unknown type"))
