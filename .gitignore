@@ -1,5 +1,5 @@
 # Distribution
-dist/bundle.js
+# dist/bundle.js
 build/
 documentation.json
 docs.json
