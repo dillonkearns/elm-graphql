@@ -12,7 +12,8 @@
     "gen:github": "npm run build && && cd examples && ../bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output src",
     "approve-compilation": "cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/complex/Main.elm src/SimpleMutation.elm",
     "approve": "bin/approve",
-    "elm-analyse": "elm-analyse --serve"
+    "elm-analyse": "elm-analyse --serve",
+    "postinstall": "npm run build"
   },
   "keywords": [
     "elm",
