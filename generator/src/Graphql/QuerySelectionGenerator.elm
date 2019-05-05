@@ -112,7 +112,7 @@ findTypeDef introspectionData rootName =
     Dict.get rootName (nameToTypeDef introspectionData)
 
 typeDefinitionToString (TypeDefinition classCaseName definableType maybeDescription) =
-    ClassCaseName.raw classCaseName
+    ClassCaseName.normalized classCaseName
 
 typeToString type_ = 
     case type_ of

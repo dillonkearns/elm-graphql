@@ -1,18 +1,14 @@
-query($teamId: ID!) {
-  user {
-    email
-  }
-  team(id: $teamId) {
-    id
-    name
-    lead {
-      fullName
-      primaryEmail
-    }
-  }
+query {
   organization {
+    id
     teams {
       name
+      onboardingWorkflowTemplate {
+        id
+      }
+      offboardingWorkflowTemplate {
+        id
+      }
     }
   }
 }
