@@ -420,19 +420,19 @@ translateOperationDefinition context introspectionData opDef =
                             }
                         )
 
-transform : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Context -> String -> Result String String
-transform options introspectionData context query =
+transform : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Context -> List String -> String -> Result String String
+transform options introspectionData context modulePath query =
     parse query
         |> Result.mapError (\deadEnds -> String.concat (List.intersperse "; " (List.map deadEndToString deadEnds)))
         |> Result.andThen (translateOperationDefinition context introspectionData)
         |> Result.map
             (\{ imports, body, recordContext } ->
                 let
-                    modulePath = 
-                        List.append options.apiSubmodule [ "Foo" ]
+                    modulePathString = 
+                        modulePath
                             |> String.join "."
                 in
-                "module "++ modulePath ++" exposing (..)\n\n"
+                "module "++ modulePathString ++" exposing (..)\n\n"
                     ++ "import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)\n"
                     ++ "import Graphql.OptionalArgument exposing (OptionalArgument(..), fromMaybe)\n"
                     ++ "import Graphql.Operation exposing (RootQuery)\n"

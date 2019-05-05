@@ -1,18 +1,11 @@
 const { Elm } = require("./Main.elm");
+import * as childProcess from "child_process";
 import * as fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
-import * as http from "http";
-import * as request from "request";
+import * as path from "path";
+import { removeGenerated, warnAndExitIfContainsNonGenerated } from "./cli/generated-code-handler";
 import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
-import * as glob from "glob";
-import * as path from "path";
-import * as childProcess from "child_process";
-import {
-  removeGenerated,
-  isGenerated,
-  warnAndExitIfContainsNonGenerated
-} from "./cli/generated-code-handler";
 const npmPackageVersion = require("../../package.json").version;
 const elmPackageVersion = require("../../elm.json").version;
 
@@ -28,6 +21,17 @@ function prependBasePath(
   outputPath: string
 ): string {
   return path.join(outputPath, baseModule.join("/"), suffixPath);
+}
+
+function loadQueryFiles(queryDirectory:string| null): {[ index: string ]: string } {
+  const queryFiles : {[ index: string ]: string } = {}
+  if(queryDirectory){
+    const filenames = fs.readdirSync(queryDirectory)
+    filenames.forEach((filename:string) => {
+      queryFiles[filename]= fs.readFileSync(queryDirectory + "/" + filename, 'utf-8')
+    })
+  }
+  return queryFiles
 }
 
 let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
@@ -46,20 +50,25 @@ app.ports.introspectSchemaFromFile.subscribe(
     introspectionFilePath,
     outputPath,
     baseModule,
+    queryDirectory,
     customDecodersModule
   }: {
     introspectionFilePath: string;
     outputPath: string;
     baseModule: string[];
+    queryDirectory : string | null;
     customDecodersModule: string | null;
   }) => {
     warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
     const introspectionFileJson = JSON.parse(
       fs.readFileSync(introspectionFilePath).toString()
     );
+
+    const queryFiles = loadQueryFiles(queryDirectory)
+
     onDataAvailable(
       introspectionFileJson.data || introspectionFileJson,
-      null,
+      queryFiles,
       outputPath,
       baseModule,
       customDecodersModule
@@ -72,7 +81,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     graphqlUrl,
     excludeDeprecated,
     outputPath,
-    queryFile,
+    queryDirectory,
     baseModule,
     headers,
     customDecodersModule
@@ -80,7 +89,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     graphqlUrl: string;
     excludeDeprecated: boolean;
     outputPath: string;
-    queryFile : string | null;
+    queryDirectory : string | null;
     baseModule: string[];
     headers: {};
     customDecodersModule: string | null;
@@ -94,11 +103,8 @@ app.ports.introspectSchemaFromUrl.subscribe(
     })
       .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
       .then(data => {
-        let queryFileContent = null
-        if (queryFile) {
-          queryFileContent = fs.readFileSync(queryFile).toString()
-        }
-        onDataAvailable(data, queryFileContent, outputPath, baseModule, customDecodersModule);
+        const queryFiles = loadQueryFiles(queryDirectory)
+        onDataAvailable(data, queryFiles, outputPath, baseModule, customDecodersModule);
       })
       .catch(err => {
         console.log(err.response || err);
@@ -119,7 +125,7 @@ function makeEmptyDirectories(
 
 function onDataAvailable(
   data: {},
-  queryFile: string | null,
+  queryFiles:{[ index: string ]: string },
   outputPath: string,
   baseModule: string[],
   customDecodersModule: string | null
@@ -134,7 +140,8 @@ function onDataAvailable(
       "Object",
       "Interface",
       "Union",
-      "Enum"
+      "Enum",
+      "Queries"
     ]);
     await Promise.all(writeGeneratedFiles(outputPath, generatedFile)).catch(
       err => {
@@ -152,7 +159,7 @@ function onDataAvailable(
     }
     console.log("Success!");
   });
-  app.ports.generateFiles.send({queryFile, introspectionData:data});
+  app.ports.generateFiles.send({queryFiles, introspectionData:data});
 }
 
 function verifyCustomCodecsFileIsValid(

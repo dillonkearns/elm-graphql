@@ -1,4 +1,4 @@
-module Graphql.Generator.Group exposing (IntrospectionData, interfacePossibleTypesDict, generateFiles, sortedIntrospectionData)
+module Graphql.Generator.Group exposing (IntrospectionData, interfacePossibleTypesDict, generateFiles, sortedIntrospectionData, moduleToFileName)
 
 import Dict exposing (Dict)
 import Graphql.Generator.Context exposing (Context)

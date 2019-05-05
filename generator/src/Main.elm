@@ -19,26 +19,32 @@ import MyDebug
 import Ports
 import Result.Extra
 import String.Interpolate exposing (interpolate)
+import Graphql.Generator.Normalize as Normalize
 
+import Json.Decode as Decode
 
 type Msg
-    = GenerateFiles { queryFile : Maybe String, introspectionData : Json.Encode.Value }
+    = GenerateFiles { queryFiles : Json.Encode.Value, introspectionData : Json.Encode.Value }
 
 
 type alias Model =
     ()
 
-
-moduleToFileName : List String -> String
-moduleToFileName modulePath =
-    (modulePath |> String.join "/")
-        ++ ".elm"
-
-run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> { queryFile : Maybe String, introspectionData : Json.Encode.Value } -> Cmd msg
-run options { queryFile, introspectionData } =
-    case Decode.decodeValue Graphql.Parser.decoder introspectionData of
-        Ok introspectData ->
-            let
+run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> { queryFiles : Json.Encode.Value, introspectionData : Json.Encode.Value } -> Cmd msg
+run options data =
+    let
+        introspectionDataResult = 
+            data.introspectionData
+                |> Decode.decodeValue Graphql.Parser.decoder 
+        
+        queryFilesResult =
+            data.queryFiles
+                |> Decode.decodeValue (Decode.dict Decode.string)
+    in
+    Result.map2 Tuple.pair introspectionDataResult queryFilesResult
+        |> Result.mapError (\error -> "Got error decoding" ++ Decode.errorToString error)
+        |> Result.andThen (\(introspectData, queryFiles) ->
+             let
                 context : Context
                 context =
                     { query = ClassCaseName.build introspectData.queryObjectName
@@ -49,35 +55,49 @@ run options { queryFile, introspectionData } =
                     , scalarCodecsModule = options.scalarCodecsModule
                     }
 
-                maybeQuerySelectionFileContents =
-                    queryFile
-                        |> Maybe.map (Graphql.QuerySelectionGenerator.transform options introspectData context)
-                        |> Debug.log "transformResult!!"
-                        |> Maybe.andThen Result.toMaybe
-                
-                fileName = moduleToFileName (List.append options.apiSubmodule ["Foo"])
-            in
-            introspectData
-                |> Graphql.Parser.encoder options
-                |> (\dict ->
-                    maybeQuerySelectionFileContents
-                        |> Maybe.map(\querySelectionFileContents ->
-                            Dict.insert fileName (querySelectionFileContents) dict
+                generatedLibFiles = 
+                    introspectData
+                        |> Graphql.Parser.encoder options
+
+                generatedQueryFilesResult =
+                    queryFiles
+                        |> Dict.toList
+                        |> List.map (\(queryFileName, query) ->
+                            let
+                                maybeModulePath =
+                                    queryFileName
+                                        |> String.split "."
+                                        |> List.head
+                                        |> Maybe.map Normalize.capitalized
+                                        |> Maybe.map (\moduleName -> [ "Queries", moduleName] )
+                                        |> Maybe.map ((++) options.apiSubmodule)
+                            in
+                            case maybeModulePath of
+                                Nothing -> Err("Unable to name file" ++ queryFileName)
+                                Just modulePath ->
+                                    query
+                                        |> Graphql.QuerySelectionGenerator.transform options introspectData context modulePath
+                                        |> Debug.log "transformResult!!"
+                                        |> Result.map (\contents -> (Group.moduleToFileName modulePath, contents)
+                                        )
                         )
-                        |> Maybe.withDefault dict
+                        |> Result.Extra.combine
+            in
+            generatedQueryFilesResult
+                |> Result.map Dict.fromList
+                |> Result.map (\ generatedQueryFiles ->
+                    generatedLibFiles
+                        |> Dict.union generatedQueryFiles
+                        |> Json.Encode.Extra.dict identity Json.Encode.string
                 )
-                |> Json.Encode.Extra.dict identity Json.Encode.string
-                |> Ports.generatedFiles
-
-        Err error ->
-            ("Got error " ++ Decode.errorToString error)
-                |> Ports.printAndExitFailure
-
+        ) 
+        |> Result.map Ports.generatedFiles
+        |> Result.mapError Ports.printAndExitFailure
+        |> Result.Extra.merge
 
 type CliOptions
     = FromUrl UrlArgs
     | FromFile FileArgs
-    | ParserTest ParserTestArgs
 
 
 type alias UrlArgs =
@@ -87,25 +107,15 @@ type alias UrlArgs =
     , excludeDeprecated : Bool
     , headers : Dict.Dict String String
     , scalarCodecsModule : Maybe ModuleName
+    , queryDirectory : Maybe String
     }
-
-
-type alias ParserTestArgs =
-    { url : String
-    , base : List String
-    , queryFile : String
-    , outputPath : String
-    , excludeDeprecated : Bool
-    , headers : Dict.Dict String String
-    , scalarCodecsModule : Maybe ModuleName
-    }
-
 
 type alias FileArgs =
     { file : String
     , base : List String
     , outputPath : String
     , scalarCodecsModule : Maybe ModuleName
+    , queryDirectory : Maybe String
     }
 
 
@@ -133,21 +143,6 @@ program : Program.Config CliOptions
 program =
     Program.config
         |> Program.add
-            (OptionsParser.buildSubCommand "test" ParserTestArgs
-                |> with (Option.requiredPositionalArg "url")
-                |> with baseOption
-                |> with queryFileOption
-                |> with outputPathOption
-                |> with (Option.flag "exclude-deprecated")
-                |> with
-                    (Option.keywordArgList "header"
-                        |> Option.validateMap parseHeaders
-                    )
-                |> with scalarCodecsOption
-                |> OptionsParser.withDoc "generate files based on the schema at `url`"
-                |> OptionsParser.map ParserTest
-            )
-        |> Program.add
             (OptionsParser.build UrlArgs
                 |> with (Option.requiredPositionalArg "url")
                 |> with baseOption
@@ -158,6 +153,7 @@ program =
                         |> Option.validateMap parseHeaders
                     )
                 |> with scalarCodecsOption
+                |> with queriesDirectoryOption
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
             )
@@ -167,6 +163,7 @@ program =
                 |> with baseOption
                 |> with outputPathOption
                 |> with scalarCodecsOption
+                |> with queriesDirectoryOption
                 |> OptionsParser.map FromFile
             )
 
@@ -192,9 +189,9 @@ baseOption =
         |> Option.withDefault [ "Api" ]
 
 
-queryFileOption : Option.Option String String Option.BeginningOption
-queryFileOption =
-    Option.requiredKeywordArg "queryFile"
+queriesDirectoryOption : Option.Option (Maybe String) (Maybe String) Option.BeginningOption
+queriesDirectoryOption =
+    Option.optionalKeywordArg "queryDirectory"
 
 
 validateModuleName : String -> Cli.Validate.ValidationResult
@@ -215,7 +212,7 @@ init flags msg =
                 { graphqlUrl = options.url
                 , excludeDeprecated = options.excludeDeprecated
                 , outputPath = options.outputPath
-                , queryFile = Nothing
+                , queryDirectory = options.queryDirectory
                 , baseModule = options.base
                 , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
@@ -228,19 +225,7 @@ init flags msg =
                 { introspectionFilePath = options.file
                 , outputPath = options.outputPath
                 , baseModule = options.base
-                , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
-                }
-            )
-
-        ParserTest options ->
-            ( ()
-            , Ports.introspectSchemaFromUrl
-                { graphqlUrl = options.url
-                , excludeDeprecated = options.excludeDeprecated
-                , outputPath = options.outputPath
-                , baseModule = options.base
-                , queryFile = Just options.queryFile
-                , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
+                , queryDirectory = options.queryDirectory
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
                 }
             )
@@ -257,9 +242,6 @@ update cliOptions msg model =
                             ( options.base, options.scalarCodecsModule )
 
                         FromFile options ->
-                            ( options.base, options.scalarCodecsModule )
-
-                        ParserTest options ->
                             ( options.base, options.scalarCodecsModule )
             in
             ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } result )

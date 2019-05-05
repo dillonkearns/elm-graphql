@@ -1,0 +1,18 @@
+query($teamId: ID!) {
+  user {
+    email
+  }
+  team(id: $teamId) {
+    id
+    name
+    lead {
+      fullName
+      primaryEmail
+    }
+  }
+  organization {
+    teams {
+      name
+    }
+  }
+}
