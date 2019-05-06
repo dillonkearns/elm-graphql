@@ -24,7 +24,7 @@ const getClient = (token) => {
 
   // Create a WebSocket link:
   const wsLink = new WebSocketLink({
-    uri: `ws://${GRAPHQL_URI}`,
+    uri: `wss://${GRAPHQL_URI}`,
     options: {
       reconnect: true
       , connectionParams: {

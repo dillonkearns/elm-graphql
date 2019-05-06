@@ -74,6 +74,16 @@ graphql_url =
     "https://todo-mvc-elm-backend1.herokuapp.com/v1alpha1/graphql"
 
 
+signup_url : String
+signup_url =
+    "https://guarded-woodland-47581.herokuapp.com/signup"
+
+
+login_url : String
+login_url =
+    "https://guarded-woodland-47581.herokuapp.com/login"
+
+
 
 ---- Ports ----
 
@@ -1045,7 +1055,7 @@ update msg model =
             let
                 loginRequest =
                     Http.post
-                        { url = "http://localhost:8010/login"
+                        { url = login_url
                         , body = Http.jsonBody (loginDataEncoder model.authData)
                         , expect = Http.expectJson (RemoteData.fromResult >> GotLoginResponse) decodeLogin
                         }
@@ -1056,7 +1066,7 @@ update msg model =
             let
                 signupRequest =
                     Http.post
-                        { url = "http://localhost:8010/signup"
+                        { url = signup_url
                         , body = Http.jsonBody (signupDataEncoder model.authData)
                         , expect = Http.expectJson (RemoteData.fromResult >> GotSignupResponse) decodeSignup
                         }
