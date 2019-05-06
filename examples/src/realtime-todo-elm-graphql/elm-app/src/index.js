@@ -12,7 +12,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import gql from 'graphql-tag'
 
 // Replace it with your graphql url
-const GRAPHQL_URI = 'localhost:8080/v1alpha1/graphql';
+const GRAPHQL_URI = 'todo-mvc-elm-backend1.herokuapp.com/v1alpha1/graphql';
 
 
 

@@ -74,17 +74,17 @@ main =
 
 graphql_url : String
 graphql_url =
-    "http://localhost:8080/v1alpha1/graphql"
+    "https://todo-mvc-elm-backend1.herokuapp.com/v1alpha1/graphql"
 
 
 signup_url : String
 signup_url =
-    "http://localhost:8010/signup"
+    "https://guarded-woodland-47581.herokuapp.com/signup"
 
 
 login_url : String
 login_url =
-    "http://localhost:8010/login"
+    "https://guarded-woodland-47581.herokuapp.com/login"
 
 
 
