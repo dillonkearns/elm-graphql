@@ -12,7 +12,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import gql from 'graphql-tag'
 
 // Replace it with your graphql url
-const GRAPHQL_URI = 'todo-mvc-elm-backend1.herokuapp.com/v1alpha1/graphql';
+const GRAPHQL_URI = 'localhost:8080/v1alpha1/graphql';
 
 
 
@@ -24,7 +24,7 @@ const getClient = (token) => {
 
   // Create a WebSocket link:
   const wsLink = new WebSocketLink({
-    uri: `wss://${GRAPHQL_URI}`,
+    uri: `ws://${GRAPHQL_URI}`,
     options: {
       reconnect: true
       , connectionParams: {
@@ -96,6 +96,26 @@ document.addEventListener("DOMContentLoaded", function() {
       }).subscribe({
         next(resp) {
           app.ports.gotRecentPublicTodoItem.send(resp);
+        },
+        error(err) {
+          console.log('error is');
+          console.log(err);
+          app.ports.gotTodoListData.send(err);
+        }
+      });
+    }
+  });
+
+  app.ports.createSubscriptionToOnlineUsers.subscribe(function(data) {
+    /* Initiate subscription request */
+    var [ data, authToken ] = data;
+    if (authToken.length > 0) {
+      getClient(authToken).subscribe({
+        query: gql`${data}`,
+        variables: {}
+      }).subscribe({
+        next(resp) {
+          app.ports.gotOnlineUsers.send(resp);
         },
         error(err) {
           console.log('error is');

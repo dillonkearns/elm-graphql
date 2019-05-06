@@ -15,11 +15,13 @@ import Hasura.Enum.Order_by
 import Hasura.InputObject
 import Hasura.Mutation as Mutation
 import Hasura.Object
+import Hasura.Object.Online_users as OnlineUser
 import Hasura.Object.Todolist as Todolist
 import Hasura.Object.Todolist_mutation_response as TodolistMutation
 import Hasura.Object.Users as Users
 import Hasura.Object.Users_mutation_response as UsersMutation
 import Hasura.Query as Query
+import Hasura.Scalar as Timestamptz exposing (Timestamptz(..))
 import Hasura.Subscription as Subscription
 import Html exposing (Html, a, button, div, form, h1, i, img, input, label, li, nav, p, span, text, ul)
 import Html.Attributes
@@ -39,6 +41,7 @@ import Html.Attributes
 import Html.Events exposing (onClick, onInput, onSubmit)
 import Html.Keyed as Keyed
 import Http
+import Iso8601
 import Json.Decode exposing (Decoder, field, int, string)
 import Json.Encode as Encode
 import RemoteData exposing (RemoteData)
@@ -71,17 +74,17 @@ main =
 
 graphql_url : String
 graphql_url =
-    "https://todo-mvc-elm-backend1.herokuapp.com/v1alpha1/graphql"
+    "http://localhost:8080/v1alpha1/graphql"
 
 
 signup_url : String
 signup_url =
-    "https://guarded-woodland-47581.herokuapp.com/signup"
+    "http://localhost:8010/signup"
 
 
 login_url : String
 login_url =
-    "https://guarded-woodland-47581.herokuapp.com/login"
+    "http://localhost:8010/login"
 
 
 
@@ -89,6 +92,9 @@ login_url =
 
 
 port createSubscriptionToTasks : ( String, String ) -> Cmd msg
+
+
+port createSubscriptionToOnlineUsers : ( String, String ) -> Cmd msg
 
 
 port createSubscriptionToPublicTodos : ( String, String ) -> Cmd msg
@@ -103,6 +109,9 @@ port creatingSubscriptionToTasks : (Int -> msg) -> Sub msg
 port gotRecentPublicTodoItem : (Json.Decode.Value -> msg) -> Sub msg
 
 
+port gotOnlineUsers : (Json.Decode.Value -> msg) -> Sub msg
+
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
     case String.length model.authData.authToken of
@@ -113,6 +122,7 @@ subscriptions model =
             Sub.batch
                 [ gotTodoListData DataReceived
                 , gotRecentPublicTodoItem RecentPublicTodoReceived
+                , gotOnlineUsers GotOnlineUsers
                 , creatingSubscriptionToTasks DataLoading
                 , Time.every 10000 Tick
                 ]
@@ -140,6 +150,16 @@ type alias Tasks =
     List Task
 
 
+type alias OnlineUsers =
+    List OnlineUser
+
+
+type alias OnlineUser =
+    { id : Maybe Int
+    , username : Maybe String
+    }
+
+
 type alias Model =
     { tasks : TaskData
     , visibility : String
@@ -150,6 +170,7 @@ type alias Model =
     , authForm : AuthForm
     , publicTodoInsert : String
     , publicTodoInfo : PublicTodoData
+    , online_users : OnlineUsersData
     }
 
 
@@ -245,6 +266,10 @@ type alias TaskData =
     RemoteData Json.Decode.Error Tasks
 
 
+type alias OnlineUsersData =
+    RemoteData Json.Decode.Error OnlineUsers
+
+
 type alias PublicTaskData =
     RemoteData Json.Decode.Error Tasks
 
@@ -268,6 +293,7 @@ iAT =
 initialize : Model
 initialize =
     { tasks = RemoteData.NotAsked
+    , online_users = RemoteData.NotAsked
     , visibility = "All"
     , newTask = ""
     , mutateTask = RemoteData.NotAsked
@@ -284,16 +310,14 @@ getInitialEvent authToken =
     Cmd.batch
         [ createSubscriptionToTasks ( subscriptionDocument |> Graphql.Document.serializeSubscription, authToken )
         , createSubscriptionToPublicTodos ( publicListSubscription |> Graphql.Document.serializeSubscription, authToken )
+        , createSubscriptionToOnlineUsers ( onlineUsersSubscription |> Graphql.Document.serializeSubscription, authToken )
         ]
 
 
 init : ( Model, Cmd Msg )
 init =
     ( initialize
-    , Cmd.batch
-        [ createSubscriptionToTasks ( subscriptionDocument |> Graphql.Document.serializeSubscription, iAT )
-        , createSubscriptionToPublicTodos ( publicListSubscription |> Graphql.Document.serializeSubscription, iAT )
-        ]
+    , getInitialEvent iAT
     )
 
 
@@ -356,6 +380,27 @@ subscriptionDocument =
 
 
 
+{-
+   Subscribe to active users
+-}
+
+
+onlineUsersSubscription : SelectionSet OnlineUsers RootSubscription
+onlineUsersSubscription =
+    Subscription.online_users identity onlineUsersSelection
+
+
+onlineUsersSelection : SelectionSet OnlineUser Hasura.Object.Online_users
+onlineUsersSelection =
+    SelectionSet.map2 OnlineUser
+        OnlineUser.id
+        OnlineUser.username
+
+
+
+{-
+   End of it
+-}
 {-
    Subscription query to fetch recent todolist
 -}
@@ -692,9 +737,27 @@ makePublicMutation mutation authToken =
 -}
 
 
-updateUserLastSeen : SelectionSet (Maybe MutationResponse) RootMutation
-updateUserLastSeen =
-    Mutation.update_users identity setUserLastSeenUpdateArgs selectionUpdateUserLastSeen
+updateUserLastSeen : String -> SelectionSet (Maybe MutationResponse) RootMutation
+updateUserLastSeen currTime =
+    Mutation.update_users (setUpdateUserArgs currTime) setUserLastSeenUpdateArgs selectionUpdateUserLastSeen
+
+
+setUpdateUserArgs : String -> Mutation.UpdateUsersOptionalArguments -> Mutation.UpdateUsersOptionalArguments
+setUpdateUserArgs val _ =
+    Mutation.UpdateUsersOptionalArguments
+        OptionalArgument.Absent
+        (OptionalArgument.Present
+            (Hasura.InputObject.Users_set_input
+                OptionalArgument.Absent
+                OptionalArgument.Absent
+                (OptionalArgument.Present
+                    (Timestamptz val)
+                )
+                OptionalArgument.Absent
+                OptionalArgument.Absent
+                OptionalArgument.Absent
+            )
+        )
 
 
 setUserLastSeenUpdateArgs : Mutation.UpdateUsersRequiredArguments
@@ -721,9 +784,9 @@ selectionUpdateUserLastSeen =
         UsersMutation.affected_rows
 
 
-updateLastSeen : String -> Cmd Msg
-updateLastSeen authToken =
-    updateUserLastSeen
+updateLastSeen : String -> SelectionSet (Maybe MutationResponse) RootMutation -> Cmd Msg
+updateLastSeen authToken updateQuery =
+    updateQuery
         |> Graphql.Http.mutationRequest graphql_url
         |> getAuthHeader authToken
         |> Graphql.Http.send (RemoteData.fromResult >> UpdateLastSeen)
@@ -958,6 +1021,7 @@ type Msg
     | AllCompletedItemsDeleted AllDeleted
     | DeleteAllCompletedItems Int
     | RecentPublicTodoReceived Json.Decode.Value
+    | GotOnlineUsers Json.Decode.Value
     | EnteredEmail String
     | EnteredPassword String
     | EnteredUsername String
@@ -1022,8 +1086,15 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Tick newTime ->
+            let
+                currentIsoTime =
+                    Iso8601.fromTime newTime
+
+                updateQuery =
+                    updateUserLastSeen currentIsoTime
+            in
             ( model
-            , updateLastSeen model.authData.authToken
+            , updateLastSeen model.authData.authToken updateQuery
             )
 
         ClearAuthToken ->
@@ -1078,6 +1149,13 @@ update msg model =
 
         DataLoading _ ->
             ( { model | tasks = RemoteData.Loading }, Cmd.none )
+
+        GotOnlineUsers data ->
+            let
+                remoteData =
+                    Json.Decode.decodeValue (onlineUsersSubscription |> Graphql.Document.decoder) data |> RemoteData.fromResult
+            in
+            ( { model | online_users = remoteData }, Cmd.none )
 
         DataReceived data ->
             let
@@ -1668,6 +1746,46 @@ topNavBar =
         ]
 
 
+getOnlineUsersCount : OnlineUsersData -> Int
+getOnlineUsersCount onlineUsers =
+    case onlineUsers of
+        RemoteData.Success data ->
+            List.length data
+
+        _ ->
+            0
+
+
+generateOnlineUsersList : OnlineUsersData -> List (Html msg)
+generateOnlineUsersList onlineUser =
+    case onlineUser of
+        RemoteData.Success d ->
+            List.map viewOnlineUser d
+
+        _ ->
+            [ text "" ]
+
+
+viewUserName : String -> Html msg
+viewUserName str =
+    div [ class "userInfo" ]
+        [ div [ class "userImg" ]
+            [ i [ class "far fa-user" ] [] ]
+        , div [ class "userName" ]
+            [ text str ]
+        ]
+
+
+viewOnlineUser : OnlineUser -> Html msg
+viewOnlineUser onlineUser =
+    case onlineUser.username of
+        Just username ->
+            viewUserName username
+
+        Nothing ->
+            text ""
+
+
 viewTodoSection : Model -> Html Msg
 viewTodoSection model =
     div [ class "content" ]
@@ -1681,16 +1799,10 @@ viewTodoSection model =
                 [ div [ class "col-xs-12 col-md-12 sliderMenu p-30 bg-gray" ]
                     [ div [ class "onlineUsersWrapper" ]
                         [ div [ class "sliderHeader" ]
-                            [ text ((++) "Online Users - " "1")
+                            [ text ((++) "Online Users - " (String.fromInt (getOnlineUsersCount model.online_users)))
                             ]
-                        , div [ class "userInfo" ]
-                            [ div [ class "userImg" ]
-                                [ i [ class "far fa-user" ] []
-                                ]
-                            , div [ class "userName" ]
-                                [ text "Karthik"
-                                ]
-                            ]
+                        , div [] <|
+                            generateOnlineUsersList model.online_users
                         ]
                     ]
                 ]
