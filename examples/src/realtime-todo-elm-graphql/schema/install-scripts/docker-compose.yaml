@@ -1,0 +1,29 @@
+version: '3.6'
+services:
+  postgres:
+    # image: postgres
+    image: mdillon/postgis
+    environment:
+    - "POSTGRES_PASSWORD:mysecretpassword"
+    ports:
+    - "5432:5432"
+    restart: always
+    volumes:
+    - database_data:/var/lib/postgresql/data
+  graphql-engine:
+    image: hasura/graphql-engine:v1.0.0-alpha44
+    ports:
+    - "8080:8080"
+    depends_on:
+    - "postgres"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:mysecretpassword@postgres:5432/postgres
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256","key": "my-secret-keyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "claims_namespace": "https://hasura.io/jwt/claims", "claims_format": "json"}'
+    command:
+      - graphql-engine
+      - serve
+      - --enable-console
+      - --access-key=secret123
+volumes:
+  database_data:
