@@ -1,0 +1,40 @@
+{
+  "name": "elm-apollo-subscription",
+  "version": "1.0.0",
+  "description": "Boilerplate to perform a GraphQL subscription using apollo-client in Elm.",
+  "main": "src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-graph-types": "elm-graphql https://elm-apollo-graphql.herokuapp.com/v1alpha1/graphql --base Hasura"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karthikvt26/elm-apollo-subscriptions.git"
+  },
+  "keywords": [
+    "Elm",
+    "Apollo",
+    "Tools",
+    "GraphQL",
+    "Subscriptions"
+  ],
+  "author": "Karthik V",
+  "license": "ISC",
+  "dependencies": {
+    "@dillonkearns/elm-graphql": "^3.4.0",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link-http": "^1.5.14",
+    "apollo-link-ws": "^1.0.17",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
+    "subscriptions-transport-ws": "^0.9.16"
+  },
+  "bugs": {
+    "url": "https://github.com/karthikvt26/elm-apollo-subscriptions/issues"
+  },
+  "homepage": "https://github.com/karthikvt26/elm-apollo-subscriptions#readme"
+}
