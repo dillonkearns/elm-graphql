@@ -5,13 +5,16 @@ Boilerplate to get started with Elm, Hasura GraphQL engine as CMS and postgres a
 # Tutorial
 
 - Deploy Postgres and GraphQL Engine on Heroku:
+
   [![Deploy to
   heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku)
+
 - Get the Heroku app URL (say `my-app.herokuapp.com`)
+
 - Clone this repo:
   ```bash
   git clone https://github.com/dillonkearns/elm-graphql
-  cd examples/src/subscription
+  cd examples/src/subscription-apollo
   ```
 
 - Create `author` table:
@@ -67,12 +70,13 @@ authorSelection =
         Author.name
 ```
 
-- Run the app:
+- Run the app
 
   ```bash
   elm-app start
   ```
 - Test the app
+
   Visit [http://localhost:3000](http://localhost:3000) to view the app
 
   ![Demo app](./assets/View1.jpg)
@@ -98,8 +102,5 @@ authorSelection =
   ```bash
   gq https://elm-apollo-graphql.herokuapp.com/v1alpha1/graphql -q 'mutation insertAuthor { insert_author(objects: [{name: "J.R.R Some author"}]) { affected_rows } }'
   ```
-
-  ![Before insert](./assets/BeforeMutation.jpg)
-
 
   ![After insert](./assets/AfterMutation.jpg)
