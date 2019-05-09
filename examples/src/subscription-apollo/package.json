@@ -36,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/karthikvt26/elm-apollo-subscriptions/issues"
   },
-  "homepage": "https://github.com/karthikvt26/elm-apollo-subscriptions#readme"
+  "homepage": "https://github.com/karthikvt26/elm-apollo-subscriptions#readme",
+  "now" : {
+    "alias" : "https://build-rgggbofktv.now.sh"
+  }
 }

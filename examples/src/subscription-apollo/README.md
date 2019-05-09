@@ -1,15 +1,8 @@
 # subscription-apollo
 
-Example usage of GraphQL subscriptions using Elm-GraphQL and [Apollo as GraphQL client](https://github.com/apollographql/apollo-client).
+Example usage of GraphQL subscriptions using Elm-GraphQL and [Apollo Client](https://github.com/apollographql/apollo-client).
 
 # Tutorial
-
-- Deploy [GraphQL Engine](https://github.com/hasura/graphql-engine) on Heroku:
-
-  [![Deploy to
-  heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku)
-
-- Get the Heroku app URL (say `my-app.herokuapp.com`)
 
 - Clone this repo:
   ```bash
@@ -17,37 +10,26 @@ Example usage of GraphQL subscriptions using Elm-GraphQL and [Apollo as GraphQL 
   cd examples/src/subscription-apollo
   ```
 
-- Create `author` table:
-  
-  Open Hasura console: visit https://my-app.herokuapp.com on a browser  
-  Navigate to `Data` section in the top nav bar and create a table as follows:
-
-  ![Create author table](./assets/add_table.jpg)
-
-- Insert sample data into `author` table:
-
-  ![Insert data into author table](./assets/insert_data.jpg)
-
-  Verify if the row is inserted successfully
-
-  ![Insert data into author table](./assets/browse_rows.jpg)
-
 - Install npm modules:
   ```bash
   npm install
   ```
 
-- Generate elm types for your GraphQL schema
-
+- Generate elm types for your GraphQL schema.
+  
   ```bash
   npm run generate-graph-types
   ```
 
+  `generate-graph-types` is an npm script which generates a GraphQL schema for the configured GraphQL server.
+
+  ![GraphQL Server Url](./assets/ConfigureGraphQLUrl.jpg)
+
   The above command should generate following files
 
-  ![Insert data into author table](./assets/GeneratedElmTypes.jpg)
+  ![GraphQL Types](./assets/GeneratedElmTypes.jpg)
 
-- Next lets configure our apollo client with the GraphQL server url
+- Configure apollo client with the GraphQL server url
 
   ![Configure GraphQL URL](./assets/GraphQLUrl.jpg)
 
@@ -104,3 +86,9 @@ authorSelection =
   ```
 
   ![After insert](./assets/AfterMutation.jpg)
+
+Demo Application:
+  This example is tested with Hasura GraphQL Engine and a demo is currently deployed on netlify
+  App URL: 
+
+  GraphQL URL: https://elm-apollo-graphql.herokuapp.com/console/api-explorer
