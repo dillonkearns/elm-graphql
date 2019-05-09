@@ -2,8 +2,6 @@
 
 Example usage of GraphQL subscriptions using Elm-GraphQL and [Apollo Client](https://github.com/apollographql/apollo-client).
 
-### [Demo](https://elm-apollo-subscriptions.now.sh/) 
-
 ## Motivation
 
   Elm-graphql doesn't have a native websockets client ([this](https://github.com/dillonkearns/elm-graphql/issues/70#issue-354938870) and [this](https://github.com/dillonkearns/elm-graphql/issues/43)). This is an example app showing how you can integrate apollo style subscriptions with an elm app using elm-graphql. It uses apollo-client and ports and could be a useful starting point for you to start integrating subscriptions into your Elm app.
