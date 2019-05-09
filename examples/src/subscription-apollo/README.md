@@ -1,6 +1,6 @@
 # subscription-apollo
 
-Example usage of subscriptions using Elm-GraphQL and [Apollo as GraphQL client](https://github.com/apollographql/apollo-client).
+Example usage of GraphQL subscriptions using Elm-GraphQL and [Apollo as GraphQL client](https://github.com/apollographql/apollo-client).
 
 # Tutorial
 
