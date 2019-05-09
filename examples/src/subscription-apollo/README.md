@@ -89,7 +89,7 @@ authorSelection =
 
   ![After insert](./assets/AfterMutation.jpg)
 
-- Demo Application:
+- Live Application Urls:
 
   This example is tested with [Hasura GraphQL Engine](https://github.com/hasura/graphql-engine) and a [demo](https://elm-apollo-subscriptions.now.sh/) is currently deployed on Netlify
 
