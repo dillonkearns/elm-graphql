@@ -8,7 +8,7 @@ const GRAPHQL_URI = 'elm-apollo-graphql.herokuapp.com/v1alpha1/graphql';
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `wss://${GRAPHQL_URI}`,
+  uri: `wss://${GRAPHQL_URI}`, // Change it to `ws` if testing on localhost
   options: {
     reconnect: true
   }

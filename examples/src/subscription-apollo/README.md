@@ -2,6 +2,8 @@
 
 Example usage of GraphQL subscriptions using Elm-GraphQL and [Apollo Client](https://github.com/apollographql/apollo-client).
 
+### [Demo](https://elm-apollo-subscriptions.now.sh/) 
+
 # Tutorial
 
 - Clone this repo:
@@ -87,8 +89,8 @@ authorSelection =
 
   ![After insert](./assets/AfterMutation.jpg)
 
-Demo Application:
-  This example is tested with Hasura GraphQL Engine and a demo is currently deployed on netlify
-  App URL: 
+- Demo Application:
 
-  GraphQL URL: https://elm-apollo-graphql.herokuapp.com/console/api-explorer
+  This example is tested with [Hasura GraphQL Engine](https://github.com/hasura/graphql-engine) and a [demo](https://elm-apollo-subscriptions.now.sh/) is currently deployed on Netlify
+
+  GraphQL URL: https://elm-apollo-graphql.herokuapp.com/console/
