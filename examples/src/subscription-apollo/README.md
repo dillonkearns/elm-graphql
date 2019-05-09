@@ -1,6 +1,6 @@
 # subscription-apollo
 
-Boilerplate to get started with elm-graphql, apollo tools, Hasura GraphQL engine as CMS and postgres as database
+Boilerplate to get started with Elm-GraphQL, [Apollo as GraphQL client](https://github.com/apollographql/apollo-client), [Hasura GraphQL engine](https://github.com/hasura/graphql-engine) as CMS and postgres as database
 
 # Tutorial
 
