@@ -11,4 +11,4 @@ Example usage of GraphQL subscriptions using Elm-GraphQL and [Apollo Client](htt
 2. On your terminal, run: `npx graphqurl https://elm-apollo-graphql.herokuapp.com/v1alpha1/graphql -q 'mutation insertAuthor { insert_author (objects: [ { name: "J.R.R Tolkien" }]) { affected_rows } }'`
 3. See that the UI updates automatically
 
-Notes: The backend is built with [Hasura](https://github.com/hasura/graphql-engine) and deployed on a heroku app at: [https://elm-apollo-graphql.herokuapp.com/console/](https://elm-apollo-graphql.herokuapp.com/console/)
+Notes: The **test** backend for this app is built with [Hasura](https://github.com/hasura/graphql-engine) and deployed on a heroku app at: [https://elm-apollo-graphql.herokuapp.com/console/](https://elm-apollo-graphql.herokuapp.com/console/)
