@@ -1,10 +1,10 @@
 # subscription-apollo
 
-Boilerplate to get started with Elm-GraphQL, [Apollo as GraphQL client](https://github.com/apollographql/apollo-client), [Hasura GraphQL engine](https://github.com/hasura/graphql-engine) as CMS and postgres as database
+Example usage of subscriptions using Elm-GraphQL and [Apollo as GraphQL client](https://github.com/apollographql/apollo-client).
 
 # Tutorial
 
-- Deploy Postgres and GraphQL Engine on Heroku:
+- Deploy [GraphQL Engine](https://github.com/hasura/graphql-engine) on Heroku:
 
   [![Deploy to
   heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hasura/graphql-engine-heroku)
