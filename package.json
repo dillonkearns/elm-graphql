@@ -12,6 +12,7 @@
     "gen:github": "npm run build && && cd examples && ../bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output src",
     "approve-compilation": "cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/complex/Main.elm src/SimpleMutation.elm",
     "approve": "bin/approve",
+    "reproduce-error": "node reproducing-issues/sdl-to-json.js",
     "elm-analyse": "elm-analyse --serve"
   },
   "keywords": [
@@ -34,6 +35,7 @@
     "elm-test": "^0.19.0-rev3",
     "elm-webpack-loader": "5.0.0",
     "fs-extra": "^5.0.0",
+    "graphql": "^14.3.0",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
     "elm-format": "^0.8.1",
