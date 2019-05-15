@@ -11,7 +11,7 @@ This folder contains some tools to help reproduce minimal examples.
 After cloning this project, run this from the top-level directory of the `elm-graphql` repo:
 
 ```bash
-npm reproduce-error
+npm run reproduce-error
 ```
 
 This will take the GraphQL schema from the file `reproducing-issues/sdl.js` and generate code based on that. From there you can check if you've reproduced the issue. This helps you iterate quickly to create a minimal schema that reproduces the fix.
