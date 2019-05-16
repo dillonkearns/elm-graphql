@@ -1,6 +1,7 @@
 module Example01BasicQuery exposing (main)
 
 import Browser
+import CustomScalarCodecs
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
@@ -20,7 +21,7 @@ type alias Response =
 
 type alias Character =
     { name : String
-    , id : Swapi.Scalar.Id
+    , id : CustomScalarCodecs.Id
     , friends : List String
     }
 

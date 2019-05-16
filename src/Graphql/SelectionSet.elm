@@ -6,7 +6,7 @@ module Graphql.SelectionSet exposing
     , empty
     , SelectionSet(..), FragmentSelectionSet(..)
     , mapOrFail, nonNullOrFail, nonNullElementsOrFail
-    , list, dict
+    , list, dict, foldl
     )
 
 {-| The auto-generated code from the `@dillonkearns/elm-graphql` CLI provides
@@ -272,7 +272,7 @@ take a look at the
 
 ## Collections of SelectionSets
 
-@docs list, dict
+@docs list, dict, foldl
 
 -}
 
@@ -646,6 +646,34 @@ list selections =
     selections
         |> List.foldl (map2 (::)) (empty |> map (\_ -> []))
         |> map List.reverse
+
+
+{-| Fold over each of the values in a list of `SelectionSet`s.
+
+    query : SelectionSet Response RootQuery
+    query =
+        SelectionSet.foldl (+)
+            0
+            ([ { owner = "dillonkearns", name = "mobster" }
+             , { owner = "dillonkearns", name = "elm-graphql" }
+             , { owner = "dillonkearns", name = "elm-typescript-interop" }
+             ]
+                |> List.map (\args -> Query.repository args stargazerCount)
+                |> List.map SelectionSet.nonNullOrFail
+            )
+
+    stargazerCount : SelectionSet Int Github.Object.Repository
+    stargazerCount =
+        Repository.stargazers identity Github.Object.StargazerConnection.totalCount
+
+-}
+foldl :
+    (item -> combined -> combined)
+    -> combined
+    -> List (SelectionSet item typeLock)
+    -> SelectionSet combined typeLock
+foldl mapFn initialValue selections =
+    List.foldl (map2 mapFn) (succeed initialValue) selections
 
 
 {-| Combine several `SelectionSet`s into a single `SelectionSet`. The

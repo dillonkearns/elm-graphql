@@ -15,8 +15,10 @@ repl-temp-*
 # Dependency directories
 node_modules
 
+# parcel
+.cache
+
 # Desktop Services Store on macOS
 .DS_Store
-
 #typical ephemera
 tmp
