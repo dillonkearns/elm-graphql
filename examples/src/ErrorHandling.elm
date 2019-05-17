@@ -26,7 +26,7 @@ query : SelectionSet Response RootQuery
 query =
     SelectionSet.succeed Response
         |> with (Query.human { id = CustomScalarCodecs.Id 1001 } human |> SelectionSet.nonNullOrFail)
-        -- |> with (Query.forcedError |> Field.nonNullOrFail)
+        -- |> with (Query.forcedError |> SelectionSet.nonNullOrFail)
         |> with Query.forcedError
 
 
@@ -44,7 +44,7 @@ makeRequest : Cmd Msg
 makeRequest =
     query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
-        |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
+        |> Graphql.Http.send (RemoteData.fromResult >> responseDetails >> GotResponse)
 
 
 type Msg
@@ -52,12 +52,12 @@ type Msg
 
 
 type alias Model =
-    RemoteData (Graphql.Http.Error Response) Response
+    String
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( RemoteData.Loading
+    ( ""
     , makeRequest
     )
 
