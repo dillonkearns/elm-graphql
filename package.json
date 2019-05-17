@@ -24,7 +24,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@types/fs-extra": "^5.0.0",
-    "@types/glob": "^5.0.34",
+    "@types/glob": "^7.1.1",
     "@types/node": "^8.5.2",
     "@types/request": "^2.0.9",
     "elm": "^0.19.0-no-deps",
