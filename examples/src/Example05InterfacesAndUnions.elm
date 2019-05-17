@@ -1,19 +1,15 @@
 module Example05InterfacesAndUnions exposing (main)
 
-import Browser
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
-import Html exposing (div, h1, p, pre, text)
-import PrintAny
 import RemoteData exposing (RemoteData)
-import Swapi.Enum.Episode as Episode exposing (Episode)
+import Swapi.Enum.Episode as Episode
 import Swapi.Interface
 import Swapi.Interface.Character as Character
-import Swapi.Object
 import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
@@ -121,24 +117,6 @@ init _ =
     ( RemoteData.Loading
     , makeRequest
     )
-
-
-view : Model -> Browser.Document Msg
-view model =
-    { title = "Starwars Demo"
-    , body =
-        [ div []
-            [ div []
-                [ h1 [] [ text "Generated Query" ]
-                , pre [] [ text (Document.serializeQuery query) ]
-                ]
-            , div []
-                [ h1 [] [ text "Response" ]
-                , model |> PrintAny.view
-                ]
-            ]
-        ]
-    }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

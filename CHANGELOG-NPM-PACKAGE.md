@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.5.0] - 2018-05-17
+
+### Changed
+
+Just some changes under the hood.
+
+- Update to latest npm dependencies. Note that the latest elm npm package
+  doesn't change the elm version, just the npm asset. It's still just elm 0.19.
+- Use parcel for bundling, and minify the `elm-graphql` npm binary. The behavior
+  should be exactly the same, and the extensive automated tests check out, plus
+  my manual testing of the binary.
+
 ## [3.4.0] - 2018-04-17
 
 ### Changed

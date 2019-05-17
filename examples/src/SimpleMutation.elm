@@ -1,13 +1,10 @@
 module SimpleMutation exposing (main)
 
-import Browser
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootMutation)
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
-import Html exposing (div, h1, p, pre, text)
-import PrintAny
 import RemoteData exposing (RemoteData)
 import Swapi.Mutation as Mutation
 
@@ -41,20 +38,6 @@ init _ =
     ( RemoteData.Loading
     , makeRequest
     )
-
-
-view : Model -> Html.Html Msg
-view model =
-    div []
-        [ div []
-            [ h1 [] [ text "Generated Query" ]
-            , pre [] [ text (Document.serializeMutation mutation) ]
-            ]
-        , div []
-            [ h1 [] [ text "Response" ]
-            , model |> PrintAny.view
-            ]
-        ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

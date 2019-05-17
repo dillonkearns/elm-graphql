@@ -7,21 +7,17 @@ import Element.Border
 import Element.Events
 import ElmPackage
 import ElmReposRequest
-import Github.Scalar
 import Graphql.Document as Document
 import Graphql.Http
-import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet
-import Html exposing (Html, a, button, div, h1, img, p, pre, text)
-import Html.Attributes exposing (href, src, style, target)
+import Html exposing (Html)
 import Html.Events exposing (onClick)
 import Http
-import PrintAny
 import RemoteData exposing (RemoteData)
 import RepoWithOwner
 import View.Result
 
 
+makePackagesGithubQuery : List RepoWithOwner.RepoWithOwner -> Cmd Msg
 makePackagesGithubQuery reposWithOwner =
     reposWithOwner
         |> ElmReposRequest.queryForRepos
@@ -62,11 +58,6 @@ init _ =
         -- , makeRequest ElmReposRequest.Stars
         ]
     )
-
-
-query : ElmReposRequest.SortOrder -> Graphql.SelectionSet.SelectionSet (List ElmReposRequest.Repo) RootQuery
-query sortOrder =
-    ElmReposRequest.query sortOrder
 
 
 view : Model -> Html Msg

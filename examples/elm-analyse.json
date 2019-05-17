@@ -1,0 +1,9 @@
+{
+  "excludedPaths": ["src/Github", "src/Swapi", "../src"],
+  "checks": {
+    "UnusedImportAlias": false,
+    "UnusedVariable": false,
+    "UnusedPatternVariable": false,
+    "SingleFieldRecord": false
+  }
+}

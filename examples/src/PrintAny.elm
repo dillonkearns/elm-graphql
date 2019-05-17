@@ -227,27 +227,8 @@ log record =
                 |> mergeQuoted
                 |> addIndents
                 |> List.reverse
-
-        _ =
-            List.map logLine lines
     in
     record
-
-
-
-{- print a single line to the console -}
-
-
-logLine : ( Int, String ) -> ()
-logLine ( indent, string ) =
-    let
-        logIndent =
-            String.padLeft indent ' ' ""
-
-        _ =
-            Debug.log "" <| logIndent ++ string
-    in
-    ()
 
 
 
@@ -415,26 +396,3 @@ mergeOneQuote string startList =
     else
         -- simply add string as line to the list
         startList ++ [ string ]
-
-
-
--- helpers
-
-
-pad : Int -> String
-pad indent =
-    String.padLeft 5 '0' <| String.fromInt indent
-
-
-splitLine : String -> ( Int, String )
-splitLine line =
-    let
-        indent =
-            String.left 5 line
-                |> String.toInt
-                |> Maybe.withDefault 0
-
-        newLine =
-            String.dropLeft 5 line
-    in
-    ( indent, newLine )

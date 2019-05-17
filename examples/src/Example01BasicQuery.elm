@@ -1,16 +1,14 @@
 module Example01BasicQuery exposing (main)
 
-import Browser
 import CustomScalarCodecs exposing (Id)
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Interface
 import Swapi.Interface.Character as Character
-import Swapi.Object
 import Swapi.Query as Query
 
 

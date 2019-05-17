@@ -1,9 +1,10 @@
 module ElmPackage exposing (request)
 
 import Http
-import Json.Decode as Decode
+import Json.Decode as Decode exposing (Decoder)
 
 
+request : Cmd (Result Http.Error (List String))
 request =
     Http.get
         { url = "https://package.elm-lang.org/search.json"
@@ -23,5 +24,6 @@ request =
 --     }
 
 
+decoder : Decoder (List String)
 decoder =
     Decode.list (Decode.field "name" Decode.string)

@@ -1,20 +1,15 @@
 module Example07CustomCodecs exposing (main)
 
-import Browser
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Language as Language
-import Swapi.InputObject
-import Swapi.Interface
 import Swapi.Interface.Character as Character
-import Swapi.Object
 import Swapi.Query as Query
-import Swapi.Scalar
 import Time
 
 
