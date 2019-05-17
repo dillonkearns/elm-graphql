@@ -39,7 +39,7 @@
     "node-elm-compiler": "^5.0.3",
     "parcel": "^1.12.3",
     "ts-loader": "^3.2.0",
-    "typescript": "^2.6.2"
+    "typescript": "^3.4.5"
   },
   "peerDependencies": {
     "elm-format": ">= 0.8.0 < 1"
