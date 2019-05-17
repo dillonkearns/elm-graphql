@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "encoding": "^0.1.12",
-    "glob": "^7.1.2",
+    "glob": "^7.1.4",
     "graphql-request": "^1.4.0",
     "request": "^2.83.0"
   },
