@@ -1,18 +1,16 @@
 module Starwars exposing (main)
 
-import Browser
+import CustomScalarCodecs
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Http.GraphqlError
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 import Helpers.Main
-import Html exposing (div, h1, p, pre, text)
 import RemoteData exposing (RemoteData)
 import Swapi.Object
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
-import Swapi.Scalar
 
 
 type alias Response =
@@ -27,7 +25,7 @@ type alias Response =
 query : SelectionSet Response RootQuery
 query =
     SelectionSet.succeed Response
-        |> with (Query.human { id = Swapi.Scalar.Id "1001" } human |> SelectionSet.nonNullOrFail)
+        |> with (Query.human { id = CustomScalarCodecs.Id 1001 } human |> SelectionSet.nonNullOrFail)
         -- |> with (Query.forcedError |> Field.nonNullOrFail)
         |> with Query.forcedError
 

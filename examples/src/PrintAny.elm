@@ -227,27 +227,8 @@ log record =
                 |> mergeQuoted
                 |> addIndents
                 |> List.reverse
-
-        _ =
-            List.map logLine lines
     in
     record
-
-
-
-{- print a single line to the console -}
-
-
-logLine : ( Int, String ) -> ()
-logLine ( indent, string ) =
-    let
-        logIndent =
-            String.padLeft indent ' ' ""
-
-        _ =
-            Debug.log "" <| logIndent ++ string
-    in
-    ()
 
 
 

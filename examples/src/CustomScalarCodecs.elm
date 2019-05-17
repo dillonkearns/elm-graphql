@@ -1,9 +1,8 @@
 module CustomScalarCodecs exposing (Id(..), PosixTime, codecs)
 
-import Graphql.Internal.Builder.Object as Object
-import Json.Decode as Decode exposing (Decoder)
+import Json.Decode as Decode
 import Json.Encode as Encode
-import Swapi.Scalar exposing (defaultCodecs)
+import Swapi.Scalar
 import Time
 
 
