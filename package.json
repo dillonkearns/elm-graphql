@@ -2,7 +2,7 @@
   "name": "@dillonkearns/elm-graphql",
   "version": "3.4.0",
   "scripts": {
-    "build": "parcel build generator/src/elm-graphql.ts --out-file bundle.js --no-source-maps",
+    "build": "parcel build generator/src/elm-graphql.ts --out-file bundle.js --target node --no-source-maps",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "elm-test && cd generator && elm-test",
@@ -27,7 +27,7 @@
     "@types/glob": "^5.0.34",
     "@types/node": "^8.5.2",
     "@types/request": "^2.0.9",
-    "elm": "^0.19.0-bugfix2",
+    "elm": "^0.19.0-no-deps",
     "elm-analyse": "^0.13.3",
     "elm-format": "^0.8.1",
     "elm-hot": "^1.0.1",
@@ -36,6 +36,7 @@
     "elm-test": "^0.19.0-rev3",
     "fs-extra": "^5.0.0",
     "graphql": "^14.3.0",
+    "node-elm-compiler": "^5.0.3",
     "parcel": "^1.12.3",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2"
