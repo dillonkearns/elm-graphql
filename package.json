@@ -13,7 +13,8 @@
     "approve-compilation": "cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/complex/Main.elm src/SimpleMutation.elm",
     "approve": "bin/approve",
     "reproduce-error": "node reproducing-issues/sdl-to-json.js > reproducing-issues/schema.json && npm run build && cd reproducing-issues && ../bin/elm-graphql --introspection-file schema.json --output gen",
-    "elm-analyse": "elm-analyse --serve"
+    "elm-analyse": "elm-analyse --serve",
+    "elm-analyse-examples": "cd examples && elm-analyse"
   },
   "keywords": [
     "elm",
@@ -28,7 +29,7 @@
     "@types/node": "^8.5.2",
     "@types/request": "^2.0.9",
     "elm": "^0.19.0-no-deps",
-    "elm-analyse": "^0.13.3",
+    "elm-analyse": "^0.16.3",
     "elm-format": "^0.8.1",
     "elm-hot": "^1.0.1",
     "elm-hot-loader": "0.5.4",

@@ -1,0 +1,3 @@
+{
+  "excludedPaths": ["src/Github", "src/Swapi", "../src"]
+}
