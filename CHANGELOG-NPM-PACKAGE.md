@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [3.6.0] - 2018-05-17
 
-### Fixes
+### Fixed
 
 - Fixed [#138](https://github.com/dillonkearns/elm-graphql/issues/138). Before this fix, an input object would incorrectly use a Custom Type wrapper instead of
   a plain record type alias to avoid circular dependencies in a case where there was no circular dependency.
