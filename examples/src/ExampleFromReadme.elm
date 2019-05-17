@@ -1,6 +1,5 @@
 module Example01BasicQuery exposing (main)
 
-import Browser
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)

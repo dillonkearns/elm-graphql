@@ -6,15 +6,13 @@ import Graphql.Http
 import Graphql.Http.GraphqlError
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument as OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
-import Html exposing (Html, div, h1, p, pre, text)
+import Html exposing (Html, div, h1, pre, text)
 import PrintAny
 import RemoteData exposing (RemoteData)
-import Swapi.Enum.Episode as Episode exposing (Episode)
-import Swapi.Interface
+import Swapi.Enum.Episode as Episode
 import Swapi.Interface.Character as Character
-import Swapi.Object
 import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query

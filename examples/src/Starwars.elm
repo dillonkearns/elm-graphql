@@ -1,14 +1,12 @@
 module Starwars exposing (main)
 
-import Browser
 import CustomScalarCodecs
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
-import Regex
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Episode as Episode exposing (Episode)
 import Swapi.Enum.Language as Language
@@ -19,7 +17,6 @@ import Swapi.Object
 import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
-import Swapi.Scalar
 import Swapi.Union
 import Swapi.Union.CharacterUnion as CharacterUnion
 

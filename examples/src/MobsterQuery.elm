@@ -1,6 +1,5 @@
 module Github exposing (main)
 
-import Browser
 import Github.Object
 import Github.Object.Release
 import Github.Object.ReleaseAsset
@@ -9,17 +8,14 @@ import Github.Object.ReleaseAssetEdge
 import Github.Object.ReleaseConnection
 import Github.Object.Repository as Repository
 import Github.Object.StargazerConnection
-import Github.Object.Topic
 import Github.Query as Query
-import Github.Scalar exposing (Date)
+import Github.Scalar
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
-import Html exposing (div, h1, p, pre, text)
-import PrintAny
 import RemoteData exposing (RemoteData)
 
 

@@ -56,6 +56,9 @@ queryForRepos reposWithOwner =
         |> SelectionSet.map (List.filterMap identity)
 
 
+grouped :
+    List (SelectionSet decodesTo1 typeLock)
+    -> SelectionSet (List decodesTo1) typeLock
 grouped selections =
     List.foldl (SelectionSet.map2 (::))
         (SelectionSet.empty |> SelectionSet.map (\_ -> []))

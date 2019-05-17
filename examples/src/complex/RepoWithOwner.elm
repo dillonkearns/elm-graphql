@@ -5,6 +5,7 @@ type RepoWithOwner
     = RepoWithOwner String
 
 
+repoWithOwner : String -> RepoWithOwner
 repoWithOwner value =
     RepoWithOwner value
 
@@ -14,6 +15,7 @@ elmPackageUrl repoWithOwnerValue =
     "http://package.elm-lang.org/packages/" ++ toString repoWithOwnerValue ++ "/latest"
 
 
+toString : RepoWithOwner -> String
 toString (RepoWithOwner value) =
     value
 

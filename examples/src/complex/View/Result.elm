@@ -5,8 +5,6 @@ import Element exposing (Element, text)
 import Element.Font
 import ElmReposRequest
 import Github.Scalar
-import Html exposing (Html, a, button, div, h1, img, p, pre)
-import Html.Attributes exposing (href, src, style, target)
 import RepoWithOwner exposing (RepoWithOwner)
 import Time exposing (Posix)
 
@@ -38,6 +36,7 @@ view ( hasPackage, result ) =
         ]
 
 
+fillWidth : Int -> Element msg -> Element msg
 fillWidth portion =
     Element.el [ Element.width (Element.fillPortion portion) ]
 

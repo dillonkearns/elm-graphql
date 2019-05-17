@@ -1,10 +1,9 @@
 module Example05InterfacesAndUnions exposing (main)
 
-import Browser
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, hardcoded, with)
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Interface
