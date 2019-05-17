@@ -9,6 +9,7 @@ npm run build
 cd examples
 ../bin/elm-graphql --introspection-file github-schema.json --base Github --output src
 ../bin/elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
+elm-analyse
 
 cd ../ete_tests
 ../bin/elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
