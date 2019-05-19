@@ -2,14 +2,15 @@ port module Main exposing (main)
 
 import Cli.Option as Option
 import Cli.OptionsParser as OptionsParser exposing (OptionsParser, with)
-import Graphql.Generator.Context exposing (Context)
-import Graphql.Generator.Group as Group
-import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Cli.Program as Program
 import Cli.Validate
 import Debug
 import Dict
+import Graphql.Generator.Context exposing (Context)
+import Graphql.Generator.Group as Group
+import Graphql.Generator.Normalize as Normalize
 import Graphql.Parser
+import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.QuerySelectionGenerator
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
@@ -20,9 +21,7 @@ import MyDebug
 import Ports
 import Result.Extra
 import String.Interpolate exposing (interpolate)
-import Graphql.Generator.Normalize as Normalize
 
-import Json.Decode as Decode
 
 type Msg
     = GenerateFiles { queryFiles : Json.Encode.Value, introspectionData : Json.Encode.Value }
@@ -31,70 +30,77 @@ type Msg
 type alias Model =
     ()
 
+
 run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> { queryFiles : Json.Encode.Value, introspectionData : Json.Encode.Value } -> Cmd msg
 run options data =
     let
-        introspectionDataResult = 
+        introspectionDataResult =
             data.introspectionData
-                |> Decode.decodeValue Graphql.Parser.decoder 
-        
+                |> Decode.decodeValue Graphql.Parser.decoder
+
         queryFilesResult =
             data.queryFiles
                 |> Decode.decodeValue (Decode.dict Decode.string)
     in
     Result.map2 Tuple.pair introspectionDataResult queryFilesResult
         |> Result.mapError (\error -> "Got error decoding" ++ Decode.errorToString error)
-        |> Result.andThen (\(introspectData, queryFiles) ->
-             let
-                context : Context
-                context =
-                    { query = ClassCaseName.build introspectData.queryObjectName
-                    , mutation = introspectData.mutationObjectName |> Maybe.map ClassCaseName.build
-                    , subscription = introspectData.subscriptionObjectName |> Maybe.map ClassCaseName.build
-                    , apiSubmodule = options.apiSubmodule
-                    , interfaces = Group.interfacePossibleTypesDict introspectData.typeDefinitions
-                    , scalarCodecsModule = options.scalarCodecsModule
-                    }
+        |> Result.andThen
+            (\( introspectData, queryFiles ) ->
+                let
+                    context : Context
+                    context =
+                        { query = ClassCaseName.build introspectData.queryObjectName
+                        , mutation = introspectData.mutationObjectName |> Maybe.map ClassCaseName.build
+                        , subscription = introspectData.subscriptionObjectName |> Maybe.map ClassCaseName.build
+                        , apiSubmodule = options.apiSubmodule
+                        , interfaces = Group.interfacePossibleTypesDict introspectData.typeDefinitions
+                        , scalarCodecsModule = options.scalarCodecsModule
+                        }
 
-                generatedLibFiles = 
-                    introspectData
-                        |> Graphql.Parser.encoder options
+                    generatedLibFiles =
+                        introspectData
+                            |> Graphql.Parser.encoder options
 
-                generatedQueryFilesResult =
-                    queryFiles
-                        |> Dict.toList
-                        |> List.map (\(queryFileName, query) ->
-                            let
-                                maybeModulePath =
-                                    queryFileName
-                                        |> String.split "."
-                                        |> List.head
-                                        |> Maybe.map Normalize.capitalized
-                                        |> Maybe.map (\moduleName -> [ "Queries", moduleName] )
-                                        |> Maybe.map ((++) options.apiSubmodule)
-                            in
-                            case maybeModulePath of
-                                Nothing -> Err("Unable to name file" ++ queryFileName)
-                                Just modulePath ->
-                                    query
-                                        |> Graphql.QuerySelectionGenerator.transform options introspectData context modulePath
-                                        |> Debug.log "transformResult!!"
-                                        |> Result.map (\contents -> (Group.moduleToFileName modulePath, contents)
-                                        )
+                    generatedQueryFilesResult =
+                        queryFiles
+                            |> Dict.toList
+                            |> List.map
+                                (\( queryFileName, query ) ->
+                                    let
+                                        maybeModulePath =
+                                            queryFileName
+                                                |> String.split "."
+                                                |> List.head
+                                                |> Maybe.map Normalize.capitalized
+                                                |> Maybe.map (\moduleName -> [ "Queries", moduleName ])
+                                                |> Maybe.map ((++) options.apiSubmodule)
+                                    in
+                                    case maybeModulePath of
+                                        Nothing ->
+                                            Err ("Unable to name file" ++ queryFileName)
+
+                                        Just modulePath ->
+                                            query
+                                                |> Graphql.QuerySelectionGenerator.transform options introspectData context modulePath
+                                                |> Debug.log "transformResult!!"
+                                                |> Result.map
+                                                    (\contents -> ( Group.moduleToFileName modulePath, contents ))
+                                )
+                            |> Result.Extra.combine
+                in
+                generatedQueryFilesResult
+                    |> Result.map Dict.fromList
+                    |> Result.map
+                        (\generatedQueryFiles ->
+                            generatedLibFiles
+                                |> Dict.union generatedQueryFiles
+                                |> Json.Encode.Extra.dict identity Json.Encode.string
                         )
-                        |> Result.Extra.combine
-            in
-            generatedQueryFilesResult
-                |> Result.map Dict.fromList
-                |> Result.map (\ generatedQueryFiles ->
-                    generatedLibFiles
-                        |> Dict.union generatedQueryFiles
-                        |> Json.Encode.Extra.dict identity Json.Encode.string
-                )
-        ) 
+            )
         |> Result.map Ports.generatedFiles
         |> Result.mapError Ports.printAndExitFailure
         |> Result.Extra.merge
+
 
 type CliOptions
     = FromUrl UrlArgs
@@ -110,6 +116,7 @@ type alias UrlArgs =
     , scalarCodecsModule : Maybe ModuleName
     , queryDirectory : Maybe String
     }
+
 
 type alias FileArgs =
     { file : String
