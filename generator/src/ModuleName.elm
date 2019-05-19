@@ -1,8 +1,17 @@
-module ModuleName exposing (ModuleName, append, fromList, toString)
+module ModuleName exposing (ModuleName, append, elmiFilenameDecoder, fromList, toString)
+
+import Json.Decode as Decode exposing (Decoder)
 
 
 type ModuleName
     = ModuleName (List String)
+
+
+elmiFilenameDecoder : Decoder ModuleName
+elmiFilenameDecoder =
+    Decode.string
+        |> Decode.map (String.split "-")
+        |> Decode.map fromList
 
 
 fromList : List String -> ModuleName

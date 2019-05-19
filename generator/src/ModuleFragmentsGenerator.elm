@@ -22,12 +22,7 @@ decoder : Decode.Decoder (List ( ModuleName, Result Error (List ExposedSelection
 decoder =
     Decode.list
         (Decode.map2 Tuple.pair
-            (Decode.field "fileName"
-                (Decode.string
-                    |> Decode.map (String.split "-")
-                    |> Decode.map ModuleName.fromList
-                )
-            )
+            (Decode.field "fileName" ModuleName.elmiFilenameDecoder)
             (Decode.field "fileContents" (Decode.string |> Decode.map parseModule))
         )
 
