@@ -14,6 +14,7 @@ import Graphql.QuerySelectionGenerator
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
 import Json.Encode.Extra
+import ModuleFragmentsGenerator
 import ModuleName exposing (ModuleName(..))
 import MyDebug
 import Ports
@@ -200,11 +201,15 @@ validateModuleName =
 
 
 type alias Flags =
-    Program.FlagsIncludingArgv {}
+    Program.FlagsIncludingArgv { elmi : String }
 
 
 init : Flags -> CliOptions -> ( Model, Cmd msg )
 init flags msg =
+    let
+        _ =
+            Debug.log "@@@@@@" (ModuleFragmentsGenerator.init flags.elmi)
+    in
     case msg of
         FromUrl options ->
             ( ()
@@ -247,7 +252,7 @@ update cliOptions msg model =
             ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } result )
 
 
-main : Program.StatefulProgram Model Msg CliOptions {}
+main : Program.StatefulProgram Model Msg CliOptions { elmi : String }
 main =
     Program.stateful
         { printAndExitFailure = Ports.printAndExitFailure

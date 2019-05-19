@@ -42,8 +42,26 @@ function loadQueryFiles(
   return queryFiles;
 }
 
-async () => {
-  let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
+(async () => {
+  const elmi = await fs.readFile(
+    path.join(
+      process.env.HOME || "",
+      "src",
+      "github.com",
+      "dillonkearns",
+      "elm-graphql",
+      "examples",
+      "elm-stuff",
+      "0.19.0",
+      "ExposesSelection.elmi"
+    )
+  );
+
+  // const app = Elm.Main.init({ flags: { elmi: elmi.toString("base64") } });
+
+  let app = Elm.Main.init({
+    flags: { argv: process.argv, versionMessage, elmi: elmi.toString("base64") }
+  });
   // app.ports.print.subscribe(console.log);
   app.ports.printAndExitFailure.subscribe((message: string) => {
     console.log(message);
@@ -176,7 +194,7 @@ async () => {
     });
     app.ports.generateFiles.send({ queryFiles, introspectionData: data });
   }
-};
+})();
 
 function verifyCustomCodecsFileIsValid(
   outputPath: string,

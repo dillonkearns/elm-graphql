@@ -17,7 +17,7 @@ type Error
     | EncodingBase64Failed
 
 
-init : String -> ( (), Cmd never )
+init : String -> Result Error (List (Maybe ExposedSelectionSet))
 init elmi =
     let
         interface =
@@ -29,25 +29,17 @@ init elmi =
                             |> Bytes.Decode.decode (Bytes.Decode.ElmFile.Interface.interface logger)
                             |> Result.fromMaybe DecodingError
                     )
-
-        exposedSelectionSets =
-            interface
-                |> Result.map (\(ElmFile.Interface.Interface i) -> i)
-                |> Result.map .types_
-                |> Result.map
-                    (Dict.foldl
-                        (\name (Ast.Canonical.Annotation _ t) ts ->
-                            let
-                                _ =
-                                    logIfSelectionSet t
-                            in
-                            [ logIfSelectionSet t ]
-                        )
-                        []
-                    )
-                |> Debug.log "exposed"
     in
-    ( (), Cmd.none )
+    interface
+        |> Result.map (\(ElmFile.Interface.Interface i) -> i)
+        |> Result.map .types_
+        |> Result.map
+            (Dict.foldl
+                (\name (Ast.Canonical.Annotation _ t) ts ->
+                    [ logIfSelectionSet t ]
+                )
+                []
+            )
 
 
 logIfSelectionSet : Ast.Canonical.Type -> Maybe ExposedSelectionSet
