@@ -17,7 +17,7 @@ type Error
     | EncodingBase64Failed
 
 
-init : String -> Result Error (List (Maybe ExposedSelectionSet))
+init : String -> Result Error (List ExposedSelectionSet)
 init elmi =
     let
         interface =
@@ -35,16 +35,12 @@ init elmi =
         |> Result.map .types_
         |> Result.map
             (Dict.foldl
-                (\name (Ast.Canonical.Annotation _ t) ts ->
-                    [ logIfSelectionSet t ]
+                (\functionName (Ast.Canonical.Annotation _ t) accumulator ->
+                    maybeSelectionSetAnnotation functionName t :: accumulator
                 )
                 []
             )
-
-
-logIfSelectionSet : Ast.Canonical.Type -> Maybe ExposedSelectionSet
-logIfSelectionSet type_ =
-    maybeSelectionSetAnnotation type_
+        |> Result.map (List.filterMap identity)
 
 
 type Level
@@ -53,12 +49,18 @@ type Level
     | Subscription
 
 
+type alias Name =
+    { functionName : String
+    , moduleName : String
+    }
+
+
 type ExposedSelectionSet
-    = ExposedSelectionSet Level Ast.Canonical.Type
+    = ExposedSelectionSet Name Level Ast.Canonical.Type
 
 
-maybeSelectionSetAnnotation : Ast.Canonical.Type -> Maybe ExposedSelectionSet
-maybeSelectionSetAnnotation type_ =
+maybeSelectionSetAnnotation : String -> Ast.Canonical.Type -> Maybe ExposedSelectionSet
+maybeSelectionSetAnnotation functionName type_ =
     case type_ of
         Ast.Canonical.TType moduleName "SelectionSet" typeParameters ->
             case moduleName of
@@ -66,7 +68,7 @@ maybeSelectionSetAnnotation type_ =
                     if details.module_ == "Graphql.SelectionSet" then
                         case typeParameters of
                             [ level, selectionType ] ->
-                                ExposedSelectionSet Query selectionType
+                                ExposedSelectionSet { functionName = functionName, moduleName = "TODO" } Query selectionType
                                     |> Just
 
                             _ ->
