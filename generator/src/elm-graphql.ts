@@ -3,7 +3,10 @@ import * as childProcess from "child_process";
 import * as fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
 import * as path from "path";
-import { removeGenerated, warnAndExitIfContainsNonGenerated } from "./cli/generated-code-handler";
+import {
+  removeGenerated,
+  warnAndExitIfContainsNonGenerated
+} from "./cli/generated-code-handler";
 import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 const npmPackageVersion = require("../../package.json").version;
@@ -23,144 +26,157 @@ function prependBasePath(
   return path.join(outputPath, baseModule.join("/"), suffixPath);
 }
 
-function loadQueryFiles(queryDirectory:string| null): {[ index: string ]: string } {
-  const queryFiles : {[ index: string ]: string } = {}
-  if(queryDirectory){
-    const filenames = fs.readdirSync(queryDirectory)
-    filenames.forEach((filename:string) => {
-      queryFiles[filename]= fs.readFileSync(queryDirectory + "/" + filename, 'utf-8')
-    })
+function loadQueryFiles(
+  queryDirectory: string | null
+): { [index: string]: string } {
+  const queryFiles: { [index: string]: string } = {};
+  if (queryDirectory) {
+    const filenames = fs.readdirSync(queryDirectory);
+    filenames.forEach((filename: string) => {
+      queryFiles[filename] = fs.readFileSync(
+        queryDirectory + "/" + filename,
+        "utf-8"
+      );
+    });
   }
-  return queryFiles
+  return queryFiles;
 }
 
-let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
-// app.ports.print.subscribe(console.log);
-app.ports.printAndExitFailure.subscribe((message: string) => {
-  console.log(message);
-  process.exit(1);
-});
-app.ports.printAndExitSuccess.subscribe((message: string) => {
-  console.log(message);
-  process.exit(0);
-});
+async () => {
+  let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
+  // app.ports.print.subscribe(console.log);
+  app.ports.printAndExitFailure.subscribe((message: string) => {
+    console.log(message);
+    process.exit(1);
+  });
+  app.ports.printAndExitSuccess.subscribe((message: string) => {
+    console.log(message);
+    process.exit(0);
+  });
 
-app.ports.introspectSchemaFromFile.subscribe(
-  ({
-    introspectionFilePath,
-    outputPath,
-    baseModule,
-    queryDirectory,
-    customDecodersModule
-  }: {
-    introspectionFilePath: string;
-    outputPath: string;
-    baseModule: string[];
-    queryDirectory : string | null;
-    customDecodersModule: string | null;
-  }) => {
-    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
-    const introspectionFileJson = JSON.parse(
-      fs.readFileSync(introspectionFilePath).toString()
-    );
-
-    const queryFiles = loadQueryFiles(queryDirectory)
-
-    onDataAvailable(
-      introspectionFileJson.data || introspectionFileJson,
-      queryFiles,
+  app.ports.introspectSchemaFromFile.subscribe(
+    ({
+      introspectionFilePath,
       outputPath,
       baseModule,
+      queryDirectory,
       customDecodersModule
-    );
-  }
-);
+    }: {
+      introspectionFilePath: string;
+      outputPath: string;
+      baseModule: string[];
+      queryDirectory: string | null;
+      customDecodersModule: string | null;
+    }) => {
+      warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+      const introspectionFileJson = JSON.parse(
+        fs.readFileSync(introspectionFilePath).toString()
+      );
 
-app.ports.introspectSchemaFromUrl.subscribe(
-  ({
-    graphqlUrl,
-    excludeDeprecated,
-    outputPath,
-    queryDirectory,
-    baseModule,
-    headers,
-    customDecodersModule
-  }: {
-    graphqlUrl: string;
-    excludeDeprecated: boolean;
-    outputPath: string;
-    queryDirectory : string | null;
-    baseModule: string[];
-    headers: {};
-    customDecodersModule: string | null;
-  }) => {
-    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+      const queryFiles = loadQueryFiles(queryDirectory);
 
-    console.log("Fetching GraphQL schema...");
-    new GraphQLClient(graphqlUrl, {
-      mode: "cors",
-      headers: headers
-    })
-      .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
-      .then(data => {
-        const queryFiles = loadQueryFiles(queryDirectory)
-        onDataAvailable(data, queryFiles, outputPath, baseModule, customDecodersModule);
-      })
-      .catch(err => {
-        console.log(err.response || err);
-        process.exit(1);
-      });
-  }
-);
-
-function makeEmptyDirectories(
-  baseModule: string[],
-  outputPath: string,
-  directoryNames: string[]
-): void {
-  directoryNames.forEach(dir => {
-    fs.mkdirpSync(prependBasePath(dir, baseModule, outputPath));
-  });
-}
-
-function onDataAvailable(
-  data: {},
-  queryFiles:{[ index: string ]: string },
-  outputPath: string,
-  baseModule: string[],
-  customDecodersModule: string | null
-) {
-  console.log("Generating files...");
-  app.ports.generatedFiles.subscribe(async function(generatedFile: {
-    [s: string]: string;
-  }) {
-    removeGenerated(prependBasePath("/", baseModule, outputPath));
-    makeEmptyDirectories(baseModule, outputPath, [
-      "InputObject",
-      "Object",
-      "Interface",
-      "Union",
-      "Enum",
-      "Queries"
-    ]);
-    await Promise.all(writeGeneratedFiles(outputPath, generatedFile)).catch(
-      err => {
-        console.error("Error writing files", err);
-      }
-    );
-    writeIntrospectionFile(baseModule, outputPath);
-    applyElmFormat(prependBasePath("/", baseModule, outputPath));
-    if (customDecodersModule) {
-      verifyCustomCodecsFileIsValid(
+      onDataAvailable(
+        introspectionFileJson.data || introspectionFileJson,
+        queryFiles,
         outputPath,
         baseModule,
         customDecodersModule
       );
     }
-    console.log("Success!");
-  });
-  app.ports.generateFiles.send({queryFiles, introspectionData:data});
-}
+  );
+
+  app.ports.introspectSchemaFromUrl.subscribe(
+    ({
+      graphqlUrl,
+      excludeDeprecated,
+      outputPath,
+      queryDirectory,
+      baseModule,
+      headers,
+      customDecodersModule
+    }: {
+      graphqlUrl: string;
+      excludeDeprecated: boolean;
+      outputPath: string;
+      queryDirectory: string | null;
+      baseModule: string[];
+      headers: {};
+      customDecodersModule: string | null;
+    }) => {
+      warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+
+      console.log("Fetching GraphQL schema...");
+      new GraphQLClient(graphqlUrl, {
+        mode: "cors",
+        headers: headers
+      })
+        .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
+        .then(data => {
+          const queryFiles = loadQueryFiles(queryDirectory);
+          onDataAvailable(
+            data,
+            queryFiles,
+            outputPath,
+            baseModule,
+            customDecodersModule
+          );
+        })
+        .catch(err => {
+          console.log(err.response || err);
+          process.exit(1);
+        });
+    }
+  );
+
+  function makeEmptyDirectories(
+    baseModule: string[],
+    outputPath: string,
+    directoryNames: string[]
+  ): void {
+    directoryNames.forEach(dir => {
+      fs.mkdirpSync(prependBasePath(dir, baseModule, outputPath));
+    });
+  }
+
+  function onDataAvailable(
+    data: {},
+    queryFiles: { [index: string]: string },
+    outputPath: string,
+    baseModule: string[],
+    customDecodersModule: string | null
+  ) {
+    console.log("Generating files...");
+    app.ports.generatedFiles.subscribe(async function(generatedFile: {
+      [s: string]: string;
+    }) {
+      removeGenerated(prependBasePath("/", baseModule, outputPath));
+      makeEmptyDirectories(baseModule, outputPath, [
+        "InputObject",
+        "Object",
+        "Interface",
+        "Union",
+        "Enum",
+        "Queries"
+      ]);
+      await Promise.all(writeGeneratedFiles(outputPath, generatedFile)).catch(
+        err => {
+          console.error("Error writing files", err);
+        }
+      );
+      writeIntrospectionFile(baseModule, outputPath);
+      applyElmFormat(prependBasePath("/", baseModule, outputPath));
+      if (customDecodersModule) {
+        verifyCustomCodecsFileIsValid(
+          outputPath,
+          baseModule,
+          customDecodersModule
+        );
+      }
+      console.log("Success!");
+    });
+    app.ports.generateFiles.send({ queryFiles, introspectionData: data });
+  }
+};
 
 function verifyCustomCodecsFileIsValid(
   outputPath: string,
@@ -225,7 +241,7 @@ function writeGeneratedFiles(
 ): Promise<void>[] {
   return Object.entries(generatedFile).map(([fileName, fileContents]) => {
     const filePath = path.join(outputPath, fileName);
-    console.log(filePath)
+    console.log(filePath);
     return fs.writeFile(filePath, targetComment + fileContents);
   });
 }
