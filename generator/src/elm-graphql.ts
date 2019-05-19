@@ -1,4 +1,5 @@
 const { Elm } = require("./Main.elm");
+import * as glob from "glob";
 import * as childProcess from "child_process";
 import * as fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
@@ -57,10 +58,22 @@ function loadQueryFiles(
     )
   );
 
-  // const app = Elm.Main.init({ flags: { elmi: elmi.toString("base64") } });
+  const elmiFiles: string[] = glob.sync(
+    `${process.cwd()}/elm-stuff/0.19.0/*.elmi`
+  );
 
   let app = Elm.Main.init({
-    flags: { argv: process.argv, versionMessage, elmi: elmi.toString("base64") }
+    flags: {
+      argv: process.argv,
+      versionMessage,
+      elmi: elmi.toString("base64"),
+      elmiFiles: elmiFiles.map(elmiFile => {
+        return {
+          fileName: path.parse(elmiFile).name,
+          fileContents: fs.readFileSync(elmiFile).toString("base64")
+        };
+      })
+    }
   });
   // app.ports.print.subscribe(console.log);
   app.ports.printAndExitFailure.subscribe((message: string) => {

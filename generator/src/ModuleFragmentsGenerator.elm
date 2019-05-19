@@ -5,11 +5,12 @@ import Base64
 import Bytes.Decode
 import Bytes.Decode.ElmFile.Interface
 import Bytes.Encode
-import Debug
 import Dict
 import ElmFile.Interface
 import ElmFile.Module
 import ElmFile.Package
+import Json.Decode as Decode
+import ModuleName exposing (ModuleName)
 
 
 type Error
@@ -17,8 +18,27 @@ type Error
     | EncodingBase64Failed
 
 
-init : String -> Result Error (List ExposedSelectionSet)
+decoder : Decode.Decoder (List ( ModuleName, Result Error (List ExposedSelectionSet) ))
+decoder =
+    Decode.list
+        (Decode.map2 Tuple.pair
+            (Decode.field "fileName"
+                (Decode.string
+                    |> Decode.map (String.split "-")
+                    |> Decode.map ModuleName.fromList
+                )
+            )
+            (Decode.field "fileContents" (Decode.string |> Decode.map parseModule))
+        )
+
+
+init : Decode.Value -> Result Decode.Error (List ( ModuleName, Result Error (List ExposedSelectionSet) ))
 init elmi =
+    Decode.decodeValue decoder elmi
+
+
+parseModule : String -> Result Error (List ExposedSelectionSet)
+parseModule elmi =
     let
         interface =
             Base64.toBytes elmi

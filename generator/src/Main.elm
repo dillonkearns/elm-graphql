@@ -208,14 +208,14 @@ validateModuleName =
 
 
 type alias Flags =
-    Program.FlagsIncludingArgv { elmi : String }
+    Program.FlagsIncludingArgv { elmi : String, elmiFiles : Decode.Value }
 
 
 init : Flags -> CliOptions -> ( Model, Cmd msg )
 init flags msg =
     let
         _ =
-            Debug.log "@@@@@@" (ModuleFragmentsGenerator.init flags.elmi)
+            Debug.log "@@@@@@" (ModuleFragmentsGenerator.init flags.elmiFiles)
     in
     case msg of
         FromUrl options ->
@@ -259,7 +259,7 @@ update cliOptions msg model =
             ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } result )
 
 
-main : Program.StatefulProgram Model Msg CliOptions { elmi : String }
+main : Program.StatefulProgram Model Msg CliOptions { elmi : String, elmiFiles : Decode.Value }
 main =
     Program.stateful
         { printAndExitFailure = Ports.printAndExitFailure
