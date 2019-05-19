@@ -18,22 +18,22 @@ type Error
     | EncodingBase64Failed
 
 
-decoder : Decode.Decoder (List ( ModuleName, Result Error (List ExposedSelectionSet) ))
+decoder : Decode.Decoder (List (Result Error (List ExposedSelectionSet)))
 decoder =
     Decode.list
-        (Decode.map2 Tuple.pair
-            (Decode.field "fileName" ModuleName.elmiFilenameDecoder)
-            (Decode.field "fileContents" (Decode.string |> Decode.map parseModule))
+        (Decode.field "fileName" ModuleName.elmiFilenameDecoder
+            |> Decode.andThen
+                (\moduleName -> Decode.field "fileContents" (Decode.string |> Decode.map (parseModule moduleName)))
         )
 
 
-init : Decode.Value -> Result Decode.Error (List ( ModuleName, Result Error (List ExposedSelectionSet) ))
+init : Decode.Value -> Result Decode.Error (List (Result Error (List ExposedSelectionSet)))
 init elmi =
     Decode.decodeValue decoder elmi
 
 
-parseModule : String -> Result Error (List ExposedSelectionSet)
-parseModule elmi =
+parseModule : ModuleName -> String -> Result Error (List ExposedSelectionSet)
+parseModule elmiModuleName elmi =
     let
         interface =
             Base64.toBytes elmi
@@ -51,7 +51,7 @@ parseModule elmi =
         |> Result.map
             (Dict.foldl
                 (\functionName (Ast.Canonical.Annotation _ t) accumulator ->
-                    maybeSelectionSetAnnotation functionName t :: accumulator
+                    maybeSelectionSetAnnotation elmiModuleName functionName t :: accumulator
                 )
                 []
             )
@@ -66,7 +66,7 @@ type Level
 
 type alias Name =
     { functionName : String
-    , moduleName : String
+    , moduleName : ModuleName
     }
 
 
@@ -74,8 +74,8 @@ type ExposedSelectionSet
     = ExposedSelectionSet Name Level Ast.Canonical.Type
 
 
-maybeSelectionSetAnnotation : String -> Ast.Canonical.Type -> Maybe ExposedSelectionSet
-maybeSelectionSetAnnotation functionName type_ =
+maybeSelectionSetAnnotation : ModuleName -> String -> Ast.Canonical.Type -> Maybe ExposedSelectionSet
+maybeSelectionSetAnnotation elmiModuleName functionName type_ =
     case type_ of
         Ast.Canonical.TType moduleName "SelectionSet" typeParameters ->
             case moduleName of
@@ -83,7 +83,7 @@ maybeSelectionSetAnnotation functionName type_ =
                     if details.module_ == "Graphql.SelectionSet" then
                         case typeParameters of
                             [ level, selectionType ] ->
-                                ExposedSelectionSet { functionName = functionName, moduleName = "TODO" } Query selectionType
+                                ExposedSelectionSet { functionName = functionName, moduleName = elmiModuleName } Query selectionType
                                     |> Just
 
                             _ ->
