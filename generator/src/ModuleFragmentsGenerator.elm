@@ -18,16 +18,27 @@ type Error
     | EncodingBase64Failed
 
 
-decoder : Decode.Decoder (List (Result Error (List ExposedSelectionSet)))
+decoder : Decode.Decoder (Result Error (List ExposedSelectionSet))
 decoder =
     Decode.list
         (Decode.field "fileName" ModuleName.elmiFilenameDecoder
             |> Decode.andThen
                 (\moduleName -> Decode.field "fileContents" (Decode.string |> Decode.map (parseModule moduleName)))
         )
+        |> Decode.map
+            (\results ->
+                results
+                    |> combineResults
+                    |> Result.map List.concat
+            )
 
 
-init : Decode.Value -> Result Decode.Error (List (Result Error (List ExposedSelectionSet)))
+combineResults : List (Result x a) -> Result x (List a)
+combineResults =
+    List.foldr (Result.map2 (::)) (Ok [])
+
+
+init : Decode.Value -> Result Decode.Error (Result Error (List ExposedSelectionSet))
 init elmi =
     Decode.decodeValue decoder elmi
 
