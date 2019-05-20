@@ -1,4 +1,4 @@
-module ModuleFragmentsGenerator exposing (init)
+module ModuleFragmentsGenerator exposing (generateFile, init)
 
 import Ast.Canonical
 import Base64
@@ -11,6 +11,7 @@ import ElmFile.Module
 import ElmFile.Package
 import Json.Decode as Decode
 import ModuleName exposing (ModuleName)
+import String.Interpolate exposing (interpolate)
 
 
 type Error
@@ -31,6 +32,33 @@ decoder =
                     |> combineResults
                     |> Result.map List.concat
             )
+
+
+generateFile : Result Error (List ExposedSelectionSet) -> String
+generateFile result =
+    case result of
+        Ok exposedSelectionSets ->
+            exposedSelectionSets
+                |> List.filter (\(ExposedSelectionSet name decodesTo onType) -> name.functionName == "droidSelection")
+                |> List.map toString
+                |> String.join "\n\n"
+
+        Err _ ->
+            "TODO - ERROR"
+
+
+toString : ExposedSelectionSet -> String
+toString (ExposedSelectionSet name decodesTo onType) =
+    interpolate
+        """serializeFragment "{1}" "{2}" {0}.{1}"""
+        [ name.moduleName |> ModuleName.toString
+        , name.functionName
+        , onType
+        ]
+
+
+
+-- "          serializeFragment "droid" "Droid" ExposesSelection.droidSelection"
 
 
 combineResults : List (Result x a) -> Result x (List a)
@@ -69,12 +97,6 @@ parseModule elmiModuleName elmi =
         |> Result.map (List.filterMap identity)
 
 
-type Level
-    = Query
-    | Mutation
-    | Subscription
-
-
 type alias Name =
     { functionName : String
     , moduleName : ModuleName
@@ -82,7 +104,7 @@ type alias Name =
 
 
 type ExposedSelectionSet
-    = ExposedSelectionSet Name Level Ast.Canonical.Type
+    = ExposedSelectionSet Name Ast.Canonical.Type String
 
 
 maybeSelectionSetAnnotation : ModuleName -> String -> Ast.Canonical.Type -> Maybe ExposedSelectionSet
@@ -94,7 +116,7 @@ maybeSelectionSetAnnotation elmiModuleName functionName type_ =
                     if details.module_ == "Graphql.SelectionSet" then
                         case typeParameters of
                             [ level, selectionType ] ->
-                                ExposedSelectionSet { functionName = functionName, moduleName = elmiModuleName } Query selectionType
+                                ExposedSelectionSet { functionName = functionName, moduleName = elmiModuleName } selectionType (selectionContextFromType level)
                                     |> Just
 
                             _ ->
@@ -105,6 +127,16 @@ maybeSelectionSetAnnotation elmiModuleName functionName type_ =
 
         _ ->
             Nothing
+
+
+selectionContextFromType : Ast.Canonical.Type -> String
+selectionContextFromType selectionContextType =
+    case selectionContextType of
+        Ast.Canonical.TType nameModuleElmFile selectionContext typeCanonicalAstListList ->
+            selectionContext
+
+        _ ->
+            "TODO"
 
 
 logger : Int -> Int -> never

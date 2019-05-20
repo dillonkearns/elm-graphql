@@ -215,7 +215,12 @@ init : Flags -> CliOptions -> ( Model, Cmd msg )
 init flags msg =
     let
         _ =
-            Debug.log "@@@@@@" (ModuleFragmentsGenerator.init flags.elmiFiles)
+            case ModuleFragmentsGenerator.init flags.elmiFiles |> Result.map ModuleFragmentsGenerator.generateFile of
+                Ok value ->
+                    Debug.log value ""
+
+                Err _ ->
+                    ""
     in
     case msg of
         FromUrl options ->
