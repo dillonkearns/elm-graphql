@@ -1,4 +1,4 @@
-module ModuleName exposing (ModuleName, append, elmiFilenameDecoder, fromList, toImport, toString)
+module ModuleName exposing (ModuleName, append, elmiFilenameDecoder, fromList, startsWith, toImport, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -17,6 +17,11 @@ elmiFilenameDecoder =
 fromList : List String -> ModuleName
 fromList =
     ModuleName
+
+
+startsWith : String -> ModuleName -> Bool
+startsWith firstItem (ModuleName moduleNameParts) =
+    List.head moduleNameParts == Just firstItem
 
 
 toImport : ModuleName -> String

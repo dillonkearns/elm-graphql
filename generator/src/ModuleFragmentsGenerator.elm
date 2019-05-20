@@ -10,6 +10,7 @@ import ElmFile.Interface
 import ElmFile.Module
 import ElmFile.Package
 import Json.Decode as Decode
+import List.Extra
 import ModuleName exposing (ModuleName)
 import String.Interpolate exposing (interpolate)
 
@@ -47,12 +48,23 @@ generate : String
 generate =
     {1}"""
                 [ exposedSelectionSets
-                    |> List.filter (\(ExposedSelectionSet name decodesTo onType) -> name.functionName == "droidSelection")
+                    |> List.filter
+                        (\(ExposedSelectionSet name decodesTo onType) ->
+                            not
+                                (ModuleName.startsWith "Swapi" name.moduleName)
+                                && not (ModuleName.startsWith "Github" name.moduleName)
+                        )
                     |> List.map (\(ExposedSelectionSet name decodesTo onType) -> name.moduleName)
                     |> List.map ModuleName.toImport
+                    |> List.Extra.unique
                     |> String.join "\n"
                 , exposedSelectionSets
-                    |> List.filter (\(ExposedSelectionSet name decodesTo onType) -> name.functionName == "droidSelection")
+                    |> List.filter
+                        (\(ExposedSelectionSet name decodesTo onType) ->
+                            not
+                                (ModuleName.startsWith "Swapi" name.moduleName)
+                                && not (ModuleName.startsWith "Github" name.moduleName)
+                        )
                     |> List.map toString
                     |> String.join "\n\n"
                 ]
