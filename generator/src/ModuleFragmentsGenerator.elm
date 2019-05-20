@@ -44,9 +44,13 @@ generateFile result =
 import Graphql.Document exposing (serializeFragment)
 {0}
 
+
 generate : String
 generate =
-    {1}"""
+    [ {1}
+    ]
+    |> String.join "\\n\\n"
+"""
                 [ exposedSelectionSets
                     |> List.filter
                         (\(ExposedSelectionSet name decodesTo onType) ->
@@ -61,12 +65,12 @@ generate =
                 , exposedSelectionSets
                     |> List.filter
                         (\(ExposedSelectionSet name decodesTo onType) ->
-                            not
-                                (ModuleName.startsWith "Swapi" name.moduleName)
+                            not (ModuleName.startsWith "Swapi" name.moduleName)
                                 && not (ModuleName.startsWith "Github" name.moduleName)
+                                && not (ModuleName.startsWith "Graphql" name.moduleName)
                         )
                     |> List.map toString
-                    |> String.join "\n\n"
+                    |> String.join "\n    , "
                 ]
 
         Err _ ->
