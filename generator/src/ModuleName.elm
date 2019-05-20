@@ -1,4 +1,4 @@
-module ModuleName exposing (ModuleName, append, elmiFilenameDecoder, fromList, toString)
+module ModuleName exposing (ModuleName, append, elmiFilenameDecoder, fromList, toImport, toString)
 
 import Json.Decode as Decode exposing (Decoder)
 
@@ -17,6 +17,11 @@ elmiFilenameDecoder =
 fromList : List String -> ModuleName
 fromList =
     ModuleName
+
+
+toImport : ModuleName -> String
+toImport moduleName =
+    "import " ++ toString moduleName
 
 
 toString : ModuleName -> String

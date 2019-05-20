@@ -38,10 +38,24 @@ generateFile : Result Error (List ExposedSelectionSet) -> String
 generateFile result =
     case result of
         Ok exposedSelectionSets ->
-            exposedSelectionSets
-                |> List.filter (\(ExposedSelectionSet name decodesTo onType) -> name.functionName == "droidSelection")
-                |> List.map toString
-                |> String.join "\n\n"
+            interpolate """module ModuleFragments exposing (..)
+
+import Graphql.Document exposing (serializeFragment)
+{0}
+
+generate : String
+generate =
+    {1}"""
+                [ exposedSelectionSets
+                    |> List.filter (\(ExposedSelectionSet name decodesTo onType) -> name.functionName == "droidSelection")
+                    |> List.map (\(ExposedSelectionSet name decodesTo onType) -> name.moduleName)
+                    |> List.map ModuleName.toImport
+                    |> String.join "\n"
+                , exposedSelectionSets
+                    |> List.filter (\(ExposedSelectionSet name decodesTo onType) -> name.functionName == "droidSelection")
+                    |> List.map toString
+                    |> String.join "\n\n"
+                ]
 
         Err _ ->
             "TODO - ERROR"

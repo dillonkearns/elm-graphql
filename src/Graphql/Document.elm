@@ -53,9 +53,9 @@ serializeSubscription (SelectionSet fields decoder_) =
 serializeFragment : String -> String -> SelectionSet decodesTo selectionContext -> String
 serializeFragment fragmentName fragmentType (SelectionSet fields decoder_) =
     interpolate """fragment {0} on {1} {
-{1}
+{2}
 }"""
-        [ fragmentName, fragmentType, Field.serializeChildren True (Just 0) fields ]
+        [ fragmentName, fragmentType, Field.serializeChildren False (Just 0) fields ]
 
 
 {-| Decoder a response from the server. This low-level function shouldn't be needed
