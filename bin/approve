@@ -5,7 +5,7 @@ set -o errexit
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 rm -rf node_modules dist
-npm install
+npm ci
 npm run build
 npm link
 rm -rf node_modules

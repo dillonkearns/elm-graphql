@@ -21,7 +21,7 @@ script:
   - echo '$TRAVIS_TAG is ' $TRAVIS_TAG
   - npm test
   - ./bin/approve
-  - cd examples/src/subscription/ && npm install && npm run build && cd ../../..
+  - cd examples/src/subscription/ && npm ci && npm run build && cd ../../..
 
 deploy:
   - provider: npm
