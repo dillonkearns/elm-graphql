@@ -3,32 +3,24 @@
 set -o errexit
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
-echo '@@@ debugging output' && git diff --name-only
 
 rm -rf node_modules dist
 npm ci
-echo '@@@ debugging output' && git diff --name-only
 npm run build
-echo '@@@ debugging output' && git diff --name-only
 npm link
-echo '@@@ debugging output' && git diff --name-only
 rm -rf node_modules
-echo '@@@ debugging output' && git diff --name-only
 
 cd examples
 elm-graphql --introspection-file github-schema.json --base Github --output src
 elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
-npx elm-analyse
-echo '@@@ debugging output' && git diff --name-only
+npx elm-analyse |  grep -v 'INFO: '
 
 cd ../ete_tests
 elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
-echo '@@@ debugging output' && git diff --name-only
 
 cd ..
 echo 'Ensuring documentation is valid...'
 npx elm make --docs=documentation.json
-echo '@@@ debugging output' && git diff --name-only
 
 echo 'Confirming that generated code has been commited...'
 changed_files=$(git diff --name-only)
