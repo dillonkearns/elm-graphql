@@ -4,15 +4,19 @@ set -o errexit
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
+rm -rf node_modules dist
+npm install
 npm run build
+npm link
+rm -rf node_modules
 
 cd examples
-../bin/elm-graphql --introspection-file github-schema.json --base Github --output src
-../bin/elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
+elm-graphql --introspection-file github-schema.json --base Github --output src
+elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
 elm-analyse
 
 cd ../ete_tests
-../bin/elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
+elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
 
 cd ..
 echo 'Ensuring documentation is valid...'
