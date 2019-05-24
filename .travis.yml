@@ -19,7 +19,7 @@ install:
 script:
   - echo '$TRAVIS_TAG is ' $TRAVIS_TAG
   - npm test
-  - npm run approve
+  - ./bin/approve
   - cd examples/src/subscription/ && npm install && npm run build && cd ../../..
 
 deploy:
