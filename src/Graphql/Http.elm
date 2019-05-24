@@ -2,7 +2,7 @@ module Graphql.Http exposing
     ( Request, HttpError(..), Error, RawError(..)
     , queryRequest, mutationRequest, queryRequestWithHttpGet
     , QueryRequestMethod(..)
-    , withHeader, withTimeout, withCredentials, withQueryParams
+    , withHeader, withTimeout, withCredentials, withQueryParams, withOperationName
     , send, sendWithTracker, toTask
     , mapError, discardParsedErrorData, withSimpleHttpError
     , parseableErrorAsSuccess
@@ -28,7 +28,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Configure `Request` Options
 
-@docs withHeader, withTimeout, withCredentials, withQueryParams
+@docs withHeader, withTimeout, withCredentials, withQueryParams, withOperationName
 
 
 ## Perform `Request`
@@ -84,6 +84,7 @@ type Request decodesTo
         , timeout : Maybe Float
         , withCredentials : Bool
         , queryParams : List ( String, String )
+        , operationName : Maybe String
         }
 
 
@@ -122,6 +123,7 @@ queryRequest baseUrl query =
     , withCredentials = False
     , details = Query Nothing query
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -152,6 +154,7 @@ queryRequestWithHttpGet baseUrl requestMethod query =
     , withCredentials = False
     , details = Query (Just requestMethod) query
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -168,6 +171,7 @@ mutationRequest baseUrl mutationSelectionSet =
     , timeout = Nothing
     , withCredentials = False
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -648,6 +652,13 @@ decodeErrorWithData data =
 withHeader : String -> String -> Request decodesTo -> Request decodesTo
 withHeader key value (Request request) =
     Request { request | headers = Http.header key value :: request.headers }
+
+
+{-| TODO
+-}
+withOperationName : String -> Request decodesTo -> Request decodesTo
+withOperationName operationName (Request request) =
+    Request { request | operationName = Just operationName }
 
 
 {-| Add query params. The values will be Uri encoded.
