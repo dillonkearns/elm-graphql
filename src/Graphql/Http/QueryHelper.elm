@@ -29,16 +29,25 @@ maxLength =
     2000
 
 
-build : Maybe HttpMethod -> String -> List QueryParam -> SelectionSet decodesTo RootQuery -> QueryRequest
-build forceMethod url queryParams queryDocument =
+build : Maybe String -> Maybe HttpMethod -> String -> List QueryParam -> SelectionSet decodesTo RootQuery -> QueryRequest
+build operationName forceMethod url queryParams queryDocument =
     let
         urlForGetRequest =
-            QueryParams.urlWithQueryParams (queryParams ++ [ ( "query", Document.serializeQueryForUrl queryDocument ) ]) url
+            QueryParams.urlWithQueryParams
+                (queryParams ++ [ ( "query", Document.serializeQueryForUrl operationName queryDocument ) ])
+                url
     in
     if forceMethod == Just Post || (String.length urlForGetRequest >= maxLength && forceMethod /= Just Get) then
         { method = Post
         , url = QueryParams.urlWithQueryParams [] url
-        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
+        , body =
+            Http.jsonBody
+                (Json.Encode.object
+                    [ ( "query"
+                      , Json.Encode.string (Document.serializeQuery operationName queryDocument)
+                      )
+                    ]
+                )
         }
 
     else

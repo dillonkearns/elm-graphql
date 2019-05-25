@@ -80,5 +80,5 @@ main =
     Helpers.Main.document
         { init = init
         , update = update
-        , queryString = Document.serializeQuery query
+        , queryString = Document.serializeQuery Nothing query
         }

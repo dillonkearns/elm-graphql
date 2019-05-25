@@ -18,31 +18,36 @@ import String.Interpolate exposing (interpolate)
 
 {-| Serialize a query selection set into a string for a GraphQL endpoint.
 -}
-serializeQuery : SelectionSet decodesTo RootQuery -> String
-serializeQuery (SelectionSet fields decoder_) =
-    serialize "query" fields
+serializeQuery : Maybe String -> SelectionSet decodesTo RootQuery -> String
+serializeQuery maybeOperationName (SelectionSet fields decoder_) =
+    serialize maybeOperationName "query" fields
 
 
 {-| Serialize a query selection set into a string with minimal whitespace. For
 use with a GET request as a query param.
 -}
-serializeQueryForUrl : SelectionSet decodesTo RootQuery -> String
-serializeQueryForUrl (SelectionSet fields decoder_) =
-    "{" ++ Field.serializeChildren Nothing fields ++ "}"
+serializeQueryForUrl : Maybe String -> SelectionSet decodesTo RootQuery -> String
+serializeQueryForUrl maybeOperationName (SelectionSet fields decoder_) =
+    case maybeOperationName of
+        Just operationName ->
+            "query " ++ operationName ++ " {" ++ Field.serializeChildren Nothing fields ++ "}"
+
+        Nothing ->
+            "{" ++ Field.serializeChildren Nothing fields ++ "}"
 
 
 {-| Serialize a mutation selection set into a string for a GraphQL endpoint.
 -}
-serializeMutation : SelectionSet decodesTo RootMutation -> String
-serializeMutation (SelectionSet fields decoder_) =
-    serialize "mutation" fields
+serializeMutation : Maybe String -> SelectionSet decodesTo RootMutation -> String
+serializeMutation maybeOperationName (SelectionSet fields decoder_) =
+    serialize maybeOperationName "mutation" fields
 
 
 {-| Serialize a subscription selection set into a string for a GraphQL endpoint.
 -}
-serializeSubscription : SelectionSet decodesTo RootSubscription -> String
-serializeSubscription (SelectionSet fields decoder_) =
-    serialize "subscription" fields
+serializeSubscription : Maybe String -> SelectionSet decodesTo RootSubscription -> String
+serializeSubscription maybeOperationName (SelectionSet fields decoder_) =
+    serialize maybeOperationName "subscription" fields
 
 
 {-| Decoder a response from the server. This low-level function shouldn't be needed
@@ -54,9 +59,13 @@ decoder (SelectionSet fields decoder_) =
     decoder_ |> Decode.field "data"
 
 
-serialize : String -> List RawField -> String
-serialize operationName queries =
+serialize : Maybe String -> String -> List RawField -> String
+serialize operationName operationType queries =
     interpolate """{0} {
 {1}
 }"""
-        [ operationName, Field.serializeChildren (Just 0) queries ]
+        [ [ Just operationType, operationName ]
+            |> List.filterMap identity
+            |> String.join " "
+        , Field.serializeChildren (Just 0) queries
+        ]

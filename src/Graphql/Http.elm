@@ -529,6 +529,7 @@ toReadyRequest (Request request) =
             let
                 queryRequestDetails =
                     QueryHelper.build
+                        request.operationName
                         (case forcedRequestMethod of
                             Just AlwaysGet ->
                                 Just QueryHelper.Get
@@ -565,7 +566,7 @@ toReadyRequest (Request request) =
                 Http.jsonBody
                     (Json.Encode.object
                         [ ( "query"
-                          , Json.Encode.string (Document.serializeMutation mutationSelectionSet)
+                          , Json.Encode.string (Document.serializeMutation request.operationName mutationSelectionSet)
                           )
                         ]
                     )

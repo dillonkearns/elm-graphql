@@ -30,14 +30,14 @@ all =
         [ test "single leaf" <|
             \() ->
                 document [ leaf "avatar" [] ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   avatar0: avatar
 }"""
         , test "single leaf for GET serializer" <|
             \() ->
                 document [ leaf "avatar" [] ]
-                    |> Graphql.Document.serializeQueryForUrl
+                    |> Graphql.Document.serializeQueryForUrl Nothing
                     |> Expect.equal """{avatar0:avatar}"""
         , test "duplicate nested fields for GET serializer" <|
             \() ->
@@ -48,7 +48,7 @@ all =
                         , leaf "avatar" []
                         ]
                     ]
-                    |> Graphql.Document.serializeQueryForUrl
+                    |> Graphql.Document.serializeQueryForUrl Nothing
                     |> Expect.equal "{topLevel{avatar0:avatar avatar0:avatar}}"
         , test "multiple top-level" <|
             \() ->
@@ -56,7 +56,7 @@ all =
                     [ leaf "avatar" []
                     , leaf "labels" []
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   avatar0: avatar
   labels0: labels
@@ -67,7 +67,7 @@ all =
                     [ leaf "avatar" []
                     , leaf "avatar" []
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   avatar0: avatar
   avatar0: avatar
@@ -81,7 +81,7 @@ all =
                         , leaf "avatar" []
                         ]
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   topLevel {
     avatar0: avatar
@@ -96,7 +96,7 @@ all =
                         [ Composite "...on Droid" [] []
                         ]
                     ]
-                    |> Graphql.Document.serializeQuery
+                    |> Graphql.Document.serializeQuery Nothing
                     |> Expect.equal """query {
   topLevel {
     ...on Droid {
@@ -108,7 +108,7 @@ all =
             [ test "top-level empty query" <|
                 \() ->
                     document []
-                        |> Graphql.Document.serializeQuery
+                        |> Graphql.Document.serializeQuery Nothing
                         |> Expect.equal """query {
   __typename
 }"""
@@ -117,7 +117,7 @@ all =
                     document
                         [ Composite "viewer" [] []
                         ]
-                        |> Graphql.Document.serializeQuery
+                        |> Graphql.Document.serializeQuery Nothing
                         |> Expect.equal """query {
   viewer {
     __typename
