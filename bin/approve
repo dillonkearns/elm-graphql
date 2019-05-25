@@ -4,11 +4,13 @@ set -o errexit
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-rm -rf node_modules dist
-npm ci
+npm uninstall -g elm-graphql
 npm run build
-npm link
-rm -rf node_modules
+rm dillonkearns-elm-graphql-*.tgz
+npm pack
+npm install -g dillonkearns-elm-graphql-*.tgz
+rm dillonkearns-elm-graphql-*.tgz
+elm-graphql --version
 
 cd examples
 elm-graphql --introspection-file github-schema.json --base Github --output src
