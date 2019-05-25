@@ -1,6 +1,10 @@
 {
   "name": "@dillonkearns/elm-graphql",
   "version": "3.6.1",
+  "files": [
+    "dist/bundle.js",
+    "bin/elm-graphql"
+  ],
   "scripts": {
     "build": "parcel build generator/src/elm-graphql.ts --out-file bundle.js --target node --bundle-node-modules --no-source-maps",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
