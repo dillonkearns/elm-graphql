@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.6.2] - 2018-05-29
+
+### Changed
+
+- Reduce NPM bundle size by removing `.npmignore` file and
+  adding explicit `files` whitelist to `package.json`.
+
 ## [3.6.1] - 2018-05-24
 
 ### Fixed
