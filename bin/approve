@@ -6,7 +6,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 npm uninstall -g elm-graphql
 npm run build
-rm dillonkearns-elm-graphql-*.tgz
+rm -f dillonkearns-elm-graphql-*.tgz
 npm pack
 npm install -g dillonkearns-elm-graphql-*.tgz
 rm dillonkearns-elm-graphql-*.tgz
