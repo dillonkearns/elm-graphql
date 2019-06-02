@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.6.2] - 2018-05-29
+
+### Changed
+
+- Reduce NPM bundle size by removing `.npmignore` file and
+  adding explicit `files` whitelist to `package.json`.
+
+## [3.6.1] - 2018-05-24
+
+### Fixed
+
+- Fixed error when running CLI ([#150](https://github.com/dillonkearns/elm-graphql/issues/150))
+  that was caused by an issue with the parcel build step. The Travis continuous integration build
+  script is now running a more realistic check that will avoid issues like this slipping through into
+  the published binaries in the future (NPM versions are only published after a green build). See
+  [the issue](https://github.com/dillonkearns/elm-graphql/issues/150) for more details.
+
+## [3.6.0] - 2018-05-17
+
+### Fixed
+
+- Fixed [#138](https://github.com/dillonkearns/elm-graphql/issues/138). Before this fix, an input object would incorrectly use a Custom Type wrapper instead of
+  a plain record type alias to avoid circular dependencies in a case where there was no circular dependency.
+  Thank you [@mattdb](https://github.com/mattdb) for reporting the issue, and providing a minimal
+  failing test case! 🙏
+
 ## [3.5.0] - 2018-05-17
 
 ### Changed

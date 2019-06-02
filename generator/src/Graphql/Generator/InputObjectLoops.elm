@@ -51,7 +51,7 @@ fieldIsCircular_ visitedNames typeDefs inputObjectName fieldTypeRef =
                             False
 
                 Type.List listTypeRef ->
-                    fieldIsCircular_ (inputObjectName :: visitedNames) typeDefs inputObjectName listTypeRef
+                    fieldIsCircular_ visitedNames typeDefs inputObjectName listTypeRef
 
                 _ ->
                     False

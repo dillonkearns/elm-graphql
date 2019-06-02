@@ -4,19 +4,25 @@ set -o errexit
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
+npm uninstall -g elm-graphql
 npm run build
+rm -f dillonkearns-elm-graphql-*.tgz
+npm pack
+npm install -g dillonkearns-elm-graphql-*.tgz
+rm dillonkearns-elm-graphql-*.tgz
+elm-graphql --version
 
 cd examples
-../bin/elm-graphql --introspection-file github-schema.json --base Github --output src
-../bin/elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
-elm-analyse
+elm-graphql --introspection-file github-schema.json --base Github --output src
+elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
+npx elm-analyse |  grep -v 'INFO: '
 
 cd ../ete_tests
-../bin/elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
+elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
 
 cd ..
 echo 'Ensuring documentation is valid...'
-elm make --docs=documentation.json
+npx elm make --docs=documentation.json
 
 echo 'Confirming that generated code has been commited...'
 changed_files=$(git diff --name-only -- examples/src/Github examples/src/Swapi ete_tests/src)

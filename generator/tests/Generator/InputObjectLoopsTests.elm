@@ -4,6 +4,7 @@ import Expect
 import Graphql.Generator.InputObjectLoops as InputObjectLoops
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
+import Graphql.Parser.Scalar as Scalar
 import Graphql.Parser.Type as Type exposing (DefinableType(..), Field, IsNullable(..), ReferrableType(..), TypeDefinition(..), TypeReference(..))
 import Test exposing (Test, describe, only, test)
 
@@ -105,7 +106,30 @@ all =
                 ]
                     |> InputObjectLoops.any
                     |> Expect.equal True
+        , test "deeply nested through list non-circular" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "GroupInput")
+                    (InputObjectType [ fieldListRef "ProductInputNewOrId" "products" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "ProductInputNewOrId")
+                    (InputObjectType [ field "ProductInput" "newProduct" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "ProductInput")
+                    (InputObjectType [ scalarField "name" ])
+                    Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal False
         ]
+
+
+scalarField : String -> Field
+scalarField fieldName =
+    { name = CamelCaseName.build fieldName
+    , description = Nothing
+    , typeRef = TypeReference (Scalar Scalar.String) NonNullable
+    , args = []
+    }
 
 
 field : String -> String -> Field
