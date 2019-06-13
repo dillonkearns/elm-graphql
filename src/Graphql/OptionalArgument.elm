@@ -56,7 +56,9 @@ type OptionalArgument a
 {-| Convert a `Maybe` to an OptionalArgument.
 
     fromMaybe (Just a) == Present a
+
     fromMaybe Nothing == Absent
+
 -}
 fromMaybe : Maybe a -> OptionalArgument a
 fromMaybe maybeValue =
@@ -68,10 +70,21 @@ fromMaybe maybeValue =
             Absent
 
 
-{-| Convert a `Maybe` to an OptionalArgument.
+{-| Convert a `Maybe` to an OptionalArgument, converting `Nothing` into
+`Null` (rather than `Absent`). See `OptionalArgument.fromMaybe` for an alternative
+which turns `Nothing` into `Absent`.
+
+This can be handy if you are performing a mutation
+where you want to "null out" some data in your API. Sending an `Absent` value
+(i.e. omitting the optional argument) in the mutation arguments won't update
+the value, but the server logic defines sending `null` as deleting the value.
+Of course, this all depends on the custom logic you define in the resolvers in
+your server's implementation of your API.
 
     fromMaybeWithNull (Just a) == Present a
+
     fromMaybeWithNull Nothing == Null
+
 -}
 fromMaybeWithNull : Maybe a -> OptionalArgument a
 fromMaybeWithNull maybeValue =
