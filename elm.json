@@ -3,7 +3,7 @@
     "name": "dillonkearns/elm-graphql",
     "summary": "Type-safe GraphQL queries in Elm.",
     "license": "BSD-3-Clause",
-    "version": "4.2.1",
+    "version": "4.3.0",
     "exposed-modules": [
         "Graphql.Operation",
         "Graphql.Http",
