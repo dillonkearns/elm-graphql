@@ -1,6 +1,7 @@
 module Graphql.OptionalArgument exposing
     ( OptionalArgument(..)
     , fromMaybe
+    , fromMaybeWithNull
     , map
     )
 
@@ -8,6 +9,7 @@ module Graphql.OptionalArgument exposing
 
 @docs OptionalArgument
 @docs fromMaybe
+@docs fromMaybeWithNull
 @docs map
 
 -}
@@ -52,6 +54,9 @@ type OptionalArgument a
 
 
 {-| Convert a `Maybe` to an OptionalArgument.
+
+    fromMaybe (Just a) == Present a
+    fromMaybe Nothing == Absent
 -}
 fromMaybe : Maybe a -> OptionalArgument a
 fromMaybe maybeValue =
@@ -61,6 +66,21 @@ fromMaybe maybeValue =
 
         Nothing ->
             Absent
+
+
+{-| Convert a `Maybe` to an OptionalArgument.
+
+    fromMaybeWithNull (Just a) == Present a
+    fromMaybeWithNull Nothing == Null
+-}
+fromMaybeWithNull : Maybe a -> OptionalArgument a
+fromMaybeWithNull maybeValue =
+    case maybeValue of
+        Just value ->
+            Present value
+
+        Nothing ->
+            Null
 
 
 {-| Transform an OptionalArgument value with a given function.
