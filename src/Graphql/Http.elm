@@ -625,9 +625,25 @@ decoderOrError decoder =
 errorDecoder : Json.Decode.Decoder a -> Json.Decode.Decoder (DataResult a)
 errorDecoder decoder =
     Json.Decode.oneOf
-        [ decoder |> Json.Decode.map GraphqlError.ParsedData |> Json.Decode.andThen decodeErrorWithData
-        , Json.Decode.field "data" Json.Decode.value |> Json.Decode.map GraphqlError.UnparsedData |> Json.Decode.andThen decodeErrorWithData
+        [ decoder
+            |> Json.Decode.map GraphqlError.ParsedData
+            |> Json.Decode.andThen decodeErrorWithData
+        , Json.Decode.field "data" Json.Decode.value
+            |> Json.Decode.map GraphqlError.UnparsedData
+            |> Json.Decode.andThen decodeErrorWithData
+        , Json.Decode.succeed (GraphqlError.UnparsedData (nullJsonValue ()))
+            |> Json.Decode.andThen decodeErrorWithData
         ]
+
+
+nullJsonValue : () -> Json.Decode.Value
+nullJsonValue a =
+    case Json.Decode.decodeString Json.Decode.value "null" of
+        Ok value ->
+            value
+
+        Err _ ->
+            nullJsonValue ()
 
 
 decodeErrorWithData : GraphqlError.PossiblyParsedData a -> Json.Decode.Decoder (DataResult a)

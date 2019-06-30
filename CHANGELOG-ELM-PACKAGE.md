@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.3.1] - 2018-06-30
+
+### Fixed
+
+- Parse pre-execution GraphQL response that has "error" but no "data"
+  (see [#168](https://github.com/dillonkearns/elm-graphql/issues/168)).
+
 ## [4.3.0] - 2018-06-13
 
 ### Added
