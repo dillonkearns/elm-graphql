@@ -9,27 +9,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [4.3.1] - 2018-06-30
+## [4.3.1] - 2019-06-30
 
 ### Fixed
 
 - Parse pre-execution GraphQL response that has "error" but no "data"
   (see [#168](https://github.com/dillonkearns/elm-graphql/issues/168)).
 
-## [4.3.0] - 2018-06-13
+## [4.3.0] - 2019-06-13
 
 ### Added
 
 - Added `SeletionSet.foldl`
 - Added `OptionalArgument.fromMaybeWithNull`
 
-## [4.2.1] - 2018-04-17
+## [4.2.1] - 2019-04-17
 
 ### Changed
 
 - Don't use field aliases for \_\_typename fields (see [PR #121](https://github.com/dillonkearns/elm-graphql/pull/121)).
 
-## [4.2.0] - 2018-01-25
+## [4.2.0] - 2019-01-25
 
 ### Added
 
