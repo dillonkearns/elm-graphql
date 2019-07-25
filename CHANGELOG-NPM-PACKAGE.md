@@ -9,14 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [3.6.2] - 2018-05-29
+## [3.6.2] - 2019-05-29
 
 ### Changed
 
 - Reduce NPM bundle size by removing `.npmignore` file and
   adding explicit `files` whitelist to `package.json`.
 
-## [3.6.1] - 2018-05-24
+## [3.6.1] - 2019-05-24
 
 ### Fixed
 
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   the published binaries in the future (NPM versions are only published after a green build). See
   [the issue](https://github.com/dillonkearns/elm-graphql/issues/150) for more details.
 
-## [3.6.0] - 2018-05-17
+## [3.6.0] - 2019-05-17
 
 ### Fixed
 
@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   Thank you [@mattdb](https://github.com/mattdb) for reporting the issue, and providing a minimal
   failing test case! 🙏
 
-## [3.5.0] - 2018-05-17
+## [3.5.0] - 2019-05-17
 
 ### Changed
 
@@ -47,20 +47,20 @@ Just some changes under the hood.
   should be exactly the same, and the extensive automated tests check out, plus
   my manual testing of the binary.
 
-## [3.4.0] - 2018-04-17
+## [3.4.0] - 2019-04-17
 
 ### Changed
 
 - Don't use field aliases for \_\_typename fields (see [PR #121](https://github.com/dillonkearns/elm-graphql/pull/121)).
 
-## [3.3.0] - 2018-03-31
+## [3.3.0] - 2019-03-31
 
 ### Added
 
 - Generate `fromString` for Enums. This function is the inverse of the Enum `toString` helper.
   So `NewHope |> Episode.toString |> Episode.fromString == Just NewHope`.
 
-## [3.2.0] - 2018-01-25
+## [3.2.0] - 2019-01-25
 
 ### Fixed
 
@@ -74,7 +74,7 @@ Just some changes under the hood.
 
 - Renamed `--scalar-decoders` flag to `--scalar-codecs`.
 
-## [3.1.0] - 2018-01-07
+## [3.1.0] - 2019-01-07
 
 ### Added
 
