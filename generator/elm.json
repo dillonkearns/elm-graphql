@@ -14,7 +14,7 @@
             "elm-community/list-extra": "8.0.0",
             "elm-community/result-extra": "2.2.1",
             "elm-community/string-extra": "3.0.0",
-            "lukewestby/elm-string-interpolate": "1.0.3"
+            "lukewestby/elm-string-interpolate": "1.0.4"
         },
         "indirect": {}
     },
