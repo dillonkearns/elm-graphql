@@ -5,8 +5,18 @@ tool recently. The `elm` CLI doesn't currently have a mechanism for automaticall
 resolving/updating dependencies. If you have `elm/http` < 2.0.0 as a dependency,
 `elm install dillonkearns/elm-graphql` will not install the latest version of
 `dillonkearns/elm-graphql`. The reason is because the latest version depends on the
-newer `elm/http`, so you first need to update that dependency. Unfortunately,
-resolving dependencies is a manual process at the moment.
+newer `elm/http`, so you first need to update that dependency. 
+
+Here's a semi-automatic aproach that you might take towards identifying the package that holds you back from updating `elm-graphql` to the latest version:
+
+1. Globally install [`elm-json`](https://github.com/zwilias/elm-json) by running `npm i -g elm-json`
+2. Create clean new `elm.json` file by running `elm-json new`
+3. Install the latest `elm-graphql` by running `elm-json install dillonkearns/elm-graphql`
+4. Attempt to install the rest of the packages in your project in one go by running `elm-json install author1/package1 author2/package2 author3/package3 ...`. It should look something like:
+```
+elm-json install NoRedInk/elm-json-decode-pipeline danyx23/elm-mimetype debois/elm-dom elm/browser elm/core elm/html elm/http elm/json elm/regex elm/svg elm/time elm/url elm-community/dict-extra elm-community/html-extra elm-community/json-extra elm-community/list-extra elm-community/maybe-extra elm-community/result-extra elm-community/string-extra justinmimbs/date justinmimbs/time-extra labzero/elm-google-geocoding myrho/elm-round simonh1000/elm-jwt thaterikperson/elm-strftime wernerdegroot/listzipper
+```
+5. Expect it to fail describing the package that conflicts with `elm-graphql` or one of it's dependencies
 
 Some other notes:
 
