@@ -84,6 +84,7 @@ type Request decodesTo
         , timeout : Maybe Float
         , withCredentials : Bool
         , queryParams : List ( String, String )
+        , operationName : Maybe String
         }
 
 
@@ -122,6 +123,7 @@ queryRequest baseUrl query =
     , withCredentials = False
     , details = Query Nothing query
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -152,6 +154,7 @@ queryRequestWithHttpGet baseUrl requestMethod query =
     , withCredentials = False
     , details = Query (Just requestMethod) query
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
 
@@ -168,8 +171,26 @@ mutationRequest baseUrl mutationSelectionSet =
     , timeout = Nothing
     , withCredentials = False
     , queryParams = []
+    , operationName = Nothing
     }
         |> Request
+
+
+{-| Set an operation name. This is a meaningful and explicit name for your operation,
+very helpful for debugging and server-side logging.
+See <https://graphql.org/learn/queries/#operation-name>
+
+    makeRequest : Cmd Msg
+    makeRequest =
+        query
+            |> Graphql.Http.queryRequest "https://api.github.com/graphql"
+            |> Graphql.Http.withOperationName "HeroNameAndFriends"
+            |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
+
+-}
+withOperationName : Request decodesTo -> String -> Request decodesTo
+withOperationName (Request request) operationName =
+    Request { request | operationName = Just operationName }
 
 
 {-| An alias for the default kind of Error. See the `RawError` for the full
@@ -537,6 +558,7 @@ toReadyRequest (Request request) =
                         )
                         request.baseUrl
                         request.queryParams
+                        request.operationName
                         querySelectionSet
             in
             { method =
@@ -554,6 +576,15 @@ toReadyRequest (Request request) =
             }
 
         Mutation mutationSelectionSet ->
+            let
+                serializedMutation =
+                    case request.operationName of
+                        Just operationName ->
+                            Document.serializeMutationWithOperationName operationName mutationSelectionSet
+
+                        Nothing ->
+                            Document.serializeMutation mutationSelectionSet
+            in
             { method = "POST"
             , headers = request.headers
             , url = request.baseUrl |> QueryParams.urlWithQueryParams request.queryParams
@@ -561,7 +592,7 @@ toReadyRequest (Request request) =
                 Http.jsonBody
                     (Json.Encode.object
                         [ ( "query"
-                          , Json.Encode.string (Document.serializeMutation mutationSelectionSet)
+                          , Json.Encode.string serializedMutation
                           )
                         ]
                     )

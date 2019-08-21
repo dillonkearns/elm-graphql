@@ -124,4 +124,18 @@ all =
   }
 }"""
             ]
+        , describe "with operation name"
+            [ test "single leaf" <|
+                \() ->
+                    document [ leaf "avatar" [] ]
+                        |> Graphql.Document.serializeQueryWithOperationName "Avatar"
+                        |> Expect.equal """query Avatar {
+  avatar0: avatar
+}"""
+            , test "single leaf for GET serializer" <|
+                \() ->
+                    document [ leaf "avatar" [] ]
+                        |> Graphql.Document.serializeQueryForUrlWithOperationName "Avatar"
+                        |> Expect.equal """query Avatar {avatar0:avatar}"""
+            ]
         ]

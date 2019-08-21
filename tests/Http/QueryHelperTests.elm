@@ -37,10 +37,19 @@ all =
         [ test "uses GET when it is short enough" <|
             \() ->
                 document [ Composite "hero" [] [ leaf "name" [] ] ]
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" []
+                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Get
                         , url = "https://elm-graphql.herokuapp.com/api?query=%7Bhero%7Bname0%3Aname%7D%7D"
+                        , body = Http.emptyBody
+                        }
+        , test "uses GET when it is short enough, with operation name" <|
+            \() ->
+                document [ Composite "hero" [] [ leaf "name" [] ] ]
+                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] (Just "OpName")
+                    |> Expect.equal
+                        { method = QueryHelper.Get
+                        , url = "https://elm-graphql.herokuapp.com/api?query=query+OpName+%7Bhero%7Bname0%3Aname%7D%7D"
                         , body = Http.emptyBody
                         }
         , test "uses POST when it is short enough for GET but POST is forced" <|
@@ -50,7 +59,7 @@ all =
                         document [ Composite "hero" [] [ leaf "name" [] ] ]
                 in
                 queryDocument
-                    |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" []
+                    |> QueryHelper.build (Just QueryHelper.Post) "https://elm-graphql.herokuapp.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Post
                         , url = "https://elm-graphql.herokuapp.com/api"
@@ -69,10 +78,29 @@ all =
                             ]
                 in
                 queryDocument
-                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" []
+                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] Nothing
                     |> Expect.equal
                         { method = QueryHelper.Post
                         , url = "https://elm-graphql.herokuapp.com/api"
                         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
+                        }
+        , test "uses POST when it too long, with operation name" <|
+            \() ->
+                let
+                    queryDocument =
+                        document
+                            [ Composite "hero"
+                                []
+                                [ leaf longName1 []
+                                , leaf longName2 []
+                                ]
+                            ]
+                in
+                queryDocument
+                    |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] (Just "OpName")
+                    |> Expect.equal
+                        { method = QueryHelper.Post
+                        , url = "https://elm-graphql.herokuapp.com/api"
+                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQueryWithOperationName "OpName" queryDocument) ) ])
                         }
         ]
