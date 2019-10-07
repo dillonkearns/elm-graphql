@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PageInfo exposing (endCursor, hasNextPage, hasPreviousPage, startCursor)
+module Github.Object.PageInfo exposing (..)
 
 import Github.InputObject
 import Github.Interface

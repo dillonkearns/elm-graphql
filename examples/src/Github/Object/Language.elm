@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Language exposing (color, id, name)
+module Github.Object.Language exposing (..)
 
 import Github.InputObject
 import Github.Interface

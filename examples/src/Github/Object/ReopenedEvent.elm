@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReopenedEvent exposing (actor, closable, createdAt, id)
+module Github.Object.ReopenedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

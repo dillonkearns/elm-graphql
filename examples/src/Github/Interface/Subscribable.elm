@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Subscribable exposing (Fragments, fragments, id, maybeFragments, viewerCanSubscribe, viewerSubscription)
+module Github.Interface.Subscribable exposing (..)
 
 import Github.Enum.SubscriptionState
 import Github.InputObject

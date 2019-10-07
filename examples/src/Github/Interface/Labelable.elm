@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Labelable exposing (Fragments, LabelsOptionalArguments, fragments, labels, maybeFragments)
+module Github.Interface.Labelable exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.SuggestedReviewer exposing (isAuthor, isCommenter, reviewer)
+module Github.Object.SuggestedReviewer exposing (..)
 
 import Github.InputObject
 import Github.Interface

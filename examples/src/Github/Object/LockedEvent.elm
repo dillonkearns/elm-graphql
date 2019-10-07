@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.LockedEvent exposing (actor, createdAt, id, lockable)
+module Github.Object.LockedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

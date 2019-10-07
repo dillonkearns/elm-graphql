@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.CommitCommentThread exposing (CommentsOptionalArguments, comments, commit, id, path, position, repository)
+module Github.Object.CommitCommentThread exposing (..)
 
 import Github.InputObject
 import Github.Interface

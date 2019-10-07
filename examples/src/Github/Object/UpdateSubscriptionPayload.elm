@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UpdateSubscriptionPayload exposing (clientMutationId, subscribable)
+module Github.Object.UpdateSubscriptionPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

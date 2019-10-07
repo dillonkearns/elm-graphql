@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewDismissalAllowance exposing (actor, id, protectedBranch)
+module Github.Object.ReviewDismissalAllowance exposing (..)
 
 import Github.InputObject
 import Github.Interface

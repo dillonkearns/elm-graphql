@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.StargazerEdge exposing (cursor, node, starredAt)
+module Github.Object.StargazerEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

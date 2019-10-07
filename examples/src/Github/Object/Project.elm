@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Project exposing (ColumnsOptionalArguments, PendingCardsOptionalArguments, body, bodyHTML, closed, closedAt, columns, createdAt, creator, databaseId, id, name, number, owner, pendingCards, resourcePath, state, updatedAt, url, viewerCanUpdate)
+module Github.Object.Project exposing (..)
 
 import Github.Enum.ProjectState
 import Github.InputObject

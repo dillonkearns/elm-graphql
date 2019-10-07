@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.License exposing (body, conditions, description, featured, hidden, id, implementation, key, limitations, name, nickname, permissions, spdxId, url)
+module Github.Object.License exposing (..)
 
 import Github.InputObject
 import Github.Interface

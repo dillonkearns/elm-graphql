@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Ref exposing (AssociatedPullRequestsOptionalArguments, associatedPullRequests, id, name, prefix, repository, target)
+module Github.Object.Ref exposing (..)
 
 import Github.Enum.PullRequestState
 import Github.InputObject

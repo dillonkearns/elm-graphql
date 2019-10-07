@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryCollaboratorConnection exposing (edges, nodes, pageInfo, totalCount)
+module Github.Object.RepositoryCollaboratorConnection exposing (..)
 
 import Github.InputObject
 import Github.Interface

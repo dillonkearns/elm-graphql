@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ProtectedBranchConnection exposing (edges, nodes, pageInfo, totalCount)
+module Github.Object.ProtectedBranchConnection exposing (..)
 
 import Github.InputObject
 import Github.Interface

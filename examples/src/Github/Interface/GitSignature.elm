@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.GitSignature exposing (Fragments, email, fragments, isValid, maybeFragments, payload, signature, signer, state)
+module Github.Interface.GitSignature exposing (..)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject

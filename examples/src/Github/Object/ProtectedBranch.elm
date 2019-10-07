@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ProtectedBranch exposing (PushAllowancesOptionalArguments, ReviewDismissalAllowancesOptionalArguments, creator, hasDismissableStaleReviews, hasRequiredReviews, hasRequiredStatusChecks, hasRestrictedPushes, hasRestrictedReviewDismissals, hasStrictRequiredStatusChecks, id, isAdminEnforced, name, pushAllowances, repository, requiredStatusCheckContexts, reviewDismissalAllowances)
+module Github.Object.ProtectedBranch exposing (..)
 
 import Github.InputObject
 import Github.Interface

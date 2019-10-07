@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReactionEdge exposing (cursor, node)
+module Github.Object.ReactionEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

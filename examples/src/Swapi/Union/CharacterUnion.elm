@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Union.CharacterUnion exposing (Fragments, fragments, maybeFragments)
+module Swapi.Union.CharacterUnion exposing (..)
 
 import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Mutation exposing (SendMessageRequiredArguments, increment, sendMessage)
+module Swapi.Mutation exposing (..)
 
 import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

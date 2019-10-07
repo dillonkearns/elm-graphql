@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Label exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, color, description, id, isDefault, issues, name, pullRequests, repository)
+module Github.Object.Label exposing (..)
 
 import Github.Enum.IssueState
 import Github.Enum.PullRequestState

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.TeamMembershipType exposing (TeamMembershipType(..), decoder, fromString, list, toString)
+module Github.Enum.TeamMembershipType exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.GitHubMetadata exposing (gitHubServicesSha, gitIpAddresses, hookIpAddresses, importerIpAddresses, isPasswordAuthenticationVerifiable, pagesIpAddresses)
+module Github.Object.GitHubMetadata exposing (..)
 
 import Github.InputObject
 import Github.Interface

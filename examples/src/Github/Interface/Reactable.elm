@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Reactable exposing (Fragments, ReactionsOptionalArguments, databaseId, fragments, id, maybeFragments, reactionGroups, reactions, viewerCanReact)
+module Github.Interface.Reactable exposing (..)
 
 import Github.Enum.ReactionContent
 import Github.InputObject

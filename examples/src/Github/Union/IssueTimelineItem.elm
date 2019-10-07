@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.IssueTimelineItem exposing (Fragments, fragments, maybeFragments)
+module Github.Union.IssueTimelineItem exposing (..)
 
 import Github.InputObject
 import Github.Interface

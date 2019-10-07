@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Node exposing (Fragments, fragments, id, maybeFragments)
+module Github.Interface.Node exposing (..)
 
 import Github.InputObject
 import Github.Interface

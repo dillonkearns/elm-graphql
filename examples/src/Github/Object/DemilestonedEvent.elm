@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DemilestonedEvent exposing (actor, createdAt, id, milestoneTitle, subject)
+module Github.Object.DemilestonedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

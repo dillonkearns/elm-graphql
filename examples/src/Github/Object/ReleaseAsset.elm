@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReleaseAsset exposing (contentType, createdAt, downloadCount, downloadUrl, id, name, release, size, updatedAt, uploadedBy, url)
+module Github.Object.ReleaseAsset exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Assignable exposing (AssigneesOptionalArguments, Fragments, assignees, fragments, maybeFragments)
+module Github.Interface.Assignable exposing (..)
 
 import Github.InputObject
 import Github.Interface

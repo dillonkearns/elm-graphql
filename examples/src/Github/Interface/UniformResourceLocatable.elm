@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.UniformResourceLocatable exposing (Fragments, fragments, maybeFragments, resourcePath, url)
+module Github.Interface.UniformResourceLocatable exposing (..)
 
 import Github.InputObject
 import Github.Interface

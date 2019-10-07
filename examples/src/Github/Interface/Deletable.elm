@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Deletable exposing (Fragments, fragments, maybeFragments, viewerCanDelete)
+module Github.Interface.Deletable exposing (..)
 
 import Github.InputObject
 import Github.Interface

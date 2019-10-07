@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.RequestedReviewer exposing (Fragments, fragments, maybeFragments)
+module Github.Union.RequestedReviewer exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Comment exposing (Fragments, UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, createdAt, createdViaEmail, editor, fragments, id, lastEditedAt, maybeFragments, publishedAt, updatedAt, userContentEdits, viewerDidAuthor)
+module Github.Interface.Comment exposing (..)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.InputObject

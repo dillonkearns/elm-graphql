@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Lockable exposing (Fragments, activeLockReason, fragments, locked, maybeFragments)
+module Github.Interface.Lockable exposing (..)
 
 import Github.Enum.LockReason
 import Github.InputObject

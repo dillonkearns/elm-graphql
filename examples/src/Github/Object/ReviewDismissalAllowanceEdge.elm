@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewDismissalAllowanceEdge exposing (cursor, node)
+module Github.Object.ReviewDismissalAllowanceEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

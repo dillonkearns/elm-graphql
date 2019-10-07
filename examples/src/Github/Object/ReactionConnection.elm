@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReactionConnection exposing (edges, nodes, pageInfo, totalCount, viewerHasReacted)
+module Github.Object.ReactionConnection exposing (..)
 
 import Github.InputObject
 import Github.Interface

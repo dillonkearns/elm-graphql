@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Milestone exposing (IssuesOptionalArguments, PullRequestsOptionalArguments, closed, closedAt, createdAt, creator, description, dueOn, id, issues, number, pullRequests, repository, resourcePath, state, title, updatedAt, url)
+module Github.Object.Milestone exposing (..)
 
 import Github.Enum.IssueState
 import Github.Enum.MilestoneState

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DeleteProjectPayload exposing (clientMutationId, owner)
+module Github.Object.DeleteProjectPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MarketplaceListingConnection exposing (edges, nodes, pageInfo, totalCount)
+module Github.Object.MarketplaceListingConnection exposing (..)
 
 import Github.InputObject
 import Github.Interface

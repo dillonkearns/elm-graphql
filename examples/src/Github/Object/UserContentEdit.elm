@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UserContentEdit exposing (createdAt, editor, id, updatedAt)
+module Github.Object.UserContentEdit exposing (..)
 
 import Github.InputObject
 import Github.Interface

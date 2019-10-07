@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryInvitationRepository exposing (ShortDescriptionHTMLOptionalArguments, createdAt, description, descriptionHTML, forkCount, hasIssuesEnabled, hasWikiEnabled, homepageUrl, isArchived, isFork, isLocked, isMirror, isPrivate, license, licenseInfo, lockReason, mirrorUrl, name, nameWithOwner, owner, pushedAt, resourcePath, shortDescriptionHTML, updatedAt, url)
+module Github.Object.RepositoryInvitationRepository exposing (..)
 
 import Github.Enum.RepositoryLockReason
 import Github.InputObject

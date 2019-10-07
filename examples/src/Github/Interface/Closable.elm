@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Closable exposing (Fragments, closed, closedAt, fragments, maybeFragments)
+module Github.Interface.Closable exposing (..)
 
 import Github.InputObject
 import Github.Interface

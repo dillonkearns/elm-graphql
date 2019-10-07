@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReactionOrderField exposing (ReactionOrderField(..), decoder, fromString, list, toString)
+module Github.Enum.ReactionOrderField exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

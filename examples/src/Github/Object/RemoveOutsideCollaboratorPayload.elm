@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RemoveOutsideCollaboratorPayload exposing (clientMutationId, removedUser)
+module Github.Object.RemoveOutsideCollaboratorPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

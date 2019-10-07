@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.UpdatableComment exposing (Fragments, fragments, maybeFragments, viewerCannotUpdateReasons)
+module Github.Interface.UpdatableComment exposing (..)
 
 import Github.Enum.CommentCannotUpdateReason
 import Github.InputObject

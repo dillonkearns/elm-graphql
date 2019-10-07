@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewDismissedEvent exposing (actor, createdAt, databaseId, id, message, messageHtml, previousReviewState, pullRequest, pullRequestCommit, resourcePath, review, url)
+module Github.Object.ReviewDismissedEvent exposing (..)
 
 import Github.Enum.PullRequestReviewState
 import Github.InputObject

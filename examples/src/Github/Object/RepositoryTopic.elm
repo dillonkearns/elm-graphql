@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryTopic exposing (id, resourcePath, topic, url)
+module Github.Object.RepositoryTopic exposing (..)
 
 import Github.InputObject
 import Github.Interface

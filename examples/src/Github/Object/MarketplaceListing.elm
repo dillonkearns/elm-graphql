@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MarketplaceListing exposing (LogoUrlOptionalArguments, companyUrl, configurationResourcePath, configurationUrl, documentationUrl, extendedDescription, extendedDescriptionHTML, fullDescription, fullDescriptionHTML, hasApprovalBeenRequested, hasPublishedFreeTrialPlans, hasTermsOfService, howItWorks, howItWorksHTML, id, installationUrl, installedForViewer, isApproved, isDelisted, isDraft, isPaid, isRejected, logoBackgroundColor, logoUrl, name, normalizedShortDescription, pricingUrl, primaryCategory, privacyPolicyUrl, resourcePath, screenshotUrls, secondaryCategory, shortDescription, slug, statusUrl, supportEmail, supportUrl, termsOfServiceUrl, url, viewerCanAddPlans, viewerCanApprove, viewerCanDelist, viewerCanEdit, viewerCanEditCategories, viewerCanEditPlans, viewerCanRedraft, viewerCanReject, viewerCanRequestApproval, viewerHasPurchased, viewerHasPurchasedForAllOrganizations, viewerIsListingAdmin)
+module Github.Object.MarketplaceListing exposing (..)
 
 import Github.InputObject
 import Github.Interface

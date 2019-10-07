@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object.Human exposing (appearsIn, avatarUrl, friends, homePlanet, id, name)
+module Swapi.Object.Human exposing (..)
 
 import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

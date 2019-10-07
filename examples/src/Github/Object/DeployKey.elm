@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DeployKey exposing (createdAt, id, key, readOnly, title, verified)
+module Github.Object.DeployKey exposing (..)
 
 import Github.InputObject
 import Github.Interface

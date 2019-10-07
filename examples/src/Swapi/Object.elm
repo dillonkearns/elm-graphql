@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object exposing (ChatMessage(..), Droid(..), Human(..))
+module Swapi.Object exposing (..)
 
 
 type ChatMessage

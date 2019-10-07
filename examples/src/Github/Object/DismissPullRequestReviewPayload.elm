@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DismissPullRequestReviewPayload exposing (clientMutationId, pullRequestReview)
+module Github.Object.DismissPullRequestReviewPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

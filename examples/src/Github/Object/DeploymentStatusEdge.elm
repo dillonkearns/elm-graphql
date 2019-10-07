@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DeploymentStatusEdge exposing (cursor, node)
+module Github.Object.DeploymentStatusEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

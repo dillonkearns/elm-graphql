@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Blame exposing (ranges)
+module Github.Object.Blame exposing (..)
 
 import Github.InputObject
 import Github.Interface

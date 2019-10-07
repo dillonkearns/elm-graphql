@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MilestoneConnection exposing (edges, nodes, pageInfo, totalCount)
+module Github.Object.MilestoneConnection exposing (..)
 
 import Github.InputObject
 import Github.Interface

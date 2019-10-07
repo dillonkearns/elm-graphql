@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewRequestRemovedEvent exposing (actor, createdAt, id, pullRequest, requestedReviewer, subject)
+module Github.Object.ReviewRequestRemovedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

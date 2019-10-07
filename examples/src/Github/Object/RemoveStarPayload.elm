@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RemoveStarPayload exposing (clientMutationId, starrable)
+module Github.Object.RemoveStarPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ProjectCard exposing (column, content, createdAt, creator, databaseId, id, note, project, projectColumn, resourcePath, state, updatedAt, url)
+module Github.Object.ProjectCard exposing (..)
 
 import Github.Enum.ProjectCardState
 import Github.InputObject

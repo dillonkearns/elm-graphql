@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.GitSignatureState exposing (GitSignatureState(..), decoder, fromString, list, toString)
+module Github.Enum.GitSignatureState exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

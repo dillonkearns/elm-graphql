@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Updatable exposing (Fragments, fragments, maybeFragments, viewerCanUpdate)
+module Github.Interface.Updatable exposing (..)
 
 import Github.InputObject
 import Github.Interface

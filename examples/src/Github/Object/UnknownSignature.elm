@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.UnknownSignature exposing (email, isValid, payload, signature, signer, state)
+module Github.Object.UnknownSignature exposing (..)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject

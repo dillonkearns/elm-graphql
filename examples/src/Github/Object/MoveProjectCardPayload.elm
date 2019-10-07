@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MoveProjectCardPayload exposing (cardEdge, clientMutationId)
+module Github.Object.MoveProjectCardPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

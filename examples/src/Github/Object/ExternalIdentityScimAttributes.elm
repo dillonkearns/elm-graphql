@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ExternalIdentityScimAttributes exposing (username)
+module Github.Object.ExternalIdentityScimAttributes exposing (..)
 
 import Github.InputObject
 import Github.Interface

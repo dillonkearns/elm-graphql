@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.GpgSignature exposing (email, isValid, keyId, payload, signature, signer, state)
+module Github.Object.GpgSignature exposing (..)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject

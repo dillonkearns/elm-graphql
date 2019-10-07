@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.SmimeSignature exposing (email, isValid, payload, signature, signer, state)
+module Github.Object.SmimeSignature exposing (..)
 
 import Github.Enum.GitSignatureState
 import Github.InputObject

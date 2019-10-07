@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.HeadRefDeletedEvent exposing (actor, createdAt, headRef, headRefName, id, pullRequest)
+module Github.Object.HeadRefDeletedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

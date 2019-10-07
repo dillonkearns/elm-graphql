@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReactionGroup exposing (UsersOptionalArguments, content, createdAt, subject, users, viewerHasReacted)
+module Github.Object.ReactionGroup exposing (..)
 
 import Github.Enum.ReactionContent
 import Github.InputObject

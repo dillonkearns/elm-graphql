@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.LicenseRule exposing (description, key, label)
+module Github.Object.LicenseRule exposing (..)
 
 import Github.InputObject
 import Github.Interface

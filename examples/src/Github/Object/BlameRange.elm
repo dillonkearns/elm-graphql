@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.BlameRange exposing (age, commit, endingLine, startingLine)
+module Github.Object.BlameRange exposing (..)
 
 import Github.InputObject
 import Github.Interface

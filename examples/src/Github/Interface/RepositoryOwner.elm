@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.RepositoryOwner exposing (AvatarUrlOptionalArguments, Fragments, PinnedRepositoriesOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, avatarUrl, fragments, id, login, maybeFragments, pinnedRepositories, repositories, repository, resourcePath, url)
+module Github.Interface.RepositoryOwner exposing (..)
 
 import Github.Enum.RepositoryAffiliation
 import Github.Enum.RepositoryPrivacy

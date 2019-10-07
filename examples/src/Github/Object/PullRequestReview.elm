@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PullRequestReview exposing (CommentsOptionalArguments, UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, bodyText, comments, commit, createdAt, createdViaEmail, databaseId, editor, id, lastEditedAt, publishedAt, pullRequest, repository, resourcePath, state, submittedAt, updatedAt, url, userContentEdits, viewerCanDelete, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor)
+module Github.Object.PullRequestReview exposing (..)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object.Droid exposing (appearsIn, avatarUrl, friends, id, name, primaryFunction)
+module Swapi.Object.Droid exposing (..)
 
 import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

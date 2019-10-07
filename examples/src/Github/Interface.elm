@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface exposing (Actor(..), Assignable(..), Closable(..), Comment(..), Deletable(..), GitObject(..), GitSignature(..), Labelable(..), Lockable(..), Node(..), ProjectOwner(..), Reactable(..), RepositoryInfo(..), RepositoryNode(..), RepositoryOwner(..), Starrable(..), Subscribable(..), UniformResourceLocatable(..), Updatable(..), UpdatableComment(..))
+module Github.Interface exposing (..)
 
 
 type Actor

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.OrganizationInvitation exposing (createdAt, email, id, invitationType, invitee, inviter, organization, role)
+module Github.Object.OrganizationInvitation exposing (..)
 
 import Github.Enum.OrganizationInvitationRole
 import Github.Enum.OrganizationInvitationType
