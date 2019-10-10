@@ -12,6 +12,50 @@ Again, ideally you could change your schema (e.g. `[string]!` becomes `[string!]
 
 Take a look at the [section about this from the official GraphQL docs](https://graphql.org/learn/schema/#lists-and-non-null).
 
+## How do I read the type of a `SelectionSet`?
+There are two placeholder types in the `SelectionSet` type (known as "type variables" in Elm terminology, but you can think of them as generics, too).
+
+```elm
+type SelectionSet decodesTo selectionContext
+```
+
+The first type is what the type will decode to. For example, if it were a `SelectionSet String <...>`, then that decoder would give you a `String` value. You can combine `SelectionSet`s together using things like `SelectionSet.map2`, so you could take a `SelectionSet` that decodes into an `Int`, and one that decodes into a `String`, and turn it into a record with an `Int` and a `String`, for example.
+
+The second type variable, `selectionContext`, is what prevents you from grabbing a field that doesn't exist in a certain context. Let's look at the example with a raw GraphQL query:
+
+```graphql
+query {
+  currentDateString
+  currentUser {
+    firstName
+    lastName
+  }
+}
+```
+
+What's to keep us from building up a query like
+
+```
+query {
+  firstName # this shouldn't be allowed!
+}
+```
+
+Well, that's what `selectionContext` is for. So in this example, we would have a type that looks like this:
+
+```elm
+firstName : SelectionSet String User
+```
+
+and in another module
+
+```elm
+currentDateString : SelectionSet String RootQuery
+```
+
+So this allows us to grab `currentDateString` in a top-level query. But to get `firstName`, we need to use it within the context of selecting fields from a GraphQL `User` Object.
+
+
 ## Why do I get an error when I don't provide an Optional Argument? According to the schema it's optional.
 
 This is very common, if you look at your schema you will probably find that the optional argument is marked as nullable (i.e. it doesn't end with a `!`). And in GraphQL, a nullable argument is exactly what an optional argument is, see http://facebook.github.io/graphql/October2016/#sec-Required-Non-Null-Arguments
