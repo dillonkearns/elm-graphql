@@ -83,7 +83,10 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRef
-                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable)
+                    |> Expect.equal
+                        (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable
+                            |> Ok
+                        )
         , test "parse raw boolean" <|
             \() ->
                 RawTypeRef
@@ -92,7 +95,10 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRef
-                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.Boolean) Type.Nullable)
+                    |> Expect.equal
+                        (Type.TypeReference (Type.Scalar Scalar.Boolean) Type.Nullable
+                            |> Ok
+                        )
         , test "parseRaw non-nullable string" <|
             \() ->
                 RawTypeRef
@@ -108,7 +114,10 @@ all =
                             )
                     }
                     |> Type.parseRef
-                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable)
+                    |> Expect.equal
+                        (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable
+                            |> Ok
+                        )
         , test "parse list of strings" <|
             \() ->
                 RawTypeRef
@@ -125,8 +134,10 @@ all =
                     }
                     |> Type.parseRef
                     |> Expect.equal
-                        (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable))
+                        (Type.TypeReference
+                            (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable))
                             Type.Nullable
+                            |> Ok
                         )
         , test "parse non-null list of non-null strings" <|
             \() ->
@@ -160,5 +171,6 @@ all =
                     |> Expect.equal
                         (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
                             Type.NonNullable
+                            |> Ok
                         )
         ]
