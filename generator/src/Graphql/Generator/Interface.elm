@@ -8,14 +8,21 @@ import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type
 import ModuleName
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : Context -> String -> List String -> List Type.Field -> String
+generate : Context -> String -> List String -> List Type.Field -> Result String String
 generate context name moduleName fields =
-    prepend context moduleName fields
-        ++ fragmentHelpers context (context.interfaces |> Dict.get name |> Maybe.withDefault []) moduleName
-        ++ (List.map (FieldGenerator.generateForInterface context name) fields |> String.join "\n\n")
+    fields
+        |> List.map (FieldGenerator.generateForInterface context name)
+        |> Result.Extra.combine
+        |> Result.map
+            (\results ->
+                prepend context moduleName fields
+                    ++ fragmentHelpers context (context.interfaces |> Dict.get name |> Maybe.withDefault []) moduleName
+                    ++ (results |> String.join "\n\n")
+            )
 
 
 fragmentHelpers : Context -> List ClassCaseName -> List String -> String

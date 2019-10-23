@@ -12,7 +12,6 @@ import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Scalar as Scalar exposing (Scalar)
 import Graphql.Parser.Type as Type exposing (TypeReference)
-import MyDebug
 import String.Extra
 import String.Interpolate exposing (interpolate)
 
@@ -35,16 +34,18 @@ type alias AnnotatedArg =
     }
 
 
-generateForObject : Context -> ClassCaseName -> Type.Field -> String
+generateForObject : Context -> ClassCaseName -> Type.Field -> Result String String
 generateForObject context thisObjectName field =
     toFieldGenerator context field
-        |> forObject_ context (ModuleName.object context thisObjectName) field
+        |> Result.map
+            (forObject_ context (ModuleName.object context thisObjectName) field)
 
 
-generateForInterface : Context -> String -> Type.Field -> String
+generateForInterface : Context -> String -> Type.Field -> Result String String
 generateForInterface context thisObjectName field =
     toFieldGenerator context field
-        |> forObject_ context (ModuleName.interface context (ClassCaseName.build thisObjectName)) field
+        |> Result.map
+            (forObject_ context (ModuleName.interface context (ClassCaseName.build thisObjectName)) field)
 
 
 forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> String
@@ -127,11 +128,13 @@ fieldArgsString { fieldArgs } =
             "(" ++ String.join " ++ " fieldArgs ++ ")"
 
 
-toFieldGenerator : Context -> Type.Field -> FieldGenerator
+toFieldGenerator : Context -> Type.Field -> Result String FieldGenerator
 toFieldGenerator ({ apiSubmodule } as context) field =
     init context field.name field.typeRef
-        |> addRequiredArgs field context field.args
-        |> addOptionalArgs field context field.args
+        |> Result.map
+            (addRequiredArgs field context field.args
+                >> addOptionalArgs field context field.args
+            )
 
 
 addRequiredArgs : Type.Field -> Context -> List Type.Arg -> FieldGenerator -> FieldGenerator
@@ -182,50 +185,52 @@ type ObjectOrInterface
     | Interface
 
 
-objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
+objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> Result String FieldGenerator
 objectThing context typeRef refName objectOrInterface =
-    let
-        typeLock =
-            case ReferenceLeaf.get typeRef of
-                ReferenceLeaf.Object ->
-                    ModuleName.object context (ClassCaseName.build refName) |> String.join "."
+    (case ReferenceLeaf.get typeRef of
+        ReferenceLeaf.Object ->
+            ModuleName.object context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-                ReferenceLeaf.Interface ->
-                    ModuleName.interface context (ClassCaseName.build refName) |> String.join "."
+        ReferenceLeaf.Interface ->
+            ModuleName.interface context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-                ReferenceLeaf.Enum ->
-                    MyDebug.crash "TODO"
+        ReferenceLeaf.Enum ->
+            Err "TODO"
 
-                ReferenceLeaf.Union ->
-                    ModuleName.union context (ClassCaseName.build refName) |> String.join "."
+        ReferenceLeaf.Union ->
+            ModuleName.union context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-                ReferenceLeaf.Scalar ->
-                    MyDebug.crash "TODO"
-
-        objectArgAnnotation =
-            interpolate
-                "SelectionSet decodesTo {0}"
-                [ typeLock ]
-    in
-    { annotatedArgs = []
-    , fieldArgs = []
-    , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
-    , decoder = "object_"
-    , otherThing = ".selectionForCompositeField"
-    , letBindings = []
-    , objectDecoderChain =
-        " ("
-            ++ (Graphql.Generator.Decoder.generateDecoder context typeRef
-                    |> String.join " >> "
-               )
-            ++ ")"
-            |> Just
-    , typeAliases = []
-    }
-        |> prependArg
-            { annotation = objectArgAnnotation
-            , arg = "object_"
-            }
+        ReferenceLeaf.Scalar ->
+            Err "TODO"
+    )
+        |> Result.map
+            (\typeLock ->
+                let
+                    objectArgAnnotation =
+                        interpolate
+                            "SelectionSet decodesTo {0}"
+                            [ typeLock ]
+                in
+                { annotatedArgs = []
+                , fieldArgs = []
+                , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
+                , decoder = "object_"
+                , otherThing = ".selectionForCompositeField"
+                , letBindings = []
+                , objectDecoderChain =
+                    " ("
+                        ++ (Graphql.Generator.Decoder.generateDecoder context typeRef
+                                |> String.join " >> "
+                           )
+                        ++ ")"
+                        |> Just
+                , typeAliases = []
+                }
+                    |> prependArg
+                        { annotation = objectArgAnnotation
+                        , arg = "object_"
+                        }
+            )
 
 
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
@@ -241,48 +246,60 @@ type LeafRef
     | ScalarLeaf
 
 
-leafType : TypeReference -> LeafRef
+leafType : TypeReference -> Result String LeafRef
 leafType (Type.TypeReference referrableType isNullable) =
     case referrableType of
         Type.ObjectRef refName ->
             ObjectLeaf refName
+                |> Ok
 
         Type.InterfaceRef refName ->
             InterfaceLeaf refName
+                |> Ok
 
         Type.UnionRef refName ->
             UnionLeaf refName
+                |> Ok
 
         Type.Scalar _ ->
             ScalarLeaf
+                |> Ok
 
         Type.List nestedReferrableType ->
             leafType nestedReferrableType
 
         Type.EnumRef _ ->
             EnumLeaf
+                |> Ok
 
         Type.InputObjectRef _ ->
-            MyDebug.crash "Unexpected type"
+            Err "Unexpected type"
 
 
-init : Context -> CamelCaseName -> TypeReference -> FieldGenerator
+init : Context -> CamelCaseName -> TypeReference -> Result String FieldGenerator
 init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType isNullable) as typeRef) =
-    case leafType typeRef of
-        ObjectLeaf refName ->
-            objectThing context typeRef refName Object
+    typeRef
+        |> leafType
+        |> Result.andThen
+            (\res ->
+                case res of
+                    ObjectLeaf refName ->
+                        objectThing context typeRef refName Object
 
-        InterfaceLeaf refName ->
-            objectThing context typeRef refName Interface
+                    InterfaceLeaf refName ->
+                        objectThing context typeRef refName Interface
 
-        UnionLeaf refName ->
-            objectThing context typeRef refName Interface
+                    UnionLeaf refName ->
+                        objectThing context typeRef refName Interface
 
-        EnumLeaf ->
-            initScalarField context typeRef
+                    EnumLeaf ->
+                        initScalarField context typeRef
+                            |> Ok
 
-        ScalarLeaf ->
-            initScalarField context typeRef
+                    ScalarLeaf ->
+                        initScalarField context typeRef
+                            |> Ok
+            )
 
 
 initScalarField : Context -> TypeReference -> FieldGenerator
