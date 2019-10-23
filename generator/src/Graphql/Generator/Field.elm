@@ -215,21 +215,26 @@ objectThing context typeRef refName objectOrInterface =
                     , arg = "object_"
                     }
         )
-        (case ReferenceLeaf.get typeRef of
-            ReferenceLeaf.Object ->
-                ModuleName.object context (ClassCaseName.build refName) |> String.join "." |> Ok
+        (typeRef
+            |> ReferenceLeaf.get
+            |> Result.andThen
+                (\res ->
+                    case res of
+                        ReferenceLeaf.Object ->
+                            ModuleName.object context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-            ReferenceLeaf.Interface ->
-                ModuleName.interface context (ClassCaseName.build refName) |> String.join "." |> Ok
+                        ReferenceLeaf.Interface ->
+                            ModuleName.interface context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-            ReferenceLeaf.Enum ->
-                Err "TODO"
+                        ReferenceLeaf.Enum ->
+                            Err "TODO"
 
-            ReferenceLeaf.Union ->
-                ModuleName.union context (ClassCaseName.build refName) |> String.join "." |> Ok
+                        ReferenceLeaf.Union ->
+                            ModuleName.union context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-            ReferenceLeaf.Scalar ->
-                Err "TODO"
+                        ReferenceLeaf.Scalar ->
+                            Err "TODO"
+                )
         )
         (Graphql.Generator.Decoder.generateDecoder context typeRef)
 

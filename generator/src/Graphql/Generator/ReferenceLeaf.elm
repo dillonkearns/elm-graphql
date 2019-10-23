@@ -1,7 +1,6 @@
 module Graphql.Generator.ReferenceLeaf exposing (ReferenceLeaf(..), get)
 
 import Graphql.Parser.Type as Type exposing (TypeReference(..))
-import MyDebug
 
 
 type ReferenceLeaf
@@ -17,26 +16,26 @@ type ReferenceLeaf
 --     = TypeReference ReferrableType IsNullable
 
 
-get : TypeReference -> ReferenceLeaf
+get : TypeReference -> Result String ReferenceLeaf
 get (TypeReference referrableType isNullable) =
     case referrableType of
         Type.ObjectRef _ ->
-            Object
+            Ok Object
 
         Type.Scalar _ ->
-            Scalar
+            Ok Scalar
 
         Type.List nestedType ->
             get nestedType
 
         Type.EnumRef _ ->
-            Enum
+            Ok Enum
 
         Type.InputObjectRef _ ->
-            MyDebug.crash "TODO"
+            Err "TODO"
 
         Type.UnionRef _ ->
-            Union
+            Ok Union
 
         Type.InterfaceRef _ ->
-            Interface
+            Ok Interface
