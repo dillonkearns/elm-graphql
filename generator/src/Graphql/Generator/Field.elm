@@ -187,50 +187,51 @@ type ObjectOrInterface
 
 objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> Result String FieldGenerator
 objectThing context typeRef refName objectOrInterface =
-    (case ReferenceLeaf.get typeRef of
-        ReferenceLeaf.Object ->
-            ModuleName.object context (ClassCaseName.build refName) |> String.join "." |> Ok
+    Result.map2
+        (\typeLock xs ->
+            let
+                objectArgAnnotation =
+                    interpolate
+                        "SelectionSet decodesTo {0}"
+                        [ typeLock ]
+            in
+            { annotatedArgs = []
+            , fieldArgs = []
+            , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
+            , decoder = "object_"
+            , otherThing = ".selectionForCompositeField"
+            , letBindings = []
+            , objectDecoderChain =
+                " ("
+                    ++ (xs
+                            |> String.join " >> "
+                       )
+                    ++ ")"
+                    |> Just
+            , typeAliases = []
+            }
+                |> prependArg
+                    { annotation = objectArgAnnotation
+                    , arg = "object_"
+                    }
+        )
+        (case ReferenceLeaf.get typeRef of
+            ReferenceLeaf.Object ->
+                ModuleName.object context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-        ReferenceLeaf.Interface ->
-            ModuleName.interface context (ClassCaseName.build refName) |> String.join "." |> Ok
+            ReferenceLeaf.Interface ->
+                ModuleName.interface context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-        ReferenceLeaf.Enum ->
-            Err "TODO"
+            ReferenceLeaf.Enum ->
+                Err "TODO"
 
-        ReferenceLeaf.Union ->
-            ModuleName.union context (ClassCaseName.build refName) |> String.join "." |> Ok
+            ReferenceLeaf.Union ->
+                ModuleName.union context (ClassCaseName.build refName) |> String.join "." |> Ok
 
-        ReferenceLeaf.Scalar ->
-            Err "TODO"
-    )
-        |> Result.map
-            (\typeLock ->
-                let
-                    objectArgAnnotation =
-                        interpolate
-                            "SelectionSet decodesTo {0}"
-                            [ typeLock ]
-                in
-                { annotatedArgs = []
-                , fieldArgs = []
-                , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
-                , decoder = "object_"
-                , otherThing = ".selectionForCompositeField"
-                , letBindings = []
-                , objectDecoderChain =
-                    " ("
-                        ++ (Graphql.Generator.Decoder.generateDecoder context typeRef
-                                |> String.join " >> "
-                           )
-                        ++ ")"
-                        |> Just
-                , typeAliases = []
-                }
-                    |> prependArg
-                        { annotation = objectArgAnnotation
-                        , arg = "object_"
-                        }
-            )
+            ReferenceLeaf.Scalar ->
+                Err "TODO"
+        )
+        (Graphql.Generator.Decoder.generateDecoder context typeRef)
 
 
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
@@ -294,28 +295,30 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
 
                     EnumLeaf ->
                         initScalarField context typeRef
-                            |> Ok
 
                     ScalarLeaf ->
                         initScalarField context typeRef
-                            |> Ok
             )
 
 
-initScalarField : Context -> TypeReference -> FieldGenerator
+initScalarField : Context -> TypeReference -> Result String FieldGenerator
 initScalarField context typeRef =
-    let
-        scalarName =
-            "\"" ++ Graphql.Generator.Decoder.generateType { context | apiSubmodule = [] } typeRef ++ "\""
-    in
-    { annotatedArgs = []
-    , fieldArgs = []
-    , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
-    , decoder =
-        Graphql.Generator.Decoder.generateDecoder context typeRef
-            |> String.join " |> "
-    , otherThing = ".selectionForField " ++ scalarName
-    , letBindings = []
-    , objectDecoderChain = Nothing
-    , typeAliases = []
-    }
+    Graphql.Generator.Decoder.generateDecoder context typeRef
+        |> Result.map
+            (\xs ->
+                let
+                    scalarName =
+                        "\"" ++ Graphql.Generator.Decoder.generateType { context | apiSubmodule = [] } typeRef ++ "\""
+                in
+                { annotatedArgs = []
+                , fieldArgs = []
+                , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
+                , decoder =
+                    xs
+                        |> String.join " |> "
+                , otherThing = ".selectionForField " ++ scalarName
+                , letBindings = []
+                , objectDecoderChain = Nothing
+                , typeAliases = []
+                }
+            )

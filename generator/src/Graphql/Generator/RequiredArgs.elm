@@ -1,21 +1,22 @@
-module Graphql.Generator.RequiredArgs exposing (Result, generate)
+module Graphql.Generator.RequiredArgs exposing (ArgResult, generate)
 
 import GenerateSyntax
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.Decoder
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.Type as Type
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-type alias Result =
+type alias ArgResult =
     { annotation : String -> String
     , list : String
     , typeAlias : { body : String, suffix : String }
     }
 
 
-generate : Context -> List Type.Arg -> Maybe Result
+generate : Context -> List Type.Arg -> Maybe ArgResult
 generate context args =
     let
         requiredArgs : List RequiredArg
@@ -26,11 +27,16 @@ generate context args =
         Nothing
 
     else
-        Just
-            { annotation = \fieldName -> interpolate "{0}RequiredArguments" [ fieldName ]
-            , list = requiredArgsString context requiredArgs
-            , typeAlias = { body = requiredArgsAnnotation context requiredArgs, suffix = "RequiredArguments" }
-            }
+        requiredArgs
+            |> requiredArgsString context
+            |> Result.toMaybe
+            |> Maybe.map
+                (\list ->
+                    { annotation = \fieldName -> interpolate "{0}RequiredArguments" [ fieldName ]
+                    , list = list
+                    , typeAlias = { body = requiredArgsAnnotation context requiredArgs, suffix = "RequiredArguments" }
+                    }
+                )
 
 
 type alias RequiredArg =
@@ -54,23 +60,28 @@ requiredArgOrNothing { name, typeRef } =
             Nothing
 
 
-requiredArgsString : Context -> List RequiredArg -> String
-requiredArgsString context requiredArgs =
-    let
-        requiredArgContents =
-            List.map (requiredArgString context) requiredArgs
-    in
-    "[ " ++ (requiredArgContents |> String.join ", ") ++ " ]"
+requiredArgsString : Context -> List RequiredArg -> Result String String
+requiredArgsString context =
+    List.map (requiredArgString context)
+        >> Result.Extra.combine
+        >> Result.map
+            (\results ->
+                "[ " ++ (results |> String.join ", ") ++ " ]"
+            )
 
 
-requiredArgString : Context -> RequiredArg -> String
+requiredArgString : Context -> RequiredArg -> Result String String
 requiredArgString context { name, referrableType, typeRef } =
-    interpolate
-        "Argument.required \"{0}\" requiredArgs.{1} ({2})"
-        [ name |> CamelCaseName.raw
-        , name |> CamelCaseName.normalized
-        , Graphql.Generator.Decoder.generateEncoder context typeRef
-        ]
+    Graphql.Generator.Decoder.generateEncoder context typeRef
+        |> Result.map
+            (\res ->
+                interpolate
+                    "Argument.required \"{0}\" requiredArgs.{1} ({2})"
+                    [ name |> CamelCaseName.raw
+                    , name |> CamelCaseName.normalized
+                    , res
+                    ]
+            )
 
 
 requiredArgsAnnotation : Context -> List RequiredArg -> String

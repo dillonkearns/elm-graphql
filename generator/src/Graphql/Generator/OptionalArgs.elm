@@ -1,4 +1,4 @@
-module Graphql.Generator.OptionalArgs exposing (Result, generate)
+module Graphql.Generator.OptionalArgs exposing (OptResult, generate)
 
 import GenerateSyntax
 import Graphql.Generator.Context exposing (Context)
@@ -6,10 +6,11 @@ import Graphql.Generator.Decoder
 import Graphql.Generator.Let exposing (LetBinding)
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.Type as Type
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-type alias Result =
+type alias OptResult =
     { annotatedArg :
         String
         ->
@@ -27,49 +28,57 @@ type alias OptionalArg =
     }
 
 
-generate : Context -> List Type.Arg -> Maybe Result
+generate : Context -> List Type.Arg -> Maybe OptResult
 generate context allArgs =
     case List.filterMap optionalArgOrNothing allArgs of
         [] ->
             Nothing
 
         optionalArgs ->
-            Just
-                { annotatedArg =
-                    \fieldName ->
-                        { annotation = annotation fieldName
-                        , arg = "fillInOptionals"
-                        }
-                , letBindings =
-                    [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord optionalArgs )
-                    , ( "optionalArgs"
-                      , argValues context optionalArgs
-                            ++ "\n                |> List.filterMap identity"
-                      )
-                    ]
-                , typeAlias = { suffix = "OptionalArguments", body = typeAlias context optionalArgs }
-                }
-
-
-argValues : Context -> List OptionalArg -> String
-argValues context optionalArgs =
-    let
-        values =
             optionalArgs
-                |> List.map (argValue context)
-                |> String.join ", "
-    in
-    interpolate "[ {0} ]" [ values ]
+                |> argValues context
+                |> Result.toMaybe
+                |> Maybe.map
+                    (\res ->
+                        { annotatedArg =
+                            \fieldName ->
+                                { annotation = annotation fieldName
+                                , arg = "fillInOptionals"
+                                }
+                        , letBindings =
+                            [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord optionalArgs )
+                            , ( "optionalArgs"
+                              , res
+                                    ++ "\n                |> List.filterMap identity"
+                              )
+                            ]
+                        , typeAlias = { suffix = "OptionalArguments", body = typeAlias context optionalArgs }
+                        }
+                    )
 
 
-argValue : Context -> OptionalArg -> String
+argValues : Context -> List OptionalArg -> Result String String
+argValues context =
+    List.map (argValue context)
+        >> Result.Extra.combine
+        >> Result.map
+            (\xs ->
+                interpolate "[ {0} ]" [ String.join ", " xs ]
+            )
+
+
+argValue : Context -> OptionalArg -> Result String String
 argValue context { name, typeOf } =
-    interpolate
-        """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
-        [ CamelCaseName.raw name
-        , CamelCaseName.normalized name
-        , Graphql.Generator.Decoder.generateEncoder context (Type.TypeReference typeOf Type.NonNullable)
-        ]
+    Graphql.Generator.Decoder.generateEncoder context (Type.TypeReference typeOf Type.NonNullable)
+        |> Result.map
+            (\res ->
+                interpolate
+                    """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
+                    [ CamelCaseName.raw name
+                    , CamelCaseName.normalized name
+                    , res
+                    ]
+            )
 
 
 emptyRecord : List OptionalArg -> String

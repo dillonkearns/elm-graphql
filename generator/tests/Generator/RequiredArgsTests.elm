@@ -68,7 +68,7 @@ all =
 
 expectResult :
     { list : String, typeAlias : String }
-    -> Maybe RequiredArgs.Result
+    -> Maybe RequiredArgs.ArgResult
     -> Expect.Expectation
 expectResult expected actual =
     actual

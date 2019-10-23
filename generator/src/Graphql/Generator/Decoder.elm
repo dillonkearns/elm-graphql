@@ -6,26 +6,29 @@ import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Scalar as Scalar
 import Graphql.Parser.Type as Type exposing (TypeReference)
 import ModuleName
-import MyDebug
 import String.Interpolate exposing (interpolate)
 
 
-generateDecoder : Context -> TypeReference -> List String
+generateDecoder : Context -> TypeReference -> Result String (List String)
 generateDecoder context (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
             case scalar of
                 Scalar.String ->
                     [ "Decode.string" ]
+                        |> Ok
 
                 Scalar.Boolean ->
                     [ "Decode.bool" ]
+                        |> Ok
 
                 Scalar.Int ->
                     [ "Decode.int" ]
+                        |> Ok
 
                 Scalar.Float ->
                     [ "Decode.float" ]
+                        |> Ok
 
                 Scalar.Custom customScalarName ->
                     let
@@ -45,18 +48,23 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                         ++ ClassCaseName.normalized customScalarName
                     , ".decoder"
                     ]
+                        |> Ok
 
         Type.List listTypeRef ->
-            generateDecoder context listTypeRef ++ [ "Decode.list" ]
+            generateDecoder context listTypeRef
+                |> Result.map (\xs -> xs ++ [ "Decode.list" ])
 
         Type.ObjectRef objectName ->
             [ "identity" ]
+                |> Ok
 
         Type.InterfaceRef interfaceName ->
             [ "identity" ]
+                |> Ok
 
         Type.UnionRef unionName ->
             [ "identity" ]
+                |> Ok
 
         Type.EnumRef enumName ->
             [ (Graphql.Generator.ModuleName.enum { apiSubmodule = context.apiSubmodule } enumName
@@ -64,30 +72,35 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
               )
                 |> String.join "."
             ]
+                |> Ok
 
         Type.InputObjectRef _ ->
-            MyDebug.crash "Input objects are only for input not responses, shouldn't need decoder."
+            Err "Input objects are only for input not responses, shouldn't need decoder."
     )
-        ++ (case isNullable of
-                Type.Nullable ->
-                    [ "Decode.nullable" ]
+        |> Result.map
+            (\xs ->
+                xs
+                    ++ (case isNullable of
+                            Type.Nullable ->
+                                [ "Decode.nullable" ]
 
-                Type.NonNullable ->
-                    []
-           )
+                            Type.NonNullable ->
+                                []
+                       )
+            )
 
 
-generateEncoderLowLevel : Context -> Type.ReferrableType -> String
+generateEncoderLowLevel : Context -> Type.ReferrableType -> Result String String
 generateEncoderLowLevel context referrableType =
     generateEncoder_ context True (Type.TypeReference referrableType Type.NonNullable)
 
 
-generateEncoder : Context -> TypeReference -> String
+generateEncoder : Context -> TypeReference -> Result String String
 generateEncoder context =
     generateEncoder_ context False
 
 
-generateEncoder_ : Context -> Bool -> TypeReference -> String
+generateEncoder_ : Context -> Bool -> TypeReference -> Result String String
 generateEncoder_ context forInputObject (Type.TypeReference referrableType isNullable) =
     let
         isNullableString =
@@ -102,16 +115,24 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
         Type.Scalar scalar ->
             case scalar of
                 Scalar.String ->
-                    "Encode.string" ++ isNullableString
+                    "Encode.string"
+                        ++ isNullableString
+                        |> Ok
 
                 Scalar.Boolean ->
-                    "Encode.bool" ++ isNullableString
+                    "Encode.bool"
+                        ++ isNullableString
+                        |> Ok
 
                 Scalar.Int ->
-                    "Encode.int" ++ isNullableString
+                    "Encode.int"
+                        ++ isNullableString
+                        |> Ok
 
                 Scalar.Float ->
-                    "Encode.float" ++ isNullableString
+                    "Encode.float"
+                        ++ isNullableString
+                        |> Ok
 
                 Scalar.Custom customScalarName ->
                     let
@@ -127,18 +148,25 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
                         , constructor
                         ]
                         ++ isNullableString
+                        |> Ok
 
         Type.List typeRef ->
-            generateEncoder_ context forInputObject typeRef ++ isNullableString ++ " |> Encode.list"
+            generateEncoder_ context forInputObject typeRef
+                |> Result.map
+                    (\res ->
+                        res
+                            ++ isNullableString
+                            ++ " |> Encode.list"
+                    )
 
         Type.ObjectRef objectName ->
-            MyDebug.crash "I don't expect to see object references as argument types."
+            Err "I don't expect to see object references as argument types."
 
         Type.InterfaceRef interfaceName ->
-            MyDebug.crash "Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces"
+            Err "Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces"
 
         Type.UnionRef _ ->
-            MyDebug.crash "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
+            Err "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
 
         Type.EnumRef enumName ->
             interpolate ("(Encode.enum {0})" ++ isNullableString)
@@ -146,6 +174,7 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
                     ++ [ "toString" ]
                     |> String.join "."
                 ]
+                |> Ok
 
         Type.InputObjectRef inputObjectName ->
             ((if forInputObject then
@@ -158,6 +187,7 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
                 |> String.join "."
             )
                 ++ isNullableString
+                |> Ok
 
 
 generateType : Context -> TypeReference -> String

@@ -104,7 +104,7 @@ expectResult :
     { letBindings : List LetBinding
     , typeAlias : String
     }
-    -> Maybe OptionalArgs.Result
+    -> Maybe OptionalArgs.OptResult
     -> Expect.Expectation
 expectResult expected actual =
     actual
