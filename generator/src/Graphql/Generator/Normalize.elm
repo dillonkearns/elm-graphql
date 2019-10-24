@@ -1,7 +1,6 @@
 module Graphql.Generator.Normalize exposing (capitalized, decapitalized)
 
 import Char
-import MyDebug
 import Regex
 import String.Extra
 
@@ -15,7 +14,7 @@ normalizeIfElmReserved name =
         name
 
 
-underscores : String -> { leading : String, trailing : String, remaining : String }
+underscores : String -> Result String { leading : String, trailing : String, remaining : String }
 underscores string =
     let
         regexFromString =
@@ -23,16 +22,17 @@ underscores string =
     in
     case Regex.find (regexFromString "^(_*)([^_]?.*[^_]?)(_*)$") string |> List.head |> Maybe.map .submatches of
         Just [ leading, Just remaining, trailing ] ->
-            { leading = Maybe.withDefault "" leading
-            , trailing = Maybe.withDefault "" trailing
-            , remaining = remaining
-            }
+            Ok
+                { leading = Maybe.withDefault "" leading
+                , trailing = Maybe.withDefault "" trailing
+                , remaining = remaining
+                }
 
         Nothing ->
-            MyDebug.crash "Got nothing"
+            Err "Got nothing"
 
         _ ->
-            MyDebug.crash ("Unexpected regex result for name " ++ string)
+            Err ("Unexpected regex result for name " ++ string)
 
 
 isAllUpper : String -> Bool
@@ -51,31 +51,32 @@ capitilize string =
             ""
 
 
-capitalized : String -> String
-capitalized name =
-    let
-        group =
-            underscores name
-    in
-    (if isAllUpper group.remaining then
-        group.remaining
-            |> String.toLower
-            |> String.Extra.classify
+capitalized : String -> Result String String
+capitalized =
+    underscores
+        >> Result.map
+            (\group ->
+                (if isAllUpper group.remaining then
+                    group.remaining
+                        |> String.toLower
+                        |> String.Extra.classify
 
-     else
-        group.remaining
-            |> capitilize
-    )
-        ++ group.leading
-        ++ group.trailing
+                 else
+                    group.remaining
+                        |> capitilize
+                )
+                    ++ group.leading
+                    ++ group.trailing
+            )
 
 
-decapitalized : String -> String
-decapitalized name =
-    name
-        |> capitalized
-        |> String.Extra.decapitalize
-        |> normalizeIfElmReserved
+decapitalized : String -> Result String String
+decapitalized =
+    capitalized
+        >> Result.map
+            (String.Extra.decapitalize
+                >> normalizeIfElmReserved
+            )
 
 
 {-| Taken from <https://github.com/elm-lang/elm-compiler/blob/d07679322ef5d71de1bd2b987ddc660a85599b87/compiler/src/Parse/Primitives/Variable.hs#L64>

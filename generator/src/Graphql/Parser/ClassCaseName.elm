@@ -17,7 +17,7 @@ raw (ClassCaseName rawName) =
     rawName
 
 
-normalized : ClassCaseName -> String
+normalized : ClassCaseName -> Result String String
 normalized (ClassCaseName rawName) =
     rawName |> Normalize.capitalized
 

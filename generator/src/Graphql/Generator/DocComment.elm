@@ -3,6 +3,7 @@ module Graphql.Generator.DocComment exposing (generate, generateForEnum)
 import Graphql.Parser.CamelCaseName as CamelCaseName
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Type as Type exposing (EnumValue, Field)
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
@@ -22,9 +23,23 @@ hasDocs mainDescription itemDescriptions =
                 |> not
 
 
-generate : Field -> String
+generate : Field -> Result String String
 generate { description, args } =
-    generate_ description (args |> List.map (\arg -> { name = arg.name |> CamelCaseName.normalized, description = arg.description }))
+    args
+        |> List.map
+            (\arg ->
+                arg.name
+                    |> CamelCaseName.normalized
+                    |> Result.map
+                        (\name ->
+                            { name = name
+                            , description = arg.description
+                            }
+                        )
+            )
+        |> Result.Extra.combine
+        |> Result.map
+            (generate_ description)
 
 
 generate_ : Maybe String -> List ItemDescription -> String
@@ -39,9 +54,22 @@ generate_ mainDescription itemDescriptions =
         ""
 
 
-generateForEnum : Maybe String -> List EnumValue -> String
-generateForEnum description enumValues =
-    generate_ description (enumValues |> List.map (\enumValue -> { name = enumValue.name |> ClassCaseName.normalized, description = enumValue.description }))
+generateForEnum : Maybe String -> List EnumValue -> Result String String
+generateForEnum description =
+    List.map
+        (\enumValue ->
+            enumValue.name
+                |> ClassCaseName.normalized
+                |> Result.map
+                    (\name ->
+                        { name = name
+                        , description = enumValue.description
+                        }
+                    )
+        )
+        >> Result.Extra.combine
+        >> Result.map
+            (generate_ description)
 
 
 argsDoc : List ItemDescription -> String

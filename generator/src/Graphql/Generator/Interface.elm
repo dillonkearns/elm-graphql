@@ -17,18 +17,43 @@ generate context name moduleName fields =
     fields
         |> List.map (FieldGenerator.generateForInterface context name)
         |> Result.Extra.combine
-        |> Result.map
-            (\results ->
+        |> Result.map2
+            (\fragmentHelpers_ fields_ ->
                 prepend context moduleName fields
-                    ++ fragmentHelpers context (context.interfaces |> Dict.get name |> Maybe.withDefault []) moduleName
-                    ++ (results |> String.join "\n\n")
+                    ++ fragmentHelpers_
+                    ++ (fields_ |> String.join "\n\n")
+            )
+            (fragmentHelpers context
+                (context.interfaces
+                    |> Dict.get name
+                    |> Maybe.withDefault []
+                )
+                moduleName
             )
 
 
-fragmentHelpers : Context -> List ClassCaseName -> List String -> String
+fragmentHelpers : Context -> List ClassCaseName -> List String -> Result String String
 fragmentHelpers context implementors moduleName =
-    interpolate
-        """
+    [ moduleName
+        |> String.join "."
+        |> Ok
+    , implementors
+        |> List.map (aliasFieldForFragment context moduleName)
+        |> Result.Extra.combine
+        |> Result.map (String.join ",\n")
+    , implementors
+        |> List.map (exhaustiveBuildupForFragment context moduleName)
+        |> Result.Extra.combine
+        |> Result.map (String.join ",\n")
+    , implementors
+        |> List.map (maybeFragmentEntry context moduleName)
+        |> Result.Extra.combine
+        |> Result.map (String.join ",\n")
+    ]
+        |> Result.Extra.combine
+        |> Result.map
+            (interpolate
+                """
 type alias Fragments decodesTo =
     {
     {1}
@@ -56,38 +81,45 @@ maybeFragments =
       {3}
     }
 """
-        [ moduleName |> String.join "."
-        , implementors
-            |> List.map (aliasFieldForFragment context moduleName)
-            |> String.join ",\n"
-        , implementors
-            |> List.map (exhaustiveBuildupForFragment context moduleName)
-            |> String.join ",\n"
-        , implementors
-            |> List.map (maybeFragmentEntry context moduleName)
-            |> String.join ",\n"
-        ]
+            )
 
 
-aliasFieldForFragment : Context -> List String -> ClassCaseName -> String
+aliasFieldForFragment : Context -> List String -> ClassCaseName -> Result String String
 aliasFieldForFragment context moduleName interfaceImplementor =
-    interpolate
-        "on{0} : SelectionSet decodesTo {1}"
-        [ ClassCaseName.normalized interfaceImplementor, ModuleName.object context interfaceImplementor |> String.join "." ]
+    Result.map2
+        (\normalized object ->
+            interpolate
+                "on{0} : SelectionSet decodesTo {1}"
+                [ normalized
+                , object |> String.join "."
+                ]
+        )
+        (ClassCaseName.normalized interfaceImplementor)
+        (ModuleName.object context interfaceImplementor)
 
 
-exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> String
+exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> Result String String
 exhaustiveBuildupForFragment context moduleName interfaceImplementor =
-    interpolate
-        """Object.buildFragment "{1}" selections.on{0}"""
-        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
+    ClassCaseName.normalized interfaceImplementor
+        |> Result.map
+            (\normalized ->
+                interpolate
+                    """Object.buildFragment "{1}" selections.on{0}"""
+                    [ normalized
+                    , ClassCaseName.raw interfaceImplementor
+                    ]
+            )
 
 
-maybeFragmentEntry : Context -> List String -> ClassCaseName -> String
+maybeFragmentEntry : Context -> List String -> ClassCaseName -> Result String String
 maybeFragmentEntry context moduleName interfaceImplementor =
-    interpolate
-        """on{0} = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\\_ -> Nothing)"""
-        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
+    ClassCaseName.normalized interfaceImplementor
+        |> Result.map
+            (\normalized ->
+                interpolate
+                    """on{0} = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\\_ -> Nothing)"""
+                    [ normalized, ClassCaseName.raw interfaceImplementor ]
+            )
 
 
 prepend : Context -> List String -> List Type.Field -> String

@@ -15,8 +15,8 @@ all =
                     [ { name = ClassCaseName.build "Tea", description = Nothing }
                     , { name = ClassCaseName.build "Coffee", description = Nothing }
                     ]
-                    |> Expect.equal """type Beverage
+                    |> Expect.equal (Ok """type Beverage
     = Tea
     | Coffee
-"""
+""")
         ]

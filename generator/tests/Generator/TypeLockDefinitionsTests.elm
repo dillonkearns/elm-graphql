@@ -14,7 +14,7 @@ all =
                 []
                     |> TypeLockDefinitions.generate [ "Api" ]
                     |> Expect.equal
-                        [ ( [ "Api", "Union" ], "module Api.Union exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Interface" ], "module Api.Interface exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ) ]
+                        (Ok [ ( [ "Api", "Union" ], "module Api.Union exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Interface" ], "module Api.Interface exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ) ])
         , test "generates imports for interfaces" <|
             \() ->
                 [ Type.typeDefinition "MyObject"
@@ -26,5 +26,5 @@ all =
                 ]
                     |> TypeLockDefinitions.generate [ "Api" ]
                     |> Expect.equal
-                        [ ( [ "Api", "Union" ], "module Api.Union exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\n\ntype MyObject\n    = MyObject\n" ), ( [ "Api", "Interface" ], "module Api.Interface exposing (..)\n\n\ntype MyInterface\n    = MyInterface\n" ) ]
+                        (Ok [ ( [ "Api", "Union" ], "module Api.Union exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\n\ntype MyObject\n    = MyObject\n" ), ( [ "Api", "Interface" ], "module Api.Interface exposing (..)\n\n\ntype MyInterface\n    = MyInterface\n" ) ])
         ]

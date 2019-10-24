@@ -31,24 +31,29 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                         |> Ok
 
                 Scalar.Custom customScalarName ->
-                    let
-                        constructor =
-                            context.apiSubmodule
-                                ++ [ "Scalar" ]
-                                ++ [ ClassCaseName.normalized customScalarName ]
-                                |> String.join "."
-                    in
-                    [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
-                        |> ModuleName.append "codecs"
-                    , context.apiSubmodule
-                        ++ [ "Scalar" ]
-                        ++ [ "unwrapCodecs" ]
-                        |> String.join "."
-                    , ".codec"
-                        ++ ClassCaseName.normalized customScalarName
-                    , ".decoder"
-                    ]
-                        |> Ok
+                    customScalarName
+                        |> ClassCaseName.normalized
+                        |> Result.map
+                            (\normalized ->
+                                let
+                                    constructor =
+                                        context.apiSubmodule
+                                            ++ [ "Scalar" ]
+                                            ++ [ normalized
+                                               ]
+                                            |> String.join "."
+                                in
+                                [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
+                                    |> ModuleName.append "codecs"
+                                , context.apiSubmodule
+                                    ++ [ "Scalar" ]
+                                    ++ [ "unwrapCodecs" ]
+                                    |> String.join "."
+                                , ".codec"
+                                    ++ normalized
+                                , ".decoder"
+                                ]
+                            )
 
         Type.List listTypeRef ->
             generateDecoder context listTypeRef
@@ -67,12 +72,16 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
                 |> Ok
 
         Type.EnumRef enumName ->
-            [ (Graphql.Generator.ModuleName.enum { apiSubmodule = context.apiSubmodule } enumName
-                ++ [ "decoder" ]
-              )
-                |> String.join "."
-            ]
-                |> Ok
+            enumName
+                |> Graphql.Generator.ModuleName.enum { apiSubmodule = context.apiSubmodule }
+                |> Result.map
+                    (\enums ->
+                        [ (enums
+                            ++ [ "decoder" ]
+                          )
+                            |> String.join "."
+                        ]
+                    )
 
         Type.InputObjectRef _ ->
             Err "Input objects are only for input not responses, shouldn't need decoder."
@@ -141,14 +150,18 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
                                 ++ [ "Scalar" ]
                                 |> String.join "."
                     in
-                    interpolate "({0} |> {2}.unwrapEncoder .codec{1})"
-                        [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
-                            |> ModuleName.append "codecs"
-                        , ClassCaseName.normalized customScalarName
-                        , constructor
-                        ]
-                        ++ isNullableString
-                        |> Ok
+                    customScalarName
+                        |> ClassCaseName.normalized
+                        |> Result.map
+                            (\normalized ->
+                                interpolate "({0} |> {2}.unwrapEncoder .codec{1})"
+                                    [ (context.scalarCodecsModule |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ])))
+                                        |> ModuleName.append "codecs"
+                                    , normalized
+                                    , constructor
+                                    ]
+                                    ++ isNullableString
+                            )
 
         Type.List typeRef ->
             generateEncoder_ context forInputObject typeRef
@@ -169,96 +182,135 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
             Err "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
 
         Type.EnumRef enumName ->
-            interpolate ("(Encode.enum {0})" ++ isNullableString)
-                [ Graphql.Generator.ModuleName.enum context enumName
-                    ++ [ "toString" ]
-                    |> String.join "."
-                ]
-                |> Ok
+            Graphql.Generator.ModuleName.enum context enumName
+                |> Result.map
+                    (\enums ->
+                        interpolate ("(Encode.enum {0})" ++ isNullableString)
+                            [ enums
+                                ++ [ "toString" ]
+                                |> String.join "."
+                            ]
+                    )
 
         Type.InputObjectRef inputObjectName ->
-            ((if forInputObject then
-                [ "encode" ++ ClassCaseName.normalized inputObjectName ]
+            inputObjectName
+                |> ClassCaseName.normalized
+                |> Result.map
+                    (\normalized ->
+                        ((if forInputObject then
+                            [ "encode"
+                                ++ normalized
+                            ]
 
-              else
-                Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
-                    ++ [ "encode" ++ ClassCaseName.normalized inputObjectName ]
-             )
-                |> String.join "."
-            )
-                ++ isNullableString
-                |> Ok
+                          else
+                            Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
+                                ++ [ "encode"
+                                        ++ normalized
+                                   ]
+                         )
+                            |> String.join "."
+                        )
+                            ++ isNullableString
+                    )
 
 
-generateType : Context -> TypeReference -> String
+generateType : Context -> TypeReference -> Result String String
 generateType context typeRef =
     generateTypeCommon False "Maybe" context typeRef
 
 
-generateType_ : Bool -> Context -> TypeReference -> String
+generateType_ : Bool -> Context -> TypeReference -> Result String String
 generateType_ fromInputObject context typeRef =
     generateTypeCommon fromInputObject "Maybe" context typeRef
 
 
-generateTypeForInputObject : Context -> TypeReference -> String
+generateTypeForInputObject : Context -> TypeReference -> Result String String
 generateTypeForInputObject context typeRef =
     generateTypeCommon True "OptionalArgument" context typeRef
 
 
-generateTypeCommon : Bool -> String -> Context -> TypeReference -> String
+generateTypeCommon : Bool -> String -> Context -> TypeReference -> Result String String
 generateTypeCommon fromInputObject nullableString context (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
             case scalar of
                 Scalar.String ->
                     "String"
+                        |> Ok
 
                 Scalar.Boolean ->
                     "Bool"
+                        |> Ok
 
                 Scalar.Int ->
                     "Int"
+                        |> Ok
 
                 Scalar.Float ->
                     "Float"
+                        |> Ok
 
                 Scalar.Custom customScalarName ->
-                    (context.scalarCodecsModule
-                        |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
-                    )
-                        |> ModuleName.append (ClassCaseName.normalized customScalarName)
+                    ClassCaseName.normalized customScalarName
+                        |> Result.map
+                            (\normalized ->
+                                (context.scalarCodecsModule
+                                    |> Maybe.withDefault
+                                        (ModuleName.fromList
+                                            (context.apiSubmodule
+                                                ++ [ "ScalarCodecs" ]
+                                            )
+                                        )
+                                )
+                                    |> ModuleName.append normalized
+                            )
 
         Type.List typeRef ->
-            "(List " ++ generateType_ fromInputObject context typeRef ++ ")"
+            generateType_ fromInputObject context typeRef
+                |> Result.map
+                    (\type_ ->
+                        "(List " ++ type_ ++ ")"
+                    )
 
         Type.ObjectRef objectName ->
             "decodesTo"
+                |> Ok
 
         Type.InterfaceRef interfaceName ->
             "decodesTo"
+                |> Ok
 
         Type.UnionRef unionName ->
             "decodesTo"
+                |> Ok
 
         Type.EnumRef enumName ->
             Graphql.Generator.ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
-                |> String.join "."
+                |> Result.map (String.join ".")
 
         Type.InputObjectRef inputObjectName ->
-            (if fromInputObject then
-                [ ClassCaseName.normalized inputObjectName ]
+            inputObjectName
+                |> ClassCaseName.normalized
+                |> Result.map
+                    (\normalized ->
+                        (if fromInputObject then
+                            [ normalized
+                            ]
 
-             else
-                Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
-                    ++ [ ClassCaseName.normalized inputObjectName ]
-            )
-                |> String.join "."
+                         else
+                            Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
+                                ++ [ normalized
+                                   ]
+                        )
+                            |> String.join "."
+                    )
     )
-        |> (\typeString ->
+        |> Result.map
+            (\typeString ->
                 case isNullable of
                     Type.Nullable ->
                         interpolate "({0} {1})" [ nullableString, typeString ]
 
                     Type.NonNullable ->
                         typeString
-           )
+            )

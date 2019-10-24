@@ -19,9 +19,9 @@ all =
                 , args = []
                 }
                     |> DocComment.generate
-                    |> Expect.equal """{-| A human in the star wars universe.
+                    |> Expect.equal (Ok """{-| A human in the star wars universe.
 -}
-"""
+""")
         , test "field with arg" <|
             \() ->
                 { name = CamelCaseName.build "human"
@@ -35,12 +35,12 @@ all =
                     ]
                 }
                     |> DocComment.generate
-                    |> Expect.equal """{-| A human in the star wars universe.
+                    |> Expect.equal (Ok """{-| A human in the star wars universe.
 
   - id - The human's id.
 
 -}
-"""
+""")
         , test "field with arg with no description" <|
             \() ->
                 { name = CamelCaseName.build "human"
@@ -54,9 +54,9 @@ all =
                     ]
                 }
                     |> DocComment.generate
-                    |> Expect.equal """{-| A human in the star wars universe.
+                    |> Expect.equal (Ok """{-| A human in the star wars universe.
 -}
-"""
+""")
         , test "field with no field description but with arg description" <|
             \() ->
                 { name = CamelCaseName.build "human"
@@ -70,10 +70,10 @@ all =
                     ]
                 }
                     |> DocComment.generate
-                    |> Expect.equal """{-|
+                    |> Expect.equal (Ok """{-|
 
   - id - The human's id.
 
 -}
-"""
+""")
         ]

@@ -36,53 +36,66 @@ type alias AnnotatedArg =
 
 generateForObject : Context -> ClassCaseName -> Type.Field -> Result String String
 generateForObject context thisObjectName field =
-    toFieldGenerator context field
-        |> Result.map
-            (forObject_ context (ModuleName.object context thisObjectName) field)
+    Result.map2
+        (\fieldGen object ->
+            forObject_ context object field fieldGen
+        )
+        (toFieldGenerator context field)
+        (ModuleName.object context thisObjectName)
+        |> Result.andThen identity
 
 
 generateForInterface : Context -> String -> Type.Field -> Result String String
 generateForInterface context thisObjectName field =
-    toFieldGenerator context field
-        |> Result.map
-            (forObject_ context (ModuleName.interface context (ClassCaseName.build thisObjectName)) field)
+    Result.map2
+        (\fieldGen object ->
+            forObject_ context object field fieldGen
+        )
+        (toFieldGenerator context field)
+        (ModuleName.interface context (ClassCaseName.build thisObjectName))
+        |> Result.andThen identity
 
 
-forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> String
+forObject_ : Context -> List String -> Type.Field -> FieldGenerator -> Result String String
 forObject_ context thisObjectName field fieldGenerator =
     fieldGeneratorToString (interpolate "SelectionSet {0} {1}" [ fieldGenerator.decoderAnnotation, thisObjectName |> String.join "." ]) field fieldGenerator
 
 
-fieldGeneratorToString : String -> Type.Field -> FieldGenerator -> String
+fieldGeneratorToString : String -> Type.Field -> FieldGenerator -> Result String String
 fieldGeneratorToString returnAnnotation field fieldGenerator =
-    let
-        fieldTypeAnnotation =
-            ((fieldGenerator.annotatedArgs |> List.map .annotation)
-                ++ [ returnAnnotation ]
-            )
-                |> String.join " -> "
-    in
-    [ typeAliasesToString field fieldGenerator
-    , interpolate
-        """{9}{6} : {3}
+    Result.map2
+        (\docComment normalized ->
+            let
+                fieldTypeAnnotation =
+                    ((fieldGenerator.annotatedArgs |> List.map .annotation)
+                        ++ [ returnAnnotation ]
+                    )
+                        |> String.join " -> "
+            in
+            [ typeAliasesToString field fieldGenerator
+            , interpolate
+                """{9}{6} : {3}
 {6} {4}={7}
       {5} "{0}" {1} ({2}){8}
 """
-        [ field.name |> CamelCaseName.raw
-        , fieldGenerator |> fieldArgsString
-        , fieldGenerator.decoder
-        , fieldTypeAnnotation
-        , argsListString fieldGenerator
-        , "Object" ++ fieldGenerator.otherThing
-        , field.name |> CamelCaseName.normalized
-        , Let.generate fieldGenerator.letBindings
-        , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
-        , DocComment.generate field
-        ]
-        |> Just
-    ]
-        |> List.filterMap identity
-        |> String.join "\n\n"
+                [ field.name |> CamelCaseName.raw
+                , fieldGenerator |> fieldArgsString
+                , fieldGenerator.decoder
+                , fieldTypeAnnotation
+                , argsListString fieldGenerator
+                , "Object" ++ fieldGenerator.otherThing
+                , normalized
+                , Let.generate fieldGenerator.letBindings
+                , fieldGenerator.objectDecoderChain |> Maybe.withDefault ""
+                , docComment
+                ]
+                |> Just
+            ]
+                |> List.filterMap identity
+                |> String.join "\n\n"
+        )
+        (DocComment.generate field)
+        (CamelCaseName.normalized field.name)
 
 
 typeAliasesToString : Type.Field -> FieldGenerator -> Maybe String
@@ -187,8 +200,8 @@ type ObjectOrInterface
 
 objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> Result String FieldGenerator
 objectThing context typeRef refName objectOrInterface =
-    Result.map2
-        (\typeLock xs ->
+    Result.map3
+        (\typeLock decoders decoderAnnotation ->
             let
                 objectArgAnnotation =
                     interpolate
@@ -197,13 +210,13 @@ objectThing context typeRef refName objectOrInterface =
             in
             { annotatedArgs = []
             , fieldArgs = []
-            , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
+            , decoderAnnotation = decoderAnnotation
             , decoder = "object_"
             , otherThing = ".selectionForCompositeField"
             , letBindings = []
             , objectDecoderChain =
                 " ("
-                    ++ (xs
+                    ++ (decoders
                             |> String.join " >> "
                        )
                     ++ ")"
@@ -221,22 +234,26 @@ objectThing context typeRef refName objectOrInterface =
                 (\res ->
                     case res of
                         ReferenceLeaf.Object ->
-                            ModuleName.object context (ClassCaseName.build refName) |> String.join "." |> Ok
+                            ModuleName.object context (ClassCaseName.build refName)
+                                |> Result.map (String.join ".")
 
                         ReferenceLeaf.Interface ->
-                            ModuleName.interface context (ClassCaseName.build refName) |> String.join "." |> Ok
+                            ModuleName.interface context (ClassCaseName.build refName)
+                                |> Result.map (String.join ".")
 
                         ReferenceLeaf.Enum ->
                             Err "TODO"
 
                         ReferenceLeaf.Union ->
-                            ModuleName.union context (ClassCaseName.build refName) |> String.join "." |> Ok
+                            ModuleName.union context (ClassCaseName.build refName)
+                                |> Result.map (String.join ".")
 
                         ReferenceLeaf.Scalar ->
                             Err "TODO"
                 )
         )
         (Graphql.Generator.Decoder.generateDecoder context typeRef)
+        (Graphql.Generator.Decoder.generateType context typeRef)
 
 
 prependArg : AnnotatedArg -> FieldGenerator -> FieldGenerator
@@ -308,22 +325,24 @@ init ({ apiSubmodule } as context) fieldName ((Type.TypeReference referrableType
 
 initScalarField : Context -> TypeReference -> Result String FieldGenerator
 initScalarField context typeRef =
-    Graphql.Generator.Decoder.generateDecoder context typeRef
-        |> Result.map
-            (\xs ->
-                let
-                    scalarName =
-                        "\"" ++ Graphql.Generator.Decoder.generateType { context | apiSubmodule = [] } typeRef ++ "\""
-                in
-                { annotatedArgs = []
-                , fieldArgs = []
-                , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
-                , decoder =
-                    xs
-                        |> String.join " |> "
-                , otherThing = ".selectionForField " ++ scalarName
-                , letBindings = []
-                , objectDecoderChain = Nothing
-                , typeAliases = []
-                }
-            )
+    Result.map3
+        (\decoders decoderAnnotation scalarType ->
+            let
+                scalarName =
+                    "\"" ++ scalarType ++ "\""
+            in
+            { annotatedArgs = []
+            , fieldArgs = []
+            , decoderAnnotation = decoderAnnotation
+            , decoder =
+                decoders
+                    |> String.join " |> "
+            , otherThing = ".selectionForField " ++ scalarName
+            , letBindings = []
+            , objectDecoderChain = Nothing
+            , typeAliases = []
+            }
+        )
+        (Graphql.Generator.Decoder.generateDecoder context typeRef)
+        (Graphql.Generator.Decoder.generateType context typeRef)
+        (Graphql.Generator.Decoder.generateType { context | apiSubmodule = [] } typeRef)

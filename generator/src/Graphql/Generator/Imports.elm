@@ -57,7 +57,8 @@ imports apiSubmodule (Type.TypeReference referrableType isNullable) =
             Nothing
 
         Type.EnumRef enumName ->
-            Just (ModuleName.enum { apiSubmodule = apiSubmodule } enumName)
+            ModuleName.enum { apiSubmodule = apiSubmodule } enumName
+                |> Result.toMaybe
 
         Type.InputObjectRef inputObjectName ->
             Nothing

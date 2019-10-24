@@ -17,6 +17,6 @@ raw (CamelCaseName name) =
     name
 
 
-normalized : CamelCaseName -> String
+normalized : CamelCaseName -> Result String String
 normalized (CamelCaseName name) =
     name |> Normalize.decapitalized

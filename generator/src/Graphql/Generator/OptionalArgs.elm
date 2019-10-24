@@ -35,26 +35,30 @@ generate context allArgs =
             Nothing
 
         optionalArgs ->
-            optionalArgs
-                |> argValues context
-                |> Result.toMaybe
-                |> Maybe.map
-                    (\res ->
-                        { annotatedArg =
-                            \fieldName ->
-                                { annotation = annotation fieldName
-                                , arg = "fillInOptionals"
-                                }
-                        , letBindings =
-                            [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord optionalArgs )
-                            , ( "optionalArgs"
-                              , res
-                                    ++ "\n                |> List.filterMap identity"
-                              )
-                            ]
-                        , typeAlias = { suffix = "OptionalArguments", body = typeAlias context optionalArgs }
+            Result.map3
+                (\emptyRecord_ optionalArgs_ body ->
+                    { annotatedArg =
+                        \fieldName ->
+                            { annotation = annotation fieldName
+                            , arg = "fillInOptionals"
+                            }
+                    , letBindings =
+                        [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord_ )
+                        , ( "optionalArgs"
+                          , optionalArgs_
+                                ++ "\n                |> List.filterMap identity"
+                          )
+                        ]
+                    , typeAlias =
+                        { suffix = "OptionalArguments"
+                        , body = body
                         }
-                    )
+                    }
+                )
+                (emptyRecord optionalArgs)
+                (argValues context optionalArgs)
+                (typeAlias context optionalArgs)
+                |> Result.toMaybe
 
 
 argValues : Context -> List OptionalArg -> Result String String
@@ -69,26 +73,36 @@ argValues context =
 
 argValue : Context -> OptionalArg -> Result String String
 argValue context { name, typeOf } =
-    Graphql.Generator.Decoder.generateEncoder context (Type.TypeReference typeOf Type.NonNullable)
-        |> Result.map
-            (\res ->
-                interpolate
-                    """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
-                    [ CamelCaseName.raw name
-                    , CamelCaseName.normalized name
-                    , res
-                    ]
+    Result.map2
+        (\encoder normalizedName ->
+            interpolate
+                """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
+                [ CamelCaseName.raw name
+                , normalizedName
+                , encoder
+                ]
+        )
+        (Graphql.Generator.Decoder.generateEncoder context (Type.TypeReference typeOf Type.NonNullable))
+        (CamelCaseName.normalized name)
+
+
+emptyRecord : List OptionalArg -> Result String String
+emptyRecord =
+    List.map
+        (\{ name } ->
+            name
+                |> CamelCaseName.normalized
+                |> Result.map
+                    (\normalizedName ->
+                        normalizedName ++ " = Absent"
+                    )
+        )
+        >> Result.Extra.combine
+        >> Result.map
+            (String.join ", "
+                >> List.singleton
+                >> interpolate "{ {0} }"
             )
-
-
-emptyRecord : List OptionalArg -> String
-emptyRecord optionalArgs =
-    let
-        recordEntries =
-            List.map (\{ name } -> CamelCaseName.normalized name ++ " = Absent") optionalArgs
-                |> String.join ", "
-    in
-    interpolate "{ {0} }" [ recordEntries ]
 
 
 annotation : String -> String
@@ -97,16 +111,26 @@ annotation fieldName =
         [ fieldName ]
 
 
-typeAlias : Context -> List OptionalArg -> String
+typeAlias : Context -> List OptionalArg -> Result String String
 typeAlias context optionalArgs =
     optionalArgs
         |> List.map
             (\{ name, typeOf } ->
-                ( CamelCaseName.normalized name
-                , "OptionalArgument " ++ Graphql.Generator.Decoder.generateType context (Type.TypeReference typeOf Type.NonNullable)
-                )
+                name
+                    |> CamelCaseName.normalized
+                    |> Result.andThen
+                        (\normalizedName ->
+                            Graphql.Generator.Decoder.generateType context (Type.TypeReference typeOf Type.NonNullable)
+                                |> Result.map
+                                    (\opt ->
+                                        ( normalizedName
+                                        , "OptionalArgument " ++ opt
+                                        )
+                                    )
+                        )
             )
-        |> GenerateSyntax.typeAlias
+        |> Result.Extra.combine
+        |> Result.map GenerateSyntax.typeAlias
 
 
 optionalArgOrNothing : Type.Arg -> Maybe OptionalArg

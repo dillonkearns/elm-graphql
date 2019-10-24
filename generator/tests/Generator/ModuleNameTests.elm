@@ -18,5 +18,5 @@ all =
                         | query = "RootQueryType" |> ClassCaseName.build
                     }
                     (ClassCaseName.build "RootQueryType")
-                    |> Expect.equal [ "RootQuery" ]
+                    |> Expect.equal (Ok [ "RootQuery" ])
         ]

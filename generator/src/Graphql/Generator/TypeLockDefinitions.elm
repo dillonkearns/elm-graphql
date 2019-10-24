@@ -2,58 +2,67 @@ module Graphql.Generator.TypeLockDefinitions exposing (generate)
 
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : List String -> List TypeDefinition -> List ( List String, String )
+generate : List String -> List TypeDefinition -> Result String (List ( List String, String ))
 generate apiSubmodule typeDefs =
     [ generateCommon "Union" unionName apiSubmodule typeDefs
     , generateCommon "Object" objectName apiSubmodule typeDefs
     , generateCommon "Interface" interfaceName apiSubmodule typeDefs
     ]
+        |> Result.Extra.combine
 
 
-generateCommon : String -> (TypeDefinition -> Bool) -> List String -> List TypeDefinition -> ( List String, String )
+generateCommon : String -> (TypeDefinition -> Bool) -> List String -> List TypeDefinition -> Result String ( List String, String )
 generateCommon typeName includeName apiSubmodule typeDefinitions =
-    (let
-        typesToGenerate =
-            typeDefinitions
-                |> List.filter includeName
-                |> List.map (\(TypeDefinition name definableType description) -> name)
-     in
-     if typesToGenerate == [] then
-        interpolate
-            """module {0} exposing (..)
+    typeDefinitions
+        |> List.filter includeName
+        |> List.map (\(TypeDefinition name definableType description) -> name)
+        |> List.map generateType
+        |> Result.Extra.combine
+        |> Result.map
+            (\results ->
+                if results == [] then
+                    interpolate
+                        """module {0} exposing (..)
 
 
 placeholder : String
 placeholder =
     ""
 """
-            [ apiSubmodule ++ [ typeName ] |> String.join "." ]
+                        [ apiSubmodule ++ [ typeName ] |> String.join "." ]
 
-     else
-        interpolate
-            """module {0} exposing (..)
+                else
+                    interpolate
+                        """module {0} exposing (..)
 
 
 {1}
 """
-            [ apiSubmodule ++ [ typeName ] |> String.join "."
-            , typesToGenerate
-                |> List.map generateType
-                |> String.join "\n\n\n"
-            ]
-    )
-        |> (\fileContents -> ( apiSubmodule ++ [ typeName ], fileContents ))
+                        [ apiSubmodule ++ [ typeName ] |> String.join "."
+                        , results
+                            |> String.join "\n\n\n"
+                        ]
+            )
+        |> Result.map
+            (\fileContents ->
+                ( apiSubmodule ++ [ typeName ], fileContents )
+            )
 
 
-generateType : ClassCaseName -> String
-generateType name =
-    interpolate
-        """type {0}
+generateType : ClassCaseName -> Result String String
+generateType =
+    ClassCaseName.normalized
+        >> Result.map
+            (\res ->
+                interpolate
+                    """type {0}
     = {0}"""
-        [ ClassCaseName.normalized name ]
+                    [ res ]
+            )
 
 
 objectName : TypeDefinition -> Bool
