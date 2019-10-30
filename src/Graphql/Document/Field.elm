@@ -51,8 +51,8 @@ alias field =
         |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ String.fromInt aliasHash)
 
 
-serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
-serialize aliasName mIndentationLevel field =
+serialize : Bool -> Maybe String -> Maybe Int -> RawField -> Maybe String
+serialize useFieldAliases aliasName mIndentationLevel field =
     let
         prefix =
             case aliasName of
@@ -76,7 +76,7 @@ serialize aliasName mIndentationLevel field =
                     (fieldName
                         ++ Argument.serialize args
                         ++ "{"
-                        ++ serializeChildren Nothing children
+                        ++ serializeChildren useFieldAliases Nothing children
                     )
                         ++ "}"
                         |> Just
@@ -85,7 +85,7 @@ serialize aliasName mIndentationLevel field =
                     (fieldName
                         ++ Argument.serialize args
                         ++ " {\n"
-                        ++ serializeChildren (Just indentationLevel) children
+                        ++ serializeChildren useFieldAliases (Just indentationLevel) children
                     )
                         ++ "\n"
                         ++ Indent.generate indentationLevel
@@ -103,13 +103,21 @@ serialize aliasName mIndentationLevel field =
             )
 
 
-serializeChildren : Maybe Int -> List RawField -> String
-serializeChildren indentationLevel children =
+serializeChildren : Bool -> Maybe Int -> List RawField -> String
+serializeChildren useFieldAliases indentationLevel children =
     children
         |> nonemptyChildren
         |> List.indexedMap
             (\index field ->
-                serialize (alias field) (indentationLevel |> Maybe.map ((+) 1)) field
+                serialize useFieldAliases
+                    (if useFieldAliases then
+                        alias field
+
+                     else
+                        Nothing
+                    )
+                    (indentationLevel |> Maybe.map ((+) 1))
+                    field
             )
         |> List.filterMap identity
         |> String.join

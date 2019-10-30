@@ -25,7 +25,7 @@ echo 'Ensuring documentation is valid...'
 npx elm make --docs=documentation.json
 
 echo 'Confirming that generated code has been commited...'
-changed_files=$(git diff --name-only)
+changed_files=$(git diff --name-only -- examples/src/Github examples/src/Swapi ete_tests/src)
 
 if [[ -n $changed_files ]]; then
   echo 'FAILURE'

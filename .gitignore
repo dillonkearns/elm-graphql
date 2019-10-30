@@ -1,5 +1,5 @@
 # Distribution
-dist/bundle.js
+# dist/bundle.js
 build/
 documentation.json
 docs.json
@@ -15,6 +15,10 @@ repl-temp-*
 # Dependency directories
 node_modules
 
+# parcel
+.cache
+
 # Desktop Services Store on macOS
 .DS_Store
-.cache
+#typical ephemera
+tmp

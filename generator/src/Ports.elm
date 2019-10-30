@@ -23,6 +23,7 @@ port printAndExitSuccess : String -> Cmd msg
 port introspectSchemaFromFile :
     { introspectionFilePath : String
     , outputPath : String
+    , queryDirectory : Maybe String
     , baseModule : List String
     , customDecodersModule : Maybe String
     }
@@ -31,6 +32,7 @@ port introspectSchemaFromFile :
 
 port introspectSchemaFromUrl :
     { excludeDeprecated : Bool
+    , queryDirectory : Maybe String
     , graphqlUrl : String
     , baseModule : List String
     , outputPath : String
@@ -40,7 +42,7 @@ port introspectSchemaFromUrl :
     -> Cmd msg
 
 
-port generateFiles : (Json.Encode.Value -> msg) -> Sub msg
+port generateFiles : ({ queryFiles: Json.Encode.Value, introspectionData: Json.Encode.Value } -> msg) -> Sub msg
 
 
 port generatedFiles : Json.Encode.Value -> Cmd msg

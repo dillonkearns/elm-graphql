@@ -1,4 +1,7 @@
-module Graphql.Document exposing (serializeQuery, serializeMutation, serializeSubscription, serializeQueryForUrl, decoder)
+module Graphql.Document exposing
+    ( serializeQuery, serializeMutation, serializeSubscription, serializeQueryForUrl, decoder
+    , serializeFragment
+    )
 
 {-| You'll usually want to use `Graphql.Http` to perform your queries directly.
 This package provides low-level functions for generating GraphQL documents that
@@ -28,7 +31,7 @@ use with a GET request as a query param.
 -}
 serializeQueryForUrl : SelectionSet decodesTo RootQuery -> String
 serializeQueryForUrl (SelectionSet fields decoder_) =
-    "{" ++ Field.serializeChildren Nothing fields ++ "}"
+    "{" ++ Field.serializeChildren True Nothing fields ++ "}"
 
 
 {-| Serialize a mutation selection set into a string for a GraphQL endpoint.
@@ -45,6 +48,16 @@ serializeSubscription (SelectionSet fields decoder_) =
     serialize "subscription" fields
 
 
+{-| Serialize a subscription selection set into a string for a GraphQL endpoint.
+-}
+serializeFragment : String -> String -> SelectionSet decodesTo selectionContext -> String
+serializeFragment fragmentName fragmentType (SelectionSet fields decoder_) =
+    interpolate """fragment {0} on {1} {
+{2}
+}"""
+        [ fragmentName, fragmentType, Field.serializeChildren False (Just 0) fields ]
+
+
 {-| Decoder a response from the server. This low-level function shouldn't be needed
 in the majority of cases. Instead, the high-level functions in `Graphql.Http`
 should be used.
@@ -59,4 +72,4 @@ serialize operationName queries =
     interpolate """{0} {
 {1}
 }"""
-        [ operationName, Field.serializeChildren (Just 0) queries ]
+        [ operationName, Field.serializeChildren True (Just 0) queries ]

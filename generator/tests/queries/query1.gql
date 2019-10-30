@@ -1,0 +1,14 @@
+query {
+  organization {
+    id
+    teams {
+      name
+      onboardingWorkflowTemplate {
+        id
+      }
+      offboardingWorkflowTemplate {
+        id
+      }
+    }
+  }
+}
