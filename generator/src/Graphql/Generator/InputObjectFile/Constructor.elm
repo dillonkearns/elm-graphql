@@ -9,10 +9,11 @@ import Graphql.Generator.Let as Let
 import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : Context -> InputObjectDetails -> String
+generate : Context -> InputObjectDetails -> Result String String
 generate context { name, fields, hasLoop } =
     let
         optionalFields =
@@ -32,99 +33,124 @@ generate context { name, fields, hasLoop } =
                             Type.TypeReference referrableType isNullable ->
                                 isNullable == Type.NonNullable
                     )
+    in
+    ClassCaseName.normalized name
+        |> Result.map
+            (\normalizedName ->
+                Result.map4
+                    (\filledOptionals returnRecord requiredAliases optionalAliases ->
+                        let
+                            annotation =
+                                AnnotatedArg.buildWithArgs
+                                    ([ when (List.length requiredFields > 0)
+                                        ( interpolate "{0}RequiredFields"
+                                            [ normalizedName ]
+                                        , "required"
+                                        )
+                                     , when (List.length optionalFields > 0)
+                                        ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ normalizedName ]
+                                        , "fillOptionals"
+                                        )
+                                     ]
+                                        |> compact
+                                    )
+                                    normalizedName
+                                    |> AnnotatedArg.toString ("build" ++ normalizedName)
 
-        returnRecord =
-            fields
-                |> List.map
-                    (\field ->
-                        interpolate "{0} = {1}.{0}"
-                            [ CamelCaseName.normalized field.name
-                            , case field.typeRef of
-                                Type.TypeReference referrableType isNullable ->
-                                    case isNullable of
-                                        Type.Nullable ->
-                                            "optionals"
-
-                                        Type.NonNullable ->
-                                            "required"
-                            ]
-                    )
-                |> String.join ", "
-
-        annotation =
-            AnnotatedArg.buildWithArgs
-                ([ when (List.length requiredFields > 0)
-                    ( interpolate "{0}RequiredFields" [ ClassCaseName.normalized name ]
-                    , "required"
-                    )
-                 , when (List.length optionalFields > 0)
-                    ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
-                    , "fillOptionals"
-                    )
-                 ]
-                    |> compact
-                )
-                (ClassCaseName.normalized name)
-                |> AnnotatedArg.toString ("build" ++ ClassCaseName.normalized name)
-
-        letClause =
-            Let.generate
-                ([ when (List.length optionalFields > 0)
-                    ( "optionals"
-                    , interpolate """
+                            letClause =
+                                Let.generate
+                                    ([ when (List.length optionalFields > 0)
+                                        ( "optionals"
+                                        , interpolate """
             fillOptionals
                 { {0} }"""
-                        [ filledOptionalsRecord optionalFields ]
-                    )
-                 ]
-                    |> compact
-                )
-    in
-    interpolate
-        """{0}{1}
+                                            [ filledOptionals ]
+                                        )
+                                     ]
+                                        |> compact
+                                    )
+                        in
+                        interpolate
+                            """{0}{1}
     {2}{ {3} }
 
 {4}
 {5}
 """
-        [ annotation
-        , letClause
-        , if hasLoop then
-            ClassCaseName.normalized name
+                            [ annotation
+                            , letClause
+                            , if hasLoop then
+                                normalizedName
 
-          else
-            ""
-        , returnRecord
-        , constructorFieldsAlias (ClassCaseName.normalized name ++ "RequiredFields") context requiredFields
-        , constructorFieldsAlias (ClassCaseName.normalized name ++ "OptionalFields") context optionalFields
-        ]
+                              else
+                                ""
+                            , returnRecord
+                            , requiredAliases
+                            , optionalAliases
+                            ]
+                    )
+                    (filledOptionalsRecord optionalFields)
+                    (fields
+                        |> List.map
+                            (\field ->
+                                CamelCaseName.normalized field.name
+                                    |> Result.map
+                                        (\normalized ->
+                                            interpolate "{0} = {1}.{0}"
+                                                [ normalized
+                                                , case field.typeRef of
+                                                    Type.TypeReference referrableType isNullable ->
+                                                        case isNullable of
+                                                            Type.Nullable ->
+                                                                "optionals"
+
+                                                            Type.NonNullable ->
+                                                                "required"
+                                                ]
+                                        )
+                            )
+                        |> Result.Extra.combine
+                        |> Result.map (String.join ", ")
+                    )
+                    (constructorFieldsAlias (normalizedName ++ "RequiredFields") context requiredFields)
+                    (constructorFieldsAlias (normalizedName ++ "OptionalFields") context optionalFields)
+            )
+        |> Result.andThen identity
 
 
-constructorFieldsAlias : String -> Context -> List Type.Field -> String
+constructorFieldsAlias : String -> Context -> List Type.Field -> Result String String
 constructorFieldsAlias nameThing context fields =
-    if List.length fields > 0 then
-        interpolate
-            """type alias {0} =
-    {1}"""
-            [ nameThing, List.map (aliasEntry context) fields |> GenerateSyntax.typeAlias ]
+    if List.isEmpty fields then
+        Ok ""
 
     else
-        ""
+        fields
+            |> List.map (aliasEntry context)
+            |> Result.Extra.combine
+            |> Result.map
+                (\aliases ->
+                    interpolate
+                        """type alias {0} =
+    {1}"""
+                        [ nameThing, aliases |> GenerateSyntax.typeAlias ]
+                )
 
 
-filledOptionalsRecord : List Type.Field -> String
-filledOptionalsRecord optionalFields =
-    optionalFields
-        |> List.map .name
-        |> List.map (\fieldName -> CamelCaseName.normalized fieldName ++ " = Absent")
-        |> String.join ", "
+filledOptionalsRecord : List Type.Field -> Result String String
+filledOptionalsRecord =
+    List.map (.name >> CamelCaseName.normalized)
+        >> Result.Extra.combine
+        >> Result.map
+            (List.map (\fieldName -> fieldName ++ " = Absent")
+                >> String.join ", "
+            )
 
 
-aliasEntry : Context -> Type.Field -> ( String, String )
+aliasEntry : Context -> Type.Field -> Result String ( String, String )
 aliasEntry context field =
-    ( CamelCaseName.normalized field.name
-    , Decoder.generateTypeForInputObject context field.typeRef
-    )
+    Result.map2 Tuple.pair
+        (CamelCaseName.normalized field.name)
+        (Decoder.generateTypeForInputObject context field.typeRef)
 
 
 when : Bool -> value -> Maybe value

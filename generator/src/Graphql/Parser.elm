@@ -4,6 +4,7 @@ import Dict exposing (Dict)
 import Graphql.Generator.Group exposing (IntrospectionData, sortedIntrospectionData)
 import Graphql.Parser.Type as Type
 import Json.Decode as Decode exposing (Decoder)
+import Json.Decode.Extra exposing (fromResult)
 import ModuleName exposing (ModuleName)
 
 
@@ -17,4 +18,4 @@ decoder options =
         (Decode.at [ "__schema", "queryType", "name" ] Decode.string)
         (Decode.maybe (Decode.at [ "__schema", "mutationType", "name" ] Decode.string))
         (Decode.maybe (Decode.at [ "__schema", "subscriptionType", "name" ] Decode.string))
-        |> Decode.map (Graphql.Generator.Group.generateFiles options)
+        |> Decode.andThen (Graphql.Generator.Group.generateFiles options >> fromResult)

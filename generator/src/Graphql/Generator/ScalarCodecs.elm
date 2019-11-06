@@ -3,12 +3,19 @@ module Graphql.Generator.ScalarCodecs exposing (generate)
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : Context -> List TypeDefinition -> ( List String, String )
+generate : Context -> List TypeDefinition -> Result String ( List String, String )
 generate context typeDefs =
-    ( context.apiSubmodule ++ [ "ScalarCodecs" ], fileContents context typeDefs )
+    fileContents context typeDefs
+        |> Result.map
+            (\contents ->
+                ( context.apiSubmodule ++ [ "ScalarCodecs" ]
+                , contents
+                )
+            )
 
 
 include : TypeDefinition -> Bool
@@ -50,18 +57,17 @@ isScalar definableType =
             False
 
 
-fileContents : Context -> List TypeDefinition -> String
+fileContents : Context -> List TypeDefinition -> Result String String
 fileContents context typeDefinitions =
     let
         typesToGenerate =
             typeDefinitions
                 |> List.filter include
-                |> List.map (\(TypeDefinition name definableType description) -> name)
 
         moduleName =
             context.apiSubmodule ++ [ "ScalarCodecs" ] |> String.join "."
     in
-    if typesToGenerate == [] then
+    if List.isEmpty typesToGenerate then
         interpolate
             """module {0} exposing (..)
 
@@ -71,10 +77,19 @@ placeholder =
     ""
 """
             [ moduleName ]
+            |> Ok
 
     else
-        interpolate
-            """module {0} exposing (..)
+        typesToGenerate
+            |> List.map
+                (\(TypeDefinition name definableType description) ->
+                    ClassCaseName.normalized name
+                )
+            |> Result.Extra.combine
+            |> Result.map
+                (\normalizedNames ->
+                    interpolate
+                        """module {0} exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 import {4}.Scalar exposing (defaultCodecs)
@@ -90,37 +105,32 @@ codecs =
         {3}
         }
 """
-            [ moduleName
-            , typesToGenerate
-                |> List.map (generateType context)
-                |> String.join "\n\n\n"
-            , (context.apiSubmodule |> String.join ".")
-                ++ ".Scalar.Codecs "
-                ++ (typesToGenerate
-                        |> List.map
-                            (\classCaseName ->
-                                ClassCaseName.normalized classCaseName
-                            )
-                        |> String.join " "
-                   )
-            , typesToGenerate
-                |> List.map
-                    (\classCaseName ->
-                        interpolate "codec{0} = defaultCodecs.codec{0}"
-                            [ ClassCaseName.normalized classCaseName ]
-                    )
-                |> String.join "    , "
-            , context.apiSubmodule |> String.join "."
-            ]
-
-
-generateType : Context -> ClassCaseName -> String
-generateType context name =
-    interpolate
-        """type alias {0}
-    = {1}"""
-        [ ClassCaseName.normalized name
-        , context.apiSubmodule
-            ++ [ "Scalar", ClassCaseName.normalized name ]
-            |> String.join "."
-        ]
+                        [ moduleName
+                        , normalizedNames
+                            |> List.map
+                                (\name ->
+                                    interpolate
+                                        """type alias {0}
+                                = {1}"""
+                                        [ name
+                                        , context.apiSubmodule
+                                            ++ [ "Scalar", name ]
+                                            |> String.join "."
+                                        ]
+                                )
+                            |> String.join "\n\n\n"
+                        , (context.apiSubmodule |> String.join ".")
+                            ++ ".Scalar.Codecs "
+                            ++ (normalizedNames
+                                    |> String.join " "
+                               )
+                        , normalizedNames
+                            |> List.map
+                                (\name ->
+                                    interpolate "codec{0} = defaultCodecs.codec{0}"
+                                        [ name ]
+                                )
+                            |> String.join "    , "
+                        , context.apiSubmodule |> String.join "."
+                        ]
+                )

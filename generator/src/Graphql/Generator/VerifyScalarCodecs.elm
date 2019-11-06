@@ -4,12 +4,17 @@ import Graphql.Generator.Context exposing (Context)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
 import ModuleName
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : Context -> List TypeDefinition -> ( List String, String )
+generate : Context -> List TypeDefinition -> Result String ( List String, String )
 generate context typeDefs =
-    ( context.apiSubmodule ++ [ "VerifyScalarCodecs" ], fileContents context typeDefs )
+    fileContents context typeDefs
+        |> Result.map
+            (\contents ->
+                ( context.apiSubmodule ++ [ "VerifyScalarCodecs" ], contents )
+            )
 
 
 include : TypeDefinition -> Bool
@@ -42,38 +47,42 @@ isScalar definableType =
             False
 
 
-fileContents : Context -> List TypeDefinition -> String
+fileContents : Context -> List TypeDefinition -> Result String String
 fileContents context typeDefinitions =
-    let
-        typesToGenerate =
-            typeDefinitions
-                |> List.filter include
-                |> List.map (\(TypeDefinition name definableType description) -> name)
+    typeDefinitions
+        |> List.filter include
+        |> List.map
+            (\(TypeDefinition name definableType description) ->
+                ClassCaseName.normalized name
+            )
+        |> Result.Extra.combine
+        |> Result.map
+            (\typesToGenerate ->
+                let
+                    moduleName =
+                        context.apiSubmodule ++ [ "VerifyScalarCodecs" ] |> String.join "."
 
-        moduleName =
-            context.apiSubmodule ++ [ "VerifyScalarCodecs" ] |> String.join "."
-
-        placeholderCode =
-            interpolate
-                """module {0} exposing (..)
+                    placeholderCode =
+                        interpolate
+                            """module {0} exposing (..)
 
 
 placeholder : String
 placeholder =
 ""
 """
-                [ moduleName ]
-    in
-    case ( typesToGenerate, context.scalarCodecsModule ) of
-        ( _, Nothing ) ->
-            placeholderCode
+                            [ moduleName ]
+                in
+                case ( typesToGenerate, context.scalarCodecsModule ) of
+                    ( _, Nothing ) ->
+                        placeholderCode
 
-        ( [], _ ) ->
-            placeholderCode
+                    ( [], _ ) ->
+                        placeholderCode
 
-        ( _, Just scalarCodecsModule ) ->
-            interpolate
-                """module {0} exposing (..)
+                    ( _, Just scalarCodecsModule ) ->
+                        interpolate
+                            """module {0} exposing (..)
 
 
 {-
@@ -89,15 +98,16 @@ verify : {3}.Scalar.Codecs {2}
 verify =
     {1}.codecs
 """
-                [ moduleName
-                , scalarCodecsModule |> ModuleName.toString
-                , typesToGenerate
-                    |> List.map
-                        (\classCaseName ->
-                            ModuleName.append
-                                (ClassCaseName.normalized classCaseName)
-                                scalarCodecsModule
-                        )
-                    |> String.join " "
-                , context.apiSubmodule |> String.join "."
-                ]
+                            [ moduleName
+                            , scalarCodecsModule |> ModuleName.toString
+                            , typesToGenerate
+                                |> List.map
+                                    (\classCaseName ->
+                                        ModuleName.append
+                                            classCaseName
+                                            scalarCodecsModule
+                                    )
+                                |> String.join " "
+                            , context.apiSubmodule |> String.join "."
+                            ]
+            )

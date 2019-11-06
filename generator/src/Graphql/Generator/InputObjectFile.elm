@@ -11,22 +11,27 @@ import Graphql.Parser.CamelCaseName as CamelCaseName exposing (CamelCaseName)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
 import ModuleName
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : Context -> List TypeDefinition -> ( List String, String )
+generate : Context -> List TypeDefinition -> Result String ( List String, String )
 generate context typeDefinitions =
-    ( moduleName context
-    , generateFileContents context typeDefinitions
-    )
+    generateFileContents context typeDefinitions
+        |> Result.map
+            (\contents ->
+                ( makeModuleName context
+                , contents
+                )
+            )
 
 
-moduleName : Context -> List String
-moduleName { apiSubmodule } =
+makeModuleName : Context -> List String
+makeModuleName { apiSubmodule } =
     apiSubmodule ++ [ "InputObject" ]
 
 
-generateFileContents : Context -> List TypeDefinition -> String
+generateFileContents : Context -> List TypeDefinition -> Result String String
 generateFileContents context typeDefinitions =
     let
         typesToGenerate =
@@ -36,8 +41,11 @@ generateFileContents context typeDefinitions =
         fields =
             typesToGenerate
                 |> List.concatMap .fields
+
+        moduleName =
+            makeModuleName context |> String.join "."
     in
-    if typesToGenerate == [] then
+    if List.isEmpty typesToGenerate then
         interpolate
             """module {0} exposing (..)
 
@@ -46,11 +54,17 @@ placeholder : String
 placeholder =
     ""
 """
-            [ moduleName context |> String.join "." ]
+            [ moduleName ]
+            |> Ok
 
     else
-        interpolate
-            """module {0} exposing (..)
+        typesToGenerate
+            |> List.map (generateEncoderAndAlias context)
+            |> Result.Extra.combine
+            |> Result.map
+                (\types ->
+                    interpolate
+                        """module {0} exposing (..)
 
 
 {1}
@@ -58,27 +72,32 @@ placeholder =
 
 {2}
 """
-            [ moduleName context |> String.join "."
-            , generateImports context fields
-            , typesToGenerate
-                |> List.map (generateEncoderAndAlias context)
-                |> String.join "\n\n\n"
-            ]
+                        [ moduleName, generateImports context fields, types |> String.join "\n\n\n" ]
+                )
 
 
-generateEncoderAndAlias : Context -> InputObjectDetails -> String
+generateEncoderAndAlias : Context -> InputObjectDetails -> Result String String
 generateEncoderAndAlias context inputObjectDetails =
     [ Constructor.generate context inputObjectDetails
     , typeAlias context inputObjectDetails
     , encoder context inputObjectDetails
     ]
-        |> String.join "\n\n"
+        |> Result.Extra.combine
+        |> Result.map (String.join "\n\n")
 
 
-typeAlias : Context -> InputObjectDetails -> String
+typeAlias : Context -> InputObjectDetails -> Result String String
 typeAlias context { name, fields, hasLoop } =
-    (if hasLoop then
-        interpolate """{-| Type alias for the `{0}` attributes. Note that this type
+    [ ClassCaseName.normalized name
+    , fields
+        |> List.map (aliasEntry context)
+        |> Result.Extra.combine
+        |> Result.map GenerateSyntax.typeAlias
+    ]
+        |> Result.Extra.combine
+        |> Result.map
+            (if hasLoop then
+                interpolate """{-| Type alias for the `{0}` attributes. Note that this type
 needs to use the `{0}` type (not just a plain type alias) because it has
 references to itself either directly (recursive) or indirectly (circular). See
 <https://github.com/dillonkearns/elm-graphql/issues/33>.
@@ -93,72 +112,87 @@ type {0}
     = {0} {0}Raw
     """
 
-     else
-        interpolate """{-| Type for the {0} input object.
+             else
+                interpolate """{-| Type for the {0} input object.
 -}
 type alias {0} =
     {1}
     """
-    )
-        [ ClassCaseName.normalized name
-        , List.map (aliasEntry context) fields |> GenerateSyntax.typeAlias
-        ]
+            )
 
 
-aliasEntry : Context -> Type.Field -> ( String, String )
+aliasEntry : Context -> Type.Field -> Result String ( String, String )
 aliasEntry context field =
-    ( CamelCaseName.normalized field.name
-    , Decoder.generateTypeForInputObject context field.typeRef
-    )
+    Result.map2 Tuple.pair
+        (CamelCaseName.normalized field.name)
+        (Decoder.generateTypeForInputObject context field.typeRef)
 
 
-encoder : Context -> InputObjectDetails -> String
+encoder : Context -> InputObjectDetails -> Result String String
 encoder context { name, fields, hasLoop } =
-    let
-        parameter =
-            if hasLoop then
-                interpolate "({0} input)" [ ClassCaseName.normalized name ]
+    Result.map2
+        (\normalized fieldEncoders ->
+            let
+                parameter =
+                    if hasLoop then
+                        interpolate "({0} input)" [ normalized ]
 
-            else
-                "input"
-    in
-    interpolate """{-| Encode a {0} into a value that can be used as an argument.
--}
-encode{0} : {0} -> Value
-encode{0} {1} =
-    Encode.maybeObject
-        [ {2} ]"""
-        [ ClassCaseName.normalized name
-        , parameter
-        , fields |> List.map (encoderForField context) |> String.join ", "
-        ]
+                    else
+                        "input"
+            in
+            interpolate """{-| Encode a {0} into a value that can be used as an argument.
+  -}
+  encode{0} : {0} -> Value
+  encode{0} {1} =
+      Encode.maybeObject
+          [ {2} ]"""
+                [ normalized
+                , parameter
+                , fieldEncoders
+                    |> String.join ", "
+                ]
+        )
+        (ClassCaseName.normalized name)
+        (fields
+            |> List.map (encoderForField context)
+            |> Result.Extra.combine
+        )
 
 
-encoderForField : Context -> Type.Field -> String
+encoderForField : Context -> Type.Field -> Result String String
 encoderForField context field =
-    interpolate """( "{0}", {1} )"""
-        [ CamelCaseName.raw field.name
-        , encoderFunction context field
-        ]
+    encoderFunction context field
+        |> Result.map
+            (\fn ->
+                interpolate """( "{0}", {1} )"""
+                    [ CamelCaseName.raw field.name
+                    , fn
+                    ]
+            )
 
 
-encoderFunction : Context -> Type.Field -> String
+encoderFunction : Context -> Type.Field -> Result String String
 encoderFunction context field =
     case field.typeRef of
         Type.TypeReference referrableType isNullable ->
-            let
-                filledOptionalsRecord_ =
-                    case isNullable of
-                        Type.NonNullable ->
-                            interpolate " input.{0} |> Just" [ CamelCaseName.normalized field.name ]
+            Result.map2
+                (\normalized decoder ->
+                    let
+                        filledOptionalsRecord_ =
+                            case isNullable of
+                                Type.NonNullable ->
+                                    interpolate " input.{0} |> Just" [ normalized ]
 
-                        Type.Nullable ->
-                            interpolate " |> Encode.optional input.{0}" [ CamelCaseName.normalized field.name ]
-            in
-            interpolate "({0}) {1}"
-                [ Decoder.generateEncoderLowLevel context referrableType
-                , filledOptionalsRecord_
-                ]
+                                Type.Nullable ->
+                                    interpolate " |> Encode.optional input.{0}" [ normalized ]
+                    in
+                    interpolate "({0}) {1}"
+                        [ decoder
+                        , filledOptionalsRecord_
+                        ]
+                )
+                (CamelCaseName.normalized field.name)
+                (Decoder.generateEncoderLowLevel context referrableType)
 
 
 generateImports : Context -> List Type.Field -> String
@@ -176,7 +210,7 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 {0}
 """
-        [ Imports.importsString apiSubmodule (moduleName context) fields
+        [ Imports.importsString apiSubmodule (makeModuleName context) fields
         , apiSubmodule |> String.join "."
         , context.scalarCodecsModule
             |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))

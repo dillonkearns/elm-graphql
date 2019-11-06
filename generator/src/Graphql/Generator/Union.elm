@@ -4,19 +4,25 @@ import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import ModuleName
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : Context -> ClassCaseName -> List String -> List ClassCaseName -> String
+generate : Context -> ClassCaseName -> List String -> List ClassCaseName -> Result String String
 generate context name moduleName possibleTypes =
-    prepend context moduleName
-        ++ fragmentHelpers context possibleTypes moduleName
+    fragmentHelpers context possibleTypes moduleName
+        |> Result.map
+            (\fragments ->
+                prepend context moduleName ++ fragments
+            )
 
 
-fragmentHelpers : Context -> List ClassCaseName -> List String -> String
+fragmentHelpers : Context -> List ClassCaseName -> List String -> Result String String
 fragmentHelpers context implementors moduleName =
-    interpolate
-        """
+    Result.map3
+        (\aliases exhaustives maybes ->
+            interpolate
+                """
 type alias Fragments decodesTo =
     {
     {1}
@@ -44,38 +50,58 @@ maybeFragments =
       {3}
     }
 """
-        [ moduleName |> String.join "."
-        , implementors
+                [ moduleName |> String.join "."
+                , aliases |> String.join ",\n"
+                , exhaustives |> String.join ",\n"
+                , maybes |> String.join ",\n"
+                ]
+        )
+        (implementors
             |> List.map (aliasFieldForFragment context moduleName)
-            |> String.join ",\n"
-        , implementors
+            |> Result.Extra.combine
+        )
+        (implementors
             |> List.map (exhaustiveBuildupForFragment context moduleName)
-            |> String.join ",\n"
-        , implementors
+            |> Result.Extra.combine
+        )
+        (implementors
             |> List.map (maybeFragmentEntry context moduleName)
-            |> String.join ",\n"
-        ]
+            |> Result.Extra.combine
+        )
 
 
-aliasFieldForFragment : Context -> List String -> ClassCaseName -> String
+aliasFieldForFragment : Context -> List String -> ClassCaseName -> Result String String
 aliasFieldForFragment context moduleName interfaceImplementor =
-    interpolate
-        "on{0} : SelectionSet decodesTo {1}"
-        [ ClassCaseName.normalized interfaceImplementor, Graphql.Generator.ModuleName.object context interfaceImplementor |> String.join "." ]
+    Result.map2
+        (\normalized objects ->
+            interpolate
+                "on{0} : SelectionSet decodesTo {1}"
+                [ normalized, objects |> String.join "." ]
+        )
+        (ClassCaseName.normalized interfaceImplementor)
+        (Graphql.Generator.ModuleName.object context interfaceImplementor)
 
 
-exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> String
+exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> Result String String
 exhaustiveBuildupForFragment context moduleName interfaceImplementor =
-    interpolate
-        """Object.buildFragment "{1}" selections.on{0}"""
-        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
+    ClassCaseName.normalized interfaceImplementor
+        |> Result.map
+            (\normalized ->
+                interpolate
+                    """Object.buildFragment "{1}" selections.on{0}"""
+                    [ normalized, ClassCaseName.raw interfaceImplementor ]
+            )
 
 
-maybeFragmentEntry : Context -> List String -> ClassCaseName -> String
+maybeFragmentEntry : Context -> List String -> ClassCaseName -> Result String String
 maybeFragmentEntry context moduleName interfaceImplementor =
-    interpolate
-        """on{0} = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\\_ -> Nothing)"""
-        [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
+    ClassCaseName.normalized interfaceImplementor
+        |> Result.map
+            (\normalized ->
+                interpolate
+                    """on{0} = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\\_ -> Nothing)"""
+                    [ normalized, ClassCaseName.raw interfaceImplementor ]
+            )
 
 
 prepend : Context -> List String -> String

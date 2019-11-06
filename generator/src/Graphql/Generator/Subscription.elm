@@ -6,13 +6,25 @@ import Graphql.Generator.Imports as Imports
 import Graphql.Generator.StaticImports as StaticImports
 import Graphql.Parser.ClassCaseName as ClassCaseName
 import Graphql.Parser.Type as Type exposing (Field)
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : Context -> List String -> List Field -> String
+generate : Context -> List String -> List Field -> Result String String
 generate context moduleName fields =
-    prepend context moduleName fields
-        ++ (List.map (FieldGenerator.generateForObject context (context.subscription |> Maybe.withDefault (ClassCaseName.build ""))) fields |> String.join "\n\n")
+    fields
+        |> List.map
+            (FieldGenerator.generateForObject context
+                (context.subscription
+                    |> Maybe.withDefault (ClassCaseName.build "")
+                )
+            )
+        |> Result.Extra.combine
+        |> Result.map
+            (\fields_ ->
+                prepend context moduleName fields
+                    ++ (fields_ |> String.join "\n\n")
+            )
 
 
 prepend : Context -> List String -> List Field -> String

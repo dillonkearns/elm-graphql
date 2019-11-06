@@ -2,12 +2,17 @@ module Graphql.Generator.Scalar exposing (generate)
 
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
+import Result.Extra
 import String.Interpolate exposing (interpolate)
 
 
-generate : List String -> List TypeDefinition -> ( List String, String )
+generate : List String -> List TypeDefinition -> Result String ( List String, String )
 generate apiSubmodule typeDefs =
-    ( apiSubmodule ++ [ "Scalar" ], fileContents apiSubmodule typeDefs )
+    fileContents apiSubmodule typeDefs
+        |> Result.map
+            (\contents ->
+                ( apiSubmodule ++ [ "Scalar" ], contents )
+            )
 
 
 include : TypeDefinition -> Bool
@@ -49,18 +54,17 @@ isScalar definableType =
             False
 
 
-fileContents : List String -> List TypeDefinition -> String
+fileContents : List String -> List TypeDefinition -> Result String String
 fileContents apiSubmodule typeDefinitions =
     let
         typesToGenerate =
             typeDefinitions
                 |> List.filter include
-                |> List.map (\(TypeDefinition name definableType description) -> name)
 
         moduleName =
             apiSubmodule ++ [ "Scalar" ] |> String.join "."
     in
-    if typesToGenerate == [] then
+    if List.isEmpty typesToGenerate then
         interpolate
             """module {0} exposing (..)
 
@@ -70,10 +74,19 @@ placeholder =
     ""
 """
             [ moduleName ]
+            |> Ok
 
     else
-        interpolate
-            """module {0} exposing (Codecs, {6}, defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
+        typesToGenerate
+            |> List.map
+                (\(TypeDefinition name definableType description) ->
+                    ClassCaseName.normalized name
+                )
+            |> Result.Extra.combine
+            |> Result.map
+                (\normalizedNames ->
+                    interpolate
+                        """module {0} exposing (Codecs, {6}, defaultCodecs, defineCodecs, unwrapCodecs, unwrapEncoder)
 
 
 import Graphql.Internal.Builder.Object as Object
@@ -115,58 +128,50 @@ defaultCodecs : RawCodecs {7}
 defaultCodecs =
     {5}
 """
-            [ moduleName
-            , typesToGenerate
-                |> List.map generateType
-                |> String.join "\n\n\n"
-            , "{"
-                ++ (typesToGenerate
-                        |> List.map
-                            (\classCaseName ->
-                                interpolate "codec{0} : Codec value{0}"
-                                    [ ClassCaseName.normalized classCaseName ]
-                            )
-                        |> String.join "\n, "
-                   )
-                ++ "}"
-            , "" -- TODO remove this
-            , typesToGenerate
-                |> List.map
-                    (\classCaseName ->
-                        "value"
-                            ++ ClassCaseName.normalized classCaseName
-                    )
-                |> String.join " "
-            , "{"
-                ++ (typesToGenerate
-                        |> List.map
-                            (\classCaseName ->
-                                interpolate "codec{0} =\n  { encoder = \\({0} raw) -> Encode.string raw\n , decoder = Object.scalarDecoder |> Decode.map {0} }"
-                                    [ ClassCaseName.normalized classCaseName
-                                    ]
-                            )
-                        |> String.join "\n, "
-                   )
-                ++ "}"
-            , typesToGenerate
-                |> List.map
-                    (\classCaseName ->
-                        ClassCaseName.normalized classCaseName
-                            ++ "(..)"
-                    )
-                |> String.join ", "
-            , typesToGenerate
-                |> List.map
-                    (\classCaseName ->
-                        ClassCaseName.normalized classCaseName
-                    )
-                |> String.join " "
-            ]
-
-
-generateType : ClassCaseName -> String
-generateType name =
-    interpolate
-        """type {0}
-    = {0} String"""
-        [ ClassCaseName.normalized name ]
+                        [ moduleName
+                        , normalizedNames
+                            |> List.map
+                                (\name ->
+                                    interpolate
+                                        """type {0}
+                              = {0} String"""
+                                        [ name ]
+                                )
+                            |> String.join "\n\n\n"
+                        , "{"
+                            ++ (normalizedNames
+                                    |> List.map
+                                        (\name ->
+                                            interpolate "codec{0} : Codec value{0}"
+                                                [ name ]
+                                        )
+                                    |> String.join "\n, "
+                               )
+                            ++ "}"
+                        , "" -- TODO remove this
+                        , normalizedNames
+                            |> List.map
+                                (\name ->
+                                    "value" ++ name
+                                )
+                            |> String.join " "
+                        , "{"
+                            ++ (normalizedNames
+                                    |> List.map
+                                        (\name ->
+                                            interpolate "codec{0} =\n  { encoder = \\({0} raw) -> Encode.string raw\n , decoder = Object.scalarDecoder |> Decode.map {0} }"
+                                                [ name ]
+                                        )
+                                    |> String.join "\n, "
+                               )
+                            ++ "}"
+                        , normalizedNames
+                            |> List.map
+                                (\name ->
+                                    name ++ "(..)"
+                                )
+                            |> String.join ", "
+                        , normalizedNames
+                            |> String.join " "
+                        ]
+                )

@@ -30,14 +30,19 @@ type alias IntrospectionData =
 
 sortedIntrospectionData : List TypeDefinition -> String -> Maybe String -> Maybe String -> IntrospectionData
 sortedIntrospectionData typeDefinitions queryObjectName mutationObjectName subscriptionObjectName =
-    { typeDefinitions = typeDefinitions |> List.sortBy typeDefName
+    { typeDefinitions =
+        typeDefinitions
+            |> List.sortBy
+                (typeDefName
+                    >> Result.withDefault ""
+                )
     , queryObjectName = queryObjectName
     , mutationObjectName = mutationObjectName
     , subscriptionObjectName = subscriptionObjectName
     }
 
 
-typeDefName : TypeDefinition -> String
+typeDefName : TypeDefinition -> Result String String
 typeDefName (TypeDefinition name definableType description) =
     ClassCaseName.normalized name
 
@@ -57,7 +62,7 @@ interfacePossibleTypesDict typeDefs =
         |> Dict.fromList
 
 
-generateFiles : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Dict String String
+generateFiles : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> IntrospectionData -> Result String (Dict String String)
 generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, subscriptionObjectName } =
     let
         context : Context
@@ -76,25 +81,27 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
                 |> excludeQuery context
                 |> excludeMutation context
                 |> excludeSubscription context
-
-        typeLockDefinitions =
-            TypeLockDefinitions.generate options.apiSubmodule definitionsWithExclusions
-
-        scalarDefinitions =
-            Scalar.generate options.apiSubmodule definitionsWithExclusions
     in
-    typeDefinitions
-        |> excludeBuiltIns
-        |> List.filterMap (toPair context)
-        |> List.append typeLockDefinitions
-        |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
-        |> List.append [ scalarDefinitions ]
-        |> List.append
-            [ ScalarCodecs.generate context definitionsWithExclusions ]
-        |> List.append
-            [ Graphql.Generator.VerifyScalarCodecs.generate context definitionsWithExclusions ]
-        |> List.map (Tuple.mapFirst moduleToFileName)
-        |> Dict.fromList
+    Result.map5
+        (\typeLockDefinitions verified scalarCodecs scalarDefinitions inputObjectFile ->
+            typeDefinitions
+                |> excludeBuiltIns
+                |> List.filterMap (toPair context)
+                |> List.append typeLockDefinitions
+                |> List.append [ inputObjectFile ]
+                |> List.append [ scalarDefinitions ]
+                |> List.append
+                    [ scalarCodecs ]
+                |> List.append
+                    [ verified ]
+                |> List.map (Tuple.mapFirst moduleToFileName)
+                |> Dict.fromList
+        )
+        (TypeLockDefinitions.generate options.apiSubmodule definitionsWithExclusions)
+        (Graphql.Generator.VerifyScalarCodecs.generate context definitionsWithExclusions)
+        (ScalarCodecs.generate context definitionsWithExclusions)
+        (Scalar.generate options.apiSubmodule definitionsWithExclusions)
+        (Graphql.Generator.InputObjectFile.generate context typeDefinitions)
 
 
 excludeBuiltIns : List TypeDefinition -> List TypeDefinition
@@ -142,44 +149,48 @@ moduleToFileName modulePath =
 
 toPair : Context -> TypeDefinition -> Maybe ( List String, String )
 toPair context ((Type.TypeDefinition name definableType description) as definition) =
-    let
-        moduleName =
-            ModuleName.generate context definition
-    in
-    (case definableType of
-        Type.ObjectType fields ->
-            if name == context.query then
-                Graphql.Generator.Query.generate context moduleName fields
-                    |> Just
+    ModuleName.generate context definition
+        |> Result.toMaybe
+        |> Maybe.andThen
+            (\moduleName ->
+                (case definableType of
+                    Type.ObjectType fields ->
+                        if name == context.query then
+                            Graphql.Generator.Query.generate context moduleName fields
+                                |> Result.toMaybe
 
-            else if Just name == context.mutation then
-                Graphql.Generator.Mutation.generate context moduleName fields
-                    |> Just
+                        else if Just name == context.mutation then
+                            Graphql.Generator.Mutation.generate context moduleName fields
+                                |> Result.toMaybe
 
-            else if Just name == context.subscription then
-                Graphql.Generator.Subscription.generate context moduleName fields
-                    |> Just
+                        else if Just name == context.subscription then
+                            Graphql.Generator.Subscription.generate context moduleName fields
+                                |> Result.toMaybe
 
-            else
-                Graphql.Generator.Object.generate context name moduleName fields
-                    |> Just
+                        else
+                            Graphql.Generator.Object.generate context name moduleName fields
+                                |> Result.toMaybe
 
-        Type.ScalarType ->
-            Nothing
+                    Type.ScalarType ->
+                        Nothing
 
-        Type.EnumType enumValues ->
-            Graphql.Generator.Enum.generate name moduleName enumValues description
-                |> Just
+                    Type.EnumType enumValues ->
+                        Graphql.Generator.Enum.generate name moduleName enumValues description
+                            |> Result.toMaybe
 
-        Type.InterfaceType fields possibleTypes ->
-            Graphql.Generator.Interface.generate context (ClassCaseName.raw name) moduleName fields
-                |> Just
+                    Type.InterfaceType fields possibleTypes ->
+                        Graphql.Generator.Interface.generate context (ClassCaseName.raw name) moduleName fields
+                            |> Result.toMaybe
 
-        Type.UnionType possibleTypes ->
-            Graphql.Generator.Union.generate context name moduleName possibleTypes
-                |> Just
+                    Type.UnionType possibleTypes ->
+                        Graphql.Generator.Union.generate context name moduleName possibleTypes
+                            |> Result.toMaybe
 
-        Type.InputObjectType fields ->
-            Nothing
-    )
-        |> Maybe.map (\fileContents -> ( moduleName, fileContents ))
+                    Type.InputObjectType fields ->
+                        Nothing
+                )
+                    |> Maybe.map
+                        (\fileContents ->
+                            ( moduleName, fileContents )
+                        )
+            )
