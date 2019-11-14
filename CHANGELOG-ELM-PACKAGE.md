@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.4.0] - 2019-10-14
+
+### Added
+
+- `Graphql.Http.withOperationName` allows you to (optionally) add
+    operation names to your GraphQL queries (thank you @asterite for your PR!
+    https://github.com/dillonkearns/elm-graphql/pull/195)
+
 ## [4.3.1] - 2019-06-30
 
 ### Fixed
