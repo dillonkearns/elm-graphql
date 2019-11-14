@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Tree exposing (abbreviatedOid, commitResourcePath, commitUrl, entries, id, oid, repository)
+module Github.Object.Tree exposing (..)
 
 import Github.InputObject
 import Github.Interface

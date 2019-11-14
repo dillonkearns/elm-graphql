@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.ReactionContent exposing (ReactionContent(..), decoder, fromString, list, toString)
+module Github.Enum.ReactionContent exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

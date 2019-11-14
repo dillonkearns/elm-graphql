@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.RepositoryNode exposing (Fragments, fragments, maybeFragments, repository)
+module Github.Interface.RepositoryNode exposing (..)
 
 import Github.InputObject
 import Github.Interface

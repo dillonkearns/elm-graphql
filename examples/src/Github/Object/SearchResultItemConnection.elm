@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.SearchResultItemConnection exposing (codeCount, edges, issueCount, nodes, pageInfo, repositoryCount, userCount, wikiCount)
+module Github.Object.SearchResultItemConnection exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PullRequestReviewThread exposing (CommentsOptionalArguments, comments, id, pullRequest, repository)
+module Github.Object.PullRequestReviewThread exposing (..)
 
 import Github.InputObject
 import Github.Interface

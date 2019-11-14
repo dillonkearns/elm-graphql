@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Interface.Character exposing (Fragments, appearsIn, avatarUrl, fragments, friends, id, maybeFragments, name)
+module Swapi.Interface.Character exposing (..)
 
 import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

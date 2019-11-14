@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.GistPrivacy exposing (GistPrivacy(..), decoder, fromString, list, toString)
+module Github.Enum.GistPrivacy exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

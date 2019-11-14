@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.GitActor exposing (AvatarUrlOptionalArguments, avatarUrl, date, email, name, user)
+module Github.Object.GitActor exposing (..)
 
 import Github.InputObject
 import Github.Interface

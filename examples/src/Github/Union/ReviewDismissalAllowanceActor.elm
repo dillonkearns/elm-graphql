@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.ReviewDismissalAllowanceActor exposing (Fragments, fragments, maybeFragments)
+module Github.Union.ReviewDismissalAllowanceActor exposing (..)
 
 import Github.InputObject
 import Github.Interface

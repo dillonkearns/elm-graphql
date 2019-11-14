@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.CodeOfConduct exposing (body, key, name, url)
+module Github.Object.CodeOfConduct exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MarketplaceCategory exposing (description, howItWorks, name, primaryListingCount, resourcePath, secondaryListingCount, slug, url)
+module Github.Object.MarketplaceCategory exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ExternalIdentity exposing (guid, id, organizationInvitation, samlIdentity, scimIdentity, user)
+module Github.Object.ExternalIdentity exposing (..)
 
 import Github.InputObject
 import Github.Interface

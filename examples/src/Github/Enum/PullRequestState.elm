@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.PullRequestState exposing (PullRequestState(..), decoder, fromString, list, toString)
+module Github.Enum.PullRequestState exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

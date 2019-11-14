@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.VerifyScalarCodecs exposing (verify)
+module Swapi.VerifyScalarCodecs exposing (..)
 
 {-
    This file is intended to be used to ensure that custom scalar decoder

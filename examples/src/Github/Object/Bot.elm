@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Bot exposing (AvatarUrlOptionalArguments, avatarUrl, createdAt, databaseId, id, login, resourcePath, updatedAt, url)
+module Github.Object.Bot exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Query exposing (DroidRequiredArguments, GreetRequiredArguments, HeroOptionalArguments, HeroUnionOptionalArguments, HumanRequiredArguments, droid, forcedError, greet, hello, hero, heroUnion, human, now, today)
+module Swapi.Query exposing (..)
 
 import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

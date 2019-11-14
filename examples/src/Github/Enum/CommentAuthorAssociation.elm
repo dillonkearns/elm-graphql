@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.CommentAuthorAssociation exposing (CommentAuthorAssociation(..), decoder, fromString, list, toString)
+module Github.Enum.CommentAuthorAssociation exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

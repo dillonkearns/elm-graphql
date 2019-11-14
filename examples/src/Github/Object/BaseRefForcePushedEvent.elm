@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.BaseRefForcePushedEvent exposing (actor, afterCommit, beforeCommit, createdAt, id, pullRequest, ref)
+module Github.Object.BaseRefForcePushedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReviewRequest exposing (databaseId, id, pullRequest, requestedReviewer, reviewer)
+module Github.Object.ReviewRequest exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PullRequestReviewCommentConnection exposing (edges, nodes, pageInfo, totalCount)
+module Github.Object.PullRequestReviewCommentConnection exposing (..)
 
 import Github.InputObject
 import Github.Interface

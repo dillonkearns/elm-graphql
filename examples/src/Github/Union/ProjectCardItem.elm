@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Union.ProjectCardItem exposing (Fragments, fragments, maybeFragments)
+module Github.Union.ProjectCardItem exposing (..)
 
 import Github.InputObject
 import Github.Interface

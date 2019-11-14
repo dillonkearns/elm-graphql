@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ReferencedEvent exposing (actor, commit, commitRepository, createdAt, id, isCrossReference, isCrossRepository, isDirectReference, subject)
+module Github.Object.ReferencedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PullRequestEdge exposing (cursor, node)
+module Github.Object.PullRequestEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

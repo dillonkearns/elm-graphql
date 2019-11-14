@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MarketplaceListingEdge exposing (cursor, node)
+module Github.Object.MarketplaceListingEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

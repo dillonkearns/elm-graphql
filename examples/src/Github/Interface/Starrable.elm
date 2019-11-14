@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Starrable exposing (Fragments, StargazersOptionalArguments, fragments, id, maybeFragments, stargazers, viewerHasStarred)
+module Github.Interface.Starrable exposing (..)
 
 import Github.InputObject
 import Github.Interface

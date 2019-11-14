@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.GistComment exposing (UserContentEditsOptionalArguments, author, authorAssociation, body, bodyHTML, createdAt, createdViaEmail, databaseId, editor, gist, id, lastEditedAt, publishedAt, updatedAt, userContentEdits, viewerCanDelete, viewerCanUpdate, viewerCannotUpdateReasons, viewerDidAuthor)
+module Github.Object.GistComment exposing (..)
 
 import Github.Enum.CommentAuthorAssociation
 import Github.Enum.CommentCannotUpdateReason

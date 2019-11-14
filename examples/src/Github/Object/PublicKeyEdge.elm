@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PublicKeyEdge exposing (cursor, node)
+module Github.Object.PublicKeyEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

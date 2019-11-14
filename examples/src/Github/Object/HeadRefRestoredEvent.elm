@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.HeadRefRestoredEvent exposing (actor, createdAt, id, pullRequest)
+module Github.Object.HeadRefRestoredEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

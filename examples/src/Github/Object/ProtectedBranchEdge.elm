@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ProtectedBranchEdge exposing (cursor, node)
+module Github.Object.ProtectedBranchEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

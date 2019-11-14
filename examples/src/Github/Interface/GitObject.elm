@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.GitObject exposing (Fragments, abbreviatedOid, commitResourcePath, commitUrl, fragments, id, maybeFragments, oid, repository)
+module Github.Interface.GitObject exposing (..)
 
 import Github.InputObject
 import Github.Interface

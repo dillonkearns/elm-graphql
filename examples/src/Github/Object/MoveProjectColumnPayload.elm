@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MoveProjectColumnPayload exposing (clientMutationId, columnEdge)
+module Github.Object.MoveProjectColumnPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

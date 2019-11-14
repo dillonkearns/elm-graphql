@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MentionedEvent exposing (actor, createdAt, databaseId, id)
+module Github.Object.MentionedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

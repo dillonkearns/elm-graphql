@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.AddCommentPayload exposing (clientMutationId, commentEdge, subject, timelineEdge)
+module Github.Object.AddCommentPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

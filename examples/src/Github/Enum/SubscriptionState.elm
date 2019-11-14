@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.SubscriptionState exposing (SubscriptionState(..), decoder, fromString, list, toString)
+module Github.Enum.SubscriptionState exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.LabeledEvent exposing (actor, createdAt, id, label, labelable)
+module Github.Object.LabeledEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

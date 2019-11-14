@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RateLimit exposing (cost, limit, nodeCount, remaining, resetAt)
+module Github.Object.RateLimit exposing (..)
 
 import Github.InputObject
 import Github.Interface

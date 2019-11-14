@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PullRequestCommit exposing (commit, id, pullRequest, resourcePath, url)
+module Github.Object.PullRequestCommit exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PublicKey exposing (id, key)
+module Github.Object.PublicKey exposing (..)
 
 import Github.InputObject
 import Github.Interface

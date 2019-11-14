@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.StatusContext exposing (commit, context, createdAt, creator, description, id, state, targetUrl)
+module Github.Object.StatusContext exposing (..)
 
 import Github.Enum.StatusState
 import Github.InputObject

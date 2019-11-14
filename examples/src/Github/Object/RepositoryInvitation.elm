@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryInvitation exposing (id, invitee, inviter, permission, repository)
+module Github.Object.RepositoryInvitation exposing (..)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject

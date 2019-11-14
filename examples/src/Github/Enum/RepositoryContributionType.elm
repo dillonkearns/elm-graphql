@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.RepositoryContributionType exposing (RepositoryContributionType(..), decoder, fromString, list, toString)
+module Github.Enum.RepositoryContributionType exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

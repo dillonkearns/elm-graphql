@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Reaction exposing (content, createdAt, databaseId, id, reactable, user)
+module Github.Object.Reaction exposing (..)
 
 import Github.Enum.ReactionContent
 import Github.InputObject

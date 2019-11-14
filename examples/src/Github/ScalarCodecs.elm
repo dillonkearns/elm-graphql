@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.ScalarCodecs exposing (Date, DateTime, GitObjectID, GitSSHRemote, GitTimestamp, Html, Id, Uri, X509Certificate, codecs)
+module Github.ScalarCodecs exposing (..)
 
 import Github.Scalar exposing (defaultCodecs)
 import Json.Decode as Decode exposing (Decoder)

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.IssueCommentEdge exposing (cursor, node)
+module Github.Object.IssueCommentEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

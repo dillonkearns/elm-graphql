@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.User exposing (AvatarUrlOptionalArguments, CommitCommentsOptionalArguments, ContributedRepositoriesOptionalArguments, FollowersOptionalArguments, FollowingOptionalArguments, GistCommentsOptionalArguments, GistRequiredArguments, GistsOptionalArguments, IssueCommentsOptionalArguments, IssuesOptionalArguments, OrganizationRequiredArguments, OrganizationsOptionalArguments, PinnedRepositoriesOptionalArguments, PublicKeysOptionalArguments, PullRequestsOptionalArguments, RepositoriesContributedToOptionalArguments, RepositoriesOptionalArguments, RepositoryRequiredArguments, StarredRepositoriesOptionalArguments, WatchingOptionalArguments, avatarUrl, bio, bioHTML, commitComments, company, companyHTML, contributedRepositories, createdAt, databaseId, email, followers, following, gist, gistComments, gists, id, isBountyHunter, isCampusExpert, isDeveloperProgramMember, isEmployee, isHireable, isSiteAdmin, isViewer, issueComments, issues, location, login, name, organization, organizations, pinnedRepositories, publicKeys, pullRequests, repositories, repositoriesContributedTo, repository, resourcePath, starredRepositories, updatedAt, url, viewerCanFollow, viewerIsFollowing, watching, websiteUrl)
+module Github.Object.User exposing (..)
 
 import Github.Enum.GistPrivacy
 import Github.Enum.IssueState

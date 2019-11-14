@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TeamMemberEdge exposing (cursor, memberAccessResourcePath, memberAccessUrl, node, role)
+module Github.Object.TeamMemberEdge exposing (..)
 
 import Github.Enum.TeamMemberRole
 import Github.InputObject

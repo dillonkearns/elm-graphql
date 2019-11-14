@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TextMatch exposing (fragment, highlights, property)
+module Github.Object.TextMatch exposing (..)
 
 import Github.InputObject
 import Github.Interface

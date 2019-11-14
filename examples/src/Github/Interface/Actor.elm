@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.Actor exposing (AvatarUrlOptionalArguments, Fragments, avatarUrl, fragments, login, maybeFragments, resourcePath, url)
+module Github.Interface.Actor exposing (..)
 
 import Github.InputObject
 import Github.Interface

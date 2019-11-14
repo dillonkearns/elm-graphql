@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.LockLockablePayload exposing (clientMutationId, lockedRecord)
+module Github.Object.LockLockablePayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

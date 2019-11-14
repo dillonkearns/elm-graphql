@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Tag exposing (abbreviatedOid, commitResourcePath, commitUrl, id, message, name, oid, repository, tagger, target)
+module Github.Object.Tag exposing (..)
 
 import Github.InputObject
 import Github.Interface

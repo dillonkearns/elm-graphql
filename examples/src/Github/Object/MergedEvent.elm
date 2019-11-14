@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MergedEvent exposing (actor, commit, createdAt, id, mergeRef, mergeRefName, pullRequest, resourcePath, url)
+module Github.Object.MergedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

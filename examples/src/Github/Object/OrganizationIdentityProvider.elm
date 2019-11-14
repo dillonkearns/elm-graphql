@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.OrganizationIdentityProvider exposing (ExternalIdentitiesOptionalArguments, digestMethod, externalIdentities, id, idpCertificate, issuer, organization, signatureMethod, ssoUrl)
+module Github.Object.OrganizationIdentityProvider exposing (..)
 
 import Github.InputObject
 import Github.Interface

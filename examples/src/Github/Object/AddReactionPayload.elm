@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.AddReactionPayload exposing (clientMutationId, reaction, subject)
+module Github.Object.AddReactionPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

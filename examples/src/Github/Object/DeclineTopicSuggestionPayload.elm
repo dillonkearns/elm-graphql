@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DeclineTopicSuggestionPayload exposing (clientMutationId, topic)
+module Github.Object.DeclineTopicSuggestionPayload exposing (..)
 
 import Github.InputObject
 import Github.Interface

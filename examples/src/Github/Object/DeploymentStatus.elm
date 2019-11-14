@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.DeploymentStatus exposing (createdAt, creator, deployment, description, environmentUrl, id, logUrl, state, updatedAt)
+module Github.Object.DeploymentStatus exposing (..)
 
 import Github.Enum.DeploymentStatusState
 import Github.InputObject

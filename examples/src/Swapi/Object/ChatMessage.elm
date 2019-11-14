@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Swapi.Object.ChatMessage exposing (character, phrase)
+module Swapi.Object.ChatMessage exposing (..)
 
 import CustomScalarCodecs
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)

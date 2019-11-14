@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.TreeEntry exposing (mode, name, object, oid, repository, type_)
+module Github.Object.TreeEntry exposing (..)
 
 import Github.InputObject
 import Github.Interface

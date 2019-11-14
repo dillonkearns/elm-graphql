@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.StarOrderField exposing (StarOrderField(..), decoder, fromString, list, toString)
+module Github.Enum.StarOrderField exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

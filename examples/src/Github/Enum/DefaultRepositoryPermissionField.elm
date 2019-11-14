@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Enum.DefaultRepositoryPermissionField exposing (DefaultRepositoryPermissionField(..), decoder, fromString, list, toString)
+module Github.Enum.DefaultRepositoryPermissionField exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 

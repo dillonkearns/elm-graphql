@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RepositoryCollaboratorEdge exposing (cursor, node, permission)
+module Github.Object.RepositoryCollaboratorEdge exposing (..)
 
 import Github.Enum.RepositoryPermission
 import Github.InputObject

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.Gist exposing (CommentsOptionalArguments, StargazersOptionalArguments, comments, createdAt, description, id, isPublic, name, owner, pushedAt, stargazers, updatedAt, viewerHasStarred)
+module Github.Object.Gist exposing (..)
 
 import Github.InputObject
 import Github.Interface

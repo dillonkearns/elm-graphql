@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ProjectCardEdge exposing (cursor, node)
+module Github.Object.ProjectCardEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

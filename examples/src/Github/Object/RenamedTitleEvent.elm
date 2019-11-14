@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.RenamedTitleEvent exposing (actor, createdAt, currentTitle, id, previousTitle, subject)
+module Github.Object.RenamedTitleEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

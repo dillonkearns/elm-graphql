@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Interface.ProjectOwner exposing (Fragments, ProjectRequiredArguments, ProjectsOptionalArguments, fragments, id, maybeFragments, project, projects, projectsResourcePath, projectsUrl, viewerCanCreateProjects)
+module Github.Interface.ProjectOwner exposing (..)
 
 import Github.Enum.ProjectState
 import Github.InputObject

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.SubscribedEvent exposing (actor, createdAt, id, subscribable)
+module Github.Object.SubscribedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

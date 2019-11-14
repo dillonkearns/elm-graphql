@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ExternalIdentitySamlAttributes exposing (nameId)
+module Github.Object.ExternalIdentitySamlAttributes exposing (..)
 
 import Github.InputObject
 import Github.Interface

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.ClosedEvent exposing (actor, closable, closer, commit, createdAt, id)
+module Github.Object.ClosedEvent exposing (..)
 
 import Github.InputObject
 import Github.Interface

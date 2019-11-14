@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.PushAllowanceEdge exposing (cursor, node)
+module Github.Object.PushAllowanceEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface

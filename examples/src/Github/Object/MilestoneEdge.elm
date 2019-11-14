@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Github.Object.MilestoneEdge exposing (cursor, node)
+module Github.Object.MilestoneEdge exposing (..)
 
 import Github.InputObject
 import Github.Interface
