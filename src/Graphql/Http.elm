@@ -2,7 +2,7 @@ module Graphql.Http exposing
     ( Request, HttpError(..), Error, RawError(..)
     , queryRequest, mutationRequest, queryRequestWithHttpGet
     , QueryRequestMethod(..)
-    , withHeader, withTimeout, withCredentials, withQueryParams
+    , withHeader, withTimeout, withCredentials, withQueryParams, withOperationName
     , send, sendWithTracker, toTask
     , mapError, discardParsedErrorData, withSimpleHttpError
     , parseableErrorAsSuccess
@@ -28,7 +28,7 @@ The builder syntax is inspired by Luke Westby's
 
 ## Configure `Request` Options
 
-@docs withHeader, withTimeout, withCredentials, withQueryParams
+@docs withHeader, withTimeout, withCredentials, withQueryParams, withOperationName
 
 
 ## Perform `Request`

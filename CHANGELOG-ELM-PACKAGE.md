@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.5.0] - 2019-12-03
+
+### Fixed
+
+- Expose `Graphql.Http.withOperationName` function (which was mistakenly left out last release).
+
 ## [4.4.0] - 2019-10-14
 
 ### Added
