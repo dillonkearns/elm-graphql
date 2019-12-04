@@ -12,7 +12,7 @@ env:
 
 before_install:
   - npm i -g npm@lts
-  - npm i -g elm@0.19.0-no-deps
+  - npm i -g elm@0.19.1
   - npm i -g npm@6.4.1
 
 install:
