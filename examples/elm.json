@@ -5,7 +5,7 @@
         "src",
         "src/complex"
     ],
-    "elm-version": "0.19.0",
+    "elm-version": "0.19.1",
     "dependencies": {
         "direct": {
             "Skinney/murmur3": "2.0.8",
@@ -19,7 +19,7 @@
             "elm/url": "1.0.0",
             "elm-community/list-extra": "8.0.0",
             "krisajenkins/remotedata": "6.0.1",
-            "lukewestby/elm-string-interpolate": "1.0.3",
+            "lukewestby/elm-string-interpolate": "1.0.4",
             "mdgriffith/elm-ui": "1.1.0",
             "rtfeldman/elm-iso8601-date-strings": "1.1.2",
             "ryannhg/date-format": "2.1.0"
