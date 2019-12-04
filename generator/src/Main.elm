@@ -1,4 +1,4 @@
-port module Main exposing (main)
+module Main exposing (main)
 
 import Cli.Option as Option
 import Cli.OptionsParser as OptionsParser exposing (OptionsParser, with)
