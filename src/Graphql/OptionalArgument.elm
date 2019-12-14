@@ -1,5 +1,6 @@
 module Graphql.OptionalArgument exposing
     ( OptionalArgument(..)
+    , fromResult
     , fromMaybe
     , fromMaybeWithNull
     , map
@@ -8,6 +9,7 @@ module Graphql.OptionalArgument exposing
 {-|
 
 @docs OptionalArgument
+@docs fromResult
 @docs fromMaybe
 @docs fromMaybeWithNull
 @docs map
@@ -67,6 +69,23 @@ fromMaybe maybeValue =
             Present value
 
         Nothing ->
+            Absent
+
+
+{-| Convert a `Result` to an OptionalArgument.
+
+    fromResult (Ok a) == Present a
+
+    FromResult (Err _) == Absent
+
+-}
+fromResult : Result error value -> OptionalArgument value
+fromResult result =
+    case result of
+        Ok value ->
+            Present value
+
+        Err _ ->
             Absent
 
 
