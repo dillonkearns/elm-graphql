@@ -30,7 +30,7 @@
     "@types/fs-extra": "^7.0.0",
     "@types/glob": "^7.1.1",
     "@types/node": "^12.0.2",
-    "@types/request": "^2.48.1",
+    "@types/request": "^2.48.3",
     "elm": "latest-0.19.1",
     "elm-analyse": "^0.16.4",
     "elm-format": "^0.8.1",
