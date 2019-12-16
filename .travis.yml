@@ -8,11 +8,11 @@ os:
 
 env:
   matrix:
-    - ELM_VERSION=0.19.0
+    - ELM_VERSION=0.19.1
 
 before_install:
   - npm i -g npm@lts
-  - npm i -g elm@0.19.0-no-deps
+  - npm i -g elm@latest-0.19.1
   - npm i -g npm@6.4.1
 
 install:
@@ -22,7 +22,7 @@ script:
   - echo '$TRAVIS_TAG is ' $TRAVIS_TAG
   - npm test
   - ./bin/approve
-  - cd examples/src/subscription/ && npm ci && npm run build && cd ../../..
+  - cd examples/subscription/ && npm ci && npm run build && cd ../..
 
 deploy:
   - provider: npm
@@ -35,6 +35,6 @@ deploy:
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
-    local_dir: examples/src/subscription/dist
+    local_dir: examples/subscription/dist
     on:
       branch: master

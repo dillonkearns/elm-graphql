@@ -11,7 +11,8 @@ import * as childProcess from "child_process";
 import {
   removeGenerated,
   isGenerated,
-  warnAndExitIfContainsNonGenerated
+  warnAndExitIfContainsNonGenerated,
+  generateOrExitIntrospectionFileFromSchema
 } from "./cli/generated-code-handler";
 const npmPackageVersion = require("../../package.json").version;
 const elmPackageVersion = require("../../elm.json").version;
@@ -40,6 +41,30 @@ app.ports.printAndExitSuccess.subscribe((message: string) => {
   console.log(message);
   process.exit(0);
 });
+
+app.ports.schemaFromFile.subscribe(
+  ({
+    schemaFilePath,
+    outputPath,
+    baseModule,
+    customDecodersModule
+  }: {
+    schemaFilePath: string;
+    outputPath: string;
+    baseModule: string[];
+    customDecodersModule: string | null;
+  }) => {
+    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+    const introspectionFileJson = generateOrExitIntrospectionFileFromSchema(schemaFilePath);
+
+    onDataAvailable(
+      introspectionFileJson,
+      outputPath,
+      baseModule,
+      customDecodersModule
+    );
+  }
+);
 
 app.ports.introspectSchemaFromFile.subscribe(
   ({

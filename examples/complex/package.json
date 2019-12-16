@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "elm-live ./Main.elm --open"
   },
   "keywords": [],
   "author": "",

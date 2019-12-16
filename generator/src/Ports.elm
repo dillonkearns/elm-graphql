@@ -6,6 +6,7 @@ port module Ports exposing
     , print
     , printAndExitFailure
     , printAndExitSuccess
+    , schemaFromFile
     )
 
 import Json.Encode
@@ -18,6 +19,15 @@ port printAndExitFailure : String -> Cmd msg
 
 
 port printAndExitSuccess : String -> Cmd msg
+
+
+port schemaFromFile :
+    { schemaFilePath : String
+    , outputPath : String
+    , baseModule : List String
+    , customDecodersModule : Maybe String
+    }
+    -> Cmd msg
 
 
 port introspectSchemaFromFile :

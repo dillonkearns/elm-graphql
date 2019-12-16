@@ -1,7 +1,7 @@
 module Helpers.Main exposing (Program, document)
 
 import Browser
-import DateFormat exposing (text)
+import DateFormat
 import Html exposing (Html, a, div, h1, input, label, p, pre, text)
 import Html.Attributes exposing (href, type_)
 import Html.Events exposing (onClick)

@@ -1,4 +1,4 @@
-port module Main exposing (main)
+module Main exposing (main)
 
 import Cli.Option as Option
 import Cli.OptionsParser as OptionsParser exposing (OptionsParser, with)
@@ -39,7 +39,8 @@ run options introspectionQueryJson =
 
 type CliOptions
     = FromUrl UrlArgs
-    | FromFile FileArgs
+    | FromIntrospectionFile FileArgs
+    | FromSchemaFile FileArgs
 
 
 type alias UrlArgs =
@@ -103,7 +104,15 @@ program =
                 |> with baseOption
                 |> with outputPathOption
                 |> with scalarCodecsOption
-                |> OptionsParser.map FromFile
+                |> OptionsParser.map FromIntrospectionFile
+            )
+        |> Program.add
+            (OptionsParser.build FileArgs
+                |> with (Option.requiredKeywordArg "schema-file")
+                |> with baseOption
+                |> with outputPathOption
+                |> with scalarCodecsOption
+                |> OptionsParser.map FromSchemaFile
             )
 
 
@@ -152,10 +161,20 @@ init flags msg =
                 }
             )
 
-        FromFile options ->
+        FromIntrospectionFile options ->
             ( ()
             , Ports.introspectSchemaFromFile
                 { introspectionFilePath = options.file
+                , outputPath = options.outputPath
+                , baseModule = options.base
+                , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                }
+            )
+
+        FromSchemaFile options ->
+            ( ()
+            , Ports.schemaFromFile
+                { schemaFilePath = options.file
                 , outputPath = options.outputPath
                 , baseModule = options.base
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
@@ -173,7 +192,10 @@ update cliOptions msg model =
                         FromUrl options ->
                             ( options.base, options.scalarCodecsModule )
 
-                        FromFile options ->
+                        FromIntrospectionFile options ->
+                            ( options.base, options.scalarCodecsModule )
+
+                        FromSchemaFile options ->
                             ( options.base, options.scalarCodecsModule )
             in
             ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } introspectionJson )

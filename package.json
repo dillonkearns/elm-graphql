@@ -6,7 +6,7 @@
     "bin/elm-graphql"
   ],
   "scripts": {
-    "build": "parcel build generator/src/elm-graphql.ts --out-file bundle.js --target node --bundle-node-modules --no-source-maps",
+    "build": "parcel build generator/src/elm-graphql.ts --out-file bundle.js --target node --bundle-node-modules --no-source-maps --no-minify",
     "elm-nuke": "rm -rf elm-stuff && elm package install -y && cd tests && rm -rf elm-stuff && elm package install -y && cd ..",
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "elm-test && cd generator && elm-test",
@@ -14,7 +14,7 @@
     "gen:starwars": "npm run build && cd examples && ../bin/elm-graphql --scalar-codecs CustomScalarCodecs https://elm-graphql.herokuapp.com --base Swapi --output src",
     "gen:normalize_test": "npm run build && cd ete_tests && ../bin/elm-graphql http://localhost:4000 --base Normalize && cd -",
     "gen:github": "npm run build && && cd examples && ../bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output src",
-    "approve-compilation": "cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/complex/Main.elm src/SimpleMutation.elm",
+    "approve-compilation": "cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/SimpleMutation.elm && cd complex && elm make --output /dev/null Main.elm",
     "reproduce-error": "node reproducing-issues/sdl-to-json.js > reproducing-issues/schema.json && npm run build && cd reproducing-issues && ../bin/elm-graphql --introspection-file schema.json --output gen",
     "elm-analyse": "elm-analyse --serve",
     "elm-analyse-examples": "cd examples && elm-analyse"
@@ -31,13 +31,13 @@
     "@types/glob": "^7.1.1",
     "@types/node": "^12.0.2",
     "@types/request": "^2.48.1",
-    "elm": "^0.19.0-no-deps",
+    "elm": "latest-0.19.1",
     "elm-analyse": "^0.16.4",
     "elm-format": "^0.8.1",
     "elm-hot": "^1.0.1",
     "elm-hot-loader": "0.5.4",
     "elm-live": "3.4.0",
-    "elm-test": "^0.19.0-rev6",
+    "elm-test": "latest-0.19.1",
     "fs-extra": "^8.0.1",
     "graphql": "^14.3.1",
     "node-elm-compiler": "^5.0.3",
