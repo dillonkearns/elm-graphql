@@ -22,7 +22,7 @@ script:
   - echo '$TRAVIS_TAG is ' $TRAVIS_TAG
   - npm test
   - ./bin/approve
-  - cd examples/src/subscription/ && npm ci && npm run build && cd ../../..
+  - cd examples/subscription/ && npm ci && npm run build && cd ../..
 
 deploy:
   - provider: npm
@@ -35,6 +35,6 @@ deploy:
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
-    local_dir: examples/src/subscription/dist
+    local_dir: examples/subscription/dist
     on:
       branch: master
