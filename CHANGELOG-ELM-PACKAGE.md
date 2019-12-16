@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+- Switch `discardParsedErrorData` from returning a `()` to an unconstrained `a`.
+    This makes it a little more flexible for users in terms of the types
+    it allows, without changing the behavior. See [#245](https://github.com/dillonkearns/elm-graphql/pull/245)
+     (thank you [@Jayshua](https://github.com/Jayshua)!).
+
 ## [4.5.0] - 2019-12-03
 
 ### Fixed
