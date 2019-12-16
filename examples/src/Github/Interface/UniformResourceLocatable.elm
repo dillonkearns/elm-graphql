@@ -42,7 +42,7 @@ fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable
 fragments selections =
-    Object.exhuastiveFragmentSelection
+    Object.exhaustiveFragmentSelection
         [ Object.buildFragment "Bot" selections.onBot
         , Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent
         , Object.buildFragment "Issue" selections.onIssue
@@ -59,7 +59,7 @@ fragments selections =
         ]
 
 
-{-| Can be used to create a non-exhuastive set of fragments by using the record
+{-| Can be used to create a non-exhaustive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
 maybeFragments : Fragments (Maybe decodesTo)

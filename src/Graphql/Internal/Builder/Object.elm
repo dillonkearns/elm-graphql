@@ -1,11 +1,11 @@
-module Graphql.Internal.Builder.Object exposing (scalarDecoder, exhuastiveFragmentSelection, buildFragment, selectionForField, selectionForCompositeField)
+module Graphql.Internal.Builder.Object exposing (scalarDecoder, exhaustiveFragmentSelection, buildFragment, selectionForField, selectionForCompositeField)
 
 {-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
 
-@docs scalarDecoder, exhuastiveFragmentSelection, buildFragment, selectionForField, selectionForCompositeField
+@docs scalarDecoder, exhaustiveFragmentSelection, buildFragment, selectionForField, selectionForCompositeField
 
 -}
 
@@ -87,10 +87,10 @@ buildFragment fragmentTypeName (SelectionSet fields decoder) =
     FragmentSelectionSet fragmentTypeName fields decoder
 
 
-{-| Used to create the `selection` functions in auto-generated code for exhuastive fragments.
+{-| Used to create the `selection` functions in auto-generated code for exhaustive fragments.
 -}
-exhuastiveFragmentSelection : List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet decodesTo typeLock
-exhuastiveFragmentSelection typeSpecificSelections =
+exhaustiveFragmentSelection : List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet decodesTo typeLock
+exhaustiveFragmentSelection typeSpecificSelections =
     let
         selections =
             typeSpecificSelections

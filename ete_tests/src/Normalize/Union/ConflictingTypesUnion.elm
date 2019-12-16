@@ -33,7 +33,7 @@ fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Normalize.Union.ConflictingTypesUnion
 fragments selections =
-    Object.exhuastiveFragmentSelection
+    Object.exhaustiveFragmentSelection
         [ Object.buildFragment "Dog" selections.onDog
         , Object.buildFragment "Cat" selections.onCat
         , Object.buildFragment "MaybeId" selections.onMaybeId
@@ -41,7 +41,7 @@ fragments selections =
         ]
 
 
-{-| Can be used to create a non-exhuastive set of fragments by using the record
+{-| Can be used to create a non-exhaustive set of fragments by using the record
 update syntax to add `SelectionSet`s for the types you want to handle.
 -}
 maybeFragments : Fragments (Maybe decodesTo)
