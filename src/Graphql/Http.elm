@@ -188,8 +188,8 @@ See <https://graphql.org/learn/queries/#operation-name>
             |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
 
 -}
-withOperationName : Request decodesTo -> String -> Request decodesTo
-withOperationName (Request request) operationName =
+withOperationName : String -> Request decodesTo -> Request decodesTo
+withOperationName operationName (Request request) =
     Request { request | operationName = Just operationName }
 
 
@@ -358,7 +358,6 @@ discardParsedErrorData result =
 
         Err (GraphqlError (GraphqlError.UnparsedData value) errorList) ->
             Err (GraphqlError (GraphqlError.UnparsedData value) errorList)
-
 
 
 {-| WARNING: When using this function you lose information. Make sure this is

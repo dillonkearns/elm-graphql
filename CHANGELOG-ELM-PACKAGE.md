@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- Fix order of arguments for Http pipeline function, `withOperationName` 
+    (fixes [#254](https://github.com/dillonkearns/elm-graphql/issues/254)).
 - Switch `discardParsedErrorData` from returning a `()` to an unconstrained `a`.
     This makes it a little more flexible for users in terms of the types
     it allows, without changing the behavior. See [#245](https://github.com/dillonkearns/elm-graphql/pull/245)
