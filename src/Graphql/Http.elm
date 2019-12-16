@@ -344,11 +344,21 @@ Or if you are using the RemoteData package:
                 )
 
 -}
-discardParsedErrorData : Result (Error decodesTo) decodesTo -> Result (Error ()) decodesTo
+discardParsedErrorData : Result (Error decodesTo) decodesTo -> Result (Error a) decodesTo
 discardParsedErrorData result =
-    Result.mapError
-        (mapError (\_ -> ()))
-        result
+    case result of
+        Ok data ->
+            Ok data
+
+        Err (HttpError httpError) ->
+            Err (HttpError httpError)
+
+        Err (GraphqlError (GraphqlError.ParsedData parsed) errorList) ->
+            Err (GraphqlError (GraphqlError.UnparsedData Json.Encode.null) errorList)
+
+        Err (GraphqlError (GraphqlError.UnparsedData value) errorList) ->
+            Err (GraphqlError (GraphqlError.UnparsedData value) errorList)
+
 
 
 {-| WARNING: When using this function you lose information. Make sure this is
