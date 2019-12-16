@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `--schema-file <schema-file>` option for CLI (thank you [jouderianjr](https://github.com/jouderianjr)!).
+  This allows you to directly point the CLI to a file with the GraphQL schema definition
+  language (SDL) format, and it will generate code based on that schema. See [#247](https://github.com/dillonkearns/elm-graphql/pull/247).
+
+### Changed
+
 - Switch `discardParsedErrorData` from returning a `()` to an unconstrained `a`.
     This makes it a little more flexible for users in terms of the types
     it allows, without changing the behavior. See [#245](https://github.com/dillonkearns/elm-graphql/pull/245)
