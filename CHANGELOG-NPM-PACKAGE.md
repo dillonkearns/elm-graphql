@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.0] - 2019-12-17
+
 ### Added
 - `--schema-file <schema-file>` option for CLI (thank you [jouderianjr](https://github.com/jouderianjr)!).
   This allows you to directly point the CLI to a file with the GraphQL schema definition
