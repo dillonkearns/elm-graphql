@@ -11,11 +11,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [5.0.0] - 2019-12-16
 
-### Added
-
-- `--schema-file <schema-file>` option for CLI (thank you [jouderianjr](https://github.com/jouderianjr)!).
-  This allows you to directly point the CLI to a file with the GraphQL schema definition
-  language (SDL) format, and it will generate code based on that schema. See [#247](https://github.com/dillonkearns/elm-graphql/pull/247).
 
 ### Changed
 
