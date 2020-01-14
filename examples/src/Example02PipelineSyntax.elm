@@ -1,4 +1,4 @@
-module Example01BasicQuery exposing (main)
+module Example02PipelineSyntax exposing (main)
 
 import CustomScalarCodecs
 import Graphql.Document as Document
