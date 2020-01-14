@@ -1,3 +1,5 @@
+console.warn = function() {};
+
 const { Elm } = require("./Main.elm");
 import * as fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
