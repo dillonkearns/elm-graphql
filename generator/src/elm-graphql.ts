@@ -1,3 +1,7 @@
+// Suppress elm warnings as we can't create production build with parcel using --no-minify
+const warnOriginal = console.warn;
+console.warn = function() {};
+
 const { Elm } = require("./Main.elm");
 import * as fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
@@ -32,6 +36,9 @@ function prependBasePath(
 }
 
 let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
+
+console.warn = warnOriginal;
+
 // app.ports.print.subscribe(console.log);
 app.ports.printAndExitFailure.subscribe((message: string) => {
   console.log(message);
