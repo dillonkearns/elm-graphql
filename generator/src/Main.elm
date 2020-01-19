@@ -50,7 +50,7 @@ type alias UrlArgs =
     , excludeDeprecated : Bool
     , headers : Dict.Dict String String
     , scalarCodecsModule : Maybe ModuleName
-    , compilerPath : String
+    , compilerPath : Maybe String
     }
 
 
@@ -59,7 +59,7 @@ type alias FileArgs =
     , base : List String
     , outputPath : String
     , scalarCodecsModule : Maybe ModuleName
-    , compilerPath : String
+    , compilerPath : Maybe String
     }
 
 
@@ -147,9 +147,9 @@ validateModuleName =
     Cli.Validate.regex "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
 
 
-compilerOption : Option.Option (Maybe String) String Option.BeginningOption
+compilerOption : Option.Option (Maybe String) (Maybe String) Option.BeginningOption
 compilerOption =
-    Option.optionalKeywordArg "compiler" |> Option.withDefault "elm"
+    Option.optionalKeywordArg "compiler"
 
 
 type alias Flags =

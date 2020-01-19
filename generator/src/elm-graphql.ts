@@ -61,7 +61,7 @@ app.ports.schemaFromFile.subscribe(
     outputPath: string;
     baseModule: string[];
     customDecodersModule: string | null;
-    compilerPath: string;
+    compilerPath: string | null;
   }) => {
     warnAndExitIfContainsNonGenerated({baseModule, outputPath});
     const introspectionFileJson = generateOrExitIntrospectionFileFromSchema(schemaFilePath);
@@ -88,7 +88,7 @@ app.ports.introspectSchemaFromFile.subscribe(
     outputPath: string;
     baseModule: string[];
     customDecodersModule: string | null;
-    compilerPath: string;
+    compilerPath: string | null;
   }) => {
     warnAndExitIfContainsNonGenerated({baseModule, outputPath});
     const introspectionFileJson = JSON.parse(
@@ -120,7 +120,7 @@ app.ports.introspectSchemaFromUrl.subscribe(
     baseModule: string[];
     headers: {};
     customDecodersModule: string | null;
-    compilerPath: string;
+    compilerPath: string | null;
   }) => {
     warnAndExitIfContainsNonGenerated({baseModule, outputPath});
 
@@ -155,7 +155,7 @@ function onDataAvailable(
   outputPath: string,
   baseModule: string[],
   customDecodersModule: string | null,
-  compilerPath: string,
+  compilerPath: string | null,
 ) {
   console.log("Generating files...");
   app.ports.generatedFiles.subscribe(async function (generatedFile: {
@@ -193,7 +193,7 @@ function verifyCustomCodecsFileIsValid(
   outputPath: string,
   baseModule: string[],
   customDecodersModule: string,
-  compilerPath: string,
+  compilerPath: string | null,
 ) {
   const verifyDecodersFile = path.join(
     outputPath,
@@ -201,7 +201,7 @@ function verifyCustomCodecsFileIsValid(
     "VerifyScalarCodecs.elm"
   );
 
-  if (compilerPath == 'elm') {
+  if (!compilerPath) {
     try {
       childProcess.execSync('elm --version');
     } catch (error) {
@@ -214,7 +214,7 @@ function verifyCustomCodecsFileIsValid(
     }
   } else {
     try {
-      childProcess.execSync(`${compilerPath} --version`)
+      childProcess.execSync(`${compilerPath} --version`);
     } catch (error) {
       console.error('The --compiler option must be given a path to an elm executable.');
 
@@ -222,8 +222,10 @@ function verifyCustomCodecsFileIsValid(
     }
   }
 
+  const customOrDefaultCompilerPath = compilerPath ? compilerPath : 'elm';
+
   try {
-    childProcess.execSync(`${compilerPath} make ${verifyDecodersFile} --output=/dev/null`, {
+    childProcess.execSync(`${customOrDefaultCompilerPath} make ${verifyDecodersFile} --output=/dev/null`, {
       stdio: "pipe"
     });
   } catch (error) {
