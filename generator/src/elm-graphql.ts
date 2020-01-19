@@ -1,14 +1,14 @@
 // Suppress elm warnings as we can't create production build with parcel using --no-minify
 const warnOriginal = console.warn;
-console.warn = function () {};
+console.warn = function() {};
 
-const {Elm} = require("./Main.elm");
+const { Elm } = require("./Main.elm");
 import * as fs from "fs-extra";
-import {GraphQLClient} from "graphql-request";
+import { GraphQLClient } from "graphql-request";
 import * as http from "http";
 import * as request from "request";
-import {applyElmFormat} from "./formatted-write";
-import {introspectionQuery} from "./introspection-query";
+import { applyElmFormat } from "./formatted-write";
+import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
 import * as childProcess from "child_process";
@@ -35,7 +35,7 @@ function prependBasePath(
   return path.join(outputPath, baseModule.join("/"), suffixPath);
 }
 
-let app = Elm.Main.init({flags: {argv: process.argv, versionMessage}});
+let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
 
 console.warn = warnOriginal;
 
@@ -55,7 +55,7 @@ app.ports.schemaFromFile.subscribe(
     outputPath,
     baseModule,
     customDecodersModule,
-    compilerPath,
+    compilerPath
   }: {
     schemaFilePath: string;
     outputPath: string;
@@ -63,7 +63,7 @@ app.ports.schemaFromFile.subscribe(
     customDecodersModule: string | null;
     compilerPath: string | null;
   }) => {
-    warnAndExitIfContainsNonGenerated({baseModule, outputPath});
+    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
     const introspectionFileJson = generateOrExitIntrospectionFileFromSchema(schemaFilePath);
 
     onDataAvailable(
@@ -90,7 +90,7 @@ app.ports.introspectSchemaFromFile.subscribe(
     customDecodersModule: string | null;
     compilerPath: string | null;
   }) => {
-    warnAndExitIfContainsNonGenerated({baseModule, outputPath});
+    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
     const introspectionFileJson = JSON.parse(
       fs.readFileSync(introspectionFilePath).toString()
     );
@@ -122,14 +122,14 @@ app.ports.introspectSchemaFromUrl.subscribe(
     customDecodersModule: string | null;
     compilerPath: string | null;
   }) => {
-    warnAndExitIfContainsNonGenerated({baseModule, outputPath});
+    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
 
     console.log("Fetching GraphQL schema...");
     new GraphQLClient(graphqlUrl, {
       mode: "cors",
       headers: headers
     })
-      .request(introspectionQuery, {includeDeprecated: !excludeDeprecated})
+      .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
       .then(data => {
         onDataAvailable(data, outputPath, baseModule, customDecodersModule, compilerPath);
       })
@@ -155,7 +155,7 @@ function onDataAvailable(
   outputPath: string,
   baseModule: string[],
   customDecodersModule: string | null,
-  compilerPath: string | null,
+  compilerPath: string | null
 ) {
   console.log("Generating files...");
   app.ports.generatedFiles.subscribe(async function (generatedFile: {
@@ -193,7 +193,7 @@ function verifyCustomCodecsFileIsValid(
   outputPath: string,
   baseModule: string[],
   customDecodersModule: string,
-  compilerPath: string | null,
+  compilerPath: string | null
 ) {
   const verifyDecodersFile = path.join(
     outputPath,
@@ -241,8 +241,8 @@ This is because either:
 
 1) This is the first time you've run this CLI with the \`--scalar-codecs\` option.
   In this case, get a valid file, you can start by copy-pasting \`${baseModule.join(
-      "."
-    )}.ScalarCodecs\`. Then change the module name to \`${customDecodersModule}\`
+    "."
+  )}.ScalarCodecs\`. Then change the module name to \`${customDecodersModule}\`
   and you have a valid starting point!
 2) You added or renamed a Custom Scalar in your GraphQL schema.
    To handle the new Custom Scalar, you can copy the relevant entries from \`${customDecodersModule}\`.
