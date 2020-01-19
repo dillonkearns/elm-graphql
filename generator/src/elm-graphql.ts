@@ -201,6 +201,27 @@ function verifyCustomCodecsFileIsValid(
     "VerifyScalarCodecs.elm"
   );
 
+  if (compilerPath == 'elm') {
+    try {
+      childProcess.execSync('elm --version');
+    } catch (error) {
+      console.error(
+        `Cannot find elm executable, make sure it is installed.
+(If elm is not on your path or is called something different, try using the --compiler flag.)`
+      );
+
+      process.exit(1);
+    }
+  } else {
+    try {
+      childProcess.execSync(`${compilerPath} --version`)
+    } catch (error) {
+      console.error('The --compiler option must be given a path to an elm executable.');
+
+      process.exit(1);
+    }
+  }
+
   try {
     childProcess.execSync(`${compilerPath} make ${verifyDecodersFile} --output=/dev/null`, {
       stdio: "pipe"
