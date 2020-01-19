@@ -1,14 +1,14 @@
 // Suppress elm warnings as we can't create production build with parcel using --no-minify
 const warnOriginal = console.warn;
-console.warn = function() {};
+console.warn = function () {};
 
-const { Elm } = require("./Main.elm");
+const {Elm} = require("./Main.elm");
 import * as fs from "fs-extra";
-import { GraphQLClient } from "graphql-request";
+import {GraphQLClient} from "graphql-request";
 import * as http from "http";
 import * as request from "request";
-import { applyElmFormat } from "./formatted-write";
-import { introspectionQuery } from "./introspection-query";
+import {applyElmFormat} from "./formatted-write";
+import {introspectionQuery} from "./introspection-query";
 import * as glob from "glob";
 import * as path from "path";
 import * as childProcess from "child_process";
@@ -35,7 +35,7 @@ function prependBasePath(
   return path.join(outputPath, baseModule.join("/"), suffixPath);
 }
 
-let app = Elm.Main.init({ flags: { argv: process.argv, versionMessage } });
+let app = Elm.Main.init({flags: {argv: process.argv, versionMessage}});
 
 console.warn = warnOriginal;
 
@@ -54,21 +54,24 @@ app.ports.schemaFromFile.subscribe(
     schemaFilePath,
     outputPath,
     baseModule,
-    customDecodersModule
+    customDecodersModule,
+    compilerPath,
   }: {
     schemaFilePath: string;
     outputPath: string;
     baseModule: string[];
     customDecodersModule: string | null;
+    compilerPath: string;
   }) => {
-    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+    warnAndExitIfContainsNonGenerated({baseModule, outputPath});
     const introspectionFileJson = generateOrExitIntrospectionFileFromSchema(schemaFilePath);
 
     onDataAvailable(
       introspectionFileJson,
       outputPath,
       baseModule,
-      customDecodersModule
+      customDecodersModule,
+      compilerPath
     );
   }
 );
@@ -78,14 +81,16 @@ app.ports.introspectSchemaFromFile.subscribe(
     introspectionFilePath,
     outputPath,
     baseModule,
-    customDecodersModule
+    customDecodersModule,
+    compilerPath
   }: {
     introspectionFilePath: string;
     outputPath: string;
     baseModule: string[];
     customDecodersModule: string | null;
+    compilerPath: string;
   }) => {
-    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+    warnAndExitIfContainsNonGenerated({baseModule, outputPath});
     const introspectionFileJson = JSON.parse(
       fs.readFileSync(introspectionFilePath).toString()
     );
@@ -93,7 +98,8 @@ app.ports.introspectSchemaFromFile.subscribe(
       introspectionFileJson.data || introspectionFileJson,
       outputPath,
       baseModule,
-      customDecodersModule
+      customDecodersModule,
+      compilerPath
     );
   }
 );
@@ -105,7 +111,8 @@ app.ports.introspectSchemaFromUrl.subscribe(
     outputPath,
     baseModule,
     headers,
-    customDecodersModule
+    customDecodersModule,
+    compilerPath
   }: {
     graphqlUrl: string;
     excludeDeprecated: boolean;
@@ -113,17 +120,18 @@ app.ports.introspectSchemaFromUrl.subscribe(
     baseModule: string[];
     headers: {};
     customDecodersModule: string | null;
+    compilerPath: string;
   }) => {
-    warnAndExitIfContainsNonGenerated({ baseModule, outputPath });
+    warnAndExitIfContainsNonGenerated({baseModule, outputPath});
 
     console.log("Fetching GraphQL schema...");
     new GraphQLClient(graphqlUrl, {
       mode: "cors",
       headers: headers
     })
-      .request(introspectionQuery, { includeDeprecated: !excludeDeprecated })
+      .request(introspectionQuery, {includeDeprecated: !excludeDeprecated})
       .then(data => {
-        onDataAvailable(data, outputPath, baseModule, customDecodersModule);
+        onDataAvailable(data, outputPath, baseModule, customDecodersModule, compilerPath);
       })
       .catch(err => {
         console.log(err.response || err);
@@ -146,10 +154,11 @@ function onDataAvailable(
   data: {},
   outputPath: string,
   baseModule: string[],
-  customDecodersModule: string | null
+  customDecodersModule: string | null,
+  compilerPath: string,
 ) {
   console.log("Generating files...");
-  app.ports.generatedFiles.subscribe(async function(generatedFile: {
+  app.ports.generatedFiles.subscribe(async function (generatedFile: {
     [s: string]: string;
   }) {
     removeGenerated(prependBasePath("/", baseModule, outputPath));
@@ -171,7 +180,8 @@ function onDataAvailable(
       verifyCustomCodecsFileIsValid(
         outputPath,
         baseModule,
-        customDecodersModule
+        customDecodersModule,
+        compilerPath
       );
     }
     console.log("Success!");
@@ -182,7 +192,8 @@ function onDataAvailable(
 function verifyCustomCodecsFileIsValid(
   outputPath: string,
   baseModule: string[],
-  customDecodersModule: string
+  customDecodersModule: string,
+  compilerPath: string,
 ) {
   const verifyDecodersFile = path.join(
     outputPath,
@@ -191,7 +202,7 @@ function verifyCustomCodecsFileIsValid(
   );
 
   try {
-    childProcess.execSync(`elm make ${verifyDecodersFile} --output=/dev/null`, {
+    childProcess.execSync(`${compilerPath} make ${verifyDecodersFile} --output=/dev/null`, {
       stdio: "pipe"
     });
   } catch (error) {
@@ -207,8 +218,8 @@ This is because either:
 
 1) This is the first time you've run this CLI with the \`--scalar-codecs\` option.
   In this case, get a valid file, you can start by copy-pasting \`${baseModule.join(
-    "."
-  )}.ScalarCodecs\`. Then change the module name to \`${customDecodersModule}\`
+      "."
+    )}.ScalarCodecs\`. Then change the module name to \`${customDecodersModule}\`
   and you have a valid starting point!
 2) You added or renamed a Custom Scalar in your GraphQL schema.
    To handle the new Custom Scalar, you can copy the relevant entries from \`${customDecodersModule}\`.

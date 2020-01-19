@@ -26,6 +26,7 @@ port schemaFromFile :
     , outputPath : String
     , baseModule : List String
     , customDecodersModule : Maybe String
+    , compilerPath : String
     }
     -> Cmd msg
 
@@ -35,6 +36,7 @@ port introspectSchemaFromFile :
     , outputPath : String
     , baseModule : List String
     , customDecodersModule : Maybe String
+    , compilerPath : String
     }
     -> Cmd msg
 
@@ -46,6 +48,7 @@ port introspectSchemaFromUrl :
     , outputPath : String
     , headers : Json.Encode.Value
     , customDecodersModule : Maybe String
+    , compilerPath : String
     }
     -> Cmd msg
 

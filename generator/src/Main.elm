@@ -168,6 +168,7 @@ init flags msg =
                 , baseModule = options.base
                 , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , compilerPath = options.compilerPath
                 }
             )
 
@@ -178,6 +179,7 @@ init flags msg =
                 , outputPath = options.outputPath
                 , baseModule = options.base
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , compilerPath = options.compilerPath
                 }
             )
 
@@ -188,6 +190,7 @@ init flags msg =
                 , outputPath = options.outputPath
                 , baseModule = options.base
                 , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , compilerPath = options.compilerPath
                 }
             )
 
