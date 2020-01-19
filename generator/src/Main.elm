@@ -50,6 +50,7 @@ type alias UrlArgs =
     , excludeDeprecated : Bool
     , headers : Dict.Dict String String
     , scalarCodecsModule : Maybe ModuleName
+    , compilerPath : String
     }
 
 
@@ -58,6 +59,7 @@ type alias FileArgs =
     , base : List String
     , outputPath : String
     , scalarCodecsModule : Maybe ModuleName
+    , compilerPath : String
     }
 
 
@@ -95,6 +97,7 @@ program =
                         |> Option.validateMap parseHeaders
                     )
                 |> with scalarCodecsOption
+                |> with compilerOption
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
             )
@@ -104,6 +107,7 @@ program =
                 |> with baseOption
                 |> with outputPathOption
                 |> with scalarCodecsOption
+                |> with compilerOption
                 |> OptionsParser.map FromIntrospectionFile
             )
         |> Program.add
@@ -112,6 +116,7 @@ program =
                 |> with baseOption
                 |> with outputPathOption
                 |> with scalarCodecsOption
+                |> with compilerOption
                 |> OptionsParser.map FromSchemaFile
             )
 
@@ -140,6 +145,11 @@ baseOption =
 validateModuleName : String -> Cli.Validate.ValidationResult
 validateModuleName =
     Cli.Validate.regex "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
+
+
+compilerOption : Option.Option (Maybe String) String Option.BeginningOption
+compilerOption =
+    Option.optionalKeywordArg "compiler" |> Option.withDefault "elm"
 
 
 type alias Flags =
