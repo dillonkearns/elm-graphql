@@ -49,7 +49,7 @@ query =
     Query.human { id = Id "1001" } humanSelection
 
 
-type alias Human =
+type alias AnotherHuman =
     { name : String
     , homePlanet : Maybe String
     }
@@ -57,7 +57,7 @@ type alias Human =
 
 humanSelection : SelectionSet Human StarWars.Object.Human
 humanSelection =
-    SelectionSet.map2 Human
+    SelectionSet.map2 AnotherHuman
         Human.name
         Human.homePlanet
 ```
