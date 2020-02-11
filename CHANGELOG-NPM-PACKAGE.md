@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.1] - 2020-02-10
+
 ### Fixed
 - Suppressed Elm's compiled in dev mode warning, see [#278](https://github.com/dillonkearns/elm-graphql/pull/278). Thank you [@jouderianjr](https://github.com/jouderianjr)!!!
 
