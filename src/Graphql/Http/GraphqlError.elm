@@ -19,7 +19,7 @@ constraint that the schema doesn't specify, or 2) when your generated code is
 out of date with the schema.
 
 See the
-[Errors section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Errors).
+[Errors section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Errors)
 for more details about GraphQL errors.
 
 -}
