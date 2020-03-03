@@ -1,6 +1,6 @@
 module Graphql.Internal.Builder.Object exposing (scalarDecoder, exhaustiveFragmentSelection, buildFragment, selectionForField, selectionForCompositeField)
 
-{-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
+{-| **WARNING** `Graphql.Internal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 Internal functions for use by auto-generated code from the `@dillonkearns/elm-graphql` CLI.
@@ -80,7 +80,7 @@ leaf details args =
     Graphql.RawField.Leaf details args
 
 
-{-| Used to create FragmentSelectionSets for type-specific fragmentsin auto-generated code.
+{-| Used to create FragmentSelectionSets for type-specific fragments in auto-generated code.
 -}
 buildFragment : String -> SelectionSet decodesTo selectionLock -> FragmentSelectionSet decodesTo fragmentLock
 buildFragment fragmentTypeName (SelectionSet fields decoder) =
