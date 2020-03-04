@@ -15,14 +15,14 @@ normalizeIfElmReserved name =
         name
 
 
-underscores : String -> { leading : String, trailing : String, remaining : String }
+underscores : String -> { leading : String, trailing : String, remaining : Maybe String }
 underscores string =
     let
         regexFromString =
             Regex.fromString >> Maybe.withDefault Regex.never
     in
     case Regex.find (regexFromString "^(_*)([^_]?.*[^_]?)(_*)$") string |> List.head |> Maybe.map .submatches of
-        Just [ leading, Just remaining, trailing ] ->
+        Just [ leading, remaining, trailing ] ->
             { leading = Maybe.withDefault "" leading
             , trailing = Maybe.withDefault "" trailing
             , remaining = remaining
@@ -57,17 +57,24 @@ capitalized name =
         group =
             underscores name
     in
-    (if isAllUpper group.remaining then
-        group.remaining
-            |> String.toLower
-            |> String.Extra.classify
+    case group.remaining of
+        Nothing ->
+            "underscore"
+                ++ group.leading
+                ++ group.trailing
 
-     else
-        group.remaining
-            |> capitilize
-    )
-        ++ group.leading
-        ++ group.trailing
+        Just remaining ->
+            (if isAllUpper remaining then
+                remaining
+                    |> String.toLower
+                    |> String.Extra.classify
+
+             else
+                remaining
+                    |> capitilize
+            )
+                ++ group.leading
+                ++ group.trailing
 
 
 decapitalized : String -> String
