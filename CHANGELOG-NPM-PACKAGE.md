@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.2] - 2020-03-04
+
 ### Fixed
 - Fixed CLI stalling when schema had field names with only `_`s (fixes [#285](https://github.com/dillonkearns/elm-graphql/issues/285)). The generated field names will be prefixed with `underscore` (see details in [#311](https://github.com/dillonkearns/elm-graphql/pull/311)).
 
