@@ -49,7 +49,7 @@ query =
     Query.human { id = Id "1001" } humanSelection
 
 
-type alias AnotherHuman =
+type alias HumanData =
     { name : String
     , homePlanet : Maybe String
     }
