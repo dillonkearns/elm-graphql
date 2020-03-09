@@ -57,7 +57,7 @@ type alias HumanData =
 
 humanSelection : SelectionSet Human StarWars.Object.Human
 humanSelection =
-    SelectionSet.map2 AnotherHuman
+    SelectionSet.map2 HumanData
         Human.name
         Human.homePlanet
 ```
