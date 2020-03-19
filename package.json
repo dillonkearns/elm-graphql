@@ -42,7 +42,7 @@
     "graphql": "^14.3.1",
     "node-elm-compiler": "^5.0.3",
     "parcel-bundler": "^1.12.3",
-    "typescript": "^3.4.5"
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "elm-format": ">= 0.8.0 < 1"
