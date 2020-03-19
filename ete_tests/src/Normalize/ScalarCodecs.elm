@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.ScalarCodecs exposing (CatId, DogId, Id, codecs)
+module Normalize.ScalarCodecs exposing (..)
 
 import Json.Decode as Decode exposing (Decoder)
 import Normalize.Scalar exposing (defaultCodecs)
