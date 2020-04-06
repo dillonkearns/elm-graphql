@@ -143,7 +143,7 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 You can do real-time APIs using GraphQL Subscriptions and `dillonkearns/elm-graphql`.
 Just wire in the framework-specific JavaScript code for opening the WebSocket connection
 through a port. Here's a [live demo](http://www.dillonkearns.com/elm-graphql/) and its
-[source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src/subscription). The [demo server is running Elixir/Absinthe](https://github.com/dillonkearns/graphqelm-demo).
+[source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/subscription). The [demo server is running Elixir/Absinthe](https://github.com/dillonkearns/graphqelm-demo).
 
 ## Contributors
 
