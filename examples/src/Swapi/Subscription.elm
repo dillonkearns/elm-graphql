@@ -19,6 +19,8 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-newMessage : SelectionSet decodesTo Swapi.Object.ChatMessage -> SelectionSet decodesTo RootSubscription
+newMessage :
+    SelectionSet decodesTo Swapi.Object.ChatMessage
+    -> SelectionSet decodesTo RootSubscription
 newMessage object_ =
     Object.selectionForCompositeField "newMessage" [] object_ identity
