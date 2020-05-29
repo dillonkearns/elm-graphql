@@ -54,7 +54,8 @@ me =
                 }
                     |> Field.generateForObject (contextWith Nothing) (ClassCaseName.build "RootQueryObject")
                     |> Expect.equal
-                        """droid : SelectionSet decodesTo Api.Object.Droid -> SelectionSet decodesTo RootQuery
+                        """droid : SelectionSet decodesTo Api.Object.Droid
+-> SelectionSet decodesTo RootQuery
 droid object_ =
       Object.selectionForCompositeField "droid" [] (object_) (identity)
 """
@@ -71,7 +72,8 @@ droid object_ =
                         )
                         (ClassCaseName.build "RootQueryObject")
                     |> Expect.equal
-                        """hero : SelectionSet decodesTo Api.Interface.Character -> SelectionSet decodesTo RootQuery
+                        """hero : SelectionSet decodesTo Api.Interface.Character
+-> SelectionSet decodesTo RootQuery
 hero object_ =
       Object.selectionForCompositeField "hero" [] (object_) (identity)
 """
@@ -84,7 +86,8 @@ hero object_ =
                 }
                     |> Field.generateForObject (contextWith Nothing) (ClassCaseName.build "Foo")
                     |> Expect.equal
-                        """droid : SelectionSet decodesTo Api.Object.Droid -> SelectionSet decodesTo Api.Object.Foo
+                        """droid : SelectionSet decodesTo Api.Object.Droid
+-> SelectionSet decodesTo Api.Object.Foo
 droid object_ =
       Object.selectionForCompositeField "droid" [] (object_) (identity)
 """
@@ -97,7 +100,8 @@ droid object_ =
                 }
                     |> Field.generateForObject (contextWith Nothing) (ClassCaseName.build "Foo")
                     |> Expect.equal
-                        """droid : SelectionSet decodesTo Api.Object.Droid -> SelectionSet (List decodesTo) Api.Object.Foo
+                        """droid : SelectionSet decodesTo Api.Object.Droid
+-> SelectionSet (List decodesTo) Api.Object.Foo
 droid object_ =
       Object.selectionForCompositeField "droid" [] (object_) (identity >> Decode.list)
 """
@@ -117,7 +121,9 @@ droid object_ =
                     |> Expect.equal
                         """type alias HumanRequiredArguments = { id : String }
 
-human : HumanRequiredArguments -> SelectionSet decodesTo Api.Object.Human -> SelectionSet decodesTo RootQuery
+human : HumanRequiredArguments
+-> SelectionSet decodesTo Api.Object.Human
+-> SelectionSet decodesTo RootQuery
 human requiredArgs object_ =
       Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object_) (identity)
 """
@@ -137,7 +143,9 @@ human requiredArgs object_ =
                     |> Expect.equal
                         """type alias MenuItemsOptionalArguments = { contains : OptionalArgument String }
 
-menuItems : (MenuItemsOptionalArguments -> MenuItemsOptionalArguments) -> SelectionSet decodesTo Api.Object.MenuItem -> SelectionSet (List decodesTo) RootQuery
+menuItems : (MenuItemsOptionalArguments -> MenuItemsOptionalArguments)
+-> SelectionSet decodesTo Api.Object.MenuItem
+-> SelectionSet (List decodesTo) RootQuery
 menuItems fillInOptionals object_ =
     let
         filledInOptionals =
