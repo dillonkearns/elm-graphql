@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "elm": "0.19.1-latest",
+    "elm": "latest-0.19.1",
     "elm-format": "0.8.3",
     "elm-live": "3.4.0"
   }
