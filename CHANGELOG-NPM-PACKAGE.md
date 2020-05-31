@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.3] - 2020-05-31
+
+### Changed
+- Use vertical formatting for function type annotations. Thanks to @sporto for the PR! See [#351](https://github.com/dillonkearns/elm-graphql/pull/351).
+
 ## [4.0.2] - 2020-03-04
 
 ### Fixed
