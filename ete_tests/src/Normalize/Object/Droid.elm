@@ -29,7 +29,9 @@ appearsIn =
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Object.Droid
+friends :
+    SelectionSet decodesTo Normalize.Interface.Character
+    -> SelectionSet (List decodesTo) Normalize.Object.Droid
 friends object_ =
     Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 
