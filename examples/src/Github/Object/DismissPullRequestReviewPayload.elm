@@ -28,6 +28,8 @@ clientMutationId =
 
 {-| The dismissed pull request review.
 -}
-pullRequestReview : SelectionSet decodesTo Github.Object.PullRequestReview -> SelectionSet decodesTo Github.Object.DismissPullRequestReviewPayload
+pullRequestReview :
+    SelectionSet decodesTo Github.Object.PullRequestReview
+    -> SelectionSet decodesTo Github.Object.DismissPullRequestReviewPayload
 pullRequestReview object_ =
     Object.selectionForCompositeField "pullRequestReview" [] object_ identity

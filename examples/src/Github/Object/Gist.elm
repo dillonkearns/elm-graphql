@@ -35,7 +35,10 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> SelectionSet decodesTo Github.Object.Gist
+comments :
+    (CommentsOptionalArguments -> CommentsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.GistCommentConnection
+    -> SelectionSet decodesTo Github.Object.Gist
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -83,7 +86,9 @@ name =
 
 {-| The gist owner.
 -}
-owner : SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet (Maybe decodesTo) Github.Object.Gist
+owner :
+    SelectionSet decodesTo Github.Interface.RepositoryOwner
+    -> SelectionSet (Maybe decodesTo) Github.Object.Gist
 owner object_ =
     Object.selectionForCompositeField "owner" [] object_ (identity >> Decode.nullable)
 
@@ -113,7 +118,10 @@ type alias StargazersOptionalArguments =
   - orderBy - Order for connection
 
 -}
-stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> SelectionSet decodesTo Github.Object.Gist
+stargazers :
+    (StargazersOptionalArguments -> StargazersOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.StargazerConnection
+    -> SelectionSet decodesTo Github.Object.Gist
 stargazers fillInOptionals object_ =
     let
         filledInOptionals =

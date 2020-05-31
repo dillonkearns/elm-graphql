@@ -49,21 +49,27 @@ invitationType =
 
 {-| The user who was invited to the organization.
 -}
-invitee : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.OrganizationInvitation
+invitee :
+    SelectionSet decodesTo Github.Object.User
+    -> SelectionSet (Maybe decodesTo) Github.Object.OrganizationInvitation
 invitee object_ =
     Object.selectionForCompositeField "invitee" [] object_ (identity >> Decode.nullable)
 
 
 {-| The user who created the invitation.
 -}
-inviter : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.OrganizationInvitation
+inviter :
+    SelectionSet decodesTo Github.Object.User
+    -> SelectionSet decodesTo Github.Object.OrganizationInvitation
 inviter object_ =
     Object.selectionForCompositeField "inviter" [] object_ identity
 
 
 {-| The organization the invite is for
 -}
-organization : SelectionSet decodesTo Github.Object.Organization -> SelectionSet decodesTo Github.Object.OrganizationInvitation
+organization :
+    SelectionSet decodesTo Github.Object.Organization
+    -> SelectionSet decodesTo Github.Object.OrganizationInvitation
 organization object_ =
     Object.selectionForCompositeField "organization" [] object_ identity
 

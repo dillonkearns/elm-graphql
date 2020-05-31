@@ -35,7 +35,10 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> SelectionSet decodesTo Github.Object.CommitCommentThread
+comments :
+    (CommentsOptionalArguments -> CommentsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.CommitCommentConnection
+    -> SelectionSet decodesTo Github.Object.CommitCommentThread
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -50,7 +53,9 @@ comments fillInOptionals object_ =
 
 {-| The commit the comments were made on.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.CommitCommentThread
+commit :
+    SelectionSet decodesTo Github.Object.Commit
+    -> SelectionSet decodesTo Github.Object.CommitCommentThread
 commit object_ =
     Object.selectionForCompositeField "commit" [] object_ identity
 
@@ -76,6 +81,8 @@ position =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.CommitCommentThread
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Object.CommitCommentThread
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity

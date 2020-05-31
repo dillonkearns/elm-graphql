@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.UnsubscribedEvent
+actor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.UnsubscribedEvent
 actor object_ =
     Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
@@ -40,6 +42,8 @@ id =
 
 {-| Object referenced by event.
 -}
-subscribable : SelectionSet decodesTo Github.Interface.Subscribable -> SelectionSet decodesTo Github.Object.UnsubscribedEvent
+subscribable :
+    SelectionSet decodesTo Github.Interface.Subscribable
+    -> SelectionSet decodesTo Github.Object.UnsubscribedEvent
 subscribable object_ =
     Object.selectionForCompositeField "subscribable" [] object_ identity

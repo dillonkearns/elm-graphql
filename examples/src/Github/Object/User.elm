@@ -34,7 +34,9 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarCodecs.Uri Github.Object.User
+avatarUrl :
+    (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
+    -> SelectionSet Github.ScalarCodecs.Uri Github.Object.User
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -77,7 +79,10 @@ type alias CommitCommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-commitComments : (CommitCommentsOptionalArguments -> CommitCommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.CommitCommentConnection -> SelectionSet decodesTo Github.Object.User
+commitComments :
+    (CommitCommentsOptionalArguments -> CommitCommentsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.CommitCommentConnection
+    -> SelectionSet decodesTo Github.Object.User
 commitComments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -128,7 +133,10 @@ type alias ContributedRepositoriesOptionalArguments =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-contributedRepositories : (ContributedRepositoriesOptionalArguments -> ContributedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Object.User
+contributedRepositories :
+    (ContributedRepositoriesOptionalArguments -> ContributedRepositoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
+    -> SelectionSet decodesTo Github.Object.User
 contributedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -178,7 +186,10 @@ type alias FollowersOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-followers : (FollowersOptionalArguments -> FollowersOptionalArguments) -> SelectionSet decodesTo Github.Object.FollowerConnection -> SelectionSet decodesTo Github.Object.User
+followers :
+    (FollowersOptionalArguments -> FollowersOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.FollowerConnection
+    -> SelectionSet decodesTo Github.Object.User
 followers fillInOptionals object_ =
     let
         filledInOptionals =
@@ -207,7 +218,10 @@ type alias FollowingOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-following : (FollowingOptionalArguments -> FollowingOptionalArguments) -> SelectionSet decodesTo Github.Object.FollowingConnection -> SelectionSet decodesTo Github.Object.User
+following :
+    (FollowingOptionalArguments -> FollowingOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.FollowingConnection
+    -> SelectionSet decodesTo Github.Object.User
 following fillInOptionals object_ =
     let
         filledInOptionals =
@@ -229,7 +243,10 @@ type alias GistRequiredArguments =
   - name - The gist name to find.
 
 -}
-gist : GistRequiredArguments -> SelectionSet decodesTo Github.Object.Gist -> SelectionSet (Maybe decodesTo) Github.Object.User
+gist :
+    GistRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Gist
+    -> SelectionSet (Maybe decodesTo) Github.Object.User
 gist requiredArgs object_ =
     Object.selectionForCompositeField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -250,7 +267,10 @@ type alias GistCommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-gistComments : (GistCommentsOptionalArguments -> GistCommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistCommentConnection -> SelectionSet decodesTo Github.Object.User
+gistComments :
+    (GistCommentsOptionalArguments -> GistCommentsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.GistCommentConnection
+    -> SelectionSet decodesTo Github.Object.User
 gistComments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -283,7 +303,10 @@ type alias GistsOptionalArguments =
   - orderBy - Ordering options for gists returned from the connection
 
 -}
-gists : (GistsOptionalArguments -> GistsOptionalArguments) -> SelectionSet decodesTo Github.Object.GistConnection -> SelectionSet decodesTo Github.Object.User
+gists :
+    (GistsOptionalArguments -> GistsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.GistConnection
+    -> SelectionSet decodesTo Github.Object.User
 gists fillInOptionals object_ =
     let
         filledInOptionals =
@@ -366,7 +389,10 @@ type alias IssueCommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-issueComments : (IssueCommentsOptionalArguments -> IssueCommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> SelectionSet decodesTo Github.Object.User
+issueComments :
+    (IssueCommentsOptionalArguments -> IssueCommentsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.IssueCommentConnection
+    -> SelectionSet decodesTo Github.Object.User
 issueComments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -401,7 +427,10 @@ type alias IssuesOptionalArguments =
   - states - A list of states to filter the issues by.
 
 -}
-issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> SelectionSet decodesTo Github.Object.User
+issues :
+    (IssuesOptionalArguments -> IssuesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.IssueConnection
+    -> SelectionSet decodesTo Github.Object.User
 issues fillInOptionals object_ =
     let
         filledInOptionals =
@@ -444,7 +473,10 @@ type alias OrganizationRequiredArguments =
   - login - The login of the organization to find.
 
 -}
-organization : OrganizationRequiredArguments -> SelectionSet decodesTo Github.Object.Organization -> SelectionSet (Maybe decodesTo) Github.Object.User
+organization :
+    OrganizationRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Organization
+    -> SelectionSet (Maybe decodesTo) Github.Object.User
 organization requiredArgs object_ =
     Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -465,7 +497,10 @@ type alias OrganizationsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-organizations : (OrganizationsOptionalArguments -> OrganizationsOptionalArguments) -> SelectionSet decodesTo Github.Object.OrganizationConnection -> SelectionSet decodesTo Github.Object.User
+organizations :
+    (OrganizationsOptionalArguments -> OrganizationsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.OrganizationConnection
+    -> SelectionSet decodesTo Github.Object.User
 organizations fillInOptionals object_ =
     let
         filledInOptionals =
@@ -502,7 +537,10 @@ type alias PinnedRepositoriesOptionalArguments =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Object.User
+pinnedRepositories :
+    (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
+    -> SelectionSet decodesTo Github.Object.User
 pinnedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -531,7 +569,10 @@ type alias PublicKeysOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-publicKeys : (PublicKeysOptionalArguments -> PublicKeysOptionalArguments) -> SelectionSet decodesTo Github.Object.PublicKeyConnection -> SelectionSet decodesTo Github.Object.User
+publicKeys :
+    (PublicKeysOptionalArguments -> PublicKeysOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.PublicKeyConnection
+    -> SelectionSet decodesTo Github.Object.User
 publicKeys fillInOptionals object_ =
     let
         filledInOptionals =
@@ -570,7 +611,10 @@ type alias PullRequestsOptionalArguments =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> SelectionSet decodesTo Github.Object.User
+pullRequests :
+    (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.PullRequestConnection
+    -> SelectionSet decodesTo Github.Object.User
 pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -609,7 +653,10 @@ type alias RepositoriesOptionalArguments =
   - isFork - If non-null, filters repositories according to whether they are forks of another repository
 
 -}
-repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Object.User
+repositories :
+    (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
+    -> SelectionSet decodesTo Github.Object.User
 repositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -648,7 +695,10 @@ type alias RepositoriesContributedToOptionalArguments =
   - contributionTypes - If non-null, include only the specified types of contributions. The GitHub.com UI uses [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
 
 -}
-repositoriesContributedTo : (RepositoriesContributedToOptionalArguments -> RepositoriesContributedToOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Object.User
+repositoriesContributedTo :
+    (RepositoriesContributedToOptionalArguments -> RepositoriesContributedToOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
+    -> SelectionSet decodesTo Github.Object.User
 repositoriesContributedTo fillInOptionals object_ =
     let
         filledInOptionals =
@@ -670,7 +720,10 @@ type alias RepositoryRequiredArguments =
   - name - Name of Repository to find.
 
 -}
-repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe decodesTo) Github.Object.User
+repository :
+    RepositoryRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet (Maybe decodesTo) Github.Object.User
 repository requiredArgs object_ =
     Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -702,7 +755,10 @@ type alias StarredRepositoriesOptionalArguments =
   - orderBy - Order for connection
 
 -}
-starredRepositories : (StarredRepositoriesOptionalArguments -> StarredRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.StarredRepositoryConnection -> SelectionSet decodesTo Github.Object.User
+starredRepositories :
+    (StarredRepositoriesOptionalArguments -> StarredRepositoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.StarredRepositoryConnection
+    -> SelectionSet decodesTo Github.Object.User
 starredRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -767,7 +823,10 @@ type alias WatchingOptionalArguments =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-watching : (WatchingOptionalArguments -> WatchingOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Object.User
+watching :
+    (WatchingOptionalArguments -> WatchingOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
+    -> SelectionSet decodesTo Github.Object.User
 watching fillInOptionals object_ =
     let
         filledInOptionals =

@@ -28,7 +28,9 @@ codeCount =
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.SearchResultItemEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
+edges :
+    SelectionSet decodesTo Github.Object.SearchResultItemEdge
+    -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
 edges object_ =
     Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -42,14 +44,18 @@ issueCount =
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Union.SearchResultItem -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
+nodes :
+    SelectionSet decodesTo Github.Union.SearchResultItem
+    -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.SearchResultItemConnection
 nodes object_ =
     Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.SearchResultItemConnection
+pageInfo :
+    SelectionSet decodesTo Github.Object.PageInfo
+    -> SelectionSet decodesTo Github.Object.SearchResultItemConnection
 pageInfo object_ =
     Object.selectionForCompositeField "pageInfo" [] object_ identity
 

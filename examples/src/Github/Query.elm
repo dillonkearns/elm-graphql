@@ -29,14 +29,19 @@ type alias CodeOfConductRequiredArguments =
   - key - The code of conduct's key
 
 -}
-codeOfConduct : CodeOfConductRequiredArguments -> SelectionSet decodesTo Github.Object.CodeOfConduct -> SelectionSet (Maybe decodesTo) RootQuery
+codeOfConduct :
+    CodeOfConductRequiredArguments
+    -> SelectionSet decodesTo Github.Object.CodeOfConduct
+    -> SelectionSet (Maybe decodesTo) RootQuery
 codeOfConduct requiredArgs object_ =
     Object.selectionForCompositeField "codeOfConduct" [ Argument.required "key" requiredArgs.key Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| Look up a code of conduct by its key
 -}
-codesOfConduct : SelectionSet decodesTo Github.Object.CodeOfConduct -> SelectionSet (Maybe (List (Maybe decodesTo))) RootQuery
+codesOfConduct :
+    SelectionSet decodesTo Github.Object.CodeOfConduct
+    -> SelectionSet (Maybe (List (Maybe decodesTo))) RootQuery
 codesOfConduct object_ =
     Object.selectionForCompositeField "codesOfConduct" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -50,14 +55,19 @@ type alias LicenseRequiredArguments =
   - key - The license's downcased SPDX ID
 
 -}
-license : LicenseRequiredArguments -> SelectionSet decodesTo Github.Object.License -> SelectionSet (Maybe decodesTo) RootQuery
+license :
+    LicenseRequiredArguments
+    -> SelectionSet decodesTo Github.Object.License
+    -> SelectionSet (Maybe decodesTo) RootQuery
 license requiredArgs object_ =
     Object.selectionForCompositeField "license" [ Argument.required "key" requiredArgs.key Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| Return a list of known open source licenses
 -}
-licenses : SelectionSet decodesTo Github.Object.License -> SelectionSet (List (Maybe decodesTo)) RootQuery
+licenses :
+    SelectionSet decodesTo Github.Object.License
+    -> SelectionSet (List (Maybe decodesTo)) RootQuery
 licenses object_ =
     Object.selectionForCompositeField "licenses" [] object_ (identity >> Decode.nullable >> Decode.list)
 
@@ -71,7 +81,10 @@ type alias MarketplaceCategoriesOptionalArguments =
   - excludeEmpty - Exclude categories with no listings.
 
 -}
-marketplaceCategories : (MarketplaceCategoriesOptionalArguments -> MarketplaceCategoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> SelectionSet (List decodesTo) RootQuery
+marketplaceCategories :
+    (MarketplaceCategoriesOptionalArguments -> MarketplaceCategoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.MarketplaceCategory
+    -> SelectionSet (List decodesTo) RootQuery
 marketplaceCategories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -93,7 +106,10 @@ type alias MarketplaceCategoryRequiredArguments =
   - slug - The URL slug of the category.
 
 -}
-marketplaceCategory : MarketplaceCategoryRequiredArguments -> SelectionSet decodesTo Github.Object.MarketplaceCategory -> SelectionSet (Maybe decodesTo) RootQuery
+marketplaceCategory :
+    MarketplaceCategoryRequiredArguments
+    -> SelectionSet decodesTo Github.Object.MarketplaceCategory
+    -> SelectionSet (Maybe decodesTo) RootQuery
 marketplaceCategory requiredArgs object_ =
     Object.selectionForCompositeField "marketplaceCategory" [ Argument.required "slug" requiredArgs.slug Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -107,7 +123,10 @@ type alias MarketplaceListingRequiredArguments =
   - slug - Select the listing that matches this slug. It's the short name of the listing used in its URL.
 
 -}
-marketplaceListing : MarketplaceListingRequiredArguments -> SelectionSet decodesTo Github.Object.MarketplaceListing -> SelectionSet (Maybe decodesTo) RootQuery
+marketplaceListing :
+    MarketplaceListingRequiredArguments
+    -> SelectionSet decodesTo Github.Object.MarketplaceListing
+    -> SelectionSet (Maybe decodesTo) RootQuery
 marketplaceListing requiredArgs object_ =
     Object.selectionForCompositeField "marketplaceListing" [ Argument.required "slug" requiredArgs.slug Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -157,7 +176,10 @@ type alias MarketplaceListingsOptionalArguments =
   - withFreeTrialsOnly - Select only listings that offer a free trial.
 
 -}
-marketplaceListings : (MarketplaceListingsOptionalArguments -> MarketplaceListingsOptionalArguments) -> SelectionSet decodesTo Github.Object.MarketplaceListingConnection -> SelectionSet decodesTo RootQuery
+marketplaceListings :
+    (MarketplaceListingsOptionalArguments -> MarketplaceListingsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.MarketplaceListingConnection
+    -> SelectionSet decodesTo RootQuery
 marketplaceListings fillInOptionals object_ =
     let
         filledInOptionals =
@@ -172,7 +194,9 @@ marketplaceListings fillInOptionals object_ =
 
 {-| Return information about the GitHub instance
 -}
-meta : SelectionSet decodesTo Github.Object.GitHubMetadata -> SelectionSet decodesTo RootQuery
+meta :
+    SelectionSet decodesTo Github.Object.GitHubMetadata
+    -> SelectionSet decodesTo RootQuery
 meta object_ =
     Object.selectionForCompositeField "meta" [] object_ identity
 
@@ -186,7 +210,10 @@ type alias NodeRequiredArguments =
   - id - ID of the object.
 
 -}
-node : NodeRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> SelectionSet (Maybe decodesTo) RootQuery
+node :
+    NodeRequiredArguments
+    -> SelectionSet decodesTo Github.Interface.Node
+    -> SelectionSet (Maybe decodesTo) RootQuery
 node requiredArgs object_ =
     Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs.id (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
 
@@ -200,7 +227,10 @@ type alias NodesRequiredArguments =
   - ids - The list of node IDs.
 
 -}
-nodes : NodesRequiredArguments -> SelectionSet decodesTo Github.Interface.Node -> SelectionSet (List (Maybe decodesTo)) RootQuery
+nodes :
+    NodesRequiredArguments
+    -> SelectionSet decodesTo Github.Interface.Node
+    -> SelectionSet (List (Maybe decodesTo)) RootQuery
 nodes requiredArgs object_ =
     Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs.ids ((Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.list) ] object_ (identity >> Decode.nullable >> Decode.list)
 
@@ -214,7 +244,10 @@ type alias OrganizationRequiredArguments =
   - login - The organization's login.
 
 -}
-organization : OrganizationRequiredArguments -> SelectionSet decodesTo Github.Object.Organization -> SelectionSet (Maybe decodesTo) RootQuery
+organization :
+    OrganizationRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Organization
+    -> SelectionSet (Maybe decodesTo) RootQuery
 organization requiredArgs object_ =
     Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -228,7 +261,10 @@ type alias RateLimitOptionalArguments =
   - dryRun - If true, calculate the cost for the query without evaluating it
 
 -}
-rateLimit : (RateLimitOptionalArguments -> RateLimitOptionalArguments) -> SelectionSet decodesTo Github.Object.RateLimit -> SelectionSet (Maybe decodesTo) RootQuery
+rateLimit :
+    (RateLimitOptionalArguments -> RateLimitOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RateLimit
+    -> SelectionSet (Maybe decodesTo) RootQuery
 rateLimit fillInOptionals object_ =
     let
         filledInOptionals =
@@ -243,7 +279,9 @@ rateLimit fillInOptionals object_ =
 
 {-| Hack to workaround <https://github.com/facebook/relay/issues/112> re-exposing the root query object
 -}
-relay : SelectionSet decodesTo RootQuery -> SelectionSet decodesTo RootQuery
+relay :
+    SelectionSet decodesTo RootQuery
+    -> SelectionSet decodesTo RootQuery
 relay object_ =
     Object.selectionForCompositeField "relay" [] object_ identity
 
@@ -260,7 +298,10 @@ type alias RepositoryRequiredArguments =
   - name - The name of the repository
 
 -}
-repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe decodesTo) RootQuery
+repository :
+    RepositoryRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet (Maybe decodesTo) RootQuery
 repository requiredArgs object_ =
     Object.selectionForCompositeField "repository" [ Argument.required "owner" requiredArgs.owner Encode.string, Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -274,7 +315,10 @@ type alias RepositoryOwnerRequiredArguments =
   - login - The username to lookup the owner by.
 
 -}
-repositoryOwner : RepositoryOwnerRequiredArguments -> SelectionSet decodesTo Github.Interface.RepositoryOwner -> SelectionSet (Maybe decodesTo) RootQuery
+repositoryOwner :
+    RepositoryOwnerRequiredArguments
+    -> SelectionSet decodesTo Github.Interface.RepositoryOwner
+    -> SelectionSet (Maybe decodesTo) RootQuery
 repositoryOwner requiredArgs object_ =
     Object.selectionForCompositeField "repositoryOwner" [ Argument.required "login" requiredArgs.login Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -288,7 +332,10 @@ type alias ResourceRequiredArguments =
   - url - The URL.
 
 -}
-resource : ResourceRequiredArguments -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable -> SelectionSet (Maybe decodesTo) RootQuery
+resource :
+    ResourceRequiredArguments
+    -> SelectionSet decodesTo Github.Interface.UniformResourceLocatable
+    -> SelectionSet (Maybe decodesTo) RootQuery
 resource requiredArgs object_ =
     Object.selectionForCompositeField "resource" [ Argument.required "url" requiredArgs.url (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecUri) ] object_ (identity >> Decode.nullable)
 
@@ -317,7 +364,11 @@ type alias SearchRequiredArguments =
   - type\_ - The types of search items to search within.
 
 -}
-search : (SearchOptionalArguments -> SearchOptionalArguments) -> SearchRequiredArguments -> SelectionSet decodesTo Github.Object.SearchResultItemConnection -> SelectionSet decodesTo RootQuery
+search :
+    (SearchOptionalArguments -> SearchOptionalArguments)
+    -> SearchRequiredArguments
+    -> SelectionSet decodesTo Github.Object.SearchResultItemConnection
+    -> SelectionSet decodesTo RootQuery
 search fillInOptionals requiredArgs object_ =
     let
         filledInOptionals =
@@ -339,7 +390,10 @@ type alias TopicRequiredArguments =
   - name - The topic's name.
 
 -}
-topic : TopicRequiredArguments -> SelectionSet decodesTo Github.Object.Topic -> SelectionSet (Maybe decodesTo) RootQuery
+topic :
+    TopicRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Topic
+    -> SelectionSet (Maybe decodesTo) RootQuery
 topic requiredArgs object_ =
     Object.selectionForCompositeField "topic" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -353,13 +407,18 @@ type alias UserRequiredArguments =
   - login - The user's login.
 
 -}
-user : UserRequiredArguments -> SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) RootQuery
+user :
+    UserRequiredArguments
+    -> SelectionSet decodesTo Github.Object.User
+    -> SelectionSet (Maybe decodesTo) RootQuery
 user requiredArgs object_ =
     Object.selectionForCompositeField "user" [ Argument.required "login" requiredArgs.login Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The currently authenticated user.
 -}
-viewer : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo RootQuery
+viewer :
+    SelectionSet decodesTo Github.Object.User
+    -> SelectionSet decodesTo RootQuery
 viewer object_ =
     Object.selectionForCompositeField "viewer" [] object_ identity

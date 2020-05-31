@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| The author of the release
 -}
-author : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.Release
+author :
+    SelectionSet decodesTo Github.Object.User
+    -> SelectionSet (Maybe decodesTo) Github.Object.Release
 author object_ =
     Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
 
@@ -91,7 +93,10 @@ type alias ReleaseAssetsOptionalArguments =
   - name - A list of names to filter the assets by.
 
 -}
-releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection -> SelectionSet decodesTo Github.Object.Release
+releaseAssets :
+    (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection
+    -> SelectionSet decodesTo Github.Object.Release
 releaseAssets fillInOptionals object_ =
     let
         filledInOptionals =
@@ -113,7 +118,9 @@ resourcePath =
 
 {-| The Git tag the release points to
 -}
-tag : SelectionSet decodesTo Github.Object.Ref -> SelectionSet (Maybe decodesTo) Github.Object.Release
+tag :
+    SelectionSet decodesTo Github.Object.Ref
+    -> SelectionSet (Maybe decodesTo) Github.Object.Release
 tag object_ =
     Object.selectionForCompositeField "tag" [] object_ (identity >> Decode.nullable)
 

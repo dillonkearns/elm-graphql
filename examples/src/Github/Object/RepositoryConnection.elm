@@ -21,21 +21,27 @@ import Json.Decode as Decode
 
 {-| A list of edges.
 -}
-edges : SelectionSet decodesTo Github.Object.RepositoryEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
+edges :
+    SelectionSet decodesTo Github.Object.RepositoryEdge
+    -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
 edges object_ =
     Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
+nodes :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.RepositoryConnection
 nodes object_ =
     Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.RepositoryConnection
+pageInfo :
+    SelectionSet decodesTo Github.Object.PageInfo
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
 pageInfo object_ =
     Object.selectionForCompositeField "pageInfo" [] object_ identity
 

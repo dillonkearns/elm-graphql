@@ -19,21 +19,27 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-edges : SelectionSet decodesTo Github.Object.CommitEdge -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.CommitHistoryConnection
+edges :
+    SelectionSet decodesTo Github.Object.CommitEdge
+    -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.CommitHistoryConnection
 edges object_ =
     Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
-nodes : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.CommitHistoryConnection
+nodes :
+    SelectionSet decodesTo Github.Object.Commit
+    -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.CommitHistoryConnection
 nodes object_ =
     Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
-pageInfo : SelectionSet decodesTo Github.Object.PageInfo -> SelectionSet decodesTo Github.Object.CommitHistoryConnection
+pageInfo :
+    SelectionSet decodesTo Github.Object.PageInfo
+    -> SelectionSet decodesTo Github.Object.CommitHistoryConnection
 pageInfo object_ =
     Object.selectionForCompositeField "pageInfo" [] object_ identity
 

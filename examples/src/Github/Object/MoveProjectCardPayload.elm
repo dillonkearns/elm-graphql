@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| The new edge of the moved card.
 -}
-cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> SelectionSet decodesTo Github.Object.MoveProjectCardPayload
+cardEdge :
+    SelectionSet decodesTo Github.Object.ProjectCardEdge
+    -> SelectionSet decodesTo Github.Object.MoveProjectCardPayload
 cardEdge object_ =
     Object.selectionForCompositeField "cardEdge" [] object_ identity
 
