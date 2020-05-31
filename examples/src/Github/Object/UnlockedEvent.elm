@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.UnlockedEvent
+actor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.UnlockedEvent
 actor object_ =
     Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
@@ -40,6 +42,8 @@ id =
 
 {-| Object that was unlocked.
 -}
-lockable : SelectionSet decodesTo Github.Interface.Lockable -> SelectionSet decodesTo Github.Object.UnlockedEvent
+lockable :
+    SelectionSet decodesTo Github.Interface.Lockable
+    -> SelectionSet decodesTo Github.Object.UnlockedEvent
 lockable object_ =
     Object.selectionForCompositeField "lockable" [] object_ identity

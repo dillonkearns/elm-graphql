@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.CommentDeletedEvent
+actor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.CommentDeletedEvent
 actor object_ =
     Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 

@@ -70,7 +70,10 @@ type alias StargazersOptionalArguments =
   - orderBy - Order for connection
 
 -}
-stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments) -> SelectionSet decodesTo Github.Object.StargazerConnection -> SelectionSet decodesTo Github.Interface.Starrable
+stargazers :
+    (StargazersOptionalArguments -> StargazersOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.StargazerConnection
+    -> SelectionSet decodesTo Github.Interface.Starrable
 stargazers fillInOptionals object_ =
     let
         filledInOptionals =

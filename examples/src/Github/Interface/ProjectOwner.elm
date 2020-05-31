@@ -62,7 +62,10 @@ type alias ProjectRequiredArguments =
   - number - The project number to find.
 
 -}
-project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> SelectionSet (Maybe decodesTo) Github.Interface.ProjectOwner
+project :
+    ProjectRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Project
+    -> SelectionSet (Maybe decodesTo) Github.Interface.ProjectOwner
 project requiredArgs object_ =
     Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
@@ -89,7 +92,10 @@ type alias ProjectsOptionalArguments =
   - states - A list of states to filter the projects by.
 
 -}
-projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> SelectionSet decodesTo Github.Interface.ProjectOwner
+projects :
+    (ProjectsOptionalArguments -> ProjectsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ProjectConnection
+    -> SelectionSet decodesTo Github.Interface.ProjectOwner
 projects fillInOptionals object_ =
     let
         filledInOptionals =

@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| The Git commit object
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.PullRequestCommit
+commit :
+    SelectionSet decodesTo Github.Object.Commit
+    -> SelectionSet decodesTo Github.Object.PullRequestCommit
 commit object_ =
     Object.selectionForCompositeField "commit" [] object_ identity
 
@@ -33,7 +35,9 @@ id =
 
 {-| The pull request this commit belongs to
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.PullRequestCommit
+pullRequest :
+    SelectionSet decodesTo Github.Object.PullRequest
+    -> SelectionSet decodesTo Github.Object.PullRequestCommit
 pullRequest object_ =
     Object.selectionForCompositeField "pullRequest" [] object_ identity
 

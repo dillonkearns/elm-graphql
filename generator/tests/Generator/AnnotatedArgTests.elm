@@ -22,7 +22,8 @@ foo  =
                     |> AnnotatedArg.prepend ( "Int", "n" )
                     |> AnnotatedArg.toString "intToString"
                     |> Expect.equal
-                        """intToString : Int -> String
+                        """intToString : Int
+-> String
 intToString n =
 """
         , test "with two args" <|
@@ -32,7 +33,9 @@ intToString n =
                     |> AnnotatedArg.prepend ( "(String -> String)", "mapFn" )
                     |> AnnotatedArg.toString "mapInt"
                     |> Expect.equal
-                        """mapInt : (String -> String) -> Int -> String
+                        """mapInt : (String -> String)
+-> Int
+-> String
 mapInt mapFn n =
 """
         , test "two args built with `buildWithArgs`" <|
@@ -40,7 +43,9 @@ mapInt mapFn n =
                 AnnotatedArg.buildWithArgs [ ( "(String -> String)", "mapFn" ), ( "Int", "n" ) ] "String"
                     |> AnnotatedArg.toString "mapInt"
                     |> Expect.equal
-                        """mapInt : (String -> String) -> Int -> String
+                        """mapInt : (String -> String)
+-> Int
+-> String
 mapInt mapFn n =
 """
         ]

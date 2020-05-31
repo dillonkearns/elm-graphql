@@ -64,6 +64,8 @@ maybeFragments =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Interface.RepositoryNode
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Interface.RepositoryNode
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity

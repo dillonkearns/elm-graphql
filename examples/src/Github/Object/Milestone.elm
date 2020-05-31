@@ -45,7 +45,9 @@ createdAt =
 
 {-| Identifies the actor who created the milestone.
 -}
-creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Milestone
+creator :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.Milestone
 creator object_ =
     Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
 
@@ -91,7 +93,10 @@ type alias IssuesOptionalArguments =
   - states - A list of states to filter the issues by.
 
 -}
-issues : (IssuesOptionalArguments -> IssuesOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueConnection -> SelectionSet decodesTo Github.Object.Milestone
+issues :
+    (IssuesOptionalArguments -> IssuesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.IssueConnection
+    -> SelectionSet decodesTo Github.Object.Milestone
 issues fillInOptionals object_ =
     let
         filledInOptionals =
@@ -137,7 +142,10 @@ type alias PullRequestsOptionalArguments =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> SelectionSet decodesTo Github.Object.Milestone
+pullRequests :
+    (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.PullRequestConnection
+    -> SelectionSet decodesTo Github.Object.Milestone
 pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -152,7 +160,9 @@ pullRequests fillInOptionals object_ =
 
 {-| The repository associated with this milestone.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Milestone
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Object.Milestone
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity
 

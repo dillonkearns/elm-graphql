@@ -39,7 +39,10 @@ type alias AncestorsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-ancestors : (AncestorsOptionalArguments -> AncestorsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> SelectionSet decodesTo Github.Object.Team
+ancestors :
+    (AncestorsOptionalArguments -> AncestorsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.TeamConnection
+    -> SelectionSet decodesTo Github.Object.Team
 ancestors fillInOptionals object_ =
     let
         filledInOptionals =
@@ -61,7 +64,9 @@ type alias AvatarUrlOptionalArguments =
   - size - The size in pixels of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.Team
+avatarUrl :
+    (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
+    -> SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.Team
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -96,7 +101,10 @@ type alias ChildTeamsOptionalArguments =
   - immediateOnly - Whether to list immediate child teams or all descendant child teams.
 
 -}
-childTeams : (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> SelectionSet decodesTo Github.Object.Team
+childTeams :
+    (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.TeamConnection
+    -> SelectionSet decodesTo Github.Object.Team
 childTeams fillInOptionals object_ =
     let
         filledInOptionals =
@@ -165,7 +173,10 @@ type alias InvitationsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-invitations : (InvitationsOptionalArguments -> InvitationsOptionalArguments) -> SelectionSet decodesTo Github.Object.OrganizationInvitationConnection -> SelectionSet (Maybe decodesTo) Github.Object.Team
+invitations :
+    (InvitationsOptionalArguments -> InvitationsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.OrganizationInvitationConnection
+    -> SelectionSet (Maybe decodesTo) Github.Object.Team
 invitations fillInOptionals object_ =
     let
         filledInOptionals =
@@ -200,7 +211,10 @@ type alias MembersOptionalArguments =
   - role - Filter by team member role
 
 -}
-members : (MembersOptionalArguments -> MembersOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamMemberConnection -> SelectionSet decodesTo Github.Object.Team
+members :
+    (MembersOptionalArguments -> MembersOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.TeamMemberConnection
+    -> SelectionSet decodesTo Github.Object.Team
 members fillInOptionals object_ =
     let
         filledInOptionals =
@@ -250,14 +264,18 @@ newTeamUrl =
 
 {-| The organization that owns this team.
 -}
-organization : SelectionSet decodesTo Github.Object.Organization -> SelectionSet decodesTo Github.Object.Team
+organization :
+    SelectionSet decodesTo Github.Object.Organization
+    -> SelectionSet decodesTo Github.Object.Team
 organization object_ =
     Object.selectionForCompositeField "organization" [] object_ identity
 
 
 {-| The parent team of the team.
 -}
-parentTeam : SelectionSet decodesTo Github.Object.Team -> SelectionSet (Maybe decodesTo) Github.Object.Team
+parentTeam :
+    SelectionSet decodesTo Github.Object.Team
+    -> SelectionSet (Maybe decodesTo) Github.Object.Team
 parentTeam object_ =
     Object.selectionForCompositeField "parentTeam" [] object_ (identity >> Decode.nullable)
 
@@ -289,7 +307,10 @@ type alias RepositoriesOptionalArguments =
   - orderBy - Order for the connection.
 
 -}
-repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamRepositoryConnection -> SelectionSet decodesTo Github.Object.Team
+repositories :
+    (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.TeamRepositoryConnection
+    -> SelectionSet decodesTo Github.Object.Team
 repositories fillInOptionals object_ =
     let
         filledInOptionals =

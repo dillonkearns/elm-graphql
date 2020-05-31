@@ -29,7 +29,9 @@ appearsIn =
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Object.Human_
+friends :
+    SelectionSet decodesTo Normalize.Interface.Character
+    -> SelectionSet (List decodesTo) Normalize.Object.Human_
 friends object_ =
     Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 

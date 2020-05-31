@@ -48,7 +48,10 @@ type alias AssigneesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> SelectionSet decodesTo Github.Object.Issue
+assignees :
+    (AssigneesOptionalArguments -> AssigneesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.UserConnection
+    -> SelectionSet decodesTo Github.Object.Issue
 assignees fillInOptionals object_ =
     let
         filledInOptionals =
@@ -63,7 +66,9 @@ assignees fillInOptionals object_ =
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Issue
+author :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 author object_ =
     Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
 
@@ -126,7 +131,10 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueCommentConnection -> SelectionSet decodesTo Github.Object.Issue
+comments :
+    (CommentsOptionalArguments -> CommentsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.IssueCommentConnection
+    -> SelectionSet decodesTo Github.Object.Issue
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -162,7 +170,9 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Issue
+editor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
@@ -188,7 +198,10 @@ type alias LabelsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> SelectionSet (Maybe decodesTo) Github.Object.Issue
+labels :
+    (LabelsOptionalArguments -> LabelsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.LabelConnection
+    -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 labels fillInOptionals object_ =
     let
         filledInOptionals =
@@ -217,7 +230,9 @@ locked =
 
 {-| Identifies the milestone associated with the issue.
 -}
-milestone : SelectionSet decodesTo Github.Object.Milestone -> SelectionSet (Maybe decodesTo) Github.Object.Issue
+milestone :
+    SelectionSet decodesTo Github.Object.Milestone
+    -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 milestone object_ =
     Object.selectionForCompositeField "milestone" [] object_ (identity >> Decode.nullable)
 
@@ -245,7 +260,10 @@ type alias ParticipantsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> SelectionSet decodesTo Github.Object.Issue
+participants :
+    (ParticipantsOptionalArguments -> ParticipantsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.UserConnection
+    -> SelectionSet decodesTo Github.Object.Issue
 participants fillInOptionals object_ =
     let
         filledInOptionals =
@@ -274,7 +292,10 @@ type alias ProjectCardsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> SelectionSet decodesTo Github.Object.Issue
+projectCards :
+    (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ProjectCardConnection
+    -> SelectionSet decodesTo Github.Object.Issue
 projectCards fillInOptionals object_ =
     let
         filledInOptionals =
@@ -296,7 +317,9 @@ publishedAt =
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Object.Issue
+reactionGroups :
+    SelectionSet decodesTo Github.Object.ReactionGroup
+    -> SelectionSet (Maybe (List decodesTo)) Github.Object.Issue
 reactionGroups object_ =
     Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
@@ -321,7 +344,10 @@ type alias ReactionsOptionalArguments =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> SelectionSet decodesTo Github.Object.Issue
+reactions :
+    (ReactionsOptionalArguments -> ReactionsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ReactionConnection
+    -> SelectionSet decodesTo Github.Object.Issue
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -336,7 +362,9 @@ reactions fillInOptionals object_ =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Issue
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Object.Issue
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity
 
@@ -373,7 +401,10 @@ type alias TimelineOptionalArguments =
   - since - Allows filtering timeline events by a `since` timestamp.
 
 -}
-timeline : (TimelineOptionalArguments -> TimelineOptionalArguments) -> SelectionSet decodesTo Github.Object.IssueTimelineConnection -> SelectionSet decodesTo Github.Object.Issue
+timeline :
+    (TimelineOptionalArguments -> TimelineOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.IssueTimelineConnection
+    -> SelectionSet decodesTo Github.Object.Issue
 timeline fillInOptionals object_ =
     let
         filledInOptionals =
@@ -423,7 +454,10 @@ type alias UserContentEditsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> SelectionSet (Maybe decodesTo) Github.Object.Issue
+userContentEdits :
+    (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.UserContentEditConnection
+    -> SelectionSet (Maybe decodesTo) Github.Object.Issue
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

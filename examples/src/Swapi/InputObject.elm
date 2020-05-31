@@ -18,7 +18,10 @@ import Swapi.Scalar
 import Swapi.Union
 
 
-buildGreeting : GreetingRequiredFields -> (GreetingOptionalFields -> GreetingOptionalFields) -> Greeting
+buildGreeting :
+    GreetingRequiredFields
+    -> (GreetingOptionalFields -> GreetingOptionalFields)
+    -> Greeting
 buildGreeting required fillOptionals =
     let
         optionals =
@@ -55,7 +58,9 @@ encodeGreeting input =
         [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
 
 
-buildGreetingOptions : (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields) -> GreetingOptions
+buildGreetingOptions :
+    (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields)
+    -> GreetingOptions
 buildGreetingOptions fillOptionals =
     let
         optionals =

@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
+actor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 actor object_ =
     Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
@@ -40,20 +42,26 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.ReviewRequestedEvent
+pullRequest :
+    SelectionSet decodesTo Github.Object.PullRequest
+    -> SelectionSet decodesTo Github.Object.ReviewRequestedEvent
 pullRequest object_ =
     Object.selectionForCompositeField "pullRequest" [] object_ identity
 
 
 {-| Identifies the reviewer whose review was requested.
 -}
-requestedReviewer : SelectionSet decodesTo Github.Union.RequestedReviewer -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
+requestedReviewer :
+    SelectionSet decodesTo Github.Union.RequestedReviewer
+    -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 requestedReviewer object_ =
     Object.selectionForCompositeField "requestedReviewer" [] object_ (identity >> Decode.nullable)
 
 
 {-| Identifies the user whose review was requested.
 -}
-subject : SelectionSet decodesTo Github.Object.User -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
+subject :
+    SelectionSet decodesTo Github.Object.User
+    -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 subject object_ =
     Object.selectionForCompositeField "subject" [] object_ (identity >> Decode.nullable)

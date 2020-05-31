@@ -29,7 +29,10 @@ type alias DroidRequiredArguments =
   - id - ID of the droid.
 
 -}
-droid : DroidRequiredArguments -> SelectionSet decodesTo Swapi.Object.Droid -> SelectionSet (Maybe decodesTo) RootQuery
+droid :
+    DroidRequiredArguments
+    -> SelectionSet decodesTo Swapi.Object.Droid
+    -> SelectionSet (Maybe decodesTo) RootQuery
 droid requiredArgs object_ =
     Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
 
@@ -45,7 +48,9 @@ type alias GreetRequiredArguments =
     { input : Swapi.InputObject.Greeting }
 
 
-greet : GreetRequiredArguments -> SelectionSet String RootQuery
+greet :
+    GreetRequiredArguments
+    -> SelectionSet String RootQuery
 greet requiredArgs =
     Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs.input Swapi.InputObject.encodeGreeting ] Decode.string
 
@@ -64,7 +69,10 @@ type alias HeroOptionalArguments =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-hero : (HeroOptionalArguments -> HeroOptionalArguments) -> SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet decodesTo RootQuery
+hero :
+    (HeroOptionalArguments -> HeroOptionalArguments)
+    -> SelectionSet decodesTo Swapi.Interface.Character
+    -> SelectionSet decodesTo RootQuery
 hero fillInOptionals object_ =
     let
         filledInOptionals =
@@ -86,7 +94,10 @@ type alias HeroUnionOptionalArguments =
   - episode - If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.
 
 -}
-heroUnion : (HeroUnionOptionalArguments -> HeroUnionOptionalArguments) -> SelectionSet decodesTo Swapi.Union.CharacterUnion -> SelectionSet decodesTo RootQuery
+heroUnion :
+    (HeroUnionOptionalArguments -> HeroUnionOptionalArguments)
+    -> SelectionSet decodesTo Swapi.Union.CharacterUnion
+    -> SelectionSet decodesTo RootQuery
 heroUnion fillInOptionals object_ =
     let
         filledInOptionals =
@@ -108,7 +119,10 @@ type alias HumanRequiredArguments =
   - id - ID of the human.
 
 -}
-human : HumanRequiredArguments -> SelectionSet decodesTo Swapi.Object.Human -> SelectionSet (Maybe decodesTo) RootQuery
+human :
+    HumanRequiredArguments
+    -> SelectionSet decodesTo Swapi.Object.Human
+    -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs object_ =
     Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
 

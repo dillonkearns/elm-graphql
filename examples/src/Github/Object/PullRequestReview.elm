@@ -24,7 +24,9 @@ import Json.Decode as Decode
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
+author :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
 author object_ =
     Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
 
@@ -73,7 +75,10 @@ type alias CommentsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-comments : (CommentsOptionalArguments -> CommentsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection -> SelectionSet decodesTo Github.Object.PullRequestReview
+comments :
+    (CommentsOptionalArguments -> CommentsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection
+    -> SelectionSet decodesTo Github.Object.PullRequestReview
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -88,7 +93,9 @@ comments fillInOptionals object_ =
 
 {-| Identifies the commit associated with this pull request review.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
+commit :
+    SelectionSet decodesTo Github.Object.Commit
+    -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
 commit object_ =
     Object.selectionForCompositeField "commit" [] object_ (identity >> Decode.nullable)
 
@@ -116,7 +123,9 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
+editor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
 editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
@@ -142,14 +151,18 @@ publishedAt =
 
 {-| Identifies the pull request associated with this pull request review.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.PullRequestReview
+pullRequest :
+    SelectionSet decodesTo Github.Object.PullRequest
+    -> SelectionSet decodesTo Github.Object.PullRequestReview
 pullRequest object_ =
     Object.selectionForCompositeField "pullRequest" [] object_ identity
 
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.PullRequestReview
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Object.PullRequestReview
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity
 
@@ -205,7 +218,10 @@ type alias UserContentEditsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
+userContentEdits :
+    (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.UserContentEditConnection
+    -> SelectionSet (Maybe decodesTo) Github.Object.PullRequestReview
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

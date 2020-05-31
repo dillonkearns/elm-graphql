@@ -24,7 +24,9 @@ import Json.Decode as Decode
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
+author :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
 author object_ =
     Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
 
@@ -80,7 +82,9 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
+editor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
 editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
@@ -92,7 +96,9 @@ id =
 
 {-| Identifies the issue associated with the comment.
 -}
-issue : SelectionSet decodesTo Github.Object.Issue -> SelectionSet decodesTo Github.Object.IssueComment
+issue :
+    SelectionSet decodesTo Github.Object.Issue
+    -> SelectionSet decodesTo Github.Object.IssueComment
 issue object_ =
     Object.selectionForCompositeField "issue" [] object_ identity
 
@@ -114,14 +120,18 @@ publishedAt =
 {-| Returns the pull request associated with the comment, if this comment was made on a
 pull request.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
+pullRequest :
+    SelectionSet decodesTo Github.Object.PullRequest
+    -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
 pullRequest object_ =
     Object.selectionForCompositeField "pullRequest" [] object_ (identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Object.IssueComment
+reactionGroups :
+    SelectionSet decodesTo Github.Object.ReactionGroup
+    -> SelectionSet (Maybe (List decodesTo)) Github.Object.IssueComment
 reactionGroups object_ =
     Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
@@ -146,7 +156,10 @@ type alias ReactionsOptionalArguments =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> SelectionSet decodesTo Github.Object.IssueComment
+reactions :
+    (ReactionsOptionalArguments -> ReactionsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ReactionConnection
+    -> SelectionSet decodesTo Github.Object.IssueComment
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -161,7 +174,9 @@ reactions fillInOptionals object_ =
 
 {-| The repository associated with this node.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.IssueComment
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Object.IssueComment
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity
 
@@ -203,7 +218,10 @@ type alias UserContentEditsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
+userContentEdits :
+    (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.UserContentEditConnection
+    -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

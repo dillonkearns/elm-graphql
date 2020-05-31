@@ -71,7 +71,9 @@ id =
 
 {-| A list of reactions grouped by content left on the subject.
 -}
-reactionGroups : SelectionSet decodesTo Github.Object.ReactionGroup -> SelectionSet (Maybe (List decodesTo)) Github.Interface.Reactable
+reactionGroups :
+    SelectionSet decodesTo Github.Object.ReactionGroup
+    -> SelectionSet (Maybe (List decodesTo)) Github.Interface.Reactable
 reactionGroups object_ =
     Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
 
@@ -96,7 +98,10 @@ type alias ReactionsOptionalArguments =
   - orderBy - Allows specifying the order in which reactions are returned.
 
 -}
-reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactionConnection -> SelectionSet decodesTo Github.Interface.Reactable
+reactions :
+    (ReactionsOptionalArguments -> ReactionsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ReactionConnection
+    -> SelectionSet decodesTo Github.Interface.Reactable
 reactions fillInOptionals object_ =
     let
         filledInOptionals =

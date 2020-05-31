@@ -28,6 +28,8 @@ clientMutationId =
 
 {-| The declined topic.
 -}
-topic : SelectionSet decodesTo Github.Object.Topic -> SelectionSet decodesTo Github.Object.DeclineTopicSuggestionPayload
+topic :
+    SelectionSet decodesTo Github.Object.Topic
+    -> SelectionSet decodesTo Github.Object.DeclineTopicSuggestionPayload
 topic object_ =
     Object.selectionForCompositeField "topic" [] object_ identity

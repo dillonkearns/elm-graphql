@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
+actor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
 actor object_ =
     Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
@@ -35,7 +37,9 @@ createdAt =
 
 {-| Identifies the Ref associated with the `head_ref_deleted` event.
 -}
-headRef : SelectionSet decodesTo Github.Object.Ref -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
+headRef :
+    SelectionSet decodesTo Github.Object.Ref
+    -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
 headRef object_ =
     Object.selectionForCompositeField "headRef" [] object_ (identity >> Decode.nullable)
 
@@ -54,6 +58,8 @@ id =
 
 {-| PullRequest referenced by event.
 -}
-pullRequest : SelectionSet decodesTo Github.Object.PullRequest -> SelectionSet decodesTo Github.Object.HeadRefDeletedEvent
+pullRequest :
+    SelectionSet decodesTo Github.Object.PullRequest
+    -> SelectionSet decodesTo Github.Object.HeadRefDeletedEvent
 pullRequest object_ =
     Object.selectionForCompositeField "pullRequest" [] object_ identity

@@ -36,7 +36,9 @@ avatarUrl =
 
 {-| The friends of the droid, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Swapi.Interface.Character -> SelectionSet (List decodesTo) Swapi.Object.Droid
+friends :
+    SelectionSet decodesTo Swapi.Interface.Character
+    -> SelectionSet (List decodesTo) Swapi.Object.Droid
 friends object_ =
     Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 

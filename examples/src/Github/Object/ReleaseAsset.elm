@@ -61,7 +61,9 @@ name =
 
 {-| Release that the asset is associated with
 -}
-release : SelectionSet decodesTo Github.Object.Release -> SelectionSet (Maybe decodesTo) Github.Object.ReleaseAsset
+release :
+    SelectionSet decodesTo Github.Object.Release
+    -> SelectionSet (Maybe decodesTo) Github.Object.ReleaseAsset
 release object_ =
     Object.selectionForCompositeField "release" [] object_ (identity >> Decode.nullable)
 
@@ -82,7 +84,9 @@ updatedAt =
 
 {-| The user that performed the upload
 -}
-uploadedBy : SelectionSet decodesTo Github.Object.User -> SelectionSet decodesTo Github.Object.ReleaseAsset
+uploadedBy :
+    SelectionSet decodesTo Github.Object.User
+    -> SelectionSet decodesTo Github.Object.ReleaseAsset
 uploadedBy object_ =
     Object.selectionForCompositeField "uploadedBy" [] object_ identity
 

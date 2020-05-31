@@ -28,7 +28,9 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarCodecs.Uri Github.Object.Bot
+avatarUrl :
+    (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
+    -> SelectionSet Github.ScalarCodecs.Uri Github.Object.Bot
 avatarUrl fillInOptionals =
     let
         filledInOptionals =

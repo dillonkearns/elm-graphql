@@ -42,7 +42,10 @@ type alias ExternalIdentitiesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-externalIdentities : (ExternalIdentitiesOptionalArguments -> ExternalIdentitiesOptionalArguments) -> SelectionSet decodesTo Github.Object.ExternalIdentityConnection -> SelectionSet decodesTo Github.Object.OrganizationIdentityProvider
+externalIdentities :
+    (ExternalIdentitiesOptionalArguments -> ExternalIdentitiesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ExternalIdentityConnection
+    -> SelectionSet decodesTo Github.Object.OrganizationIdentityProvider
 externalIdentities fillInOptionals object_ =
     let
         filledInOptionals =
@@ -76,7 +79,9 @@ issuer =
 
 {-| Organization this Identity Provider belongs to
 -}
-organization : SelectionSet decodesTo Github.Object.Organization -> SelectionSet (Maybe decodesTo) Github.Object.OrganizationIdentityProvider
+organization :
+    SelectionSet decodesTo Github.Object.Organization
+    -> SelectionSet (Maybe decodesTo) Github.Object.OrganizationIdentityProvider
 organization object_ =
     Object.selectionForCompositeField "organization" [] object_ (identity >> Decode.nullable)
 

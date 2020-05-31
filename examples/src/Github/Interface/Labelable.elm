@@ -63,7 +63,10 @@ type alias LabelsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-labels : (LabelsOptionalArguments -> LabelsOptionalArguments) -> SelectionSet decodesTo Github.Object.LabelConnection -> SelectionSet (Maybe decodesTo) Github.Interface.Labelable
+labels :
+    (LabelsOptionalArguments -> LabelsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.LabelConnection
+    -> SelectionSet (Maybe decodesTo) Github.Interface.Labelable
 labels fillInOptionals object_ =
     let
         filledInOptionals =

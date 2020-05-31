@@ -22,7 +22,9 @@ import Json.Decode as Decode
 
 {-| The commit this status is attached to.
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet (Maybe decodesTo) Github.Object.Status
+commit :
+    SelectionSet decodesTo Github.Object.Commit
+    -> SelectionSet (Maybe decodesTo) Github.Object.Status
 commit object_ =
     Object.selectionForCompositeField "commit" [] object_ (identity >> Decode.nullable)
 
@@ -36,14 +38,19 @@ type alias ContextRequiredArguments =
   - name - The context name.
 
 -}
-context : ContextRequiredArguments -> SelectionSet decodesTo Github.Object.StatusContext -> SelectionSet (Maybe decodesTo) Github.Object.Status
+context :
+    ContextRequiredArguments
+    -> SelectionSet decodesTo Github.Object.StatusContext
+    -> SelectionSet (Maybe decodesTo) Github.Object.Status
 context requiredArgs object_ =
     Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.
 -}
-contexts : SelectionSet decodesTo Github.Object.StatusContext -> SelectionSet (List decodesTo) Github.Object.Status
+contexts :
+    SelectionSet decodesTo Github.Object.StatusContext
+    -> SelectionSet (List decodesTo) Github.Object.Status
 contexts object_ =
     Object.selectionForCompositeField "contexts" [] object_ (identity >> Decode.list)
 

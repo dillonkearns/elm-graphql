@@ -36,7 +36,10 @@ import Graphql.SelectionSet exposing (SelectionSet)
 import Json.Decode as Decode
 
 
-buildAcceptTopicSuggestionInput : AcceptTopicSuggestionInputRequiredFields -> (AcceptTopicSuggestionInputOptionalFields -> AcceptTopicSuggestionInputOptionalFields) -> AcceptTopicSuggestionInput
+buildAcceptTopicSuggestionInput :
+    AcceptTopicSuggestionInputRequiredFields
+    -> (AcceptTopicSuggestionInputOptionalFields -> AcceptTopicSuggestionInputOptionalFields)
+    -> AcceptTopicSuggestionInput
 buildAcceptTopicSuggestionInput required fillOptionals =
     let
         optionals =
@@ -73,7 +76,10 @@ encodeAcceptTopicSuggestionInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
-buildAddCommentInput : AddCommentInputRequiredFields -> (AddCommentInputOptionalFields -> AddCommentInputOptionalFields) -> AddCommentInput
+buildAddCommentInput :
+    AddCommentInputRequiredFields
+    -> (AddCommentInputOptionalFields -> AddCommentInputOptionalFields)
+    -> AddCommentInput
 buildAddCommentInput required fillOptionals =
     let
         optionals =
@@ -110,7 +116,10 @@ encodeAddCommentInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.subjectId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
-buildAddProjectCardInput : AddProjectCardInputRequiredFields -> (AddProjectCardInputOptionalFields -> AddProjectCardInputOptionalFields) -> AddProjectCardInput
+buildAddProjectCardInput :
+    AddProjectCardInputRequiredFields
+    -> (AddProjectCardInputOptionalFields -> AddProjectCardInputOptionalFields)
+    -> AddProjectCardInput
 buildAddProjectCardInput required fillOptionals =
     let
         optionals =
@@ -149,7 +158,10 @@ encodeAddProjectCardInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.projectColumnId |> Just ), ( "contentId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.optional input.contentId ), ( "note", Encode.string |> Encode.optional input.note ) ]
 
 
-buildAddProjectColumnInput : AddProjectColumnInputRequiredFields -> (AddProjectColumnInputOptionalFields -> AddProjectColumnInputOptionalFields) -> AddProjectColumnInput
+buildAddProjectColumnInput :
+    AddProjectColumnInputRequiredFields
+    -> (AddProjectColumnInputOptionalFields -> AddProjectColumnInputOptionalFields)
+    -> AddProjectColumnInput
 buildAddProjectColumnInput required fillOptionals =
     let
         optionals =
@@ -186,7 +198,10 @@ encodeAddProjectColumnInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.projectId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
-buildAddPullRequestReviewCommentInput : AddPullRequestReviewCommentInputRequiredFields -> (AddPullRequestReviewCommentInputOptionalFields -> AddPullRequestReviewCommentInputOptionalFields) -> AddPullRequestReviewCommentInput
+buildAddPullRequestReviewCommentInput :
+    AddPullRequestReviewCommentInputRequiredFields
+    -> (AddPullRequestReviewCommentInputOptionalFields -> AddPullRequestReviewCommentInputOptionalFields)
+    -> AddPullRequestReviewCommentInput
 buildAddPullRequestReviewCommentInput required fillOptionals =
     let
         optionals =
@@ -232,7 +247,10 @@ encodeAddPullRequestReviewCommentInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestReviewId |> Just ), ( "commitOID", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitObjectID) |> Encode.optional input.commitOID ), ( "body", Encode.string input.body |> Just ), ( "path", Encode.string |> Encode.optional input.path ), ( "position", Encode.int |> Encode.optional input.position ), ( "inReplyTo", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.optional input.inReplyTo ) ]
 
 
-buildAddPullRequestReviewInput : AddPullRequestReviewInputRequiredFields -> (AddPullRequestReviewInputOptionalFields -> AddPullRequestReviewInputOptionalFields) -> AddPullRequestReviewInput
+buildAddPullRequestReviewInput :
+    AddPullRequestReviewInputRequiredFields
+    -> (AddPullRequestReviewInputOptionalFields -> AddPullRequestReviewInputOptionalFields)
+    -> AddPullRequestReviewInput
 buildAddPullRequestReviewInput required fillOptionals =
     let
         optionals =
@@ -275,7 +293,10 @@ encodeAddPullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestId |> Just ), ( "commitOID", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitObjectID) |> Encode.optional input.commitOID ), ( "body", Encode.string |> Encode.optional input.body ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString |> Encode.optional input.event ), ( "comments", (encodeDraftPullRequestReviewComment |> Encode.maybe |> Encode.list) |> Encode.optional input.comments ) ]
 
 
-buildAddReactionInput : AddReactionInputRequiredFields -> (AddReactionInputOptionalFields -> AddReactionInputOptionalFields) -> AddReactionInput
+buildAddReactionInput :
+    AddReactionInputRequiredFields
+    -> (AddReactionInputOptionalFields -> AddReactionInputOptionalFields)
+    -> AddReactionInput
 buildAddReactionInput required fillOptionals =
     let
         optionals =
@@ -312,7 +333,10 @@ encodeAddReactionInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
-buildAddStarInput : AddStarInputRequiredFields -> (AddStarInputOptionalFields -> AddStarInputOptionalFields) -> AddStarInput
+buildAddStarInput :
+    AddStarInputRequiredFields
+    -> (AddStarInputOptionalFields -> AddStarInputOptionalFields)
+    -> AddStarInput
 buildAddStarInput required fillOptionals =
     let
         optionals =
@@ -346,7 +370,9 @@ encodeAddStarInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.starrableId |> Just ) ]
 
 
-buildCommitAuthor : (CommitAuthorOptionalFields -> CommitAuthorOptionalFields) -> CommitAuthor
+buildCommitAuthor :
+    (CommitAuthorOptionalFields -> CommitAuthorOptionalFields)
+    -> CommitAuthor
 buildCommitAuthor fillOptionals =
     let
         optionals =
@@ -378,7 +404,10 @@ encodeCommitAuthor input =
         [ ( "id", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list) |> Encode.optional input.emails ) ]
 
 
-buildCreateProjectInput : CreateProjectInputRequiredFields -> (CreateProjectInputOptionalFields -> CreateProjectInputOptionalFields) -> CreateProjectInput
+buildCreateProjectInput :
+    CreateProjectInputRequiredFields
+    -> (CreateProjectInputOptionalFields -> CreateProjectInputOptionalFields)
+    -> CreateProjectInput
 buildCreateProjectInput required fillOptionals =
     let
         optionals =
@@ -418,7 +447,10 @@ encodeCreateProjectInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "ownerId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.ownerId |> Just ), ( "name", Encode.string input.name |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
-buildDeclineTopicSuggestionInput : DeclineTopicSuggestionInputRequiredFields -> (DeclineTopicSuggestionInputOptionalFields -> DeclineTopicSuggestionInputOptionalFields) -> DeclineTopicSuggestionInput
+buildDeclineTopicSuggestionInput :
+    DeclineTopicSuggestionInputRequiredFields
+    -> (DeclineTopicSuggestionInputOptionalFields -> DeclineTopicSuggestionInputOptionalFields)
+    -> DeclineTopicSuggestionInput
 buildDeclineTopicSuggestionInput required fillOptionals =
     let
         optionals =
@@ -457,7 +489,10 @@ encodeDeclineTopicSuggestionInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "repositoryId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.repositoryId |> Just ), ( "name", Encode.string input.name |> Just ), ( "reason", Encode.enum Github.Enum.TopicSuggestionDeclineReason.toString input.reason |> Just ) ]
 
 
-buildDeleteProjectCardInput : DeleteProjectCardInputRequiredFields -> (DeleteProjectCardInputOptionalFields -> DeleteProjectCardInputOptionalFields) -> DeleteProjectCardInput
+buildDeleteProjectCardInput :
+    DeleteProjectCardInputRequiredFields
+    -> (DeleteProjectCardInputOptionalFields -> DeleteProjectCardInputOptionalFields)
+    -> DeleteProjectCardInput
 buildDeleteProjectCardInput required fillOptionals =
     let
         optionals =
@@ -491,7 +526,10 @@ encodeDeleteProjectCardInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.cardId |> Just ) ]
 
 
-buildDeleteProjectColumnInput : DeleteProjectColumnInputRequiredFields -> (DeleteProjectColumnInputOptionalFields -> DeleteProjectColumnInputOptionalFields) -> DeleteProjectColumnInput
+buildDeleteProjectColumnInput :
+    DeleteProjectColumnInputRequiredFields
+    -> (DeleteProjectColumnInputOptionalFields -> DeleteProjectColumnInputOptionalFields)
+    -> DeleteProjectColumnInput
 buildDeleteProjectColumnInput required fillOptionals =
     let
         optionals =
@@ -525,7 +563,10 @@ encodeDeleteProjectColumnInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.columnId |> Just ) ]
 
 
-buildDeleteProjectInput : DeleteProjectInputRequiredFields -> (DeleteProjectInputOptionalFields -> DeleteProjectInputOptionalFields) -> DeleteProjectInput
+buildDeleteProjectInput :
+    DeleteProjectInputRequiredFields
+    -> (DeleteProjectInputOptionalFields -> DeleteProjectInputOptionalFields)
+    -> DeleteProjectInput
 buildDeleteProjectInput required fillOptionals =
     let
         optionals =
@@ -559,7 +600,10 @@ encodeDeleteProjectInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.projectId |> Just ) ]
 
 
-buildDeletePullRequestReviewInput : DeletePullRequestReviewInputRequiredFields -> (DeletePullRequestReviewInputOptionalFields -> DeletePullRequestReviewInputOptionalFields) -> DeletePullRequestReviewInput
+buildDeletePullRequestReviewInput :
+    DeletePullRequestReviewInputRequiredFields
+    -> (DeletePullRequestReviewInputOptionalFields -> DeletePullRequestReviewInputOptionalFields)
+    -> DeletePullRequestReviewInput
 buildDeletePullRequestReviewInput required fillOptionals =
     let
         optionals =
@@ -593,7 +637,10 @@ encodeDeletePullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestReviewId |> Just ) ]
 
 
-buildDismissPullRequestReviewInput : DismissPullRequestReviewInputRequiredFields -> (DismissPullRequestReviewInputOptionalFields -> DismissPullRequestReviewInputOptionalFields) -> DismissPullRequestReviewInput
+buildDismissPullRequestReviewInput :
+    DismissPullRequestReviewInputRequiredFields
+    -> (DismissPullRequestReviewInputOptionalFields -> DismissPullRequestReviewInputOptionalFields)
+    -> DismissPullRequestReviewInput
 buildDismissPullRequestReviewInput required fillOptionals =
     let
         optionals =
@@ -630,7 +677,9 @@ encodeDismissPullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestReviewId |> Just ), ( "message", Encode.string input.message |> Just ) ]
 
 
-buildDraftPullRequestReviewComment : DraftPullRequestReviewCommentRequiredFields -> DraftPullRequestReviewComment
+buildDraftPullRequestReviewComment :
+    DraftPullRequestReviewCommentRequiredFields
+    -> DraftPullRequestReviewComment
 buildDraftPullRequestReviewComment required =
     { path = required.path, position = required.position, body = required.body }
 
@@ -659,7 +708,9 @@ encodeDraftPullRequestReviewComment input =
         [ ( "path", Encode.string input.path |> Just ), ( "position", Encode.int input.position |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
-buildGistOrder : GistOrderRequiredFields -> GistOrder
+buildGistOrder :
+    GistOrderRequiredFields
+    -> GistOrder
 buildGistOrder required =
     { field = required.field, direction = required.direction }
 
@@ -686,7 +737,9 @@ encodeGistOrder input =
         [ ( "field", Encode.enum Github.Enum.GistOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildIssueOrder : IssueOrderRequiredFields -> IssueOrder
+buildIssueOrder :
+    IssueOrderRequiredFields
+    -> IssueOrder
 buildIssueOrder required =
     { field = required.field, direction = required.direction }
 
@@ -713,7 +766,9 @@ encodeIssueOrder input =
         [ ( "field", Encode.enum Github.Enum.IssueOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildLanguageOrder : LanguageOrderRequiredFields -> LanguageOrder
+buildLanguageOrder :
+    LanguageOrderRequiredFields
+    -> LanguageOrder
 buildLanguageOrder required =
     { field = required.field, direction = required.direction }
 
@@ -740,7 +795,10 @@ encodeLanguageOrder input =
         [ ( "field", Encode.enum Github.Enum.LanguageOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildLockLockableInput : LockLockableInputRequiredFields -> (LockLockableInputOptionalFields -> LockLockableInputOptionalFields) -> LockLockableInput
+buildLockLockableInput :
+    LockLockableInputRequiredFields
+    -> (LockLockableInputOptionalFields -> LockLockableInputOptionalFields)
+    -> LockLockableInput
 buildLockLockableInput required fillOptionals =
     let
         optionals =
@@ -777,7 +835,9 @@ encodeLockLockableInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "lockableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.lockableId |> Just ), ( "lockReason", Encode.enum Github.Enum.LockReason.toString |> Encode.optional input.lockReason ) ]
 
 
-buildMilestoneOrder : MilestoneOrderRequiredFields -> MilestoneOrder
+buildMilestoneOrder :
+    MilestoneOrderRequiredFields
+    -> MilestoneOrder
 buildMilestoneOrder required =
     { field = required.field, direction = required.direction }
 
@@ -804,7 +864,10 @@ encodeMilestoneOrder input =
         [ ( "field", Encode.enum Github.Enum.MilestoneOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildMoveProjectCardInput : MoveProjectCardInputRequiredFields -> (MoveProjectCardInputOptionalFields -> MoveProjectCardInputOptionalFields) -> MoveProjectCardInput
+buildMoveProjectCardInput :
+    MoveProjectCardInputRequiredFields
+    -> (MoveProjectCardInputOptionalFields -> MoveProjectCardInputOptionalFields)
+    -> MoveProjectCardInput
 buildMoveProjectCardInput required fillOptionals =
     let
         optionals =
@@ -844,7 +907,10 @@ encodeMoveProjectCardInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "cardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.cardId |> Just ), ( "columnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.columnId |> Just ), ( "afterCardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.optional input.afterCardId ) ]
 
 
-buildMoveProjectColumnInput : MoveProjectColumnInputRequiredFields -> (MoveProjectColumnInputOptionalFields -> MoveProjectColumnInputOptionalFields) -> MoveProjectColumnInput
+buildMoveProjectColumnInput :
+    MoveProjectColumnInputRequiredFields
+    -> (MoveProjectColumnInputOptionalFields -> MoveProjectColumnInputOptionalFields)
+    -> MoveProjectColumnInput
 buildMoveProjectColumnInput required fillOptionals =
     let
         optionals =
@@ -881,7 +947,9 @@ encodeMoveProjectColumnInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "columnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.columnId |> Just ), ( "afterColumnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.optional input.afterColumnId ) ]
 
 
-buildProjectOrder : ProjectOrderRequiredFields -> ProjectOrder
+buildProjectOrder :
+    ProjectOrderRequiredFields
+    -> ProjectOrder
 buildProjectOrder required =
     { field = required.field, direction = required.direction }
 
@@ -908,7 +976,9 @@ encodeProjectOrder input =
         [ ( "field", Encode.enum Github.Enum.ProjectOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildReactionOrder : ReactionOrderRequiredFields -> ReactionOrder
+buildReactionOrder :
+    ReactionOrderRequiredFields
+    -> ReactionOrder
 buildReactionOrder required =
     { field = required.field, direction = required.direction }
 
@@ -935,7 +1005,9 @@ encodeReactionOrder input =
         [ ( "field", Encode.enum Github.Enum.ReactionOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildRefOrder : RefOrderRequiredFields -> RefOrder
+buildRefOrder :
+    RefOrderRequiredFields
+    -> RefOrder
 buildRefOrder required =
     { field = required.field, direction = required.direction }
 
@@ -962,7 +1034,9 @@ encodeRefOrder input =
         [ ( "field", Encode.enum Github.Enum.RefOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildReleaseOrder : ReleaseOrderRequiredFields -> ReleaseOrder
+buildReleaseOrder :
+    ReleaseOrderRequiredFields
+    -> ReleaseOrder
 buildReleaseOrder required =
     { field = required.field, direction = required.direction }
 
@@ -989,7 +1063,10 @@ encodeReleaseOrder input =
         [ ( "field", Encode.enum Github.Enum.ReleaseOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildRemoveOutsideCollaboratorInput : RemoveOutsideCollaboratorInputRequiredFields -> (RemoveOutsideCollaboratorInputOptionalFields -> RemoveOutsideCollaboratorInputOptionalFields) -> RemoveOutsideCollaboratorInput
+buildRemoveOutsideCollaboratorInput :
+    RemoveOutsideCollaboratorInputRequiredFields
+    -> (RemoveOutsideCollaboratorInputOptionalFields -> RemoveOutsideCollaboratorInputOptionalFields)
+    -> RemoveOutsideCollaboratorInput
 buildRemoveOutsideCollaboratorInput required fillOptionals =
     let
         optionals =
@@ -1026,7 +1103,10 @@ encodeRemoveOutsideCollaboratorInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "userId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.userId |> Just ), ( "organizationId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.organizationId |> Just ) ]
 
 
-buildRemoveReactionInput : RemoveReactionInputRequiredFields -> (RemoveReactionInputOptionalFields -> RemoveReactionInputOptionalFields) -> RemoveReactionInput
+buildRemoveReactionInput :
+    RemoveReactionInputRequiredFields
+    -> (RemoveReactionInputOptionalFields -> RemoveReactionInputOptionalFields)
+    -> RemoveReactionInput
 buildRemoveReactionInput required fillOptionals =
     let
         optionals =
@@ -1063,7 +1143,10 @@ encodeRemoveReactionInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subjectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.subjectId |> Just ), ( "content", Encode.enum Github.Enum.ReactionContent.toString input.content |> Just ) ]
 
 
-buildRemoveStarInput : RemoveStarInputRequiredFields -> (RemoveStarInputOptionalFields -> RemoveStarInputOptionalFields) -> RemoveStarInput
+buildRemoveStarInput :
+    RemoveStarInputRequiredFields
+    -> (RemoveStarInputOptionalFields -> RemoveStarInputOptionalFields)
+    -> RemoveStarInput
 buildRemoveStarInput required fillOptionals =
     let
         optionals =
@@ -1097,7 +1180,9 @@ encodeRemoveStarInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "starrableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.starrableId |> Just ) ]
 
 
-buildRepositoryOrder : RepositoryOrderRequiredFields -> RepositoryOrder
+buildRepositoryOrder :
+    RepositoryOrderRequiredFields
+    -> RepositoryOrder
 buildRepositoryOrder required =
     { field = required.field, direction = required.direction }
 
@@ -1124,7 +1209,10 @@ encodeRepositoryOrder input =
         [ ( "field", Encode.enum Github.Enum.RepositoryOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildRequestReviewsInput : RequestReviewsInputRequiredFields -> (RequestReviewsInputOptionalFields -> RequestReviewsInputOptionalFields) -> RequestReviewsInput
+buildRequestReviewsInput :
+    RequestReviewsInputRequiredFields
+    -> (RequestReviewsInputOptionalFields -> RequestReviewsInputOptionalFields)
+    -> RequestReviewsInput
 buildRequestReviewsInput required fillOptionals =
     let
         optionals =
@@ -1165,7 +1253,9 @@ encodeRequestReviewsInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestId |> Just ), ( "userIds", ((Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.list) |> Encode.optional input.userIds ), ( "teamIds", ((Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) |> Encode.list) |> Encode.optional input.teamIds ), ( "union", Encode.bool |> Encode.optional input.union ) ]
 
 
-buildStarOrder : StarOrderRequiredFields -> StarOrder
+buildStarOrder :
+    StarOrderRequiredFields
+    -> StarOrder
 buildStarOrder required =
     { field = required.field, direction = required.direction }
 
@@ -1192,7 +1282,10 @@ encodeStarOrder input =
         [ ( "field", Encode.enum Github.Enum.StarOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildSubmitPullRequestReviewInput : SubmitPullRequestReviewInputRequiredFields -> (SubmitPullRequestReviewInputOptionalFields -> SubmitPullRequestReviewInputOptionalFields) -> SubmitPullRequestReviewInput
+buildSubmitPullRequestReviewInput :
+    SubmitPullRequestReviewInputRequiredFields
+    -> (SubmitPullRequestReviewInputOptionalFields -> SubmitPullRequestReviewInputOptionalFields)
+    -> SubmitPullRequestReviewInput
 buildSubmitPullRequestReviewInput required fillOptionals =
     let
         optionals =
@@ -1232,7 +1325,9 @@ encodeSubmitPullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestReviewId |> Just ), ( "event", Encode.enum Github.Enum.PullRequestReviewEvent.toString input.event |> Just ), ( "body", Encode.string |> Encode.optional input.body ) ]
 
 
-buildTeamOrder : TeamOrderRequiredFields -> TeamOrder
+buildTeamOrder :
+    TeamOrderRequiredFields
+    -> TeamOrder
 buildTeamOrder required =
     { field = required.field, direction = required.direction }
 
@@ -1259,7 +1354,9 @@ encodeTeamOrder input =
         [ ( "field", Encode.enum Github.Enum.TeamOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildTeamRepositoryOrder : TeamRepositoryOrderRequiredFields -> TeamRepositoryOrder
+buildTeamRepositoryOrder :
+    TeamRepositoryOrderRequiredFields
+    -> TeamRepositoryOrder
 buildTeamRepositoryOrder required =
     { field = required.field, direction = required.direction }
 
@@ -1286,7 +1383,10 @@ encodeTeamRepositoryOrder input =
         [ ( "field", Encode.enum Github.Enum.TeamRepositoryOrderField.toString input.field |> Just ), ( "direction", Encode.enum Github.Enum.OrderDirection.toString input.direction |> Just ) ]
 
 
-buildUpdateProjectCardInput : UpdateProjectCardInputRequiredFields -> (UpdateProjectCardInputOptionalFields -> UpdateProjectCardInputOptionalFields) -> UpdateProjectCardInput
+buildUpdateProjectCardInput :
+    UpdateProjectCardInputRequiredFields
+    -> (UpdateProjectCardInputOptionalFields -> UpdateProjectCardInputOptionalFields)
+    -> UpdateProjectCardInput
 buildUpdateProjectCardInput required fillOptionals =
     let
         optionals =
@@ -1323,7 +1423,10 @@ encodeUpdateProjectCardInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectCardId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.projectCardId |> Just ), ( "note", Encode.string input.note |> Just ) ]
 
 
-buildUpdateProjectColumnInput : UpdateProjectColumnInputRequiredFields -> (UpdateProjectColumnInputOptionalFields -> UpdateProjectColumnInputOptionalFields) -> UpdateProjectColumnInput
+buildUpdateProjectColumnInput :
+    UpdateProjectColumnInputRequiredFields
+    -> (UpdateProjectColumnInputOptionalFields -> UpdateProjectColumnInputOptionalFields)
+    -> UpdateProjectColumnInput
 buildUpdateProjectColumnInput required fillOptionals =
     let
         optionals =
@@ -1360,7 +1463,10 @@ encodeUpdateProjectColumnInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectColumnId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.projectColumnId |> Just ), ( "name", Encode.string input.name |> Just ) ]
 
 
-buildUpdateProjectInput : UpdateProjectInputRequiredFields -> (UpdateProjectInputOptionalFields -> UpdateProjectInputOptionalFields) -> UpdateProjectInput
+buildUpdateProjectInput :
+    UpdateProjectInputRequiredFields
+    -> (UpdateProjectInputOptionalFields -> UpdateProjectInputOptionalFields)
+    -> UpdateProjectInput
 buildUpdateProjectInput required fillOptionals =
     let
         optionals =
@@ -1403,7 +1509,10 @@ encodeUpdateProjectInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "projectId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.projectId |> Just ), ( "name", Encode.string |> Encode.optional input.name ), ( "body", Encode.string |> Encode.optional input.body ), ( "state", Encode.enum Github.Enum.ProjectState.toString |> Encode.optional input.state ), ( "public", Encode.bool |> Encode.optional input.public ) ]
 
 
-buildUpdatePullRequestReviewCommentInput : UpdatePullRequestReviewCommentInputRequiredFields -> (UpdatePullRequestReviewCommentInputOptionalFields -> UpdatePullRequestReviewCommentInputOptionalFields) -> UpdatePullRequestReviewCommentInput
+buildUpdatePullRequestReviewCommentInput :
+    UpdatePullRequestReviewCommentInputRequiredFields
+    -> (UpdatePullRequestReviewCommentInputOptionalFields -> UpdatePullRequestReviewCommentInputOptionalFields)
+    -> UpdatePullRequestReviewCommentInput
 buildUpdatePullRequestReviewCommentInput required fillOptionals =
     let
         optionals =
@@ -1440,7 +1549,10 @@ encodeUpdatePullRequestReviewCommentInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestReviewCommentId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
-buildUpdatePullRequestReviewInput : UpdatePullRequestReviewInputRequiredFields -> (UpdatePullRequestReviewInputOptionalFields -> UpdatePullRequestReviewInputOptionalFields) -> UpdatePullRequestReviewInput
+buildUpdatePullRequestReviewInput :
+    UpdatePullRequestReviewInputRequiredFields
+    -> (UpdatePullRequestReviewInputOptionalFields -> UpdatePullRequestReviewInputOptionalFields)
+    -> UpdatePullRequestReviewInput
 buildUpdatePullRequestReviewInput required fillOptionals =
     let
         optionals =
@@ -1477,7 +1589,10 @@ encodeUpdatePullRequestReviewInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.pullRequestReviewId |> Just ), ( "body", Encode.string input.body |> Just ) ]
 
 
-buildUpdateSubscriptionInput : UpdateSubscriptionInputRequiredFields -> (UpdateSubscriptionInputOptionalFields -> UpdateSubscriptionInputOptionalFields) -> UpdateSubscriptionInput
+buildUpdateSubscriptionInput :
+    UpdateSubscriptionInputRequiredFields
+    -> (UpdateSubscriptionInputOptionalFields -> UpdateSubscriptionInputOptionalFields)
+    -> UpdateSubscriptionInput
 buildUpdateSubscriptionInput required fillOptionals =
     let
         optionals =
@@ -1514,7 +1629,10 @@ encodeUpdateSubscriptionInput input =
         [ ( "clientMutationId", Encode.string |> Encode.optional input.clientMutationId ), ( "subscribableId", (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId) input.subscribableId |> Just ), ( "state", Encode.enum Github.Enum.SubscriptionState.toString input.state |> Just ) ]
 
 
-buildUpdateTopicsInput : UpdateTopicsInputRequiredFields -> (UpdateTopicsInputOptionalFields -> UpdateTopicsInputOptionalFields) -> UpdateTopicsInput
+buildUpdateTopicsInput :
+    UpdateTopicsInputRequiredFields
+    -> (UpdateTopicsInputOptionalFields -> UpdateTopicsInputOptionalFields)
+    -> UpdateTopicsInput
 buildUpdateTopicsInput required fillOptionals =
     let
         optionals =
