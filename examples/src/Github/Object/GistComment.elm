@@ -23,7 +23,9 @@ import Json.Decode as Decode
 
 {-| The actor who authored the comment.
 -}
-author : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
+author :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 author object_ =
     Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
 
@@ -72,14 +74,18 @@ databaseId =
 
 {-| The actor who edited the comment.
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
+editor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 
 
 {-| The associated gist.
 -}
-gist : SelectionSet decodesTo Github.Object.Gist -> SelectionSet decodesTo Github.Object.GistComment
+gist :
+    SelectionSet decodesTo Github.Object.Gist
+    -> SelectionSet decodesTo Github.Object.GistComment
 gist object_ =
     Object.selectionForCompositeField "gist" [] object_ identity
 
@@ -126,7 +132,10 @@ type alias UserContentEditsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments) -> SelectionSet decodesTo Github.Object.UserContentEditConnection -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
+userContentEdits :
+    (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.UserContentEditConnection
+    -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

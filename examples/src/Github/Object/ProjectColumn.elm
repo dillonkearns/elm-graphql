@@ -35,7 +35,10 @@ type alias CardsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-cards : (CardsOptionalArguments -> CardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> SelectionSet decodesTo Github.Object.ProjectColumn
+cards :
+    (CardsOptionalArguments -> CardsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ProjectCardConnection
+    -> SelectionSet decodesTo Github.Object.ProjectColumn
 cards fillInOptionals object_ =
     let
         filledInOptionals =
@@ -76,7 +79,9 @@ name =
 
 {-| The project that contains this column.
 -}
-project : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.ProjectColumn
+project :
+    SelectionSet decodesTo Github.Object.Project
+    -> SelectionSet decodesTo Github.Object.ProjectColumn
 project object_ =
     Object.selectionForCompositeField "project" [] object_ identity
 

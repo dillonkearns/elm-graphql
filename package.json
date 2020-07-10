@@ -1,6 +1,6 @@
 {
   "name": "@dillonkearns/elm-graphql",
-  "version": "4.0.0",
+  "version": "4.0.3",
   "files": [
     "dist/bundle.js",
     "bin/elm-graphql"
@@ -33,8 +33,8 @@
     "@types/request": "^2.48.1",
     "elm": "latest-0.19.1",
     "elm-analyse": "^0.16.4",
-    "elm-format": "^0.8.1",
-    "elm-hot": "^1.0.1",
+    "elm-format": "0.8.3",
+    "elm-hot": "^1.1.4",
     "elm-hot-loader": "0.5.4",
     "elm-live": "3.4.0",
     "elm-test": "latest-0.19.1",

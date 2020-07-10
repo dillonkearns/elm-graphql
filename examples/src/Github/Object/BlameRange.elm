@@ -28,7 +28,9 @@ age =
 
 {-| Identifies the line author
 -}
-commit : SelectionSet decodesTo Github.Object.Commit -> SelectionSet decodesTo Github.Object.BlameRange
+commit :
+    SelectionSet decodesTo Github.Object.Commit
+    -> SelectionSet decodesTo Github.Object.BlameRange
 commit object_ =
     Object.selectionForCompositeField "commit" [] object_ identity
 

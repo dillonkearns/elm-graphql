@@ -34,6 +34,8 @@ name =
 {-| A list of related topics, including aliases of this topic, sorted with the most relevant
 first.
 -}
-relatedTopics : SelectionSet decodesTo Github.Object.Topic -> SelectionSet (List decodesTo) Github.Object.Topic
+relatedTopics :
+    SelectionSet decodesTo Github.Object.Topic
+    -> SelectionSet (List decodesTo) Github.Object.Topic
 relatedTopics object_ =
     Object.selectionForCompositeField "relatedTopics" [] object_ (identity >> Decode.list)

@@ -46,7 +46,10 @@ type alias AssociatedPullRequestsOptionalArguments =
   - orderBy - Ordering options for pull requests returned from the connection.
 
 -}
-associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments) -> SelectionSet decodesTo Github.Object.PullRequestConnection -> SelectionSet decodesTo Github.Object.Ref
+associatedPullRequests :
+    (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.PullRequestConnection
+    -> SelectionSet decodesTo Github.Object.Ref
 associatedPullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -80,13 +83,17 @@ prefix =
 
 {-| The repository the ref belongs to.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.Ref
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Object.Ref
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity
 
 
 {-| The object the ref points to.
 -}
-target : SelectionSet decodesTo Github.Interface.GitObject -> SelectionSet decodesTo Github.Object.Ref
+target :
+    SelectionSet decodesTo Github.Interface.GitObject
+    -> SelectionSet decodesTo Github.Object.Ref
 target object_ =
     Object.selectionForCompositeField "target" [] object_ identity

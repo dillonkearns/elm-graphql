@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   to the Elm compiler that you would like to use for verifying your custom scalar
   codecs. By default, the CLI will use the Elm compiler (`elm`) in your PATH.
 
+## [4.0.3] - 2020-05-31
+
+### Changed
+- Use vertical formatting for function type annotations. Thanks to @sporto for the PR! See [#351](https://github.com/dillonkearns/elm-graphql/pull/351).
+
+## [4.0.2] - 2020-03-04
+
+### Fixed
+- Fixed CLI stalling when schema had field names with only `_`s (fixes [#285](https://github.com/dillonkearns/elm-graphql/issues/285)). The generated field names will be prefixed with `underscore` (see details in [#311](https://github.com/dillonkearns/elm-graphql/pull/311)).
+
+## [4.0.1] - 2020-02-10
+
 ### Fixed
 - Suppressed Elm's compiled in dev mode warning, see [#278](https://github.com/dillonkearns/elm-graphql/pull/278). Thank you [@jouderianjr](https://github.com/jouderianjr)!!!
 

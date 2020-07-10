@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Interface.Character exposing (Fragments, appearsIn, fragments, friends, id, maybeFragments, name)
+module Normalize.Interface.Character exposing (..)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -57,7 +57,9 @@ appearsIn =
 
 {-| The friends of the character, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Interface.Character
+friends :
+    SelectionSet decodesTo Normalize.Interface.Character
+    -> SelectionSet (List decodesTo) Normalize.Interface.Character
 friends object_ =
     Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 

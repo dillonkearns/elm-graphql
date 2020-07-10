@@ -128,7 +128,7 @@ with record constructors!
 Since both single fields and collections of fields are `SelectionSet`s in `dillonkearns/elm-graphql`,
 you can easily pull in sub-`SelectionSet`s to your queries. Just treat it like you would a regular field.
 
-This is analagous to using a [fragment in plain GraphQL](https://graphql.org/learn/queries/#fragments).
+This is analogous to using a [fragment in plain GraphQL](https://graphql.org/learn/queries/#fragments).
 This is a handy tool for modularizing your GraphQL queries.
 
 Let's say we want to query Github's GraphQL API like this:
@@ -546,7 +546,7 @@ with (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFi
         )
 
 
-{-| Include a hardcoded value. This is used analagously to `with` to add values
+{-| Include a hardcoded value. This is used analogously to `with` to add values
 into a pipeline.
 
         import StarWars.Enum.Episode as Episode exposing (Episode)

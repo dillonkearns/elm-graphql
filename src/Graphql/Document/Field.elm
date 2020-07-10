@@ -107,8 +107,8 @@ serializeChildren : Maybe Int -> List RawField -> String
 serializeChildren indentationLevel children =
     children
         |> nonemptyChildren
-        |> List.indexedMap
-            (\index field ->
+        |> List.map
+            (\field ->
                 serialize (alias field) (indentationLevel |> Maybe.map ((+) 1)) field
             )
         |> List.filterMap identity

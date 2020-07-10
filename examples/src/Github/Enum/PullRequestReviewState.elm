@@ -55,7 +55,7 @@ decoder =
             )
 
 
-{-| Convert from the union type representating the Enum to a string that the GraphQL server will recognize.
+{-| Convert from the union type representing the Enum to a string that the GraphQL server will recognize.
 -}
 toString : PullRequestReviewState -> String
 toString enum =

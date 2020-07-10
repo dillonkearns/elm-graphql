@@ -12,6 +12,14 @@ all =
             \() ->
                 Normalize.decapitalized "validCamelCaseName"
                     |> Expect.equal "validCamelCaseName"
+        , test "adds the word 'underscore' in front a single _ to make it a valid identifier" <|
+            \() ->
+                Normalize.decapitalized "_"
+                    |> Expect.equal "underscore_"
+        , test "adds the word 'underscore' in front of underscore-only names with multiple underscores" <|
+            \() ->
+                Normalize.decapitalized "__"
+                    |> Expect.equal "underscore__"
         , test "leaves valid snake_case names untouched" <|
             \() ->
                 Normalize.decapitalized "year_budget"

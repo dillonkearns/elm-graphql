@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| The edge from the ProjectColumn's card connection.
 -}
-cardEdge : SelectionSet decodesTo Github.Object.ProjectCardEdge -> SelectionSet decodesTo Github.Object.AddProjectCardPayload
+cardEdge :
+    SelectionSet decodesTo Github.Object.ProjectCardEdge
+    -> SelectionSet decodesTo Github.Object.AddProjectCardPayload
 cardEdge object_ =
     Object.selectionForCompositeField "cardEdge" [] object_ identity
 
@@ -35,6 +37,8 @@ clientMutationId =
 
 {-| The ProjectColumn
 -}
-projectColumn : SelectionSet decodesTo Github.Object.Project -> SelectionSet decodesTo Github.Object.AddProjectCardPayload
+projectColumn :
+    SelectionSet decodesTo Github.Object.Project
+    -> SelectionSet decodesTo Github.Object.AddProjectCardPayload
 projectColumn object_ =
     Object.selectionForCompositeField "projectColumn" [] object_ identity

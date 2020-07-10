@@ -4,7 +4,7 @@ module Graphql.Internal.Encode exposing
     , Value
     )
 
-{-| **WARNING** `Graphql.Interal` modules are used by the `@dillonkearns/elm-graphql` command line
+{-| **WARNING** `Graphql.Internal` modules are used by the `@dillonkearns/elm-graphql` command line
 code generator tool. They should not be consumed through hand-written code.
 
 `Graphql.Internal.Encode.Value`s are low-level details used by generated code.

@@ -28,7 +28,9 @@ body =
 
 {-| The conditions set by the license
 -}
-conditions : SelectionSet decodesTo Github.Object.LicenseRule -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
+conditions :
+    SelectionSet decodesTo Github.Object.LicenseRule
+    -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
 conditions object_ =
     Object.selectionForCompositeField "conditions" [] object_ (identity >> Decode.nullable >> Decode.list)
 
@@ -75,7 +77,9 @@ key =
 
 {-| The limitations set by the license
 -}
-limitations : SelectionSet decodesTo Github.Object.LicenseRule -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
+limitations :
+    SelectionSet decodesTo Github.Object.LicenseRule
+    -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
 limitations object_ =
     Object.selectionForCompositeField "limitations" [] object_ (identity >> Decode.nullable >> Decode.list)
 
@@ -96,7 +100,9 @@ nickname =
 
 {-| The permissions set by the license
 -}
-permissions : SelectionSet decodesTo Github.Object.LicenseRule -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
+permissions :
+    SelectionSet decodesTo Github.Object.LicenseRule
+    -> SelectionSet (List (Maybe decodesTo)) Github.Object.License
 permissions object_ =
     Object.selectionForCompositeField "permissions" [] object_ (identity >> Decode.nullable >> Decode.list)
 

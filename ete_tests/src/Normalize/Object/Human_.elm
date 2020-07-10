@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.Object.Human_ exposing (appearsIn, friends, homePlanet, id, name)
+module Normalize.Object.Human_ exposing (..)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -29,7 +29,9 @@ appearsIn =
 
 {-| The friends of the human, or an empty list if they have none.
 -}
-friends : SelectionSet decodesTo Normalize.Interface.Character -> SelectionSet (List decodesTo) Normalize.Object.Human_
+friends :
+    SelectionSet decodesTo Normalize.Interface.Character
+    -> SelectionSet (List decodesTo) Normalize.Object.Human_
 friends object_ =
     Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
 

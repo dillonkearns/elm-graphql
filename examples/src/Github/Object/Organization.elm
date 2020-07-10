@@ -33,7 +33,9 @@ type alias AvatarUrlOptionalArguments =
   - size - The size of the resulting square image.
 
 -}
-avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments) -> SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
+avatarUrl :
+    (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
+    -> SelectionSet Github.ScalarCodecs.Uri Github.Object.Organization
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -102,7 +104,10 @@ type alias MembersOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-members : (MembersOptionalArguments -> MembersOptionalArguments) -> SelectionSet decodesTo Github.Object.UserConnection -> SelectionSet decodesTo Github.Object.Organization
+members :
+    (MembersOptionalArguments -> MembersOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.UserConnection
+    -> SelectionSet decodesTo Github.Object.Organization
 members fillInOptionals object_ =
     let
         filledInOptionals =
@@ -167,7 +172,10 @@ type alias PinnedRepositoriesOptionalArguments =
   - isLocked - If non-null, filters repositories according to whether they have been locked
 
 -}
-pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Object.Organization
+pinnedRepositories :
+    (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
+    -> SelectionSet decodesTo Github.Object.Organization
 pinnedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -189,7 +197,10 @@ type alias ProjectRequiredArguments =
   - number - The project number to find.
 
 -}
-project : ProjectRequiredArguments -> SelectionSet decodesTo Github.Object.Project -> SelectionSet (Maybe decodesTo) Github.Object.Organization
+project :
+    ProjectRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Project
+    -> SelectionSet (Maybe decodesTo) Github.Object.Organization
 project requiredArgs object_ =
     Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
 
@@ -216,7 +227,10 @@ type alias ProjectsOptionalArguments =
   - states - A list of states to filter the projects by.
 
 -}
-projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectConnection -> SelectionSet decodesTo Github.Object.Organization
+projects :
+    (ProjectsOptionalArguments -> ProjectsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ProjectConnection
+    -> SelectionSet decodesTo Github.Object.Organization
 projects fillInOptionals object_ =
     let
         filledInOptionals =
@@ -269,7 +283,10 @@ type alias RepositoriesOptionalArguments =
   - isFork - If non-null, filters repositories according to whether they are forks of another repository
 
 -}
-repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments) -> SelectionSet decodesTo Github.Object.RepositoryConnection -> SelectionSet decodesTo Github.Object.Organization
+repositories :
+    (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.RepositoryConnection
+    -> SelectionSet decodesTo Github.Object.Organization
 repositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -291,7 +308,10 @@ type alias RepositoryRequiredArguments =
   - name - Name of Repository to find.
 
 -}
-repository : RepositoryRequiredArguments -> SelectionSet decodesTo Github.Object.Repository -> SelectionSet (Maybe decodesTo) Github.Object.Organization
+repository :
+    RepositoryRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet (Maybe decodesTo) Github.Object.Organization
 repository requiredArgs object_ =
     Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -305,7 +325,9 @@ resourcePath =
 
 {-| The Organization's SAML Identity Providers
 -}
-samlIdentityProvider : SelectionSet decodesTo Github.Object.OrganizationIdentityProvider -> SelectionSet (Maybe decodesTo) Github.Object.Organization
+samlIdentityProvider :
+    SelectionSet decodesTo Github.Object.OrganizationIdentityProvider
+    -> SelectionSet (Maybe decodesTo) Github.Object.Organization
 samlIdentityProvider object_ =
     Object.selectionForCompositeField "samlIdentityProvider" [] object_ (identity >> Decode.nullable)
 
@@ -319,7 +341,10 @@ type alias TeamRequiredArguments =
   - slug - The name or slug of the team to find.
 
 -}
-team : TeamRequiredArguments -> SelectionSet decodesTo Github.Object.Team -> SelectionSet (Maybe decodesTo) Github.Object.Organization
+team :
+    TeamRequiredArguments
+    -> SelectionSet decodesTo Github.Object.Team
+    -> SelectionSet (Maybe decodesTo) Github.Object.Organization
 team requiredArgs object_ =
     Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs.slug Encode.string ] object_ (identity >> Decode.nullable)
 
@@ -354,7 +379,10 @@ type alias TeamsOptionalArguments =
   - rootTeamsOnly - If true, restrict to only root teams
 
 -}
-teams : (TeamsOptionalArguments -> TeamsOptionalArguments) -> SelectionSet decodesTo Github.Object.TeamConnection -> SelectionSet decodesTo Github.Object.Organization
+teams :
+    (TeamsOptionalArguments -> TeamsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.TeamConnection
+    -> SelectionSet decodesTo Github.Object.Organization
 teams fillInOptionals object_ =
     let
         filledInOptionals =

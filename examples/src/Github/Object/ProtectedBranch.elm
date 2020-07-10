@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| The actor who created this protected branch.
 -}
-creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.ProtectedBranch
+creator :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.ProtectedBranch
 creator object_ =
     Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
 
@@ -103,7 +105,10 @@ type alias PushAllowancesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.PushAllowanceConnection -> SelectionSet decodesTo Github.Object.ProtectedBranch
+pushAllowances :
+    (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.PushAllowanceConnection
+    -> SelectionSet decodesTo Github.Object.ProtectedBranch
 pushAllowances fillInOptionals object_ =
     let
         filledInOptionals =
@@ -118,7 +123,9 @@ pushAllowances fillInOptionals object_ =
 
 {-| The repository associated with this protected branch.
 -}
-repository : SelectionSet decodesTo Github.Object.Repository -> SelectionSet decodesTo Github.Object.ProtectedBranch
+repository :
+    SelectionSet decodesTo Github.Object.Repository
+    -> SelectionSet decodesTo Github.Object.ProtectedBranch
 repository object_ =
     Object.selectionForCompositeField "repository" [] object_ identity
 
@@ -146,7 +153,10 @@ type alias ReviewDismissalAllowancesOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments) -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection -> SelectionSet decodesTo Github.Object.ProtectedBranch
+reviewDismissalAllowances :
+    (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection
+    -> SelectionSet decodesTo Github.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals object_ =
     let
         filledInOptionals =

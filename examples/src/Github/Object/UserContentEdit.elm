@@ -28,7 +28,9 @@ createdAt =
 
 {-| The actor who edited this content,
 -}
-editor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.UserContentEdit
+editor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.UserContentEdit
 editor object_ =
     Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
 

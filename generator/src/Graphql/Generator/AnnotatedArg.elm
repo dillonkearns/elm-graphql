@@ -30,7 +30,7 @@ toString functionName { args, returnAnnotation } =
         typeAnnotation =
             interpolate "{0} : {1}"
                 [ functionName
-                , annotations |> String.join " -> "
+                , annotations |> String.join "\n-> "
                 ]
 
         parameterNames =

@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module Normalize.InputObject exposing (CircularOne(..), CircularOneOptionalFields, CircularOneRaw, CircularTwo(..), CircularTwoOptionalFields, CircularTwoRaw, Greeting, GreetingOptionalFields, GreetingOptions, GreetingOptionsOptionalFields, GreetingRequiredFields, Recursive(..), RecursiveOptionalFields, RecursiveRaw, ReservedWord, ReservedWordRequiredFields, buildCircularOne, buildCircularTwo, buildGreeting, buildGreetingOptions, buildRecursive, buildReservedWord, encodeCircularOne, encodeCircularTwo, encodeGreeting, encodeGreetingOptions, encodeRecursive, encodeReservedWord)
+module Normalize.InputObject exposing (..)
 
 import Graphql.Internal.Builder.Argument as Argument exposing (Argument)
 import Graphql.Internal.Builder.Object as Object
@@ -18,7 +18,9 @@ import Normalize.ScalarCodecs
 import Normalize.Union
 
 
-buildCircularOne : (CircularOneOptionalFields -> CircularOneOptionalFields) -> CircularOne
+buildCircularOne :
+    (CircularOneOptionalFields -> CircularOneOptionalFields)
+    -> CircularOne
 buildCircularOne fillOptionals =
     let
         optionals =
@@ -55,7 +57,9 @@ encodeCircularOne (CircularOne input) =
         [ ( "circularTwo", encodeCircularTwo |> Encode.optional input.circularTwo ) ]
 
 
-buildCircularTwo : (CircularTwoOptionalFields -> CircularTwoOptionalFields) -> CircularTwo
+buildCircularTwo :
+    (CircularTwoOptionalFields -> CircularTwoOptionalFields)
+    -> CircularTwo
 buildCircularTwo fillOptionals =
     let
         optionals =
@@ -92,7 +96,10 @@ encodeCircularTwo (CircularTwo input) =
         [ ( "circularOne", encodeCircularOne |> Encode.optional input.circularOne ) ]
 
 
-buildGreeting : GreetingRequiredFields -> (GreetingOptionalFields -> GreetingOptionalFields) -> Greeting
+buildGreeting :
+    GreetingRequiredFields
+    -> (GreetingOptionalFields -> GreetingOptionalFields)
+    -> Greeting
 buildGreeting required fillOptionals =
     let
         optionals =
@@ -129,7 +136,9 @@ encodeGreeting input =
         [ ( "language", Encode.enum Normalize.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
 
 
-buildGreetingOptions : (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields) -> GreetingOptions
+buildGreetingOptions :
+    (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields)
+    -> GreetingOptions
 buildGreetingOptions fillOptionals =
     let
         optionals =
@@ -157,7 +166,9 @@ encodeGreetingOptions input =
         [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
 
 
-buildRecursive : (RecursiveOptionalFields -> RecursiveOptionalFields) -> Recursive
+buildRecursive :
+    (RecursiveOptionalFields -> RecursiveOptionalFields)
+    -> Recursive
 buildRecursive fillOptionals =
     let
         optionals =
@@ -194,7 +205,9 @@ encodeRecursive (Recursive input) =
         [ ( "recursive", encodeRecursive |> Encode.optional input.recursive ) ]
 
 
-buildReservedWord : ReservedWordRequiredFields -> ReservedWord
+buildReservedWord :
+    ReservedWordRequiredFields
+    -> ReservedWord
 buildReservedWord required =
     { type_ = required.type_ }
 

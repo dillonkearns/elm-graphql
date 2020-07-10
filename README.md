@@ -49,7 +49,7 @@ query =
     Query.human { id = Id "1001" } humanSelection
 
 
-type alias Human =
+type alias HumanData =
     { name : String
     , homePlanet : Maybe String
     }
@@ -57,7 +57,7 @@ type alias Human =
 
 humanSelection : SelectionSet Human StarWars.Object.Human
 humanSelection =
-    SelectionSet.map2 Human
+    SelectionSet.map2 HumanData
         Human.name
         Human.homePlanet
 ```
@@ -96,7 +96,6 @@ elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/
 - My 10-minute video tutorial on how to leverage Custom Scalars in `elm-graphql` using the Scalar Codecs feature.
   [![Scalar Codecs Tutorial](./assets/scalar-codecs-tutorial.png)](https://incrementalelm.com/scalar-codecs-tutorial)
 
-* There are a couple of chapters so far in [The Official `dillonkearns/elm-graphql` Gitbook](https://dillonkearns.gitbooks.io/elm-graphql/content/)
 * [A Beginner's Guide to GraphQL with Elm](https://medium.com/@zenitram.oiram/a-beginners-guide-to-graphql-with-elm-315b580f0aad) by [@martimatix](https://github.com/martimatix)
 * [Graphqelm: Optional Arguments in a Language Without Optional Arguments](https://medium.com/@zenitram.oiram/graphqelm-optional-arguments-in-a-language-without-optional-arguments-d8074ca3cf74) by [@martimatix](https://github.com/martimatix)
 * [Comprehensive tutorial by the Hasura Team](https://learn.hasura.io/graphql/elm-graphql/introduction)
@@ -144,7 +143,7 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 You can do real-time APIs using GraphQL Subscriptions and `dillonkearns/elm-graphql`.
 Just wire in the framework-specific JavaScript code for opening the WebSocket connection
 through a port. Here's a [live demo](http://www.dillonkearns.com/elm-graphql/) and its
-[source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/src/subscription). The [demo server is running Elixir/Absinthe](https://github.com/dillonkearns/graphqelm-demo).
+[source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/subscription). The [demo server is running Elixir/Absinthe](https://github.com/dillonkearns/graphqelm-demo).
 
 ## Contributors
 

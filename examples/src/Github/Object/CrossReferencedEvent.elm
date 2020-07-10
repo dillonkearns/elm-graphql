@@ -21,7 +21,9 @@ import Json.Decode as Decode
 
 {-| Identifies the actor who performed the event.
 -}
-actor : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.CrossReferencedEvent
+actor :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.CrossReferencedEvent
 actor object_ =
     Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
 
@@ -61,14 +63,18 @@ resourcePath =
 
 {-| Issue or pull request that made the reference.
 -}
-source : SelectionSet decodesTo Github.Union.ReferencedSubject -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
+source :
+    SelectionSet decodesTo Github.Union.ReferencedSubject
+    -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
 source object_ =
     Object.selectionForCompositeField "source" [] object_ identity
 
 
 {-| Issue or pull request to which the reference was made.
 -}
-target : SelectionSet decodesTo Github.Union.ReferencedSubject -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
+target :
+    SelectionSet decodesTo Github.Union.ReferencedSubject
+    -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
 target object_ =
     Object.selectionForCompositeField "target" [] object_ identity
 

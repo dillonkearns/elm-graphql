@@ -28,6 +28,8 @@ clientMutationId =
 
 {-| The new edge of the moved column.
 -}
-columnEdge : SelectionSet decodesTo Github.Object.ProjectColumnEdge -> SelectionSet decodesTo Github.Object.MoveProjectColumnPayload
+columnEdge :
+    SelectionSet decodesTo Github.Object.ProjectColumnEdge
+    -> SelectionSet decodesTo Github.Object.MoveProjectColumnPayload
 columnEdge object_ =
     Object.selectionForCompositeField "columnEdge" [] object_ identity

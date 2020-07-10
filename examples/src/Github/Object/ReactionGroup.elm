@@ -36,7 +36,9 @@ createdAt =
 
 {-| The subject that was reacted to.
 -}
-subject : SelectionSet decodesTo Github.Interface.Reactable -> SelectionSet decodesTo Github.Object.ReactionGroup
+subject :
+    SelectionSet decodesTo Github.Interface.Reactable
+    -> SelectionSet decodesTo Github.Object.ReactionGroup
 subject object_ =
     Object.selectionForCompositeField "subject" [] object_ identity
 
@@ -57,7 +59,10 @@ type alias UsersOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-users : (UsersOptionalArguments -> UsersOptionalArguments) -> SelectionSet decodesTo Github.Object.ReactingUserConnection -> SelectionSet decodesTo Github.Object.ReactionGroup
+users :
+    (UsersOptionalArguments -> UsersOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ReactingUserConnection
+    -> SelectionSet decodesTo Github.Object.ReactionGroup
 users fillInOptionals object_ =
     let
         filledInOptionals =

@@ -180,7 +180,9 @@ type alias LogoUrlOptionalArguments =
   - size - The size in pixels of the resulting square image.
 
 -}
-logoUrl : (LogoUrlOptionalArguments -> LogoUrlOptionalArguments) -> SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.MarketplaceListing
+logoUrl :
+    (LogoUrlOptionalArguments -> LogoUrlOptionalArguments)
+    -> SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.MarketplaceListing
 logoUrl fillInOptionals =
     let
         filledInOptionals =
@@ -216,7 +218,9 @@ pricingUrl =
 
 {-| The category that best describes the listing.
 -}
-primaryCategory : SelectionSet decodesTo Github.Object.MarketplaceCategory -> SelectionSet decodesTo Github.Object.MarketplaceListing
+primaryCategory :
+    SelectionSet decodesTo Github.Object.MarketplaceCategory
+    -> SelectionSet decodesTo Github.Object.MarketplaceListing
 primaryCategory object_ =
     Object.selectionForCompositeField "primaryCategory" [] object_ identity
 
@@ -244,7 +248,9 @@ screenshotUrls =
 
 {-| An alternate category that describes the listing.
 -}
-secondaryCategory : SelectionSet decodesTo Github.Object.MarketplaceCategory -> SelectionSet (Maybe decodesTo) Github.Object.MarketplaceListing
+secondaryCategory :
+    SelectionSet decodesTo Github.Object.MarketplaceCategory
+    -> SelectionSet (Maybe decodesTo) Github.Object.MarketplaceListing
 secondaryCategory object_ =
     Object.selectionForCompositeField "secondaryCategory" [] object_ (identity >> Decode.nullable)
 

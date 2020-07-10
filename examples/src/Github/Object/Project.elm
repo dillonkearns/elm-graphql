@@ -64,7 +64,10 @@ type alias ColumnsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-columns : (ColumnsOptionalArguments -> ColumnsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectColumnConnection -> SelectionSet decodesTo Github.Object.Project
+columns :
+    (ColumnsOptionalArguments -> ColumnsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ProjectColumnConnection
+    -> SelectionSet decodesTo Github.Object.Project
 columns fillInOptionals object_ =
     let
         filledInOptionals =
@@ -86,7 +89,9 @@ createdAt =
 
 {-| The actor who originally created the project.
 -}
-creator : SelectionSet decodesTo Github.Interface.Actor -> SelectionSet (Maybe decodesTo) Github.Object.Project
+creator :
+    SelectionSet decodesTo Github.Interface.Actor
+    -> SelectionSet (Maybe decodesTo) Github.Object.Project
 creator object_ =
     Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
 
@@ -119,7 +124,9 @@ number =
 
 {-| The project's owner. Currently limited to repositories and organizations.
 -}
-owner : SelectionSet decodesTo Github.Interface.ProjectOwner -> SelectionSet decodesTo Github.Object.Project
+owner :
+    SelectionSet decodesTo Github.Interface.ProjectOwner
+    -> SelectionSet decodesTo Github.Object.Project
 owner object_ =
     Object.selectionForCompositeField "owner" [] object_ identity
 
@@ -140,7 +147,10 @@ type alias PendingCardsOptionalArguments =
   - before - Returns the elements in the list that come before the specified global ID.
 
 -}
-pendingCards : (PendingCardsOptionalArguments -> PendingCardsOptionalArguments) -> SelectionSet decodesTo Github.Object.ProjectCardConnection -> SelectionSet decodesTo Github.Object.Project
+pendingCards :
+    (PendingCardsOptionalArguments -> PendingCardsOptionalArguments)
+    -> SelectionSet decodesTo Github.Object.ProjectCardConnection
+    -> SelectionSet decodesTo Github.Object.Project
 pendingCards fillInOptionals object_ =
     let
         filledInOptionals =

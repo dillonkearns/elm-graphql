@@ -28,7 +28,9 @@ clientMutationId =
 
 {-| The column the deleted card was in.
 -}
-column : SelectionSet decodesTo Github.Object.ProjectColumn -> SelectionSet decodesTo Github.Object.DeleteProjectCardPayload
+column :
+    SelectionSet decodesTo Github.Object.ProjectColumn
+    -> SelectionSet decodesTo Github.Object.DeleteProjectCardPayload
 column object_ =
     Object.selectionForCompositeField "column" [] object_ identity
 
