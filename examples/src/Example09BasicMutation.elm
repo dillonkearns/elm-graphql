@@ -8,13 +8,22 @@ import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Helpers.Main
 import RemoteData exposing (RemoteData)
 import Swapi.Enum.Phrase exposing (Phrase(..))
+import Swapi.Interface
+import Swapi.Interface.Character
 import Swapi.Mutation as Mutation exposing (SendMessageRequiredArguments)
 import Swapi.Object as Object exposing (ChatMessage)
 import Swapi.Object.ChatMessage as ObjChat
 
 
+type alias Character =
+    { name : String
+    , avatarUrl : String
+    }
+
+
 type alias ChatMessage =
     { phrase : Phrase
+    , character : Maybe Character
     }
 
 
@@ -24,8 +33,16 @@ type alias Response =
 
 chatSelection : SelectionSet ChatMessage Object.ChatMessage
 chatSelection =
-    SelectionSet.map ChatMessage
+    SelectionSet.map2 ChatMessage
         ObjChat.phrase
+        (ObjChat.character characterSelection)
+
+
+characterSelection : SelectionSet Character Swapi.Interface.Character
+characterSelection =
+    SelectionSet.map2 Character
+        Swapi.Interface.Character.name
+        Swapi.Interface.Character.avatarUrl
 
 
 sendChatMutation : SelectionSet Response RootMutation
