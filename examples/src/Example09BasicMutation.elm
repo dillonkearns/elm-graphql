@@ -31,7 +31,7 @@ chatSelection =
 sendChatMutation : SelectionSet Response RootMutation
 sendChatMutation =
     Mutation.sendMessage
-        (SendMessageRequiredArguments (CustomScalarCodecs.Id 1001) Droids)
+        { characterId = CustomScalarCodecs.Id 1001, phrase = Droids }
         chatSelection
 
 
