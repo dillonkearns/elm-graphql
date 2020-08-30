@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.1] - 2020-08-30
+
+### Changed
+- The optional `operationName` field is now sent in the POST body, or GET query parameters, when a request is performed.
+  Even though it's optional, some tooling depends on that field being present, so this may make some server-side tools happy.
+  See [#388](https://github.com/dillonkearns/elm-graphql/pull/388). Thank you to [Yoni](https://github.com/yonigibbs) for this contribution!
+
 ## [5.0.0] - 2019-12-16
 
 
