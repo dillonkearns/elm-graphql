@@ -49,7 +49,7 @@ all =
                     |> QueryHelper.build Nothing "https://elm-graphql.herokuapp.com/api" [] (Just "OpName")
                     |> Expect.equal
                         { method = QueryHelper.Get
-                        , url = "https://elm-graphql.herokuapp.com/api?query=query+OpName+%7Bhero%7Bname0%3Aname%7D%7D"
+                        , url = "https://elm-graphql.herokuapp.com/api?query=query+OpName+%7Bhero%7Bname0%3Aname%7D%7D&operationName=OpName"
                         , body = Http.emptyBody
                         }
         , test "uses POST when it is short enough for GET but POST is forced" <|
@@ -101,6 +101,11 @@ all =
                     |> Expect.equal
                         { method = QueryHelper.Post
                         , url = "https://elm-graphql.herokuapp.com/api"
-                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQueryWithOperationName "OpName" queryDocument) ) ])
+                        , body =
+                            Http.jsonBody <|
+                                Json.Encode.object
+                                    [ ( "query", Json.Encode.string (Document.serializeQueryWithOperationName "OpName" queryDocument) )
+                                    , ( "operationName", Json.Encode.string "OpName" )
+                                    ]
                         }
         ]
