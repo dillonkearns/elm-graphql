@@ -32,30 +32,40 @@ maxLength =
 build : Maybe HttpMethod -> String -> List QueryParam -> Maybe String -> SelectionSet decodesTo RootQuery -> QueryRequest
 build forceMethod url queryParams maybeOperationName queryDocument =
     let
-        serializedQueryForGetRequest =
+        ( serializedQueryForGetRequest, operationNameParamForGetRequest ) =
             case maybeOperationName of
                 Just operationName ->
-                    Document.serializeQueryForUrlWithOperationName operationName queryDocument
+                    ( Document.serializeQueryForUrlWithOperationName operationName queryDocument
+                    , [ ( "operationName", operationName ) ]
+                    )
 
                 Nothing ->
-                    Document.serializeQueryForUrl queryDocument
+                    ( Document.serializeQueryForUrl queryDocument, [] )
 
         urlForGetRequest =
-            QueryParams.urlWithQueryParams (queryParams ++ [ ( "query", serializedQueryForGetRequest ) ]) url
+            QueryParams.urlWithQueryParams
+                (queryParams ++ [ ( "query", serializedQueryForGetRequest ) ] ++ operationNameParamForGetRequest)
+                url
     in
     if forceMethod == Just Post || (String.length urlForGetRequest >= maxLength && forceMethod /= Just Get) then
         let
-            serializedQuery =
+            ( serializedQuery, operationNameParamForPostRequest ) =
                 case maybeOperationName of
                     Just operationName ->
-                        Document.serializeQueryWithOperationName operationName queryDocument
+                        ( Document.serializeQueryWithOperationName operationName queryDocument
+                        , [ ( "operationName", Json.Encode.string operationName ) ]
+                        )
 
                     Nothing ->
-                        Document.serializeQuery queryDocument
+                        ( Document.serializeQuery queryDocument, [] )
         in
         { method = Post
         , url = QueryParams.urlWithQueryParams [] url
-        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string serializedQuery ) ])
+        , body =
+            Http.jsonBody <|
+                Json.Encode.object <|
+                    [ ( "query", Json.Encode.string serializedQuery ) ]
+                        ++ operationNameParamForPostRequest
         }
 
     else
