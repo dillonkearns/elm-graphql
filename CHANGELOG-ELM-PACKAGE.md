@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.2] - 2020-09-17
+
+### Fixed
+- Pulled in vendor code for murmur3 package because of a GitHub username change that started causing problems
+  installing that package from the Elm package repository. Thank you [neslinesli93](https://github.com/neslinesli93) for the fix!
+  See [#397](https://github.com/dillonkearns/elm-graphql/pull/397).
+
 ## [5.0.1] - 2020-08-30
 
 ### Changed
