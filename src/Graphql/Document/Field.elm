@@ -1,10 +1,9 @@
 module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 
 import Graphql.Document.Argument as Argument
+import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
 import Graphql.RawField exposing (RawField(..))
-import List.Extra
-import Murmur3
 
 
 hashedAliasName : RawField -> String
@@ -41,7 +40,7 @@ maybeAliasHash field =
                     |> String.concat
                     |> Just
     )
-        |> Maybe.map (Murmur3.hashString 0)
+        |> Maybe.map (hashString 0)
 
 
 alias : RawField -> Maybe String
