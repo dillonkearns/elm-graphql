@@ -59,7 +59,7 @@ selectionForField typeString fieldName args decoder =
 selectionForCompositeField :
     String
     -> List Argument
-    -> SelectionSet a objectTypeLock
+    -> SelectionSet a objectScope
     -> (Decoder a -> Decoder b)
     -> SelectionSet b lockedTo
 selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderTransform =

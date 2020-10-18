@@ -1,4 +1,4 @@
-module Graphql.Generator.TypeLockDefinitions exposing (generate)
+module Graphql.Generator.ScopeDefinitions exposing (generate)
 
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Type as Type exposing (TypeDefinition(..))
