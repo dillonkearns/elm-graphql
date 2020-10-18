@@ -14,6 +14,7 @@ before_install:
   - npm i -g npm@lts
   - npm i -g elm@latest-0.19.1
   - npm i -g npm@6.4.1
+  - npm i -g elm-format@0.8.3
 
 install:
   - npm ci
