@@ -16,12 +16,12 @@ Take a look at the [section about this from the official GraphQL docs](https://g
 There are two placeholder types in the `SelectionSet` type (known as "type variables" in Elm terminology, but you can think of them as generics, too).
 
 ```elm
-type SelectionSet decodesTo selectionContext
+type SelectionSet decodesTo scope
 ```
 
 The first type is what the type will decode to. For example, if it were a `SelectionSet String <...>`, then that decoder would give you a `String` value. You can combine `SelectionSet`s together using things like `SelectionSet.map2`, so you could take a `SelectionSet` that decodes into an `Int`, and one that decodes into a `String`, and turn it into a record with an `Int` and a `String`, for example.
 
-The second type variable, `selectionContext`, is what prevents you from grabbing a field that doesn't exist in a certain context. Let's look at the example with a raw GraphQL query:
+The second type variable, `scope`, is what prevents you from grabbing a field that doesn't exist in a certain context. Let's look at the example with a raw GraphQL query:
 
 ```graphql
 query {
@@ -41,7 +41,7 @@ query {
 }
 ```
 
-Well, that's what `selectionContext` is for. So in this example, we would have a type that looks like this:
+Well, that's what `scope` is for. So in this example, we would have a type that looks like this:
 
 ```elm
 firstName : SelectionSet String User
