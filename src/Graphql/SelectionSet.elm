@@ -180,7 +180,7 @@ we define below.
             (Repository.createdAt |> mapToDateTime)
             (Repository.updatedAt |> mapToDateTime)
 
-    mapToDateTime : SelectionSet Github.Scalar.DateTime typeLock -> SelectionSet Posix typeLock
+    mapToDateTime : SelectionSet Github.Scalar.DateTime scope -> SelectionSet Posix scope
     mapToDateTime =
         SelectionSet.mapOrFail
             (\(Github.Scalar.DateTime value) ->
@@ -285,7 +285,7 @@ import List.Extra
 
 {-| SelectionSet type
 -}
-type SelectionSet decodesTo typeLock
+type SelectionSet decodesTo scope
     = SelectionSet (List RawField) (Decoder decodesTo)
 
 
@@ -348,14 +348,14 @@ Mapping is also handy when you are dealing with polymorphic GraphQL types
             }
 
 -}
-map : (a -> b) -> SelectionSet a typeLock -> SelectionSet b typeLock
+map : (a -> b) -> SelectionSet a scope -> SelectionSet b scope
 map mapFunction (SelectionSet selectionFields selectionDecoder) =
     SelectionSet selectionFields (Decode.map mapFunction selectionDecoder)
 
 
 {-| A helper for mapping a SelectionSet to provide a default value.
 -}
-withDefault : a -> SelectionSet (Maybe a) typeLock -> SelectionSet a typeLock
+withDefault : a -> SelectionSet (Maybe a) scope -> SelectionSet a scope
 withDefault default =
     map (Maybe.withDefault default)
 
@@ -385,9 +385,9 @@ folder, there are lots of end-to-end examples there!
 -}
 map2 :
     (decodesTo1 -> decodesTo2 -> decodesToCombined)
-    -> SelectionSet decodesTo1 typeLock
-    -> SelectionSet decodesTo2 typeLock
-    -> SelectionSet decodesToCombined typeLock
+    -> SelectionSet decodesTo1 scope
+    -> SelectionSet decodesTo2 scope
+    -> SelectionSet decodesToCombined scope
 map2 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
     SelectionSet
         (selectionFields1 ++ selectionFields2)
@@ -420,10 +420,10 @@ and `SelectionSet.with` to continue it).
 -}
 map3 :
     (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesToCombined)
-    -> SelectionSet decodesTo1 typeLock
-    -> SelectionSet decodesTo2 typeLock
-    -> SelectionSet decodesTo3 typeLock
-    -> SelectionSet decodesToCombined typeLock
+    -> SelectionSet decodesTo1 scope
+    -> SelectionSet decodesTo2 scope
+    -> SelectionSet decodesTo3 scope
+    -> SelectionSet decodesToCombined scope
 map3 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) =
     SelectionSet
         (List.concat [ selectionFields1, selectionFields2, selectionFields3 ])
@@ -433,11 +433,11 @@ map3 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 {-| -}
 map4 :
     (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesToCombined)
-    -> SelectionSet decodesTo1 typeLock
-    -> SelectionSet decodesTo2 typeLock
-    -> SelectionSet decodesTo3 typeLock
-    -> SelectionSet decodesTo4 typeLock
-    -> SelectionSet decodesToCombined typeLock
+    -> SelectionSet decodesTo1 scope
+    -> SelectionSet decodesTo2 scope
+    -> SelectionSet decodesTo3 scope
+    -> SelectionSet decodesTo4 scope
+    -> SelectionSet decodesToCombined scope
 map4 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) =
     SelectionSet
         (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4 ])
@@ -447,12 +447,12 @@ map4 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 {-| -}
 map5 :
     (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesToCombined)
-    -> SelectionSet decodesTo1 typeLock
-    -> SelectionSet decodesTo2 typeLock
-    -> SelectionSet decodesTo3 typeLock
-    -> SelectionSet decodesTo4 typeLock
-    -> SelectionSet decodesTo5 typeLock
-    -> SelectionSet decodesToCombined typeLock
+    -> SelectionSet decodesTo1 scope
+    -> SelectionSet decodesTo2 scope
+    -> SelectionSet decodesTo3 scope
+    -> SelectionSet decodesTo4 scope
+    -> SelectionSet decodesTo5 scope
+    -> SelectionSet decodesToCombined scope
 map5 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) =
     SelectionSet
         (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5 ])
@@ -462,13 +462,13 @@ map5 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 {-| -}
 map6 :
     (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesTo6 -> decodesToCombined)
-    -> SelectionSet decodesTo1 typeLock
-    -> SelectionSet decodesTo2 typeLock
-    -> SelectionSet decodesTo3 typeLock
-    -> SelectionSet decodesTo4 typeLock
-    -> SelectionSet decodesTo5 typeLock
-    -> SelectionSet decodesTo6 typeLock
-    -> SelectionSet decodesToCombined typeLock
+    -> SelectionSet decodesTo1 scope
+    -> SelectionSet decodesTo2 scope
+    -> SelectionSet decodesTo3 scope
+    -> SelectionSet decodesTo4 scope
+    -> SelectionSet decodesTo5 scope
+    -> SelectionSet decodesTo6 scope
+    -> SelectionSet decodesToCombined scope
 map6 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) (SelectionSet selectionFields6 selectionDecoder6) =
     SelectionSet
         (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5, selectionFields6 ])
@@ -478,14 +478,14 @@ map6 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 {-| -}
 map7 :
     (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesTo6 -> decodesTo7 -> decodesToCombined)
-    -> SelectionSet decodesTo1 typeLock
-    -> SelectionSet decodesTo2 typeLock
-    -> SelectionSet decodesTo3 typeLock
-    -> SelectionSet decodesTo4 typeLock
-    -> SelectionSet decodesTo5 typeLock
-    -> SelectionSet decodesTo6 typeLock
-    -> SelectionSet decodesTo7 typeLock
-    -> SelectionSet decodesToCombined typeLock
+    -> SelectionSet decodesTo1 scope
+    -> SelectionSet decodesTo2 scope
+    -> SelectionSet decodesTo3 scope
+    -> SelectionSet decodesTo4 scope
+    -> SelectionSet decodesTo5 scope
+    -> SelectionSet decodesTo6 scope
+    -> SelectionSet decodesTo7 scope
+    -> SelectionSet decodesToCombined scope
 map7 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) (SelectionSet selectionFields6 selectionDecoder6) (SelectionSet selectionFields7 selectionDecoder7) =
     SelectionSet
         (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5, selectionFields6, selectionFields7 ])
@@ -495,15 +495,15 @@ map7 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
 {-| -}
 map8 :
     (decodesTo1 -> decodesTo2 -> decodesTo3 -> decodesTo4 -> decodesTo5 -> decodesTo6 -> decodesTo7 -> decodesTo8 -> decodesToCombined)
-    -> SelectionSet decodesTo1 typeLock
-    -> SelectionSet decodesTo2 typeLock
-    -> SelectionSet decodesTo3 typeLock
-    -> SelectionSet decodesTo4 typeLock
-    -> SelectionSet decodesTo5 typeLock
-    -> SelectionSet decodesTo6 typeLock
-    -> SelectionSet decodesTo7 typeLock
-    -> SelectionSet decodesTo8 typeLock
-    -> SelectionSet decodesToCombined typeLock
+    -> SelectionSet decodesTo1 scope
+    -> SelectionSet decodesTo2 scope
+    -> SelectionSet decodesTo3 scope
+    -> SelectionSet decodesTo4 scope
+    -> SelectionSet decodesTo5 scope
+    -> SelectionSet decodesTo6 scope
+    -> SelectionSet decodesTo7 scope
+    -> SelectionSet decodesTo8 scope
+    -> SelectionSet decodesToCombined scope
 map8 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) (SelectionSet selectionFields3 selectionDecoder3) (SelectionSet selectionFields4 selectionDecoder4) (SelectionSet selectionFields5 selectionDecoder5) (SelectionSet selectionFields6 selectionDecoder6) (SelectionSet selectionFields7 selectionDecoder7) (SelectionSet selectionFields8 selectionDecoder8) =
     SelectionSet
         (List.concat [ selectionFields1, selectionFields2, selectionFields3, selectionFields4, selectionFields5, selectionFields6, selectionFields7, selectionFields8 ])
@@ -523,21 +523,21 @@ map8 combine (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet sel
             SelectionSet.empty
 
 -}
-empty : SelectionSet () typeLock
+empty : SelectionSet () scope
 empty =
     SelectionSet [] (Decode.succeed ())
 
 
 {-| This type is used internally only in the generated code.
 -}
-type FragmentSelectionSet decodesTo typeLock
+type FragmentSelectionSet decodesTo scope
     = FragmentSelectionSet String (List RawField) (Decoder decodesTo)
 
 
 {-| See the explanation in the Pipeline section. This function is used
 to add `SelectionSet`s onto a pipeline.
 -}
-with : SelectionSet a typeLock -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
+with : SelectionSet a scope -> SelectionSet (a -> b) scope -> SelectionSet b scope
 with (SelectionSet selectionFields1 selectionDecoder1) (SelectionSet selectionFields2 selectionDecoder2) =
     SelectionSet (selectionFields1 ++ selectionFields2)
         (Decode.map2 (|>)
@@ -565,7 +565,7 @@ into a pipeline.
                 |> hardcoded "Star Wars"
 
 -}
-hardcoded : a -> SelectionSet (a -> b) typeLock -> SelectionSet b typeLock
+hardcoded : a -> SelectionSet (a -> b) scope -> SelectionSet b scope
 hardcoded constant (SelectionSet objectFields objectDecoder) =
     SelectionSet objectFields
         (Decode.map2 (|>)
@@ -612,7 +612,7 @@ only the type when using a polymorphic type (Interface or Union).
             }
 
 -}
-succeed : a -> SelectionSet a typeLock
+succeed : a -> SelectionSet a scope
 succeed constructor =
     SelectionSet [] (Decode.succeed constructor)
 
@@ -641,7 +641,7 @@ that section of these docs.
             |> SelectionSet.list
 
 -}
-list : List (SelectionSet a typeLock) -> SelectionSet (List a) typeLock
+list : List (SelectionSet a scope) -> SelectionSet (List a) scope
 list selections =
     selections
         |> List.foldl (map2 (::)) (empty |> map (\_ -> []))
@@ -670,8 +670,8 @@ list selections =
 foldl :
     (item -> combined -> combined)
     -> combined
-    -> List (SelectionSet item typeLock)
-    -> SelectionSet combined typeLock
+    -> List (SelectionSet item scope)
+    -> SelectionSet combined scope
 foldl mapFn initialValue selections =
     List.foldl (map2 mapFn) (succeed initialValue) selections
 
@@ -703,13 +703,13 @@ want to use `map2` and other functions in that section of these docs.
             |> SelectionSet.dict
 
 -}
-dict : List ( String, SelectionSet a typeLock ) -> SelectionSet (Dict String a) typeLock
+dict : List ( String, SelectionSet a scope ) -> SelectionSet (Dict String a) scope
 dict selections =
     selections
         |> List.foldl combineDict (empty |> map (\_ -> Dict.empty))
 
 
-combineDict : ( String, SelectionSet a typeLock ) -> SelectionSet (Dict String a) typeLock -> SelectionSet (Dict String a) typeLock
+combineDict : ( String, SelectionSet a scope ) -> SelectionSet (Dict String a) scope -> SelectionSet (Dict String a) scope
 combineDict ( key, selection ) acc =
     map2 (Dict.insert key) selection acc
 
@@ -739,7 +739,7 @@ If it returns an `Err`, the _entire_ response will fail to decode.
             |> with (Repository.updatedAt |> mapToDateTime)
 
 
-    mapToDateTime : Field Github.Scalar.DateTime typeLock -> Field Posix typeLock
+    mapToDateTime : Field Github.Scalar.DateTime scope -> Field Posix scope
     mapToDateTime =
         Field.mapOrFail
             (\(Github.Scalar.DateTime value) ->
@@ -748,7 +748,7 @@ If it returns an `Err`, the _entire_ response will fail to decode.
                      ++ value ++ " as Iso8601 DateTime.")
 
 -}
-mapOrFail : (decodesTo -> Result String mapsTo) -> SelectionSet decodesTo typeLock -> SelectionSet mapsTo typeLock
+mapOrFail : (decodesTo -> Result String mapsTo) -> SelectionSet decodesTo scope -> SelectionSet mapsTo scope
 mapOrFail mapFunction (SelectionSet field decoder) =
     decoder
         |> Decode.map mapFunction
@@ -772,7 +772,7 @@ This will cause your _entire_ decoder to fail if the field comes back as null.
 It's far better to fix your schema then to use this escape hatch!
 
 -}
-nonNullOrFail : SelectionSet (Maybe decodesTo) typeLock -> SelectionSet decodesTo typeLock
+nonNullOrFail : SelectionSet (Maybe decodesTo) scope -> SelectionSet decodesTo scope
 nonNullOrFail (SelectionSet fields decoder) =
     decoder
         |> Decode.andThen
@@ -810,7 +810,7 @@ Without the `Field.nonNull...` transformations here, the type would be
 `SelectionSet (Maybe (List (Maybe Release))) Github.Object.ReleaseConnection`.
 
 -}
-nonNullElementsOrFail : SelectionSet (List (Maybe decodesTo)) typeLock -> SelectionSet (List decodesTo) typeLock
+nonNullElementsOrFail : SelectionSet (List (Maybe decodesTo)) scope -> SelectionSet (List decodesTo) scope
 nonNullElementsOrFail (SelectionSet fields decoder) =
     decoder
         |> Decode.andThen

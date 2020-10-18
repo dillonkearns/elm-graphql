@@ -89,7 +89,7 @@ buildFragment fragmentTypeName (SelectionSet fields decoder) =
 
 {-| Used to create the `selection` functions in auto-generated code for exhaustive fragments.
 -}
-exhaustiveFragmentSelection : List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet decodesTo typeLock
+exhaustiveFragmentSelection : List (FragmentSelectionSet decodesTo scope) -> SelectionSet decodesTo scope
 exhaustiveFragmentSelection typeSpecificSelections =
     let
         selections =

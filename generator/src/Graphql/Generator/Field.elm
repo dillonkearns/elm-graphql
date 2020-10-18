@@ -185,7 +185,7 @@ type ObjectOrInterface
 objectThing : Context -> TypeReference -> String -> ObjectOrInterface -> FieldGenerator
 objectThing context typeRef refName objectOrInterface =
     let
-        typeLock =
+        scope =
             case ReferenceLeaf.get typeRef of
                 ReferenceLeaf.Object ->
                     ModuleName.object context (ClassCaseName.build refName) |> String.join "."
@@ -205,7 +205,7 @@ objectThing context typeRef refName objectOrInterface =
         objectArgAnnotation =
             interpolate
                 "SelectionSet decodesTo {0}"
-                [ typeLock ]
+                [ scope ]
     in
     { annotatedArgs = []
     , fieldArgs = []

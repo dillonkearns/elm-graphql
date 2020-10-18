@@ -77,7 +77,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
                 |> excludeMutation context
                 |> excludeSubscription context
 
-        typeLockDefinitions =
+        scopeDefinitions =
             TypeLockDefinitions.generate options.apiSubmodule definitionsWithExclusions
 
         scalarDefinitions =
@@ -86,7 +86,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
     typeDefinitions
         |> excludeBuiltIns
         |> List.filterMap (toPair context)
-        |> List.append typeLockDefinitions
+        |> List.append scopeDefinitions
         |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
         |> List.append

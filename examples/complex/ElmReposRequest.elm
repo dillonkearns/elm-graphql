@@ -57,8 +57,8 @@ queryForRepos reposWithOwner =
 
 
 grouped :
-    List (SelectionSet decodesTo1 typeLock)
-    -> SelectionSet (List decodesTo1) typeLock
+    List (SelectionSet decodesTo1 scope)
+    -> SelectionSet (List decodesTo1) scope
 grouped selections =
     List.foldl (SelectionSet.map2 (::))
         (SelectionSet.empty |> SelectionSet.map (\_ -> []))
@@ -124,7 +124,7 @@ timestampsSelection =
         (Repository.updatedAt |> mapToDateTime)
 
 
-mapToDateTime : SelectionSet Github.Scalar.DateTime typeLock -> SelectionSet Posix typeLock
+mapToDateTime : SelectionSet Github.Scalar.DateTime scope -> SelectionSet Posix scope
 mapToDateTime =
     SelectionSet.mapOrFail
         (\(Github.Scalar.DateTime value) ->
