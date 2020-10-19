@@ -75,9 +75,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - `SelectionSet.list` lets you combine a `List` of
-  `SelectionSet value typeLock`s into a single `SelectionSet (List value) typeLock`.
+  `SelectionSet value scope`s into a single `SelectionSet (List value) scope`.
 - `SelectionSet.dict` lets you combine a `List` of
-  `(String, SelectionSet value typeLock)`s into a single `SelectionSet (Dict String value) typeLock`.
+  `(String, SelectionSet value scope)`s into a single `SelectionSet (Dict String value) scope`.
   The `String`s in the list are used as the key in the `Dict`.
 - Expose type `Graphql.Codec` (for use with the `--scalar-codecs` CLI flag,
   see [this example](https://github.com/dillonkearns/elm-graphql/blob/master/examples/src/Example07CustomCodecs.elm)).
@@ -178,8 +178,8 @@ but it would contains the same data as before.
   - Anywhere you called `Field.map`, `mapOrFail`, etc., is just `SelectionSet.map`, etc. now.
   - Remove any calls to `<GeneratedModule>.selection` and replace it with `SelectionSet.succeed`
     (for Union types, the `selection` function has been renamed to `fragments`, see the last point below).
-  - Any annotations which were `Field decodesTo typeLock`, simply change them to
-    `SelectionSet decodesTo typeLock`
+  - Any annotations which were `Field decodesTo scope`, simply change them to
+    `SelectionSet decodesTo scope`
 
 - The `.selection` function for Unions has been renamed to `.fragments` to be consistent
   with the naming for Interfaces.

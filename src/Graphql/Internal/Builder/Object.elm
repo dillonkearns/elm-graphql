@@ -59,7 +59,7 @@ selectionForField typeString fieldName args decoder =
 selectionForCompositeField :
     String
     -> List Argument
-    -> SelectionSet a objectTypeLock
+    -> SelectionSet a objectScope
     -> (Decoder a -> Decoder b)
     -> SelectionSet b lockedTo
 selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderTransform =
@@ -89,7 +89,7 @@ buildFragment fragmentTypeName (SelectionSet fields decoder) =
 
 {-| Used to create the `selection` functions in auto-generated code for exhaustive fragments.
 -}
-exhaustiveFragmentSelection : List (FragmentSelectionSet decodesTo typeLock) -> SelectionSet decodesTo typeLock
+exhaustiveFragmentSelection : List (FragmentSelectionSet decodesTo scope) -> SelectionSet decodesTo scope
 exhaustiveFragmentSelection typeSpecificSelections =
     let
         selections =

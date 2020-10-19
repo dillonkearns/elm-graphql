@@ -71,7 +71,7 @@ serializeSubscription (SelectionSet fields decoder_) =
 in the majority of cases. Instead, the high-level functions in `Graphql.Http`
 should be used.
 -}
-decoder : SelectionSet decodesTo typeLock -> Decoder decodesTo
+decoder : SelectionSet decodesTo scope -> Decoder decodesTo
 decoder (SelectionSet fields decoder_) =
     decoder_ |> Decode.field "data"
 

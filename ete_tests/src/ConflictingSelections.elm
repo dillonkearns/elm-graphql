@@ -35,7 +35,7 @@ query =
         )
 
 
-ignoreValue : SelectionSet decodesTo typeLock -> SelectionSet () typeLock
+ignoreValue : SelectionSet decodesTo scope -> SelectionSet () scope
 ignoreValue =
     SelectionSet.map (\_ -> ())
 

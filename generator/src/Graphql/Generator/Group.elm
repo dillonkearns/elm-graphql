@@ -11,8 +11,8 @@ import Graphql.Generator.Object
 import Graphql.Generator.Query
 import Graphql.Generator.Scalar as Scalar
 import Graphql.Generator.ScalarCodecs as ScalarCodecs
+import Graphql.Generator.ScopeDefinitions as ScopeDefinitions
 import Graphql.Generator.Subscription
-import Graphql.Generator.TypeLockDefinitions as TypeLockDefinitions
 import Graphql.Generator.Union
 import Graphql.Generator.VerifyScalarCodecs
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
@@ -77,8 +77,8 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
                 |> excludeMutation context
                 |> excludeSubscription context
 
-        typeLockDefinitions =
-            TypeLockDefinitions.generate options.apiSubmodule definitionsWithExclusions
+        scopeDefinitions =
+            ScopeDefinitions.generate options.apiSubmodule definitionsWithExclusions
 
         scalarDefinitions =
             Scalar.generate options.apiSubmodule definitionsWithExclusions
@@ -86,7 +86,7 @@ generateFiles options { typeDefinitions, queryObjectName, mutationObjectName, su
     typeDefinitions
         |> excludeBuiltIns
         |> List.filterMap (toPair context)
-        |> List.append typeLockDefinitions
+        |> List.append scopeDefinitions
         |> List.append [ Graphql.Generator.InputObjectFile.generate context typeDefinitions ]
         |> List.append [ scalarDefinitions ]
         |> List.append
