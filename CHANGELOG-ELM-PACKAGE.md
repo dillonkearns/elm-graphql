@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.3] - 2020-10-18
+
+### Changed
+
+- Renamed `SelectionSet decodesTo typeLock` type variable to `SelectionSet decodesTo scope`. See [#407](https://github.com/dillonkearns/elm-graphql/pull/407).
+
 ## [5.0.2] - 2020-09-17
 
 ### Fixed
+
 - Pulled in vendor code for murmur3 package because of a GitHub username change that started causing problems
   installing that package from the Elm package repository. Thank you [neslinesli93](https://github.com/neslinesli93) for the fix!
   See [#397](https://github.com/dillonkearns/elm-graphql/pull/397).
@@ -19,21 +26,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [5.0.1] - 2020-08-30
 
 ### Changed
+
 - The optional `operationName` field is now sent in the POST body, or GET query parameters, when a request is performed.
   Even though it's optional, some tooling depends on that field being present, so this may make some server-side tools happy.
   See [#388](https://github.com/dillonkearns/elm-graphql/pull/388). Thank you to [Yoni](https://github.com/yonigibbs) for this contribution!
 
 ## [5.0.0] - 2019-12-16
 
-
 ### Changed
 
-- (MAJOR API change) Fix order of arguments for Http pipeline function, `withOperationName` 
-    (fixes [#254](https://github.com/dillonkearns/elm-graphql/issues/254)).
+- (MAJOR API change) Fix order of arguments for Http pipeline function, `withOperationName`
+  (fixes [#254](https://github.com/dillonkearns/elm-graphql/issues/254)).
 - (MAJOR API change) Switch `discardParsedErrorData` from returning a `()` to an unconstrained `a`.
-    This makes it a little more flexible for users in terms of the types
-    it allows, without changing the behavior. See [#245](https://github.com/dillonkearns/elm-graphql/pull/245)
-     (thank you [@Jayshua](https://github.com/Jayshua)!).
+  This makes it a little more flexible for users in terms of the types
+  it allows, without changing the behavior. See [#245](https://github.com/dillonkearns/elm-graphql/pull/245)
+  (thank you [@Jayshua](https://github.com/Jayshua)!).
 - (MAJOR API change) fix typo in internal function name (`exhuastiveFragmentSelection` -> `exhaustiveFragmentSelection`).
 
 ## [4.5.0] - 2019-12-03
@@ -47,8 +54,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - `Graphql.Http.withOperationName` allows you to (optionally) add
-    operation names to your GraphQL queries (thank you @asterite for your PR!
-    https://github.com/dillonkearns/elm-graphql/pull/195)
+  operation names to your GraphQL queries (thank you @asterite for your PR!
+  https://github.com/dillonkearns/elm-graphql/pull/195)
 
 ## [4.3.1] - 2019-06-30
 
