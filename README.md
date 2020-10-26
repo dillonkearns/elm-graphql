@@ -1,9 +1,9 @@
-<img src="https://cdn.jsdelivr.net/gh/martimatix/logo-graphqelm/logo.svg" alt="dillonearns/elm-graphql logo" width="40%" align="right">
-
 # dillonkearns/elm-graphql
 
 [![Build Status](https://travis-ci.org/dillonkearns/elm-graphql.svg?branch=master)](https://travis-ci.org/dillonkearns/elm-graphql) [![Elm package](https://img.shields.io/elm-package/v/dillonkearns/elm-graphql.svg)](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/)
 [![npm](https://img.shields.io/npm/v/@dillonkearns/elm-graphql.svg)](https://npmjs.com/package/@dillonkearns/elm-graphql)
+
+![elm-graphql logo](https://res.cloudinary.com/dillonkearns/image/upload/f_png,w_150,q_100/v1603750625/elm-graphql-logo.svg)
 
 Why use this package over the other available Elm GraphQL packages? This is the only one that
 generates type-safe code for your entire schema. Check out this blog post, [Type-Safe & Composable GraphQL in Elm](https://medium.com/open-graphql/type-safe-composable-graphql-in-elm-b3378cc8d021), to learn more about the motivation for this library. (It's also the only type-safe
