@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.5] - 2020-11-11
+
+### Changed
+
+- Updated to latest version of `graphql-request` NPM dependency, see https://github.com/dillonkearns/elm-graphql/pull/419. Thank you @Hermanverschooten!
+
 ## [4.0.4] - 2020-10-21
 
 ### Added
