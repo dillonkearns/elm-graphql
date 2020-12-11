@@ -265,7 +265,7 @@ it ever maps to an `Err` instead of an `Ok` `Result`.
 
 If you're wondering why there are so many `Maybe`s in your generated code,
 take a look at the
-[FAQ question "Why are there so many Maybes in my responses? How do I reduce them?"](https://github.com/dillonkearns/graphqelm/blob/master/FAQ.md#why-are-there-so-many-maybes-in-my-responses-how-do-i-reduce-them).
+[FAQ question "Why are there so many Maybes in my responses? How do I reduce them?"](https://github.com/dillonkearns/elm-graphql/blob/master/FAQ.md#why-are-there-so-many-maybes-in-my-responses-how-do-i-reduce-them).
 
 @docs mapOrFail, nonNullOrFail, nonNullElementsOrFail
 
