@@ -72,8 +72,8 @@ parseHeaders headers =
 parseHeader : String -> Result String ( String, String )
 parseHeader header =
     case String.split ":" header of
-        [ key, value ] ->
-            Ok ( key, value )
+        key :: valueHead :: valueTail ->
+            Ok ( key, String.join ":" (valueHead :: valueTail) )
 
         _ ->
             interpolate "Could not parse header `{0}`. Must be of form `<key>: <value>`, for example `authorization: Bearer abcdefg1234567`."
