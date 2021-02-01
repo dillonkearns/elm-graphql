@@ -60,7 +60,7 @@ fileContents context typeDefinitions =
 
 placeholder : String
 placeholder =
-""
+    ""
 """
                 [ moduleName ]
     in

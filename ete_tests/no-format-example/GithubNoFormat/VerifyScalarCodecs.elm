@@ -5,4 +5,4 @@ module GithubNoFormat.VerifyScalarCodecs exposing (..)
 
 placeholder : String
 placeholder =
-""
+    ""
