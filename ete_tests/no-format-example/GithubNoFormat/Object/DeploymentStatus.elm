@@ -26,7 +26,7 @@ createdAt =
 {-| Identifies the actor who triggered the deployment.
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.DeploymentStatus
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.DeploymentStatus
 creator object_ =
       Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
 
@@ -34,7 +34,7 @@ creator object_ =
 {-| Identifies the deployment associated with status.
 -}
 deployment : SelectionSet decodesTo GithubNoFormat.Object.Deployment
--> SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
+ -> SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
 deployment object_ =
       Object.selectionForCompositeField "deployment" [] (object_) (identity)
 

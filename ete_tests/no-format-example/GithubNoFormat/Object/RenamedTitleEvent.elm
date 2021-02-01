@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RenamedTitleEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RenamedTitleEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -53,6 +53,6 @@ previousTitle =
 {-| Subject that was renamed.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Union.RenamedTitleSubject
--> SelectionSet decodesTo GithubNoFormat.Object.RenamedTitleEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.RenamedTitleEvent
 subject object_ =
       Object.selectionForCompositeField "subject" [] (object_) (identity)

@@ -19,7 +19,7 @@ import GithubNoFormat.Enum.StatusState
 {-| This commit this status context is attached to.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.StatusContext
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.StatusContext
 commit object_ =
       Object.selectionForCompositeField "commit" [] (object_) (identity >> Decode.nullable)
 
@@ -41,7 +41,7 @@ createdAt =
 {-| The actor who created this status context.
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.StatusContext
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.StatusContext
 creator object_ =
       Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
 

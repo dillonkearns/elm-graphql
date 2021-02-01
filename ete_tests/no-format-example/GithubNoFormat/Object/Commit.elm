@@ -33,7 +33,7 @@ additions =
 {-| Authorship details of the commit.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Object.GitActor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -60,8 +60,8 @@ type alias BlameRequiredArguments = { path : String }
 
 -}
 blame : BlameRequiredArguments
--> SelectionSet decodesTo GithubNoFormat.Object.Blame
--> SelectionSet decodesTo GithubNoFormat.Object.Commit
+ -> SelectionSet decodesTo GithubNoFormat.Object.Blame
+ -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 blame requiredArgs object_ =
       Object.selectionForCompositeField "blame" [ Argument.required "path" requiredArgs.path (Encode.string) ] (object_) (identity)
 
@@ -74,9 +74,9 @@ changedFiles =
 
 
 type alias CommentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| Comments made on the commit.
 
@@ -87,8 +87,8 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Commit
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -132,7 +132,7 @@ committedViaWeb =
 {-| Committership details of the commit.
 -}
 committer : SelectionSet decodesTo GithubNoFormat.Object.GitActor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
 committer object_ =
       Object.selectionForCompositeField "committer" [] (object_) (identity >> Decode.nullable)
 
@@ -145,13 +145,13 @@ deletions =
 
 
 type alias HistoryOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,path : OptionalArgument String
-,author : OptionalArgument GithubNoFormat.InputObject.CommitAuthor
-,since : OptionalArgument GithubNoFormat.ScalarCodecs.GitTimestamp
-,until : OptionalArgument GithubNoFormat.ScalarCodecs.GitTimestamp }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , path : OptionalArgument String
+ , author : OptionalArgument GithubNoFormat.InputObject.CommitAuthor
+ , since : OptionalArgument GithubNoFormat.ScalarCodecs.GitTimestamp
+ , until : OptionalArgument GithubNoFormat.ScalarCodecs.GitTimestamp }
 
 {-| The linear commit history starting from (and including) this commit, in the same order as `git log`.
 
@@ -166,8 +166,8 @@ type alias HistoryOptionalArguments = { first : OptionalArgument Int
 
 -}
 history : (HistoryOptionalArguments -> HistoryOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.CommitHistoryConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Commit
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitHistoryConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 history fillInOptionals object_ =
     let
         filledInOptionals =
@@ -228,9 +228,9 @@ oid =
 
 
 type alias ParentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| The parents of a commit.
 
@@ -241,8 +241,8 @@ type alias ParentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 parents : (ParentsOptionalArguments -> ParentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.CommitConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Commit
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 parents fillInOptionals object_ =
     let
         filledInOptionals =
@@ -265,7 +265,7 @@ pushedDate =
 {-| The Repository this commit belongs to
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.Commit
+ -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -280,7 +280,7 @@ resourcePath =
 {-| Commit signing information, if present.
 -}
 signature : SelectionSet decodesTo GithubNoFormat.Interface.GitSignature
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
 signature object_ =
       Object.selectionForCompositeField "signature" [] (object_) (identity >> Decode.nullable)
 
@@ -288,7 +288,7 @@ signature object_ =
 {-| Status information for this commit
 -}
 status : SelectionSet decodesTo GithubNoFormat.Object.Status
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Commit
 status object_ =
       Object.selectionForCompositeField "status" [] (object_) (identity >> Decode.nullable)
 
@@ -303,7 +303,7 @@ tarballUrl =
 {-| Commit's root Tree
 -}
 tree : SelectionSet decodesTo GithubNoFormat.Object.Tree
--> SelectionSet decodesTo GithubNoFormat.Object.Commit
+ -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 tree object_ =
       Object.selectionForCompositeField "tree" [] (object_) (identity)
 

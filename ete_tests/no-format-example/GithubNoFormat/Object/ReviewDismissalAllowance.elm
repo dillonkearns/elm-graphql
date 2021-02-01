@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The actor that can dismiss.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Union.ReviewDismissalAllowanceActor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewDismissalAllowance
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewDismissalAllowance
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -32,6 +32,6 @@ id =
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
 protectedBranch : SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
--> SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissalAllowance
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissalAllowance
 protectedBranch object_ =
       Object.selectionForCompositeField "protectedBranch" [] (object_) (identity)

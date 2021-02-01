@@ -20,8 +20,8 @@ import GithubNoFormat.Enum.GitSignatureState
 type alias Fragments decodesTo =
     {
     onGpgSignature : SelectionSet decodesTo GithubNoFormat.Object.GpgSignature,
-onSmimeSignature : SelectionSet decodesTo GithubNoFormat.Object.SmimeSignature,
-onUnknownSignature : SelectionSet decodesTo GithubNoFormat.Object.UnknownSignature
+ onSmimeSignature : SelectionSet decodesTo GithubNoFormat.Object.SmimeSignature,
+ onUnknownSignature : SelectionSet decodesTo GithubNoFormat.Object.UnknownSignature
     }
 
 
@@ -34,8 +34,8 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "GpgSignature" selections.onGpgSignature,
-Object.buildFragment "SmimeSignature" selections.onSmimeSignature,
-Object.buildFragment "UnknownSignature" selections.onUnknownSignature
+ Object.buildFragment "SmimeSignature" selections.onSmimeSignature,
+ Object.buildFragment "UnknownSignature" selections.onUnknownSignature
         ]
 
 
@@ -46,8 +46,8 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onGpgSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onSmimeSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onUnknownSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onSmimeSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onUnknownSignature = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| Email used to sign this object.
 -}
@@ -80,7 +80,7 @@ signature =
 {-| GitHub user corresponding to the email signing this commit.
 -}
 signer : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.GitSignature
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.GitSignature
 signer object_ =
       Object.selectionForCompositeField "signer" [] (object_) (identity >> Decode.nullable)
 

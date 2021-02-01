@@ -42,7 +42,7 @@ createdAt =
 {-| Identifies the actor who created the milestone.
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Milestone
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Milestone
 creator object_ =
       Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
 
@@ -67,12 +67,12 @@ id =
 
 
 type alias IssuesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,labels : OptionalArgument (List String)
-,orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder
-,states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , labels : OptionalArgument (List String)
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder
+ , states : OptionalArgument (List GithubNoFormat.Enum.IssueState.IssueState) }
 
 {-| A list of issues associated with the milestone.
 
@@ -86,8 +86,8 @@ type alias IssuesOptionalArguments = { first : OptionalArgument Int
 
 -}
 issues : (IssuesOptionalArguments -> IssuesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.IssueConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Milestone
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Milestone
 issues fillInOptionals object_ =
     let
         filledInOptionals =
@@ -108,14 +108,14 @@ number =
 
 
 type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
-,labels : OptionalArgument (List String)
-,headRefName : OptionalArgument String
-,baseRefName : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
+ , labels : OptionalArgument (List String)
+ , headRefName : OptionalArgument String
+ , baseRefName : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
 
 {-| A list of pull requests associated with the milestone.
 
@@ -131,8 +131,8 @@ type alias PullRequestsOptionalArguments = { first : OptionalArgument Int
 
 -}
 pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Milestone
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Milestone
 pullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -148,7 +148,7 @@ pullRequests fillInOptionals object_ =
 {-| The repository associated with this milestone.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.Milestone
+ -> SelectionSet decodesTo GithubNoFormat.Object.Milestone
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 

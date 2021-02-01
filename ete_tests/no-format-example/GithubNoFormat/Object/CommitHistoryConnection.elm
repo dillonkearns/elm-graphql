@@ -17,7 +17,7 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
 edges : SelectionSet decodesTo GithubNoFormat.Object.CommitEdge
--> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.CommitHistoryConnection
+ -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.CommitHistoryConnection
 edges object_ =
       Object.selectionForCompositeField "edges" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -25,7 +25,7 @@ edges object_ =
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.CommitHistoryConnection
+ -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.CommitHistoryConnection
 nodes object_ =
       Object.selectionForCompositeField "nodes" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -33,7 +33,7 @@ nodes object_ =
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo GithubNoFormat.Object.PageInfo
--> SelectionSet decodesTo GithubNoFormat.Object.CommitHistoryConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitHistoryConnection
 pageInfo object_ =
       Object.selectionForCompositeField "pageInfo" [] (object_) (identity)
 

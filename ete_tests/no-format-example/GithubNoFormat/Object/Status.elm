@@ -19,7 +19,7 @@ import GithubNoFormat.Enum.StatusState
 {-| The commit this status is attached to.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Status
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Status
 commit object_ =
       Object.selectionForCompositeField "commit" [] (object_) (identity >> Decode.nullable)
 
@@ -32,8 +32,8 @@ type alias ContextRequiredArguments = { name : String }
 
 -}
 context : ContextRequiredArguments
--> SelectionSet decodesTo GithubNoFormat.Object.StatusContext
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Status
+ -> SelectionSet decodesTo GithubNoFormat.Object.StatusContext
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Status
 context requiredArgs object_ =
       Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs.name (Encode.string) ] (object_) (identity >> Decode.nullable)
 
@@ -41,7 +41,7 @@ context requiredArgs object_ =
 {-| The individual status contexts for this commit.
 -}
 contexts : SelectionSet decodesTo GithubNoFormat.Object.StatusContext
--> SelectionSet (List decodesTo) GithubNoFormat.Object.Status
+ -> SelectionSet (List decodesTo) GithubNoFormat.Object.Status
 contexts object_ =
       Object.selectionForCompositeField "contexts" [] (object_) (identity >> Decode.list)
 

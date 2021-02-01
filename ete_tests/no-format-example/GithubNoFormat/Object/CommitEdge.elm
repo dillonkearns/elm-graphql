@@ -26,6 +26,6 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CommitEdge
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CommitEdge
 node object_ =
       Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)

@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
-onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
     }
 
 
@@ -34,7 +34,7 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
           Object.buildFragment "Issue" selections.onIssue,
-Object.buildFragment "PullRequest" selections.onPullRequest
+ Object.buildFragment "PullRequest" selections.onPullRequest
         ]
 
 
@@ -45,5 +45,5 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }

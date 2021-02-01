@@ -33,6 +33,6 @@ isCommenter =
 {-| Identifies the user suggested to review the pull request.
 -}
 reviewer : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet decodesTo GithubNoFormat.Object.SuggestedReviewer
+ -> SelectionSet decodesTo GithubNoFormat.Object.SuggestedReviewer
 reviewer object_ =
       Object.selectionForCompositeField "reviewer" [] (object_) (identity)

@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CrossReferencedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CrossReferencedEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -60,7 +60,7 @@ resourcePath =
 {-| Issue or pull request that made the reference.
 -}
 source : SelectionSet decodesTo GithubNoFormat.Union.ReferencedSubject
--> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
 source object_ =
       Object.selectionForCompositeField "source" [] (object_) (identity)
 
@@ -68,7 +68,7 @@ source object_ =
 {-| Issue or pull request to which the reference was made.
 -}
 target : SelectionSet decodesTo GithubNoFormat.Union.ReferencedSubject
--> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
 target object_ =
       Object.selectionForCompositeField "target" [] (object_) (identity)
 

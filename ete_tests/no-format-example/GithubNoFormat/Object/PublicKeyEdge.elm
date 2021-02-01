@@ -26,6 +26,6 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo GithubNoFormat.Object.PublicKey
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PublicKeyEdge
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PublicKeyEdge
 node object_ =
       Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)

@@ -21,7 +21,7 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -78,7 +78,7 @@ databaseId =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
 editor object_ =
       Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
 
@@ -91,7 +91,7 @@ id =
 {-| Identifies the issue associated with the comment.
 -}
 issue : SelectionSet decodesTo GithubNoFormat.Object.Issue
--> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
 issue object_ =
       Object.selectionForCompositeField "issue" [] (object_) (identity)
 
@@ -115,7 +115,7 @@ pull request.
 
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
 pullRequest object_ =
       Object.selectionForCompositeField "pullRequest" [] (object_) (identity >> Decode.nullable)
 
@@ -123,17 +123,17 @@ pullRequest object_ =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
--> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.IssueComment
+ -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.IssueComment
 reactionGroups object_ =
       Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
-,orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
 
 {-| A list of Reactions left on the Issue.
 
@@ -146,8 +146,8 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
--> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -163,7 +163,7 @@ reactions fillInOptionals object_ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -190,9 +190,9 @@ url =
 
 
 type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of edits to this content.
 
@@ -203,8 +203,8 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

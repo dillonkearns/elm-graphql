@@ -20,9 +20,9 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
-onMilestone : SelectionSet decodesTo GithubNoFormat.Object.Milestone,
-onProject : SelectionSet decodesTo GithubNoFormat.Object.Project,
-onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ onMilestone : SelectionSet decodesTo GithubNoFormat.Object.Milestone,
+ onProject : SelectionSet decodesTo GithubNoFormat.Object.Project,
+ onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
     }
 
 
@@ -35,9 +35,9 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Issue" selections.onIssue,
-Object.buildFragment "Milestone" selections.onMilestone,
-Object.buildFragment "Project" selections.onProject,
-Object.buildFragment "PullRequest" selections.onPullRequest
+ Object.buildFragment "Milestone" selections.onMilestone,
+ Object.buildFragment "Project" selections.onProject,
+ Object.buildFragment "PullRequest" selections.onPullRequest
         ]
 
 
@@ -48,9 +48,9 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onMilestone = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onProject = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onMilestone = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onProject = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| `true` if the object is closed (definition of closed may depend on type)
 -}

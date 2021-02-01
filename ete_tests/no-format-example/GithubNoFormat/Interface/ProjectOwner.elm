@@ -20,7 +20,7 @@ import GithubNoFormat.Enum.ProjectState
 type alias Fragments decodesTo =
     {
     onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
-onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository
+ onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository
     }
 
 
@@ -33,7 +33,7 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Organization" selections.onOrganization,
-Object.buildFragment "Repository" selections.onRepository
+ Object.buildFragment "Repository" selections.onRepository
         ]
 
 
@@ -44,7 +44,7 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.ProjectOwner
 id =
@@ -59,19 +59,19 @@ type alias ProjectRequiredArguments = { number : Int }
 
 -}
 project : ProjectRequiredArguments
--> SelectionSet decodesTo GithubNoFormat.Object.Project
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.ProjectOwner
+ -> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.ProjectOwner
 project requiredArgs object_ =
       Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number (Encode.int) ] (object_) (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.ProjectOrder
-,search : OptionalArgument String
-,states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.ProjectOrder
+ , search : OptionalArgument String
+ , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
 
 {-| A list of projects under the owner.
 
@@ -85,8 +85,8 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument Int
 
 -}
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
--> SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
+ -> SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
 projects fillInOptionals object_ =
     let
         filledInOptionals =

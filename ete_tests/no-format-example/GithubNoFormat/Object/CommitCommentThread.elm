@@ -17,9 +17,9 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
 type alias CommentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| The comments that exist in this thread.
 
@@ -30,8 +30,8 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
--> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -47,7 +47,7 @@ comments fillInOptionals object_ =
 {-| The commit the comments were made on.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
 commit object_ =
       Object.selectionForCompositeField "commit" [] (object_) (identity)
 
@@ -74,6 +74,6 @@ position =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
+ -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)

@@ -45,9 +45,9 @@ closedAt =
 
 
 type alias ColumnsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| List of columns in the project
 
@@ -58,8 +58,8 @@ type alias ColumnsOptionalArguments = { first : OptionalArgument Int
 
 -}
 columns : (ColumnsOptionalArguments -> ColumnsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumnConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumnConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Project
 columns fillInOptionals object_ =
     let
         filledInOptionals =
@@ -82,7 +82,7 @@ createdAt =
 {-| The actor who originally created the project.
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Project
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Project
 creator object_ =
       Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
 
@@ -116,15 +116,15 @@ number =
 {-| The project's owner. Currently limited to repositories and organizations.
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
--> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet decodesTo GithubNoFormat.Object.Project
 owner object_ =
       Object.selectionForCompositeField "owner" [] (object_) (identity)
 
 
 type alias PendingCardsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| List of pending cards in this project
 
@@ -135,8 +135,8 @@ type alias PendingCardsOptionalArguments = { first : OptionalArgument Int
 
 -}
 pendingCards : (PendingCardsOptionalArguments -> PendingCardsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Project
 pendingCards fillInOptionals object_ =
     let
         filledInOptionals =

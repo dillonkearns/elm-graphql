@@ -33,6 +33,6 @@ first.
 
 -}
 relatedTopics : SelectionSet decodesTo GithubNoFormat.Object.Topic
--> SelectionSet (List decodesTo) GithubNoFormat.Object.Topic
+ -> SelectionSet (List decodesTo) GithubNoFormat.Object.Topic
 relatedTopics object_ =
       Object.selectionForCompositeField "relatedTopics" [] (object_) (identity >> Decode.list)

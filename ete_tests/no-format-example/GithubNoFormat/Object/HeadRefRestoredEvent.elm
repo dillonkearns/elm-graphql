@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefRestoredEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefRestoredEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -39,6 +39,6 @@ id =
 {-| PullRequest referenced by event.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
--> SelectionSet decodesTo GithubNoFormat.Object.HeadRefRestoredEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.HeadRefRestoredEvent
 pullRequest object_ =
       Object.selectionForCompositeField "pullRequest" [] (object_) (identity)

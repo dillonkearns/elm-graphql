@@ -33,15 +33,15 @@ createdAt =
 {-| The subject that was reacted to.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Interface.Reactable
--> SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
 subject object_ =
       Object.selectionForCompositeField "subject" [] (object_) (identity)
 
 
 type alias UsersOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| Users who have reacted to the reaction subject with the emotion represented by this reaction group
 
@@ -52,8 +52,8 @@ type alias UsersOptionalArguments = { first : OptionalArgument Int
 
 -}
 users : (UsersOptionalArguments -> UsersOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReactingUserConnection
--> SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactingUserConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
 users fillInOptionals object_ =
     let
         filledInOptionals =

@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| A list of edges.
 -}
 edges : SelectionSet decodesTo GithubNoFormat.Object.IssueTimelineItemEdge
--> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.IssueTimelineConnection
+ -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.IssueTimelineConnection
 edges object_ =
       Object.selectionForCompositeField "edges" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -27,7 +27,7 @@ edges object_ =
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo GithubNoFormat.Union.IssueTimelineItem
--> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.IssueTimelineConnection
+ -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.IssueTimelineConnection
 nodes object_ =
       Object.selectionForCompositeField "nodes" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
@@ -35,7 +35,7 @@ nodes object_ =
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo GithubNoFormat.Object.PageInfo
--> SelectionSet decodesTo GithubNoFormat.Object.IssueTimelineConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueTimelineConnection
 pageInfo object_ =
       Object.selectionForCompositeField "pageInfo" [] (object_) (identity)
 

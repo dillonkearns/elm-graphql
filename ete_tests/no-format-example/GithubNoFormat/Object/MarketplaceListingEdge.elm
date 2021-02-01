@@ -26,6 +26,6 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MarketplaceListingEdge
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MarketplaceListingEdge
 node object_ =
       Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)

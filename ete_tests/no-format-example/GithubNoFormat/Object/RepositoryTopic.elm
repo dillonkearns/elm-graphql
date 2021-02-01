@@ -31,7 +31,7 @@ resourcePath =
 {-| The topic.
 -}
 topic : SelectionSet decodesTo GithubNoFormat.Object.Topic
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryTopic
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryTopic
 topic object_ =
       Object.selectionForCompositeField "topic" [] (object_) (identity)
 

@@ -17,9 +17,9 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
 type alias CardsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| List of cards in the column
 
@@ -30,8 +30,8 @@ type alias CardsOptionalArguments = { first : OptionalArgument Int
 
 -}
 cards : (CardsOptionalArguments -> CardsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
 cards fillInOptionals object_ =
     let
         filledInOptionals =
@@ -73,7 +73,7 @@ name =
 {-| The project that contains this column.
 -}
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
 project object_ =
       Object.selectionForCompositeField "project" [] (object_) (identity)
 

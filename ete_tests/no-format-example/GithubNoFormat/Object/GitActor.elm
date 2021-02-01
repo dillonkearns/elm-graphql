@@ -24,7 +24,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
--> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.GitActor
+ -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.GitActor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -61,6 +61,6 @@ name =
 {-| The GitHub user corresponding to the email field. Null if no such user exists.
 -}
 user : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GitActor
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GitActor
 user object_ =
       Object.selectionForCompositeField "user" [] (object_) (identity >> Decode.nullable)

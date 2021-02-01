@@ -30,7 +30,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
--> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
+ -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Organization
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -84,9 +84,9 @@ login =
 
 
 type alias MembersOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of users who are members of this organization.
 
@@ -97,8 +97,8 @@ type alias MembersOptionalArguments = { first : OptionalArgument Int
 
 -}
 members : (MembersOptionalArguments -> MembersOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Organization
 members fillInOptionals object_ =
     let
         filledInOptionals =
@@ -140,13 +140,13 @@ organizationBillingEmail =
 
 
 type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
-,orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
-,affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
-,isLocked : OptionalArgument Bool }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
+ , isLocked : OptionalArgument Bool }
 
 {-| A list of repositories this user has pinned to their profile
 
@@ -161,8 +161,8 @@ type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
 
 -}
 pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Organization
 pinnedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -183,19 +183,19 @@ type alias ProjectRequiredArguments = { number : Int }
 
 -}
 project : ProjectRequiredArguments
--> SelectionSet decodesTo GithubNoFormat.Object.Project
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.Project
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 project requiredArgs object_ =
       Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number (Encode.int) ] (object_) (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.ProjectOrder
-,search : OptionalArgument String
-,states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.ProjectOrder
+ , search : OptionalArgument String
+ , states : OptionalArgument (List GithubNoFormat.Enum.ProjectState.ProjectState) }
 
 {-| A list of projects under the owner.
 
@@ -209,8 +209,8 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument Int
 
 -}
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Organization
 projects fillInOptionals object_ =
     let
         filledInOptionals =
@@ -238,14 +238,14 @@ projectsUrl =
 
 
 type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
-,orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
-,affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
-,isLocked : OptionalArgument Bool
-,isFork : OptionalArgument Bool }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
+ , isLocked : OptionalArgument Bool
+ , isFork : OptionalArgument Bool }
 
 {-| A list of repositories that the user owns.
 
@@ -261,8 +261,8 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
 
 -}
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Organization
 repositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -283,8 +283,8 @@ type alias RepositoryRequiredArguments = { name : String }
 
 -}
 repository : RepositoryRequiredArguments
--> SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 repository requiredArgs object_ =
       Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name (Encode.string) ] (object_) (identity >> Decode.nullable)
 
@@ -299,7 +299,7 @@ resourcePath =
 {-| The Organization's SAML Identity Providers
 -}
 samlIdentityProvider : SelectionSet decodesTo GithubNoFormat.Object.OrganizationIdentityProvider
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 samlIdentityProvider object_ =
       Object.selectionForCompositeField "samlIdentityProvider" [] (object_) (identity >> Decode.nullable)
 
@@ -312,23 +312,23 @@ type alias TeamRequiredArguments = { slug : String }
 
 -}
 team : TeamRequiredArguments
--> SelectionSet decodesTo GithubNoFormat.Object.Team
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.Team
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 team requiredArgs object_ =
       Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs.slug (Encode.string) ] (object_) (identity >> Decode.nullable)
 
 
 type alias TeamsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,privacy : OptionalArgument GithubNoFormat.Enum.TeamPrivacy.TeamPrivacy
-,role : OptionalArgument GithubNoFormat.Enum.TeamRole.TeamRole
-,query : OptionalArgument String
-,userLogins : OptionalArgument (List String)
-,orderBy : OptionalArgument GithubNoFormat.InputObject.TeamOrder
-,ldapMapped : OptionalArgument Bool
-,rootTeamsOnly : OptionalArgument Bool }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , privacy : OptionalArgument GithubNoFormat.Enum.TeamPrivacy.TeamPrivacy
+ , role : OptionalArgument GithubNoFormat.Enum.TeamRole.TeamRole
+ , query : OptionalArgument String
+ , userLogins : OptionalArgument (List String)
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.TeamOrder
+ , ldapMapped : OptionalArgument Bool
+ , rootTeamsOnly : OptionalArgument Bool }
 
 {-| A list of teams in this organization.
 
@@ -346,8 +346,8 @@ type alias TeamsOptionalArguments = { first : OptionalArgument Int
 
 -}
 teams : (TeamsOptionalArguments -> TeamsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Organization
+ -> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Organization
 teams fillInOptionals object_ =
     let
         filledInOptionals =

@@ -26,6 +26,6 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo GithubNoFormat.Object.Label
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.LabelEdge
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.LabelEdge
 node object_ =
       Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)

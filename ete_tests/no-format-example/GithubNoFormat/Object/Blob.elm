@@ -73,7 +73,7 @@ oid =
 {-| The Repository the Git object belongs to
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.Blob
+ -> SelectionSet decodesTo GithubNoFormat.Object.Blob
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 

@@ -20,10 +20,10 @@ import GithubNoFormat.Enum.SubscriptionState
 type alias Fragments decodesTo =
     {
     onCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit,
-onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
-onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
-onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository,
-onTeam : SelectionSet decodesTo GithubNoFormat.Object.Team
+ onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
+ onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
+ onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository,
+ onTeam : SelectionSet decodesTo GithubNoFormat.Object.Team
     }
 
 
@@ -36,10 +36,10 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Commit" selections.onCommit,
-Object.buildFragment "Issue" selections.onIssue,
-Object.buildFragment "PullRequest" selections.onPullRequest,
-Object.buildFragment "Repository" selections.onRepository,
-Object.buildFragment "Team" selections.onTeam
+ Object.buildFragment "Issue" selections.onIssue,
+ Object.buildFragment "PullRequest" selections.onPullRequest,
+ Object.buildFragment "Repository" selections.onRepository,
+ Object.buildFragment "Team" selections.onTeam
         ]
 
 
@@ -50,10 +50,10 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Subscribable
 id =

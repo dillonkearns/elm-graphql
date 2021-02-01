@@ -24,7 +24,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
--> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Bot
+ -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Bot
 avatarUrl fillInOptionals =
     let
         filledInOptionals =

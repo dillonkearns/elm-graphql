@@ -17,9 +17,9 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
 type alias CommentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of pull request comments associated with the thread.
 
@@ -30,8 +30,8 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewCommentConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewCommentConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -52,7 +52,7 @@ id =
 {-| Identifies the pull request associated with this thread.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
 pullRequest object_ =
       Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
 
@@ -60,6 +60,6 @@ pullRequest object_ =
 {-| Identifies the repository associated with this thread.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewThread
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)

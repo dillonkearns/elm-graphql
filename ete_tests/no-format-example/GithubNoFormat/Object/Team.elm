@@ -20,9 +20,9 @@ import GithubNoFormat.Enum.TeamMemberRole
 import GithubNoFormat.Enum.TeamPrivacy
 import GithubNoFormat.Enum.SubscriptionState
 type alias AncestorsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of teams that are ancestors of this team.
 
@@ -33,8 +33,8 @@ type alias AncestorsOptionalArguments = { first : OptionalArgument Int
 
 -}
 ancestors : (AncestorsOptionalArguments -> AncestorsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Team
+ -> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Team
 ancestors fillInOptionals object_ =
     let
         filledInOptionals =
@@ -55,7 +55,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
--> SelectionSet (Maybe GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Team
+ -> SelectionSet (Maybe GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Team
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -69,12 +69,12 @@ avatarUrl fillInOptionals =
 
 
 type alias ChildTeamsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.TeamOrder
-,userLogins : OptionalArgument (List String)
-,immediateOnly : OptionalArgument Bool }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.TeamOrder
+ , userLogins : OptionalArgument (List String)
+ , immediateOnly : OptionalArgument Bool }
 
 {-| List of child teams belonging to this team
 
@@ -88,8 +88,8 @@ type alias ChildTeamsOptionalArguments = { first : OptionalArgument Int
 
 -}
 childTeams : (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Team
+ -> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Team
 childTeams fillInOptionals object_ =
     let
         filledInOptionals =
@@ -143,9 +143,9 @@ id =
 
 
 type alias InvitationsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of pending invitations for users to this team
 
@@ -156,8 +156,8 @@ type alias InvitationsOptionalArguments = { first : OptionalArgument Int
 
 -}
 invitations : (InvitationsOptionalArguments -> InvitationsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.OrganizationInvitationConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Team
+ -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationInvitationConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Team
 invitations fillInOptionals object_ =
     let
         filledInOptionals =
@@ -171,12 +171,12 @@ invitations fillInOptionals object_ =
 
 
 type alias MembersOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,query : OptionalArgument String
-,membership : OptionalArgument GithubNoFormat.Enum.TeamMembershipType.TeamMembershipType
-,role : OptionalArgument GithubNoFormat.Enum.TeamMemberRole.TeamMemberRole }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , query : OptionalArgument String
+ , membership : OptionalArgument GithubNoFormat.Enum.TeamMembershipType.TeamMembershipType
+ , role : OptionalArgument GithubNoFormat.Enum.TeamMemberRole.TeamMemberRole }
 
 {-| A list of users who are members of this team.
 
@@ -190,8 +190,8 @@ type alias MembersOptionalArguments = { first : OptionalArgument Int
 
 -}
 members : (MembersOptionalArguments -> MembersOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.TeamMemberConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Team
+ -> SelectionSet decodesTo GithubNoFormat.Object.TeamMemberConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Team
 members fillInOptionals object_ =
     let
         filledInOptionals =
@@ -242,7 +242,7 @@ newTeamUrl =
 {-| The organization that owns this team.
 -}
 organization : SelectionSet decodesTo GithubNoFormat.Object.Organization
--> SelectionSet decodesTo GithubNoFormat.Object.Team
+ -> SelectionSet decodesTo GithubNoFormat.Object.Team
 organization object_ =
       Object.selectionForCompositeField "organization" [] (object_) (identity)
 
@@ -250,7 +250,7 @@ organization object_ =
 {-| The parent team of the team.
 -}
 parentTeam : SelectionSet decodesTo GithubNoFormat.Object.Team
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Team
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Team
 parentTeam object_ =
       Object.selectionForCompositeField "parentTeam" [] (object_) (identity >> Decode.nullable)
 
@@ -263,11 +263,11 @@ privacy =
 
 
 type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,query : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.TeamRepositoryOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , query : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.TeamRepositoryOrder }
 
 {-| A list of repositories this team has access to.
 
@@ -280,8 +280,8 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
 
 -}
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.TeamRepositoryConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Team
+ -> SelectionSet decodesTo GithubNoFormat.Object.TeamRepositoryConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Team
 repositories fillInOptionals object_ =
     let
         filledInOptionals =

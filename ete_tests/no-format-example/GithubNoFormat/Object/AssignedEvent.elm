@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.AssignedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.AssignedEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -27,7 +27,7 @@ actor object_ =
 {-| Identifies the assignable associated with the event.
 -}
 assignable : SelectionSet decodesTo GithubNoFormat.Interface.Assignable
--> SelectionSet decodesTo GithubNoFormat.Object.AssignedEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.AssignedEvent
 assignable object_ =
       Object.selectionForCompositeField "assignable" [] (object_) (identity)
 
@@ -47,6 +47,6 @@ id =
 {-| Identifies the user who was assigned.
 -}
 user : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.AssignedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.AssignedEvent
 user object_ =
       Object.selectionForCompositeField "user" [] (object_) (identity >> Decode.nullable)

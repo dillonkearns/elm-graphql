@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestedEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -39,7 +39,7 @@ id =
 {-| PullRequest referenced by event.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
--> SelectionSet decodesTo GithubNoFormat.Object.ReviewRequestedEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReviewRequestedEvent
 pullRequest object_ =
       Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
 
@@ -47,7 +47,7 @@ pullRequest object_ =
 {-| Identifies the reviewer whose review was requested.
 -}
 requestedReviewer : SelectionSet decodesTo GithubNoFormat.Union.RequestedReviewer
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestedEvent
 requestedReviewer object_ =
       Object.selectionForCompositeField "requestedReviewer" [] (object_) (identity >> Decode.nullable)
 
@@ -55,6 +55,6 @@ requestedReviewer object_ =
 {-| Identifies the user whose review was requested.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestedEvent
 subject object_ =
       Object.selectionForCompositeField "subject" [] (object_) (identity >> Decode.nullable)

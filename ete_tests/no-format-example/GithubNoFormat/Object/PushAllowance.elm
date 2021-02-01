@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The actor that can push.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Union.PushAllowanceActor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PushAllowance
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PushAllowance
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -32,6 +32,6 @@ id =
 {-| Identifies the protected branch associated with the allowed user or team.
 -}
 protectedBranch : SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
--> SelectionSet decodesTo GithubNoFormat.Object.PushAllowance
+ -> SelectionSet decodesTo GithubNoFormat.Object.PushAllowance
 protectedBranch object_ =
       Object.selectionForCompositeField "protectedBranch" [] (object_) (identity)

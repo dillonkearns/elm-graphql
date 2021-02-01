@@ -23,7 +23,7 @@ associated with a column, they will not become pending in the future.
 
 -}
 column : SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
 column object_ =
       Object.selectionForCompositeField "column" [] (object_) (identity >> Decode.nullable)
 
@@ -31,7 +31,7 @@ column object_ =
 {-| The card content item
 -}
 content : SelectionSet decodesTo GithubNoFormat.Union.ProjectCardItem
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
 content object_ =
       Object.selectionForCompositeField "content" [] (object_) (identity >> Decode.nullable)
 
@@ -46,7 +46,7 @@ createdAt =
 {-| The actor who created this card
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
 creator object_ =
       Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
 
@@ -73,7 +73,7 @@ note =
 {-| The project that contains this card.
 -}
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
 project object_ =
       Object.selectionForCompositeField "project" [] (object_) (identity)
 
@@ -81,7 +81,7 @@ project object_ =
 {-| The column that contains this card.
 -}
 projectColumn : SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
 projectColumn object_ =
       Object.selectionForCompositeField "projectColumn" [] (object_) (identity)
 

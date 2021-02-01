@@ -20,7 +20,7 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GistComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GistComment
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -70,7 +70,7 @@ databaseId =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GistComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GistComment
 editor object_ =
       Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
 
@@ -78,7 +78,7 @@ editor object_ =
 {-| The associated gist.
 -}
 gist : SelectionSet decodesTo GithubNoFormat.Object.Gist
--> SelectionSet decodesTo GithubNoFormat.Object.GistComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.GistComment
 gist object_ =
       Object.selectionForCompositeField "gist" [] (object_) (identity)
 
@@ -110,9 +110,9 @@ updatedAt =
 
 
 type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of edits to this content.
 
@@ -123,8 +123,8 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GistComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GistComment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

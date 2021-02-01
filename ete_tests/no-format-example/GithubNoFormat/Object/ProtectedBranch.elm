@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The actor who created this protected branch.
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProtectedBranch
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProtectedBranch
 creator object_ =
       Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
 
@@ -86,9 +86,9 @@ name =
 
 
 type alias PushAllowancesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list push allowances for this protected branch.
 
@@ -99,8 +99,8 @@ type alias PushAllowancesOptionalArguments = { first : OptionalArgument Int
 
 -}
 pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PushAllowanceConnection
--> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
+ -> SelectionSet decodesTo GithubNoFormat.Object.PushAllowanceConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
 pushAllowances fillInOptionals object_ =
     let
         filledInOptionals =
@@ -116,7 +116,7 @@ pushAllowances fillInOptionals object_ =
 {-| The repository associated with this protected branch.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -129,9 +129,9 @@ requiredStatusCheckContexts =
 
 
 type alias ReviewDismissalAllowancesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list review dismissal allowances for this protected branch.
 
@@ -142,8 +142,8 @@ type alias ReviewDismissalAllowancesOptionalArguments = { first : OptionalArgume
 
 -}
 reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissalAllowanceConnection
--> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissalAllowanceConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals object_ =
     let
         filledInOptionals =

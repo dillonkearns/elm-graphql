@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The new edge of the moved card.
 -}
 cardEdge : SelectionSet decodesTo GithubNoFormat.Object.ProjectCardEdge
--> SelectionSet decodesTo GithubNoFormat.Object.MoveProjectCardPayload
+ -> SelectionSet decodesTo GithubNoFormat.Object.MoveProjectCardPayload
 cardEdge object_ =
       Object.selectionForCompositeField "cardEdge" [] (object_) (identity)
 

@@ -17,14 +17,14 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 import GithubNoFormat.Enum.PullRequestState
 type alias AssociatedPullRequestsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
-,labels : OptionalArgument (List String)
-,headRefName : OptionalArgument String
-,baseRefName : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestState.PullRequestState)
+ , labels : OptionalArgument (List String)
+ , headRefName : OptionalArgument String
+ , baseRefName : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.IssueOrder }
 
 {-| A list of pull requests with this ref as the head ref.
 
@@ -40,8 +40,8 @@ type alias AssociatedPullRequestsOptionalArguments = { first : OptionalArgument 
 
 -}
 associatedPullRequests : (AssociatedPullRequestsOptionalArguments -> AssociatedPullRequestsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Ref
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Ref
 associatedPullRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -76,7 +76,7 @@ prefix =
 {-| The repository the ref belongs to.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.Ref
+ -> SelectionSet decodesTo GithubNoFormat.Object.Ref
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -84,6 +84,6 @@ repository object_ =
 {-| The object the ref points to.
 -}
 target : SelectionSet decodesTo GithubNoFormat.Interface.GitObject
--> SelectionSet decodesTo GithubNoFormat.Object.Ref
+ -> SelectionSet decodesTo GithubNoFormat.Object.Ref
 target object_ =
       Object.selectionForCompositeField "target" [] (object_) (identity)

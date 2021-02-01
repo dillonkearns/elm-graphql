@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onUser : SelectionSet decodesTo GithubNoFormat.Object.User,
-onTeam : SelectionSet decodesTo GithubNoFormat.Object.Team
+ onTeam : SelectionSet decodesTo GithubNoFormat.Object.Team
     }
 
 
@@ -34,7 +34,7 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
           Object.buildFragment "User" selections.onUser,
-Object.buildFragment "Team" selections.onTeam
+ Object.buildFragment "Team" selections.onTeam
         ]
 
 
@@ -45,5 +45,5 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onTeam = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }

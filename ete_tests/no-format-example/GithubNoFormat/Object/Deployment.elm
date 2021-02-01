@@ -19,7 +19,7 @@ import GithubNoFormat.Enum.DeploymentState
 {-| Identifies the commit sha of the deployment.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
 commit object_ =
       Object.selectionForCompositeField "commit" [] (object_) (identity >> Decode.nullable)
 
@@ -34,7 +34,7 @@ createdAt =
 {-| Identifies the actor who triggered the deployment.
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
 creator object_ =
       Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
 
@@ -61,7 +61,7 @@ id =
 {-| The latest status of this deployment.
 -}
 latestStatus : SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
 latestStatus object_ =
       Object.selectionForCompositeField "latestStatus" [] (object_) (identity >> Decode.nullable)
 
@@ -76,7 +76,7 @@ payload =
 {-| Identifies the repository associated with the deployment.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.Deployment
+ -> SelectionSet decodesTo GithubNoFormat.Object.Deployment
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -89,9 +89,9 @@ state =
 
 
 type alias StatusesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of statuses associated with the deployment.
 
@@ -102,8 +102,8 @@ type alias StatusesOptionalArguments = { first : OptionalArgument Int
 
 -}
 statuses : (StatusesOptionalArguments -> StatusesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatusConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
+ -> SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatusConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
 statuses fillInOptionals object_ =
     let
         filledInOptionals =

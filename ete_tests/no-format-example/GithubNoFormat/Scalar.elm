@@ -47,14 +47,14 @@ type X509Certificate
 
 defineCodecs :
     {codecDate : Codec valueDate
-, codecDateTime : Codec valueDateTime
-, codecGitObjectID : Codec valueGitObjectID
-, codecGitSSHRemote : Codec valueGitSSHRemote
-, codecGitTimestamp : Codec valueGitTimestamp
-, codecHtml : Codec valueHtml
-, codecId : Codec valueId
-, codecUri : Codec valueUri
-, codecX509Certificate : Codec valueX509Certificate}
+ , codecDateTime : Codec valueDateTime
+ , codecGitObjectID : Codec valueGitObjectID
+ , codecGitSSHRemote : Codec valueGitSSHRemote
+ , codecGitTimestamp : Codec valueGitTimestamp
+ , codecHtml : Codec valueHtml
+ , codecId : Codec valueId
+ , codecUri : Codec valueUri
+ , codecX509Certificate : Codec valueX509Certificate}
     -> Codecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate
 defineCodecs definitions =
     Codecs definitions
@@ -63,14 +63,14 @@ defineCodecs definitions =
 unwrapCodecs :
     Codecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate
     -> {codecDate : Codec valueDate
-, codecDateTime : Codec valueDateTime
-, codecGitObjectID : Codec valueGitObjectID
-, codecGitSSHRemote : Codec valueGitSSHRemote
-, codecGitTimestamp : Codec valueGitTimestamp
-, codecHtml : Codec valueHtml
-, codecId : Codec valueId
-, codecUri : Codec valueUri
-, codecX509Certificate : Codec valueX509Certificate}
+ , codecDateTime : Codec valueDateTime
+ , codecGitObjectID : Codec valueGitObjectID
+ , codecGitSSHRemote : Codec valueGitSSHRemote
+ , codecGitTimestamp : Codec valueGitTimestamp
+ , codecHtml : Codec valueHtml
+ , codecId : Codec valueId
+ , codecUri : Codec valueUri
+ , codecX509Certificate : Codec valueX509Certificate}
 unwrapCodecs (Codecs unwrappedCodecs) =
     unwrappedCodecs
 
@@ -90,14 +90,14 @@ type Codecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitT
 
 type alias RawCodecs valueDate valueDateTime valueGitObjectID valueGitSSHRemote valueGitTimestamp valueHtml valueId valueUri valueX509Certificate =
     {codecDate : Codec valueDate
-, codecDateTime : Codec valueDateTime
-, codecGitObjectID : Codec valueGitObjectID
-, codecGitSSHRemote : Codec valueGitSSHRemote
-, codecGitTimestamp : Codec valueGitTimestamp
-, codecHtml : Codec valueHtml
-, codecId : Codec valueId
-, codecUri : Codec valueUri
-, codecX509Certificate : Codec valueX509Certificate}
+ , codecDateTime : Codec valueDateTime
+ , codecGitObjectID : Codec valueGitObjectID
+ , codecGitSSHRemote : Codec valueGitSSHRemote
+ , codecGitTimestamp : Codec valueGitTimestamp
+ , codecHtml : Codec valueHtml
+ , codecId : Codec valueId
+ , codecUri : Codec valueUri
+ , codecX509Certificate : Codec valueX509Certificate}
 
 
 defaultCodecs : RawCodecs Date DateTime GitObjectID GitSSHRemote GitTimestamp Html Id Uri X509Certificate
@@ -105,27 +105,27 @@ defaultCodecs =
     {codecDate =
   { encoder = \(Date raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map Date }
-, codecDateTime =
+ , codecDateTime =
   { encoder = \(DateTime raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map DateTime }
-, codecGitObjectID =
+ , codecGitObjectID =
   { encoder = \(GitObjectID raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map GitObjectID }
-, codecGitSSHRemote =
+ , codecGitSSHRemote =
   { encoder = \(GitSSHRemote raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map GitSSHRemote }
-, codecGitTimestamp =
+ , codecGitTimestamp =
   { encoder = \(GitTimestamp raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map GitTimestamp }
-, codecHtml =
+ , codecHtml =
   { encoder = \(Html raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map Html }
-, codecId =
+ , codecId =
   { encoder = \(Id raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map Id }
-, codecUri =
+ , codecUri =
   { encoder = \(Uri raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map Uri }
-, codecX509Certificate =
+ , codecX509Certificate =
   { encoder = \(X509Certificate raw) -> Encode.string raw
  , decoder = Object.scalarDecoder |> Decode.map X509Certificate }}

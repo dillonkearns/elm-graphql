@@ -26,7 +26,7 @@ cursor =
 {-| The item at the end of the edge.
 -}
 node : SelectionSet decodesTo GithubNoFormat.Union.SearchResultItem
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.SearchResultItemEdge
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.SearchResultItemEdge
 node object_ =
       Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)
 
@@ -34,6 +34,6 @@ node object_ =
 {-| Text matches on the result found.
 -}
 textMatches : SelectionSet decodesTo GithubNoFormat.Object.TextMatch
--> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.SearchResultItemEdge
+ -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.SearchResultItemEdge
 textMatches object_ =
       Object.selectionForCompositeField "textMatches" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)

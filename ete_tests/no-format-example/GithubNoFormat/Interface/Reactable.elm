@@ -20,10 +20,10 @@ import GithubNoFormat.Enum.ReactionContent
 type alias Fragments decodesTo =
     {
     onCommitComment : SelectionSet decodesTo GithubNoFormat.Object.CommitComment,
-onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
-onIssueComment : SelectionSet decodesTo GithubNoFormat.Object.IssueComment,
-onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
-onPullRequestReviewComment : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
+ onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
+ onIssueComment : SelectionSet decodesTo GithubNoFormat.Object.IssueComment,
+ onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
+ onPullRequestReviewComment : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
     }
 
 
@@ -36,10 +36,10 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "CommitComment" selections.onCommitComment,
-Object.buildFragment "Issue" selections.onIssue,
-Object.buildFragment "IssueComment" selections.onIssueComment,
-Object.buildFragment "PullRequest" selections.onPullRequest,
-Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+ Object.buildFragment "Issue" selections.onIssue,
+ Object.buildFragment "IssueComment" selections.onIssueComment,
+ Object.buildFragment "PullRequest" selections.onPullRequest,
+ Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
         ]
 
 
@@ -50,10 +50,10 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| Identifies the primary key from the database.
 -}
@@ -70,17 +70,17 @@ id =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
--> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Interface.Reactable
+ -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Interface.Reactable
 reactionGroups object_ =
       Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
-,orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
 
 {-| A list of Reactions left on the Issue.
 
@@ -93,8 +93,8 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
--> SelectionSet decodesTo GithubNoFormat.Interface.Reactable
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
+ -> SelectionSet decodesTo GithubNoFormat.Interface.Reactable
 reactions fillInOptionals object_ =
     let
         filledInOptionals =

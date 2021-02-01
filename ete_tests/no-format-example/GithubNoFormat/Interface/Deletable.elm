@@ -20,10 +20,10 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onCommitComment : SelectionSet decodesTo GithubNoFormat.Object.CommitComment,
-onGistComment : SelectionSet decodesTo GithubNoFormat.Object.GistComment,
-onIssueComment : SelectionSet decodesTo GithubNoFormat.Object.IssueComment,
-onPullRequestReview : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview,
-onPullRequestReviewComment : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
+ onGistComment : SelectionSet decodesTo GithubNoFormat.Object.GistComment,
+ onIssueComment : SelectionSet decodesTo GithubNoFormat.Object.IssueComment,
+ onPullRequestReview : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview,
+ onPullRequestReviewComment : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
     }
 
 
@@ -36,10 +36,10 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "CommitComment" selections.onCommitComment,
-Object.buildFragment "GistComment" selections.onGistComment,
-Object.buildFragment "IssueComment" selections.onIssueComment,
-Object.buildFragment "PullRequestReview" selections.onPullRequestReview,
-Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+ Object.buildFragment "GistComment" selections.onGistComment,
+ Object.buildFragment "IssueComment" selections.onIssueComment,
+ Object.buildFragment "PullRequestReview" selections.onPullRequestReview,
+ Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
         ]
 
 
@@ -50,10 +50,10 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onGistComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onGistComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| Check if the current viewer can delete this object.
 -}

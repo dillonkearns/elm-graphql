@@ -33,6 +33,6 @@ invalidTopicNames =
 {-| The updated repository.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.UpdateTopicsPayload
+ -> SelectionSet decodesTo GithubNoFormat.Object.UpdateTopicsPayload
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)

@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The Git commit object
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
 commit object_ =
       Object.selectionForCompositeField "commit" [] (object_) (identity)
 
@@ -32,7 +32,7 @@ id =
 {-| The pull request this commit belongs to
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
 pullRequest object_ =
       Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
 

@@ -21,7 +21,7 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -57,7 +57,7 @@ bodyText =
 {-| Identifies the commit associated with the comment.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
 commit object_ =
       Object.selectionForCompositeField "commit" [] (object_) (identity)
 
@@ -100,7 +100,7 @@ draftedAt =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 editor object_ =
       Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
 
@@ -120,7 +120,7 @@ lastEditedAt =
 {-| Identifies the original commit associated with the comment.
 -}
 originalCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 originalCommit object_ =
       Object.selectionForCompositeField "originalCommit" [] (object_) (identity >> Decode.nullable)
 
@@ -156,7 +156,7 @@ publishedAt =
 {-| The pull request associated with this review comment.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
 pullRequest object_ =
       Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
 
@@ -164,7 +164,7 @@ pullRequest object_ =
 {-| The pull request review associated with this review comment.
 -}
 pullRequestReview : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 pullRequestReview object_ =
       Object.selectionForCompositeField "pullRequestReview" [] (object_) (identity >> Decode.nullable)
 
@@ -172,17 +172,17 @@ pullRequestReview object_ =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
--> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.PullRequestReviewComment
 reactionGroups object_ =
       Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
-,orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
 
 {-| A list of Reactions left on the Issue.
 
@@ -195,8 +195,8 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -212,7 +212,7 @@ reactions fillInOptionals object_ =
 {-| The comment this is a reply to.
 -}
 replyTo : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 replyTo object_ =
       Object.selectionForCompositeField "replyTo" [] (object_) (identity >> Decode.nullable)
 
@@ -220,7 +220,7 @@ replyTo object_ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -247,9 +247,9 @@ url =
 
 
 type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of edits to this content.
 
@@ -260,8 +260,8 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

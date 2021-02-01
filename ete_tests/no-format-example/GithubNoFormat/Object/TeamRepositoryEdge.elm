@@ -22,7 +22,7 @@ cursor =
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.TeamRepositoryEdge
+ -> SelectionSet decodesTo GithubNoFormat.Object.TeamRepositoryEdge
 node object_ =
       Object.selectionForCompositeField "node" [] (object_) (identity)
 

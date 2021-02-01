@@ -21,11 +21,11 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
-onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
-onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository,
-onUser : SelectionSet decodesTo GithubNoFormat.Object.User,
-onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
-onMarketplaceListing : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
+ onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
+ onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository,
+ onUser : SelectionSet decodesTo GithubNoFormat.Object.User,
+ onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
+ onMarketplaceListing : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
     }
 
 
@@ -38,11 +38,11 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
           Object.buildFragment "Issue" selections.onIssue,
-Object.buildFragment "PullRequest" selections.onPullRequest,
-Object.buildFragment "Repository" selections.onRepository,
-Object.buildFragment "User" selections.onUser,
-Object.buildFragment "Organization" selections.onOrganization,
-Object.buildFragment "MarketplaceListing" selections.onMarketplaceListing
+ Object.buildFragment "PullRequest" selections.onPullRequest,
+ Object.buildFragment "Repository" selections.onRepository,
+ Object.buildFragment "User" selections.onUser,
+ Object.buildFragment "Organization" selections.onOrganization,
+ Object.buildFragment "MarketplaceListing" selections.onMarketplaceListing
         ]
 
 
@@ -53,9 +53,9 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onMarketplaceListing = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onMarketplaceListing = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }

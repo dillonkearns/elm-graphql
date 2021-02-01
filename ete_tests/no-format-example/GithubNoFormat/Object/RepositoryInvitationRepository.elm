@@ -110,7 +110,7 @@ license =
 {-| The license associated with the repository
 -}
 licenseInfo : SelectionSet decodesTo GithubNoFormat.Object.License
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RepositoryInvitationRepository
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RepositoryInvitationRepository
 licenseInfo object_ =
       Object.selectionForCompositeField "licenseInfo" [] (object_) (identity >> Decode.nullable)
 
@@ -146,7 +146,7 @@ nameWithOwner =
 {-| The owner of the repository associated with this invitation repository.
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitationRepository
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitationRepository
 owner object_ =
       Object.selectionForCompositeField "owner" [] (object_) (identity)
 
@@ -173,7 +173,7 @@ type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument In
 
 -}
 shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
--> SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.RepositoryInvitationRepository
+ -> SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.RepositoryInvitationRepository
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =

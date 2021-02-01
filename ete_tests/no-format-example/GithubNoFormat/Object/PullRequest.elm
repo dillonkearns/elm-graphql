@@ -38,9 +38,9 @@ additions =
 
 
 type alias AssigneesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of Users assigned to this object.
 
@@ -51,8 +51,8 @@ type alias AssigneesOptionalArguments = { first : OptionalArgument Int
 
 -}
 assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 assignees fillInOptionals object_ =
     let
         filledInOptionals =
@@ -68,7 +68,7 @@ assignees fillInOptionals object_ =
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -83,7 +83,7 @@ authorAssociation =
 {-| Identifies the base Ref associated with the pull request.
 -}
 baseRef : SelectionSet decodesTo GithubNoFormat.Object.Ref
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 baseRef object_ =
       Object.selectionForCompositeField "baseRef" [] (object_) (identity >> Decode.nullable)
 
@@ -145,9 +145,9 @@ closedAt =
 
 
 type alias CommentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of comments associated with the pull request.
 
@@ -158,8 +158,8 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.IssueCommentConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueCommentConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -173,9 +173,9 @@ comments fillInOptionals object_ =
 
 
 type alias CommitsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of commits present in this pull request's head branch not present in the base branch.
 
@@ -186,8 +186,8 @@ type alias CommitsOptionalArguments = { first : OptionalArgument Int
 
 -}
 commits : (CommitsOptionalArguments -> CommitsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommitConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommitConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 commits fillInOptionals object_ =
     let
         filledInOptionals =
@@ -231,7 +231,7 @@ deletions =
 {-| The actor who edited this pull request's body.
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 editor object_ =
       Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
 
@@ -239,7 +239,7 @@ editor object_ =
 {-| Identifies the head Ref associated with the pull request.
 -}
 headRef : SelectionSet decodesTo GithubNoFormat.Object.Ref
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 headRef object_ =
       Object.selectionForCompositeField "headRef" [] (object_) (identity >> Decode.nullable)
 
@@ -261,7 +261,7 @@ headRefOid =
 {-| The repository associated with this pull request's head Ref.
 -}
 headRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 headRepository object_ =
       Object.selectionForCompositeField "headRepository" [] (object_) (identity >> Decode.nullable)
 
@@ -269,7 +269,7 @@ headRepository object_ =
 {-| The owner of the repository associated with this pull request's head Ref.
 -}
 headRepositoryOwner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 headRepositoryOwner object_ =
       Object.selectionForCompositeField "headRepositoryOwner" [] (object_) (identity >> Decode.nullable)
 
@@ -287,9 +287,9 @@ isCrossRepository =
 
 
 type alias LabelsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of labels associated with the object.
 
@@ -300,8 +300,8 @@ type alias LabelsOptionalArguments = { first : OptionalArgument Int
 
 -}
 labels : (LabelsOptionalArguments -> LabelsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.LabelConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.LabelConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 labels fillInOptionals object_ =
     let
         filledInOptionals =
@@ -331,7 +331,7 @@ locked =
 {-| The commit that was created when this pull request was merged.
 -}
 mergeCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 mergeCommit object_ =
       Object.selectionForCompositeField "mergeCommit" [] (object_) (identity >> Decode.nullable)
 
@@ -360,7 +360,7 @@ mergedAt =
 {-| Identifies the milestone associated with the pull request.
 -}
 milestone : SelectionSet decodesTo GithubNoFormat.Object.Milestone
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 milestone object_ =
       Object.selectionForCompositeField "milestone" [] (object_) (identity >> Decode.nullable)
 
@@ -373,9 +373,9 @@ number =
 
 
 type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of Users that are participating in the Pull Request conversation.
 
@@ -386,8 +386,8 @@ type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
 
 -}
 participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 participants fillInOptionals object_ =
     let
         filledInOptionals =
@@ -403,15 +403,15 @@ participants fillInOptionals object_ =
 {-| The commit that GitHub automatically generated to test if this pull request could be merged. This field will not return a value if the pull request is merged, or if the test merge commit is still being generated. See the `mergeable` field for more details on the mergeability of the pull request.
 -}
 potentialMergeCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 potentialMergeCommit object_ =
       Object.selectionForCompositeField "potentialMergeCommit" [] (object_) (identity >> Decode.nullable)
 
 
 type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| List of project cards associated with this pull request.
 
@@ -422,8 +422,8 @@ type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
 
 -}
 projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 projectCards fillInOptionals object_ =
     let
         filledInOptionals =
@@ -446,17 +446,17 @@ publishedAt =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
--> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.PullRequest
 reactionGroups object_ =
       Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
-,orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
 
 {-| A list of Reactions left on the Issue.
 
@@ -469,8 +469,8 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -486,7 +486,7 @@ reactions fillInOptionals object_ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -513,9 +513,9 @@ revertUrl =
 
 
 type alias ReviewRequestsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of review requests associated with the pull request.
 
@@ -526,8 +526,8 @@ type alias ReviewRequestsOptionalArguments = { first : OptionalArgument Int
 
 -}
 reviewRequests : (ReviewRequestsOptionalArguments -> ReviewRequestsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReviewRequestConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReviewRequestConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 reviewRequests fillInOptionals object_ =
     let
         filledInOptionals =
@@ -541,11 +541,11 @@ reviewRequests fillInOptionals object_ =
 
 
 type alias ReviewsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,states : OptionalArgument (List GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState)
-,author : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , states : OptionalArgument (List GithubNoFormat.Enum.PullRequestReviewState.PullRequestReviewState)
+ , author : OptionalArgument String }
 
 {-| A list of reviews associated with the pull request.
 
@@ -558,8 +558,8 @@ type alias ReviewsOptionalArguments = { first : OptionalArgument Int
 
 -}
 reviews : (ReviewsOptionalArguments -> ReviewsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 reviews fillInOptionals object_ =
     let
         filledInOptionals =
@@ -582,16 +582,16 @@ state =
 {-| A list of reviewer suggestions based on commit history and past review comments.
 -}
 suggestedReviewers : SelectionSet decodesTo GithubNoFormat.Object.SuggestedReviewer
--> SelectionSet (List (Maybe decodesTo)) GithubNoFormat.Object.PullRequest
+ -> SelectionSet (List (Maybe decodesTo)) GithubNoFormat.Object.PullRequest
 suggestedReviewers object_ =
       Object.selectionForCompositeField "suggestedReviewers" [] (object_) (identity >> Decode.nullable >> Decode.list)
 
 
 type alias TimelineOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,since : OptionalArgument GithubNoFormat.ScalarCodecs.DateTime }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , since : OptionalArgument GithubNoFormat.ScalarCodecs.DateTime }
 
 {-| A list of events, comments, commits, etc. associated with the pull request.
 
@@ -603,8 +603,8 @@ type alias TimelineOptionalArguments = { first : OptionalArgument Int
 
 -}
 timeline : (TimelineOptionalArguments -> TimelineOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestTimelineConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestTimelineConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequest
 timeline fillInOptionals object_ =
     let
         filledInOptionals =
@@ -639,9 +639,9 @@ url =
 
 
 type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of edits to this content.
 
@@ -652,8 +652,8 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequest
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

@@ -21,7 +21,7 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -55,9 +55,9 @@ bodyText =
 
 
 type alias CommentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of review comments for the current pull request review.
 
@@ -68,8 +68,8 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewCommentConnection
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewCommentConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -85,7 +85,7 @@ comments fillInOptionals object_ =
 {-| Identifies the commit associated with this pull request review.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
 commit object_ =
       Object.selectionForCompositeField "commit" [] (object_) (identity >> Decode.nullable)
 
@@ -114,7 +114,7 @@ databaseId =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
 editor object_ =
       Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
 
@@ -141,7 +141,7 @@ publishedAt =
 {-| Identifies the pull request associated with this pull request review.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
 pullRequest object_ =
       Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
 
@@ -149,7 +149,7 @@ pullRequest object_ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -190,9 +190,9 @@ url =
 
 
 type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of edits to this content.
 
@@ -203,8 +203,8 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

@@ -20,12 +20,12 @@ import GithubNoFormat.Enum.CommentAuthorAssociation
 type alias Fragments decodesTo =
     {
     onCommitComment : SelectionSet decodesTo GithubNoFormat.Object.CommitComment,
-onGistComment : SelectionSet decodesTo GithubNoFormat.Object.GistComment,
-onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
-onIssueComment : SelectionSet decodesTo GithubNoFormat.Object.IssueComment,
-onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
-onPullRequestReview : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview,
-onPullRequestReviewComment : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
+ onGistComment : SelectionSet decodesTo GithubNoFormat.Object.GistComment,
+ onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
+ onIssueComment : SelectionSet decodesTo GithubNoFormat.Object.IssueComment,
+ onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
+ onPullRequestReview : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview,
+ onPullRequestReviewComment : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
     }
 
 
@@ -38,12 +38,12 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "CommitComment" selections.onCommitComment,
-Object.buildFragment "GistComment" selections.onGistComment,
-Object.buildFragment "Issue" selections.onIssue,
-Object.buildFragment "IssueComment" selections.onIssueComment,
-Object.buildFragment "PullRequest" selections.onPullRequest,
-Object.buildFragment "PullRequestReview" selections.onPullRequestReview,
-Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+ Object.buildFragment "GistComment" selections.onGistComment,
+ Object.buildFragment "Issue" selections.onIssue,
+ Object.buildFragment "IssueComment" selections.onIssueComment,
+ Object.buildFragment "PullRequest" selections.onPullRequest,
+ Object.buildFragment "PullRequestReview" selections.onPullRequestReview,
+ Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
         ]
 
 
@@ -54,17 +54,17 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onCommitComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onGistComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onGistComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onIssueComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequestReview = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequestReviewComment = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -107,7 +107,7 @@ createdViaEmail =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
 editor object_ =
       Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
 
@@ -139,9 +139,9 @@ updatedAt =
 
 
 type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of edits to this content.
 
@@ -152,8 +152,8 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

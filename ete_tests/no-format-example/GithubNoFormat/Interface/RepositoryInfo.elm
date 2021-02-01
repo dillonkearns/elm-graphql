@@ -20,7 +20,7 @@ import GithubNoFormat.Enum.RepositoryLockReason
 type alias Fragments decodesTo =
     {
     onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository,
-onRepositoryInvitationRepository : SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitationRepository
+ onRepositoryInvitationRepository : SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitationRepository
     }
 
 
@@ -33,7 +33,7 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Repository" selections.onRepository,
-Object.buildFragment "RepositoryInvitationRepository" selections.onRepositoryInvitationRepository
+ Object.buildFragment "RepositoryInvitationRepository" selections.onRepositoryInvitationRepository
         ]
 
 
@@ -44,7 +44,7 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRepositoryInvitationRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onRepositoryInvitationRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| Identifies the date and time when the object was created.
 -}
@@ -140,7 +140,7 @@ license =
 {-| The license associated with the repository
 -}
 licenseInfo : SelectionSet decodesTo GithubNoFormat.Object.License
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.RepositoryInfo
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.RepositoryInfo
 licenseInfo object_ =
       Object.selectionForCompositeField "licenseInfo" [] (object_) (identity >> Decode.nullable)
 
@@ -176,7 +176,7 @@ nameWithOwner =
 {-| The User owner of the repository.
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
--> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryInfo
+ -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryInfo
 owner object_ =
       Object.selectionForCompositeField "owner" [] (object_) (identity)
 
@@ -203,7 +203,7 @@ type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument In
 
 -}
 shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
--> SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Interface.RepositoryInfo
+ -> SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Interface.RepositoryInfo
 shortDescriptionHTML fillInOptionals =
     let
         filledInOptionals =

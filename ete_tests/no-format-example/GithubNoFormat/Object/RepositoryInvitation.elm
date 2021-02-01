@@ -24,7 +24,7 @@ id =
 {-| The user who received the invitation.
 -}
 invitee : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitation
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitation
 invitee object_ =
       Object.selectionForCompositeField "invitee" [] (object_) (identity)
 
@@ -32,7 +32,7 @@ invitee object_ =
 {-| The user who created the invitation.
 -}
 inviter : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitation
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitation
 inviter object_ =
       Object.selectionForCompositeField "inviter" [] (object_) (identity)
 
@@ -47,6 +47,6 @@ permission =
 {-| The Repository the user is invited to.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitationRepository
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RepositoryInvitation
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RepositoryInvitation
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity >> Decode.nullable)

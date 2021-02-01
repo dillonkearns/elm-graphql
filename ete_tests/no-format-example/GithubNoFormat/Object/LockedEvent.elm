@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.LockedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.LockedEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -39,6 +39,6 @@ id =
 {-| Object that was locked.
 -}
 lockable : SelectionSet decodesTo GithubNoFormat.Interface.Lockable
--> SelectionSet decodesTo GithubNoFormat.Object.LockedEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.LockedEvent
 lockable object_ =
       Object.selectionForCompositeField "lockable" [] (object_) (identity)

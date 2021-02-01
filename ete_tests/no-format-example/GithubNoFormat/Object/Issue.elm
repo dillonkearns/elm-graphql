@@ -29,9 +29,9 @@ activeLockReason =
 
 
 type alias AssigneesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of Users assigned to this object.
 
@@ -42,8 +42,8 @@ type alias AssigneesOptionalArguments = { first : OptionalArgument Int
 
 -}
 assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 assignees fillInOptionals object_ =
     let
         filledInOptionals =
@@ -59,7 +59,7 @@ assignees fillInOptionals object_ =
 {-| The actor who authored the comment.
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -107,9 +107,9 @@ closedAt =
 
 
 type alias CommentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of comments associated with the Issue.
 
@@ -120,8 +120,8 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.IssueCommentConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueCommentConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -158,7 +158,7 @@ databaseId =
 {-| The actor who edited the comment.
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 editor object_ =
       Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
 
@@ -169,9 +169,9 @@ id =
 
 
 type alias LabelsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of labels associated with the object.
 
@@ -182,8 +182,8 @@ type alias LabelsOptionalArguments = { first : OptionalArgument Int
 
 -}
 labels : (LabelsOptionalArguments -> LabelsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.LabelConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.LabelConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 labels fillInOptionals object_ =
     let
         filledInOptionals =
@@ -213,7 +213,7 @@ locked =
 {-| Identifies the milestone associated with the issue.
 -}
 milestone : SelectionSet decodesTo GithubNoFormat.Object.Milestone
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 milestone object_ =
       Object.selectionForCompositeField "milestone" [] (object_) (identity >> Decode.nullable)
 
@@ -226,9 +226,9 @@ number =
 
 
 type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of Users that are participating in the Issue conversation.
 
@@ -239,8 +239,8 @@ type alias ParticipantsOptionalArguments = { first : OptionalArgument Int
 
 -}
 participants : (ParticipantsOptionalArguments -> ParticipantsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 participants fillInOptionals object_ =
     let
         filledInOptionals =
@@ -254,9 +254,9 @@ participants fillInOptionals object_ =
 
 
 type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| List of project cards associated with this issue.
 
@@ -267,8 +267,8 @@ type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
 
 -}
 projectCards : (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 projectCards fillInOptionals object_ =
     let
         filledInOptionals =
@@ -291,17 +291,17 @@ publishedAt =
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
--> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.Issue
+ -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.Issue
 reactionGroups object_ =
       Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
-,orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , content : OptionalArgument GithubNoFormat.Enum.ReactionContent.ReactionContent
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.ReactionOrder }
 
 {-| A list of Reactions left on the Issue.
 
@@ -314,8 +314,8 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 
 -}
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 reactions fillInOptionals object_ =
     let
         filledInOptionals =
@@ -331,7 +331,7 @@ reactions fillInOptionals object_ =
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 
@@ -351,10 +351,10 @@ state =
 
 
 type alias TimelineOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,since : OptionalArgument GithubNoFormat.ScalarCodecs.DateTime }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , since : OptionalArgument GithubNoFormat.ScalarCodecs.DateTime }
 
 {-| A list of events, comments, commits, etc. associated with the issue.
 
@@ -366,8 +366,8 @@ type alias TimelineOptionalArguments = { first : OptionalArgument Int
 
 -}
 timeline : (TimelineOptionalArguments -> TimelineOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.IssueTimelineConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.IssueTimelineConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 timeline fillInOptionals object_ =
     let
         filledInOptionals =
@@ -402,9 +402,9 @@ url =
 
 
 type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of edits to this content.
 
@@ -415,8 +415,8 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 
 -}
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
+ -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 userContentEdits fillInOptionals object_ =
     let
         filledInOptionals =

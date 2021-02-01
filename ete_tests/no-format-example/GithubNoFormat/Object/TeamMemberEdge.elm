@@ -36,7 +36,7 @@ memberAccessUrl =
 
 
 node : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet decodesTo GithubNoFormat.Object.TeamMemberEdge
+ -> SelectionSet decodesTo GithubNoFormat.Object.TeamMemberEdge
 node object_ =
       Object.selectionForCompositeField "node" [] (object_) (identity)
 

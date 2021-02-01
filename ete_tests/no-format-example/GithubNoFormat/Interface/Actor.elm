@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onBot : SelectionSet decodesTo GithubNoFormat.Object.Bot,
-onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
-onUser : SelectionSet decodesTo GithubNoFormat.Object.User
+ onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
+ onUser : SelectionSet decodesTo GithubNoFormat.Object.User
     }
 
 
@@ -34,8 +34,8 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Bot" selections.onBot,
-Object.buildFragment "Organization" selections.onOrganization,
-Object.buildFragment "User" selections.onUser
+ Object.buildFragment "Organization" selections.onOrganization,
+ Object.buildFragment "User" selections.onUser
         ]
 
 
@@ -46,8 +46,8 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onBot = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
@@ -57,7 +57,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
--> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.Actor
+ -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.Actor
 avatarUrl fillInOptionals =
     let
         filledInOptionals =

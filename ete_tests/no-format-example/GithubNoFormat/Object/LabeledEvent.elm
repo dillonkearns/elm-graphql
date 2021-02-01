@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.LabeledEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.LabeledEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -39,7 +39,7 @@ id =
 {-| Identifies the label associated with the 'labeled' event.
 -}
 label : SelectionSet decodesTo GithubNoFormat.Object.Label
--> SelectionSet decodesTo GithubNoFormat.Object.LabeledEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.LabeledEvent
 label object_ =
       Object.selectionForCompositeField "label" [] (object_) (identity)
 
@@ -47,6 +47,6 @@ label object_ =
 {-| Identifies the `Labelable` associated with the event.
 -}
 labelable : SelectionSet decodesTo GithubNoFormat.Interface.Labelable
--> SelectionSet decodesTo GithubNoFormat.Object.LabeledEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.LabeledEvent
 labelable object_ =
       Object.selectionForCompositeField "labelable" [] (object_) (identity)

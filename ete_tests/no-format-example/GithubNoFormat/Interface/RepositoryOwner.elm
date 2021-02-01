@@ -23,7 +23,7 @@ import GithubNoFormat.Enum.RepositoryAffiliation
 type alias Fragments decodesTo =
     {
     onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
-onUser : SelectionSet decodesTo GithubNoFormat.Object.User
+ onUser : SelectionSet decodesTo GithubNoFormat.Object.User
     }
 
 
@@ -36,7 +36,7 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Organization" selections.onOrganization,
-Object.buildFragment "User" selections.onUser
+ Object.buildFragment "User" selections.onUser
         ]
 
 
@@ -47,7 +47,7 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
@@ -57,7 +57,7 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
--> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.RepositoryOwner
+ -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Interface.RepositoryOwner
 avatarUrl fillInOptionals =
     let
         filledInOptionals =
@@ -83,13 +83,13 @@ login =
 
 
 type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
-,orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
-,affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
-,isLocked : OptionalArgument Bool }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
+ , isLocked : OptionalArgument Bool }
 
 {-| A list of repositories this user has pinned to their profile
 
@@ -104,8 +104,8 @@ type alias PinnedRepositoriesOptionalArguments = { first : OptionalArgument Int
 
 -}
 pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
--> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
+ -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
 pinnedRepositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -119,14 +119,14 @@ pinnedRepositories fillInOptionals object_ =
 
 
 type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
-,orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
-,affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
-,isLocked : OptionalArgument Bool
-,isFork : OptionalArgument Bool }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , privacy : OptionalArgument GithubNoFormat.Enum.RepositoryPrivacy.RepositoryPrivacy
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.RepositoryOrder
+ , affiliations : OptionalArgument (List (Maybe GithubNoFormat.Enum.RepositoryAffiliation.RepositoryAffiliation))
+ , isLocked : OptionalArgument Bool
+ , isFork : OptionalArgument Bool }
 
 {-| A list of repositories that the user owns.
 
@@ -142,8 +142,8 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
 
 -}
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
--> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
+ -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryConnection
+ -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
 repositories fillInOptionals object_ =
     let
         filledInOptionals =
@@ -164,8 +164,8 @@ type alias RepositoryRequiredArguments = { name : String }
 
 -}
 repository : RepositoryRequiredArguments
--> SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.RepositoryOwner
+ -> SelectionSet decodesTo GithubNoFormat.Object.Repository
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.RepositoryOwner
 repository requiredArgs object_ =
       Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name (Encode.string) ] (object_) (identity >> Decode.nullable)
 

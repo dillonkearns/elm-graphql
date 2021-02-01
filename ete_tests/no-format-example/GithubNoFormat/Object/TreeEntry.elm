@@ -33,7 +33,7 @@ name =
 {-| Entry file object.
 -}
 object : SelectionSet decodesTo GithubNoFormat.Interface.GitObject
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.TreeEntry
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.TreeEntry
 object object_ =
       Object.selectionForCompositeField "object" [] (object_) (identity >> Decode.nullable)
 
@@ -48,7 +48,7 @@ oid =
 {-| The Repository the tree entry belongs to
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Object.TreeEntry
+ -> SelectionSet decodesTo GithubNoFormat.Object.TreeEntry
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)
 

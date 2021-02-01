@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| Identifies the actor who performed the event.
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.UnsubscribedEvent
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.UnsubscribedEvent
 actor object_ =
       Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
 
@@ -39,6 +39,6 @@ id =
 {-| Object referenced by event.
 -}
 subscribable : SelectionSet decodesTo GithubNoFormat.Interface.Subscribable
--> SelectionSet decodesTo GithubNoFormat.Object.UnsubscribedEvent
+ -> SelectionSet decodesTo GithubNoFormat.Object.UnsubscribedEvent
 subscribable object_ =
       Object.selectionForCompositeField "subscribable" [] (object_) (identity)

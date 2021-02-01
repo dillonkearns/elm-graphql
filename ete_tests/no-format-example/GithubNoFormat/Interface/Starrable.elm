@@ -20,7 +20,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onGist : SelectionSet decodesTo GithubNoFormat.Object.Gist,
-onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository
+ onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository
     }
 
 
@@ -33,7 +33,7 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Gist" selections.onGist,
-Object.buildFragment "Repository" selections.onRepository
+ Object.buildFragment "Repository" selections.onRepository
         ]
 
 
@@ -44,7 +44,7 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onGist = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Starrable
 id =
@@ -52,10 +52,10 @@ id =
 
 
 type alias StargazersOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.StarOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.StarOrder }
 
 {-| A list of users who have starred this starrable.
 
@@ -67,8 +67,8 @@ type alias StargazersOptionalArguments = { first : OptionalArgument Int
 
 -}
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
--> SelectionSet decodesTo GithubNoFormat.Interface.Starrable
+ -> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
+ -> SelectionSet decodesTo GithubNoFormat.Interface.Starrable
 stargazers fillInOptionals object_ =
     let
         filledInOptionals =

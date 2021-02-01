@@ -24,9 +24,9 @@ digestMethod =
 
 
 type alias ExternalIdentitiesOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| External Identities provisioned by this Identity Provider
 
@@ -37,8 +37,8 @@ type alias ExternalIdentitiesOptionalArguments = { first : OptionalArgument Int
 
 -}
 externalIdentities : (ExternalIdentitiesOptionalArguments -> ExternalIdentitiesOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ExternalIdentityConnection
--> SelectionSet decodesTo GithubNoFormat.Object.OrganizationIdentityProvider
+ -> SelectionSet decodesTo GithubNoFormat.Object.ExternalIdentityConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationIdentityProvider
 externalIdentities fillInOptionals object_ =
     let
         filledInOptionals =
@@ -73,7 +73,7 @@ issuer =
 {-| Organization this Identity Provider belongs to
 -}
 organization : SelectionSet decodesTo GithubNoFormat.Object.Organization
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.OrganizationIdentityProvider
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.OrganizationIdentityProvider
 organization object_ =
       Object.selectionForCompositeField "organization" [] (object_) (identity >> Decode.nullable)
 

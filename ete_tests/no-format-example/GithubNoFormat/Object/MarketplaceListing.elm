@@ -176,7 +176,7 @@ type alias LogoUrlOptionalArguments = { size : OptionalArgument Int }
 
 -}
 logoUrl : (LogoUrlOptionalArguments -> LogoUrlOptionalArguments)
--> SelectionSet (Maybe GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.MarketplaceListing
+ -> SelectionSet (Maybe GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.MarketplaceListing
 logoUrl fillInOptionals =
     let
         filledInOptionals =
@@ -213,7 +213,7 @@ pricingUrl =
 {-| The category that best describes the listing.
 -}
 primaryCategory : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
--> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
+ -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
 primaryCategory object_ =
       Object.selectionForCompositeField "primaryCategory" [] (object_) (identity)
 
@@ -242,7 +242,7 @@ screenshotUrls =
 {-| An alternate category that describes the listing.
 -}
 secondaryCategory : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MarketplaceListing
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MarketplaceListing
 secondaryCategory object_ =
       Object.selectionForCompositeField "secondaryCategory" [] (object_) (identity >> Decode.nullable)
 

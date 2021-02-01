@@ -20,9 +20,9 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onBlob : SelectionSet decodesTo GithubNoFormat.Object.Blob,
-onCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit,
-onTag : SelectionSet decodesTo GithubNoFormat.Object.Tag,
-onTree : SelectionSet decodesTo GithubNoFormat.Object.Tree
+ onCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit,
+ onTag : SelectionSet decodesTo GithubNoFormat.Object.Tag,
+ onTree : SelectionSet decodesTo GithubNoFormat.Object.Tree
     }
 
 
@@ -35,9 +35,9 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Blob" selections.onBlob,
-Object.buildFragment "Commit" selections.onCommit,
-Object.buildFragment "Tag" selections.onTag,
-Object.buildFragment "Tree" selections.onTree
+ Object.buildFragment "Commit" selections.onCommit,
+ Object.buildFragment "Tag" selections.onTag,
+ Object.buildFragment "Tree" selections.onTree
         ]
 
 
@@ -48,9 +48,9 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onBlob = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onTag = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onTree = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onTag = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onTree = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| An abbreviated version of the Git object ID
 -}
@@ -88,6 +88,6 @@ oid =
 {-| The Repository the Git object belongs to
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
--> SelectionSet decodesTo GithubNoFormat.Interface.GitObject
+ -> SelectionSet decodesTo GithubNoFormat.Interface.GitObject
 repository object_ =
       Object.selectionForCompositeField "repository" [] (object_) (identity)

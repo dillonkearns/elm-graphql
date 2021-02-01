@@ -17,9 +17,9 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
 type alias CommentsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String }
 
 {-| A list of comments associated with the gist
 
@@ -30,8 +30,8 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 
 -}
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.GistCommentConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Gist
+ -> SelectionSet decodesTo GithubNoFormat.Object.GistCommentConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Gist
 comments fillInOptionals object_ =
     let
         filledInOptionals =
@@ -80,7 +80,7 @@ name =
 {-| The gist owner.
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Gist
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Gist
 owner object_ =
       Object.selectionForCompositeField "owner" [] (object_) (identity >> Decode.nullable)
 
@@ -93,10 +93,10 @@ pushedAt =
 
 
 type alias StargazersOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,orderBy : OptionalArgument GithubNoFormat.InputObject.StarOrder }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , orderBy : OptionalArgument GithubNoFormat.InputObject.StarOrder }
 
 {-| A list of users who have starred this starrable.
 
@@ -108,8 +108,8 @@ type alias StargazersOptionalArguments = { first : OptionalArgument Int
 
 -}
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Gist
+ -> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Gist
 stargazers fillInOptionals object_ =
     let
         filledInOptionals =

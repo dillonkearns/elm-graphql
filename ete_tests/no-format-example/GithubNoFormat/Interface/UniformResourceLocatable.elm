@@ -20,18 +20,18 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 type alias Fragments decodesTo =
     {
     onBot : SelectionSet decodesTo GithubNoFormat.Object.Bot,
-onCrossReferencedEvent : SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent,
-onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
-onMergedEvent : SelectionSet decodesTo GithubNoFormat.Object.MergedEvent,
-onMilestone : SelectionSet decodesTo GithubNoFormat.Object.Milestone,
-onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
-onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
-onPullRequestCommit : SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit,
-onRelease : SelectionSet decodesTo GithubNoFormat.Object.Release,
-onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository,
-onRepositoryTopic : SelectionSet decodesTo GithubNoFormat.Object.RepositoryTopic,
-onReviewDismissedEvent : SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissedEvent,
-onUser : SelectionSet decodesTo GithubNoFormat.Object.User
+ onCrossReferencedEvent : SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent,
+ onIssue : SelectionSet decodesTo GithubNoFormat.Object.Issue,
+ onMergedEvent : SelectionSet decodesTo GithubNoFormat.Object.MergedEvent,
+ onMilestone : SelectionSet decodesTo GithubNoFormat.Object.Milestone,
+ onOrganization : SelectionSet decodesTo GithubNoFormat.Object.Organization,
+ onPullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest,
+ onPullRequestCommit : SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit,
+ onRelease : SelectionSet decodesTo GithubNoFormat.Object.Release,
+ onRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository,
+ onRepositoryTopic : SelectionSet decodesTo GithubNoFormat.Object.RepositoryTopic,
+ onReviewDismissedEvent : SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissedEvent,
+ onUser : SelectionSet decodesTo GithubNoFormat.Object.User
     }
 
 
@@ -44,18 +44,18 @@ fragments selections =
     Object.exhaustiveFragmentSelection
         [
          Object.buildFragment "Bot" selections.onBot,
-Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent,
-Object.buildFragment "Issue" selections.onIssue,
-Object.buildFragment "MergedEvent" selections.onMergedEvent,
-Object.buildFragment "Milestone" selections.onMilestone,
-Object.buildFragment "Organization" selections.onOrganization,
-Object.buildFragment "PullRequest" selections.onPullRequest,
-Object.buildFragment "PullRequestCommit" selections.onPullRequestCommit,
-Object.buildFragment "Release" selections.onRelease,
-Object.buildFragment "Repository" selections.onRepository,
-Object.buildFragment "RepositoryTopic" selections.onRepositoryTopic,
-Object.buildFragment "ReviewDismissedEvent" selections.onReviewDismissedEvent,
-Object.buildFragment "User" selections.onUser
+ Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent,
+ Object.buildFragment "Issue" selections.onIssue,
+ Object.buildFragment "MergedEvent" selections.onMergedEvent,
+ Object.buildFragment "Milestone" selections.onMilestone,
+ Object.buildFragment "Organization" selections.onOrganization,
+ Object.buildFragment "PullRequest" selections.onPullRequest,
+ Object.buildFragment "PullRequestCommit" selections.onPullRequestCommit,
+ Object.buildFragment "Release" selections.onRelease,
+ Object.buildFragment "Repository" selections.onRepository,
+ Object.buildFragment "RepositoryTopic" selections.onRepositoryTopic,
+ Object.buildFragment "ReviewDismissedEvent" selections.onReviewDismissedEvent,
+ Object.buildFragment "User" selections.onUser
         ]
 
 
@@ -66,18 +66,18 @@ maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
     {
       onBot = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onCrossReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onMergedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onMilestone = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onPullRequestCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRelease = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onRepositoryTopic = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onReviewDismissedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
-onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+ onCrossReferencedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onIssue = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onMergedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onMilestone = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onOrganization = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequest = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onPullRequestCommit = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onRelease = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onRepository = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onRepositoryTopic = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onReviewDismissedEvent = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing),
+ onUser = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 {-| The HTML path to this resource.
 -}

@@ -19,7 +19,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 {-| The author of the release
 -}
 author : SelectionSet decodesTo GithubNoFormat.Object.User
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
 author object_ =
       Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
 
@@ -72,10 +72,10 @@ publishedAt =
 
 
 type alias ReleaseAssetsOptionalArguments = { first : OptionalArgument Int
-,after : OptionalArgument String
-,last : OptionalArgument Int
-,before : OptionalArgument String
-,name : OptionalArgument String }
+ , after : OptionalArgument String
+ , last : OptionalArgument Int
+ , before : OptionalArgument String
+ , name : OptionalArgument String }
 
 {-| List of releases assets which are dependent on this release.
 
@@ -87,8 +87,8 @@ type alias ReleaseAssetsOptionalArguments = { first : OptionalArgument Int
 
 -}
 releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments)
--> SelectionSet decodesTo GithubNoFormat.Object.ReleaseAssetConnection
--> SelectionSet decodesTo GithubNoFormat.Object.Release
+ -> SelectionSet decodesTo GithubNoFormat.Object.ReleaseAssetConnection
+ -> SelectionSet decodesTo GithubNoFormat.Object.Release
 releaseAssets fillInOptionals object_ =
     let
         filledInOptionals =
@@ -111,7 +111,7 @@ resourcePath =
 {-| The Git tag the release points to
 -}
 tag : SelectionSet decodesTo GithubNoFormat.Object.Ref
--> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
+ -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
 tag object_ =
       Object.selectionForCompositeField "tag" [] (object_) (identity >> Decode.nullable)
 
