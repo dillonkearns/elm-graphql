@@ -19,6 +19,8 @@ npx elm-analyse |  grep -v 'INFO: '
 
 cd ../ete_tests
 elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src
+elm-graphql --introspection-file ../examples/github-schema.json --base GithubNoFormat --output no-format-example --skip-elm-format
+npx elm make no-format-example/GithubNoFormat/**/*.elm
 
 cd ..
 echo 'Ensuring documentation is valid...'

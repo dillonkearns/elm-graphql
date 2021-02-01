@@ -149,9 +149,14 @@ function onDataAvailable(
   customDecodersModule: string | null
 ) {
   console.log("Generating files...");
-  app.ports.generatedFiles.subscribe(async function(generatedFile: {
-    [s: string]: string;
-  }) {
+  app.ports.generatedFiles.subscribe(async function(
+    { generatedFile, skipElmFormat }: {
+      generatedFile: {
+        [s: string]: string;
+      },
+      skipElmFormat: boolean
+    }
+  ) {
     removeGenerated(prependBasePath("/", baseModule, outputPath));
     makeEmptyDirectories(baseModule, outputPath, [
       "InputObject",
@@ -166,7 +171,9 @@ function onDataAvailable(
       }
     );
     writeIntrospectionFile(baseModule, outputPath);
-    applyElmFormat(prependBasePath("/", baseModule, outputPath));
+    if (!skipElmFormat) {
+      applyElmFormat(prependBasePath("/", baseModule, outputPath));
+    }
     if (customDecodersModule) {
       verifyCustomCodecsFileIsValid(
         outputPath,
