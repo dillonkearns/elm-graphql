@@ -131,7 +131,7 @@ defaultCodecs =
                                 interpolate "codec{0} : Codec value{0}"
                                     [ ClassCaseName.normalized classCaseName ]
                             )
-                        |> String.join "\n, "
+                        |> String.join "\n , "
                    )
                 ++ "}"
             , "" -- TODO remove this
@@ -150,7 +150,7 @@ defaultCodecs =
                                     [ ClassCaseName.normalized classCaseName
                                     ]
                             )
-                        |> String.join "\n, "
+                        |> String.join "\n , "
                    )
                 ++ "}"
             , typesToGenerate

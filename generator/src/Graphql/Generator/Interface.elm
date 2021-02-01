@@ -52,13 +52,13 @@ maybeFragments =
         [ moduleName |> String.join "."
         , implementors
             |> List.map (aliasFieldForFragment context moduleName)
-            |> String.join ",\n"
+            |> String.join ",\n "
         , implementors
             |> List.map (exhaustiveBuildupForFragment context moduleName)
-            |> String.join ",\n"
+            |> String.join ",\n "
         , implementors
             |> List.map (maybeFragmentEntry context moduleName)
-            |> String.join ",\n"
+            |> String.join ",\n "
         ]
 
 
