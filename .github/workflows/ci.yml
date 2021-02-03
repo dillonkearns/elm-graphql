@@ -63,7 +63,7 @@ jobs:
         continue-on-error: true
         run: npx --no-install elm make --docs docs.json
       - name: Elm Publish
-        uses: dillonkearns/elm-publish-action@1.0.2
+        uses: dillonkearns/elm-publish-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-elm: ./node_modules/.bin/elm
