@@ -3,6 +3,7 @@
 set -o errexit
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
+export set NO_ELM_TOOLING_INSTALL=1
 
 npm uninstall -g elm-graphql
 npm run build
