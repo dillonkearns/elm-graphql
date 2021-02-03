@@ -73,3 +73,9 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
+      - run: (cd examples/subscription/ && npm ci && npm run build)
+      - name: Deploy Subscriptions example
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./examples/subscription/dist
