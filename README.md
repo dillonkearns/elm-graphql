@@ -1,6 +1,6 @@
 # dillonkearns/elm-graphql
 
-[![Build Status](https://travis-ci.org/dillonkearns/elm-graphql.svg?branch=master)](https://travis-ci.org/dillonkearns/elm-graphql) [![Elm package](https://img.shields.io/elm-package/v/dillonkearns/elm-graphql.svg)](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/)
+[![Build Status](https://github.com/dillonkearns/elm-graphql/workflows/CI/badge.svg)](https://github.com/dillonkearns/elm-graphql/actions?query=branch%3Amaster) [![Elm package](https://img.shields.io/elm-package/v/dillonkearns/elm-graphql.svg)](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/)
 [![npm](https://img.shields.io/npm/v/@dillonkearns/elm-graphql.svg)](https://npmjs.com/package/@dillonkearns/elm-graphql)
 
 ![elm-graphql logo](https://res.cloudinary.com/dillonkearns/image/upload/f_png,w_150,q_100/v1603750625/elm-graphql-logo.svg)
@@ -142,7 +142,7 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 
 You can do real-time APIs using GraphQL Subscriptions and `dillonkearns/elm-graphql`.
 Just wire in the framework-specific JavaScript code for opening the WebSocket connection
-through a port. Here's a [live demo](http://www.dillonkearns.com/elm-graphql/) and its
+through a port. Here's a [live demo](https://dillonkearns.github.io/elm-graphql/) and its
 [source code](https://github.com/dillonkearns/elm-graphql/tree/master/examples/subscription). The [demo server is running Elixir/Absinthe](https://github.com/dillonkearns/graphqelm-demo).
 
 ## Contributors

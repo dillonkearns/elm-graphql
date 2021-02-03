@@ -183,7 +183,7 @@ character id name =
 
 messageButton : Phrase -> Html.Html Msg
 messageButton phrase =
-    button [ onClick (SendMessage phrase) ] [ phrase |> Debug.toString |> text ]
+    button [ onClick (SendMessage phrase) ] [ phrase |> phraseToString |> text ]
 
 
 chatMessagesView : List ChatMessage -> Html.Html msg
