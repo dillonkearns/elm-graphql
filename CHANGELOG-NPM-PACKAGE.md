@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.1.0] - 2021-02-02
+
+- Add `--skip-elm-format` CLI option. See [#447](https://github.com/dillonkearns/elm-graphql/pull/447). Thank you [@lydell](https://github.com/lydell)!
+
 ## [4.0.5] - 2020-11-11
 
 ### Changed
