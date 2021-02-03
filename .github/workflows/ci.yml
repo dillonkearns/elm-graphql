@@ -32,7 +32,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.elm
-          key: elm-${{ hashFiles('elm.json', 'elm-tooling.json') }}
+          key: elm-${{ hashFiles('elm.json', 'elm-tooling.json', 'generator/elm.json') }}
           # key: elm-${{ hashFiles('elm.json', 'elm-tooling.json', 'review/elm.json') }}
 
       # Install npm packages, unless we restored them from cache.
