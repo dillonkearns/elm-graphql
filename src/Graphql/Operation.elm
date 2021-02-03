@@ -24,7 +24,7 @@ type RootMutation
 
 
 {-| Type for top-level subscriptions. Subscriptions use WebSockets, for which Elm needs ports. See
-https://github.com/dillonkearns/elm-graphql/blob/master/examples/subscription/Main.elm for an example of using
+<https://github.com/dillonkearns/elm-graphql/blob/master/examples/subscription/Main.elm> for an example of using
 `elm-graphql` subscriptions with ports.
 -}
 type RootSubscription

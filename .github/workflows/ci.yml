@@ -53,7 +53,7 @@ jobs:
       - name: Tests
         run: npm test
       - name: elm-format
-        run: npx --no-install elm-format --validate
+        run: npx --no-install elm-format --validate src/ generator/
       # - name: elm-review
       #   run: npx --no-install elm-review
       # - name: prettier
