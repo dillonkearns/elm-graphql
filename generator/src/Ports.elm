@@ -3,7 +3,6 @@ port module Ports exposing
     , generatedFiles
     , introspectSchemaFromFile
     , introspectSchemaFromUrl
-    , print
     , printAndExitFailure
     , printAndExitSuccess
     , schemaFromFile

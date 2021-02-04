@@ -1,4 +1,4 @@
-module Graphql.Parser.Scalar exposing (Scalar(..), parse, toString)
+module Graphql.Parser.Scalar exposing (Scalar(..), parse)
 
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 

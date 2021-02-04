@@ -1,4 +1,4 @@
-module Graphql.Generator.ModuleName exposing (enum, enumTypeName, generate, inputObject, interface, mutation, object, query, union)
+module Graphql.Generator.ModuleName exposing (enum, enumTypeName, generate, inputObject, interface, object, union)
 
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)

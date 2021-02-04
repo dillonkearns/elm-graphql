@@ -54,7 +54,7 @@ jobs:
       - name: elm-format
         run: npx --no-install elm-format --validate src/ generator/
       - name: elm-review
-        run: npx --no-install elm-review
+        run: npx --no-install elm-review && (cd generator && npx --no-install elm-review)
       # - name: prettier
       #   run: npx --no-install prettier --check .
       - name: Build elm docs

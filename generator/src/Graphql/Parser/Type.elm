@@ -251,7 +251,7 @@ type TypeReference
 
 
 type ReferrableType
-    = Scalar Scalar.Scalar
+    = Scalar Scalar
     | List TypeReference
     | EnumRef ClassCaseName
     | ObjectRef String

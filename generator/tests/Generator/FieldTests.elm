@@ -11,6 +11,7 @@ import Graphql.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 
+contextWith : Maybe (Dict.Dict String (List ClassCaseName)) -> Context
 contextWith maybeInterfaceLookup =
     -- Context.stub
     { stub
@@ -18,10 +19,6 @@ contextWith maybeInterfaceLookup =
         , apiSubmodule = [ "Api" ]
         , interfaces = maybeInterfaceLookup |> Maybe.withDefault Dict.empty
     }
-
-
-
--- Context.context { query = "RootQueryObject", mutation = Nothing, subscription = Nothing, apiSubmodule = [ "Api" ], interfaces = Dict.empty }
 
 
 all : Test

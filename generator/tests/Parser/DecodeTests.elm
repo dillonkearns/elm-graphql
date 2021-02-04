@@ -38,11 +38,11 @@ all =
                            ]
                          }
                """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString decoder
                     |> Expect.equal
                         (Ok
-                            (Type.typeDefinition "Weather"
-                                (Type.EnumType
+                            (typeDefinition "Weather"
+                                (EnumType
                                     [ { name = ClassCaseName.build "CLOUDY", description = Nothing }
                                     , { name = ClassCaseName.build "SUNNY", description = Nothing }
                                     ]
@@ -63,10 +63,10 @@ all =
                           "enumValues": null
                         }
                               """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString decoder
                     |> Expect.equal
                         (Ok
-                            (Type.typeDefinition "Date" ScalarType Nothing)
+                            (typeDefinition "Date" ScalarType Nothing)
                         )
         , test "decodes object" <|
             \() ->
@@ -130,10 +130,10 @@ all =
           "enumValues": null
         }
                         """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString decoder
                     |> Expect.equal
                         (Ok
-                            (Type.typeDefinition "MenuItem"
+                            (typeDefinition "MenuItem"
                                 (ObjectType
                                     [ { name = CamelCaseName.build "description"
                                       , description = Nothing
@@ -184,10 +184,10 @@ all =
                             }
                             ]}
                                         """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString decoder
                     |> Expect.equal
                         (Ok
-                            (Type.typeDefinition "MenuItem"
+                            (typeDefinition "MenuItem"
                                 (ObjectType
                                     [ { name = CamelCaseName.build "stargazers"
                                       , description = Just "A list of users who have starred this starrable."
@@ -247,10 +247,10 @@ all =
                         "enumValues": null
                       }
                                                         """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString decoder
                     |> Expect.equal
                         (Ok
-                            (Type.typeDefinition "Character"
+                            (typeDefinition "Character"
                                 (InterfaceType
                                     [ { name = CamelCaseName.build "friends"
                                       , description = Nothing
@@ -313,10 +313,10 @@ all =
                           "enumValues": null
                         }
                                         """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString decoder
                     |> Expect.equal
                         (Ok
-                            (Type.typeDefinition "Query"
+                            (typeDefinition "Query"
                                 (ObjectType
                                     [ { name = CamelCaseName.build "menuItems"
                                       , description = Nothing
@@ -418,10 +418,10 @@ all =
                          ]
                        }
                 """
-                    |> Decode.decodeString Type.decoder
+                    |> Decode.decodeString decoder
                     |> Expect.equal
                         (Ok
-                            (Type.typeDefinition "Character"
+                            (typeDefinition "Character"
                                 (InterfaceType
                                     [ { name = CamelCaseName.build "id"
                                       , description = Just "The id of the character."
