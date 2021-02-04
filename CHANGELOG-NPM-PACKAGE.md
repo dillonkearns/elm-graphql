@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.1.2] - 2021-02-04
+
+### Fixed
+
+- Fixed issue with `--header` options that had `:` within the values, see [#441](https://github.com/dillonkearns/elm-graphql/pull/441). Thank you [Jonas](https://github.com/klaftertief) for the fix!
+- Updated NPM dependencies.
+
 ## [4.1.1] - 2021-02-04
 
 ### Fixed
