@@ -16,7 +16,7 @@
     "gen:github": "npm run build && && cd examples && ../bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output src",
     "approve-compilation": "cd ete_tests && elm make src/NormalizeDemo.elm --output /dev/null && cd - && cd examples && elm make --output /dev/null src/Github.elm src/Starwars.elm src/SimpleMutation.elm && cd complex && elm make --output /dev/null Main.elm",
     "reproduce-error": "node reproducing-issues/sdl-to-json.js > reproducing-issues/schema.json && npm run build && cd reproducing-issues && ../bin/elm-graphql --introspection-file schema.json --output gen",
-    "postinstall": "elm-tooling install"
+    "prepare": "elm-tooling install"
   },
   "keywords": [
     "elm",

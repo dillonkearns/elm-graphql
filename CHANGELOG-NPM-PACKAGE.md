@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.1.3] - 2021-02-04
+
+### Fixed
+
+- Fixed issue with running `elm-tooling install` as a `postinstall` script. This was supposed to run as part of the development tooling, not the published package. Fixed with [these instructions](https://elm-tooling.github.io/elm-tooling-cli/quirks/).
+
 ## [4.1.2] - 2021-02-04
 
 ### Fixed
