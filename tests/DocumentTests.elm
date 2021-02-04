@@ -11,6 +11,7 @@ import Json.Decode as Decode
 import Test exposing (Test, describe, test)
 
 
+intArg : { key : String, value : Int } -> Graphql.Internal.Builder.Argument.Argument
 intArg { key, value } =
     Graphql.Internal.Builder.Argument.required key value Graphql.Internal.Encode.int
 
@@ -20,6 +21,7 @@ document fields =
     SelectionSet fields (Decode.fail "")
 
 
+leaf : String -> List Graphql.Internal.Builder.Argument.Argument -> RawField
 leaf fieldName arguments =
     Leaf { typeString = "", fieldName = fieldName } arguments
 

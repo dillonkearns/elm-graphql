@@ -32,8 +32,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.elm
-          key: elm-${{ hashFiles('elm.json', 'elm-tooling.json', 'generator/elm.json') }}
-          # key: elm-${{ hashFiles('elm.json', 'elm-tooling.json', 'review/elm.json') }}
+          key: elm-${{ hashFiles('elm.json', 'elm-tooling.json', 'generator/elm.json', 'review/elm.json') }}
 
       # Install npm packages, unless we restored them from cache.
       # Since `npm ci` removes the node_modules folder before running it’s
@@ -54,8 +53,8 @@ jobs:
         run: npm test
       - name: elm-format
         run: npx --no-install elm-format --validate src/ generator/
-      # - name: elm-review
-      #   run: npx --no-install elm-review
+      - name: elm-review
+        run: npx --no-install elm-review
       # - name: prettier
       #   run: npx --no-install prettier --check .
       - name: Build elm docs

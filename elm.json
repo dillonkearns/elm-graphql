@@ -21,7 +21,6 @@
         "elm/core": "1.0.2 <= v < 2.0.0",
         "elm/http": "2.0.0 <= v < 3.0.0",
         "elm/json": "1.1.1 <= v < 2.0.0",
-        "elm/time": "1.0.0 <= v < 2.0.0",
         "elm/url": "1.0.0 <= v < 2.0.0",
         "elm-community/list-extra": "8.0.0 <= v < 9.0.0",
         "lukewestby/elm-string-interpolate": "1.0.4 <= v < 2.0.0"
