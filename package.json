@@ -38,7 +38,7 @@
     "elm-tooling": "^1.1.0",
     "fs-extra": "^8.0.1",
     "graphql": "^15.5.0",
-    "node-elm-compiler": "^5.0.3",
+    "node-elm-compiler": "^5.0.5",
     "parcel-bundler": "^1.12.3",
     "typescript": "^3.4.5"
   },
