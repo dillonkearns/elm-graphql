@@ -1,4 +1,4 @@
-module Graphql.Generator.Context exposing (Context, context, stub)
+module Graphql.Generator.Context exposing (Context, stub)
 
 import Dict exposing (Dict)
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)

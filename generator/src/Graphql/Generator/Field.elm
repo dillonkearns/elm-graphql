@@ -59,7 +59,7 @@ fieldGeneratorToString returnAnnotation field fieldGenerator =
             ((fieldGenerator.annotatedArgs |> List.map .annotation)
                 ++ [ returnAnnotation ]
             )
-                |> String.join "\n-> "
+                |> String.join "\n -> "
     in
     [ typeAliasesToString field fieldGenerator
     , interpolate

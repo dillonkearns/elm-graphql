@@ -110,6 +110,7 @@ exhaustiveFragmentSelection typeSpecificSelections =
         )
 
 
+exhaustiveFailureMessage : List (FragmentSelectionSet decodesTo scope) -> String -> String
 exhaustiveFailureMessage typeSpecificSelections typeName =
     interpolate
         "Unhandled type `{0}` in exhaustive fragment handling. The following types had handlers registered to handle them: [{1}]. This happens if you are parsing either a Union or Interface. Do you need to rerun the `@dillonkearns/elm-graphql` command line tool?"

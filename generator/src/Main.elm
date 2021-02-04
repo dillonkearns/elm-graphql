@@ -24,12 +24,21 @@ type alias Model =
     ()
 
 
-run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName } -> Json.Encode.Value -> Cmd msg
-run options introspectionQueryJson =
-    case Decode.decodeValue (Graphql.Parser.decoder options) introspectionQueryJson of
+run : { apiSubmodule : List String, scalarCodecsModule : Maybe ModuleName, skipElmFormat : Bool } -> Json.Encode.Value -> Cmd msg
+run { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
+    let
+        decoder =
+            Graphql.Parser.decoder
+                { apiSubmodule = apiSubmodule
+                , scalarCodecsModule = scalarCodecsModule
+                }
+    in
+    case Decode.decodeValue decoder introspectionQueryJson of
         Ok fields ->
-            fields
-                |> Json.Encode.Extra.dict identity Json.Encode.string
+            Json.Encode.object
+                [ ( "generatedFile", Json.Encode.Extra.dict identity Json.Encode.string fields )
+                , ( "skipElmFormat", Json.Encode.bool skipElmFormat )
+                ]
                 |> Ports.generatedFiles
 
         Err error ->
@@ -50,6 +59,7 @@ type alias UrlArgs =
     , excludeDeprecated : Bool
     , headers : Dict.Dict String String
     , scalarCodecsModule : Maybe ModuleName
+    , skipElmFormat : Bool
     }
 
 
@@ -58,6 +68,7 @@ type alias FileArgs =
     , base : List String
     , outputPath : String
     , scalarCodecsModule : Maybe ModuleName
+    , skipElmFormat : Bool
     }
 
 
@@ -95,6 +106,7 @@ program =
                         |> Option.validateMap parseHeaders
                     )
                 |> with scalarCodecsOption
+                |> with skipElmFormatOption
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
             )
@@ -104,6 +116,7 @@ program =
                 |> with baseOption
                 |> with outputPathOption
                 |> with scalarCodecsOption
+                |> with skipElmFormatOption
                 |> OptionsParser.map FromIntrospectionFile
             )
         |> Program.add
@@ -112,6 +125,7 @@ program =
                 |> with baseOption
                 |> with outputPathOption
                 |> with scalarCodecsOption
+                |> with skipElmFormatOption
                 |> OptionsParser.map FromSchemaFile
             )
 
@@ -122,6 +136,11 @@ scalarCodecsOption =
         |> Option.validateIfPresent validateModuleName
         |> Option.map (Maybe.map (String.split "."))
         |> Option.map (Maybe.map ModuleName.fromList)
+
+
+skipElmFormatOption : Option.Option Bool Bool Option.BeginningOption
+skipElmFormatOption =
+    Option.flag "skip-elm-format"
 
 
 outputPathOption : Option.Option (Maybe String) String Option.BeginningOption
@@ -187,18 +206,25 @@ update cliOptions msg model =
     case msg of
         GenerateFiles introspectionJson ->
             let
-                ( baseModule, scalarCodecsModule ) =
+                ( baseModule, scalarCodecsModule, skipElmFormat ) =
                     case cliOptions of
                         FromUrl options ->
-                            ( options.base, options.scalarCodecsModule )
+                            ( options.base, options.scalarCodecsModule, options.skipElmFormat )
 
                         FromIntrospectionFile options ->
-                            ( options.base, options.scalarCodecsModule )
+                            ( options.base, options.scalarCodecsModule, options.skipElmFormat )
 
                         FromSchemaFile options ->
-                            ( options.base, options.scalarCodecsModule )
+                            ( options.base, options.scalarCodecsModule, options.skipElmFormat )
             in
-            ( (), run { apiSubmodule = baseModule, scalarCodecsModule = scalarCodecsModule } introspectionJson )
+            ( ()
+            , run
+                { apiSubmodule = baseModule
+                , scalarCodecsModule = scalarCodecsModule
+                , skipElmFormat = skipElmFormat
+                }
+                introspectionJson
+            )
 
 
 main : Program.StatefulProgram Model Msg CliOptions {}

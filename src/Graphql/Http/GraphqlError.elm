@@ -64,7 +64,7 @@ type alias Location =
     { line : Int, column : Int }
 
 
-locationDecoder : Decode.Decoder Location
+locationDecoder : Decoder Location
 locationDecoder =
     Decode.map2 Location
         (Decode.field "line" Decode.int)

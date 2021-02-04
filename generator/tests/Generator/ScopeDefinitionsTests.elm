@@ -17,11 +17,11 @@ all =
                         [ ( [ "Api", "Union" ], "module Api.Union exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Object" ], "module Api.Object exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ), ( [ "Api", "Interface" ], "module Api.Interface exposing (..)\n\n\nplaceholder : String\nplaceholder =\n    \"\"\n" ) ]
         , test "generates imports for interfaces" <|
             \() ->
-                [ Type.typeDefinition "MyObject"
-                    (Type.ObjectType [])
+                [ typeDefinition "MyObject"
+                    (ObjectType [])
                     Nothing
-                , Type.typeDefinition "MyInterface"
-                    (Type.InterfaceType [] [])
+                , typeDefinition "MyInterface"
+                    (InterfaceType [] [])
                     Nothing
                 ]
                     |> ScopeDefinitions.generate [ "Api" ]

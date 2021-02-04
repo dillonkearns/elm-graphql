@@ -35,7 +35,7 @@ module.exports = function(env) {
             {
               loader: "elm-webpack-loader",
               options:
-                MODE === "production" ? {} : { debug: false, forceWatch: true }
+                MODE === "production" ? {} : { debug: true, forceWatch: true }
             }
           ]
         }

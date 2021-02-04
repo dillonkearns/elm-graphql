@@ -3,6 +3,7 @@ module Http.QueryHelperTests exposing (all)
 import Expect
 import Graphql.Document as Document
 import Graphql.Http.QueryHelper as QueryHelper
+import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.Operation exposing (RootMutation, RootQuery)
 import Graphql.RawField exposing (RawField(..))
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet(..))
@@ -27,6 +28,7 @@ longName2 =
     String.repeat 1500 "b"
 
 
+leaf : String -> List Argument -> RawField
 leaf fieldName arguments =
     Leaf { typeString = "", fieldName = fieldName } arguments
 
