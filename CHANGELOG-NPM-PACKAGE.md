@@ -9,7 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.1.1] - 2021-02-03
+
+### Fixed
+
+- Update `graphql` npm package to add support for parsing GraphQL Description syntax in schema files. Fixes [#452](https://github.com/dillonkearns/elm-graphql/issues/452).
+
 ## [4.1.0] - 2021-02-02
+
+### Added
 
 - Add `--skip-elm-format` CLI option. See [#447](https://github.com/dillonkearns/elm-graphql/pull/447). Thank you [@lydell](https://github.com/lydell)!
 
