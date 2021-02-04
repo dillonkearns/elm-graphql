@@ -13,7 +13,7 @@
             "elm-community/json-extra": "3.0.0",
             "elm-community/list-extra": "8.2.4",
             "elm-community/result-extra": "2.4.0",
-            "elm-community/string-extra": "3.0.0",
+            "elm-community/string-extra": "4.0.1",
             "lukewestby/elm-string-interpolate": "1.0.4"
         },
         "indirect": {}
