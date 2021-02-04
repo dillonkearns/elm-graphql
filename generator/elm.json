@@ -11,7 +11,7 @@
             "elm/json": "1.0.0",
             "elm/regex": "1.0.0",
             "elm-community/json-extra": "3.0.0",
-            "elm-community/list-extra": "8.0.0",
+            "elm-community/list-extra": "8.2.4",
             "elm-community/result-extra": "2.3.0",
             "elm-community/string-extra": "3.0.0",
             "lukewestby/elm-string-interpolate": "1.0.4"
