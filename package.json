@@ -46,7 +46,6 @@
     "elm-format": ">= 0.8.0 < 1"
   },
   "dependencies": {
-    "encoding": "^0.1.12",
     "glob": "^7.1.4",
     "graphql-request": "^3.3.0",
     "request": "^2.88.0"
