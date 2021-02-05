@@ -108,7 +108,7 @@ members :
     (MembersOptionalArguments -> MembersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserConnection
     -> SelectionSet decodesTo Github.Object.Organization
-members fillInOptionals object_ =
+members fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -117,7 +117,7 @@ members fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "members" optionalArgs object_ identity
+    Object.selectionForCompositeField "members" optionalArgs object____ identity
 
 
 {-| The organization's public profile name.
@@ -176,7 +176,7 @@ pinnedRepositories :
     (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.RepositoryConnection
     -> SelectionSet decodesTo Github.Object.Organization
-pinnedRepositories fillInOptionals object_ =
+pinnedRepositories fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
@@ -185,7 +185,7 @@ pinnedRepositories fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "pinnedRepositories" optionalArgs object_ identity
+    Object.selectionForCompositeField "pinnedRepositories" optionalArgs object____ identity
 
 
 type alias ProjectRequiredArguments =
@@ -201,8 +201,8 @@ project :
     ProjectRequiredArguments
     -> SelectionSet decodesTo Github.Object.Project
     -> SelectionSet (Maybe decodesTo) Github.Object.Organization
-project requiredArgs object_ =
-    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+project requiredArgs object____ =
+    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -231,7 +231,7 @@ projects :
     (ProjectsOptionalArguments -> ProjectsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ProjectConnection
     -> SelectionSet decodesTo Github.Object.Organization
-projects fillInOptionals object_ =
+projects fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
@@ -240,7 +240,7 @@ projects fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeProjectOrder, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.ProjectState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "projects" optionalArgs object_ identity
+    Object.selectionForCompositeField "projects" optionalArgs object____ identity
 
 
 {-| The HTTP path listing organization's projects
@@ -287,7 +287,7 @@ repositories :
     (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.RepositoryConnection
     -> SelectionSet decodesTo Github.Object.Organization
-repositories fillInOptionals object_ =
+repositories fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent, isFork = Absent }
@@ -296,7 +296,7 @@ repositories fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals.isFork Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "repositories" optionalArgs object_ identity
+    Object.selectionForCompositeField "repositories" optionalArgs object____ identity
 
 
 type alias RepositoryRequiredArguments =
@@ -312,8 +312,8 @@ repository :
     RepositoryRequiredArguments
     -> SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet (Maybe decodesTo) Github.Object.Organization
-repository requiredArgs object_ =
-    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
+repository requiredArgs object____ =
+    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
@@ -328,8 +328,8 @@ resourcePath =
 samlIdentityProvider :
     SelectionSet decodesTo Github.Object.OrganizationIdentityProvider
     -> SelectionSet (Maybe decodesTo) Github.Object.Organization
-samlIdentityProvider object_ =
-    Object.selectionForCompositeField "samlIdentityProvider" [] object_ (identity >> Decode.nullable)
+samlIdentityProvider object____ =
+    Object.selectionForCompositeField "samlIdentityProvider" [] object____ (identity >> Decode.nullable)
 
 
 type alias TeamRequiredArguments =
@@ -345,8 +345,8 @@ team :
     TeamRequiredArguments
     -> SelectionSet decodesTo Github.Object.Team
     -> SelectionSet (Maybe decodesTo) Github.Object.Organization
-team requiredArgs object_ =
-    Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs.slug Encode.string ] object_ (identity >> Decode.nullable)
+team requiredArgs object____ =
+    Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs.slug Encode.string ] object____ (identity >> Decode.nullable)
 
 
 type alias TeamsOptionalArguments =
@@ -383,7 +383,7 @@ teams :
     (TeamsOptionalArguments -> TeamsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.TeamConnection
     -> SelectionSet decodesTo Github.Object.Organization
-teams fillInOptionals object_ =
+teams fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, role = Absent, query = Absent, userLogins = Absent, orderBy = Absent, ldapMapped = Absent, rootTeamsOnly = Absent }
@@ -392,7 +392,7 @@ teams fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.TeamPrivacy.toString), Argument.optional "role" filledInOptionals.role (Encode.enum Github.Enum.TeamRole.toString), Argument.optional "query" filledInOptionals.query Encode.string, Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeTeamOrder, Argument.optional "ldapMapped" filledInOptionals.ldapMapped Encode.bool, Argument.optional "rootTeamsOnly" filledInOptionals.rootTeamsOnly Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "teams" optionalArgs object_ identity
+    Object.selectionForCompositeField "teams" optionalArgs object____ identity
 
 
 {-| The HTTP path listing organization's teams

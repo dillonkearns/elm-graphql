@@ -31,5 +31,5 @@ clientMutationId =
 starrable :
     SelectionSet decodesTo Github.Interface.Starrable
     -> SelectionSet decodesTo Github.Object.RemoveStarPayload
-starrable object_ =
-    Object.selectionForCompositeField "starrable" [] object_ identity
+starrable object____ =
+    Object.selectionForCompositeField "starrable" [] object____ identity

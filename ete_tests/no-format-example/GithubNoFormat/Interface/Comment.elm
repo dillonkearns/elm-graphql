@@ -65,8 +65,8 @@ maybeFragments =
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
-author object_ =
-      Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
+author object____ =
+      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -108,8 +108,8 @@ createdViaEmail =
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
-editor object_ =
-      Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
+editor object____ =
+      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Comment
@@ -154,7 +154,7 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -163,7 +163,7 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs (object_) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs (object____) (identity >> Decode.nullable)
 
 
 {-| Did the viewer author this comment.

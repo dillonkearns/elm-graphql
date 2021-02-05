@@ -27,5 +27,5 @@ cursor =
 -}
 node : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RepositoryEdge
-node object_ =
-      Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)
+node object____ =
+      Object.selectionForCompositeField "node" [] (object____) (identity >> Decode.nullable)

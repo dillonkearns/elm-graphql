@@ -68,8 +68,8 @@ maybeFragments =
 author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
-author object_ =
-    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
+author object____ =
+    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -112,8 +112,8 @@ createdViaEmail =
 editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
-editor object_ =
-    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
+editor object____ =
+    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.Comment
@@ -162,7 +162,7 @@ userContentEdits :
     (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserContentEditConnection
     -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -171,7 +171,7 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs object____ (identity >> Decode.nullable)
 
 
 {-| Did the viewer author this comment.

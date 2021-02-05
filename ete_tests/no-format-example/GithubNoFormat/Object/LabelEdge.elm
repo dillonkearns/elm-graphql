@@ -27,5 +27,5 @@ cursor =
 -}
 node : SelectionSet decodesTo GithubNoFormat.Object.Label
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.LabelEdge
-node object_ =
-      Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)
+node object____ =
+      Object.selectionForCompositeField "node" [] (object____) (identity >> Decode.nullable)

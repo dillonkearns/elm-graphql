@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestRemovedEvent
-actor object_ =
-      Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
+actor object____ =
+      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -40,21 +40,21 @@ id =
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.ReviewRequestRemovedEvent
-pullRequest object_ =
-      Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
+pullRequest object____ =
+      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
 
 
 {-| Identifies the reviewer whose review request was removed.
 -}
 requestedReviewer : SelectionSet decodesTo GithubNoFormat.Union.RequestedReviewer
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestRemovedEvent
-requestedReviewer object_ =
-      Object.selectionForCompositeField "requestedReviewer" [] (object_) (identity >> Decode.nullable)
+requestedReviewer object____ =
+      Object.selectionForCompositeField "requestedReviewer" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the user whose review request was removed.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestRemovedEvent
-subject object_ =
-      Object.selectionForCompositeField "subject" [] (object_) (identity >> Decode.nullable)
+subject object____ =
+      Object.selectionForCompositeField "subject" [] (object____) (identity >> Decode.nullable)

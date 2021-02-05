@@ -24,8 +24,8 @@ import Json.Decode as Decode
 actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.UnlockedEvent
-actor object_ =
-    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
+actor object____ =
+    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -45,5 +45,5 @@ id =
 lockable :
     SelectionSet decodesTo Github.Interface.Lockable
     -> SelectionSet decodesTo Github.Object.UnlockedEvent
-lockable object_ =
-    Object.selectionForCompositeField "lockable" [] object_ identity
+lockable object____ =
+    Object.selectionForCompositeField "lockable" [] object____ identity

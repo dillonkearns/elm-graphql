@@ -20,24 +20,24 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 edges : SelectionSet decodesTo GithubNoFormat.Object.ProjectCardEdge
  -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.ProjectCardConnection
-edges object_ =
-      Object.selectionForCompositeField "edges" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+edges object____ =
+      Object.selectionForCompositeField "edges" [] (object____) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
 -}
 nodes : SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
  -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.ProjectCardConnection
-nodes object_ =
-      Object.selectionForCompositeField "nodes" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+nodes object____ =
+      Object.selectionForCompositeField "nodes" [] (object____) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
 -}
 pageInfo : SelectionSet decodesTo GithubNoFormat.Object.PageInfo
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
-pageInfo object_ =
-      Object.selectionForCompositeField "pageInfo" [] (object_) (identity)
+pageInfo object____ =
+      Object.selectionForCompositeField "pageInfo" [] (object____) (identity)
 
 
 {-| Identifies the total count of items in the connection.

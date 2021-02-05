@@ -65,5 +65,5 @@ maybeFragments =
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryNode
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)

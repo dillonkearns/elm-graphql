@@ -31,5 +31,5 @@ clientMutationId =
 projectColumn :
     SelectionSet decodesTo Github.Object.ProjectColumn
     -> SelectionSet decodesTo Github.Object.UpdateProjectColumnPayload
-projectColumn object_ =
-    Object.selectionForCompositeField "projectColumn" [] object_ identity
+projectColumn object____ =
+    Object.selectionForCompositeField "projectColumn" [] object____ identity

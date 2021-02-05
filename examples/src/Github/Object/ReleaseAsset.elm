@@ -64,8 +64,8 @@ name =
 release :
     SelectionSet decodesTo Github.Object.Release
     -> SelectionSet (Maybe decodesTo) Github.Object.ReleaseAsset
-release object_ =
-    Object.selectionForCompositeField "release" [] object_ (identity >> Decode.nullable)
+release object____ =
+    Object.selectionForCompositeField "release" [] object____ (identity >> Decode.nullable)
 
 
 {-| The size (in bytes) of the asset
@@ -87,8 +87,8 @@ updatedAt =
 uploadedBy :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.ReleaseAsset
-uploadedBy object_ =
-    Object.selectionForCompositeField "uploadedBy" [] object_ identity
+uploadedBy object____ =
+    Object.selectionForCompositeField "uploadedBy" [] object____ identity
 
 
 {-| Identifies the URL of the release asset.

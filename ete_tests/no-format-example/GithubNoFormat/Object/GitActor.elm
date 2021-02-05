@@ -62,5 +62,5 @@ name =
 -}
 user : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GitActor
-user object_ =
-      Object.selectionForCompositeField "user" [] (object_) (identity >> Decode.nullable)
+user object____ =
+      Object.selectionForCompositeField "user" [] (object____) (identity >> Decode.nullable)

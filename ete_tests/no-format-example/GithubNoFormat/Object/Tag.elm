@@ -67,21 +67,21 @@ oid =
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.Tag
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)
 
 
 {-| Details about the tag author.
 -}
 tagger : SelectionSet decodesTo GithubNoFormat.Object.GitActor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Tag
-tagger object_ =
-      Object.selectionForCompositeField "tagger" [] (object_) (identity >> Decode.nullable)
+tagger object____ =
+      Object.selectionForCompositeField "tagger" [] (object____) (identity >> Decode.nullable)
 
 
 {-| The Git object the tag points to.
 -}
 target : SelectionSet decodesTo GithubNoFormat.Interface.GitObject
  -> SelectionSet decodesTo GithubNoFormat.Object.Tag
-target object_ =
-      Object.selectionForCompositeField "target" [] (object_) (identity)
+target object____ =
+      Object.selectionForCompositeField "target" [] (object____) (identity)

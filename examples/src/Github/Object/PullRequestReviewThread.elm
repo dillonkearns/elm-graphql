@@ -39,7 +39,7 @@ comments :
     (CommentsOptionalArguments -> CommentsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.PullRequestReviewCommentConnection
     -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
-comments fillInOptionals object_ =
+comments fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -48,7 +48,7 @@ comments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "comments" optionalArgs object_ identity
+    Object.selectionForCompositeField "comments" optionalArgs object____ identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.PullRequestReviewThread
@@ -61,8 +61,8 @@ id =
 pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
-pullRequest object_ =
-    Object.selectionForCompositeField "pullRequest" [] object_ identity
+pullRequest object____ =
+    Object.selectionForCompositeField "pullRequest" [] object____ identity
 
 
 {-| Identifies the repository associated with this thread.
@@ -70,5 +70,5 @@ pullRequest object_ =
 repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.PullRequestReviewThread
-repository object_ =
-    Object.selectionForCompositeField "repository" [] object_ identity
+repository object____ =
+    Object.selectionForCompositeField "repository" [] object____ identity

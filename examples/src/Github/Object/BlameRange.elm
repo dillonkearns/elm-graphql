@@ -31,8 +31,8 @@ age =
 commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet decodesTo Github.Object.BlameRange
-commit object_ =
-    Object.selectionForCompositeField "commit" [] object_ identity
+commit object____ =
+    Object.selectionForCompositeField "commit" [] object____ identity
 
 
 {-| The ending line for the range

@@ -31,8 +31,8 @@ clientMutationId =
 reaction :
     SelectionSet decodesTo Github.Object.Reaction
     -> SelectionSet decodesTo Github.Object.RemoveReactionPayload
-reaction object_ =
-    Object.selectionForCompositeField "reaction" [] object_ identity
+reaction object____ =
+    Object.selectionForCompositeField "reaction" [] object____ identity
 
 
 {-| The reactable subject.
@@ -40,5 +40,5 @@ reaction object_ =
 subject :
     SelectionSet decodesTo Github.Interface.Reactable
     -> SelectionSet decodesTo Github.Object.RemoveReactionPayload
-subject object_ =
-    Object.selectionForCompositeField "subject" [] object_ identity
+subject object____ =
+    Object.selectionForCompositeField "subject" [] object____ identity

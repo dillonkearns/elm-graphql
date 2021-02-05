@@ -31,8 +31,8 @@ createdAt =
 editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.UserContentEdit
-editor object_ =
-    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
+editor object____ =
+    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.UserContentEdit

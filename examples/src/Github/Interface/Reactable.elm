@@ -74,8 +74,8 @@ id =
 reactionGroups :
     SelectionSet decodesTo Github.Object.ReactionGroup
     -> SelectionSet (Maybe (List decodesTo)) Github.Interface.Reactable
-reactionGroups object_ =
-    Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
+reactionGroups object____ =
+    Object.selectionForCompositeField "reactionGroups" [] object____ (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -102,7 +102,7 @@ reactions :
     (ReactionsOptionalArguments -> ReactionsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReactionConnection
     -> SelectionSet decodesTo Github.Interface.Reactable
-reactions fillInOptionals object_ =
+reactions fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
@@ -111,7 +111,7 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReactionOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "reactions" optionalArgs object_ identity
+    Object.selectionForCompositeField "reactions" optionalArgs object____ identity
 
 
 {-| Can user react to this subject

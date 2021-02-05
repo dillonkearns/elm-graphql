@@ -23,8 +23,8 @@ cursor =
 
 node : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.TeamRepositoryEdge
-node object_ =
-      Object.selectionForCompositeField "node" [] (object_) (identity)
+node object____ =
+      Object.selectionForCompositeField "node" [] (object____) (identity)
 
 
 {-| The permission level the team has on the repository

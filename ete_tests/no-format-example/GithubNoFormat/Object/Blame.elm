@@ -20,5 +20,5 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 ranges : SelectionSet decodesTo GithubNoFormat.Object.BlameRange
  -> SelectionSet (List decodesTo) GithubNoFormat.Object.Blame
-ranges object_ =
-      Object.selectionForCompositeField "ranges" [] (object_) (identity >> Decode.list)
+ranges object____ =
+      Object.selectionForCompositeField "ranges" [] (object____) (identity >> Decode.list)

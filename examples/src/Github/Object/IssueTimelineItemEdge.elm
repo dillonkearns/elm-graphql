@@ -31,5 +31,5 @@ cursor =
 node :
     SelectionSet decodesTo Github.Union.IssueTimelineItem
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueTimelineItemEdge
-node object_ =
-    Object.selectionForCompositeField "node" [] object_ (identity >> Decode.nullable)
+node object____ =
+    Object.selectionForCompositeField "node" [] object____ (identity >> Decode.nullable)

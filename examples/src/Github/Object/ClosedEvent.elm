@@ -24,8 +24,8 @@ import Json.Decode as Decode
 actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.ClosedEvent
-actor object_ =
-    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
+actor object____ =
+    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
 
 
 {-| Object that was closed.
@@ -33,8 +33,8 @@ actor object_ =
 closable :
     SelectionSet decodesTo Github.Interface.Closable
     -> SelectionSet decodesTo Github.Object.ClosedEvent
-closable object_ =
-    Object.selectionForCompositeField "closable" [] object_ identity
+closable object____ =
+    Object.selectionForCompositeField "closable" [] object____ identity
 
 
 {-| Object which triggered the creation of this event.
@@ -42,8 +42,8 @@ closable object_ =
 closer :
     SelectionSet decodesTo Github.Union.Closer
     -> SelectionSet (Maybe decodesTo) Github.Object.ClosedEvent
-closer object_ =
-    Object.selectionForCompositeField "closer" [] object_ (identity >> Decode.nullable)
+closer object____ =
+    Object.selectionForCompositeField "closer" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'closed' event.
@@ -51,8 +51,8 @@ closer object_ =
 commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.ClosedEvent
-commit object_ =
-    Object.selectionForCompositeField "commit" [] object_ (identity >> Decode.nullable)
+commit object____ =
+    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.

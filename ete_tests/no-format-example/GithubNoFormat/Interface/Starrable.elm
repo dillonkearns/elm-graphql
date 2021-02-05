@@ -69,7 +69,7 @@ type alias StargazersOptionalArguments = { first : OptionalArgument Int
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
  -> SelectionSet decodesTo GithubNoFormat.Interface.Starrable
-stargazers fillInOptionals object_ =
+stargazers fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
@@ -78,7 +78,7 @@ stargazers fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeStarOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "stargazers" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "stargazers" optionalArgs (object____) (identity)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.

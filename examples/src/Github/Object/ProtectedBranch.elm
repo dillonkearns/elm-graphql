@@ -24,8 +24,8 @@ import Json.Decode as Decode
 creator :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.ProtectedBranch
-creator object_ =
-    Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
+creator object____ =
+    Object.selectionForCompositeField "creator" [] object____ (identity >> Decode.nullable)
 
 
 {-| Will new commits pushed to this branch dismiss pull request review approvals.
@@ -109,7 +109,7 @@ pushAllowances :
     (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.PushAllowanceConnection
     -> SelectionSet decodesTo Github.Object.ProtectedBranch
-pushAllowances fillInOptionals object_ =
+pushAllowances fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -118,7 +118,7 @@ pushAllowances fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "pushAllowances" optionalArgs object_ identity
+    Object.selectionForCompositeField "pushAllowances" optionalArgs object____ identity
 
 
 {-| The repository associated with this protected branch.
@@ -126,8 +126,8 @@ pushAllowances fillInOptionals object_ =
 repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.ProtectedBranch
-repository object_ =
-    Object.selectionForCompositeField "repository" [] object_ identity
+repository object____ =
+    Object.selectionForCompositeField "repository" [] object____ identity
 
 
 {-| List of required status check contexts that must pass for commits to be accepted to this branch.
@@ -157,7 +157,7 @@ reviewDismissalAllowances :
     (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection
     -> SelectionSet decodesTo Github.Object.ProtectedBranch
-reviewDismissalAllowances fillInOptionals object_ =
+reviewDismissalAllowances fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -166,4 +166,4 @@ reviewDismissalAllowances fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs object_ identity
+    Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs object____ identity

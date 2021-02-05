@@ -73,7 +73,7 @@ issues :
     (IssuesOptionalArguments -> IssuesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.IssueConnection
     -> SelectionSet decodesTo Github.Object.Label
-issues fillInOptionals object_ =
+issues fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
@@ -82,7 +82,7 @@ issues fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "issues" optionalArgs object_ identity
+    Object.selectionForCompositeField "issues" optionalArgs object____ identity
 
 
 {-| Identifies the label name.
@@ -122,7 +122,7 @@ pullRequests :
     (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.PullRequestConnection
     -> SelectionSet decodesTo Github.Object.Label
-pullRequests fillInOptionals object_ =
+pullRequests fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
@@ -131,7 +131,7 @@ pullRequests fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "pullRequests" optionalArgs object_ identity
+    Object.selectionForCompositeField "pullRequests" optionalArgs object____ identity
 
 
 {-| The repository associated with this label.
@@ -139,5 +139,5 @@ pullRequests fillInOptionals object_ =
 repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.Label
-repository object_ =
-    Object.selectionForCompositeField "repository" [] object_ identity
+repository object____ =
+    Object.selectionForCompositeField "repository" [] object____ identity

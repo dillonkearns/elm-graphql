@@ -27,8 +27,8 @@ cursor =
 node :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.ReactingUserEdge
-node object_ =
-    Object.selectionForCompositeField "node" [] object_ identity
+node object____ =
+    Object.selectionForCompositeField "node" [] object____ identity
 
 
 {-| The moment when the user made the reaction.

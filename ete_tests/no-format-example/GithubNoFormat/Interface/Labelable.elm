@@ -62,7 +62,7 @@ type alias LabelsOptionalArguments = { first : OptionalArgument Int
 labels : (LabelsOptionalArguments -> LabelsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.LabelConnection
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Labelable
-labels fillInOptionals object_ =
+labels fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -71,4 +71,4 @@ labels fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "labels" optionalArgs (object_) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "labels" optionalArgs (object____) (identity >> Decode.nullable)

@@ -27,13 +27,13 @@ clientMutationId =
 -}
 reaction : SelectionSet decodesTo GithubNoFormat.Object.Reaction
  -> SelectionSet decodesTo GithubNoFormat.Object.RemoveReactionPayload
-reaction object_ =
-      Object.selectionForCompositeField "reaction" [] (object_) (identity)
+reaction object____ =
+      Object.selectionForCompositeField "reaction" [] (object____) (identity)
 
 
 {-| The reactable subject.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Interface.Reactable
  -> SelectionSet decodesTo GithubNoFormat.Object.RemoveReactionPayload
-subject object_ =
-      Object.selectionForCompositeField "subject" [] (object_) (identity)
+subject object____ =
+      Object.selectionForCompositeField "subject" [] (object____) (identity)

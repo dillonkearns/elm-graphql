@@ -33,8 +33,8 @@ droid :
     DroidRequiredArguments
     -> SelectionSet decodesTo Swapi.Object.Droid
     -> SelectionSet (Maybe decodesTo) RootQuery
-droid requiredArgs object_ =
-    Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
+droid requiredArgs object____ =
+    Object.selectionForCompositeField "droid" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object____ (identity >> Decode.nullable)
 
 
 {-| Getting this field will result in an error.
@@ -73,7 +73,7 @@ hero :
     (HeroOptionalArguments -> HeroOptionalArguments)
     -> SelectionSet decodesTo Swapi.Interface.Character
     -> SelectionSet decodesTo RootQuery
-hero fillInOptionals object_ =
+hero fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { episode = Absent }
@@ -82,7 +82,7 @@ hero fillInOptionals object_ =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "hero" optionalArgs object_ identity
+    Object.selectionForCompositeField "hero" optionalArgs object____ identity
 
 
 type alias HeroUnionOptionalArguments =
@@ -98,7 +98,7 @@ heroUnion :
     (HeroUnionOptionalArguments -> HeroUnionOptionalArguments)
     -> SelectionSet decodesTo Swapi.Union.CharacterUnion
     -> SelectionSet decodesTo RootQuery
-heroUnion fillInOptionals object_ =
+heroUnion fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { episode = Absent }
@@ -107,7 +107,7 @@ heroUnion fillInOptionals object_ =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "heroUnion" optionalArgs object_ identity
+    Object.selectionForCompositeField "heroUnion" optionalArgs object____ identity
 
 
 type alias HumanRequiredArguments =
@@ -123,8 +123,8 @@ human :
     HumanRequiredArguments
     -> SelectionSet decodesTo Swapi.Object.Human
     -> SelectionSet (Maybe decodesTo) RootQuery
-human requiredArgs object_ =
-    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
+human requiredArgs object____ =
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId) ] object____ (identity >> Decode.nullable)
 
 
 now : SelectionSet CustomScalarCodecs.PosixTime RootQuery

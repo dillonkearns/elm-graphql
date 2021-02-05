@@ -34,5 +34,5 @@ isCommenter =
 -}
 reviewer : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet decodesTo GithubNoFormat.Object.SuggestedReviewer
-reviewer object_ =
-      Object.selectionForCompositeField "reviewer" [] (object_) (identity)
+reviewer object____ =
+      Object.selectionForCompositeField "reviewer" [] (object____) (identity)

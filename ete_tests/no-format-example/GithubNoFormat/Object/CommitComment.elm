@@ -22,8 +22,8 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CommitComment
-author object_ =
-      Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
+author object____ =
+      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -51,8 +51,8 @@ bodyHTML =
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CommitComment
-commit object_ =
-      Object.selectionForCompositeField "commit" [] (object_) (identity >> Decode.nullable)
+commit object____ =
+      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -80,8 +80,8 @@ databaseId =
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CommitComment
-editor object_ =
-      Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
+editor object____ =
+      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.CommitComment
@@ -121,8 +121,8 @@ publishedAt =
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
  -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.CommitComment
-reactionGroups object_ =
-      Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
+reactionGroups object____ =
+      Object.selectionForCompositeField "reactionGroups" [] (object____) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
@@ -145,7 +145,7 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitComment
-reactions fillInOptionals object_ =
+reactions fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
@@ -154,15 +154,15 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "content" filledInOptionals.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs (object____) (identity)
 
 
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitComment
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)
 
 
 {-| The HTTP path permalink for this commit comment.
@@ -202,7 +202,7 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CommitComment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -211,7 +211,7 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs (object_) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs (object____) (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

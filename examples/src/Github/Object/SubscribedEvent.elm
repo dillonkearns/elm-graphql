@@ -24,8 +24,8 @@ import Json.Decode as Decode
 actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.SubscribedEvent
-actor object_ =
-    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
+actor object____ =
+    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -45,5 +45,5 @@ id =
 subscribable :
     SelectionSet decodesTo Github.Interface.Subscribable
     -> SelectionSet decodesTo Github.Object.SubscribedEvent
-subscribable object_ =
-    Object.selectionForCompositeField "subscribable" [] object_ identity
+subscribable object____ =
+    Object.selectionForCompositeField "subscribable" [] object____ identity

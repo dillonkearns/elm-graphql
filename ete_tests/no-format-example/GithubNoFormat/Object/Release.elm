@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 author : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
-author object_ =
-      Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
+author object____ =
+      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -89,7 +89,7 @@ type alias ReleaseAssetsOptionalArguments = { first : OptionalArgument Int
 releaseAssets : (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReleaseAssetConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Release
-releaseAssets fillInOptionals object_ =
+releaseAssets fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
@@ -98,7 +98,7 @@ releaseAssets fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "name" filledInOptionals.name (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "releaseAssets" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "releaseAssets" optionalArgs (object____) (identity)
 
 
 {-| The HTTP path for this issue
@@ -112,8 +112,8 @@ resourcePath =
 -}
 tag : SelectionSet decodesTo GithubNoFormat.Object.Ref
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
-tag object_ =
-      Object.selectionForCompositeField "tag" [] (object_) (identity >> Decode.nullable)
+tag object____ =
+      Object.selectionForCompositeField "tag" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.

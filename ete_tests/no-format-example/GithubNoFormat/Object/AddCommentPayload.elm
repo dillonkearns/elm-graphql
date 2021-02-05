@@ -27,21 +27,21 @@ clientMutationId =
 -}
 commentEdge : SelectionSet decodesTo GithubNoFormat.Object.IssueCommentEdge
  -> SelectionSet decodesTo GithubNoFormat.Object.AddCommentPayload
-commentEdge object_ =
-      Object.selectionForCompositeField "commentEdge" [] (object_) (identity)
+commentEdge object____ =
+      Object.selectionForCompositeField "commentEdge" [] (object____) (identity)
 
 
 {-| The subject
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Interface.Node
  -> SelectionSet decodesTo GithubNoFormat.Object.AddCommentPayload
-subject object_ =
-      Object.selectionForCompositeField "subject" [] (object_) (identity)
+subject object____ =
+      Object.selectionForCompositeField "subject" [] (object____) (identity)
 
 
 {-| The edge from the subject's timeline connection.
 -}
 timelineEdge : SelectionSet decodesTo GithubNoFormat.Object.IssueTimelineItemEdge
  -> SelectionSet decodesTo GithubNoFormat.Object.AddCommentPayload
-timelineEdge object_ =
-      Object.selectionForCompositeField "timelineEdge" [] (object_) (identity)
+timelineEdge object____ =
+      Object.selectionForCompositeField "timelineEdge" [] (object____) (identity)

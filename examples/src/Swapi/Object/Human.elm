@@ -39,8 +39,8 @@ avatarUrl =
 friends :
     SelectionSet decodesTo Swapi.Interface.Character
     -> SelectionSet (List decodesTo) Swapi.Object.Human
-friends object_ =
-    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
+friends object____ =
+    Object.selectionForCompositeField "friends" [] object____ (identity >> Decode.list)
 
 
 {-| The home planet of the human, or null if unknown.

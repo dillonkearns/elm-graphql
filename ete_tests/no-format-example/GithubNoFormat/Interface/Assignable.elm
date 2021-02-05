@@ -62,7 +62,7 @@ type alias AssigneesOptionalArguments = { first : OptionalArgument Int
 assignees : (AssigneesOptionalArguments -> AssigneesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserConnection
  -> SelectionSet decodesTo GithubNoFormat.Interface.Assignable
-assignees fillInOptionals object_ =
+assignees fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -71,4 +71,4 @@ assignees fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "assignees" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "assignees" optionalArgs (object____) (identity)

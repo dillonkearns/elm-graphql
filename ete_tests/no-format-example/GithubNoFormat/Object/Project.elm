@@ -60,7 +60,7 @@ type alias ColumnsOptionalArguments = { first : OptionalArgument Int
 columns : (ColumnsOptionalArguments -> ColumnsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumnConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Project
-columns fillInOptionals object_ =
+columns fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -69,7 +69,7 @@ columns fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "columns" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "columns" optionalArgs (object____) (identity)
 
 
 {-| Identifies the date and time when the object was created.
@@ -83,8 +83,8 @@ createdAt =
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Project
-creator object_ =
-      Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
+creator object____ =
+      Object.selectionForCompositeField "creator" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -117,8 +117,8 @@ number =
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
  -> SelectionSet decodesTo GithubNoFormat.Object.Project
-owner object_ =
-      Object.selectionForCompositeField "owner" [] (object_) (identity)
+owner object____ =
+      Object.selectionForCompositeField "owner" [] (object____) (identity)
 
 
 type alias PendingCardsOptionalArguments = { first : OptionalArgument Int
@@ -137,7 +137,7 @@ type alias PendingCardsOptionalArguments = { first : OptionalArgument Int
 pendingCards : (PendingCardsOptionalArguments -> PendingCardsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Project
-pendingCards fillInOptionals object_ =
+pendingCards fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -146,7 +146,7 @@ pendingCards fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "pendingCards" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "pendingCards" optionalArgs (object____) (identity)
 
 
 {-| The HTTP path for this project

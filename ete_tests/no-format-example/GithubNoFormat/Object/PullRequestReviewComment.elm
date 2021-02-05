@@ -22,8 +22,8 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
-author object_ =
-      Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
+author object____ =
+      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -58,8 +58,8 @@ bodyText =
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
-commit object_ =
-      Object.selectionForCompositeField "commit" [] (object_) (identity)
+commit object____ =
+      Object.selectionForCompositeField "commit" [] (object____) (identity)
 
 
 {-| Identifies when the comment was created.
@@ -101,8 +101,8 @@ draftedAt =
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
-editor object_ =
-      Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
+editor object____ =
+      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequestReviewComment
@@ -121,8 +121,8 @@ lastEditedAt =
 -}
 originalCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
-originalCommit object_ =
-      Object.selectionForCompositeField "originalCommit" [] (object_) (identity >> Decode.nullable)
+originalCommit object____ =
+      Object.selectionForCompositeField "originalCommit" [] (object____) (identity >> Decode.nullable)
 
 
 {-| The original line index in the diff to which the comment applies.
@@ -157,24 +157,24 @@ publishedAt =
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
-pullRequest object_ =
-      Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
+pullRequest object____ =
+      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
 
 
 {-| The pull request review associated with this review comment.
 -}
 pullRequestReview : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
-pullRequestReview object_ =
-      Object.selectionForCompositeField "pullRequestReview" [] (object_) (identity >> Decode.nullable)
+pullRequestReview object____ =
+      Object.selectionForCompositeField "pullRequestReview" [] (object____) (identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
  -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.PullRequestReviewComment
-reactionGroups object_ =
-      Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
+reactionGroups object____ =
+      Object.selectionForCompositeField "reactionGroups" [] (object____) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
@@ -197,7 +197,7 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
-reactions fillInOptionals object_ =
+reactions fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
@@ -206,23 +206,23 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "content" filledInOptionals.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs (object____) (identity)
 
 
 {-| The comment this is a reply to.
 -}
 replyTo : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
-replyTo object_ =
-      Object.selectionForCompositeField "replyTo" [] (object_) (identity >> Decode.nullable)
+replyTo object____ =
+      Object.selectionForCompositeField "replyTo" [] (object____) (identity >> Decode.nullable)
 
 
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)
 
 
 {-| The HTTP path permalink for this review comment.
@@ -262,7 +262,7 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -271,7 +271,7 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs (object_) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs (object____) (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

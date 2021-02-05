@@ -32,7 +32,7 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
-comments fillInOptionals object_ =
+comments fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -41,15 +41,15 @@ comments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "comments" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "comments" optionalArgs (object____) (identity)
 
 
 {-| The commit the comments were made on.
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
-commit object_ =
-      Object.selectionForCompositeField "commit" [] (object_) (identity)
+commit object____ =
+      Object.selectionForCompositeField "commit" [] (object____) (identity)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.CommitCommentThread
@@ -75,5 +75,5 @@ position =
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentThread
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)

@@ -66,8 +66,8 @@ project :
     ProjectRequiredArguments
     -> SelectionSet decodesTo Github.Object.Project
     -> SelectionSet (Maybe decodesTo) Github.Interface.ProjectOwner
-project requiredArgs object_ =
-    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object_ (identity >> Decode.nullable)
+project requiredArgs object____ =
+    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -96,7 +96,7 @@ projects :
     (ProjectsOptionalArguments -> ProjectsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ProjectConnection
     -> SelectionSet decodesTo Github.Interface.ProjectOwner
-projects fillInOptionals object_ =
+projects fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
@@ -105,7 +105,7 @@ projects fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeProjectOrder, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.ProjectState.toString |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "projects" optionalArgs object_ identity
+    Object.selectionForCompositeField "projects" optionalArgs object____ identity
 
 
 {-| The HTTP path listing owners projects

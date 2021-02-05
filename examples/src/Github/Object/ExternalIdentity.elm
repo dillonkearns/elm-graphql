@@ -36,8 +36,8 @@ id =
 organizationInvitation :
     SelectionSet decodesTo Github.Object.OrganizationInvitation
     -> SelectionSet (Maybe decodesTo) Github.Object.ExternalIdentity
-organizationInvitation object_ =
-    Object.selectionForCompositeField "organizationInvitation" [] object_ (identity >> Decode.nullable)
+organizationInvitation object____ =
+    Object.selectionForCompositeField "organizationInvitation" [] object____ (identity >> Decode.nullable)
 
 
 {-| SAML Identity attributes
@@ -45,8 +45,8 @@ organizationInvitation object_ =
 samlIdentity :
     SelectionSet decodesTo Github.Object.ExternalIdentitySamlAttributes
     -> SelectionSet (Maybe decodesTo) Github.Object.ExternalIdentity
-samlIdentity object_ =
-    Object.selectionForCompositeField "samlIdentity" [] object_ (identity >> Decode.nullable)
+samlIdentity object____ =
+    Object.selectionForCompositeField "samlIdentity" [] object____ (identity >> Decode.nullable)
 
 
 {-| SCIM Identity attributes
@@ -54,8 +54,8 @@ samlIdentity object_ =
 scimIdentity :
     SelectionSet decodesTo Github.Object.ExternalIdentityScimAttributes
     -> SelectionSet (Maybe decodesTo) Github.Object.ExternalIdentity
-scimIdentity object_ =
-    Object.selectionForCompositeField "scimIdentity" [] object_ (identity >> Decode.nullable)
+scimIdentity object____ =
+    Object.selectionForCompositeField "scimIdentity" [] object____ (identity >> Decode.nullable)
 
 
 {-| User linked to this external identity
@@ -63,5 +63,5 @@ scimIdentity object_ =
 user :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.ExternalIdentity
-user object_ =
-    Object.selectionForCompositeField "user" [] object_ (identity >> Decode.nullable)
+user object____ =
+    Object.selectionForCompositeField "user" [] object____ (identity >> Decode.nullable)

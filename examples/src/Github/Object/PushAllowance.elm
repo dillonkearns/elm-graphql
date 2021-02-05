@@ -24,8 +24,8 @@ import Json.Decode as Decode
 actor :
     SelectionSet decodesTo Github.Union.PushAllowanceActor
     -> SelectionSet (Maybe decodesTo) Github.Object.PushAllowance
-actor object_ =
-    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
+actor object____ =
+    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.PushAllowance
@@ -38,5 +38,5 @@ id =
 protectedBranch :
     SelectionSet decodesTo Github.Object.ProtectedBranch
     -> SelectionSet decodesTo Github.Object.PushAllowance
-protectedBranch object_ =
-    Object.selectionForCompositeField "protectedBranch" [] object_ identity
+protectedBranch object____ =
+    Object.selectionForCompositeField "protectedBranch" [] object____ identity

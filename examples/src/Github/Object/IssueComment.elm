@@ -27,8 +27,8 @@ import Json.Decode as Decode
 author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
-author object_ =
-    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
+author object____ =
+    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -85,8 +85,8 @@ databaseId =
 editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
-editor object_ =
-    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
+editor object____ =
+    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.IssueComment
@@ -99,8 +99,8 @@ id =
 issue :
     SelectionSet decodesTo Github.Object.Issue
     -> SelectionSet decodesTo Github.Object.IssueComment
-issue object_ =
-    Object.selectionForCompositeField "issue" [] object_ identity
+issue object____ =
+    Object.selectionForCompositeField "issue" [] object____ identity
 
 
 {-| The moment the editor made the last edit
@@ -123,8 +123,8 @@ pull request.
 pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
-pullRequest object_ =
-    Object.selectionForCompositeField "pullRequest" [] object_ (identity >> Decode.nullable)
+pullRequest object____ =
+    Object.selectionForCompositeField "pullRequest" [] object____ (identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -132,8 +132,8 @@ pullRequest object_ =
 reactionGroups :
     SelectionSet decodesTo Github.Object.ReactionGroup
     -> SelectionSet (Maybe (List decodesTo)) Github.Object.IssueComment
-reactionGroups object_ =
-    Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
+reactionGroups object____ =
+    Object.selectionForCompositeField "reactionGroups" [] object____ (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -160,7 +160,7 @@ reactions :
     (ReactionsOptionalArguments -> ReactionsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReactionConnection
     -> SelectionSet decodesTo Github.Object.IssueComment
-reactions fillInOptionals object_ =
+reactions fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
@@ -169,7 +169,7 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReactionOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "reactions" optionalArgs object_ identity
+    Object.selectionForCompositeField "reactions" optionalArgs object____ identity
 
 
 {-| The repository associated with this node.
@@ -177,8 +177,8 @@ reactions fillInOptionals object_ =
 repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.IssueComment
-repository object_ =
-    Object.selectionForCompositeField "repository" [] object_ identity
+repository object____ =
+    Object.selectionForCompositeField "repository" [] object____ identity
 
 
 {-| The HTTP path for this issue comment
@@ -222,7 +222,7 @@ userContentEdits :
     (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserContentEditConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -231,7 +231,7 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs object____ (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

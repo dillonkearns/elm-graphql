@@ -210,7 +210,7 @@ objectThing context typeRef refName objectOrInterface =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
-    , decoder = "object_"
+    , decoder = "object____"
     , otherThing = ".selectionForCompositeField"
     , letBindings = []
     , objectDecoderChain =
@@ -224,7 +224,7 @@ objectThing context typeRef refName objectOrInterface =
     }
         |> prependArg
             { annotation = objectArgAnnotation
-            , arg = "object_"
+            , arg = "object____"
             }
 
 

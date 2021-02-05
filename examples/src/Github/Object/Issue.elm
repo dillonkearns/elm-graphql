@@ -52,7 +52,7 @@ assignees :
     (AssigneesOptionalArguments -> AssigneesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserConnection
     -> SelectionSet decodesTo Github.Object.Issue
-assignees fillInOptionals object_ =
+assignees fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -61,7 +61,7 @@ assignees fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "assignees" optionalArgs object_ identity
+    Object.selectionForCompositeField "assignees" optionalArgs object____ identity
 
 
 {-| The actor who authored the comment.
@@ -69,8 +69,8 @@ assignees fillInOptionals object_ =
 author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.Issue
-author object_ =
-    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
+author object____ =
+    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -135,7 +135,7 @@ comments :
     (CommentsOptionalArguments -> CommentsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.IssueCommentConnection
     -> SelectionSet decodesTo Github.Object.Issue
-comments fillInOptionals object_ =
+comments fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -144,7 +144,7 @@ comments fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "comments" optionalArgs object_ identity
+    Object.selectionForCompositeField "comments" optionalArgs object____ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -173,8 +173,8 @@ databaseId =
 editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.Issue
-editor object_ =
-    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
+editor object____ =
+    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Issue
@@ -202,7 +202,7 @@ labels :
     (LabelsOptionalArguments -> LabelsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.LabelConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Issue
-labels fillInOptionals object_ =
+labels fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -211,7 +211,7 @@ labels fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "labels" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "labels" optionalArgs object____ (identity >> Decode.nullable)
 
 
 {-| The moment the editor made the last edit
@@ -233,8 +233,8 @@ locked =
 milestone :
     SelectionSet decodesTo Github.Object.Milestone
     -> SelectionSet (Maybe decodesTo) Github.Object.Issue
-milestone object_ =
-    Object.selectionForCompositeField "milestone" [] object_ (identity >> Decode.nullable)
+milestone object____ =
+    Object.selectionForCompositeField "milestone" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the issue number.
@@ -264,7 +264,7 @@ participants :
     (ParticipantsOptionalArguments -> ParticipantsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserConnection
     -> SelectionSet decodesTo Github.Object.Issue
-participants fillInOptionals object_ =
+participants fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -273,7 +273,7 @@ participants fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "participants" optionalArgs object_ identity
+    Object.selectionForCompositeField "participants" optionalArgs object____ identity
 
 
 type alias ProjectCardsOptionalArguments =
@@ -296,7 +296,7 @@ projectCards :
     (ProjectCardsOptionalArguments -> ProjectCardsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ProjectCardConnection
     -> SelectionSet decodesTo Github.Object.Issue
-projectCards fillInOptionals object_ =
+projectCards fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -305,7 +305,7 @@ projectCards fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "projectCards" optionalArgs object_ identity
+    Object.selectionForCompositeField "projectCards" optionalArgs object____ identity
 
 
 {-| Identifies when the comment was published at.
@@ -320,8 +320,8 @@ publishedAt =
 reactionGroups :
     SelectionSet decodesTo Github.Object.ReactionGroup
     -> SelectionSet (Maybe (List decodesTo)) Github.Object.Issue
-reactionGroups object_ =
-    Object.selectionForCompositeField "reactionGroups" [] object_ (identity >> Decode.list >> Decode.nullable)
+reactionGroups object____ =
+    Object.selectionForCompositeField "reactionGroups" [] object____ (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -348,7 +348,7 @@ reactions :
     (ReactionsOptionalArguments -> ReactionsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReactionConnection
     -> SelectionSet decodesTo Github.Object.Issue
-reactions fillInOptionals object_ =
+reactions fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
@@ -357,7 +357,7 @@ reactions fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "content" filledInOptionals.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReactionOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "reactions" optionalArgs object_ identity
+    Object.selectionForCompositeField "reactions" optionalArgs object____ identity
 
 
 {-| The repository associated with this node.
@@ -365,8 +365,8 @@ reactions fillInOptionals object_ =
 repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.Issue
-repository object_ =
-    Object.selectionForCompositeField "repository" [] object_ identity
+repository object____ =
+    Object.selectionForCompositeField "repository" [] object____ identity
 
 
 {-| The HTTP path for this issue
@@ -405,7 +405,7 @@ timeline :
     (TimelineOptionalArguments -> TimelineOptionalArguments)
     -> SelectionSet decodesTo Github.Object.IssueTimelineConnection
     -> SelectionSet decodesTo Github.Object.Issue
-timeline fillInOptionals object_ =
+timeline fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, since = Absent }
@@ -414,7 +414,7 @@ timeline fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "since" filledInOptionals.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecDateTime) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "timeline" optionalArgs object_ identity
+    Object.selectionForCompositeField "timeline" optionalArgs object____ identity
 
 
 {-| Identifies the issue title.
@@ -458,7 +458,7 @@ userContentEdits :
     (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserContentEditConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Issue
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals object____ =
     let
         filledInOptionals =
             fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
@@ -467,7 +467,7 @@ userContentEdits fillInOptionals object_ =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs object____ (identity >> Decode.nullable)
 
 
 {-| Can user react to this subject
