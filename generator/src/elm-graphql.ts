@@ -7,12 +7,10 @@ import * as fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
 import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
-import * as glob from "glob";
 import * as path from "path";
 import * as childProcess from "child_process";
 import {
   removeGenerated,
-  isGenerated,
   warnAndExitIfContainsNonGenerated,
   generateOrExitIntrospectionFileFromSchema
 } from "./cli/generated-code-handler";
