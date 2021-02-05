@@ -53,9 +53,9 @@ type alias Greeting =
 {-| Encode a Greeting into a value that can be used as an argument.
 -}
 encodeGreeting : Greeting -> Value
-encodeGreeting input =
+encodeGreeting input____ =
     Encode.maybeObject
-        [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
+        [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input____.language ), ( "name", Encode.string input____.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input____.options ) ]
 
 
 buildGreetingOptions :
@@ -83,6 +83,6 @@ type alias GreetingOptions =
 {-| Encode a GreetingOptions into a value that can be used as an argument.
 -}
 encodeGreetingOptions : GreetingOptions -> Value
-encodeGreetingOptions input =
+encodeGreetingOptions input____ =
     Encode.maybeObject
-        [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
+        [ ( "prefix", Encode.string |> Encode.optional input____.prefix ) ]

@@ -46,6 +46,6 @@ type alias ShapeInput =
 {-| Encode a ShapeInput into a value that can be used as an argument.
 -}
 encodeShapeInput : ShapeInput -> Value
-encodeShapeInput input =
+encodeShapeInput input____ =
     Encode.maybeObject
-        [ ( "kind", Encode.string |> Encode.optional input.kind ), ( "geometry", (Encode.float |> Encode.maybe |> Encode.list |> Encode.maybe |> Encode.list) |> Encode.optional input.geometry ) ]
+        [ ( "kind", Encode.string |> Encode.optional input____.kind ), ( "geometry", (Encode.float |> Encode.maybe |> Encode.list |> Encode.maybe |> Encode.list) |> Encode.optional input____.geometry ) ]

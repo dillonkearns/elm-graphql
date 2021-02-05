@@ -117,10 +117,10 @@ encoder context { name, fields, hasLoop } =
     let
         parameter =
             if hasLoop then
-                interpolate "({0} input)" [ ClassCaseName.normalized name ]
+                interpolate "({0} input____)" [ ClassCaseName.normalized name ]
 
             else
-                "input"
+                "input____"
     in
     interpolate """{-| Encode a {0} into a value that can be used as an argument.
 -}
@@ -150,10 +150,10 @@ encoderFunction context field =
                 filledOptionalsRecord_ =
                     case isNullable of
                         Type.NonNullable ->
-                            interpolate " input.{0} |> Just" [ CamelCaseName.normalized field.name ]
+                            interpolate " input____.{0} |> Just" [ CamelCaseName.normalized field.name ]
 
                         Type.Nullable ->
-                            interpolate " |> Encode.optional input.{0}" [ CamelCaseName.normalized field.name ]
+                            interpolate " |> Encode.optional input____.{0}" [ CamelCaseName.normalized field.name ]
             in
             interpolate "({0}) {1}"
                 [ Decoder.generateEncoderLowLevel context referrableType

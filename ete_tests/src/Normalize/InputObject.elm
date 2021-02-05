@@ -52,9 +52,9 @@ type CircularOne
 {-| Encode a CircularOne into a value that can be used as an argument.
 -}
 encodeCircularOne : CircularOne -> Value
-encodeCircularOne (CircularOne input) =
+encodeCircularOne (CircularOne input____) =
     Encode.maybeObject
-        [ ( "circularTwo", encodeCircularTwo |> Encode.optional input.circularTwo ) ]
+        [ ( "circularTwo", encodeCircularTwo |> Encode.optional input____.circularTwo ) ]
 
 
 buildCircularTwo :
@@ -91,9 +91,9 @@ type CircularTwo
 {-| Encode a CircularTwo into a value that can be used as an argument.
 -}
 encodeCircularTwo : CircularTwo -> Value
-encodeCircularTwo (CircularTwo input) =
+encodeCircularTwo (CircularTwo input____) =
     Encode.maybeObject
-        [ ( "circularOne", encodeCircularOne |> Encode.optional input.circularOne ) ]
+        [ ( "circularOne", encodeCircularOne |> Encode.optional input____.circularOne ) ]
 
 
 buildGreeting :
@@ -131,9 +131,9 @@ type alias Greeting =
 {-| Encode a Greeting into a value that can be used as an argument.
 -}
 encodeGreeting : Greeting -> Value
-encodeGreeting input =
+encodeGreeting input____ =
     Encode.maybeObject
-        [ ( "language", Encode.enum Normalize.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
+        [ ( "language", Encode.enum Normalize.Enum.Language.toString |> Encode.optional input____.language ), ( "name", Encode.string input____.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input____.options ) ]
 
 
 buildGreetingOptions :
@@ -161,9 +161,9 @@ type alias GreetingOptions =
 {-| Encode a GreetingOptions into a value that can be used as an argument.
 -}
 encodeGreetingOptions : GreetingOptions -> Value
-encodeGreetingOptions input =
+encodeGreetingOptions input____ =
     Encode.maybeObject
-        [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
+        [ ( "prefix", Encode.string |> Encode.optional input____.prefix ) ]
 
 
 buildRecursive :
@@ -200,9 +200,9 @@ type Recursive
 {-| Encode a Recursive into a value that can be used as an argument.
 -}
 encodeRecursive : Recursive -> Value
-encodeRecursive (Recursive input) =
+encodeRecursive (Recursive input____) =
     Encode.maybeObject
-        [ ( "recursive", encodeRecursive |> Encode.optional input.recursive ) ]
+        [ ( "recursive", encodeRecursive |> Encode.optional input____.recursive ) ]
 
 
 buildReservedWord :
@@ -225,6 +225,6 @@ type alias ReservedWord =
 {-| Encode a ReservedWord into a value that can be used as an argument.
 -}
 encodeReservedWord : ReservedWord -> Value
-encodeReservedWord input =
+encodeReservedWord input____ =
     Encode.maybeObject
-        [ ( "type", Encode.string input.type_ |> Just ) ]
+        [ ( "type", Encode.string input____.type_ |> Just ) ]

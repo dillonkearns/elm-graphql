@@ -80,9 +80,9 @@ type alias AcceptTopicSuggestionInput =
 {-| Encode a AcceptTopicSuggestionInput into a value that can be used as an argument.
 -}
 encodeAcceptTopicSuggestionInput : AcceptTopicSuggestionInput -> Value
-encodeAcceptTopicSuggestionInput input =
+encodeAcceptTopicSuggestionInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "repositoryId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.repositoryId |> Just ), ( "name", (Encode.string)  input.name |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "repositoryId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.repositoryId |> Just ), ( "name", (Encode.string)  input____.name |> Just ) ]
 
 
 buildAddCommentInput : AddCommentInputRequiredFields
@@ -116,9 +116,9 @@ type alias AddCommentInput =
 {-| Encode a AddCommentInput into a value that can be used as an argument.
 -}
 encodeAddCommentInput : AddCommentInput -> Value
-encodeAddCommentInput input =
+encodeAddCommentInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "subjectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.subjectId |> Just ), ( "body", (Encode.string)  input.body |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "subjectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.subjectId |> Just ), ( "body", (Encode.string)  input____.body |> Just ) ]
 
 
 buildAddProjectCardInput : AddProjectCardInputRequiredFields
@@ -154,9 +154,9 @@ type alias AddProjectCardInput =
 {-| Encode a AddProjectCardInput into a value that can be used as an argument.
 -}
 encodeAddProjectCardInput : AddProjectCardInput -> Value
-encodeAddProjectCardInput input =
+encodeAddProjectCardInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "projectColumnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.projectColumnId |> Just ), ( "contentId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input.contentId ), ( "note", (Encode.string)  |> Encode.optional input.note ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "projectColumnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.projectColumnId |> Just ), ( "contentId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input____.contentId ), ( "note", (Encode.string)  |> Encode.optional input____.note ) ]
 
 
 buildAddProjectColumnInput : AddProjectColumnInputRequiredFields
@@ -190,9 +190,9 @@ type alias AddProjectColumnInput =
 {-| Encode a AddProjectColumnInput into a value that can be used as an argument.
 -}
 encodeAddProjectColumnInput : AddProjectColumnInput -> Value
-encodeAddProjectColumnInput input =
+encodeAddProjectColumnInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "projectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.projectId |> Just ), ( "name", (Encode.string)  input.name |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "projectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.projectId |> Just ), ( "name", (Encode.string)  input____.name |> Just ) ]
 
 
 buildAddPullRequestReviewCommentInput : AddPullRequestReviewCommentInputRequiredFields
@@ -234,9 +234,9 @@ type alias AddPullRequestReviewCommentInput =
 {-| Encode a AddPullRequestReviewCommentInput into a value that can be used as an argument.
 -}
 encodeAddPullRequestReviewCommentInput : AddPullRequestReviewCommentInput -> Value
-encodeAddPullRequestReviewCommentInput input =
+encodeAddPullRequestReviewCommentInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestReviewId |> Just ), ( "commitOID", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitObjectID))  |> Encode.optional input.commitOID ), ( "body", (Encode.string)  input.body |> Just ), ( "path", (Encode.string)  |> Encode.optional input.path ), ( "position", (Encode.int)  |> Encode.optional input.position ), ( "inReplyTo", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input.inReplyTo ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestReviewId |> Just ), ( "commitOID", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitObjectID))  |> Encode.optional input____.commitOID ), ( "body", (Encode.string)  input____.body |> Just ), ( "path", (Encode.string)  |> Encode.optional input____.path ), ( "position", (Encode.int)  |> Encode.optional input____.position ), ( "inReplyTo", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input____.inReplyTo ) ]
 
 
 buildAddPullRequestReviewInput : AddPullRequestReviewInputRequiredFields
@@ -276,9 +276,9 @@ type alias AddPullRequestReviewInput =
 {-| Encode a AddPullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeAddPullRequestReviewInput : AddPullRequestReviewInput -> Value
-encodeAddPullRequestReviewInput input =
+encodeAddPullRequestReviewInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestId |> Just ), ( "commitOID", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitObjectID))  |> Encode.optional input.commitOID ), ( "body", (Encode.string)  |> Encode.optional input.body ), ( "event", ((Encode.enum GithubNoFormat.Enum.PullRequestReviewEvent.toString))  |> Encode.optional input.event ), ( "comments", (encodeDraftPullRequestReviewComment |> Encode.maybe |> Encode.list)  |> Encode.optional input.comments ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestId |> Just ), ( "commitOID", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitObjectID))  |> Encode.optional input____.commitOID ), ( "body", (Encode.string)  |> Encode.optional input____.body ), ( "event", ((Encode.enum GithubNoFormat.Enum.PullRequestReviewEvent.toString))  |> Encode.optional input____.event ), ( "comments", (encodeDraftPullRequestReviewComment |> Encode.maybe |> Encode.list)  |> Encode.optional input____.comments ) ]
 
 
 buildAddReactionInput : AddReactionInputRequiredFields
@@ -312,9 +312,9 @@ type alias AddReactionInput =
 {-| Encode a AddReactionInput into a value that can be used as an argument.
 -}
 encodeAddReactionInput : AddReactionInput -> Value
-encodeAddReactionInput input =
+encodeAddReactionInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "subjectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.subjectId |> Just ), ( "content", ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString))  input.content |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "subjectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.subjectId |> Just ), ( "content", ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString))  input____.content |> Just ) ]
 
 
 buildAddStarInput : AddStarInputRequiredFields
@@ -346,9 +346,9 @@ type alias AddStarInput =
 {-| Encode a AddStarInput into a value that can be used as an argument.
 -}
 encodeAddStarInput : AddStarInput -> Value
-encodeAddStarInput input =
+encodeAddStarInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "starrableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.starrableId |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "starrableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.starrableId |> Just ) ]
 
 
 buildCommitAuthor : (CommitAuthorOptionalFields -> CommitAuthorOptionalFields)
@@ -379,9 +379,9 @@ type alias CommitAuthor =
 {-| Encode a CommitAuthor into a value that can be used as an argument.
 -}
 encodeCommitAuthor : CommitAuthor -> Value
-encodeCommitAuthor input =
+encodeCommitAuthor input____ =
     Encode.maybeObject
-        [ ( "id", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input.id ), ( "emails", (Encode.string |> Encode.list)  |> Encode.optional input.emails ) ]
+        [ ( "id", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input____.id ), ( "emails", (Encode.string |> Encode.list)  |> Encode.optional input____.emails ) ]
 
 
 buildCreateProjectInput : CreateProjectInputRequiredFields
@@ -417,9 +417,9 @@ type alias CreateProjectInput =
 {-| Encode a CreateProjectInput into a value that can be used as an argument.
 -}
 encodeCreateProjectInput : CreateProjectInput -> Value
-encodeCreateProjectInput input =
+encodeCreateProjectInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "ownerId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.ownerId |> Just ), ( "name", (Encode.string)  input.name |> Just ), ( "body", (Encode.string)  |> Encode.optional input.body ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "ownerId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.ownerId |> Just ), ( "name", (Encode.string)  input____.name |> Just ), ( "body", (Encode.string)  |> Encode.optional input____.body ) ]
 
 
 buildDeclineTopicSuggestionInput : DeclineTopicSuggestionInputRequiredFields
@@ -455,9 +455,9 @@ type alias DeclineTopicSuggestionInput =
 {-| Encode a DeclineTopicSuggestionInput into a value that can be used as an argument.
 -}
 encodeDeclineTopicSuggestionInput : DeclineTopicSuggestionInput -> Value
-encodeDeclineTopicSuggestionInput input =
+encodeDeclineTopicSuggestionInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "repositoryId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.repositoryId |> Just ), ( "name", (Encode.string)  input.name |> Just ), ( "reason", ((Encode.enum GithubNoFormat.Enum.TopicSuggestionDeclineReason.toString))  input.reason |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "repositoryId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.repositoryId |> Just ), ( "name", (Encode.string)  input____.name |> Just ), ( "reason", ((Encode.enum GithubNoFormat.Enum.TopicSuggestionDeclineReason.toString))  input____.reason |> Just ) ]
 
 
 buildDeleteProjectCardInput : DeleteProjectCardInputRequiredFields
@@ -489,9 +489,9 @@ type alias DeleteProjectCardInput =
 {-| Encode a DeleteProjectCardInput into a value that can be used as an argument.
 -}
 encodeDeleteProjectCardInput : DeleteProjectCardInput -> Value
-encodeDeleteProjectCardInput input =
+encodeDeleteProjectCardInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "cardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.cardId |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "cardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.cardId |> Just ) ]
 
 
 buildDeleteProjectColumnInput : DeleteProjectColumnInputRequiredFields
@@ -523,9 +523,9 @@ type alias DeleteProjectColumnInput =
 {-| Encode a DeleteProjectColumnInput into a value that can be used as an argument.
 -}
 encodeDeleteProjectColumnInput : DeleteProjectColumnInput -> Value
-encodeDeleteProjectColumnInput input =
+encodeDeleteProjectColumnInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "columnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.columnId |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "columnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.columnId |> Just ) ]
 
 
 buildDeleteProjectInput : DeleteProjectInputRequiredFields
@@ -557,9 +557,9 @@ type alias DeleteProjectInput =
 {-| Encode a DeleteProjectInput into a value that can be used as an argument.
 -}
 encodeDeleteProjectInput : DeleteProjectInput -> Value
-encodeDeleteProjectInput input =
+encodeDeleteProjectInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "projectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.projectId |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "projectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.projectId |> Just ) ]
 
 
 buildDeletePullRequestReviewInput : DeletePullRequestReviewInputRequiredFields
@@ -591,9 +591,9 @@ type alias DeletePullRequestReviewInput =
 {-| Encode a DeletePullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeDeletePullRequestReviewInput : DeletePullRequestReviewInput -> Value
-encodeDeletePullRequestReviewInput input =
+encodeDeletePullRequestReviewInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestReviewId |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestReviewId |> Just ) ]
 
 
 buildDismissPullRequestReviewInput : DismissPullRequestReviewInputRequiredFields
@@ -627,9 +627,9 @@ type alias DismissPullRequestReviewInput =
 {-| Encode a DismissPullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeDismissPullRequestReviewInput : DismissPullRequestReviewInput -> Value
-encodeDismissPullRequestReviewInput input =
+encodeDismissPullRequestReviewInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestReviewId |> Just ), ( "message", (Encode.string)  input.message |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestReviewId |> Just ), ( "message", (Encode.string)  input____.message |> Just ) ]
 
 
 buildDraftPullRequestReviewComment : DraftPullRequestReviewCommentRequiredFields
@@ -656,9 +656,9 @@ type alias DraftPullRequestReviewComment =
 {-| Encode a DraftPullRequestReviewComment into a value that can be used as an argument.
 -}
 encodeDraftPullRequestReviewComment : DraftPullRequestReviewComment -> Value
-encodeDraftPullRequestReviewComment input =
+encodeDraftPullRequestReviewComment input____ =
     Encode.maybeObject
-        [ ( "path", (Encode.string)  input.path |> Just ), ( "position", (Encode.int)  input.position |> Just ), ( "body", (Encode.string)  input.body |> Just ) ]
+        [ ( "path", (Encode.string)  input____.path |> Just ), ( "position", (Encode.int)  input____.position |> Just ), ( "body", (Encode.string)  input____.body |> Just ) ]
 
 
 buildGistOrder : GistOrderRequiredFields
@@ -683,9 +683,9 @@ type alias GistOrder =
 {-| Encode a GistOrder into a value that can be used as an argument.
 -}
 encodeGistOrder : GistOrder -> Value
-encodeGistOrder input =
+encodeGistOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.GistOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.GistOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildIssueOrder : IssueOrderRequiredFields
@@ -710,9 +710,9 @@ type alias IssueOrder =
 {-| Encode a IssueOrder into a value that can be used as an argument.
 -}
 encodeIssueOrder : IssueOrder -> Value
-encodeIssueOrder input =
+encodeIssueOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.IssueOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.IssueOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildLanguageOrder : LanguageOrderRequiredFields
@@ -737,9 +737,9 @@ type alias LanguageOrder =
 {-| Encode a LanguageOrder into a value that can be used as an argument.
 -}
 encodeLanguageOrder : LanguageOrder -> Value
-encodeLanguageOrder input =
+encodeLanguageOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.LanguageOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.LanguageOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildLockLockableInput : LockLockableInputRequiredFields
@@ -773,9 +773,9 @@ type alias LockLockableInput =
 {-| Encode a LockLockableInput into a value that can be used as an argument.
 -}
 encodeLockLockableInput : LockLockableInput -> Value
-encodeLockLockableInput input =
+encodeLockLockableInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "lockableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.lockableId |> Just ), ( "lockReason", ((Encode.enum GithubNoFormat.Enum.LockReason.toString))  |> Encode.optional input.lockReason ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "lockableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.lockableId |> Just ), ( "lockReason", ((Encode.enum GithubNoFormat.Enum.LockReason.toString))  |> Encode.optional input____.lockReason ) ]
 
 
 buildMilestoneOrder : MilestoneOrderRequiredFields
@@ -800,9 +800,9 @@ type alias MilestoneOrder =
 {-| Encode a MilestoneOrder into a value that can be used as an argument.
 -}
 encodeMilestoneOrder : MilestoneOrder -> Value
-encodeMilestoneOrder input =
+encodeMilestoneOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.MilestoneOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.MilestoneOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildMoveProjectCardInput : MoveProjectCardInputRequiredFields
@@ -838,9 +838,9 @@ type alias MoveProjectCardInput =
 {-| Encode a MoveProjectCardInput into a value that can be used as an argument.
 -}
 encodeMoveProjectCardInput : MoveProjectCardInput -> Value
-encodeMoveProjectCardInput input =
+encodeMoveProjectCardInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "cardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.cardId |> Just ), ( "columnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.columnId |> Just ), ( "afterCardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input.afterCardId ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "cardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.cardId |> Just ), ( "columnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.columnId |> Just ), ( "afterCardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input____.afterCardId ) ]
 
 
 buildMoveProjectColumnInput : MoveProjectColumnInputRequiredFields
@@ -874,9 +874,9 @@ type alias MoveProjectColumnInput =
 {-| Encode a MoveProjectColumnInput into a value that can be used as an argument.
 -}
 encodeMoveProjectColumnInput : MoveProjectColumnInput -> Value
-encodeMoveProjectColumnInput input =
+encodeMoveProjectColumnInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "columnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.columnId |> Just ), ( "afterColumnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input.afterColumnId ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "columnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.columnId |> Just ), ( "afterColumnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  |> Encode.optional input____.afterColumnId ) ]
 
 
 buildProjectOrder : ProjectOrderRequiredFields
@@ -901,9 +901,9 @@ type alias ProjectOrder =
 {-| Encode a ProjectOrder into a value that can be used as an argument.
 -}
 encodeProjectOrder : ProjectOrder -> Value
-encodeProjectOrder input =
+encodeProjectOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.ProjectOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.ProjectOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildReactionOrder : ReactionOrderRequiredFields
@@ -928,9 +928,9 @@ type alias ReactionOrder =
 {-| Encode a ReactionOrder into a value that can be used as an argument.
 -}
 encodeReactionOrder : ReactionOrder -> Value
-encodeReactionOrder input =
+encodeReactionOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.ReactionOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.ReactionOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildRefOrder : RefOrderRequiredFields
@@ -955,9 +955,9 @@ type alias RefOrder =
 {-| Encode a RefOrder into a value that can be used as an argument.
 -}
 encodeRefOrder : RefOrder -> Value
-encodeRefOrder input =
+encodeRefOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.RefOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.RefOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildReleaseOrder : ReleaseOrderRequiredFields
@@ -982,9 +982,9 @@ type alias ReleaseOrder =
 {-| Encode a ReleaseOrder into a value that can be used as an argument.
 -}
 encodeReleaseOrder : ReleaseOrder -> Value
-encodeReleaseOrder input =
+encodeReleaseOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.ReleaseOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.ReleaseOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildRemoveOutsideCollaboratorInput : RemoveOutsideCollaboratorInputRequiredFields
@@ -1018,9 +1018,9 @@ type alias RemoveOutsideCollaboratorInput =
 {-| Encode a RemoveOutsideCollaboratorInput into a value that can be used as an argument.
 -}
 encodeRemoveOutsideCollaboratorInput : RemoveOutsideCollaboratorInput -> Value
-encodeRemoveOutsideCollaboratorInput input =
+encodeRemoveOutsideCollaboratorInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "userId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.userId |> Just ), ( "organizationId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.organizationId |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "userId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.userId |> Just ), ( "organizationId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.organizationId |> Just ) ]
 
 
 buildRemoveReactionInput : RemoveReactionInputRequiredFields
@@ -1054,9 +1054,9 @@ type alias RemoveReactionInput =
 {-| Encode a RemoveReactionInput into a value that can be used as an argument.
 -}
 encodeRemoveReactionInput : RemoveReactionInput -> Value
-encodeRemoveReactionInput input =
+encodeRemoveReactionInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "subjectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.subjectId |> Just ), ( "content", ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString))  input.content |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "subjectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.subjectId |> Just ), ( "content", ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString))  input____.content |> Just ) ]
 
 
 buildRemoveStarInput : RemoveStarInputRequiredFields
@@ -1088,9 +1088,9 @@ type alias RemoveStarInput =
 {-| Encode a RemoveStarInput into a value that can be used as an argument.
 -}
 encodeRemoveStarInput : RemoveStarInput -> Value
-encodeRemoveStarInput input =
+encodeRemoveStarInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "starrableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.starrableId |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "starrableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.starrableId |> Just ) ]
 
 
 buildRepositoryOrder : RepositoryOrderRequiredFields
@@ -1115,9 +1115,9 @@ type alias RepositoryOrder =
 {-| Encode a RepositoryOrder into a value that can be used as an argument.
 -}
 encodeRepositoryOrder : RepositoryOrder -> Value
-encodeRepositoryOrder input =
+encodeRepositoryOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.RepositoryOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.RepositoryOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildRequestReviewsInput : RequestReviewsInputRequiredFields
@@ -1155,9 +1155,9 @@ type alias RequestReviewsInput =
 {-| Encode a RequestReviewsInput into a value that can be used as an argument.
 -}
 encodeRequestReviewsInput : RequestReviewsInput -> Value
-encodeRequestReviewsInput input =
+encodeRequestReviewsInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestId |> Just ), ( "userIds", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId) |> Encode.list)  |> Encode.optional input.userIds ), ( "teamIds", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId) |> Encode.list)  |> Encode.optional input.teamIds ), ( "union", (Encode.bool)  |> Encode.optional input.union ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestId |> Just ), ( "userIds", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId) |> Encode.list)  |> Encode.optional input____.userIds ), ( "teamIds", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId) |> Encode.list)  |> Encode.optional input____.teamIds ), ( "union", (Encode.bool)  |> Encode.optional input____.union ) ]
 
 
 buildStarOrder : StarOrderRequiredFields
@@ -1182,9 +1182,9 @@ type alias StarOrder =
 {-| Encode a StarOrder into a value that can be used as an argument.
 -}
 encodeStarOrder : StarOrder -> Value
-encodeStarOrder input =
+encodeStarOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.StarOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.StarOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildSubmitPullRequestReviewInput : SubmitPullRequestReviewInputRequiredFields
@@ -1220,9 +1220,9 @@ type alias SubmitPullRequestReviewInput =
 {-| Encode a SubmitPullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeSubmitPullRequestReviewInput : SubmitPullRequestReviewInput -> Value
-encodeSubmitPullRequestReviewInput input =
+encodeSubmitPullRequestReviewInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestReviewId |> Just ), ( "event", ((Encode.enum GithubNoFormat.Enum.PullRequestReviewEvent.toString))  input.event |> Just ), ( "body", (Encode.string)  |> Encode.optional input.body ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestReviewId |> Just ), ( "event", ((Encode.enum GithubNoFormat.Enum.PullRequestReviewEvent.toString))  input____.event |> Just ), ( "body", (Encode.string)  |> Encode.optional input____.body ) ]
 
 
 buildTeamOrder : TeamOrderRequiredFields
@@ -1247,9 +1247,9 @@ type alias TeamOrder =
 {-| Encode a TeamOrder into a value that can be used as an argument.
 -}
 encodeTeamOrder : TeamOrder -> Value
-encodeTeamOrder input =
+encodeTeamOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.TeamOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.TeamOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildTeamRepositoryOrder : TeamRepositoryOrderRequiredFields
@@ -1274,9 +1274,9 @@ type alias TeamRepositoryOrder =
 {-| Encode a TeamRepositoryOrder into a value that can be used as an argument.
 -}
 encodeTeamRepositoryOrder : TeamRepositoryOrder -> Value
-encodeTeamRepositoryOrder input =
+encodeTeamRepositoryOrder input____ =
     Encode.maybeObject
-        [ ( "field", ((Encode.enum GithubNoFormat.Enum.TeamRepositoryOrderField.toString))  input.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input.direction |> Just ) ]
+        [ ( "field", ((Encode.enum GithubNoFormat.Enum.TeamRepositoryOrderField.toString))  input____.field |> Just ), ( "direction", ((Encode.enum GithubNoFormat.Enum.OrderDirection.toString))  input____.direction |> Just ) ]
 
 
 buildUpdateProjectCardInput : UpdateProjectCardInputRequiredFields
@@ -1310,9 +1310,9 @@ type alias UpdateProjectCardInput =
 {-| Encode a UpdateProjectCardInput into a value that can be used as an argument.
 -}
 encodeUpdateProjectCardInput : UpdateProjectCardInput -> Value
-encodeUpdateProjectCardInput input =
+encodeUpdateProjectCardInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "projectCardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.projectCardId |> Just ), ( "note", (Encode.string)  input.note |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "projectCardId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.projectCardId |> Just ), ( "note", (Encode.string)  input____.note |> Just ) ]
 
 
 buildUpdateProjectColumnInput : UpdateProjectColumnInputRequiredFields
@@ -1346,9 +1346,9 @@ type alias UpdateProjectColumnInput =
 {-| Encode a UpdateProjectColumnInput into a value that can be used as an argument.
 -}
 encodeUpdateProjectColumnInput : UpdateProjectColumnInput -> Value
-encodeUpdateProjectColumnInput input =
+encodeUpdateProjectColumnInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "projectColumnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.projectColumnId |> Just ), ( "name", (Encode.string)  input.name |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "projectColumnId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.projectColumnId |> Just ), ( "name", (Encode.string)  input____.name |> Just ) ]
 
 
 buildUpdateProjectInput : UpdateProjectInputRequiredFields
@@ -1388,9 +1388,9 @@ type alias UpdateProjectInput =
 {-| Encode a UpdateProjectInput into a value that can be used as an argument.
 -}
 encodeUpdateProjectInput : UpdateProjectInput -> Value
-encodeUpdateProjectInput input =
+encodeUpdateProjectInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "projectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.projectId |> Just ), ( "name", (Encode.string)  |> Encode.optional input.name ), ( "body", (Encode.string)  |> Encode.optional input.body ), ( "state", ((Encode.enum GithubNoFormat.Enum.ProjectState.toString))  |> Encode.optional input.state ), ( "public", (Encode.bool)  |> Encode.optional input.public ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "projectId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.projectId |> Just ), ( "name", (Encode.string)  |> Encode.optional input____.name ), ( "body", (Encode.string)  |> Encode.optional input____.body ), ( "state", ((Encode.enum GithubNoFormat.Enum.ProjectState.toString))  |> Encode.optional input____.state ), ( "public", (Encode.bool)  |> Encode.optional input____.public ) ]
 
 
 buildUpdatePullRequestReviewCommentInput : UpdatePullRequestReviewCommentInputRequiredFields
@@ -1424,9 +1424,9 @@ type alias UpdatePullRequestReviewCommentInput =
 {-| Encode a UpdatePullRequestReviewCommentInput into a value that can be used as an argument.
 -}
 encodeUpdatePullRequestReviewCommentInput : UpdatePullRequestReviewCommentInput -> Value
-encodeUpdatePullRequestReviewCommentInput input =
+encodeUpdatePullRequestReviewCommentInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestReviewCommentId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestReviewCommentId |> Just ), ( "body", (Encode.string)  input.body |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestReviewCommentId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestReviewCommentId |> Just ), ( "body", (Encode.string)  input____.body |> Just ) ]
 
 
 buildUpdatePullRequestReviewInput : UpdatePullRequestReviewInputRequiredFields
@@ -1460,9 +1460,9 @@ type alias UpdatePullRequestReviewInput =
 {-| Encode a UpdatePullRequestReviewInput into a value that can be used as an argument.
 -}
 encodeUpdatePullRequestReviewInput : UpdatePullRequestReviewInput -> Value
-encodeUpdatePullRequestReviewInput input =
+encodeUpdatePullRequestReviewInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.pullRequestReviewId |> Just ), ( "body", (Encode.string)  input.body |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "pullRequestReviewId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.pullRequestReviewId |> Just ), ( "body", (Encode.string)  input____.body |> Just ) ]
 
 
 buildUpdateSubscriptionInput : UpdateSubscriptionInputRequiredFields
@@ -1496,9 +1496,9 @@ type alias UpdateSubscriptionInput =
 {-| Encode a UpdateSubscriptionInput into a value that can be used as an argument.
 -}
 encodeUpdateSubscriptionInput : UpdateSubscriptionInput -> Value
-encodeUpdateSubscriptionInput input =
+encodeUpdateSubscriptionInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "subscribableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.subscribableId |> Just ), ( "state", ((Encode.enum GithubNoFormat.Enum.SubscriptionState.toString))  input.state |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "subscribableId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.subscribableId |> Just ), ( "state", ((Encode.enum GithubNoFormat.Enum.SubscriptionState.toString))  input____.state |> Just ) ]
 
 
 buildUpdateTopicsInput : UpdateTopicsInputRequiredFields
@@ -1532,6 +1532,6 @@ type alias UpdateTopicsInput =
 {-| Encode a UpdateTopicsInput into a value that can be used as an argument.
 -}
 encodeUpdateTopicsInput : UpdateTopicsInput -> Value
-encodeUpdateTopicsInput input =
+encodeUpdateTopicsInput input____ =
     Encode.maybeObject
-        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input.clientMutationId ), ( "repositoryId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input.repositoryId |> Just ), ( "topicNames", (Encode.string |> Encode.list)  input.topicNames |> Just ) ]
+        [ ( "clientMutationId", (Encode.string)  |> Encode.optional input____.clientMutationId ), ( "repositoryId", ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId))  input____.repositoryId |> Just ), ( "topicNames", (Encode.string |> Encode.list)  input____.topicNames |> Just ) ]
