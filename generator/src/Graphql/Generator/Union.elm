@@ -28,7 +28,7 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo {0}
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
           {2}
@@ -67,7 +67,7 @@ aliasFieldForFragment context moduleName interfaceImplementor =
 exhaustiveBuildupForFragment : Context -> List String -> ClassCaseName -> String
 exhaustiveBuildupForFragment context moduleName interfaceImplementor =
     interpolate
-        """Object.buildFragment "{1}" selections.on{0}"""
+        """Object.buildFragment "{1}" selections____.on{0}"""
         [ ClassCaseName.normalized interfaceImplementor, ClassCaseName.raw interfaceImplementor ]
 
 

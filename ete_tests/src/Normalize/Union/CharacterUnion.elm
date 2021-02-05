@@ -30,10 +30,10 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Normalize.Union.CharacterUnion
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "_human" selections.onHuman_
-        , Object.buildFragment "Droid" selections.onDroid
+        [ Object.buildFragment "_human" selections____.onHuman_
+        , Object.buildFragment "Droid" selections____.onDroid
         ]
 
 

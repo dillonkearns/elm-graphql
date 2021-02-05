@@ -30,10 +30,10 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Union.Closer
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Commit" selections.onCommit
-        , Object.buildFragment "PullRequest" selections.onPullRequest
+        [ Object.buildFragment "Commit" selections____.onCommit
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
         ]
 
 
