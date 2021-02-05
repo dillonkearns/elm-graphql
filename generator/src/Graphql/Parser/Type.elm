@@ -20,6 +20,7 @@ import Graphql.Parser.Scalar as Scalar exposing (Scalar)
 import Graphql.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
 import MyDebug
+import Result.Extra
 
 
 decoder : Decoder TypeDefinition
@@ -68,7 +69,7 @@ inputObjectDecoder =
     Decode.map2 createInputObject
         (Decode.field "name" Decode.string)
         (inputField
-            |> Decode.map parseField
+            |> Decode.andThen parseField
             |> Decode.list
             |> Decode.field "inputFields"
         )
@@ -79,7 +80,7 @@ interfaceDecoder =
     Decode.map3 createInterface
         (Decode.field "name" Decode.string)
         (fieldDecoder
-            |> Decode.map parseField
+            |> Decode.andThen parseField
             |> Decode.list
             |> Decode.field "fields"
         )
@@ -93,21 +94,35 @@ unionDecoder =
         (Decode.field "possibleTypes" (Decode.string |> Decode.field "name" |> Decode.list))
 
 
-parseField : RawField -> Field
+parseField : RawField -> Decoder Field
 parseField { name, ofType, args, description } =
-    { name = CamelCaseName.build name
-    , description = description
-    , typeRef = parseRef ofType
-    , args =
-        List.map
-            (\arg ->
-                { name = CamelCaseName.build arg.name
-                , description = arg.description
-                , typeRef = parseRef arg.ofType
-                }
-            )
+    let
+        argRefs =
             args
-    }
+                |> List.map
+                    (\arg ->
+                        parseRef arg.ofType
+                            |> Result.map
+                                (\argType ->
+                                    { name = CamelCaseName.build arg.name
+                                    , description = arg.description
+                                    , typeRef = argType
+                                    }
+                                )
+                    )
+                |> Result.Extra.combine
+    in
+    case Result.map2 Tuple.pair (parseRef ofType) argRefs of
+        Ok ( ofTypeRef, okArgRefs ) ->
+            Decode.succeed
+                { name = CamelCaseName.build name
+                , description = description
+                , typeRef = ofTypeRef
+                , args = okArgRefs
+                }
+
+        Err error ->
+            Decode.fail error
 
 
 objectDecoder : Decoder TypeDefinition
@@ -115,7 +130,7 @@ objectDecoder =
     Decode.map2 createObject
         (Decode.field "name" Decode.string)
         (fieldDecoder
-            |> Decode.map parseField
+            |> Decode.andThen parseField
             |> Decode.list
             |> Decode.field "fields"
         )
@@ -270,42 +285,44 @@ expectString maybeString =
             MyDebug.crash "Expected string but got Nothing"
 
 
-parseRef : RawTypeRef -> TypeReference
+parseRef : RawTypeRef -> Result String TypeReference
 parseRef (RawTypeRef rawTypeRef) =
     case rawTypeRef.kind of
         TypeKind.List ->
             case rawTypeRef.ofType of
                 Just nestedOfType ->
-                    TypeReference (List (parseRef nestedOfType)) Nullable
+                    parseRef nestedOfType
+                        |> Result.map (\listRef -> TypeReference (List listRef) Nullable)
 
                 Nothing ->
-                    MyDebug.crash "Missing nested type for List reference"
+                    Err "Missing nested type for List reference"
 
         TypeKind.Scalar ->
             case rawTypeRef.name of
                 Just scalarName ->
-                    TypeReference
-                        (Scalar (Scalar.parse scalarName))
-                        Nullable
+                    TypeReference (Scalar (Scalar.parse scalarName)) Nullable
+                        |> Ok
 
                 Nothing ->
-                    MyDebug.crash "Should not get null names for scalar references"
+                    Err "Should not get null names for scalar references"
 
         TypeKind.Interface ->
             case rawTypeRef.name of
                 Just interfaceName ->
                     TypeReference (InterfaceRef interfaceName) Nullable
+                        |> Ok
 
                 Nothing ->
-                    MyDebug.crash "Should not get null names for interface references"
+                    Err "Should not get null names for interface references"
 
         TypeKind.Object ->
             case rawTypeRef.name of
                 Just objectName ->
                     TypeReference (ObjectRef objectName) Nullable
+                        |> Ok
 
                 Nothing ->
-                    MyDebug.crash "Should not get null names for object references"
+                    Err "Should not get null names for object references"
 
         TypeKind.NonNull ->
             case rawTypeRef.ofType of
@@ -315,60 +332,70 @@ parseRef (RawTypeRef rawTypeRef) =
                             TypeReference
                                 (Scalar (scalarName |> expectString |> Scalar.parse))
                                 NonNullable
+                                |> Ok
 
                         ( TypeKind.Object, objectName ) ->
                             TypeReference (objectName |> expectString |> ObjectRef) NonNullable
+                                |> Ok
 
                         ( TypeKind.Interface, interfaceName ) ->
                             TypeReference (interfaceName |> expectString |> InterfaceRef) NonNullable
+                                |> Ok
 
                         ( TypeKind.List, _ ) ->
                             case actualOfType.ofType of
                                 Just nestedOfType ->
-                                    TypeReference (List (parseRef nestedOfType)) NonNullable
+                                    parseRef nestedOfType
+                                        |> Result.map (\listRef -> TypeReference (List listRef) NonNullable)
 
                                 Nothing ->
-                                    MyDebug.crash ""
+                                    Err ""
 
                         ( TypeKind.NonNull, _ ) ->
-                            MyDebug.crash "Can't have nested non-null types"
+                            Err "Can't have nested non-null types"
 
                         ( TypeKind.Ignore, _ ) ->
-                            ignoreRef
+                            Ok ignoreRef
 
                         ( TypeKind.Enum, enumName ) ->
                             TypeReference (enumName |> expectString |> ClassCaseName.build |> EnumRef) NonNullable
+                                |> Ok
 
                         ( TypeKind.InputObject, inputObjectName ) ->
                             TypeReference (inputObjectName |> expectString |> ClassCaseName.build |> InputObjectRef) NonNullable
+                                |> Ok
 
                         ( TypeKind.Union, _ ) ->
                             TypeReference (actualOfType.name |> expectString |> UnionRef) NonNullable
+                                |> Ok
 
                 Nothing ->
-                    ignoreRef
+                    Ok ignoreRef
 
         TypeKind.Ignore ->
-            ignoreRef
+            Ok ignoreRef
 
         TypeKind.Enum ->
             case rawTypeRef.name of
                 Just objectName ->
                     TypeReference (objectName |> ClassCaseName.build |> EnumRef) Nullable
+                        |> Ok
 
                 Nothing ->
-                    MyDebug.crash "Should not get null names for enum references"
+                    Err "Should not get null names for enum references"
 
         TypeKind.InputObject ->
             case rawTypeRef.name of
                 Just inputObjectName ->
                     TypeReference (inputObjectName |> ClassCaseName.build |> InputObjectRef) Nullable
+                        |> Ok
 
                 Nothing ->
-                    MyDebug.crash "Should not get null names for input object references"
+                    Err "Should not get null names for input object references"
 
         TypeKind.Union ->
             TypeReference (UnionRef (expectString rawTypeRef.name)) Nullable
+                |> Ok
 
 
 ignoreRef : TypeReference
