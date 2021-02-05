@@ -19,7 +19,6 @@ import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
 import Graphql.Parser.Scalar as Scalar exposing (Scalar)
 import Graphql.Parser.TypeKind as TypeKind exposing (TypeKind)
 import Json.Decode as Decode exposing (Decoder)
-import MyDebug
 import Result.Extra
 
 
@@ -275,14 +274,14 @@ type ReferrableType
     | InterfaceRef String
 
 
-expectString : Maybe String -> String
-expectString maybeString =
+expectPresent : Maybe value -> Result String value
+expectPresent maybeString =
     case maybeString of
         Just string ->
-            string
+            Ok string
 
         Nothing ->
-            MyDebug.crash "Expected string but got Nothing"
+            Err "Expected string but got Nothing"
 
 
 parseRef : RawTypeRef -> Result String TypeReference
@@ -329,18 +328,30 @@ parseRef (RawTypeRef rawTypeRef) =
                 Just (RawTypeRef actualOfType) ->
                     case ( actualOfType.kind, actualOfType.name ) of
                         ( TypeKind.Scalar, scalarName ) ->
-                            TypeReference
-                                (Scalar (scalarName |> expectString |> Scalar.parse))
-                                NonNullable
-                                |> Ok
+                            scalarName
+                                |> expectPresent
+                                |> Result.map
+                                    (\presentScalarName ->
+                                        TypeReference
+                                            (Scalar (presentScalarName |> Scalar.parse))
+                                            NonNullable
+                                    )
 
                         ( TypeKind.Object, objectName ) ->
-                            TypeReference (objectName |> expectString |> ObjectRef) NonNullable
-                                |> Ok
+                            objectName
+                                |> expectPresent
+                                |> Result.map
+                                    (\presentObjectName ->
+                                        TypeReference (presentObjectName |> ObjectRef) NonNullable
+                                    )
 
                         ( TypeKind.Interface, interfaceName ) ->
-                            TypeReference (interfaceName |> expectString |> InterfaceRef) NonNullable
-                                |> Ok
+                            interfaceName
+                                |> expectPresent
+                                |> Result.map
+                                    (\presentName ->
+                                        TypeReference (presentName |> InterfaceRef) NonNullable
+                                    )
 
                         ( TypeKind.List, _ ) ->
                             case actualOfType.ofType of
@@ -358,16 +369,28 @@ parseRef (RawTypeRef rawTypeRef) =
                             Ok ignoreRef
 
                         ( TypeKind.Enum, enumName ) ->
-                            TypeReference (enumName |> expectString |> ClassCaseName.build |> EnumRef) NonNullable
-                                |> Ok
+                            enumName
+                                |> expectPresent
+                                |> Result.map
+                                    (\presentName ->
+                                        TypeReference (presentName |> ClassCaseName.build |> EnumRef) NonNullable
+                                    )
 
                         ( TypeKind.InputObject, inputObjectName ) ->
-                            TypeReference (inputObjectName |> expectString |> ClassCaseName.build |> InputObjectRef) NonNullable
-                                |> Ok
+                            inputObjectName
+                                |> expectPresent
+                                |> Result.map
+                                    (\presentName ->
+                                        TypeReference (presentName |> ClassCaseName.build |> InputObjectRef) NonNullable
+                                    )
 
                         ( TypeKind.Union, _ ) ->
-                            TypeReference (actualOfType.name |> expectString |> UnionRef) NonNullable
-                                |> Ok
+                            actualOfType.name
+                                |> expectPresent
+                                |> Result.map
+                                    (\presentName ->
+                                        TypeReference (presentName |> UnionRef) NonNullable
+                                    )
 
                 Nothing ->
                     Ok ignoreRef
@@ -394,8 +417,9 @@ parseRef (RawTypeRef rawTypeRef) =
                     Err "Should not get null names for input object references"
 
         TypeKind.Union ->
-            TypeReference (UnionRef (expectString rawTypeRef.name)) Nullable
-                |> Ok
+            rawTypeRef.name
+                |> expectPresent
+                |> Result.map (\typeRefName -> TypeReference (UnionRef typeRefName) Nullable)
 
 
 ignoreRef : TypeReference
