@@ -22,11 +22,11 @@ buildShapeInput :
     -> ShapeInput
 buildShapeInput fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { kind = Absent, geometry = Absent }
     in
-    { kind = optionals.kind, geometry = optionals.geometry }
+    { kind = optionals____.kind, geometry = optionals____.geometry }
 
 
 type alias ShapeInputOptionalFields =

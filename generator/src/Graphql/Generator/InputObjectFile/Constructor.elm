@@ -43,7 +43,7 @@ generate context { name, fields, hasLoop } =
                                 Type.TypeReference referrableType isNullable ->
                                     case isNullable of
                                         Type.Nullable ->
-                                            "optionals"
+                                            "optionals____"
 
                                         Type.NonNullable ->
                                             "required____"
@@ -70,7 +70,7 @@ generate context { name, fields, hasLoop } =
         letClause =
             Let.generate
                 ([ when (List.length optionalFields > 0)
-                    ( "optionals"
+                    ( "optionals____"
                     , interpolate """
             fillOptionals____
                 { {0} }"""

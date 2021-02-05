@@ -23,11 +23,11 @@ buildCircularOne :
     -> CircularOne
 buildCircularOne fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { circularTwo = Absent }
     in
-    CircularOne { circularTwo = optionals.circularTwo }
+    CircularOne { circularTwo = optionals____.circularTwo }
 
 
 type alias CircularOneOptionalFields =
@@ -62,11 +62,11 @@ buildCircularTwo :
     -> CircularTwo
 buildCircularTwo fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { circularOne = Absent }
     in
-    CircularTwo { circularOne = optionals.circularOne }
+    CircularTwo { circularOne = optionals____.circularOne }
 
 
 type alias CircularTwoOptionalFields =
@@ -102,11 +102,11 @@ buildGreeting :
     -> Greeting
 buildGreeting required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { language = Absent, options = Absent }
     in
-    { language = optionals.language, name = required____.name, options = optionals.options }
+    { language = optionals____.language, name = required____.name, options = optionals____.options }
 
 
 type alias GreetingRequiredFields =
@@ -141,11 +141,11 @@ buildGreetingOptions :
     -> GreetingOptions
 buildGreetingOptions fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { prefix = Absent }
     in
-    { prefix = optionals.prefix }
+    { prefix = optionals____.prefix }
 
 
 type alias GreetingOptionsOptionalFields =
@@ -171,11 +171,11 @@ buildRecursive :
     -> Recursive
 buildRecursive fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { recursive = Absent }
     in
-    Recursive { recursive = optionals.recursive }
+    Recursive { recursive = optionals____.recursive }
 
 
 type alias RecursiveOptionalFields =

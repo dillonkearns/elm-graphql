@@ -24,11 +24,11 @@ buildGreeting :
     -> Greeting
 buildGreeting required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { language = Absent, options = Absent }
     in
-    { language = optionals.language, name = required____.name, options = optionals.options }
+    { language = optionals____.language, name = required____.name, options = optionals____.options }
 
 
 type alias GreetingRequiredFields =
@@ -63,11 +63,11 @@ buildGreetingOptions :
     -> GreetingOptions
 buildGreetingOptions fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { prefix = Absent }
     in
-    { prefix = optionals.prefix }
+    { prefix = optionals____.prefix }
 
 
 type alias GreetingOptionsOptionalFields =

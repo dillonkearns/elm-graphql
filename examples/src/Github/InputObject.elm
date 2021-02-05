@@ -42,11 +42,11 @@ buildAcceptTopicSuggestionInput :
     -> AcceptTopicSuggestionInput
 buildAcceptTopicSuggestionInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, repositoryId = required____.repositoryId, name = required____.name }
+    { clientMutationId = optionals____.clientMutationId, repositoryId = required____.repositoryId, name = required____.name }
 
 
 type alias AcceptTopicSuggestionInputRequiredFields =
@@ -82,11 +82,11 @@ buildAddCommentInput :
     -> AddCommentInput
 buildAddCommentInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, subjectId = required____.subjectId, body = required____.body }
+    { clientMutationId = optionals____.clientMutationId, subjectId = required____.subjectId, body = required____.body }
 
 
 type alias AddCommentInputRequiredFields =
@@ -122,11 +122,11 @@ buildAddProjectCardInput :
     -> AddProjectCardInput
 buildAddProjectCardInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, contentId = Absent, note = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, projectColumnId = required____.projectColumnId, contentId = optionals.contentId, note = optionals.note }
+    { clientMutationId = optionals____.clientMutationId, projectColumnId = required____.projectColumnId, contentId = optionals____.contentId, note = optionals____.note }
 
 
 type alias AddProjectCardInputRequiredFields =
@@ -164,11 +164,11 @@ buildAddProjectColumnInput :
     -> AddProjectColumnInput
 buildAddProjectColumnInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, projectId = required____.projectId, name = required____.name }
+    { clientMutationId = optionals____.clientMutationId, projectId = required____.projectId, name = required____.name }
 
 
 type alias AddProjectColumnInputRequiredFields =
@@ -204,11 +204,11 @@ buildAddPullRequestReviewCommentInput :
     -> AddPullRequestReviewCommentInput
 buildAddPullRequestReviewCommentInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, commitOID = Absent, path = Absent, position = Absent, inReplyTo = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, commitOID = optionals.commitOID, body = required____.body, path = optionals.path, position = optionals.position, inReplyTo = optionals.inReplyTo }
+    { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, commitOID = optionals____.commitOID, body = required____.body, path = optionals____.path, position = optionals____.position, inReplyTo = optionals____.inReplyTo }
 
 
 type alias AddPullRequestReviewCommentInputRequiredFields =
@@ -253,11 +253,11 @@ buildAddPullRequestReviewInput :
     -> AddPullRequestReviewInput
 buildAddPullRequestReviewInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, commitOID = Absent, body = Absent, event = Absent, comments = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestId = required____.pullRequestId, commitOID = optionals.commitOID, body = optionals.body, event = optionals.event, comments = optionals.comments }
+    { clientMutationId = optionals____.clientMutationId, pullRequestId = required____.pullRequestId, commitOID = optionals____.commitOID, body = optionals____.body, event = optionals____.event, comments = optionals____.comments }
 
 
 type alias AddPullRequestReviewInputRequiredFields =
@@ -299,11 +299,11 @@ buildAddReactionInput :
     -> AddReactionInput
 buildAddReactionInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, subjectId = required____.subjectId, content = required____.content }
+    { clientMutationId = optionals____.clientMutationId, subjectId = required____.subjectId, content = required____.content }
 
 
 type alias AddReactionInputRequiredFields =
@@ -339,11 +339,11 @@ buildAddStarInput :
     -> AddStarInput
 buildAddStarInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, starrableId = required____.starrableId }
+    { clientMutationId = optionals____.clientMutationId, starrableId = required____.starrableId }
 
 
 type alias AddStarInputRequiredFields =
@@ -375,11 +375,11 @@ buildCommitAuthor :
     -> CommitAuthor
 buildCommitAuthor fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { id = Absent, emails = Absent }
     in
-    { id = optionals.id, emails = optionals.emails }
+    { id = optionals____.id, emails = optionals____.emails }
 
 
 type alias CommitAuthorOptionalFields =
@@ -410,11 +410,11 @@ buildCreateProjectInput :
     -> CreateProjectInput
 buildCreateProjectInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, body = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, ownerId = required____.ownerId, name = required____.name, body = optionals.body }
+    { clientMutationId = optionals____.clientMutationId, ownerId = required____.ownerId, name = required____.name, body = optionals____.body }
 
 
 type alias CreateProjectInputRequiredFields =
@@ -453,11 +453,11 @@ buildDeclineTopicSuggestionInput :
     -> DeclineTopicSuggestionInput
 buildDeclineTopicSuggestionInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, repositoryId = required____.repositoryId, name = required____.name, reason = required____.reason }
+    { clientMutationId = optionals____.clientMutationId, repositoryId = required____.repositoryId, name = required____.name, reason = required____.reason }
 
 
 type alias DeclineTopicSuggestionInputRequiredFields =
@@ -495,11 +495,11 @@ buildDeleteProjectCardInput :
     -> DeleteProjectCardInput
 buildDeleteProjectCardInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, cardId = required____.cardId }
+    { clientMutationId = optionals____.clientMutationId, cardId = required____.cardId }
 
 
 type alias DeleteProjectCardInputRequiredFields =
@@ -532,11 +532,11 @@ buildDeleteProjectColumnInput :
     -> DeleteProjectColumnInput
 buildDeleteProjectColumnInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, columnId = required____.columnId }
+    { clientMutationId = optionals____.clientMutationId, columnId = required____.columnId }
 
 
 type alias DeleteProjectColumnInputRequiredFields =
@@ -569,11 +569,11 @@ buildDeleteProjectInput :
     -> DeleteProjectInput
 buildDeleteProjectInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, projectId = required____.projectId }
+    { clientMutationId = optionals____.clientMutationId, projectId = required____.projectId }
 
 
 type alias DeleteProjectInputRequiredFields =
@@ -606,11 +606,11 @@ buildDeletePullRequestReviewInput :
     -> DeletePullRequestReviewInput
 buildDeletePullRequestReviewInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId }
+    { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId }
 
 
 type alias DeletePullRequestReviewInputRequiredFields =
@@ -643,11 +643,11 @@ buildDismissPullRequestReviewInput :
     -> DismissPullRequestReviewInput
 buildDismissPullRequestReviewInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, message = required____.message }
+    { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, message = required____.message }
 
 
 type alias DismissPullRequestReviewInputRequiredFields =
@@ -801,11 +801,11 @@ buildLockLockableInput :
     -> LockLockableInput
 buildLockLockableInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, lockReason = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, lockableId = required____.lockableId, lockReason = optionals.lockReason }
+    { clientMutationId = optionals____.clientMutationId, lockableId = required____.lockableId, lockReason = optionals____.lockReason }
 
 
 type alias LockLockableInputRequiredFields =
@@ -870,11 +870,11 @@ buildMoveProjectCardInput :
     -> MoveProjectCardInput
 buildMoveProjectCardInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, afterCardId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, cardId = required____.cardId, columnId = required____.columnId, afterCardId = optionals.afterCardId }
+    { clientMutationId = optionals____.clientMutationId, cardId = required____.cardId, columnId = required____.columnId, afterCardId = optionals____.afterCardId }
 
 
 type alias MoveProjectCardInputRequiredFields =
@@ -913,11 +913,11 @@ buildMoveProjectColumnInput :
     -> MoveProjectColumnInput
 buildMoveProjectColumnInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, afterColumnId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, columnId = required____.columnId, afterColumnId = optionals.afterColumnId }
+    { clientMutationId = optionals____.clientMutationId, columnId = required____.columnId, afterColumnId = optionals____.afterColumnId }
 
 
 type alias MoveProjectColumnInputRequiredFields =
@@ -1069,11 +1069,11 @@ buildRemoveOutsideCollaboratorInput :
     -> RemoveOutsideCollaboratorInput
 buildRemoveOutsideCollaboratorInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, userId = required____.userId, organizationId = required____.organizationId }
+    { clientMutationId = optionals____.clientMutationId, userId = required____.userId, organizationId = required____.organizationId }
 
 
 type alias RemoveOutsideCollaboratorInputRequiredFields =
@@ -1109,11 +1109,11 @@ buildRemoveReactionInput :
     -> RemoveReactionInput
 buildRemoveReactionInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, subjectId = required____.subjectId, content = required____.content }
+    { clientMutationId = optionals____.clientMutationId, subjectId = required____.subjectId, content = required____.content }
 
 
 type alias RemoveReactionInputRequiredFields =
@@ -1149,11 +1149,11 @@ buildRemoveStarInput :
     -> RemoveStarInput
 buildRemoveStarInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, starrableId = required____.starrableId }
+    { clientMutationId = optionals____.clientMutationId, starrableId = required____.starrableId }
 
 
 type alias RemoveStarInputRequiredFields =
@@ -1215,11 +1215,11 @@ buildRequestReviewsInput :
     -> RequestReviewsInput
 buildRequestReviewsInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, userIds = Absent, teamIds = Absent, union = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestId = required____.pullRequestId, userIds = optionals.userIds, teamIds = optionals.teamIds, union = optionals.union }
+    { clientMutationId = optionals____.clientMutationId, pullRequestId = required____.pullRequestId, userIds = optionals____.userIds, teamIds = optionals____.teamIds, union = optionals____.union }
 
 
 type alias RequestReviewsInputRequiredFields =
@@ -1288,11 +1288,11 @@ buildSubmitPullRequestReviewInput :
     -> SubmitPullRequestReviewInput
 buildSubmitPullRequestReviewInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, body = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, event = required____.event, body = optionals.body }
+    { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, event = required____.event, body = optionals____.body }
 
 
 type alias SubmitPullRequestReviewInputRequiredFields =
@@ -1389,11 +1389,11 @@ buildUpdateProjectCardInput :
     -> UpdateProjectCardInput
 buildUpdateProjectCardInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, projectCardId = required____.projectCardId, note = required____.note }
+    { clientMutationId = optionals____.clientMutationId, projectCardId = required____.projectCardId, note = required____.note }
 
 
 type alias UpdateProjectCardInputRequiredFields =
@@ -1429,11 +1429,11 @@ buildUpdateProjectColumnInput :
     -> UpdateProjectColumnInput
 buildUpdateProjectColumnInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, projectColumnId = required____.projectColumnId, name = required____.name }
+    { clientMutationId = optionals____.clientMutationId, projectColumnId = required____.projectColumnId, name = required____.name }
 
 
 type alias UpdateProjectColumnInputRequiredFields =
@@ -1469,11 +1469,11 @@ buildUpdateProjectInput :
     -> UpdateProjectInput
 buildUpdateProjectInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent, name = Absent, body = Absent, state = Absent, public = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, projectId = required____.projectId, name = optionals.name, body = optionals.body, state = optionals.state, public = optionals.public }
+    { clientMutationId = optionals____.clientMutationId, projectId = required____.projectId, name = optionals____.name, body = optionals____.body, state = optionals____.state, public = optionals____.public }
 
 
 type alias UpdateProjectInputRequiredFields =
@@ -1515,11 +1515,11 @@ buildUpdatePullRequestReviewCommentInput :
     -> UpdatePullRequestReviewCommentInput
 buildUpdatePullRequestReviewCommentInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestReviewCommentId = required____.pullRequestReviewCommentId, body = required____.body }
+    { clientMutationId = optionals____.clientMutationId, pullRequestReviewCommentId = required____.pullRequestReviewCommentId, body = required____.body }
 
 
 type alias UpdatePullRequestReviewCommentInputRequiredFields =
@@ -1555,11 +1555,11 @@ buildUpdatePullRequestReviewInput :
     -> UpdatePullRequestReviewInput
 buildUpdatePullRequestReviewInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, body = required____.body }
+    { clientMutationId = optionals____.clientMutationId, pullRequestReviewId = required____.pullRequestReviewId, body = required____.body }
 
 
 type alias UpdatePullRequestReviewInputRequiredFields =
@@ -1595,11 +1595,11 @@ buildUpdateSubscriptionInput :
     -> UpdateSubscriptionInput
 buildUpdateSubscriptionInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, subscribableId = required____.subscribableId, state = required____.state }
+    { clientMutationId = optionals____.clientMutationId, subscribableId = required____.subscribableId, state = required____.state }
 
 
 type alias UpdateSubscriptionInputRequiredFields =
@@ -1635,11 +1635,11 @@ buildUpdateTopicsInput :
     -> UpdateTopicsInput
 buildUpdateTopicsInput required____ fillOptionals____ =
     let
-        optionals =
+        optionals____ =
             fillOptionals____
                 { clientMutationId = Absent }
     in
-    { clientMutationId = optionals.clientMutationId, repositoryId = required____.repositoryId, topicNames = required____.topicNames }
+    { clientMutationId = optionals____.clientMutationId, repositoryId = required____.repositoryId, topicNames = required____.topicNames }
 
 
 type alias UpdateTopicsInputRequiredFields =
