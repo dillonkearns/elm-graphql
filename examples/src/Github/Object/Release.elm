@@ -97,10 +97,10 @@ releaseAssets :
     (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection
     -> SelectionSet decodesTo Github.Object.Release
-releaseAssets fillInOptionals object____ =
+releaseAssets fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]

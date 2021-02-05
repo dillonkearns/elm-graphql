@@ -101,10 +101,10 @@ type alias PushAllowancesOptionalArguments = { first : OptionalArgument Int
 pushAllowances : (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.PushAllowanceConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
-pushAllowances fillInOptionals object____ =
+pushAllowances fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
@@ -144,10 +144,10 @@ type alias ReviewDismissalAllowancesOptionalArguments = { first : OptionalArgume
 reviewDismissalAllowances : (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReviewDismissalAllowanceConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
-reviewDismissalAllowances fillInOptionals object____ =
+reviewDismissalAllowances fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]

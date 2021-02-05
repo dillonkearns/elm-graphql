@@ -73,10 +73,10 @@ hero :
     (HeroOptionalArguments -> HeroOptionalArguments)
     -> SelectionSet decodesTo Swapi.Interface.Character
     -> SelectionSet decodesTo RootQuery
-hero fillInOptionals object____ =
+hero fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { episode = Absent }
+            fillInOptionals____ { episode = Absent }
 
         optionalArgs =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]
@@ -98,10 +98,10 @@ heroUnion :
     (HeroUnionOptionalArguments -> HeroUnionOptionalArguments)
     -> SelectionSet decodesTo Swapi.Union.CharacterUnion
     -> SelectionSet decodesTo RootQuery
-heroUnion fillInOptionals object____ =
+heroUnion fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { episode = Absent }
+            fillInOptionals____ { episode = Absent }
 
         optionalArgs =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Swapi.Enum.Episode.toString) ]

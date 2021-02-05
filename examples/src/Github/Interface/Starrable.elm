@@ -74,10 +74,10 @@ stargazers :
     (StargazersOptionalArguments -> StargazersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.StargazerConnection
     -> SelectionSet decodesTo Github.Interface.Starrable
-stargazers fillInOptionals object____ =
+stargazers fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]

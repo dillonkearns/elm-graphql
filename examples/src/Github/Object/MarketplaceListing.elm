@@ -183,10 +183,10 @@ type alias LogoUrlOptionalArguments =
 logoUrl :
     (LogoUrlOptionalArguments -> LogoUrlOptionalArguments)
     -> SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.MarketplaceListing
-logoUrl fillInOptionals =
+logoUrl fillInOptionals____ =
     let
         filledInOptionals =
-            fillInOptionals { size = Absent }
+            fillInOptionals____ { size = Absent }
 
         optionalArgs =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]

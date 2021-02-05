@@ -143,10 +143,10 @@ human requiredArgs object____ =
 menuItems : (MenuItemsOptionalArguments -> MenuItemsOptionalArguments)
  -> SelectionSet decodesTo Api.Object.MenuItem
  -> SelectionSet (List decodesTo) RootQuery
-menuItems fillInOptionals object____ =
+menuItems fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { contains = Absent }
+            fillInOptionals____ { contains = Absent }
 
         optionalArgs =
             [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]

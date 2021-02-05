@@ -84,10 +84,10 @@ hero :
     (HeroOptionalArguments -> HeroOptionalArguments)
     -> SelectionSet decodesTo Normalize.Interface.Character
     -> SelectionSet decodesTo RootQuery
-hero fillInOptionals object____ =
+hero fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { episode = Absent }
+            fillInOptionals____ { episode = Absent }
 
         optionalArgs =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
@@ -109,10 +109,10 @@ heroUnion :
     (HeroUnionOptionalArguments -> HeroUnionOptionalArguments)
     -> SelectionSet decodesTo Normalize.Union.CharacterUnion
     -> SelectionSet (Maybe decodesTo) RootQuery
-heroUnion fillInOptionals object____ =
+heroUnion fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { episode = Absent }
+            fillInOptionals____ { episode = Absent }
 
         optionalArgs =
             [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
@@ -161,10 +161,10 @@ type alias TypeOptionalArguments =
 type_ :
     (TypeOptionalArguments -> TypeOptionalArguments)
     -> SelectionSet String RootQuery
-type_ fillInOptionals =
+type_ fillInOptionals____ =
     let
         filledInOptionals =
-            fillInOptionals { input = Absent }
+            fillInOptionals____ { input = Absent }
 
         optionalArgs =
             [ Argument.optional "input" filledInOptionals.input Normalize.InputObject.encodeReservedWord ]

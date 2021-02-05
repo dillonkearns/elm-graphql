@@ -109,10 +109,10 @@ pushAllowances :
     (PushAllowancesOptionalArguments -> PushAllowancesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.PushAllowanceConnection
     -> SelectionSet decodesTo Github.Object.ProtectedBranch
-pushAllowances fillInOptionals object____ =
+pushAllowances fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -157,10 +157,10 @@ reviewDismissalAllowances :
     (ReviewDismissalAllowancesOptionalArguments -> ReviewDismissalAllowancesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReviewDismissalAllowanceConnection
     -> SelectionSet decodesTo Github.Object.ProtectedBranch
-reviewDismissalAllowances fillInOptionals object____ =
+reviewDismissalAllowances fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]

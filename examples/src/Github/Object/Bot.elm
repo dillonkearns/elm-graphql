@@ -31,10 +31,10 @@ type alias AvatarUrlOptionalArguments =
 avatarUrl :
     (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
     -> SelectionSet Github.ScalarCodecs.Uri Github.Object.Bot
-avatarUrl fillInOptionals =
+avatarUrl fillInOptionals____ =
     let
         filledInOptionals =
-            fillInOptionals { size = Absent }
+            fillInOptionals____ { size = Absent }
 
         optionalArgs =
             [ Argument.optional "size" filledInOptionals.size Encode.int ]

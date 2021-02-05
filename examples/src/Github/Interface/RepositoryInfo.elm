@@ -211,10 +211,10 @@ type alias ShortDescriptionHTMLOptionalArguments =
 shortDescriptionHTML :
     (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
     -> SelectionSet Github.ScalarCodecs.Html Github.Interface.RepositoryInfo
-shortDescriptionHTML fillInOptionals =
+shortDescriptionHTML fillInOptionals____ =
     let
         filledInOptionals =
-            fillInOptionals { limit = Absent }
+            fillInOptionals____ { limit = Absent }
 
         optionalArgs =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]

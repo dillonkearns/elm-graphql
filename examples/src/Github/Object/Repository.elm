@@ -50,10 +50,10 @@ assignableUsers :
     (AssignableUsersOptionalArguments -> AssignableUsersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserConnection
     -> SelectionSet decodesTo Github.Object.Repository
-assignableUsers fillInOptionals object____ =
+assignableUsers fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -93,10 +93,10 @@ collaborators :
     (CollaboratorsOptionalArguments -> CollaboratorsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.RepositoryCollaboratorConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-collaborators fillInOptionals object____ =
+collaborators fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, affiliation = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, affiliation = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "affiliation" filledInOptionals.affiliation (Encode.enum Github.Enum.CollaboratorAffiliation.toString) ]
@@ -125,10 +125,10 @@ commitComments :
     (CommitCommentsOptionalArguments -> CommitCommentsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.CommitCommentConnection
     -> SelectionSet decodesTo Github.Object.Repository
-commitComments fillInOptionals object____ =
+commitComments fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -180,10 +180,10 @@ deployKeys :
     (DeployKeysOptionalArguments -> DeployKeysOptionalArguments)
     -> SelectionSet decodesTo Github.Object.DeployKeyConnection
     -> SelectionSet decodesTo Github.Object.Repository
-deployKeys fillInOptionals object____ =
+deployKeys fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -214,10 +214,10 @@ deployments :
     (DeploymentsOptionalArguments -> DeploymentsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.DeploymentConnection
     -> SelectionSet decodesTo Github.Object.Repository
-deployments fillInOptionals object____ =
+deployments fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, environments = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, environments = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "environments" filledInOptionals.environments (Encode.string |> Encode.list) ]
@@ -282,10 +282,10 @@ forks :
     (ForksOptionalArguments -> ForksOptionalArguments)
     -> SelectionSet decodesTo Github.Object.RepositoryConnection
     -> SelectionSet decodesTo Github.Object.Repository
-forks fillInOptionals object____ =
+forks fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "privacy" filledInOptionals.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked Encode.bool ]
@@ -415,10 +415,10 @@ issues :
     (IssuesOptionalArguments -> IssuesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.IssueConnection
     -> SelectionSet decodesTo Github.Object.Repository
-issues fillInOptionals object____ =
+issues fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.IssueState.toString |> Encode.list) ]
@@ -466,10 +466,10 @@ labels :
     (LabelsOptionalArguments -> LabelsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.LabelConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-labels fillInOptionals object____ =
+labels fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "query" filledInOptionals.query Encode.string ]
@@ -500,10 +500,10 @@ languages :
     (LanguagesOptionalArguments -> LanguagesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.LanguageConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-languages fillInOptionals object____ =
+languages fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeLanguageOrder ]
@@ -555,10 +555,10 @@ mentionableUsers :
     (MentionableUsersOptionalArguments -> MentionableUsersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserConnection
     -> SelectionSet decodesTo Github.Object.Repository
-mentionableUsers fillInOptionals object____ =
+mentionableUsers fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -608,10 +608,10 @@ milestones :
     (MilestonesOptionalArguments -> MilestonesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.MilestoneConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-milestones fillInOptionals object____ =
+milestones fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.MilestoneState.toString |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeMilestoneOrder ]
@@ -657,10 +657,10 @@ object :
     (ObjectOptionalArguments -> ObjectOptionalArguments)
     -> SelectionSet decodesTo Github.Interface.GitObject
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-object fillInOptionals object____ =
+object fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { oid = Absent, expression = Absent }
+            fillInOptionals____ { oid = Absent, expression = Absent }
 
         optionalArgs =
             [ Argument.optional "oid" filledInOptionals.oid (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitObjectID), Argument.optional "expression" filledInOptionals.expression Encode.string ]
@@ -739,10 +739,10 @@ projects :
     (ProjectsOptionalArguments -> ProjectsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ProjectConnection
     -> SelectionSet decodesTo Github.Object.Repository
-projects fillInOptionals object____ =
+projects fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeProjectOrder, Argument.optional "search" filledInOptionals.search Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.ProjectState.toString |> Encode.list) ]
@@ -785,10 +785,10 @@ protectedBranches :
     (ProtectedBranchesOptionalArguments -> ProtectedBranchesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ProtectedBranchConnection
     -> SelectionSet decodesTo Github.Object.Repository
-protectedBranches fillInOptionals object____ =
+protectedBranches fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -844,10 +844,10 @@ pullRequests :
     (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.PullRequestConnection
     -> SelectionSet decodesTo Github.Object.Repository
-pullRequests fillInOptionals object____ =
+pullRequests fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "states" filledInOptionals.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeIssueOrder ]
@@ -910,10 +910,10 @@ refs :
     -> RefsRequiredArguments
     -> SelectionSet decodesTo Github.Object.RefConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-refs fillInOptionals requiredArgs object____ =
+refs fillInOptionals____ requiredArgs object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, direction = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, direction = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "direction" filledInOptionals.direction (Encode.enum Github.Enum.OrderDirection.toString), Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeRefOrder ]
@@ -961,10 +961,10 @@ releases :
     (ReleasesOptionalArguments -> ReleasesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReleaseConnection
     -> SelectionSet decodesTo Github.Object.Repository
-releases fillInOptionals object____ =
+releases fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeReleaseOrder ]
@@ -993,10 +993,10 @@ repositoryTopics :
     (RepositoryTopicsOptionalArguments -> RepositoryTopicsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.RepositoryTopicConnection
     -> SelectionSet decodesTo Github.Object.Repository
-repositoryTopics fillInOptionals object____ =
+repositoryTopics fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
@@ -1024,10 +1024,10 @@ type alias ShortDescriptionHTMLOptionalArguments =
 shortDescriptionHTML :
     (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
     -> SelectionSet Github.ScalarCodecs.Html Github.Object.Repository
-shortDescriptionHTML fillInOptionals =
+shortDescriptionHTML fillInOptionals____ =
     let
         filledInOptionals =
-            fillInOptionals { limit = Absent }
+            fillInOptionals____ { limit = Absent }
 
         optionalArgs =
             [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
@@ -1065,10 +1065,10 @@ stargazers :
     (StargazersOptionalArguments -> StargazersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.StargazerConnection
     -> SelectionSet decodesTo Github.Object.Repository
-stargazers fillInOptionals object____ =
+stargazers fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "orderBy" filledInOptionals.orderBy Github.InputObject.encodeStarOrder ]
@@ -1160,10 +1160,10 @@ watchers :
     (WatchersOptionalArguments -> WatchersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserConnection
     -> SelectionSet decodesTo Github.Object.Repository
-watchers fillInOptionals object____ =
+watchers fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]

@@ -89,10 +89,10 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitCommentConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Commit
-comments fillInOptionals object____ =
+comments fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
@@ -168,10 +168,10 @@ type alias HistoryOptionalArguments = { first : OptionalArgument Int
 history : (HistoryOptionalArguments -> HistoryOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitHistoryConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Commit
-history fillInOptionals object____ =
+history fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "path" filledInOptionals.path (Encode.string), Argument.optional "author" filledInOptionals.author (GithubNoFormat.InputObject.encodeCommitAuthor), Argument.optional "since" filledInOptionals.since ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitTimestamp)), Argument.optional "until" filledInOptionals.until ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitTimestamp)) ]
@@ -243,10 +243,10 @@ type alias ParentsOptionalArguments = { first : OptionalArgument Int
 parents : (ParentsOptionalArguments -> ParentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.CommitConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Commit
-parents fillInOptionals object____ =
+parents fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]

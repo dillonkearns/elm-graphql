@@ -35,10 +35,10 @@ type alias AncestorsOptionalArguments = { first : OptionalArgument Int
 ancestors : (AncestorsOptionalArguments -> AncestorsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
-ancestors fillInOptionals object____ =
+ancestors fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
@@ -56,10 +56,10 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
  -> SelectionSet (Maybe GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Team
-avatarUrl fillInOptionals =
+avatarUrl fillInOptionals____ =
     let
         filledInOptionals =
-            fillInOptionals { size = Absent }
+            fillInOptionals____ { size = Absent }
 
         optionalArgs =
             [ Argument.optional "size" filledInOptionals.size (Encode.int) ]
@@ -90,10 +90,10 @@ type alias ChildTeamsOptionalArguments = { first : OptionalArgument Int
 childTeams : (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.TeamConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
-childTeams fillInOptionals object____ =
+childTeams fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, userLogins = Absent, immediateOnly = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, userLogins = Absent, immediateOnly = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeTeamOrder), Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly (Encode.bool) ]
@@ -158,10 +158,10 @@ type alias InvitationsOptionalArguments = { first : OptionalArgument Int
 invitations : (InvitationsOptionalArguments -> InvitationsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationInvitationConnection
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Team
-invitations fillInOptionals object____ =
+invitations fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
@@ -192,10 +192,10 @@ type alias MembersOptionalArguments = { first : OptionalArgument Int
 members : (MembersOptionalArguments -> MembersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.TeamMemberConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
-members fillInOptionals object____ =
+members fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, membership = Absent, role = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, membership = Absent, role = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "query" filledInOptionals.query (Encode.string), Argument.optional "membership" filledInOptionals.membership ((Encode.enum GithubNoFormat.Enum.TeamMembershipType.toString)), Argument.optional "role" filledInOptionals.role ((Encode.enum GithubNoFormat.Enum.TeamMemberRole.toString)) ]
@@ -282,10 +282,10 @@ type alias RepositoriesOptionalArguments = { first : OptionalArgument Int
 repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.TeamRepositoryConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
-repositories fillInOptionals object____ =
+repositories fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, orderBy = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, orderBy = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "query" filledInOptionals.query (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeTeamRepositoryOrder) ]

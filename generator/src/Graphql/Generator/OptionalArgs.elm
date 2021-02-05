@@ -38,10 +38,10 @@ generate context allArgs =
                 { annotatedArg =
                     \fieldName ->
                         { annotation = annotation fieldName
-                        , arg = "fillInOptionals"
+                        , arg = "fillInOptionals____"
                         }
                 , letBindings =
-                    [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord optionalArgs )
+                    [ ( "filledInOptionals", "fillInOptionals____ " ++ emptyRecord optionalArgs )
                     , ( "optionalArgs"
                       , argValues context optionalArgs
                             ++ "\n                |> List.filterMap identity"

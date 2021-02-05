@@ -26,10 +26,10 @@ type alias CreatePunchListItemOptionalArguments =
 createPunchListItem :
     (CreatePunchListItemOptionalArguments -> CreatePunchListItemOptionalArguments)
     -> SelectionSet String RootMutation
-createPunchListItem fillInOptionals =
+createPunchListItem fillInOptionals____ =
     let
         filledInOptionals =
-            fillInOptionals { shapes = Absent }
+            fillInOptionals____ { shapes = Absent }
 
         optionalArgs =
             [ Argument.optional "shapes" filledInOptionals.shapes (EdgeCases.InputObject.encodeShapeInput |> Encode.maybe |> Encode.list) ]

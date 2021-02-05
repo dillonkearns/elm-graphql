@@ -76,10 +76,10 @@ type alias MarketplaceCategoriesOptionalArguments = { excludeEmpty : OptionalArg
 marketplaceCategories : (MarketplaceCategoriesOptionalArguments -> MarketplaceCategoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
  -> SelectionSet (List decodesTo) RootQuery
-marketplaceCategories fillInOptionals object____ =
+marketplaceCategories fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { excludeEmpty = Absent }
+            fillInOptionals____ { excludeEmpty = Absent }
 
         optionalArgs =
             [ Argument.optional "excludeEmpty" filledInOptionals.excludeEmpty (Encode.bool) ]
@@ -152,10 +152,10 @@ false, only approved listings will be returned.
 marketplaceListings : (MarketplaceListingsOptionalArguments -> MarketplaceListingsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListingConnection
  -> SelectionSet decodesTo RootQuery
-marketplaceListings fillInOptionals object____ =
+marketplaceListings fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "categorySlug" filledInOptionals.categorySlug (Encode.string), Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin (Encode.bool), Argument.optional "adminId" filledInOptionals.adminId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "organizationId" filledInOptionals.organizationId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "allStates" filledInOptionals.allStates (Encode.bool), Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly (Encode.bool), Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly (Encode.bool) ]
@@ -224,10 +224,10 @@ type alias RateLimitOptionalArguments = { dryRun : OptionalArgument Bool }
 rateLimit : (RateLimitOptionalArguments -> RateLimitOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RateLimit
  -> SelectionSet (Maybe decodesTo) RootQuery
-rateLimit fillInOptionals object____ =
+rateLimit fillInOptionals____ object____ =
     let
         filledInOptionals =
-            fillInOptionals { dryRun = Absent }
+            fillInOptionals____ { dryRun = Absent }
 
         optionalArgs =
             [ Argument.optional "dryRun" filledInOptionals.dryRun (Encode.bool) ]
@@ -310,10 +310,10 @@ search : (SearchOptionalArguments -> SearchOptionalArguments)
  -> SearchRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.SearchResultItemConnection
  -> SelectionSet decodesTo RootQuery
-search fillInOptionals requiredArgs object____ =
+search fillInOptionals____ requiredArgs object____ =
     let
         filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
             [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
