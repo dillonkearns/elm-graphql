@@ -1,5 +1,5 @@
 import * as glob from "glob";
-import * as fs from "fs-extra";
+import * as fs from "fs";
 import { prependBasePath } from "./path-helpers";
 import { introspectionFromSchema, buildSchema } from "graphql";
 

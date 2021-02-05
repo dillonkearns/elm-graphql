@@ -3,7 +3,7 @@ const warnOriginal = console.warn;
 console.warn = function() {};
 
 const { Elm } = require("./Main.elm");
-import * as fs from "fs-extra";
+import * as fs from "fs";
 import { GraphQLClient } from "graphql-request";
 import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
@@ -134,7 +134,7 @@ function makeEmptyDirectories(
   directoryNames: string[]
 ): void {
   directoryNames.forEach(dir => {
-    fs.mkdirpSync(prependBasePath(dir, baseModule, outputPath));
+    fs.mkdirSync(prependBasePath(dir, baseModule, outputPath), {recursive: true});
   });
 }
 
@@ -245,7 +245,7 @@ function writeGeneratedFiles(
 ): Promise<void>[] {
   return Object.entries(generatedFile).map(([fileName, fileContents]) => {
     const filePath = path.join(outputPath, fileName);
-    return fs.writeFile(filePath, targetComment + fileContents);
+    return fs.promises.writeFile(filePath, targetComment + fileContents);
   });
 }
 
