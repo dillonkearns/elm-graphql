@@ -47,8 +47,7 @@
   },
   "dependencies": {
     "glob": "^7.1.6",
-    "graphql-request": "^3.4.0",
-    "request": "^2.88.0"
+    "graphql-request": "^3.4.0"
   },
   "bin": {
     "elm-graphql": "bin/elm-graphql"
