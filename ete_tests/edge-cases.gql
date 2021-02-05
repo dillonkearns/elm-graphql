@@ -1,0 +1,17 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+input ShapeInput {
+  kind: String
+  geometry: [[Float]]
+}
+
+type RootMutationType {
+  createPunchListItem(shapes: [ShapeInput]): String!
+}
+
+type RootQueryType {
+  hello(name: String!): String!
+}

@@ -1,4 +1,4 @@
-module Starwars exposing (main)
+module ConflictingSelections exposing (main)
 
 import Browser
 import Graphql.Document as Document

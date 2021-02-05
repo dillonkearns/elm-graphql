@@ -129,7 +129,7 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
                         ++ isNullableString
 
         Type.List typeRef ->
-            generateEncoder_ context forInputObject typeRef ++ isNullableString ++ " |> Encode.list"
+            generateEncoder_ context forInputObject typeRef ++ " |> Encode.list" ++ isNullableString
 
         Type.ObjectRef objectName ->
             MyDebug.crash "I don't expect to see object references as argument types."
