@@ -32,14 +32,14 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.Reactable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "CommitComment" selections.onCommitComment,
- Object.buildFragment "Issue" selections.onIssue,
- Object.buildFragment "IssueComment" selections.onIssueComment,
- Object.buildFragment "PullRequest" selections.onPullRequest,
- Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+         Object.buildFragment "CommitComment" selections____.onCommitComment,
+ Object.buildFragment "Issue" selections____.onIssue,
+ Object.buildFragment "IssueComment" selections____.onIssueComment,
+ Object.buildFragment "PullRequest" selections____.onPullRequest,
+ Object.buildFragment "PullRequestReviewComment" selections____.onPullRequestReviewComment
         ]
 
 
@@ -71,8 +71,8 @@ id =
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
  -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Interface.Reactable
-reactionGroups object_ =
-      Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
+reactionGroups object____ =
+      Object.selectionForCompositeField "reactionGroups" [] (object____) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
@@ -95,16 +95,16 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
  -> SelectionSet decodesTo GithubNoFormat.Interface.Reactable
-reactions fillInOptionals object_ =
+reactions fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "content" filledInOptionals.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "content" filledInOptionals____.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (identity)
 
 
 {-| Can user react to this subject

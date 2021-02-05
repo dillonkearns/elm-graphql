@@ -31,5 +31,5 @@ cursor =
 node :
     SelectionSet decodesTo Github.Object.ProjectCard
     -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCardEdge
-node object_ =
-    Object.selectionForCompositeField "node" [] object_ (identity >> Decode.nullable)
+node object____ =
+    Object.selectionForCompositeField "node" [] object____ (identity >> Decode.nullable)

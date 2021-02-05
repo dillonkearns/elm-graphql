@@ -27,5 +27,5 @@ cursor =
 -}
 node : SelectionSet decodesTo GithubNoFormat.Object.ReleaseAsset
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReleaseAssetEdge
-node object_ =
-      Object.selectionForCompositeField "node" [] (object_) (identity >> Decode.nullable)
+node object____ =
+      Object.selectionForCompositeField "node" [] (object____) (identity >> Decode.nullable)

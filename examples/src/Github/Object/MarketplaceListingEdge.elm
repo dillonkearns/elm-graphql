@@ -31,5 +31,5 @@ cursor =
 node :
     SelectionSet decodesTo Github.Object.MarketplaceListing
     -> SelectionSet (Maybe decodesTo) Github.Object.MarketplaceListingEdge
-node object_ =
-    Object.selectionForCompositeField "node" [] object_ (identity >> Decode.nullable)
+node object____ =
+    Object.selectionForCompositeField "node" [] object____ (identity >> Decode.nullable)

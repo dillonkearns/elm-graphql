@@ -58,38 +58,38 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Union.PullRequestTimelineItem
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Commit" selections.onCommit
-        , Object.buildFragment "CommitCommentThread" selections.onCommitCommentThread
-        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
-        , Object.buildFragment "PullRequestReviewThread" selections.onPullRequestReviewThread
-        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
-        , Object.buildFragment "IssueComment" selections.onIssueComment
-        , Object.buildFragment "ClosedEvent" selections.onClosedEvent
-        , Object.buildFragment "ReopenedEvent" selections.onReopenedEvent
-        , Object.buildFragment "SubscribedEvent" selections.onSubscribedEvent
-        , Object.buildFragment "UnsubscribedEvent" selections.onUnsubscribedEvent
-        , Object.buildFragment "MergedEvent" selections.onMergedEvent
-        , Object.buildFragment "ReferencedEvent" selections.onReferencedEvent
-        , Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent
-        , Object.buildFragment "AssignedEvent" selections.onAssignedEvent
-        , Object.buildFragment "UnassignedEvent" selections.onUnassignedEvent
-        , Object.buildFragment "LabeledEvent" selections.onLabeledEvent
-        , Object.buildFragment "UnlabeledEvent" selections.onUnlabeledEvent
-        , Object.buildFragment "MilestonedEvent" selections.onMilestonedEvent
-        , Object.buildFragment "DemilestonedEvent" selections.onDemilestonedEvent
-        , Object.buildFragment "RenamedTitleEvent" selections.onRenamedTitleEvent
-        , Object.buildFragment "LockedEvent" selections.onLockedEvent
-        , Object.buildFragment "UnlockedEvent" selections.onUnlockedEvent
-        , Object.buildFragment "DeployedEvent" selections.onDeployedEvent
-        , Object.buildFragment "HeadRefDeletedEvent" selections.onHeadRefDeletedEvent
-        , Object.buildFragment "HeadRefRestoredEvent" selections.onHeadRefRestoredEvent
-        , Object.buildFragment "HeadRefForcePushedEvent" selections.onHeadRefForcePushedEvent
-        , Object.buildFragment "BaseRefForcePushedEvent" selections.onBaseRefForcePushedEvent
-        , Object.buildFragment "ReviewRequestedEvent" selections.onReviewRequestedEvent
-        , Object.buildFragment "ReviewRequestRemovedEvent" selections.onReviewRequestRemovedEvent
-        , Object.buildFragment "ReviewDismissedEvent" selections.onReviewDismissedEvent
+        [ Object.buildFragment "Commit" selections____.onCommit
+        , Object.buildFragment "CommitCommentThread" selections____.onCommitCommentThread
+        , Object.buildFragment "PullRequestReview" selections____.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewThread" selections____.onPullRequestReviewThread
+        , Object.buildFragment "PullRequestReviewComment" selections____.onPullRequestReviewComment
+        , Object.buildFragment "IssueComment" selections____.onIssueComment
+        , Object.buildFragment "ClosedEvent" selections____.onClosedEvent
+        , Object.buildFragment "ReopenedEvent" selections____.onReopenedEvent
+        , Object.buildFragment "SubscribedEvent" selections____.onSubscribedEvent
+        , Object.buildFragment "UnsubscribedEvent" selections____.onUnsubscribedEvent
+        , Object.buildFragment "MergedEvent" selections____.onMergedEvent
+        , Object.buildFragment "ReferencedEvent" selections____.onReferencedEvent
+        , Object.buildFragment "CrossReferencedEvent" selections____.onCrossReferencedEvent
+        , Object.buildFragment "AssignedEvent" selections____.onAssignedEvent
+        , Object.buildFragment "UnassignedEvent" selections____.onUnassignedEvent
+        , Object.buildFragment "LabeledEvent" selections____.onLabeledEvent
+        , Object.buildFragment "UnlabeledEvent" selections____.onUnlabeledEvent
+        , Object.buildFragment "MilestonedEvent" selections____.onMilestonedEvent
+        , Object.buildFragment "DemilestonedEvent" selections____.onDemilestonedEvent
+        , Object.buildFragment "RenamedTitleEvent" selections____.onRenamedTitleEvent
+        , Object.buildFragment "LockedEvent" selections____.onLockedEvent
+        , Object.buildFragment "UnlockedEvent" selections____.onUnlockedEvent
+        , Object.buildFragment "DeployedEvent" selections____.onDeployedEvent
+        , Object.buildFragment "HeadRefDeletedEvent" selections____.onHeadRefDeletedEvent
+        , Object.buildFragment "HeadRefRestoredEvent" selections____.onHeadRefRestoredEvent
+        , Object.buildFragment "HeadRefForcePushedEvent" selections____.onHeadRefForcePushedEvent
+        , Object.buildFragment "BaseRefForcePushedEvent" selections____.onBaseRefForcePushedEvent
+        , Object.buildFragment "ReviewRequestedEvent" selections____.onReviewRequestedEvent
+        , Object.buildFragment "ReviewRequestRemovedEvent" selections____.onReviewRequestRemovedEvent
+        , Object.buildFragment "ReviewDismissedEvent" selections____.onReviewDismissedEvent
         ]
 
 

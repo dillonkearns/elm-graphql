@@ -32,16 +32,16 @@ type alias CommentsOptionalArguments = { first : OptionalArgument Int
 comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.GistCommentConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Gist
-comments fillInOptionals object_ =
+comments fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "comments" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "comments" optionalArgs____ (object____) (identity)
 
 
 {-| Identifies the date and time when the object was created.
@@ -81,8 +81,8 @@ name =
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Gist
-owner object_ =
-      Object.selectionForCompositeField "owner" [] (object_) (identity >> Decode.nullable)
+owner object____ =
+      Object.selectionForCompositeField "owner" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies when the gist was last pushed to.
@@ -110,16 +110,16 @@ type alias StargazersOptionalArguments = { first : OptionalArgument Int
 stargazers : (StargazersOptionalArguments -> StargazersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.StargazerConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.Gist
-stargazers fillInOptionals object_ =
+stargazers fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeStarOrder) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeStarOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "stargazers" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "stargazers" optionalArgs____ (object____) (identity)
 
 
 {-| Identifies the date and time when the object was last updated.

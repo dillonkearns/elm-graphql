@@ -30,10 +30,10 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.Assignable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Issue" selections.onIssue
-        , Object.buildFragment "PullRequest" selections.onPullRequest
+        [ Object.buildFragment "Issue" selections____.onIssue
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
         ]
 
 
@@ -67,13 +67,13 @@ assignees :
     (AssigneesOptionalArguments -> AssigneesOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserConnection
     -> SelectionSet decodesTo Github.Interface.Assignable
-assignees fillInOptionals object_ =
+assignees fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "assignees" optionalArgs object_ identity
+    Object.selectionForCompositeField "assignees" optionalArgs____ object____ identity

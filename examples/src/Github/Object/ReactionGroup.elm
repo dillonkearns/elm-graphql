@@ -39,8 +39,8 @@ createdAt =
 subject :
     SelectionSet decodesTo Github.Interface.Reactable
     -> SelectionSet decodesTo Github.Object.ReactionGroup
-subject object_ =
-    Object.selectionForCompositeField "subject" [] object_ identity
+subject object____ =
+    Object.selectionForCompositeField "subject" [] object____ identity
 
 
 type alias UsersOptionalArguments =
@@ -63,16 +63,16 @@ users :
     (UsersOptionalArguments -> UsersOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReactingUserConnection
     -> SelectionSet decodesTo Github.Object.ReactionGroup
-users fillInOptionals object_ =
+users fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "users" optionalArgs object_ identity
+    Object.selectionForCompositeField "users" optionalArgs____ object____ identity
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.

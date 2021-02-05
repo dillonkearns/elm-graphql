@@ -25,8 +25,8 @@ import Json.Decode as Decode
 commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.StatusContext
-commit object_ =
-    Object.selectionForCompositeField "commit" [] object_ (identity >> Decode.nullable)
+commit object____ =
+    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
 
 
 {-| The name of this status context.
@@ -48,8 +48,8 @@ createdAt =
 creator :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.StatusContext
-creator object_ =
-    Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
+creator object____ =
+    Object.selectionForCompositeField "creator" [] object____ (identity >> Decode.nullable)
 
 
 {-| The description for this status context.

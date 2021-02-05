@@ -35,15 +35,15 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.RepositoryNode
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "CommitComment" selections.onCommitComment
-        , Object.buildFragment "CommitCommentThread" selections.onCommitCommentThread
-        , Object.buildFragment "Issue" selections.onIssue
-        , Object.buildFragment "IssueComment" selections.onIssueComment
-        , Object.buildFragment "PullRequest" selections.onPullRequest
-        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
-        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        [ Object.buildFragment "CommitComment" selections____.onCommitComment
+        , Object.buildFragment "CommitCommentThread" selections____.onCommitCommentThread
+        , Object.buildFragment "Issue" selections____.onIssue
+        , Object.buildFragment "IssueComment" selections____.onIssueComment
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
+        , Object.buildFragment "PullRequestReview" selections____.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewComment" selections____.onPullRequestReviewComment
         ]
 
 
@@ -67,5 +67,5 @@ maybeFragments =
 repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Interface.RepositoryNode
-repository object_ =
-    Object.selectionForCompositeField "repository" [] object_ identity
+repository object____ =
+    Object.selectionForCompositeField "repository" [] object____ identity

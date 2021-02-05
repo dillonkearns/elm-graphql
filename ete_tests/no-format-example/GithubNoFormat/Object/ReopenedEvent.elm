@@ -20,16 +20,16 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReopenedEvent
-actor object_ =
-      Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
+actor object____ =
+      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Object that was reopened.
 -}
 closable : SelectionSet decodesTo GithubNoFormat.Interface.Closable
  -> SelectionSet decodesTo GithubNoFormat.Object.ReopenedEvent
-closable object_ =
-      Object.selectionForCompositeField "closable" [] (object_) (identity)
+closable object____ =
+      Object.selectionForCompositeField "closable" [] (object____) (identity)
 
 
 {-| Identifies the date and time when the object was created.

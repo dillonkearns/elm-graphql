@@ -39,16 +39,16 @@ comments :
     (CommentsOptionalArguments -> CommentsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.CommitCommentConnection
     -> SelectionSet decodesTo Github.Object.CommitCommentThread
-comments fillInOptionals object_ =
+comments fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "comments" optionalArgs object_ identity
+    Object.selectionForCompositeField "comments" optionalArgs____ object____ identity
 
 
 {-| The commit the comments were made on.
@@ -56,8 +56,8 @@ comments fillInOptionals object_ =
 commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet decodesTo Github.Object.CommitCommentThread
-commit object_ =
-    Object.selectionForCompositeField "commit" [] object_ identity
+commit object____ =
+    Object.selectionForCompositeField "commit" [] object____ identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.CommitCommentThread
@@ -84,5 +84,5 @@ position =
 repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.CommitCommentThread
-repository object_ =
-    Object.selectionForCompositeField "repository" [] object_ identity
+repository object____ =
+    Object.selectionForCompositeField "repository" [] object____ identity

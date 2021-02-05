@@ -68,16 +68,16 @@ columns :
     (ColumnsOptionalArguments -> ColumnsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ProjectColumnConnection
     -> SelectionSet decodesTo Github.Object.Project
-columns fillInOptionals object_ =
+columns fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "columns" optionalArgs object_ identity
+    Object.selectionForCompositeField "columns" optionalArgs____ object____ identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -92,8 +92,8 @@ createdAt =
 creator :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.Project
-creator object_ =
-    Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
+creator object____ =
+    Object.selectionForCompositeField "creator" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -127,8 +127,8 @@ number =
 owner :
     SelectionSet decodesTo Github.Interface.ProjectOwner
     -> SelectionSet decodesTo Github.Object.Project
-owner object_ =
-    Object.selectionForCompositeField "owner" [] object_ identity
+owner object____ =
+    Object.selectionForCompositeField "owner" [] object____ identity
 
 
 type alias PendingCardsOptionalArguments =
@@ -151,16 +151,16 @@ pendingCards :
     (PendingCardsOptionalArguments -> PendingCardsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ProjectCardConnection
     -> SelectionSet decodesTo Github.Object.Project
-pendingCards fillInOptionals object_ =
+pendingCards fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "pendingCards" optionalArgs object_ identity
+    Object.selectionForCompositeField "pendingCards" optionalArgs____ object____ identity
 
 
 {-| The HTTP path for this project

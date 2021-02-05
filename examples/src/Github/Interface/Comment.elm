@@ -36,15 +36,15 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.Comment
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "CommitComment" selections.onCommitComment
-        , Object.buildFragment "GistComment" selections.onGistComment
-        , Object.buildFragment "Issue" selections.onIssue
-        , Object.buildFragment "IssueComment" selections.onIssueComment
-        , Object.buildFragment "PullRequest" selections.onPullRequest
-        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
-        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        [ Object.buildFragment "CommitComment" selections____.onCommitComment
+        , Object.buildFragment "GistComment" selections____.onGistComment
+        , Object.buildFragment "Issue" selections____.onIssue
+        , Object.buildFragment "IssueComment" selections____.onIssueComment
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
+        , Object.buildFragment "PullRequestReview" selections____.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewComment" selections____.onPullRequestReviewComment
         ]
 
 
@@ -68,8 +68,8 @@ maybeFragments =
 author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
-author object_ =
-    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
+author object____ =
+    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -112,8 +112,8 @@ createdViaEmail =
 editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
-editor object_ =
-    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
+editor object____ =
+    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.Comment
@@ -162,16 +162,16 @@ userContentEdits :
     (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserContentEditConnection
     -> SelectionSet (Maybe decodesTo) Github.Interface.Comment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (identity >> Decode.nullable)
 
 
 {-| Did the viewer author this comment.

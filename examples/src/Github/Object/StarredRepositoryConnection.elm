@@ -24,8 +24,8 @@ import Json.Decode as Decode
 edges :
     SelectionSet decodesTo Github.Object.StarredRepositoryEdge
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.StarredRepositoryConnection
-edges object_ =
-    Object.selectionForCompositeField "edges" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+edges object____ =
+    Object.selectionForCompositeField "edges" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
@@ -33,8 +33,8 @@ edges object_ =
 nodes :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.StarredRepositoryConnection
-nodes object_ =
-    Object.selectionForCompositeField "nodes" [] object_ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+nodes object____ =
+    Object.selectionForCompositeField "nodes" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
@@ -42,8 +42,8 @@ nodes object_ =
 pageInfo :
     SelectionSet decodesTo Github.Object.PageInfo
     -> SelectionSet decodesTo Github.Object.StarredRepositoryConnection
-pageInfo object_ =
-    Object.selectionForCompositeField "pageInfo" [] object_ identity
+pageInfo object____ =
+    Object.selectionForCompositeField "pageInfo" [] object____ identity
 
 
 {-| Identifies the total count of items in the connection.

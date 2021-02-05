@@ -32,15 +32,15 @@ type alias CircularInputRequiredArguments =
 circularInput :
     CircularInputRequiredArguments
     -> SelectionSet (Maybe String) RootQuery
-circularInput requiredArgs =
-    Object.selectionForField "(Maybe String)" "circularInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
+circularInput requiredArgs____ =
+    Object.selectionForField "(Maybe String)" "circularInput" [ Argument.required "input" requiredArgs____.input Normalize.InputObject.encodeCircularOne ] (Decode.string |> Decode.nullable)
 
 
 conflictingTypesUnion :
     SelectionSet decodesTo Normalize.Union.ConflictingTypesUnion
     -> SelectionSet decodesTo RootQuery
-conflictingTypesUnion object_ =
-    Object.selectionForCompositeField "conflictingTypesUnion" [] object_ identity
+conflictingTypesUnion object____ =
+    Object.selectionForCompositeField "conflictingTypesUnion" [] object____ identity
 
 
 type alias DroidRequiredArguments =
@@ -56,8 +56,8 @@ droid_ :
     DroidRequiredArguments
     -> SelectionSet decodesTo Normalize.Object.Droid
     -> SelectionSet (Maybe decodesTo) RootQuery
-droid_ requiredArgs object_ =
-    Object.selectionForCompositeField "_droid" [ Argument.required "_iD" requiredArgs.iD_ (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
+droid_ requiredArgs____ object____ =
+    Object.selectionForCompositeField "_droid" [ Argument.required "_iD" requiredArgs____.iD_ (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object____ (identity >> Decode.nullable)
 
 
 type alias GreetRequiredArguments =
@@ -67,8 +67,8 @@ type alias GreetRequiredArguments =
 greet :
     GreetRequiredArguments
     -> SelectionSet String RootQuery
-greet requiredArgs =
-    Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeGreeting ] Decode.string
+greet requiredArgs____ =
+    Object.selectionForField "String" "greet" [ Argument.required "input" requiredArgs____.input Normalize.InputObject.encodeGreeting ] Decode.string
 
 
 type alias HeroOptionalArguments =
@@ -84,16 +84,16 @@ hero :
     (HeroOptionalArguments -> HeroOptionalArguments)
     -> SelectionSet decodesTo Normalize.Interface.Character
     -> SelectionSet decodesTo RootQuery
-hero fillInOptionals object_ =
+hero fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { episode = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { episode = Absent }
 
-        optionalArgs =
-            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
+        optionalArgs____ =
+            [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "hero" optionalArgs object_ identity
+    Object.selectionForCompositeField "hero" optionalArgs____ object____ identity
 
 
 type alias HeroUnionOptionalArguments =
@@ -109,16 +109,16 @@ heroUnion :
     (HeroUnionOptionalArguments -> HeroUnionOptionalArguments)
     -> SelectionSet decodesTo Normalize.Union.CharacterUnion
     -> SelectionSet (Maybe decodesTo) RootQuery
-heroUnion fillInOptionals object_ =
+heroUnion fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { episode = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { episode = Absent }
 
-        optionalArgs =
-            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
+        optionalArgs____ =
+            [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "heroUnion" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "heroUnion" optionalArgs____ object____ (identity >> Decode.nullable)
 
 
 type alias HumanRequiredArguments =
@@ -134,8 +134,8 @@ human :
     HumanRequiredArguments
     -> SelectionSet decodesTo Normalize.Object.Human_
     -> SelectionSet (Maybe decodesTo) RootQuery
-human requiredArgs object_ =
-    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object_ (identity >> Decode.nullable)
+human requiredArgs____ object____ =
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs____.id (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object____ (identity >> Decode.nullable)
 
 
 type alias RecursiveInputRequiredArguments =
@@ -150,8 +150,8 @@ type alias RecursiveInputRequiredArguments =
 recursiveInput :
     RecursiveInputRequiredArguments
     -> SelectionSet (Maybe String) RootQuery
-recursiveInput requiredArgs =
-    Object.selectionForField "(Maybe String)" "recursiveInput" [ Argument.required "input" requiredArgs.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
+recursiveInput requiredArgs____ =
+    Object.selectionForField "(Maybe String)" "recursiveInput" [ Argument.required "input" requiredArgs____.input Normalize.InputObject.encodeRecursive ] (Decode.string |> Decode.nullable)
 
 
 type alias TypeOptionalArguments =
@@ -161,13 +161,13 @@ type alias TypeOptionalArguments =
 type_ :
     (TypeOptionalArguments -> TypeOptionalArguments)
     -> SelectionSet String RootQuery
-type_ fillInOptionals =
+type_ fillInOptionals____ =
     let
-        filledInOptionals =
-            fillInOptionals { input = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { input = Absent }
 
-        optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Normalize.InputObject.encodeReservedWord ]
+        optionalArgs____ =
+            [ Argument.optional "input" filledInOptionals____.input Normalize.InputObject.encodeReservedWord ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "String" "type" optionalArgs Decode.string
+    Object.selectionForField "String" "type" optionalArgs____ Decode.string

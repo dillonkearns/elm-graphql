@@ -27,13 +27,13 @@ clientMutationId =
 -}
 columnEdge : SelectionSet decodesTo GithubNoFormat.Object.ProjectColumnEdge
  -> SelectionSet decodesTo GithubNoFormat.Object.AddProjectColumnPayload
-columnEdge object_ =
-      Object.selectionForCompositeField "columnEdge" [] (object_) (identity)
+columnEdge object____ =
+      Object.selectionForCompositeField "columnEdge" [] (object____) (identity)
 
 
 {-| The project
 -}
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet decodesTo GithubNoFormat.Object.AddProjectColumnPayload
-project object_ =
-      Object.selectionForCompositeField "project" [] (object_) (identity)
+project object____ =
+      Object.selectionForCompositeField "project" [] (object____) (identity)

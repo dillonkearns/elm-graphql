@@ -23,8 +23,8 @@ import Swapi.Union
 character :
     SelectionSet decodesTo Swapi.Interface.Character
     -> SelectionSet (Maybe decodesTo) Swapi.Object.ChatMessage
-character object_ =
-    Object.selectionForCompositeField "character" [] object_ (identity >> Decode.nullable)
+character object____ =
+    Object.selectionForCompositeField "character" [] object____ (identity >> Decode.nullable)
 
 
 phrase : SelectionSet Swapi.Enum.Phrase.Phrase Swapi.Object.ChatMessage

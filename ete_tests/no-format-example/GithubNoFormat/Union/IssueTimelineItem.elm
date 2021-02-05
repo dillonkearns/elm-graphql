@@ -45,26 +45,26 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo GithubNoFormat.Union.IssueTimelineItem
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-          Object.buildFragment "Commit" selections.onCommit,
- Object.buildFragment "IssueComment" selections.onIssueComment,
- Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent,
- Object.buildFragment "ClosedEvent" selections.onClosedEvent,
- Object.buildFragment "ReopenedEvent" selections.onReopenedEvent,
- Object.buildFragment "SubscribedEvent" selections.onSubscribedEvent,
- Object.buildFragment "UnsubscribedEvent" selections.onUnsubscribedEvent,
- Object.buildFragment "ReferencedEvent" selections.onReferencedEvent,
- Object.buildFragment "AssignedEvent" selections.onAssignedEvent,
- Object.buildFragment "UnassignedEvent" selections.onUnassignedEvent,
- Object.buildFragment "LabeledEvent" selections.onLabeledEvent,
- Object.buildFragment "UnlabeledEvent" selections.onUnlabeledEvent,
- Object.buildFragment "MilestonedEvent" selections.onMilestonedEvent,
- Object.buildFragment "DemilestonedEvent" selections.onDemilestonedEvent,
- Object.buildFragment "RenamedTitleEvent" selections.onRenamedTitleEvent,
- Object.buildFragment "LockedEvent" selections.onLockedEvent,
- Object.buildFragment "UnlockedEvent" selections.onUnlockedEvent
+          Object.buildFragment "Commit" selections____.onCommit,
+ Object.buildFragment "IssueComment" selections____.onIssueComment,
+ Object.buildFragment "CrossReferencedEvent" selections____.onCrossReferencedEvent,
+ Object.buildFragment "ClosedEvent" selections____.onClosedEvent,
+ Object.buildFragment "ReopenedEvent" selections____.onReopenedEvent,
+ Object.buildFragment "SubscribedEvent" selections____.onSubscribedEvent,
+ Object.buildFragment "UnsubscribedEvent" selections____.onUnsubscribedEvent,
+ Object.buildFragment "ReferencedEvent" selections____.onReferencedEvent,
+ Object.buildFragment "AssignedEvent" selections____.onAssignedEvent,
+ Object.buildFragment "UnassignedEvent" selections____.onUnassignedEvent,
+ Object.buildFragment "LabeledEvent" selections____.onLabeledEvent,
+ Object.buildFragment "UnlabeledEvent" selections____.onUnlabeledEvent,
+ Object.buildFragment "MilestonedEvent" selections____.onMilestonedEvent,
+ Object.buildFragment "DemilestonedEvent" selections____.onDemilestonedEvent,
+ Object.buildFragment "RenamedTitleEvent" selections____.onRenamedTitleEvent,
+ Object.buildFragment "LockedEvent" selections____.onLockedEvent,
+ Object.buildFragment "UnlockedEvent" selections____.onUnlockedEvent
         ]
 
 

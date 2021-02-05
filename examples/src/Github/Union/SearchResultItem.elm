@@ -34,14 +34,14 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Union.SearchResultItem
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Issue" selections.onIssue
-        , Object.buildFragment "PullRequest" selections.onPullRequest
-        , Object.buildFragment "Repository" selections.onRepository
-        , Object.buildFragment "User" selections.onUser
-        , Object.buildFragment "Organization" selections.onOrganization
-        , Object.buildFragment "MarketplaceListing" selections.onMarketplaceListing
+        [ Object.buildFragment "Issue" selections____.onIssue
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
+        , Object.buildFragment "Repository" selections____.onRepository
+        , Object.buildFragment "User" selections____.onUser
+        , Object.buildFragment "Organization" selections____.onOrganization
+        , Object.buildFragment "MarketplaceListing" selections____.onMarketplaceListing
         ]
 
 

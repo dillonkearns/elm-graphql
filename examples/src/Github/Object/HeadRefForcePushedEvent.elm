@@ -24,8 +24,8 @@ import Json.Decode as Decode
 actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
-actor object_ =
-    Object.selectionForCompositeField "actor" [] object_ (identity >> Decode.nullable)
+actor object____ =
+    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the after commit SHA for the 'head\_ref\_force\_pushed' event.
@@ -33,8 +33,8 @@ actor object_ =
 afterCommit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
-afterCommit object_ =
-    Object.selectionForCompositeField "afterCommit" [] object_ (identity >> Decode.nullable)
+afterCommit object____ =
+    Object.selectionForCompositeField "afterCommit" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the before commit SHA for the 'head\_ref\_force\_pushed' event.
@@ -42,8 +42,8 @@ afterCommit object_ =
 beforeCommit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
-beforeCommit object_ =
-    Object.selectionForCompositeField "beforeCommit" [] object_ (identity >> Decode.nullable)
+beforeCommit object____ =
+    Object.selectionForCompositeField "beforeCommit" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -63,8 +63,8 @@ id =
 pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.HeadRefForcePushedEvent
-pullRequest object_ =
-    Object.selectionForCompositeField "pullRequest" [] object_ identity
+pullRequest object____ =
+    Object.selectionForCompositeField "pullRequest" [] object____ identity
 
 
 {-| Identifies the fully qualified ref name for the 'head\_ref\_force\_pushed' event.
@@ -72,5 +72,5 @@ pullRequest object_ =
 ref :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefForcePushedEvent
-ref object_ =
-    Object.selectionForCompositeField "ref" [] object_ (identity >> Decode.nullable)
+ref object____ =
+    Object.selectionForCompositeField "ref" [] object____ (identity >> Decode.nullable)

@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CommentDeletedEvent
-actor object_ =
-      Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
+actor object____ =
+      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.

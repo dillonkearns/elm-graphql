@@ -22,8 +22,8 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 -}
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
-author object_ =
-      Object.selectionForCompositeField "author" [] (object_) (identity >> Decode.nullable)
+author object____ =
+      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -79,8 +79,8 @@ databaseId =
 -}
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
-editor object_ =
-      Object.selectionForCompositeField "editor" [] (object_) (identity >> Decode.nullable)
+editor object____ =
+      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.IssueComment
@@ -92,8 +92,8 @@ id =
 -}
 issue : SelectionSet decodesTo GithubNoFormat.Object.Issue
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
-issue object_ =
-      Object.selectionForCompositeField "issue" [] (object_) (identity)
+issue object____ =
+      Object.selectionForCompositeField "issue" [] (object____) (identity)
 
 
 {-| The moment the editor made the last edit
@@ -116,16 +116,16 @@ pull request.
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
-pullRequest object_ =
-      Object.selectionForCompositeField "pullRequest" [] (object_) (identity >> Decode.nullable)
+pullRequest object____ =
+      Object.selectionForCompositeField "pullRequest" [] (object____) (identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
 -}
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
  -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.IssueComment
-reactionGroups object_ =
-      Object.selectionForCompositeField "reactionGroups" [] (object_) (identity >> Decode.list >> Decode.nullable)
+reactionGroups object____ =
+      Object.selectionForCompositeField "reactionGroups" [] (object____) (identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
@@ -148,24 +148,24 @@ type alias ReactionsOptionalArguments = { first : OptionalArgument Int
 reactions : (ReactionsOptionalArguments -> ReactionsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactionConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
-reactions fillInOptionals object_ =
+reactions fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "content" filledInOptionals.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "content" filledInOptionals____.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (identity)
 
 
 {-| The repository associated with this node.
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.IssueComment
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)
 
 
 {-| The HTTP path for this issue comment
@@ -205,16 +205,16 @@ type alias UserContentEditsOptionalArguments = { first : OptionalArgument Int
 userContentEdits : (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.UserContentEditConnection
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.IssueComment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs (object_) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

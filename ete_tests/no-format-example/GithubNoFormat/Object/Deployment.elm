@@ -20,8 +20,8 @@ import GithubNoFormat.Enum.DeploymentState
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
-commit object_ =
-      Object.selectionForCompositeField "commit" [] (object_) (identity >> Decode.nullable)
+commit object____ =
+      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -35,8 +35,8 @@ createdAt =
 -}
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
-creator object_ =
-      Object.selectionForCompositeField "creator" [] (object_) (identity >> Decode.nullable)
+creator object____ =
+      Object.selectionForCompositeField "creator" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -62,8 +62,8 @@ id =
 -}
 latestStatus : SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
-latestStatus object_ =
-      Object.selectionForCompositeField "latestStatus" [] (object_) (identity >> Decode.nullable)
+latestStatus object____ =
+      Object.selectionForCompositeField "latestStatus" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Extra information that a deployment system might need.
@@ -77,8 +77,8 @@ payload =
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.Deployment
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)
 
 
 {-| The current state of the deployment.
@@ -104,13 +104,13 @@ type alias StatusesOptionalArguments = { first : OptionalArgument Int
 statuses : (StatusesOptionalArguments -> StatusesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatusConnection
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
-statuses fillInOptionals object_ =
+statuses fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "statuses" optionalArgs (object_) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "statuses" optionalArgs____ (object____) (identity >> Decode.nullable)

@@ -111,8 +111,8 @@ license =
 -}
 licenseInfo : SelectionSet decodesTo GithubNoFormat.Object.License
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.RepositoryInvitationRepository
-licenseInfo object_ =
-      Object.selectionForCompositeField "licenseInfo" [] (object_) (identity >> Decode.nullable)
+licenseInfo object____ =
+      Object.selectionForCompositeField "licenseInfo" [] (object____) (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -147,8 +147,8 @@ nameWithOwner =
 -}
 owner : SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryInvitationRepository
-owner object_ =
-      Object.selectionForCompositeField "owner" [] (object_) (identity)
+owner object____ =
+      Object.selectionForCompositeField "owner" [] (object____) (identity)
 
 
 {-| Identifies when the repository was last pushed to.
@@ -174,16 +174,16 @@ type alias ShortDescriptionHTMLOptionalArguments = { limit : OptionalArgument In
 -}
 shortDescriptionHTML : (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
  -> SelectionSet GithubNoFormat.ScalarCodecs.Html GithubNoFormat.Object.RepositoryInvitationRepository
-shortDescriptionHTML fillInOptionals =
+shortDescriptionHTML fillInOptionals____ =
     let
-        filledInOptionals =
-            fillInOptionals { limit = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { limit = Absent }
 
-        optionalArgs =
-            [ Argument.optional "limit" filledInOptionals.limit (Encode.int) ]
+        optionalArgs____ =
+            [ Argument.optional "limit" filledInOptionals____.limit (Encode.int) ]
                 |> List.filterMap identity
     in
-      Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+      Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.

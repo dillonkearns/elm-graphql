@@ -31,5 +31,5 @@ clientMutationId =
 subscribable :
     SelectionSet decodesTo Github.Interface.Subscribable
     -> SelectionSet decodesTo Github.Object.UpdateSubscriptionPayload
-subscribable object_ =
-    Object.selectionForCompositeField "subscribable" [] object_ identity
+subscribable object____ =
+    Object.selectionForCompositeField "subscribable" [] object____ identity

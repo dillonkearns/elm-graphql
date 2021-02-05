@@ -27,5 +27,5 @@ clientMutationId =
 -}
 removedUser : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet decodesTo GithubNoFormat.Object.RemoveOutsideCollaboratorPayload
-removedUser object_ =
-      Object.selectionForCompositeField "removedUser" [] (object_) (identity)
+removedUser object____ =
+      Object.selectionForCompositeField "removedUser" [] (object____) (identity)

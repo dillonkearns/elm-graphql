@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
-commit object_ =
-      Object.selectionForCompositeField "commit" [] (object_) (identity)
+commit object____ =
+      Object.selectionForCompositeField "commit" [] (object____) (identity)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequestCommit
@@ -33,8 +33,8 @@ id =
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestCommit
-pullRequest object_ =
-      Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
+pullRequest object____ =
+      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
 
 
 {-| The HTTP path for this pull request commit

@@ -21,13 +21,13 @@ import Normalize.Union
 buildCircularOne :
     (CircularOneOptionalFields -> CircularOneOptionalFields)
     -> CircularOne
-buildCircularOne fillOptionals =
+buildCircularOne fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { circularTwo = Absent }
     in
-    CircularOne { circularTwo = optionals.circularTwo }
+    CircularOne { circularTwo = optionals____.circularTwo }
 
 
 type alias CircularOneOptionalFields =
@@ -52,21 +52,21 @@ type CircularOne
 {-| Encode a CircularOne into a value that can be used as an argument.
 -}
 encodeCircularOne : CircularOne -> Value
-encodeCircularOne (CircularOne input) =
+encodeCircularOne (CircularOne input____) =
     Encode.maybeObject
-        [ ( "circularTwo", encodeCircularTwo |> Encode.optional input.circularTwo ) ]
+        [ ( "circularTwo", encodeCircularTwo |> Encode.optional input____.circularTwo ) ]
 
 
 buildCircularTwo :
     (CircularTwoOptionalFields -> CircularTwoOptionalFields)
     -> CircularTwo
-buildCircularTwo fillOptionals =
+buildCircularTwo fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { circularOne = Absent }
     in
-    CircularTwo { circularOne = optionals.circularOne }
+    CircularTwo { circularOne = optionals____.circularOne }
 
 
 type alias CircularTwoOptionalFields =
@@ -91,22 +91,22 @@ type CircularTwo
 {-| Encode a CircularTwo into a value that can be used as an argument.
 -}
 encodeCircularTwo : CircularTwo -> Value
-encodeCircularTwo (CircularTwo input) =
+encodeCircularTwo (CircularTwo input____) =
     Encode.maybeObject
-        [ ( "circularOne", encodeCircularOne |> Encode.optional input.circularOne ) ]
+        [ ( "circularOne", encodeCircularOne |> Encode.optional input____.circularOne ) ]
 
 
 buildGreeting :
     GreetingRequiredFields
     -> (GreetingOptionalFields -> GreetingOptionalFields)
     -> Greeting
-buildGreeting required fillOptionals =
+buildGreeting required____ fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { language = Absent, options = Absent }
     in
-    { language = optionals.language, name = required.name, options = optionals.options }
+    { language = optionals____.language, name = required____.name, options = optionals____.options }
 
 
 type alias GreetingRequiredFields =
@@ -131,21 +131,21 @@ type alias Greeting =
 {-| Encode a Greeting into a value that can be used as an argument.
 -}
 encodeGreeting : Greeting -> Value
-encodeGreeting input =
+encodeGreeting input____ =
     Encode.maybeObject
-        [ ( "language", Encode.enum Normalize.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
+        [ ( "language", Encode.enum Normalize.Enum.Language.toString |> Encode.optional input____.language ), ( "name", Encode.string input____.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input____.options ) ]
 
 
 buildGreetingOptions :
     (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields)
     -> GreetingOptions
-buildGreetingOptions fillOptionals =
+buildGreetingOptions fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { prefix = Absent }
     in
-    { prefix = optionals.prefix }
+    { prefix = optionals____.prefix }
 
 
 type alias GreetingOptionsOptionalFields =
@@ -161,21 +161,21 @@ type alias GreetingOptions =
 {-| Encode a GreetingOptions into a value that can be used as an argument.
 -}
 encodeGreetingOptions : GreetingOptions -> Value
-encodeGreetingOptions input =
+encodeGreetingOptions input____ =
     Encode.maybeObject
-        [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
+        [ ( "prefix", Encode.string |> Encode.optional input____.prefix ) ]
 
 
 buildRecursive :
     (RecursiveOptionalFields -> RecursiveOptionalFields)
     -> Recursive
-buildRecursive fillOptionals =
+buildRecursive fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { recursive = Absent }
     in
-    Recursive { recursive = optionals.recursive }
+    Recursive { recursive = optionals____.recursive }
 
 
 type alias RecursiveOptionalFields =
@@ -200,16 +200,16 @@ type Recursive
 {-| Encode a Recursive into a value that can be used as an argument.
 -}
 encodeRecursive : Recursive -> Value
-encodeRecursive (Recursive input) =
+encodeRecursive (Recursive input____) =
     Encode.maybeObject
-        [ ( "recursive", encodeRecursive |> Encode.optional input.recursive ) ]
+        [ ( "recursive", encodeRecursive |> Encode.optional input____.recursive ) ]
 
 
 buildReservedWord :
     ReservedWordRequiredFields
     -> ReservedWord
-buildReservedWord required =
-    { type_ = required.type_ }
+buildReservedWord required____ =
+    { type_ = required____.type_ }
 
 
 type alias ReservedWordRequiredFields =
@@ -225,6 +225,6 @@ type alias ReservedWord =
 {-| Encode a ReservedWord into a value that can be used as an argument.
 -}
 encodeReservedWord : ReservedWord -> Value
-encodeReservedWord input =
+encodeReservedWord input____ =
     Encode.maybeObject
-        [ ( "type", Encode.string input.type_ |> Just ) ]
+        [ ( "type", Encode.string input____.type_ |> Just ) ]

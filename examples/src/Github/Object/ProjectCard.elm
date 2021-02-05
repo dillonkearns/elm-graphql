@@ -28,8 +28,8 @@ associated with a column, they will not become pending in the future.
 column :
     SelectionSet decodesTo Github.Object.ProjectColumn
     -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
-column object_ =
-    Object.selectionForCompositeField "column" [] object_ (identity >> Decode.nullable)
+column object____ =
+    Object.selectionForCompositeField "column" [] object____ (identity >> Decode.nullable)
 
 
 {-| The card content item
@@ -37,8 +37,8 @@ column object_ =
 content :
     SelectionSet decodesTo Github.Union.ProjectCardItem
     -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
-content object_ =
-    Object.selectionForCompositeField "content" [] object_ (identity >> Decode.nullable)
+content object____ =
+    Object.selectionForCompositeField "content" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -53,8 +53,8 @@ createdAt =
 creator :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
-creator object_ =
-    Object.selectionForCompositeField "creator" [] object_ (identity >> Decode.nullable)
+creator object____ =
+    Object.selectionForCompositeField "creator" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -81,8 +81,8 @@ note =
 project :
     SelectionSet decodesTo Github.Object.Project
     -> SelectionSet decodesTo Github.Object.ProjectCard
-project object_ =
-    Object.selectionForCompositeField "project" [] object_ identity
+project object____ =
+    Object.selectionForCompositeField "project" [] object____ identity
 
 
 {-| The column that contains this card.
@@ -90,8 +90,8 @@ project object_ =
 projectColumn :
     SelectionSet decodesTo Github.Object.ProjectColumn
     -> SelectionSet decodesTo Github.Object.ProjectCard
-projectColumn object_ =
-    Object.selectionForCompositeField "projectColumn" [] object_ identity
+projectColumn object____ =
+    Object.selectionForCompositeField "projectColumn" [] object____ identity
 
 
 {-| The HTTP path for this card

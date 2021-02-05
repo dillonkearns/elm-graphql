@@ -31,10 +31,10 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Swapi.Interface.Character
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Human" selections.onHuman
-        , Object.buildFragment "Droid" selections.onDroid
+        [ Object.buildFragment "Human" selections____.onHuman
+        , Object.buildFragment "Droid" selections____.onDroid
         ]
 
 
@@ -67,8 +67,8 @@ avatarUrl =
 friends :
     SelectionSet decodesTo Swapi.Interface.Character
     -> SelectionSet (List decodesTo) Swapi.Interface.Character
-friends object_ =
-    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
+friends object____ =
+    Object.selectionForCompositeField "friends" [] object____ (identity >> Decode.list)
 
 
 {-| The ID of the character.

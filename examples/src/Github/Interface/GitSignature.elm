@@ -32,11 +32,11 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.GitSignature
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "GpgSignature" selections.onGpgSignature
-        , Object.buildFragment "SmimeSignature" selections.onSmimeSignature
-        , Object.buildFragment "UnknownSignature" selections.onUnknownSignature
+        [ Object.buildFragment "GpgSignature" selections____.onGpgSignature
+        , Object.buildFragment "SmimeSignature" selections____.onSmimeSignature
+        , Object.buildFragment "UnknownSignature" selections____.onUnknownSignature
         ]
 
 
@@ -84,8 +84,8 @@ signature =
 signer :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Interface.GitSignature
-signer object_ =
-    Object.selectionForCompositeField "signer" [] object_ (identity >> Decode.nullable)
+signer object____ =
+    Object.selectionForCompositeField "signer" [] object____ (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.

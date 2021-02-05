@@ -31,11 +31,11 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.Actor
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Bot" selections.onBot
-        , Object.buildFragment "Organization" selections.onOrganization
-        , Object.buildFragment "User" selections.onUser
+        [ Object.buildFragment "Bot" selections____.onBot
+        , Object.buildFragment "Organization" selections____.onOrganization
+        , Object.buildFragment "User" selections____.onUser
         ]
 
 
@@ -62,16 +62,16 @@ type alias AvatarUrlOptionalArguments =
 avatarUrl :
     (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
     -> SelectionSet Github.ScalarCodecs.Uri Github.Interface.Actor
-avatarUrl fillInOptionals =
+avatarUrl fillInOptionals____ =
     let
-        filledInOptionals =
-            fillInOptionals { size = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { size = Absent }
 
-        optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size Encode.int ]
+        optionalArgs____ =
+            [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The username of the actor.

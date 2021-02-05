@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Union.PushAllowanceActor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PushAllowance
-actor object_ =
-      Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
+actor object____ =
+      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PushAllowance
@@ -33,5 +33,5 @@ id =
 -}
 protectedBranch : SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
  -> SelectionSet decodesTo GithubNoFormat.Object.PushAllowance
-protectedBranch object_ =
-      Object.selectionForCompositeField "protectedBranch" [] (object_) (identity)
+protectedBranch object____ =
+      Object.selectionForCompositeField "protectedBranch" [] (object____) (identity)

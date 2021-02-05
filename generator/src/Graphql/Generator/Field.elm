@@ -149,7 +149,7 @@ addRequiredArgs field context args fieldGenerator =
                                 |> CamelCaseName.raw
                                 |> String.Extra.classify
                             )
-                    , arg = "requiredArgs"
+                    , arg = "requiredArgs____"
                     }
 
         Nothing ->
@@ -161,7 +161,7 @@ addOptionalArgs field context args fieldGenerator =
     case Graphql.Generator.OptionalArgs.generate context args of
         Just { annotatedArg, letBindings, typeAlias } ->
             { fieldGenerator
-                | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
+                | fieldArgs = "optionalArgs____" :: fieldGenerator.fieldArgs
                 , letBindings = fieldGenerator.letBindings ++ letBindings
                 , typeAliases = typeAlias :: fieldGenerator.typeAliases
             }
@@ -210,7 +210,7 @@ objectThing context typeRef refName objectOrInterface =
     { annotatedArgs = []
     , fieldArgs = []
     , decoderAnnotation = Graphql.Generator.Decoder.generateType context typeRef
-    , decoder = "object_"
+    , decoder = "object____"
     , otherThing = ".selectionForCompositeField"
     , letBindings = []
     , objectDecoderChain =
@@ -224,7 +224,7 @@ objectThing context typeRef refName objectOrInterface =
     }
         |> prependArg
             { annotation = objectArgAnnotation
-            , arg = "object_"
+            , arg = "object____"
             }
 
 

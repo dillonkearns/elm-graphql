@@ -38,11 +38,11 @@ generate context allArgs =
                 { annotatedArg =
                     \fieldName ->
                         { annotation = annotation fieldName
-                        , arg = "fillInOptionals"
+                        , arg = "fillInOptionals____"
                         }
                 , letBindings =
-                    [ ( "filledInOptionals", "fillInOptionals " ++ emptyRecord optionalArgs )
-                    , ( "optionalArgs"
+                    [ ( "filledInOptionals____", "fillInOptionals____ " ++ emptyRecord optionalArgs )
+                    , ( "optionalArgs____"
                       , argValues context optionalArgs
                             ++ "\n                |> List.filterMap identity"
                       )
@@ -65,7 +65,7 @@ argValues context optionalArgs =
 argValue : Context -> OptionalArg -> String
 argValue context { name, typeOf } =
     interpolate
-        """Argument.optional "{0}" filledInOptionals.{1} ({2})"""
+        """Argument.optional "{0}" filledInOptionals____.{1} ({2})"""
         [ CamelCaseName.raw name
         , CamelCaseName.normalized name
         , Graphql.Generator.Decoder.generateEncoder context (Type.TypeReference typeOf Type.NonNullable)

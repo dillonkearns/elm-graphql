@@ -40,22 +40,22 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.UniformResourceLocatable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "Bot" selections.onBot,
- Object.buildFragment "CrossReferencedEvent" selections.onCrossReferencedEvent,
- Object.buildFragment "Issue" selections.onIssue,
- Object.buildFragment "MergedEvent" selections.onMergedEvent,
- Object.buildFragment "Milestone" selections.onMilestone,
- Object.buildFragment "Organization" selections.onOrganization,
- Object.buildFragment "PullRequest" selections.onPullRequest,
- Object.buildFragment "PullRequestCommit" selections.onPullRequestCommit,
- Object.buildFragment "Release" selections.onRelease,
- Object.buildFragment "Repository" selections.onRepository,
- Object.buildFragment "RepositoryTopic" selections.onRepositoryTopic,
- Object.buildFragment "ReviewDismissedEvent" selections.onReviewDismissedEvent,
- Object.buildFragment "User" selections.onUser
+         Object.buildFragment "Bot" selections____.onBot,
+ Object.buildFragment "CrossReferencedEvent" selections____.onCrossReferencedEvent,
+ Object.buildFragment "Issue" selections____.onIssue,
+ Object.buildFragment "MergedEvent" selections____.onMergedEvent,
+ Object.buildFragment "Milestone" selections____.onMilestone,
+ Object.buildFragment "Organization" selections____.onOrganization,
+ Object.buildFragment "PullRequest" selections____.onPullRequest,
+ Object.buildFragment "PullRequestCommit" selections____.onPullRequestCommit,
+ Object.buildFragment "Release" selections____.onRelease,
+ Object.buildFragment "Repository" selections____.onRepository,
+ Object.buildFragment "RepositoryTopic" selections____.onRepositoryTopic,
+ Object.buildFragment "ReviewDismissedEvent" selections____.onReviewDismissedEvent,
+ Object.buildFragment "User" selections____.onUser
         ]
 
 

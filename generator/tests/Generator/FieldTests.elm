@@ -53,8 +53,8 @@ me =
                     |> Expect.equal
                         """droid : SelectionSet decodesTo Api.Object.Droid
  -> SelectionSet decodesTo RootQuery
-droid object_ =
-      Object.selectionForCompositeField "droid" [] (object_) (identity)
+droid object____ =
+      Object.selectionForCompositeField "droid" [] (object____) (identity)
 """
         , test "simple interface with no args" <|
             \() ->
@@ -71,8 +71,8 @@ droid object_ =
                     |> Expect.equal
                         """hero : SelectionSet decodesTo Api.Interface.Character
  -> SelectionSet decodesTo RootQuery
-hero object_ =
-      Object.selectionForCompositeField "hero" [] (object_) (identity)
+hero object____ =
+      Object.selectionForCompositeField "hero" [] (object____) (identity)
 """
         , test "simple object with no args for object" <|
             \() ->
@@ -85,8 +85,8 @@ hero object_ =
                     |> Expect.equal
                         """droid : SelectionSet decodesTo Api.Object.Droid
  -> SelectionSet decodesTo Api.Object.Foo
-droid object_ =
-      Object.selectionForCompositeField "droid" [] (object_) (identity)
+droid object____ =
+      Object.selectionForCompositeField "droid" [] (object____) (identity)
 """
         , test "list of objects with no args" <|
             \() ->
@@ -99,8 +99,8 @@ droid object_ =
                     |> Expect.equal
                         """droid : SelectionSet decodesTo Api.Object.Droid
  -> SelectionSet (List decodesTo) Api.Object.Foo
-droid object_ =
-      Object.selectionForCompositeField "droid" [] (object_) (identity >> Decode.list)
+droid object____ =
+      Object.selectionForCompositeField "droid" [] (object____) (identity >> Decode.list)
 """
         , test "with required args" <|
             \() ->
@@ -121,8 +121,8 @@ droid object_ =
 human : HumanRequiredArguments
  -> SelectionSet decodesTo Api.Object.Human
  -> SelectionSet decodesTo RootQuery
-human requiredArgs object_ =
-      Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object_) (identity)
+human requiredArgs____ object____ =
+      Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs____.id (Encode.string) ] (object____) (identity)
 """
         , test "with optional args" <|
             \() ->
@@ -143,16 +143,16 @@ human requiredArgs object_ =
 menuItems : (MenuItemsOptionalArguments -> MenuItemsOptionalArguments)
  -> SelectionSet decodesTo Api.Object.MenuItem
  -> SelectionSet (List decodesTo) RootQuery
-menuItems fillInOptionals object_ =
+menuItems fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { contains = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { contains = Absent }
 
-        optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
+        optionalArgs____ =
+            [ Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "menuItems" optionalArgs (object_) (identity >> Decode.list)
+      Object.selectionForCompositeField "menuItems" optionalArgs____ (object____) (identity >> Decode.list)
 """
         , test "normalizes reserved names" <|
             \() ->

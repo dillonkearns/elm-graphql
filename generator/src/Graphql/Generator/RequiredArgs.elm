@@ -66,7 +66,7 @@ requiredArgsString context requiredArgs =
 requiredArgString : Context -> RequiredArg -> String
 requiredArgString context { name, referrableType, typeRef } =
     interpolate
-        "Argument.required \"{0}\" requiredArgs.{1} ({2})"
+        "Argument.required \"{0}\" requiredArgs____.{1} ({2})"
         [ name |> CamelCaseName.raw
         , name |> CamelCaseName.normalized
         , Graphql.Generator.Decoder.generateEncoder context typeRef

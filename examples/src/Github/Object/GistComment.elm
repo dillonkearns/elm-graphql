@@ -26,8 +26,8 @@ import Json.Decode as Decode
 author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
-author object_ =
-    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
+author object____ =
+    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
 
 
 {-| Author's association with the gist.
@@ -77,8 +77,8 @@ databaseId =
 editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
-editor object_ =
-    Object.selectionForCompositeField "editor" [] object_ (identity >> Decode.nullable)
+editor object____ =
+    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
 
 
 {-| The associated gist.
@@ -86,8 +86,8 @@ editor object_ =
 gist :
     SelectionSet decodesTo Github.Object.Gist
     -> SelectionSet decodesTo Github.Object.GistComment
-gist object_ =
-    Object.selectionForCompositeField "gist" [] object_ identity
+gist object____ =
+    Object.selectionForCompositeField "gist" [] object____ identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.GistComment
@@ -136,16 +136,16 @@ userContentEdits :
     (UserContentEditsOptionalArguments -> UserContentEditsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.UserContentEditConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
-userContentEdits fillInOptionals object_ =
+userContentEdits fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs object_ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

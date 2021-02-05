@@ -32,16 +32,16 @@ type alias CodeOfConductRequiredArguments = { key : String }
 codeOfConduct : CodeOfConductRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.CodeOfConduct
  -> SelectionSet (Maybe decodesTo) RootQuery
-codeOfConduct requiredArgs object_ =
-      Object.selectionForCompositeField "codeOfConduct" [ Argument.required "key" requiredArgs.key (Encode.string) ] (object_) (identity >> Decode.nullable)
+codeOfConduct requiredArgs____ object____ =
+      Object.selectionForCompositeField "codeOfConduct" [ Argument.required "key" requiredArgs____.key (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 {-| Look up a code of conduct by its key
 -}
 codesOfConduct : SelectionSet decodesTo GithubNoFormat.Object.CodeOfConduct
  -> SelectionSet (Maybe (List (Maybe decodesTo))) RootQuery
-codesOfConduct object_ =
-      Object.selectionForCompositeField "codesOfConduct" [] (object_) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+codesOfConduct object____ =
+      Object.selectionForCompositeField "codesOfConduct" [] (object____) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 type alias LicenseRequiredArguments = { key : String }
@@ -54,16 +54,16 @@ type alias LicenseRequiredArguments = { key : String }
 license : LicenseRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.License
  -> SelectionSet (Maybe decodesTo) RootQuery
-license requiredArgs object_ =
-      Object.selectionForCompositeField "license" [ Argument.required "key" requiredArgs.key (Encode.string) ] (object_) (identity >> Decode.nullable)
+license requiredArgs____ object____ =
+      Object.selectionForCompositeField "license" [ Argument.required "key" requiredArgs____.key (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 {-| Return a list of known open source licenses
 -}
 licenses : SelectionSet decodesTo GithubNoFormat.Object.License
  -> SelectionSet (List (Maybe decodesTo)) RootQuery
-licenses object_ =
-      Object.selectionForCompositeField "licenses" [] (object_) (identity >> Decode.nullable >> Decode.list)
+licenses object____ =
+      Object.selectionForCompositeField "licenses" [] (object____) (identity >> Decode.nullable >> Decode.list)
 
 
 type alias MarketplaceCategoriesOptionalArguments = { excludeEmpty : OptionalArgument Bool }
@@ -76,16 +76,16 @@ type alias MarketplaceCategoriesOptionalArguments = { excludeEmpty : OptionalArg
 marketplaceCategories : (MarketplaceCategoriesOptionalArguments -> MarketplaceCategoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
  -> SelectionSet (List decodesTo) RootQuery
-marketplaceCategories fillInOptionals object_ =
+marketplaceCategories fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { excludeEmpty = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { excludeEmpty = Absent }
 
-        optionalArgs =
-            [ Argument.optional "excludeEmpty" filledInOptionals.excludeEmpty (Encode.bool) ]
+        optionalArgs____ =
+            [ Argument.optional "excludeEmpty" filledInOptionals____.excludeEmpty (Encode.bool) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "marketplaceCategories" optionalArgs (object_) (identity >> Decode.list)
+      Object.selectionForCompositeField "marketplaceCategories" optionalArgs____ (object____) (identity >> Decode.list)
 
 
 type alias MarketplaceCategoryRequiredArguments = { slug : String }
@@ -98,8 +98,8 @@ type alias MarketplaceCategoryRequiredArguments = { slug : String }
 marketplaceCategory : MarketplaceCategoryRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
  -> SelectionSet (Maybe decodesTo) RootQuery
-marketplaceCategory requiredArgs object_ =
-      Object.selectionForCompositeField "marketplaceCategory" [ Argument.required "slug" requiredArgs.slug (Encode.string) ] (object_) (identity >> Decode.nullable)
+marketplaceCategory requiredArgs____ object____ =
+      Object.selectionForCompositeField "marketplaceCategory" [ Argument.required "slug" requiredArgs____.slug (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias MarketplaceListingRequiredArguments = { slug : String }
@@ -112,8 +112,8 @@ type alias MarketplaceListingRequiredArguments = { slug : String }
 marketplaceListing : MarketplaceListingRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
  -> SelectionSet (Maybe decodesTo) RootQuery
-marketplaceListing requiredArgs object_ =
-      Object.selectionForCompositeField "marketplaceListing" [ Argument.required "slug" requiredArgs.slug (Encode.string) ] (object_) (identity >> Decode.nullable)
+marketplaceListing requiredArgs____ object____ =
+      Object.selectionForCompositeField "marketplaceListing" [ Argument.required "slug" requiredArgs____.slug (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias MarketplaceListingsOptionalArguments = { first : OptionalArgument Int
@@ -152,24 +152,24 @@ false, only approved listings will be returned.
 marketplaceListings : (MarketplaceListingsOptionalArguments -> MarketplaceListingsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListingConnection
  -> SelectionSet decodesTo RootQuery
-marketplaceListings fillInOptionals object_ =
+marketplaceListings fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "categorySlug" filledInOptionals.categorySlug (Encode.string), Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin (Encode.bool), Argument.optional "adminId" filledInOptionals.adminId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "organizationId" filledInOptionals.organizationId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "allStates" filledInOptionals.allStates (Encode.bool), Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly (Encode.bool), Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly (Encode.bool) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "categorySlug" filledInOptionals____.categorySlug (Encode.string), Argument.optional "viewerCanAdmin" filledInOptionals____.viewerCanAdmin (Encode.bool), Argument.optional "adminId" filledInOptionals____.adminId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "organizationId" filledInOptionals____.organizationId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "allStates" filledInOptionals____.allStates (Encode.bool), Argument.optional "slugs" filledInOptionals____.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals____.primaryCategoryOnly (Encode.bool), Argument.optional "withFreeTrialsOnly" filledInOptionals____.withFreeTrialsOnly (Encode.bool) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "marketplaceListings" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "marketplaceListings" optionalArgs____ (object____) (identity)
 
 
 {-| Return information about the GitHub instance
 -}
 meta : SelectionSet decodesTo GithubNoFormat.Object.GitHubMetadata
  -> SelectionSet decodesTo RootQuery
-meta object_ =
-      Object.selectionForCompositeField "meta" [] (object_) (identity)
+meta object____ =
+      Object.selectionForCompositeField "meta" [] (object____) (identity)
 
 
 type alias NodeRequiredArguments = { id : GithubNoFormat.ScalarCodecs.Id }
@@ -182,8 +182,8 @@ type alias NodeRequiredArguments = { id : GithubNoFormat.ScalarCodecs.Id }
 node : NodeRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Interface.Node
  -> SelectionSet (Maybe decodesTo) RootQuery
-node requiredArgs object_ =
-      Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs.id ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)) ] (object_) (identity >> Decode.nullable)
+node requiredArgs____ object____ =
+      Object.selectionForCompositeField "node" [ Argument.required "id" requiredArgs____.id ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)) ] (object____) (identity >> Decode.nullable)
 
 
 type alias NodesRequiredArguments = { ids : (List GithubNoFormat.ScalarCodecs.Id) }
@@ -196,8 +196,8 @@ type alias NodesRequiredArguments = { ids : (List GithubNoFormat.ScalarCodecs.Id
 nodes : NodesRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Interface.Node
  -> SelectionSet (List (Maybe decodesTo)) RootQuery
-nodes requiredArgs object_ =
-      Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs.ids ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId) |> Encode.list) ] (object_) (identity >> Decode.nullable >> Decode.list)
+nodes requiredArgs____ object____ =
+      Object.selectionForCompositeField "nodes" [ Argument.required "ids" requiredArgs____.ids ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId) |> Encode.list) ] (object____) (identity >> Decode.nullable >> Decode.list)
 
 
 type alias OrganizationRequiredArguments = { login : String }
@@ -210,8 +210,8 @@ type alias OrganizationRequiredArguments = { login : String }
 organization : OrganizationRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Organization
  -> SelectionSet (Maybe decodesTo) RootQuery
-organization requiredArgs object_ =
-      Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs.login (Encode.string) ] (object_) (identity >> Decode.nullable)
+organization requiredArgs____ object____ =
+      Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs____.login (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias RateLimitOptionalArguments = { dryRun : OptionalArgument Bool }
@@ -224,24 +224,24 @@ type alias RateLimitOptionalArguments = { dryRun : OptionalArgument Bool }
 rateLimit : (RateLimitOptionalArguments -> RateLimitOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.RateLimit
  -> SelectionSet (Maybe decodesTo) RootQuery
-rateLimit fillInOptionals object_ =
+rateLimit fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { dryRun = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { dryRun = Absent }
 
-        optionalArgs =
-            [ Argument.optional "dryRun" filledInOptionals.dryRun (Encode.bool) ]
+        optionalArgs____ =
+            [ Argument.optional "dryRun" filledInOptionals____.dryRun (Encode.bool) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "rateLimit" optionalArgs (object_) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "rateLimit" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 {-| Hack to workaround https://github.com/facebook/relay/issues/112 re-exposing the root query object
 -}
 relay : SelectionSet decodesTo RootQuery
  -> SelectionSet decodesTo RootQuery
-relay object_ =
-      Object.selectionForCompositeField "relay" [] (object_) (identity)
+relay object____ =
+      Object.selectionForCompositeField "relay" [] (object____) (identity)
 
 
 type alias RepositoryRequiredArguments = { owner : String
@@ -256,8 +256,8 @@ type alias RepositoryRequiredArguments = { owner : String
 repository : RepositoryRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet (Maybe decodesTo) RootQuery
-repository requiredArgs object_ =
-      Object.selectionForCompositeField "repository" [ Argument.required "owner" requiredArgs.owner (Encode.string), Argument.required "name" requiredArgs.name (Encode.string) ] (object_) (identity >> Decode.nullable)
+repository requiredArgs____ object____ =
+      Object.selectionForCompositeField "repository" [ Argument.required "owner" requiredArgs____.owner (Encode.string), Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias RepositoryOwnerRequiredArguments = { login : String }
@@ -270,8 +270,8 @@ type alias RepositoryOwnerRequiredArguments = { login : String }
 repositoryOwner : RepositoryOwnerRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
  -> SelectionSet (Maybe decodesTo) RootQuery
-repositoryOwner requiredArgs object_ =
-      Object.selectionForCompositeField "repositoryOwner" [ Argument.required "login" requiredArgs.login (Encode.string) ] (object_) (identity >> Decode.nullable)
+repositoryOwner requiredArgs____ object____ =
+      Object.selectionForCompositeField "repositoryOwner" [ Argument.required "login" requiredArgs____.login (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias ResourceRequiredArguments = { url : GithubNoFormat.ScalarCodecs.Uri }
@@ -284,8 +284,8 @@ type alias ResourceRequiredArguments = { url : GithubNoFormat.ScalarCodecs.Uri }
 resource : ResourceRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Interface.UniformResourceLocatable
  -> SelectionSet (Maybe decodesTo) RootQuery
-resource requiredArgs object_ =
-      Object.selectionForCompositeField "resource" [ Argument.required "url" requiredArgs.url ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecUri)) ] (object_) (identity >> Decode.nullable)
+resource requiredArgs____ object____ =
+      Object.selectionForCompositeField "resource" [ Argument.required "url" requiredArgs____.url ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecUri)) ] (object____) (identity >> Decode.nullable)
 
 
 type alias SearchOptionalArguments = { first : OptionalArgument Int
@@ -310,16 +310,16 @@ search : (SearchOptionalArguments -> SearchOptionalArguments)
  -> SearchRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.SearchResultItemConnection
  -> SelectionSet decodesTo RootQuery
-search fillInOptionals requiredArgs object_ =
+search fillInOptionals____ requiredArgs____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "search" (optionalArgs ++ [ Argument.required "query" requiredArgs.query (Encode.string), Argument.required "type" requiredArgs.type_ ((Encode.enum GithubNoFormat.Enum.SearchType.toString)) ]) (object_) (identity)
+      Object.selectionForCompositeField "search" (optionalArgs____ ++ [ Argument.required "query" requiredArgs____.query (Encode.string), Argument.required "type" requiredArgs____.type_ ((Encode.enum GithubNoFormat.Enum.SearchType.toString)) ]) (object____) (identity)
 
 
 type alias TopicRequiredArguments = { name : String }
@@ -332,8 +332,8 @@ type alias TopicRequiredArguments = { name : String }
 topic : TopicRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Topic
  -> SelectionSet (Maybe decodesTo) RootQuery
-topic requiredArgs object_ =
-      Object.selectionForCompositeField "topic" [ Argument.required "name" requiredArgs.name (Encode.string) ] (object_) (identity >> Decode.nullable)
+topic requiredArgs____ object____ =
+      Object.selectionForCompositeField "topic" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias UserRequiredArguments = { login : String }
@@ -346,13 +346,13 @@ type alias UserRequiredArguments = { login : String }
 user : UserRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) RootQuery
-user requiredArgs object_ =
-      Object.selectionForCompositeField "user" [ Argument.required "login" requiredArgs.login (Encode.string) ] (object_) (identity >> Decode.nullable)
+user requiredArgs____ object____ =
+      Object.selectionForCompositeField "user" [ Argument.required "login" requiredArgs____.login (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 {-| The currently authenticated user.
 -}
 viewer : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet decodesTo RootQuery
-viewer object_ =
-      Object.selectionForCompositeField "viewer" [] (object_) (identity)
+viewer object____ =
+      Object.selectionForCompositeField "viewer" [] (object____) (identity)

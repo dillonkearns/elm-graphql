@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 cardEdge : SelectionSet decodesTo GithubNoFormat.Object.ProjectCardEdge
  -> SelectionSet decodesTo GithubNoFormat.Object.MoveProjectCardPayload
-cardEdge object_ =
-      Object.selectionForCompositeField "cardEdge" [] (object_) (identity)
+cardEdge object____ =
+      Object.selectionForCompositeField "cardEdge" [] (object____) (identity)
 
 
 {-| A unique identifier for the client performing the mutation.

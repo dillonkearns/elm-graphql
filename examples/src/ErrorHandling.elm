@@ -89,7 +89,7 @@ responseDetails model =
             "Not Asked"
 
         RemoteData.Success successData ->
-            "Request succeeded so I can use the structred data here... successData.vader.name = " ++ successData.vader.name
+            "Request succeeded so I can use the structured data here... successData.vader.name = " ++ successData.vader.name
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

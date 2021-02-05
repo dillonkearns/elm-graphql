@@ -29,11 +29,11 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "Organization" selections.onOrganization,
- Object.buildFragment "Repository" selections.onRepository
+         Object.buildFragment "Organization" selections____.onOrganization,
+ Object.buildFragment "Repository" selections____.onRepository
         ]
 
 
@@ -61,8 +61,8 @@ type alias ProjectRequiredArguments = { number : Int }
 project : ProjectRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.ProjectOwner
-project requiredArgs object_ =
-      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number (Encode.int) ] (object_) (identity >> Decode.nullable)
+project requiredArgs____ object____ =
+      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments = { first : OptionalArgument Int
@@ -87,16 +87,16 @@ type alias ProjectsOptionalArguments = { first : OptionalArgument Int
 projects : (ProjectsOptionalArguments -> ProjectsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectConnection
  -> SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
-projects fillInOptionals object_ =
+projects fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, search = Absent, states = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeProjectOrder), Argument.optional "search" filledInOptionals.search (Encode.string), Argument.optional "states" filledInOptionals.states ((Encode.enum GithubNoFormat.Enum.ProjectState.toString) |> Encode.list) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeProjectOrder), Argument.optional "search" filledInOptionals____.search (Encode.string), Argument.optional "states" filledInOptionals____.states ((Encode.enum GithubNoFormat.Enum.ProjectState.toString) |> Encode.list) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "projects" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "projects" optionalArgs____ (object____) (identity)
 
 
 {-| The HTTP path listing owners projects

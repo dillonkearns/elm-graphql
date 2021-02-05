@@ -31,10 +31,10 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Normalize.Interface.Character
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "_human" selections.onHuman_
-        , Object.buildFragment "Droid" selections.onDroid
+        [ Object.buildFragment "_human" selections____.onHuman_
+        , Object.buildFragment "Droid" selections____.onDroid
         ]
 
 
@@ -60,8 +60,8 @@ appearsIn =
 friends :
     SelectionSet decodesTo Normalize.Interface.Character
     -> SelectionSet (List decodesTo) Normalize.Interface.Character
-friends object_ =
-    Object.selectionForCompositeField "friends" [] object_ (identity >> Decode.list)
+friends object____ =
+    Object.selectionForCompositeField "friends" [] object____ (identity >> Decode.list)
 
 
 {-| The ID of the character.

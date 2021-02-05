@@ -32,16 +32,16 @@ type alias CardsOptionalArguments = { first : OptionalArgument Int
 cards : (CardsOptionalArguments -> CardsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCardConnection
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
-cards fillInOptionals object_ =
+cards fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "cards" optionalArgs (object_) (identity)
+      Object.selectionForCompositeField "cards" optionalArgs____ (object____) (identity)
 
 
 {-| Identifies the date and time when the object was created.
@@ -74,8 +74,8 @@ name =
 -}
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
-project object_ =
-      Object.selectionForCompositeField "project" [] (object_) (identity)
+project object____ =
+      Object.selectionForCompositeField "project" [] (object____) (identity)
 
 
 {-| The HTTP path for this project column

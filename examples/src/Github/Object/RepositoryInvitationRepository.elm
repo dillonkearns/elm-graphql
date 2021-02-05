@@ -116,8 +116,8 @@ license =
 licenseInfo :
     SelectionSet decodesTo Github.Object.License
     -> SelectionSet (Maybe decodesTo) Github.Object.RepositoryInvitationRepository
-licenseInfo object_ =
-    Object.selectionForCompositeField "licenseInfo" [] object_ (identity >> Decode.nullable)
+licenseInfo object____ =
+    Object.selectionForCompositeField "licenseInfo" [] object____ (identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -153,8 +153,8 @@ nameWithOwner =
 owner :
     SelectionSet decodesTo Github.Interface.RepositoryOwner
     -> SelectionSet decodesTo Github.Object.RepositoryInvitationRepository
-owner object_ =
-    Object.selectionForCompositeField "owner" [] object_ identity
+owner object____ =
+    Object.selectionForCompositeField "owner" [] object____ identity
 
 
 {-| Identifies when the repository was last pushed to.
@@ -183,16 +183,16 @@ type alias ShortDescriptionHTMLOptionalArguments =
 shortDescriptionHTML :
     (ShortDescriptionHTMLOptionalArguments -> ShortDescriptionHTMLOptionalArguments)
     -> SelectionSet Github.ScalarCodecs.Html Github.Object.RepositoryInvitationRepository
-shortDescriptionHTML fillInOptionals =
+shortDescriptionHTML fillInOptionals____ =
     let
-        filledInOptionals =
-            fillInOptionals { limit = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { limit = Absent }
 
-        optionalArgs =
-            [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
+        optionalArgs____ =
+            [ Argument.optional "limit" filledInOptionals____.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.

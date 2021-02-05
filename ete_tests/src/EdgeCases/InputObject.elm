@@ -20,13 +20,13 @@ import Json.Decode as Decode
 buildShapeInput :
     (ShapeInputOptionalFields -> ShapeInputOptionalFields)
     -> ShapeInput
-buildShapeInput fillOptionals =
+buildShapeInput fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { kind = Absent, geometry = Absent }
     in
-    { kind = optionals.kind, geometry = optionals.geometry }
+    { kind = optionals____.kind, geometry = optionals____.geometry }
 
 
 type alias ShapeInputOptionalFields =
@@ -46,6 +46,6 @@ type alias ShapeInput =
 {-| Encode a ShapeInput into a value that can be used as an argument.
 -}
 encodeShapeInput : ShapeInput -> Value
-encodeShapeInput input =
+encodeShapeInput input____ =
     Encode.maybeObject
-        [ ( "kind", Encode.string |> Encode.optional input.kind ), ( "geometry", (Encode.float |> Encode.maybe |> Encode.list |> Encode.maybe |> Encode.list) |> Encode.optional input.geometry ) ]
+        [ ( "kind", Encode.string |> Encode.optional input____.kind ), ( "geometry", (Encode.float |> Encode.maybe |> Encode.list |> Encode.maybe |> Encode.list) |> Encode.optional input____.geometry ) ]

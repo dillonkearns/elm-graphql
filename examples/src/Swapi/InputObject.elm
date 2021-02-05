@@ -22,13 +22,13 @@ buildGreeting :
     GreetingRequiredFields
     -> (GreetingOptionalFields -> GreetingOptionalFields)
     -> Greeting
-buildGreeting required fillOptionals =
+buildGreeting required____ fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { language = Absent, options = Absent }
     in
-    { language = optionals.language, name = required.name, options = optionals.options }
+    { language = optionals____.language, name = required____.name, options = optionals____.options }
 
 
 type alias GreetingRequiredFields =
@@ -53,21 +53,21 @@ type alias Greeting =
 {-| Encode a Greeting into a value that can be used as an argument.
 -}
 encodeGreeting : Greeting -> Value
-encodeGreeting input =
+encodeGreeting input____ =
     Encode.maybeObject
-        [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input.language ), ( "name", Encode.string input.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input.options ) ]
+        [ ( "language", Encode.enum Swapi.Enum.Language.toString |> Encode.optional input____.language ), ( "name", Encode.string input____.name |> Just ), ( "options", encodeGreetingOptions |> Encode.optional input____.options ) ]
 
 
 buildGreetingOptions :
     (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields)
     -> GreetingOptions
-buildGreetingOptions fillOptionals =
+buildGreetingOptions fillOptionals____ =
     let
-        optionals =
-            fillOptionals
+        optionals____ =
+            fillOptionals____
                 { prefix = Absent }
     in
-    { prefix = optionals.prefix }
+    { prefix = optionals____.prefix }
 
 
 type alias GreetingOptionsOptionalFields =
@@ -83,6 +83,6 @@ type alias GreetingOptions =
 {-| Encode a GreetingOptions into a value that can be used as an argument.
 -}
 encodeGreetingOptions : GreetingOptions -> Value
-encodeGreetingOptions input =
+encodeGreetingOptions input____ =
     Encode.maybeObject
-        [ ( "prefix", Encode.string |> Encode.optional input.prefix ) ]
+        [ ( "prefix", Encode.string |> Encode.optional input____.prefix ) ]

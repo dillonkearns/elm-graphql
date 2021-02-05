@@ -32,14 +32,14 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.Subscribable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "Commit" selections.onCommit,
- Object.buildFragment "Issue" selections.onIssue,
- Object.buildFragment "PullRequest" selections.onPullRequest,
- Object.buildFragment "Repository" selections.onRepository,
- Object.buildFragment "Team" selections.onTeam
+         Object.buildFragment "Commit" selections____.onCommit,
+ Object.buildFragment "Issue" selections____.onIssue,
+ Object.buildFragment "PullRequest" selections____.onPullRequest,
+ Object.buildFragment "Repository" selections____.onRepository,
+ Object.buildFragment "Team" selections____.onTeam
         ]
 
 

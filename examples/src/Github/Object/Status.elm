@@ -25,8 +25,8 @@ import Json.Decode as Decode
 commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.Status
-commit object_ =
-    Object.selectionForCompositeField "commit" [] object_ (identity >> Decode.nullable)
+commit object____ =
+    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
 
 
 type alias ContextRequiredArguments =
@@ -42,8 +42,8 @@ context :
     ContextRequiredArguments
     -> SelectionSet decodesTo Github.Object.StatusContext
     -> SelectionSet (Maybe decodesTo) Github.Object.Status
-context requiredArgs object_ =
-    Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object_ (identity >> Decode.nullable)
+context requiredArgs____ object____ =
+    Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.
@@ -51,8 +51,8 @@ context requiredArgs object_ =
 contexts :
     SelectionSet decodesTo Github.Object.StatusContext
     -> SelectionSet (List decodesTo) Github.Object.Status
-contexts object_ =
-    Object.selectionForCompositeField "contexts" [] object_ (identity >> Decode.list)
+contexts object____ =
+    Object.selectionForCompositeField "contexts" [] object____ (identity >> Decode.list)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Status

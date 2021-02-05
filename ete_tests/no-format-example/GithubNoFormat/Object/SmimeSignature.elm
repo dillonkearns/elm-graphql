@@ -48,8 +48,8 @@ signature =
 -}
 signer : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.SmimeSignature
-signer object_ =
-      Object.selectionForCompositeField "signer" [] (object_) (identity >> Decode.nullable)
+signer object____ =
+      Object.selectionForCompositeField "signer" [] (object____) (identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.

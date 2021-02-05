@@ -25,16 +25,16 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
  -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.Bot
-avatarUrl fillInOptionals =
+avatarUrl fillInOptionals____ =
     let
-        filledInOptionals =
-            fillInOptionals { size = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { size = Absent }
 
-        optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size (Encode.int) ]
+        optionalArgs____ =
+            [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap identity
     in
-      Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the date and time when the object was created.

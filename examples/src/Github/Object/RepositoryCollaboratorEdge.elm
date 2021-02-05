@@ -28,8 +28,8 @@ cursor =
 node :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.RepositoryCollaboratorEdge
-node object_ =
-    Object.selectionForCompositeField "node" [] object_ identity
+node object____ =
+    Object.selectionForCompositeField "node" [] object____ identity
 
 
 {-| The permission the user has on the repository.

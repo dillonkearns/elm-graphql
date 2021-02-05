@@ -33,7 +33,7 @@ all =
                     |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = """{ id : String }"""
-                        , list = """[ Argument.required "id" requiredArgs.id (Encode.string) ]"""
+                        , list = """[ Argument.required "id" requiredArgs____.id (Encode.string) ]"""
                         }
         , test "composite" <|
             \() ->
@@ -41,7 +41,7 @@ all =
                     |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = """{ numbers : (List Int) }"""
-                        , list = """[ Argument.required "numbers" requiredArgs.numbers (Encode.int |> Encode.list) ]"""
+                        , list = """[ Argument.required "numbers" requiredArgs____.numbers (Encode.int |> Encode.list) ]"""
                         }
         , test "multiple primitives" <|
             \() ->
@@ -49,7 +49,7 @@ all =
                     |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = GenerateSyntax.typeAlias [ ( "id", "String" ), ( "name", "String" ) ]
-                        , list = """[ Argument.required "id" requiredArgs.id (Encode.string), Argument.required "name" requiredArgs.name (Encode.string) ]"""
+                        , list = """[ Argument.required "id" requiredArgs____.id (Encode.string), Argument.required "name" requiredArgs____.name (Encode.string) ]"""
                         }
         , test "normalizes arguments" <|
             \() ->
@@ -61,7 +61,7 @@ all =
                     |> RequiredArgs.generate Context.stub
                     |> expectResult
                         { typeAlias = "{ type_ : String }"
-                        , list = """[ Argument.required "type" requiredArgs.type_ (Encode.string) ]"""
+                        , list = """[ Argument.required "type" requiredArgs____.type_ (Encode.string) ]"""
                         }
         ]
 

@@ -43,10 +43,10 @@ generate context { name, fields, hasLoop } =
                                 Type.TypeReference referrableType isNullable ->
                                     case isNullable of
                                         Type.Nullable ->
-                                            "optionals"
+                                            "optionals____"
 
                                         Type.NonNullable ->
-                                            "required"
+                                            "required____"
                             ]
                     )
                 |> String.join ", "
@@ -55,11 +55,11 @@ generate context { name, fields, hasLoop } =
             AnnotatedArg.buildWithArgs
                 ([ when (List.length requiredFields > 0)
                     ( interpolate "{0}RequiredFields" [ ClassCaseName.normalized name ]
-                    , "required"
+                    , "required____"
                     )
                  , when (List.length optionalFields > 0)
                     ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
-                    , "fillOptionals"
+                    , "fillOptionals____"
                     )
                  ]
                     |> compact
@@ -70,9 +70,9 @@ generate context { name, fields, hasLoop } =
         letClause =
             Let.generate
                 ([ when (List.length optionalFields > 0)
-                    ( "optionals"
+                    ( "optionals____"
                     , interpolate """
-            fillOptionals
+            fillOptionals____
                 { {0} }"""
                         [ filledOptionalsRecord optionalFields ]
                     )

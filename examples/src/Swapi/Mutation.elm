@@ -35,5 +35,5 @@ sendMessage :
     SendMessageRequiredArguments
     -> SelectionSet decodesTo Swapi.Object.ChatMessage
     -> SelectionSet (Maybe decodesTo) RootMutation
-sendMessage requiredArgs object_ =
-    Object.selectionForCompositeField "sendMessage" [ Argument.required "characterId" requiredArgs.characterId (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId), Argument.required "phrase" requiredArgs.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object_ (identity >> Decode.nullable)
+sendMessage requiredArgs____ object____ =
+    Object.selectionForCompositeField "sendMessage" [ Argument.required "characterId" requiredArgs____.characterId (CustomScalarCodecs.codecs |> Swapi.Scalar.unwrapEncoder .codecId), Argument.required "phrase" requiredArgs____.phrase (Encode.enum Swapi.Enum.Phrase.toString) ] object____ (identity >> Decode.nullable)

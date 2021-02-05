@@ -42,8 +42,8 @@ memberAccessUrl =
 node :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.TeamMemberEdge
-node object_ =
-    Object.selectionForCompositeField "node" [] object_ identity
+node object____ =
+    Object.selectionForCompositeField "node" [] object____ identity
 
 
 {-| The role the member has on the team.

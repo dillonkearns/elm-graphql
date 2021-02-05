@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.DemilestonedEvent
-actor object_ =
-      Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
+actor object____ =
+      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -47,5 +47,5 @@ milestoneTitle =
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Union.MilestoneItem
  -> SelectionSet decodesTo GithubNoFormat.Object.DemilestonedEvent
-subject object_ =
-      Object.selectionForCompositeField "subject" [] (object_) (identity)
+subject object____ =
+      Object.selectionForCompositeField "subject" [] (object____) (identity)

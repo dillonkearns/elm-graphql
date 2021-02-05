@@ -20,8 +20,8 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 -}
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.DeployedEvent
-actor object_ =
-      Object.selectionForCompositeField "actor" [] (object_) (identity >> Decode.nullable)
+actor object____ =
+      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -42,8 +42,8 @@ databaseId =
 -}
 deployment : SelectionSet decodesTo GithubNoFormat.Object.Deployment
  -> SelectionSet decodesTo GithubNoFormat.Object.DeployedEvent
-deployment object_ =
-      Object.selectionForCompositeField "deployment" [] (object_) (identity)
+deployment object____ =
+      Object.selectionForCompositeField "deployment" [] (object____) (identity)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.DeployedEvent
@@ -55,13 +55,13 @@ id =
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.DeployedEvent
-pullRequest object_ =
-      Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
+pullRequest object____ =
+      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
 
 
 {-| The ref associated with the 'deployed' event.
 -}
 ref : SelectionSet decodesTo GithubNoFormat.Object.Ref
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.DeployedEvent
-ref object_ =
-      Object.selectionForCompositeField "ref" [] (object_) (identity >> Decode.nullable)
+ref object____ =
+      Object.selectionForCompositeField "ref" [] (object____) (identity >> Decode.nullable)

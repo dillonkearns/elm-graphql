@@ -177,16 +177,16 @@ type alias LogoUrlOptionalArguments = { size : OptionalArgument Int }
 -}
 logoUrl : (LogoUrlOptionalArguments -> LogoUrlOptionalArguments)
  -> SelectionSet (Maybe GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.MarketplaceListing
-logoUrl fillInOptionals =
+logoUrl fillInOptionals____ =
     let
-        filledInOptionals =
-            fillInOptionals { size = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { size = Absent }
 
-        optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size (Encode.int) ]
+        optionalArgs____ =
+            [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap identity
     in
-      Object.selectionForField "(Maybe ScalarCodecs.Uri)" "logoUrl" optionalArgs (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+      Object.selectionForField "(Maybe ScalarCodecs.Uri)" "logoUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 {-| The listing's full name.
@@ -214,8 +214,8 @@ pricingUrl =
 -}
 primaryCategory : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
-primaryCategory object_ =
-      Object.selectionForCompositeField "primaryCategory" [] (object_) (identity)
+primaryCategory object____ =
+      Object.selectionForCompositeField "primaryCategory" [] (object____) (identity)
 
 
 {-| URL to the listing's privacy policy.
@@ -243,8 +243,8 @@ screenshotUrls =
 -}
 secondaryCategory : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MarketplaceListing
-secondaryCategory object_ =
-      Object.selectionForCompositeField "secondaryCategory" [] (object_) (identity >> Decode.nullable)
+secondaryCategory object____ =
+      Object.selectionForCompositeField "secondaryCategory" [] (object____) (identity >> Decode.nullable)
 
 
 {-| The listing's very short description.

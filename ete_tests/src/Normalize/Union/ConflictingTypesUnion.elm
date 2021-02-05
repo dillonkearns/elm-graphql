@@ -32,12 +32,12 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Normalize.Union.ConflictingTypesUnion
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Dog" selections.onDog
-        , Object.buildFragment "Cat" selections.onCat
-        , Object.buildFragment "MaybeId" selections.onMaybeId
-        , Object.buildFragment "ListId" selections.onListId
+        [ Object.buildFragment "Dog" selections____.onDog
+        , Object.buildFragment "Cat" selections____.onCat
+        , Object.buildFragment "MaybeId" selections____.onMaybeId
+        , Object.buildFragment "ListId" selections____.onListId
         ]
 
 

@@ -25,16 +25,16 @@ type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
 -}
 avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
  -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.GitActor
-avatarUrl fillInOptionals =
+avatarUrl fillInOptionals____ =
     let
-        filledInOptionals =
-            fillInOptionals { size = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { size = Absent }
 
-        optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size (Encode.int) ]
+        optionalArgs____ =
+            [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap identity
     in
-      Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+      Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| The timestamp of the Git action (authoring or committing).
@@ -62,5 +62,5 @@ name =
 -}
 user : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GitActor
-user object_ =
-      Object.selectionForCompositeField "user" [] (object_) (identity >> Decode.nullable)
+user object____ =
+      Object.selectionForCompositeField "user" [] (object____) (identity >> Decode.nullable)

@@ -31,11 +31,11 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Union.CollectionItemContent
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Repository" selections.onRepository
-        , Object.buildFragment "Organization" selections.onOrganization
-        , Object.buildFragment "User" selections.onUser
+        [ Object.buildFragment "Repository" selections____.onRepository
+        , Object.buildFragment "Organization" selections____.onOrganization
+        , Object.buildFragment "User" selections____.onUser
         ]
 
 

@@ -23,8 +23,8 @@ cursor =
 
 node : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet decodesTo GithubNoFormat.Object.ReactingUserEdge
-node object_ =
-      Object.selectionForCompositeField "node" [] (object_) (identity)
+node object____ =
+      Object.selectionForCompositeField "node" [] (object____) (identity)
 
 
 {-| The moment when the user made the reaction.

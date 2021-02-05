@@ -47,24 +47,24 @@ invitationType =
 -}
 invitee : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.OrganizationInvitation
-invitee object_ =
-      Object.selectionForCompositeField "invitee" [] (object_) (identity >> Decode.nullable)
+invitee object____ =
+      Object.selectionForCompositeField "invitee" [] (object____) (identity >> Decode.nullable)
 
 
 {-| The user who created the invitation.
 -}
 inviter : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationInvitation
-inviter object_ =
-      Object.selectionForCompositeField "inviter" [] (object_) (identity)
+inviter object____ =
+      Object.selectionForCompositeField "inviter" [] (object____) (identity)
 
 
 {-| The organization the invite is for
 -}
 organization : SelectionSet decodesTo GithubNoFormat.Object.Organization
  -> SelectionSet decodesTo GithubNoFormat.Object.OrganizationInvitation
-organization object_ =
-      Object.selectionForCompositeField "organization" [] (object_) (identity)
+organization object____ =
+      Object.selectionForCompositeField "organization" [] (object____) (identity)
 
 
 {-| The user's pending role in the organization (e.g. member, owner).

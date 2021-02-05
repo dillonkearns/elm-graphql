@@ -23,8 +23,8 @@ cursor =
 
 node : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.StarredRepositoryEdge
-node object_ =
-      Object.selectionForCompositeField "node" [] (object_) (identity)
+node object____ =
+      Object.selectionForCompositeField "node" [] (object____) (identity)
 
 
 {-| Identifies when the item was starred.

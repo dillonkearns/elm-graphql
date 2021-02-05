@@ -31,5 +31,5 @@ clientMutationId =
 pullRequestReviewComment :
     SelectionSet decodesTo Github.Object.PullRequestReviewComment
     -> SelectionSet decodesTo Github.Object.UpdatePullRequestReviewCommentPayload
-pullRequestReviewComment object_ =
-    Object.selectionForCompositeField "pullRequestReviewComment" [] object_ identity
+pullRequestReviewComment object____ =
+    Object.selectionForCompositeField "pullRequestReviewComment" [] object____ identity

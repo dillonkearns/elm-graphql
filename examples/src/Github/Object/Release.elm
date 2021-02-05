@@ -24,8 +24,8 @@ import Json.Decode as Decode
 author :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.Release
-author object_ =
-    Object.selectionForCompositeField "author" [] object_ (identity >> Decode.nullable)
+author object____ =
+    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -97,16 +97,16 @@ releaseAssets :
     (ReleaseAssetsOptionalArguments -> ReleaseAssetsOptionalArguments)
     -> SelectionSet decodesTo Github.Object.ReleaseAssetConnection
     -> SelectionSet decodesTo Github.Object.Release
-releaseAssets fillInOptionals object_ =
+releaseAssets fillInOptionals____ object____ =
     let
-        filledInOptionals =
-            fillInOptionals { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
+        filledInOptionals____ =
+            fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, name = Absent }
 
-        optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "name" filledInOptionals.name Encode.string ]
+        optionalArgs____ =
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "name" filledInOptionals____.name Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "releaseAssets" optionalArgs object_ identity
+    Object.selectionForCompositeField "releaseAssets" optionalArgs____ object____ identity
 
 
 {-| The HTTP path for this issue
@@ -121,8 +121,8 @@ resourcePath =
 tag :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.Release
-tag object_ =
-    Object.selectionForCompositeField "tag" [] object_ (identity >> Decode.nullable)
+tag object____ =
+    Object.selectionForCompositeField "tag" [] object____ (identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.

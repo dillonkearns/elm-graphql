@@ -27,13 +27,13 @@ clientMutationId =
 -}
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.RequestReviewsPayload
-pullRequest object_ =
-      Object.selectionForCompositeField "pullRequest" [] (object_) (identity)
+pullRequest object____ =
+      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
 
 
 {-| The edge from the pull request to the requested reviewers.
 -}
 requestedReviewersEdge : SelectionSet decodesTo GithubNoFormat.Object.UserEdge
  -> SelectionSet decodesTo GithubNoFormat.Object.RequestReviewsPayload
-requestedReviewersEdge object_ =
-      Object.selectionForCompositeField "requestedReviewersEdge" [] (object_) (identity)
+requestedReviewersEdge object____ =
+      Object.selectionForCompositeField "requestedReviewersEdge" [] (object____) (identity)

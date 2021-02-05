@@ -74,8 +74,8 @@ oid =
 -}
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.Blob
-repository object_ =
-      Object.selectionForCompositeField "repository" [] (object_) (identity)
+repository object____ =
+      Object.selectionForCompositeField "repository" [] (object____) (identity)
 
 
 {-| UTF8 text data or null if the Blob is binary
