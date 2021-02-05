@@ -83,7 +83,7 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRef
-                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable)
+                    |> Expect.equal (Ok (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable))
         , test "parse raw boolean" <|
             \() ->
                 RawTypeRef
@@ -92,7 +92,7 @@ all =
                     , ofType = Nothing
                     }
                     |> Type.parseRef
-                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.Boolean) Type.Nullable)
+                    |> Expect.equal (Ok (Type.TypeReference (Type.Scalar Scalar.Boolean) Type.Nullable))
         , test "parseRaw non-nullable string" <|
             \() ->
                 RawTypeRef
@@ -108,7 +108,7 @@ all =
                             )
                     }
                     |> Type.parseRef
-                    |> Expect.equal (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable)
+                    |> Expect.equal (Ok (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
         , test "parse list of strings" <|
             \() ->
                 RawTypeRef
@@ -125,8 +125,10 @@ all =
                     }
                     |> Type.parseRef
                     |> Expect.equal
-                        (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable))
-                            Type.Nullable
+                        (Ok
+                            (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.Nullable))
+                                Type.Nullable
+                            )
                         )
         , test "parse non-null list of non-null strings" <|
             \() ->
@@ -158,7 +160,9 @@ all =
                     }
                     |> Type.parseRef
                     |> Expect.equal
-                        (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
-                            Type.NonNullable
+                        (Ok
+                            (Type.TypeReference (Type.List (Type.TypeReference (Type.Scalar Scalar.String) Type.NonNullable))
+                                Type.NonNullable
+                            )
                         )
         ]
