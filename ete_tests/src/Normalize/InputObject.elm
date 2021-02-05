@@ -100,13 +100,13 @@ buildGreeting :
     GreetingRequiredFields
     -> (GreetingOptionalFields -> GreetingOptionalFields)
     -> Greeting
-buildGreeting required fillOptionals =
+buildGreeting required____ fillOptionals =
     let
         optionals =
             fillOptionals
                 { language = Absent, options = Absent }
     in
-    { language = optionals.language, name = required.name, options = optionals.options }
+    { language = optionals.language, name = required____.name, options = optionals.options }
 
 
 type alias GreetingRequiredFields =
@@ -208,8 +208,8 @@ encodeRecursive (Recursive input) =
 buildReservedWord :
     ReservedWordRequiredFields
     -> ReservedWord
-buildReservedWord required =
-    { type_ = required.type_ }
+buildReservedWord required____ =
+    { type_ = required____.type_ }
 
 
 type alias ReservedWordRequiredFields =
