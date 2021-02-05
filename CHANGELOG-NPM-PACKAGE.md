@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.1.4] - 2021-02-04
+
+### Fixed
+
+- Fixed a bug with the ordering of nullable list encoders for input objects (see [#456](https://github.com/dillonkearns/elm-graphql/pull/456)).
+
 ## [4.1.3] - 2021-02-04
 
 ### Fixed
