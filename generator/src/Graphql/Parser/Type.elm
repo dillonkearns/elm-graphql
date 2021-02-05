@@ -53,10 +53,6 @@ decodeKind kind =
             Decode.fail ("Unexpected kind " ++ kind)
 
 
-
--- Decode.fail ("Unknown kind " ++ kind)
-
-
 scalarDecoder : Decoder TypeDefinition
 scalarDecoder =
     Decode.map (\scalarName -> typeDefinition scalarName ScalarType Nothing)
