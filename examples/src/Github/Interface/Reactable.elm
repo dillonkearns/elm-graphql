@@ -34,13 +34,13 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.Reactable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "CommitComment" selections.onCommitComment
-        , Object.buildFragment "Issue" selections.onIssue
-        , Object.buildFragment "IssueComment" selections.onIssueComment
-        , Object.buildFragment "PullRequest" selections.onPullRequest
-        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        [ Object.buildFragment "CommitComment" selections____.onCommitComment
+        , Object.buildFragment "Issue" selections____.onIssue
+        , Object.buildFragment "IssueComment" selections____.onIssueComment
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
+        , Object.buildFragment "PullRequestReviewComment" selections____.onPullRequestReviewComment
         ]
 
 

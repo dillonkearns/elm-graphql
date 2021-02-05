@@ -36,16 +36,16 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.Updatable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "CommitComment" selections.onCommitComment
-        , Object.buildFragment "GistComment" selections.onGistComment
-        , Object.buildFragment "Issue" selections.onIssue
-        , Object.buildFragment "IssueComment" selections.onIssueComment
-        , Object.buildFragment "Project" selections.onProject
-        , Object.buildFragment "PullRequest" selections.onPullRequest
-        , Object.buildFragment "PullRequestReview" selections.onPullRequestReview
-        , Object.buildFragment "PullRequestReviewComment" selections.onPullRequestReviewComment
+        [ Object.buildFragment "CommitComment" selections____.onCommitComment
+        , Object.buildFragment "GistComment" selections____.onGistComment
+        , Object.buildFragment "Issue" selections____.onIssue
+        , Object.buildFragment "IssueComment" selections____.onIssueComment
+        , Object.buildFragment "Project" selections____.onProject
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
+        , Object.buildFragment "PullRequestReview" selections____.onPullRequestReview
+        , Object.buildFragment "PullRequestReviewComment" selections____.onPullRequestReviewComment
         ]
 
 

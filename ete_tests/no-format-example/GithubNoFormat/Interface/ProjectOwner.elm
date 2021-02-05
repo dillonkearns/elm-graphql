@@ -29,11 +29,11 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "Organization" selections.onOrganization,
- Object.buildFragment "Repository" selections.onRepository
+         Object.buildFragment "Organization" selections____.onOrganization,
+ Object.buildFragment "Repository" selections____.onRepository
         ]
 
 

@@ -64,8 +64,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe RefOrderField
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
         "TAG_COMMIT_DATE" ->
             Just TagCommitDate
 

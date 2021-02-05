@@ -92,8 +92,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe {0}
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
 {1}
         _ ->
                 Nothing

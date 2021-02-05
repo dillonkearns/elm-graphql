@@ -30,12 +30,12 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.GitSignature
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "GpgSignature" selections.onGpgSignature,
- Object.buildFragment "SmimeSignature" selections.onSmimeSignature,
- Object.buildFragment "UnknownSignature" selections.onUnknownSignature
+         Object.buildFragment "GpgSignature" selections____.onGpgSignature,
+ Object.buildFragment "SmimeSignature" selections____.onSmimeSignature,
+ Object.buildFragment "UnknownSignature" selections____.onUnknownSignature
         ]
 
 

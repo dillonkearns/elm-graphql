@@ -32,11 +32,11 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.RepositoryOwner
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "Organization" selections.onOrganization,
- Object.buildFragment "User" selections.onUser
+         Object.buildFragment "Organization" selections____.onOrganization,
+ Object.buildFragment "User" selections____.onUser
         ]
 
 

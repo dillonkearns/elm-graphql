@@ -32,12 +32,12 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Github.Interface.Closable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Issue" selections.onIssue
-        , Object.buildFragment "Milestone" selections.onMilestone
-        , Object.buildFragment "Project" selections.onProject
-        , Object.buildFragment "PullRequest" selections.onPullRequest
+        [ Object.buildFragment "Issue" selections____.onIssue
+        , Object.buildFragment "Milestone" selections____.onMilestone
+        , Object.buildFragment "Project" selections____.onProject
+        , Object.buildFragment "PullRequest" selections____.onPullRequest
         ]
 
 

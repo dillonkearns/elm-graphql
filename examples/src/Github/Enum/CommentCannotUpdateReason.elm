@@ -88,8 +88,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe CommentCannotUpdateReason
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
         "INSUFFICIENT_ACCESS" ->
             Just InsufficientAccess
 

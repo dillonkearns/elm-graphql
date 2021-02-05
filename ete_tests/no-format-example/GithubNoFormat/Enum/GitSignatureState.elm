@@ -158,8 +158,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe GitSignatureState
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
         "VALID" ->
                 Just Valid
 

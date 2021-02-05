@@ -59,8 +59,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe ReleaseOrderField
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
         "CREATED_AT" ->
                 Just CreatedAt
 

@@ -96,8 +96,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe ReactionContent
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
         "THUMBS_UP" ->
             Just ThumbsUp
 

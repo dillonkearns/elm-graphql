@@ -104,8 +104,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe DeploymentState
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
         "ABANDONED" ->
                 Just Abandoned
 

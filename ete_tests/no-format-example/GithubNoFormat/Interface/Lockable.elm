@@ -29,11 +29,11 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.Lockable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "Issue" selections.onIssue,
- Object.buildFragment "PullRequest" selections.onPullRequest
+         Object.buildFragment "Issue" selections____.onIssue,
+ Object.buildFragment "PullRequest" selections____.onPullRequest
         ]
 
 

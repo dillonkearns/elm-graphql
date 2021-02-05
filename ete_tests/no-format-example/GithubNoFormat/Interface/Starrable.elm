@@ -29,11 +29,11 @@ type alias Fragments decodesTo =
 fragments :
       Fragments decodesTo
       -> SelectionSet decodesTo GithubNoFormat.Interface.Starrable
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
         [
-         Object.buildFragment "Gist" selections.onGist,
- Object.buildFragment "Repository" selections.onRepository
+         Object.buildFragment "Gist" selections____.onGist,
+ Object.buildFragment "Repository" selections____.onRepository
         ]
 
 

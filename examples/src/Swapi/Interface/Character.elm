@@ -31,10 +31,10 @@ type alias Fragments decodesTo =
 fragments :
     Fragments decodesTo
     -> SelectionSet decodesTo Swapi.Interface.Character
-fragments selections =
+fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Human" selections.onHuman
-        , Object.buildFragment "Droid" selections.onDroid
+        [ Object.buildFragment "Human" selections____.onHuman
+        , Object.buildFragment "Droid" selections____.onDroid
         ]
 
 

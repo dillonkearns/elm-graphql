@@ -56,8 +56,8 @@ This can be useful for generating Strings to use for <select> menus to check whi
 
 -}
 fromString : String -> Maybe StarOrderField
-fromString enumString =
-    case enumString of
+fromString enumString____ =
+    case enumString____ of
         "STARRED_AT" ->
             Just StarredAt
 
