@@ -161,7 +161,7 @@ addOptionalArgs field context args fieldGenerator =
     case Graphql.Generator.OptionalArgs.generate context args of
         Just { annotatedArg, letBindings, typeAlias } ->
             { fieldGenerator
-                | fieldArgs = "optionalArgs" :: fieldGenerator.fieldArgs
+                | fieldArgs = "optionalArgs____" :: fieldGenerator.fieldArgs
                 , letBindings = fieldGenerator.letBindings ++ letBindings
                 , typeAliases = typeAlias :: fieldGenerator.typeAliases
             }

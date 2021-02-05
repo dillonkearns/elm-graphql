@@ -81,11 +81,11 @@ marketplaceCategories fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { excludeEmpty = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "excludeEmpty" filledInOptionals____.excludeEmpty (Encode.bool) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "marketplaceCategories" optionalArgs (object____) (identity >> Decode.list)
+      Object.selectionForCompositeField "marketplaceCategories" optionalArgs____ (object____) (identity >> Decode.list)
 
 
 type alias MarketplaceCategoryRequiredArguments = { slug : String }
@@ -157,11 +157,11 @@ marketplaceListings fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "categorySlug" filledInOptionals____.categorySlug (Encode.string), Argument.optional "viewerCanAdmin" filledInOptionals____.viewerCanAdmin (Encode.bool), Argument.optional "adminId" filledInOptionals____.adminId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "organizationId" filledInOptionals____.organizationId ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecId)), Argument.optional "allStates" filledInOptionals____.allStates (Encode.bool), Argument.optional "slugs" filledInOptionals____.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals____.primaryCategoryOnly (Encode.bool), Argument.optional "withFreeTrialsOnly" filledInOptionals____.withFreeTrialsOnly (Encode.bool) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "marketplaceListings" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "marketplaceListings" optionalArgs____ (object____) (identity)
 
 
 {-| Return information about the GitHub instance
@@ -229,11 +229,11 @@ rateLimit fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { dryRun = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "dryRun" filledInOptionals____.dryRun (Encode.bool) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "rateLimit" optionalArgs (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "rateLimit" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 {-| Hack to workaround https://github.com/facebook/relay/issues/112 re-exposing the root query object
@@ -315,11 +315,11 @@ search fillInOptionals____ requiredArgs object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "search" (optionalArgs ++ [ Argument.required "query" requiredArgs.query (Encode.string), Argument.required "type" requiredArgs.type_ ((Encode.enum GithubNoFormat.Enum.SearchType.toString)) ]) (object____) (identity)
+      Object.selectionForCompositeField "search" (optionalArgs____ ++ [ Argument.required "query" requiredArgs.query (Encode.string), Argument.required "type" requiredArgs.type_ ((Encode.enum GithubNoFormat.Enum.SearchType.toString)) ]) (object____) (identity)
 
 
 type alias TopicRequiredArguments = { name : String }

@@ -182,11 +182,11 @@ logoUrl fillInOptionals____ =
         filledInOptionals____ =
             fillInOptionals____ { size = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap identity
     in
-      Object.selectionForField "(Maybe ScalarCodecs.Uri)" "logoUrl" optionalArgs (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+      Object.selectionForField "(Maybe ScalarCodecs.Uri)" "logoUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 {-| The listing's full name.

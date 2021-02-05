@@ -78,11 +78,11 @@ hero fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { episode = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "hero" optionalArgs object____ identity
+    Object.selectionForCompositeField "hero" optionalArgs____ object____ identity
 
 
 type alias HeroUnionOptionalArguments =
@@ -103,11 +103,11 @@ heroUnion fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { episode = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Swapi.Enum.Episode.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "heroUnion" optionalArgs object____ identity
+    Object.selectionForCompositeField "heroUnion" optionalArgs____ object____ identity
 
 
 type alias HumanRequiredArguments =

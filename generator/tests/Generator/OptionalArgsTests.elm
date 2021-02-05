@@ -41,7 +41,7 @@ all =
                         { typeAlias = "{ contains : OptionalArgument String }"
                         , letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { contains = Absent }" )
-                            , ( "optionalArgs", """[ Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
+                            , ( "optionalArgs____", """[ Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
                 |> List.filterMap identity""" )
                             ]
                         }
@@ -61,7 +61,7 @@ all =
                         { typeAlias = GenerateSyntax.typeAlias [ ( "id", "OptionalArgument String" ), ( "contains", "OptionalArgument String" ) ]
                         , letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { id = Absent, contains = Absent }" )
-                            , ( "optionalArgs", """[ Argument.optional "id" filledInOptionals____.id (Encode.string), Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
+                            , ( "optionalArgs____", """[ Argument.optional "id" filledInOptionals____.id (Encode.string), Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
                 |> List.filterMap identity""" )
                             ]
                         }
@@ -76,7 +76,7 @@ all =
                     |> expectResult
                         { letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { first = Absent }" )
-                            , ( "optionalArgs", """[ Argument.optional "first" filledInOptionals____.first (Encode.int) ]
+                            , ( "optionalArgs____", """[ Argument.optional "first" filledInOptionals____.first (Encode.int) ]
                 |> List.filterMap identity""" )
                             ]
                         , typeAlias = "{ first : OptionalArgument Int }"
@@ -93,7 +93,7 @@ all =
                         { typeAlias = "{ episode : OptionalArgument Api.Enum.Episode.Episode }"
                         , letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { episode = Absent }" )
-                            , ( "optionalArgs", """[ Argument.optional "episode" filledInOptionals____.episode ((Encode.enum Api.Enum.Episode.toString)) ]
+                            , ( "optionalArgs____", """[ Argument.optional "episode" filledInOptionals____.episode ((Encode.enum Api.Enum.Episode.toString)) ]
                 |> List.filterMap identity""" )
                             ]
                         }

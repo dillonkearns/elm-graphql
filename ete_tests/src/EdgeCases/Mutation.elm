@@ -31,8 +31,8 @@ createPunchListItem fillInOptionals____ =
         filledInOptionals____ =
             fillInOptionals____ { shapes = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "shapes" filledInOptionals____.shapes (EdgeCases.InputObject.encodeShapeInput |> Encode.maybe |> Encode.list) ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "String" "createPunchListItem" optionalArgs Decode.string
+    Object.selectionForField "String" "createPunchListItem" optionalArgs____ Decode.string

@@ -36,11 +36,11 @@ avatarUrl fillInOptionals____ =
         filledInOptionals____ =
             fillInOptionals____ { size = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 {-| Identifies the date and time when the object was created.

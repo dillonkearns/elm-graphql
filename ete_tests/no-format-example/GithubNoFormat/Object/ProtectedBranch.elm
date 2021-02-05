@@ -106,11 +106,11 @@ pushAllowances fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "pushAllowances" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "pushAllowances" optionalArgs____ (object____) (identity)
 
 
 {-| The repository associated with this protected branch.
@@ -149,8 +149,8 @@ reviewDismissalAllowances fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs____ (object____) (identity)

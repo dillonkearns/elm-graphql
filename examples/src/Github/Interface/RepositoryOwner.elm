@@ -66,11 +66,11 @@ avatarUrl fillInOptionals____ =
         filledInOptionals____ =
             fillInOptionals____ { size = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
+    Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Interface.RepositoryOwner
@@ -118,11 +118,11 @@ pinnedRepositories fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "privacy" filledInOptionals____.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals____.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "pinnedRepositories" optionalArgs object____ identity
+    Object.selectionForCompositeField "pinnedRepositories" optionalArgs____ object____ identity
 
 
 type alias RepositoriesOptionalArguments =
@@ -160,11 +160,11 @@ repositories fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent, isFork = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "privacy" filledInOptionals____.privacy (Encode.enum Github.Enum.RepositoryPrivacy.toString), Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeRepositoryOrder, Argument.optional "affiliations" filledInOptionals____.affiliations (Encode.enum Github.Enum.RepositoryAffiliation.toString |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked Encode.bool, Argument.optional "isFork" filledInOptionals____.isFork Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "repositories" optionalArgs object____ identity
+    Object.selectionForCompositeField "repositories" optionalArgs____ object____ identity
 
 
 type alias RepositoryRequiredArguments =

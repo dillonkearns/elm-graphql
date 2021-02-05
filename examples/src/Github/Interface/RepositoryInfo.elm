@@ -216,11 +216,11 @@ shortDescriptionHTML fillInOptionals____ =
         filledInOptionals____ =
             fillInOptionals____ { limit = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "limit" filledInOptionals____.limit Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
+    Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 
 
 {-| Identifies the date and time when the object was last updated.

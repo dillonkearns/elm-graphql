@@ -148,11 +148,11 @@ menuItems fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { contains = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "menuItems" optionalArgs (object____) (identity >> Decode.list)
+      Object.selectionForCompositeField "menuItems" optionalArgs____ (object____) (identity >> Decode.list)
 """
         , test "normalizes reserved names" <|
             \() ->

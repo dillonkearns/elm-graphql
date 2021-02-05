@@ -48,11 +48,11 @@ ancestors fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "ancestors" optionalArgs object____ identity
+    Object.selectionForCompositeField "ancestors" optionalArgs____ object____ identity
 
 
 type alias AvatarUrlOptionalArguments =
@@ -72,11 +72,11 @@ avatarUrl fillInOptionals____ =
         filledInOptionals____ =
             fillInOptionals____ { size = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap identity
     in
-    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "avatarUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
+    Object.selectionForField "(Maybe ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
 
 type alias ChildTeamsOptionalArguments =
@@ -110,11 +110,11 @@ childTeams fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, userLogins = Absent, immediateOnly = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeTeamOrder, Argument.optional "userLogins" filledInOptionals____.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals____.immediateOnly Encode.bool ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "childTeams" optionalArgs object____ identity
+    Object.selectionForCompositeField "childTeams" optionalArgs____ object____ identity
 
 
 {-| The slug corresponding to the organization and team.
@@ -182,11 +182,11 @@ invitations fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "invitations" optionalArgs object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "invitations" optionalArgs____ object____ (identity >> Decode.nullable)
 
 
 type alias MembersOptionalArguments =
@@ -220,11 +220,11 @@ members fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, membership = Absent, role = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "query" filledInOptionals____.query Encode.string, Argument.optional "membership" filledInOptionals____.membership (Encode.enum Github.Enum.TeamMembershipType.toString), Argument.optional "role" filledInOptionals____.role (Encode.enum Github.Enum.TeamMemberRole.toString) ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "members" optionalArgs object____ identity
+    Object.selectionForCompositeField "members" optionalArgs____ object____ identity
 
 
 {-| The HTTP path for the team' members
@@ -316,11 +316,11 @@ repositories fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, orderBy = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "query" filledInOptionals____.query Encode.string, Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeTeamRepositoryOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "repositories" optionalArgs object____ identity
+    Object.selectionForCompositeField "repositories" optionalArgs____ object____ identity
 
 
 {-| The HTTP path for this team's repositories

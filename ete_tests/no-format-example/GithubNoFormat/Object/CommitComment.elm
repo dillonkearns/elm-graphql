@@ -150,11 +150,11 @@ reactions fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "content" filledInOptionals____.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (identity)
 
 
 {-| The repository associated with this node.
@@ -207,11 +207,11 @@ userContentEdits fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

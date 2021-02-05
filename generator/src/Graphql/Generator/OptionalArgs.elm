@@ -42,7 +42,7 @@ generate context allArgs =
                         }
                 , letBindings =
                     [ ( "filledInOptionals____", "fillInOptionals____ " ++ emptyRecord optionalArgs )
-                    , ( "optionalArgs"
+                    , ( "optionalArgs____"
                       , argValues context optionalArgs
                             ++ "\n                |> List.filterMap identity"
                       )

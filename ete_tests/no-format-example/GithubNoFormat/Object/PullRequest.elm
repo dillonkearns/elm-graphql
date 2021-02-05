@@ -58,11 +58,11 @@ assignees fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "assignees" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "assignees" optionalArgs____ (object____) (identity)
 
 
 {-| The actor who authored the comment.
@@ -165,11 +165,11 @@ comments fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "comments" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "comments" optionalArgs____ (object____) (identity)
 
 
 type alias CommitsOptionalArguments = { first : OptionalArgument Int
@@ -193,11 +193,11 @@ commits fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "commits" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "commits" optionalArgs____ (object____) (identity)
 
 
 {-| Identifies the date and time when the object was created.
@@ -307,11 +307,11 @@ labels fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "labels" optionalArgs (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "labels" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 {-| The moment the editor made the last edit
@@ -393,11 +393,11 @@ participants fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "participants" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "participants" optionalArgs____ (object____) (identity)
 
 
 {-| The commit that GitHub automatically generated to test if this pull request could be merged. This field will not return a value if the pull request is merged, or if the test merge commit is still being generated. See the `mergeable` field for more details on the mergeability of the pull request.
@@ -429,11 +429,11 @@ projectCards fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "projectCards" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "projectCards" optionalArgs____ (object____) (identity)
 
 
 {-| Identifies when the comment was published at.
@@ -476,11 +476,11 @@ reactions fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, content = Absent, orderBy = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "content" filledInOptionals____.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (identity)
 
 
 {-| The repository associated with this node.
@@ -533,11 +533,11 @@ reviewRequests fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reviewRequests" optionalArgs (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "reviewRequests" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 type alias ReviewsOptionalArguments = { first : OptionalArgument Int
@@ -565,11 +565,11 @@ reviews fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, author = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "states" filledInOptionals____.states ((Encode.enum GithubNoFormat.Enum.PullRequestReviewState.toString) |> Encode.list), Argument.optional "author" filledInOptionals____.author (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "reviews" optionalArgs (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "reviews" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 {-| Identifies the state of the pull request.
@@ -610,11 +610,11 @@ timeline fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, since = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "since" filledInOptionals____.since ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecDateTime)) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "timeline" optionalArgs (object____) (identity)
+      Object.selectionForCompositeField "timeline" optionalArgs____ (object____) (identity)
 
 
 {-| Identifies the pull request title.
@@ -659,11 +659,11 @@ userContentEdits fillInOptionals____ object____ =
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
-        optionalArgs =
+        optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (identity >> Decode.nullable)
 
 
 {-| Can user react to this subject
