@@ -69,8 +69,8 @@ enumToString enumName enumValues =
         """{-| Convert from the union type representing the Enum to a string that the GraphQL server will recognize.
 -}
 toString : {0} -> String
-toString enum =
-    case enum of
+toString enum____ =
+    case enum____ of
 {1}"""
         [ ClassCaseName.normalized enumName
         , List.map toStringCase enumValues |> String.join "\n\n"

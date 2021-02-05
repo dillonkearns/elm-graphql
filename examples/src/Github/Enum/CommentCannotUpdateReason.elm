@@ -58,8 +58,8 @@ decoder =
 {-| Convert from the union type representing the Enum to a string that the GraphQL server will recognize.
 -}
 toString : CommentCannotUpdateReason -> String
-toString enum =
-    case enum of
+toString enum____ =
+    case enum____ of
         InsufficientAccess ->
             "INSUFFICIENT_ACCESS"
 
