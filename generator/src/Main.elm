@@ -40,7 +40,15 @@ run { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
                 |> Ports.generatedFiles
 
         Err error ->
-            ("Got error " ++ Decode.errorToString error)
+            ("""I couldn't understand the JSON for this schema. Here are some reasons this could fail:
+
+- You may have provided a part of the introspection schema that is incomplete or invalid. Be sure you got it using the correct introspection query, or consider using another option like `elm-graphql --schema-file` if you want to use SDL syntax instead of JSON.
+- Perhaps the schema is invalid (even well-established tools sometimes generate incorrect values)
+- Or perhaps there's an issue with elm-graphql
+
+
+
+""" ++ Decode.errorToString error)
                 |> Ports.printAndExitFailure
 
 
