@@ -201,8 +201,8 @@ project :
     ProjectRequiredArguments
     -> SelectionSet decodesTo Github.Object.Project
     -> SelectionSet (Maybe decodesTo) Github.Object.Organization
-project requiredArgs object____ =
-    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
+project requiredArgs____ object____ =
+    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -312,8 +312,8 @@ repository :
     RepositoryRequiredArguments
     -> SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet (Maybe decodesTo) Github.Object.Organization
-repository requiredArgs object____ =
-    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object____ (identity >> Decode.nullable)
+repository requiredArgs____ object____ =
+    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
@@ -345,8 +345,8 @@ team :
     TeamRequiredArguments
     -> SelectionSet decodesTo Github.Object.Team
     -> SelectionSet (Maybe decodesTo) Github.Object.Organization
-team requiredArgs object____ =
-    Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs.slug Encode.string ] object____ (identity >> Decode.nullable)
+team requiredArgs____ object____ =
+    Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs____.slug Encode.string ] object____ (identity >> Decode.nullable)
 
 
 type alias TeamsOptionalArguments =

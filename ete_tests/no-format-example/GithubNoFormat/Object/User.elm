@@ -228,8 +228,8 @@ type alias GistRequiredArguments = { name : String }
 gist : GistRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Gist
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.User
-gist requiredArgs object____ =
-      Object.selectionForCompositeField "gist" [ Argument.required "name" requiredArgs.name (Encode.string) ] (object____) (identity >> Decode.nullable)
+gist requiredArgs____ object____ =
+      Object.selectionForCompositeField "gist" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias GistCommentsOptionalArguments = { first : OptionalArgument Int
@@ -439,8 +439,8 @@ type alias OrganizationRequiredArguments = { login : String }
 organization : OrganizationRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Organization
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.User
-organization requiredArgs object____ =
-      Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs.login (Encode.string) ] (object____) (identity >> Decode.nullable)
+organization requiredArgs____ object____ =
+      Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs____.login (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias OrganizationsOptionalArguments = { first : OptionalArgument Int
@@ -659,8 +659,8 @@ type alias RepositoryRequiredArguments = { name : String }
 repository : RepositoryRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.User
-repository requiredArgs object____ =
-      Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name (Encode.string) ] (object____) (identity >> Decode.nullable)
+repository requiredArgs____ object____ =
+      Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user

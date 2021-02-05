@@ -149,7 +149,7 @@ addRequiredArgs field context args fieldGenerator =
                                 |> CamelCaseName.raw
                                 |> String.Extra.classify
                             )
-                    , arg = "requiredArgs"
+                    , arg = "requiredArgs____"
                     }
 
         Nothing ->

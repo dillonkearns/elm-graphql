@@ -70,8 +70,8 @@ blame :
     BlameRequiredArguments
     -> SelectionSet decodesTo Github.Object.Blame
     -> SelectionSet decodesTo Github.Object.Commit
-blame requiredArgs object____ =
-    Object.selectionForCompositeField "blame" [ Argument.required "path" requiredArgs.path Encode.string ] object____ identity
+blame requiredArgs____ object____ =
+    Object.selectionForCompositeField "blame" [ Argument.required "path" requiredArgs____.path Encode.string ] object____ identity
 
 
 {-| The number of changed files in this commit.

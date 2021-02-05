@@ -66,8 +66,8 @@ project :
     ProjectRequiredArguments
     -> SelectionSet decodesTo Github.Object.Project
     -> SelectionSet (Maybe decodesTo) Github.Interface.ProjectOwner
-project requiredArgs object____ =
-    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
+project requiredArgs____ object____ =
+    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =

@@ -368,8 +368,8 @@ issue :
     IssueRequiredArguments
     -> SelectionSet decodesTo Github.Object.Issue
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-issue requiredArgs object____ =
-    Object.selectionForCompositeField "issue" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
+issue requiredArgs____ object____ =
+    Object.selectionForCompositeField "issue" [ Argument.required "number" requiredArgs____.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias IssueOrPullRequestRequiredArguments =
@@ -385,8 +385,8 @@ issueOrPullRequest :
     IssueOrPullRequestRequiredArguments
     -> SelectionSet decodesTo Github.Union.IssueOrPullRequest
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-issueOrPullRequest requiredArgs object____ =
-    Object.selectionForCompositeField "issueOrPullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
+issueOrPullRequest requiredArgs____ object____ =
+    Object.selectionForCompositeField "issueOrPullRequest" [ Argument.required "number" requiredArgs____.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias IssuesOptionalArguments =
@@ -440,8 +440,8 @@ label :
     LabelRequiredArguments
     -> SelectionSet decodesTo Github.Object.Label
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-label requiredArgs object____ =
-    Object.selectionForCompositeField "label" [ Argument.required "name" requiredArgs.name Encode.string ] object____ (identity >> Decode.nullable)
+label requiredArgs____ object____ =
+    Object.selectionForCompositeField "label" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 type alias LabelsOptionalArguments =
@@ -580,8 +580,8 @@ milestone :
     MilestoneRequiredArguments
     -> SelectionSet decodesTo Github.Object.Milestone
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-milestone requiredArgs object____ =
-    Object.selectionForCompositeField "milestone" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
+milestone requiredArgs____ object____ =
+    Object.selectionForCompositeField "milestone" [ Argument.required "number" requiredArgs____.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias MilestonesOptionalArguments =
@@ -709,8 +709,8 @@ project :
     ProjectRequiredArguments
     -> SelectionSet decodesTo Github.Object.Project
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-project requiredArgs object____ =
-    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
+project requiredArgs____ object____ =
+    Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments =
@@ -810,8 +810,8 @@ pullRequest :
     PullRequestRequiredArguments
     -> SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-pullRequest requiredArgs object____ =
-    Object.selectionForCompositeField "pullRequest" [ Argument.required "number" requiredArgs.number Encode.int ] object____ (identity >> Decode.nullable)
+pullRequest requiredArgs____ object____ =
+    Object.selectionForCompositeField "pullRequest" [ Argument.required "number" requiredArgs____.number Encode.int ] object____ (identity >> Decode.nullable)
 
 
 type alias PullRequestsOptionalArguments =
@@ -876,8 +876,8 @@ ref :
     RefRequiredArguments
     -> SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-ref requiredArgs object____ =
-    Object.selectionForCompositeField "ref" [ Argument.required "qualifiedName" requiredArgs.qualifiedName Encode.string ] object____ (identity >> Decode.nullable)
+ref requiredArgs____ object____ =
+    Object.selectionForCompositeField "ref" [ Argument.required "qualifiedName" requiredArgs____.qualifiedName Encode.string ] object____ (identity >> Decode.nullable)
 
 
 type alias RefsOptionalArguments =
@@ -910,7 +910,7 @@ refs :
     -> RefsRequiredArguments
     -> SelectionSet decodesTo Github.Object.RefConnection
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-refs fillInOptionals____ requiredArgs object____ =
+refs fillInOptionals____ requiredArgs____ object____ =
     let
         filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, direction = Absent, orderBy = Absent }
@@ -919,7 +919,7 @@ refs fillInOptionals____ requiredArgs object____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "direction" filledInOptionals____.direction (Encode.enum Github.Enum.OrderDirection.toString), Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeRefOrder ]
                 |> List.filterMap identity
     in
-    Object.selectionForCompositeField "refs" (optionalArgs____ ++ [ Argument.required "refPrefix" requiredArgs.refPrefix Encode.string ]) object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "refs" (optionalArgs____ ++ [ Argument.required "refPrefix" requiredArgs____.refPrefix Encode.string ]) object____ (identity >> Decode.nullable)
 
 
 type alias ReleaseRequiredArguments =
@@ -935,8 +935,8 @@ release :
     ReleaseRequiredArguments
     -> SelectionSet decodesTo Github.Object.Release
     -> SelectionSet (Maybe decodesTo) Github.Object.Repository
-release requiredArgs object____ =
-    Object.selectionForCompositeField "release" [ Argument.required "tagName" requiredArgs.tagName Encode.string ] object____ (identity >> Decode.nullable)
+release requiredArgs____ object____ =
+    Object.selectionForCompositeField "release" [ Argument.required "tagName" requiredArgs____.tagName Encode.string ] object____ (identity >> Decode.nullable)
 
 
 type alias ReleasesOptionalArguments =

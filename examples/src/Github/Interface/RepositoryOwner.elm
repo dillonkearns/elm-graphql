@@ -180,8 +180,8 @@ repository :
     RepositoryRequiredArguments
     -> SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet (Maybe decodesTo) Github.Interface.RepositoryOwner
-repository requiredArgs object____ =
-    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object____ (identity >> Decode.nullable)
+repository requiredArgs____ object____ =
+    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 {-| The HTTP URL for the owner.

@@ -185,8 +185,8 @@ type alias ProjectRequiredArguments = { number : Int }
 project : ProjectRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
-project requiredArgs object____ =
-      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number (Encode.int) ] (object____) (identity >> Decode.nullable)
+project requiredArgs____ object____ =
+      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments = { first : OptionalArgument Int
@@ -285,8 +285,8 @@ type alias RepositoryRequiredArguments = { name : String }
 repository : RepositoryRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
-repository requiredArgs object____ =
-      Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name (Encode.string) ] (object____) (identity >> Decode.nullable)
+repository requiredArgs____ object____ =
+      Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
@@ -314,8 +314,8 @@ type alias TeamRequiredArguments = { slug : String }
 team : TeamRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
-team requiredArgs object____ =
-      Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs.slug (Encode.string) ] (object____) (identity >> Decode.nullable)
+team requiredArgs____ object____ =
+      Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs____.slug (Encode.string) ] (object____) (identity >> Decode.nullable)
 
 
 type alias TeamsOptionalArguments = { first : OptionalArgument Int

@@ -26,5 +26,5 @@ type alias HelloRequiredArguments =
 hello :
     HelloRequiredArguments
     -> SelectionSet String RootQuery
-hello requiredArgs =
-    Object.selectionForField "String" "hello" [ Argument.required "name" requiredArgs.name Encode.string ] Decode.string
+hello requiredArgs____ =
+    Object.selectionForField "String" "hello" [ Argument.required "name" requiredArgs____.name Encode.string ] Decode.string

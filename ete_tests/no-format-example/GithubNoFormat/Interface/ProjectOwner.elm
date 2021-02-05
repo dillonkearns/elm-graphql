@@ -61,8 +61,8 @@ type alias ProjectRequiredArguments = { number : Int }
 project : ProjectRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.ProjectOwner
-project requiredArgs object____ =
-      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs.number (Encode.int) ] (object____) (identity >> Decode.nullable)
+project requiredArgs____ object____ =
+      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments = { first : OptionalArgument Int

@@ -42,8 +42,8 @@ context :
     ContextRequiredArguments
     -> SelectionSet decodesTo Github.Object.StatusContext
     -> SelectionSet (Maybe decodesTo) Github.Object.Status
-context requiredArgs object____ =
-    Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs.name Encode.string ] object____ (identity >> Decode.nullable)
+context requiredArgs____ object____ =
+    Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.

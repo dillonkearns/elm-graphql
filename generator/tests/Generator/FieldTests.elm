@@ -121,8 +121,8 @@ droid object____ =
 human : HumanRequiredArguments
  -> SelectionSet decodesTo Api.Object.Human
  -> SelectionSet decodesTo RootQuery
-human requiredArgs object____ =
-      Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs.id (Encode.string) ] (object____) (identity)
+human requiredArgs____ object____ =
+      Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs____.id (Encode.string) ] (object____) (identity)
 """
         , test "with optional args" <|
             \() ->

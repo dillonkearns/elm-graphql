@@ -247,8 +247,8 @@ gist :
     GistRequiredArguments
     -> SelectionSet decodesTo Github.Object.Gist
     -> SelectionSet (Maybe decodesTo) Github.Object.User
-gist requiredArgs object____ =
-    Object.selectionForCompositeField "gist" [ Argument.required "name" requiredArgs.name Encode.string ] object____ (identity >> Decode.nullable)
+gist requiredArgs____ object____ =
+    Object.selectionForCompositeField "gist" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 type alias GistCommentsOptionalArguments =
@@ -477,8 +477,8 @@ organization :
     OrganizationRequiredArguments
     -> SelectionSet decodesTo Github.Object.Organization
     -> SelectionSet (Maybe decodesTo) Github.Object.User
-organization requiredArgs object____ =
-    Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs.login Encode.string ] object____ (identity >> Decode.nullable)
+organization requiredArgs____ object____ =
+    Object.selectionForCompositeField "organization" [ Argument.required "login" requiredArgs____.login Encode.string ] object____ (identity >> Decode.nullable)
 
 
 type alias OrganizationsOptionalArguments =
@@ -724,8 +724,8 @@ repository :
     RepositoryRequiredArguments
     -> SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet (Maybe decodesTo) Github.Object.User
-repository requiredArgs object____ =
-    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs.name Encode.string ] object____ (identity >> Decode.nullable)
+repository requiredArgs____ object____ =
+    Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
