@@ -20,7 +20,7 @@ module Graphql.OptionalArgument exposing
       import Api.Enum.Episode as Episode exposing (Episode)
       import Api.Query as Query
       import Graphql.Operation exposing (RootQuery)
-      import Graphql.OptionalArgument exposing (OptionalArgument(Null, Present))
+      import Graphql.OptionalArgument exposing (OptionalArgument(..))
       import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
 
 
