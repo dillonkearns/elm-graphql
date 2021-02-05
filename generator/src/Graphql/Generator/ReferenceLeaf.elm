@@ -12,11 +12,6 @@ type ReferenceLeaf
     | Scalar
 
 
-
--- type TypeReference
---     = TypeReference ReferrableType IsNullable
-
-
 get : TypeReference -> ReferenceLeaf
 get (TypeReference referrableType isNullable) =
     case referrableType of
