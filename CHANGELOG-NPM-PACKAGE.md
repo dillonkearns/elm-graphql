@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- Node 10.12.0 is now the minimum supported Node version. `elm-graphql` now uses the `fs` package directly from Node instead of using `fs-extra`.
 - Remove unused dependencies.
 
 ## [4.1.4] - 2021-02-04
