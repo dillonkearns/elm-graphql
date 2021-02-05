@@ -8,9 +8,7 @@ import Dict
 import Graphql.Parser
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode
-import Json.Encode.Extra
 import ModuleName exposing (ModuleName(..))
-import MyDebug
 import Ports
 import Result.Extra
 import String.Interpolate exposing (interpolate)
@@ -36,7 +34,7 @@ run { apiSubmodule, scalarCodecsModule, skipElmFormat } introspectionQueryJson =
     case Decode.decodeValue decoder introspectionQueryJson of
         Ok fields ->
             Json.Encode.object
-                [ ( "generatedFile", Json.Encode.Extra.dict identity Json.Encode.string fields )
+                [ ( "generatedFile", Json.Encode.dict identity Json.Encode.string fields )
                 , ( "skipElmFormat", Json.Encode.bool skipElmFormat )
                 ]
                 |> Ports.generatedFiles
