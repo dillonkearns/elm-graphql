@@ -1,5 +1,6 @@
-module Example01BasicQuery exposing (main)
+module ExampleFromReadme exposing (main)
 
+import CustomScalarCodecs exposing (Id(..))
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
@@ -9,7 +10,6 @@ import RemoteData exposing (RemoteData)
 import Swapi.Object
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
-import Swapi.Scalar exposing (Id(..))
 
 
 type alias Response =
@@ -24,7 +24,7 @@ type alias Human =
 
 query : SelectionSet (Maybe Human) RootQuery
 query =
-    Query.human { id = Id "1001" } humanSelection
+    Query.human { id = Id 1001 } humanSelection
 
 
 humanSelection : SelectionSet Human Swapi.Object.Human

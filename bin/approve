@@ -16,6 +16,7 @@ elm-graphql --version
 cd examples
 elm-graphql --introspection-file github-schema.json --base Github --output src
 elm-graphql https://elm-graphql.herokuapp.com/api --base Swapi --scalar-codecs CustomScalarCodecs --output src
+find src -type f -name '*.elm' -print0 | xargs -0 npx elm make --output /dev/null
 
 cd ../ete_tests
 elm-graphql https://elm-graphql-normalize.herokuapp.com/api --base Normalize --output src

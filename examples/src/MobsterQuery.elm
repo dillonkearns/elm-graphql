@@ -1,4 +1,4 @@
-module Github exposing (main)
+module MobsterQuery exposing (main)
 
 import Github.Object
 import Github.Object.Release

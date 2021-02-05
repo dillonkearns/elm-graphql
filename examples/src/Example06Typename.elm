@@ -1,4 +1,4 @@
-module Example05InterfacesAndUnions exposing (main)
+module Example06Typename exposing (main)
 
 import Graphql.Document as Document
 import Graphql.Http

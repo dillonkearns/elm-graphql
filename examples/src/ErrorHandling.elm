@@ -1,4 +1,4 @@
-module Starwars exposing (main)
+module ErrorHandling exposing (main)
 
 import CustomScalarCodecs
 import Graphql.Document as Document

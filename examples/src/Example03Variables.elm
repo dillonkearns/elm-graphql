@@ -1,5 +1,6 @@
 module Example03Variables exposing (main)
 
+import CustomScalarCodecs exposing (Id(..))
 import Graphql.Document as Document
 import Graphql.Http
 import Graphql.Operation exposing (RootQuery)
@@ -12,7 +13,6 @@ import Swapi.Interface.Character as Character
 import Swapi.Object.Droid as Droid
 import Swapi.Object.Human as Human
 import Swapi.Query as Query
-import Swapi.Scalar exposing (Id(..))
 
 
 type alias Response =
@@ -35,7 +35,7 @@ query id =
 
 makeRequest : Cmd Msg
 makeRequest =
-    Id "1001"
+    Id 1001
         |> query
         |> Graphql.Http.queryRequest "https://elm-graphql.herokuapp.com"
         |> Graphql.Http.send (RemoteData.fromResult >> GotResponse)
@@ -72,5 +72,5 @@ main =
     Helpers.Main.document
         { init = init
         , update = update
-        , queryString = Document.serializeQuery (query <| Id "1001")
+        , queryString = Document.serializeQuery (query <| Id 1001)
         }
