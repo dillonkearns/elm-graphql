@@ -103,11 +103,11 @@ comments :
     -> SelectionSet decodesTo Github.Object.Commit
 comments fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "comments" optionalArgs object____ identity
@@ -187,11 +187,11 @@ history :
     -> SelectionSet decodesTo Github.Object.Commit
 history fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "path" filledInOptionals.path Encode.string, Argument.optional "author" filledInOptionals.author Github.InputObject.encodeCommitAuthor, Argument.optional "since" filledInOptionals.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp), Argument.optional "until" filledInOptionals.until (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp) ]
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "path" filledInOptionals____.path Encode.string, Argument.optional "author" filledInOptionals____.author Github.InputObject.encodeCommitAuthor, Argument.optional "since" filledInOptionals____.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp), Argument.optional "until" filledInOptionals____.until (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp) ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "history" optionalArgs object____ identity
@@ -266,11 +266,11 @@ parents :
     -> SelectionSet decodesTo Github.Object.Commit
 parents fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "parents" optionalArgs object____ identity

@@ -39,11 +39,11 @@ avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
  -> SelectionSet GithubNoFormat.ScalarCodecs.Uri GithubNoFormat.Object.User
 avatarUrl fillInOptionals____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { size = Absent }
 
         optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size (Encode.int) ]
+            [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap identity
     in
       Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
@@ -81,11 +81,11 @@ commitComments : (CommitCommentsOptionalArguments -> CommitCommentsOptionalArgum
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 commitComments fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "commitComments" optionalArgs (object____) (identity)
@@ -131,11 +131,11 @@ contributedRepositories : (ContributedRepositoriesOptionalArguments -> Contribut
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 contributedRepositories fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "privacy" filledInOptionals.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked (Encode.bool) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals____.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked (Encode.bool) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "contributedRepositories" optionalArgs (object____) (identity)
@@ -180,11 +180,11 @@ followers : (FollowersOptionalArguments -> FollowersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 followers fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "followers" optionalArgs (object____) (identity)
@@ -208,11 +208,11 @@ following : (FollowingOptionalArguments -> FollowingOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 following fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "following" optionalArgs (object____) (identity)
@@ -250,11 +250,11 @@ gistComments : (GistCommentsOptionalArguments -> GistCommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 gistComments fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "gistComments" optionalArgs (object____) (identity)
@@ -282,11 +282,11 @@ gists : (GistsOptionalArguments -> GistsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 gists fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "privacy" filledInOptionals.privacy ((Encode.enum GithubNoFormat.Enum.GistPrivacy.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeGistOrder) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.GistPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeGistOrder) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "gists" optionalArgs (object____) (identity)
@@ -364,11 +364,11 @@ issueComments : (IssueCommentsOptionalArguments -> IssueCommentsOptionalArgument
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 issueComments fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "issueComments" optionalArgs (object____) (identity)
@@ -398,11 +398,11 @@ issues : (IssuesOptionalArguments -> IssuesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 issues fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, labels = Absent, orderBy = Absent, states = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeIssueOrder), Argument.optional "states" filledInOptionals.states ((Encode.enum GithubNoFormat.Enum.IssueState.toString) |> Encode.list) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "labels" filledInOptionals____.labels (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeIssueOrder), Argument.optional "states" filledInOptionals____.states ((Encode.enum GithubNoFormat.Enum.IssueState.toString) |> Encode.list) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "issues" optionalArgs (object____) (identity)
@@ -461,11 +461,11 @@ organizations : (OrganizationsOptionalArguments -> OrganizationsOptionalArgument
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 organizations fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "organizations" optionalArgs (object____) (identity)
@@ -497,11 +497,11 @@ pinnedRepositories : (PinnedRepositoriesOptionalArguments -> PinnedRepositoriesO
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 pinnedRepositories fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "privacy" filledInOptionals.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked (Encode.bool) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals____.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked (Encode.bool) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "pinnedRepositories" optionalArgs (object____) (identity)
@@ -525,11 +525,11 @@ publicKeys : (PublicKeysOptionalArguments -> PublicKeysOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 publicKeys fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "publicKeys" optionalArgs (object____) (identity)
@@ -563,11 +563,11 @@ pullRequests : (PullRequestsOptionalArguments -> PullRequestsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 pullRequests fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, states = Absent, labels = Absent, headRefName = Absent, baseRefName = Absent, orderBy = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "states" filledInOptionals.states ((Encode.enum GithubNoFormat.Enum.PullRequestState.toString) |> Encode.list), Argument.optional "labels" filledInOptionals.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals.headRefName (Encode.string), Argument.optional "baseRefName" filledInOptionals.baseRefName (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeIssueOrder) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "states" filledInOptionals____.states ((Encode.enum GithubNoFormat.Enum.PullRequestState.toString) |> Encode.list), Argument.optional "labels" filledInOptionals____.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals____.headRefName (Encode.string), Argument.optional "baseRefName" filledInOptionals____.baseRefName (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeIssueOrder) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "pullRequests" optionalArgs (object____) (identity)
@@ -601,11 +601,11 @@ repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 repositories fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent, isFork = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "privacy" filledInOptionals.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked (Encode.bool), Argument.optional "isFork" filledInOptionals.isFork (Encode.bool) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals____.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked (Encode.bool), Argument.optional "isFork" filledInOptionals____.isFork (Encode.bool) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "repositories" optionalArgs (object____) (identity)
@@ -639,11 +639,11 @@ repositoriesContributedTo : (RepositoriesContributedToOptionalArguments -> Repos
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 repositoriesContributedTo fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, isLocked = Absent, includeUserRepositories = Absent, contributionTypes = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "privacy" filledInOptionals.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "isLocked" filledInOptionals.isLocked (Encode.bool), Argument.optional "includeUserRepositories" filledInOptionals.includeUserRepositories (Encode.bool), Argument.optional "contributionTypes" filledInOptionals.contributionTypes ((Encode.enum GithubNoFormat.Enum.RepositoryContributionType.toString) |> Encode.maybe |> Encode.list) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "isLocked" filledInOptionals____.isLocked (Encode.bool), Argument.optional "includeUserRepositories" filledInOptionals____.includeUserRepositories (Encode.bool), Argument.optional "contributionTypes" filledInOptionals____.contributionTypes ((Encode.enum GithubNoFormat.Enum.RepositoryContributionType.toString) |> Encode.maybe |> Encode.list) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "repositoriesContributedTo" optionalArgs (object____) (identity)
@@ -692,11 +692,11 @@ starredRepositories : (StarredRepositoriesOptionalArguments -> StarredRepositori
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 starredRepositories fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, ownedByViewer = Absent, orderBy = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "ownedByViewer" filledInOptionals.ownedByViewer (Encode.bool), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeStarOrder) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "ownedByViewer" filledInOptionals____.ownedByViewer (Encode.bool), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeStarOrder) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "starredRepositories" optionalArgs (object____) (identity)
@@ -756,11 +756,11 @@ watching : (WatchingOptionalArguments -> WatchingOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.User
 watching fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, privacy = Absent, orderBy = Absent, affiliations = Absent, isLocked = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "privacy" filledInOptionals.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals.isLocked (Encode.bool) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals____.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked (Encode.bool) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "watching" optionalArgs (object____) (identity)

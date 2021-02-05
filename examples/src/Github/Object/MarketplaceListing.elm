@@ -185,11 +185,11 @@ logoUrl :
     -> SelectionSet (Maybe Github.ScalarCodecs.Uri) Github.Object.MarketplaceListing
 logoUrl fillInOptionals____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { size = Absent }
 
         optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size Encode.int ]
+            [ Argument.optional "size" filledInOptionals____.size Encode.int ]
                 |> List.filterMap identity
     in
     Object.selectionForField "(Maybe ScalarCodecs.Uri)" "logoUrl" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)

@@ -111,11 +111,11 @@ pushAllowances :
     -> SelectionSet decodesTo Github.Object.ProtectedBranch
 pushAllowances fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "pushAllowances" optionalArgs object____ identity
@@ -159,11 +159,11 @@ reviewDismissalAllowances :
     -> SelectionSet decodesTo Github.Object.ProtectedBranch
 reviewDismissalAllowances fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs object____ identity

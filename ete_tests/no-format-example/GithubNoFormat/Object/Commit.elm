@@ -91,11 +91,11 @@ comments : (CommentsOptionalArguments -> CommentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 comments fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "comments" optionalArgs (object____) (identity)
@@ -170,11 +170,11 @@ history : (HistoryOptionalArguments -> HistoryOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 history fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, path = Absent, author = Absent, since = Absent, until = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "path" filledInOptionals.path (Encode.string), Argument.optional "author" filledInOptionals.author (GithubNoFormat.InputObject.encodeCommitAuthor), Argument.optional "since" filledInOptionals.since ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitTimestamp)), Argument.optional "until" filledInOptionals.until ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitTimestamp)) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "path" filledInOptionals____.path (Encode.string), Argument.optional "author" filledInOptionals____.author (GithubNoFormat.InputObject.encodeCommitAuthor), Argument.optional "since" filledInOptionals____.since ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitTimestamp)), Argument.optional "until" filledInOptionals____.until ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecGitTimestamp)) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "history" optionalArgs (object____) (identity)
@@ -245,11 +245,11 @@ parents : (ParentsOptionalArguments -> ParentsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.Commit
 parents fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "parents" optionalArgs (object____) (identity)

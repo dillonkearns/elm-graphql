@@ -87,11 +87,11 @@ marketplaceCategories :
     -> SelectionSet (List decodesTo) RootQuery
 marketplaceCategories fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { excludeEmpty = Absent }
 
         optionalArgs =
-            [ Argument.optional "excludeEmpty" filledInOptionals.excludeEmpty Encode.bool ]
+            [ Argument.optional "excludeEmpty" filledInOptionals____.excludeEmpty Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "marketplaceCategories" optionalArgs object____ (identity >> Decode.list)
@@ -182,11 +182,11 @@ marketplaceListings :
     -> SelectionSet decodesTo RootQuery
 marketplaceListings fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, categorySlug = Absent, viewerCanAdmin = Absent, adminId = Absent, organizationId = Absent, allStates = Absent, slugs = Absent, primaryCategoryOnly = Absent, withFreeTrialsOnly = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string, Argument.optional "categorySlug" filledInOptionals.categorySlug Encode.string, Argument.optional "viewerCanAdmin" filledInOptionals.viewerCanAdmin Encode.bool, Argument.optional "adminId" filledInOptionals.adminId (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId), Argument.optional "organizationId" filledInOptionals.organizationId (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId), Argument.optional "allStates" filledInOptionals.allStates Encode.bool, Argument.optional "slugs" filledInOptionals.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals.primaryCategoryOnly Encode.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals.withFreeTrialsOnly Encode.bool ]
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "categorySlug" filledInOptionals____.categorySlug Encode.string, Argument.optional "viewerCanAdmin" filledInOptionals____.viewerCanAdmin Encode.bool, Argument.optional "adminId" filledInOptionals____.adminId (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId), Argument.optional "organizationId" filledInOptionals____.organizationId (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecId), Argument.optional "allStates" filledInOptionals____.allStates Encode.bool, Argument.optional "slugs" filledInOptionals____.slugs (Encode.string |> Encode.maybe |> Encode.list), Argument.optional "primaryCategoryOnly" filledInOptionals____.primaryCategoryOnly Encode.bool, Argument.optional "withFreeTrialsOnly" filledInOptionals____.withFreeTrialsOnly Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "marketplaceListings" optionalArgs object____ identity
@@ -267,11 +267,11 @@ rateLimit :
     -> SelectionSet (Maybe decodesTo) RootQuery
 rateLimit fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { dryRun = Absent }
 
         optionalArgs =
-            [ Argument.optional "dryRun" filledInOptionals.dryRun Encode.bool ]
+            [ Argument.optional "dryRun" filledInOptionals____.dryRun Encode.bool ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "rateLimit" optionalArgs object____ (identity >> Decode.nullable)
@@ -371,11 +371,11 @@ search :
     -> SelectionSet decodesTo RootQuery
 search fillInOptionals____ requiredArgs object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first Encode.int, Argument.optional "after" filledInOptionals.after Encode.string, Argument.optional "last" filledInOptionals.last Encode.int, Argument.optional "before" filledInOptionals.before Encode.string ]
+            [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "search" (optionalArgs ++ [ Argument.required "query" requiredArgs.query Encode.string, Argument.required "type" requiredArgs.type_ (Encode.enum Github.Enum.SearchType.toString) ]) object____ identity

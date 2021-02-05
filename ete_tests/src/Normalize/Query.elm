@@ -86,11 +86,11 @@ hero :
     -> SelectionSet decodesTo RootQuery
 hero fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { episode = Absent }
 
         optionalArgs =
-            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
+            [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "hero" optionalArgs object____ identity
@@ -111,11 +111,11 @@ heroUnion :
     -> SelectionSet (Maybe decodesTo) RootQuery
 heroUnion fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { episode = Absent }
 
         optionalArgs =
-            [ Argument.optional "episode" filledInOptionals.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
+            [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
                 |> List.filterMap identity
     in
     Object.selectionForCompositeField "heroUnion" optionalArgs object____ (identity >> Decode.nullable)
@@ -163,11 +163,11 @@ type_ :
     -> SelectionSet String RootQuery
 type_ fillInOptionals____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { input = Absent }
 
         optionalArgs =
-            [ Argument.optional "input" filledInOptionals.input Normalize.InputObject.encodeReservedWord ]
+            [ Argument.optional "input" filledInOptionals____.input Normalize.InputObject.encodeReservedWord ]
                 |> List.filterMap identity
     in
     Object.selectionForField "String" "type" optionalArgs Decode.string

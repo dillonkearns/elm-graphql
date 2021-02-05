@@ -213,11 +213,11 @@ shortDescriptionHTML :
     -> SelectionSet Github.ScalarCodecs.Html Github.Interface.RepositoryInfo
 shortDescriptionHTML fillInOptionals____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { limit = Absent }
 
         optionalArgs =
-            [ Argument.optional "limit" filledInOptionals.limit Encode.int ]
+            [ Argument.optional "limit" filledInOptionals____.limit Encode.int ]
                 |> List.filterMap identity
     in
     Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)

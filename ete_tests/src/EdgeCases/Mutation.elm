@@ -28,11 +28,11 @@ createPunchListItem :
     -> SelectionSet String RootMutation
 createPunchListItem fillInOptionals____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { shapes = Absent }
 
         optionalArgs =
-            [ Argument.optional "shapes" filledInOptionals.shapes (EdgeCases.InputObject.encodeShapeInput |> Encode.maybe |> Encode.list) ]
+            [ Argument.optional "shapes" filledInOptionals____.shapes (EdgeCases.InputObject.encodeShapeInput |> Encode.maybe |> Encode.list) ]
                 |> List.filterMap identity
     in
     Object.selectionForField "String" "createPunchListItem" optionalArgs Decode.string

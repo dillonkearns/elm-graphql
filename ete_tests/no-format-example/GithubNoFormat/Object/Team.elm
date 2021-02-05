@@ -37,11 +37,11 @@ ancestors : (AncestorsOptionalArguments -> AncestorsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
 ancestors fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "ancestors" optionalArgs (object____) (identity)
@@ -58,11 +58,11 @@ avatarUrl : (AvatarUrlOptionalArguments -> AvatarUrlOptionalArguments)
  -> SelectionSet (Maybe GithubNoFormat.ScalarCodecs.Uri) GithubNoFormat.Object.Team
 avatarUrl fillInOptionals____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { size = Absent }
 
         optionalArgs =
-            [ Argument.optional "size" filledInOptionals.size (Encode.int) ]
+            [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
                 |> List.filterMap identity
     in
       Object.selectionForField "(Maybe ScalarCodecs.Uri)" "avatarUrl" optionalArgs (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
@@ -92,11 +92,11 @@ childTeams : (ChildTeamsOptionalArguments -> ChildTeamsOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
 childTeams fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, orderBy = Absent, userLogins = Absent, immediateOnly = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeTeamOrder), Argument.optional "userLogins" filledInOptionals.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals.immediateOnly (Encode.bool) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeTeamOrder), Argument.optional "userLogins" filledInOptionals____.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals____.immediateOnly (Encode.bool) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "childTeams" optionalArgs (object____) (identity)
@@ -160,11 +160,11 @@ invitations : (InvitationsOptionalArguments -> InvitationsOptionalArguments)
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Team
 invitations fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "invitations" optionalArgs (object____) (identity >> Decode.nullable)
@@ -194,11 +194,11 @@ members : (MembersOptionalArguments -> MembersOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
 members fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, membership = Absent, role = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "query" filledInOptionals.query (Encode.string), Argument.optional "membership" filledInOptionals.membership ((Encode.enum GithubNoFormat.Enum.TeamMembershipType.toString)), Argument.optional "role" filledInOptionals.role ((Encode.enum GithubNoFormat.Enum.TeamMemberRole.toString)) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "query" filledInOptionals____.query (Encode.string), Argument.optional "membership" filledInOptionals____.membership ((Encode.enum GithubNoFormat.Enum.TeamMembershipType.toString)), Argument.optional "role" filledInOptionals____.role ((Encode.enum GithubNoFormat.Enum.TeamMemberRole.toString)) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "members" optionalArgs (object____) (identity)
@@ -284,11 +284,11 @@ repositories : (RepositoriesOptionalArguments -> RepositoriesOptionalArguments)
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
 repositories fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { first = Absent, after = Absent, last = Absent, before = Absent, query = Absent, orderBy = Absent }
 
         optionalArgs =
-            [ Argument.optional "first" filledInOptionals.first (Encode.int), Argument.optional "after" filledInOptionals.after (Encode.string), Argument.optional "last" filledInOptionals.last (Encode.int), Argument.optional "before" filledInOptionals.before (Encode.string), Argument.optional "query" filledInOptionals.query (Encode.string), Argument.optional "orderBy" filledInOptionals.orderBy (GithubNoFormat.InputObject.encodeTeamRepositoryOrder) ]
+            [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "query" filledInOptionals____.query (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeTeamRepositoryOrder) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "repositories" optionalArgs (object____) (identity)

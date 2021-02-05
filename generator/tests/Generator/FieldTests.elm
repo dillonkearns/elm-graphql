@@ -145,11 +145,11 @@ menuItems : (MenuItemsOptionalArguments -> MenuItemsOptionalArguments)
  -> SelectionSet (List decodesTo) RootQuery
 menuItems fillInOptionals____ object____ =
     let
-        filledInOptionals =
+        filledInOptionals____ =
             fillInOptionals____ { contains = Absent }
 
         optionalArgs =
-            [ Argument.optional "contains" filledInOptionals.contains (Encode.string) ]
+            [ Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
                 |> List.filterMap identity
     in
       Object.selectionForCompositeField "menuItems" optionalArgs (object____) (identity >> Decode.list)
