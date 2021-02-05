@@ -692,7 +692,7 @@ type alias RepositoriesContributedToOptionalArguments =
   - orderBy - Ordering options for repositories returned from the connection
   - isLocked - If non-null, filters repositories according to whether they have been locked
   - includeUserRepositories - If true, include user repositories
-  - contributionTypes - If non-null, include only the specified types of contributions. The GitHub.com UI uses [COMMIT, ISSUE, PULL\_REQUEST, REPOSITORY][COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
+  - contributionTypes - If non-null, include only the specified types of contributions. The GitHub.com UI uses [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
 
 -}
 repositoriesContributedTo :
