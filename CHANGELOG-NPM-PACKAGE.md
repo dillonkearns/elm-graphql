@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Added long `_` suffix to generated parameter and let binding names to prevent any shadowing issues in generated code (see [#457](https://github.com/dillonkearns/elm-graphql/pull/457)).
+- Don't require `npx` to run `elm-format`. Instead, `elm-graphql` will now look on the PATH to try to find `elm-format`, and give an error message if it is not found. See [#458](https://github.com/dillonkearns/elm-graphql/pull/458).
+
+### Changed
+
+- Node 10 is now the minimum supported Node version. `elm-graphql` now uses the `fs` package directly from Node instead of using `fs-extra`.
+- Remove unused dependencies.
 
 ## [4.1.4] - 2021-02-04
 
