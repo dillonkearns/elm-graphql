@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Added long `_` suffix to generated parameter and let binding names to prevent any shadowing issues in generated code (see [#457](https://github.com/dillonkearns/elm-graphql/pull/457)).
+
 ## [4.1.4] - 2021-02-04
 
 ### Fixed
