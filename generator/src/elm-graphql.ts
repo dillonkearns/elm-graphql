@@ -5,8 +5,6 @@ console.warn = function() {};
 const { Elm } = require("./Main.elm");
 import * as fs from "fs-extra";
 import { GraphQLClient } from "graphql-request";
-import * as http from "http";
-import * as request from "request";
 import { applyElmFormat } from "./formatted-write";
 import { introspectionQuery } from "./introspection-query";
 import * as glob from "glob";

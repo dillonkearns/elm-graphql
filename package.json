@@ -29,7 +29,6 @@
     "@types/fs-extra": "^7.0.0",
     "@types/glob": "^7.1.1",
     "@types/node": "^12.0.2",
-    "@types/request": "^2.48.1",
     "elm-hot": "^1.1.4",
     "elm-hot-loader": "0.5.4",
     "elm-live": "3.4.0",
@@ -47,8 +46,7 @@
   },
   "dependencies": {
     "glob": "^7.1.6",
-    "graphql-request": "^3.4.0",
-    "request": "^2.88.0"
+    "graphql-request": "^3.4.0"
   },
   "bin": {
     "elm-graphql": "bin/elm-graphql"
