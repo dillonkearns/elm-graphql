@@ -59,7 +59,7 @@ generate context { name, fields, hasLoop } =
                     )
                  , when (List.length optionalFields > 0)
                     ( interpolate "({0}OptionalFields -> {0}OptionalFields)" [ ClassCaseName.normalized name ]
-                    , "fillOptionals"
+                    , "fillOptionals____"
                     )
                  ]
                     |> compact
@@ -72,7 +72,7 @@ generate context { name, fields, hasLoop } =
                 ([ when (List.length optionalFields > 0)
                     ( "optionals"
                     , interpolate """
-            fillOptionals
+            fillOptionals____
                 { {0} }"""
                         [ filledOptionalsRecord optionalFields ]
                     )

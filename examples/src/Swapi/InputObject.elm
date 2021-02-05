@@ -22,10 +22,10 @@ buildGreeting :
     GreetingRequiredFields
     -> (GreetingOptionalFields -> GreetingOptionalFields)
     -> Greeting
-buildGreeting required____ fillOptionals =
+buildGreeting required____ fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { language = Absent, options = Absent }
     in
     { language = optionals.language, name = required____.name, options = optionals.options }
@@ -61,10 +61,10 @@ encodeGreeting input =
 buildGreetingOptions :
     (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields)
     -> GreetingOptions
-buildGreetingOptions fillOptionals =
+buildGreetingOptions fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { prefix = Absent }
     in
     { prefix = optionals.prefix }

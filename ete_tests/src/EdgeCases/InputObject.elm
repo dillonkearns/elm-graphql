@@ -20,10 +20,10 @@ import Json.Decode as Decode
 buildShapeInput :
     (ShapeInputOptionalFields -> ShapeInputOptionalFields)
     -> ShapeInput
-buildShapeInput fillOptionals =
+buildShapeInput fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { kind = Absent, geometry = Absent }
     in
     { kind = optionals.kind, geometry = optionals.geometry }

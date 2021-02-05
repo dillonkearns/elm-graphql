@@ -21,10 +21,10 @@ import Normalize.Union
 buildCircularOne :
     (CircularOneOptionalFields -> CircularOneOptionalFields)
     -> CircularOne
-buildCircularOne fillOptionals =
+buildCircularOne fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { circularTwo = Absent }
     in
     CircularOne { circularTwo = optionals.circularTwo }
@@ -60,10 +60,10 @@ encodeCircularOne (CircularOne input) =
 buildCircularTwo :
     (CircularTwoOptionalFields -> CircularTwoOptionalFields)
     -> CircularTwo
-buildCircularTwo fillOptionals =
+buildCircularTwo fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { circularOne = Absent }
     in
     CircularTwo { circularOne = optionals.circularOne }
@@ -100,10 +100,10 @@ buildGreeting :
     GreetingRequiredFields
     -> (GreetingOptionalFields -> GreetingOptionalFields)
     -> Greeting
-buildGreeting required____ fillOptionals =
+buildGreeting required____ fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { language = Absent, options = Absent }
     in
     { language = optionals.language, name = required____.name, options = optionals.options }
@@ -139,10 +139,10 @@ encodeGreeting input =
 buildGreetingOptions :
     (GreetingOptionsOptionalFields -> GreetingOptionsOptionalFields)
     -> GreetingOptions
-buildGreetingOptions fillOptionals =
+buildGreetingOptions fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { prefix = Absent }
     in
     { prefix = optionals.prefix }
@@ -169,10 +169,10 @@ encodeGreetingOptions input =
 buildRecursive :
     (RecursiveOptionalFields -> RecursiveOptionalFields)
     -> Recursive
-buildRecursive fillOptionals =
+buildRecursive fillOptionals____ =
     let
         optionals =
-            fillOptionals
+            fillOptionals____
                 { recursive = Absent }
     in
     Recursive { recursive = optionals.recursive }
