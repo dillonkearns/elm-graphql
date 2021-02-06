@@ -70,13 +70,13 @@ Once you've installed everything, running the `elm-graphql` code generation tool
 is as simple as this:
 
 ```bash
-elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src
+npx elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src
 ```
 
 If headers are required, such as a Bearer Token, the `--header` flag can be supplied.
 
 ```bash
-elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src --header 'headerKey: header value'
+npx elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src --header 'headerKey: header value'
 ```
 
 ## Learning Resources
@@ -121,7 +121,7 @@ There's a very helpful group of people in the #graphql channel in [the Elm Slack
 
    ```shell
    npm install --save-dev @dillonkearns/elm-graphql
-   # you can now run it locally with the ./node_modules/.bin/elm-graphql binary,
+   # you can now run it locally using `npx elm-graphql`,
    # or by calling it through an npm script as in this project's package.json
    ```
 

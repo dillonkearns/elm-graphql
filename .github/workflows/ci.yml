@@ -74,6 +74,7 @@ jobs:
           token: ${{ secrets.NPM_TOKEN }}
       - run: (cd examples/subscription/ && npm ci && npm run build)
       - name: Deploy Subscriptions example
+        if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
