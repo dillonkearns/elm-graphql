@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.4] - 2021-02-10
+
+### Fixed
+
+- The README now shows a badge with the GitHub Actions CI status (Travis is deprecated and is no longer being used here).
+
 ## [5.0.3] - 2020-10-18
 
 ### Changed
@@ -108,8 +114,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   In order to allow `dillonkearns/elm-graphql` users to capture the body of
   responses with a bad status, we need to do a major version bump.
 
-
-    In a nutshell, this change introduces a custom type that looks like this:
+  In a nutshell, this change introduces a custom type that looks like this:
 
 ```elm
 module Graphql.Http.Error exposing -- ..
