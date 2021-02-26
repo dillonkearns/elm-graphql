@@ -84,7 +84,7 @@ all =
                 ]
                     |> InputObjectLoops.any
                     |> Expect.equal True
-        , test "deeploy nested loops through list reference" <|
+        , test "deeply nested loops through list reference" <|
             \() ->
                 [ TypeDefinition (ClassCaseName.build "CircularInputObjectOne")
                     (InputObjectType [ field "CircularInputObjectTwo" "fieldNameOne" ])
@@ -115,6 +115,31 @@ all =
                     (InputObjectType [ field "ProductInput" "newProduct" ])
                     Nothing
                 , TypeDefinition (ClassCaseName.build "ProductInput")
+                    (InputObjectType [ scalarField "name" ])
+                    Nothing
+                ]
+                    |> InputObjectLoops.any
+                    |> Expect.equal False
+        , test "extremely deeply nested through mixed references non-circular" <|
+            \() ->
+                [ TypeDefinition (ClassCaseName.build "InputTypeOne")
+                    (InputObjectType
+                        [ fieldListRef "InputTypeTwo" "typeTwos" ]
+                    )
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "InputTypeTwo")
+                    (InputObjectType [ fieldListRef "InputTypeThree" "typeThrees" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "InputTypeThree")
+                    (InputObjectType [ fieldListRef "InputTypeFour" "typeFours" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "InputTypeFour")
+                    (InputObjectType [ field "InputTypeFive" "typeFive" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "InputTypeFive")
+                    (InputObjectType [ field "InputTypeSix" "typeSix" ])
+                    Nothing
+                , TypeDefinition (ClassCaseName.build "InputTypeSix")
                     (InputObjectType [ scalarField "name" ])
                     Nothing
                 ]
