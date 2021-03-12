@@ -34,7 +34,7 @@
     "elm-live": "4.0.2",
     "elm-review": "^2.4.6",
     "elm-test": "^0.19.1-revision6",
-    "elm-tooling": "^1.2.0",
+    "elm-tooling": "^1.3.0",
     "graphql": "^15.5.0",
     "node-elm-compiler": "^5.0.3",
     "parcel-bundler": "^1.12.3",
