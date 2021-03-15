@@ -44,7 +44,7 @@ fieldIsCircular_ visitedNames typeDefs inputObjectName fieldTypeRef =
                             not alreadyVisitedThis
                                 || isRecursive inputObjectName fields
                                 || List.any
-                                    (fieldIsCircular_ (inputObjectName :: visitedNames) typeDefs inputObjectName)
+                                    (fieldIsCircular_ (inputObjectName :: visitedNames) typeDefs name)
                                     (fields |> List.map .typeRef)
 
                         Nothing ->
