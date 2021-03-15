@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.1] - 2021-03-15
+
+### Fixed
+
+- The input object loop detection had some false positives. This fix prevents using nested input object loop wrappers for some deeply nested input objects that are actually not circular. See [#475](https://github.com/dillonkearns/elm-graphql/pull/475/). Thank you [@mcasper](https://github.com/mcasper)!
+
 ## [4.2.0] - 2021-02-05
 
 ### Fixed
