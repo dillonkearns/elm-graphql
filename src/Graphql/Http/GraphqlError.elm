@@ -19,7 +19,7 @@ constraint that the schema doesn't specify, or 2) when your generated code is
 out of date with the schema.
 
 See the
-[Errors section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Errors)
+[Errors section in the GraphQL spec](https://spec.graphql.org/June2018/#sec-Errors)
 for more details about GraphQL errors.
 
 -}
@@ -27,6 +27,7 @@ type alias GraphqlError =
     { message : String
     , locations : Maybe (List Location)
     , details : Dict String Decode.Value
+    , extensions : Maybe (Dict String Decode.Value)
     }
 
 
@@ -47,13 +48,14 @@ type PossiblyParsedData parsed
 -}
 decoder : Decoder (List GraphqlError)
 decoder =
-    Decode.map3 GraphqlError
+    Decode.map4 GraphqlError
         (Decode.field "message" Decode.string)
         (Decode.maybe (Decode.field "locations" (Decode.list locationDecoder)))
         (Decode.dict Decode.value
             |> Decode.map (Dict.remove "message")
             |> Decode.map (Dict.remove "locations")
         )
+        (Decode.maybe (Decode.field "extensions" (Decode.dict Decode.value)))
         |> Decode.list
         |> Decode.field "errors"
 
