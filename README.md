@@ -188,7 +188,7 @@ Github issue to discuss!
 
 I would like to investigate generating helpers to make pagination simpler
 for Connections (based on the
-[Relay Cursor Connections Specification](https://facebook.github.io/relay/graphql/connections.htm)).
+[Relay Cursor Connections Specification](https://relay.dev/graphql/connections.htm)).
 If you have ideas on this chime in on [this thread](https://github.com/dillonkearns/elm-graphql/issues/29).
 
 See [the full roadmap on Trello](https://trello.com/b/BCIWtZeL/dillonkearns-elm-graphql).
