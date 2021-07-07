@@ -27,7 +27,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@types/cross-spawn": "^6.0.2",
-    "@types/glob": "^7.1.1",
+    "@types/glob": "^7.1.4",
     "@types/node": "^12.0.2",
     "elm-hot": "^1.1.4",
     "elm-hot-loader": "0.5.4",
