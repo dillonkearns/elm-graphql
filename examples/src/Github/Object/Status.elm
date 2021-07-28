@@ -26,7 +26,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.Status
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "commit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 type alias ContextRequiredArguments =
@@ -43,7 +43,7 @@ context :
     -> SelectionSet decodesTo Github.Object.StatusContext
     -> SelectionSet (Maybe decodesTo) Github.Object.Status
 context requiredArgs____ object____ =
-    Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs____.name Encode.string ] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.
@@ -52,7 +52,7 @@ contexts :
     SelectionSet decodesTo Github.Object.StatusContext
     -> SelectionSet (List decodesTo) Github.Object.Status
 contexts object____ =
-    Object.selectionForCompositeField "contexts" [] object____ (identity >> Decode.list)
+    Object.selectionForCompositeField "contexts" [] object____ (Basics.identity >> Decode.list)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Status

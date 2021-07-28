@@ -75,9 +75,9 @@ columns fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "columns" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "columns" optionalArgs____ object____ Basics.identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -93,7 +93,7 @@ creator :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.Project
 creator object____ =
-    Object.selectionForCompositeField "creator" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "creator" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -128,7 +128,7 @@ owner :
     SelectionSet decodesTo Github.Interface.ProjectOwner
     -> SelectionSet decodesTo Github.Object.Project
 owner object____ =
-    Object.selectionForCompositeField "owner" [] object____ identity
+    Object.selectionForCompositeField "owner" [] object____ Basics.identity
 
 
 type alias PendingCardsOptionalArguments =
@@ -158,9 +158,9 @@ pendingCards fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "pendingCards" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "pendingCards" optionalArgs____ object____ Basics.identity
 
 
 {-| The HTTP path for this project

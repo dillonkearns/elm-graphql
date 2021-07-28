@@ -32,4 +32,4 @@ node :
     SelectionSet decodesTo Github.Object.MarketplaceListing
     -> SelectionSet (Maybe decodesTo) Github.Object.MarketplaceListingEdge
 node object____ =
-    Object.selectionForCompositeField "node" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [] object____ (Basics.identity >> Decode.nullable)

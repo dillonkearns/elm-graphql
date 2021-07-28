@@ -49,7 +49,7 @@ signature =
 signer : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.UnknownSignature
 signer object____ =
-      Object.selectionForCompositeField "signer" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "signer" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid.

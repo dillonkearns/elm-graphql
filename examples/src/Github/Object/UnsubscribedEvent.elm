@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.UnsubscribedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -46,4 +46,4 @@ subscribable :
     SelectionSet decodesTo Github.Interface.Subscribable
     -> SelectionSet decodesTo Github.Object.UnsubscribedEvent
 subscribable object____ =
-    Object.selectionForCompositeField "subscribable" [] object____ identity
+    Object.selectionForCompositeField "subscribable" [] object____ Basics.identity

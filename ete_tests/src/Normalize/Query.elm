@@ -40,7 +40,7 @@ conflictingTypesUnion :
     SelectionSet decodesTo Normalize.Union.ConflictingTypesUnion
     -> SelectionSet decodesTo RootQuery
 conflictingTypesUnion object____ =
-    Object.selectionForCompositeField "conflictingTypesUnion" [] object____ identity
+    Object.selectionForCompositeField "conflictingTypesUnion" [] object____ Basics.identity
 
 
 type alias DroidRequiredArguments =
@@ -57,7 +57,7 @@ droid_ :
     -> SelectionSet decodesTo Normalize.Object.Droid
     -> SelectionSet (Maybe decodesTo) RootQuery
 droid_ requiredArgs____ object____ =
-    Object.selectionForCompositeField "_droid" [ Argument.required "_iD" requiredArgs____.iD_ (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "_droid" [ Argument.required "_iD" requiredArgs____.iD_ (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object____ (Basics.identity >> Decode.nullable)
 
 
 type alias GreetRequiredArguments =
@@ -91,9 +91,9 @@ hero fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "hero" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "hero" optionalArgs____ object____ Basics.identity
 
 
 type alias HeroUnionOptionalArguments =
@@ -116,9 +116,9 @@ heroUnion fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "episode" filledInOptionals____.episode (Encode.enum Normalize.Enum.Episode_.toString) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "heroUnion" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "heroUnion" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 type alias HumanRequiredArguments =
@@ -135,7 +135,7 @@ human :
     -> SelectionSet decodesTo Normalize.Object.Human_
     -> SelectionSet (Maybe decodesTo) RootQuery
 human requiredArgs____ object____ =
-    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs____.id (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "human" [ Argument.required "id" requiredArgs____.id (Normalize.ScalarCodecs.codecs |> Normalize.Scalar.unwrapEncoder .codecId) ] object____ (Basics.identity >> Decode.nullable)
 
 
 type alias RecursiveInputRequiredArguments =
@@ -168,6 +168,6 @@ type_ fillInOptionals____ =
 
         optionalArgs____ =
             [ Argument.optional "input" filledInOptionals____.input Normalize.InputObject.encodeReservedWord ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
     Object.selectionForField "String" "type" optionalArgs____ Decode.string

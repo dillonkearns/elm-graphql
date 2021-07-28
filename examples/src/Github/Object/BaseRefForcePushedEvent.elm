@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the after commit SHA for the 'base\_ref\_force\_pushed' event.
@@ -34,7 +34,7 @@ afterCommit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
 afterCommit object____ =
-    Object.selectionForCompositeField "afterCommit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "afterCommit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the before commit SHA for the 'base\_ref\_force\_pushed' event.
@@ -43,7 +43,7 @@ beforeCommit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
 beforeCommit object____ =
-    Object.selectionForCompositeField "beforeCommit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "beforeCommit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -64,7 +64,7 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.BaseRefForcePushedEvent
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity
 
 
 {-| Identifies the fully qualified ref name for the 'base\_ref\_force\_pushed' event.
@@ -73,4 +73,4 @@ ref :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.BaseRefForcePushedEvent
 ref object____ =
-    Object.selectionForCompositeField "ref" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "ref" [] object____ (Basics.identity >> Decode.nullable)

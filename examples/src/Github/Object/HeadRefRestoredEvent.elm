@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefRestoredEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -46,4 +46,4 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.HeadRefRestoredEvent
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity

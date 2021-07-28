@@ -21,7 +21,7 @@ import GithubNoFormat.Enum.DeploymentState
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
 commit object____ =
-      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "commit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -36,7 +36,7 @@ createdAt =
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
 creator object____ =
-      Object.selectionForCompositeField "creator" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "creator" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -63,7 +63,7 @@ id =
 latestStatus : SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Deployment
 latestStatus object____ =
-      Object.selectionForCompositeField "latestStatus" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "latestStatus" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Extra information that a deployment system might need.
@@ -78,7 +78,7 @@ payload =
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.Deployment
 repository object____ =
-      Object.selectionForCompositeField "repository" [] (object____) (identity)
+      Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The current state of the deployment.
@@ -111,6 +111,6 @@ statuses fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "statuses" optionalArgs____ (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "statuses" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)

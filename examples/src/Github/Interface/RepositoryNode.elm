@@ -68,4 +68,4 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Interface.RepositoryNode
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity

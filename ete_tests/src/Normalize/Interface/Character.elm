@@ -61,7 +61,7 @@ friends :
     SelectionSet decodesTo Normalize.Interface.Character
     -> SelectionSet (List decodesTo) Normalize.Interface.Character
 friends object____ =
-    Object.selectionForCompositeField "friends" [] object____ (identity >> Decode.list)
+    Object.selectionForCompositeField "friends" [] object____ (Basics.identity >> Decode.list)
 
 
 {-| The ID of the character.

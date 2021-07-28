@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefForcePushedEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the after commit SHA for the 'head_ref_force_pushed' event.
@@ -29,7 +29,7 @@ actor object____ =
 afterCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefForcePushedEvent
 afterCommit object____ =
-      Object.selectionForCompositeField "afterCommit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "afterCommit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the before commit SHA for the 'head_ref_force_pushed' event.
@@ -37,7 +37,7 @@ afterCommit object____ =
 beforeCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefForcePushedEvent
 beforeCommit object____ =
-      Object.selectionForCompositeField "beforeCommit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "beforeCommit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -57,7 +57,7 @@ id =
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.HeadRefForcePushedEvent
 pullRequest object____ =
-      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
+      Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
 
 {-| Identifies the fully qualified ref name for the 'head_ref_force_pushed' event.
@@ -65,4 +65,4 @@ pullRequest object____ =
 ref : SelectionSet decodesTo GithubNoFormat.Object.Ref
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefForcePushedEvent
 ref object____ =
-      Object.selectionForCompositeField "ref" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "ref" [] (object____) (Basics.identity >> Decode.nullable)

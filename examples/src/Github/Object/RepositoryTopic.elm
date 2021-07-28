@@ -37,7 +37,7 @@ topic :
     SelectionSet decodesTo Github.Object.Topic
     -> SelectionSet decodesTo Github.Object.RepositoryTopic
 topic object____ =
-    Object.selectionForCompositeField "topic" [] object____ identity
+    Object.selectionForCompositeField "topic" [] object____ Basics.identity
 
 
 {-| The HTTP URL for this repository-topic.

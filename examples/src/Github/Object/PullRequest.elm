@@ -68,9 +68,9 @@ assignees fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "assignees" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "assignees" optionalArgs____ object____ Basics.identity
 
 
 {-| The actor who authored the comment.
@@ -79,7 +79,7 @@ author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 author object____ =
-    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -95,7 +95,7 @@ baseRef :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 baseRef object____ =
-    Object.selectionForCompositeField "baseRef" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "baseRef" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the name of the base Ref associated with the pull request, even if the ref has been deleted.
@@ -181,9 +181,9 @@ comments fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "comments" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "comments" optionalArgs____ object____ Basics.identity
 
 
 type alias CommitsOptionalArguments =
@@ -213,9 +213,9 @@ commits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "commits" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "commits" optionalArgs____ object____ Basics.identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -252,7 +252,7 @@ editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 editor object____ =
-    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "editor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the head Ref associated with the pull request.
@@ -261,7 +261,7 @@ headRef :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 headRef object____ =
-    Object.selectionForCompositeField "headRef" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "headRef" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the name of the head Ref associated with the pull request, even if the ref has been deleted.
@@ -284,7 +284,7 @@ headRepository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 headRepository object____ =
-    Object.selectionForCompositeField "headRepository" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "headRepository" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The owner of the repository associated with this pull request's head Ref.
@@ -293,7 +293,7 @@ headRepositoryOwner :
     SelectionSet decodesTo Github.Interface.RepositoryOwner
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 headRepositoryOwner object____ =
-    Object.selectionForCompositeField "headRepositoryOwner" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "headRepositoryOwner" [] object____ (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.PullRequest
@@ -335,9 +335,9 @@ labels fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "labels" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "labels" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The moment the editor made the last edit
@@ -360,7 +360,7 @@ mergeCommit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 mergeCommit object____ =
-    Object.selectionForCompositeField "mergeCommit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "mergeCommit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Whether or not the pull request can be merged based on the existence of merge conflicts.
@@ -390,7 +390,7 @@ milestone :
     SelectionSet decodesTo Github.Object.Milestone
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 milestone object____ =
-    Object.selectionForCompositeField "milestone" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "milestone" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the pull request number.
@@ -427,9 +427,9 @@ participants fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "participants" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "participants" optionalArgs____ object____ Basics.identity
 
 
 {-| The commit that GitHub automatically generated to test if this pull request could be merged. This field will not return a value if the pull request is merged, or if the test merge commit is still being generated. See the `mergeable` field for more details on the mergeability of the pull request.
@@ -438,7 +438,7 @@ potentialMergeCommit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.PullRequest
 potentialMergeCommit object____ =
-    Object.selectionForCompositeField "potentialMergeCommit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "potentialMergeCommit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 type alias ProjectCardsOptionalArguments =
@@ -468,9 +468,9 @@ projectCards fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "projectCards" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "projectCards" optionalArgs____ object____ Basics.identity
 
 
 {-| Identifies when the comment was published at.
@@ -486,7 +486,7 @@ reactionGroups :
     SelectionSet decodesTo Github.Object.ReactionGroup
     -> SelectionSet (Maybe (List decodesTo)) Github.Object.PullRequest
 reactionGroups object____ =
-    Object.selectionForCompositeField "reactionGroups" [] object____ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "reactionGroups" [] object____ (Basics.identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -520,9 +520,9 @@ reactions fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "content" filledInOptionals____.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeReactionOrder ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "reactions" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "reactions" optionalArgs____ object____ Basics.identity
 
 
 {-| The repository associated with this node.
@@ -531,7 +531,7 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.PullRequest
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity
 
 
 {-| The HTTP path for this pull request.
@@ -582,9 +582,9 @@ reviewRequests fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "reviewRequests" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "reviewRequests" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 type alias ReviewsOptionalArguments =
@@ -618,9 +618,9 @@ reviews fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "states" filledInOptionals____.states (Encode.enum Github.Enum.PullRequestReviewState.toString |> Encode.list), Argument.optional "author" filledInOptionals____.author Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "reviews" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "reviews" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the state of the pull request.
@@ -636,7 +636,7 @@ suggestedReviewers :
     SelectionSet decodesTo Github.Object.SuggestedReviewer
     -> SelectionSet (List (Maybe decodesTo)) Github.Object.PullRequest
 suggestedReviewers object____ =
-    Object.selectionForCompositeField "suggestedReviewers" [] object____ (identity >> Decode.nullable >> Decode.list)
+    Object.selectionForCompositeField "suggestedReviewers" [] object____ (Basics.identity >> Decode.nullable >> Decode.list)
 
 
 type alias TimelineOptionalArguments =
@@ -668,9 +668,9 @@ timeline fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "since" filledInOptionals____.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecDateTime) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "timeline" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "timeline" optionalArgs____ object____ Basics.identity
 
 
 {-| Identifies the pull request title.
@@ -721,9 +721,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Can user react to this subject

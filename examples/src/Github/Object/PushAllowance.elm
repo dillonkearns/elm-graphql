@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Union.PushAllowanceActor
     -> SelectionSet (Maybe decodesTo) Github.Object.PushAllowance
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.PushAllowance
@@ -39,4 +39,4 @@ protectedBranch :
     SelectionSet decodesTo Github.Object.ProtectedBranch
     -> SelectionSet decodesTo Github.Object.PushAllowance
 protectedBranch object____ =
-    Object.selectionForCompositeField "protectedBranch" [] object____ identity
+    Object.selectionForCompositeField "protectedBranch" [] object____ Basics.identity

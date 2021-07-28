@@ -52,7 +52,7 @@ reactable :
     SelectionSet decodesTo Github.Interface.Reactable
     -> SelectionSet decodesTo Github.Object.Reaction
 reactable object____ =
-    Object.selectionForCompositeField "reactable" [] object____ identity
+    Object.selectionForCompositeField "reactable" [] object____ Basics.identity
 
 
 {-| Identifies the user who created this reaction.
@@ -61,4 +61,4 @@ user :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.Reaction
 user object____ =
-    Object.selectionForCompositeField "user" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "user" [] object____ (Basics.identity >> Decode.nullable)

@@ -25,7 +25,7 @@ associated with a column, they will not become pending in the future.
 column : SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
 column object____ =
-      Object.selectionForCompositeField "column" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "column" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The card content item
@@ -33,7 +33,7 @@ column object____ =
 content : SelectionSet decodesTo GithubNoFormat.Union.ProjectCardItem
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
 content object____ =
-      Object.selectionForCompositeField "content" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "content" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -48,7 +48,7 @@ createdAt =
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProjectCard
 creator object____ =
-      Object.selectionForCompositeField "creator" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "creator" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -75,7 +75,7 @@ note =
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
 project object____ =
-      Object.selectionForCompositeField "project" [] (object____) (identity)
+      Object.selectionForCompositeField "project" [] (object____) (Basics.identity)
 
 
 {-| The column that contains this card.
@@ -83,7 +83,7 @@ project object____ =
 projectColumn : SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
 projectColumn object____ =
-      Object.selectionForCompositeField "projectColumn" [] (object____) (identity)
+      Object.selectionForCompositeField "projectColumn" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this card

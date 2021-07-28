@@ -50,13 +50,13 @@ generateDecoder context (Type.TypeReference referrableType isNullable) =
             generateDecoder context listTypeRef ++ [ "Decode.list" ]
 
         Type.ObjectRef objectName ->
-            [ "identity" ]
+            [ "Basics.identity" ]
 
         Type.InterfaceRef interfaceName ->
-            [ "identity" ]
+            [ "Basics.identity" ]
 
         Type.UnionRef unionName ->
-            [ "identity" ]
+            [ "Basics.identity" ]
 
         Type.EnumRef enumName ->
             [ (Graphql.Generator.ModuleName.enum { apiSubmodule = context.apiSubmodule } enumName

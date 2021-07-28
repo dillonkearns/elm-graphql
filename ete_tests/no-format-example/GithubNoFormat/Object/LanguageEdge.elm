@@ -24,7 +24,7 @@ cursor =
 node : SelectionSet decodesTo GithubNoFormat.Object.Language
  -> SelectionSet decodesTo GithubNoFormat.Object.LanguageEdge
 node object____ =
-      Object.selectionForCompositeField "node" [] (object____) (identity)
+      Object.selectionForCompositeField "node" [] (object____) (Basics.identity)
 
 
 {-| The number of bytes of code written in the language.

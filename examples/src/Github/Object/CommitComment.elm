@@ -28,7 +28,7 @@ author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.CommitComment
 author object____ =
-    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -58,7 +58,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.CommitComment
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "commit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -88,7 +88,7 @@ editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.CommitComment
 editor object____ =
-    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "editor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.CommitComment
@@ -130,7 +130,7 @@ reactionGroups :
     SelectionSet decodesTo Github.Object.ReactionGroup
     -> SelectionSet (Maybe (List decodesTo)) Github.Object.CommitComment
 reactionGroups object____ =
-    Object.selectionForCompositeField "reactionGroups" [] object____ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "reactionGroups" [] object____ (Basics.identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -164,9 +164,9 @@ reactions fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "content" filledInOptionals____.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeReactionOrder ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "reactions" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "reactions" optionalArgs____ object____ Basics.identity
 
 
 {-| The repository associated with this node.
@@ -175,7 +175,7 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.CommitComment
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity
 
 
 {-| The HTTP path permalink for this commit comment.
@@ -226,9 +226,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

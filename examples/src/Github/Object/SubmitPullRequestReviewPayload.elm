@@ -32,4 +32,4 @@ pullRequestReview :
     SelectionSet decodesTo Github.Object.PullRequestReview
     -> SelectionSet decodesTo Github.Object.SubmitPullRequestReviewPayload
 pullRequestReview object____ =
-    Object.selectionForCompositeField "pullRequestReview" [] object____ identity
+    Object.selectionForCompositeField "pullRequestReview" [] object____ Basics.identity

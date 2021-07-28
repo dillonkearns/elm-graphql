@@ -32,4 +32,4 @@ node :
     SelectionSet decodesTo Github.Object.Deployment
     -> SelectionSet (Maybe decodesTo) Github.Object.DeploymentEdge
 node object____ =
-    Object.selectionForCompositeField "node" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [] object____ (Basics.identity >> Decode.nullable)

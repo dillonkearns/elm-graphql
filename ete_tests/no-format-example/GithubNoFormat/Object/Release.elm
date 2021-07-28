@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 author : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
 author object____ =
-      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "author" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -96,9 +96,9 @@ releaseAssets fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "name" filledInOptionals____.name (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "releaseAssets" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "releaseAssets" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The HTTP path for this issue
@@ -113,7 +113,7 @@ resourcePath =
 tag : SelectionSet decodesTo GithubNoFormat.Object.Ref
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Release
 tag object____ =
-      Object.selectionForCompositeField "tag" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "tag" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.

@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MovedColumnsInProjectEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.

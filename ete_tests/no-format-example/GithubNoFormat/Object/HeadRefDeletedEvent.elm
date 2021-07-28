@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefDeletedEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -36,7 +36,7 @@ createdAt =
 headRef : SelectionSet decodesTo GithubNoFormat.Object.Ref
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.HeadRefDeletedEvent
 headRef object____ =
-      Object.selectionForCompositeField "headRef" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "headRef" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the name of the Ref associated with the `head_ref_deleted` event.
@@ -56,4 +56,4 @@ id =
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.HeadRefDeletedEvent
 pullRequest object____ =
-      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
+      Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)

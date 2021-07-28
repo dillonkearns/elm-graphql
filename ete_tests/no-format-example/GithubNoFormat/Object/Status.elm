@@ -21,7 +21,7 @@ import GithubNoFormat.Enum.StatusState
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Status
 commit object____ =
-      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "commit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 type alias ContextRequiredArguments = { name : String }
@@ -35,7 +35,7 @@ context : ContextRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.StatusContext
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Status
 context requiredArgs____ object____ =
-      Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "context" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The individual status contexts for this commit.
@@ -43,7 +43,7 @@ context requiredArgs____ object____ =
 contexts : SelectionSet decodesTo GithubNoFormat.Object.StatusContext
  -> SelectionSet (List decodesTo) GithubNoFormat.Object.Status
 contexts object____ =
-      Object.selectionForCompositeField "contexts" [] (object____) (identity >> Decode.list)
+      Object.selectionForCompositeField "contexts" [] (object____) (Basics.identity >> Decode.list)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Status

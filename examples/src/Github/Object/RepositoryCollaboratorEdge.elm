@@ -29,7 +29,7 @@ node :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.RepositoryCollaboratorEdge
 node object____ =
-    Object.selectionForCompositeField "node" [] object____ identity
+    Object.selectionForCompositeField "node" [] object____ Basics.identity
 
 
 {-| The permission the user has on the repository.

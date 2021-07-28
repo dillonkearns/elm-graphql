@@ -35,4 +35,4 @@ deletedColumnId =
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet decodesTo GithubNoFormat.Object.DeleteProjectColumnPayload
 project object____ =
-      Object.selectionForCompositeField "project" [] (object____) (identity)
+      Object.selectionForCompositeField "project" [] (object____) (Basics.identity)

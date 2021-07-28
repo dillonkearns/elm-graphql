@@ -42,7 +42,7 @@ all =
                         , letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { contains = Absent }" )
                             , ( "optionalArgs____", """[ Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
-                |> List.filterMap identity""" )
+                |> List.filterMap Basics.identity""" )
                             ]
                         }
         , test "with multiple optional string args" <|
@@ -62,7 +62,7 @@ all =
                         , letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { id = Absent, contains = Absent }" )
                             , ( "optionalArgs____", """[ Argument.optional "id" filledInOptionals____.id (Encode.string), Argument.optional "contains" filledInOptionals____.contains (Encode.string) ]
-                |> List.filterMap identity""" )
+                |> List.filterMap Basics.identity""" )
                             ]
                         }
         , test "with an optional int arg" <|
@@ -77,7 +77,7 @@ all =
                         { letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { first = Absent }" )
                             , ( "optionalArgs____", """[ Argument.optional "first" filledInOptionals____.first (Encode.int) ]
-                |> List.filterMap identity""" )
+                |> List.filterMap Basics.identity""" )
                             ]
                         , typeAlias = "{ first : OptionalArgument Int }"
                         }
@@ -94,7 +94,7 @@ all =
                         , letBindings =
                             [ ( "filledInOptionals____", "fillInOptionals____ { episode = Absent }" )
                             , ( "optionalArgs____", """[ Argument.optional "episode" filledInOptionals____.episode ((Encode.enum Api.Enum.Episode.toString)) ]
-                |> List.filterMap identity""" )
+                |> List.filterMap Basics.identity""" )
                             ]
                         }
         ]

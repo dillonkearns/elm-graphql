@@ -23,7 +23,7 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 author object____ =
-      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "author" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -59,7 +59,7 @@ bodyText =
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
 commit object____ =
-      Object.selectionForCompositeField "commit" [] (object____) (identity)
+      Object.selectionForCompositeField "commit" [] (object____) (Basics.identity)
 
 
 {-| Identifies when the comment was created.
@@ -102,7 +102,7 @@ draftedAt =
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 editor object____ =
-      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "editor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequestReviewComment
@@ -122,7 +122,7 @@ lastEditedAt =
 originalCommit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 originalCommit object____ =
-      Object.selectionForCompositeField "originalCommit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "originalCommit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The original line index in the diff to which the comment applies.
@@ -158,7 +158,7 @@ publishedAt =
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
 pullRequest object____ =
-      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
+      Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
 
 {-| The pull request review associated with this review comment.
@@ -166,7 +166,7 @@ pullRequest object____ =
 pullRequestReview : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 pullRequestReview object____ =
-      Object.selectionForCompositeField "pullRequestReview" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "pullRequestReview" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -174,7 +174,7 @@ pullRequestReview object____ =
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
  -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.PullRequestReviewComment
 reactionGroups object____ =
-      Object.selectionForCompositeField "reactionGroups" [] (object____) (identity >> Decode.list >> Decode.nullable)
+      Object.selectionForCompositeField "reactionGroups" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
@@ -204,9 +204,9 @@ reactions fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "content" filledInOptionals____.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The comment this is a reply to.
@@ -214,7 +214,7 @@ reactions fillInOptionals____ object____ =
 replyTo : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReviewComment
 replyTo object____ =
-      Object.selectionForCompositeField "replyTo" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "replyTo" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The repository associated with this node.
@@ -222,7 +222,7 @@ replyTo object____ =
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
 repository object____ =
-      Object.selectionForCompositeField "repository" [] (object____) (identity)
+      Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path permalink for this review comment.
@@ -269,9 +269,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

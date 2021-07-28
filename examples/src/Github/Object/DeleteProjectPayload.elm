@@ -32,4 +32,4 @@ owner :
     SelectionSet decodesTo Github.Interface.ProjectOwner
     -> SelectionSet decodesTo Github.Object.DeleteProjectPayload
 owner object____ =
-    Object.selectionForCompositeField "owner" [] object____ identity
+    Object.selectionForCompositeField "owner" [] object____ Basics.identity

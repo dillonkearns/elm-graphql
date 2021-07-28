@@ -32,7 +32,7 @@ pullRequestReview :
     SelectionSet decodesTo Github.Object.PullRequestReview
     -> SelectionSet decodesTo Github.Object.AddPullRequestReviewPayload
 pullRequestReview object____ =
-    Object.selectionForCompositeField "pullRequestReview" [] object____ identity
+    Object.selectionForCompositeField "pullRequestReview" [] object____ Basics.identity
 
 
 {-| The edge from the pull request's review connection.
@@ -41,4 +41,4 @@ reviewEdge :
     SelectionSet decodesTo Github.Object.PullRequestReviewEdge
     -> SelectionSet decodesTo Github.Object.AddPullRequestReviewPayload
 reviewEdge object____ =
-    Object.selectionForCompositeField "reviewEdge" [] object____ identity
+    Object.selectionForCompositeField "reviewEdge" [] object____ Basics.identity

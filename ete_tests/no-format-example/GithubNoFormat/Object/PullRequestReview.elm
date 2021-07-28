@@ -23,7 +23,7 @@ import GithubNoFormat.Enum.CommentCannotUpdateReason
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
 author object____ =
-      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "author" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -77,9 +77,9 @@ comments fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "comments" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "comments" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| Identifies the commit associated with this pull request review.
@@ -87,7 +87,7 @@ comments fillInOptionals____ object____ =
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
 commit object____ =
-      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "commit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -116,7 +116,7 @@ databaseId =
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.PullRequestReview
 editor object____ =
-      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "editor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.PullRequestReview
@@ -143,7 +143,7 @@ publishedAt =
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
 pullRequest object____ =
-      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
+      Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
 
 {-| The repository associated with this node.
@@ -151,7 +151,7 @@ pullRequest object____ =
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.PullRequestReview
 repository object____ =
-      Object.selectionForCompositeField "repository" [] (object____) (identity)
+      Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path permalink for this PullRequestReview.
@@ -212,9 +212,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

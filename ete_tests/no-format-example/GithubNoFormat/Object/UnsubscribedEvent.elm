@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.UnsubscribedEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -41,4 +41,4 @@ id =
 subscribable : SelectionSet decodesTo GithubNoFormat.Interface.Subscribable
  -> SelectionSet decodesTo GithubNoFormat.Object.UnsubscribedEvent
 subscribable object____ =
-      Object.selectionForCompositeField "subscribable" [] (object____) (identity)
+      Object.selectionForCompositeField "subscribable" [] (object____) (Basics.identity)

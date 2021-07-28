@@ -32,4 +32,4 @@ lockedRecord :
     SelectionSet decodesTo Github.Interface.Lockable
     -> SelectionSet (Maybe decodesTo) Github.Object.LockLockablePayload
 lockedRecord object____ =
-    Object.selectionForCompositeField "lockedRecord" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "lockedRecord" [] object____ (Basics.identity >> Decode.nullable)

@@ -44,7 +44,7 @@ generate context allArgs =
                     [ ( "filledInOptionals____", "fillInOptionals____ " ++ emptyRecord optionalArgs )
                     , ( "optionalArgs____"
                       , argValues context optionalArgs
-                            ++ "\n                |> List.filterMap identity"
+                            ++ "\n                |> List.filterMap Basics.identity"
                       )
                     ]
                 , typeAlias = { suffix = "OptionalArguments", body = typeAlias context optionalArgs }

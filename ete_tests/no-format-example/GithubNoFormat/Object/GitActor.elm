@@ -32,7 +32,7 @@ avatarUrl fillInOptionals____ =
 
         optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
       Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
@@ -63,4 +63,4 @@ name =
 user : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.GitActor
 user object____ =
-      Object.selectionForCompositeField "user" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "user" [] (object____) (Basics.identity >> Decode.nullable)

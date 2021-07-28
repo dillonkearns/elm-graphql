@@ -79,7 +79,7 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.Blob
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity
 
 
 {-| UTF8 text data or null if the Blob is binary

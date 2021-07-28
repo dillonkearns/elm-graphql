@@ -32,4 +32,4 @@ projectCard :
     SelectionSet decodesTo Github.Object.ProjectCard
     -> SelectionSet decodesTo Github.Object.UpdateProjectCardPayload
 projectCard object____ =
-    Object.selectionForCompositeField "projectCard" [] object____ identity
+    Object.selectionForCompositeField "projectCard" [] object____ Basics.identity

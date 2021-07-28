@@ -51,9 +51,9 @@ assignees fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "assignees" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "assignees" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The actor who authored the comment.
@@ -61,7 +61,7 @@ assignees fillInOptionals____ object____ =
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 author object____ =
-      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "author" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -129,9 +129,9 @@ comments fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "comments" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "comments" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| Identifies the date and time when the object was created.
@@ -160,7 +160,7 @@ databaseId =
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 editor object____ =
-      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "editor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.Issue
@@ -191,9 +191,9 @@ labels fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "labels" optionalArgs____ (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "labels" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The moment the editor made the last edit
@@ -215,7 +215,7 @@ locked =
 milestone : SelectionSet decodesTo GithubNoFormat.Object.Milestone
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Issue
 milestone object____ =
-      Object.selectionForCompositeField "milestone" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "milestone" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the issue number.
@@ -248,9 +248,9 @@ participants fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "participants" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "participants" optionalArgs____ (object____) (Basics.identity)
 
 
 type alias ProjectCardsOptionalArguments = { first : OptionalArgument Int
@@ -276,9 +276,9 @@ projectCards fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "projectCards" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "projectCards" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| Identifies when the comment was published at.
@@ -293,7 +293,7 @@ publishedAt =
 reactionGroups : SelectionSet decodesTo GithubNoFormat.Object.ReactionGroup
  -> SelectionSet (Maybe (List decodesTo)) GithubNoFormat.Object.Issue
 reactionGroups object____ =
-      Object.selectionForCompositeField "reactionGroups" [] (object____) (identity >> Decode.list >> Decode.nullable)
+      Object.selectionForCompositeField "reactionGroups" [] (object____) (Basics.identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments = { first : OptionalArgument Int
@@ -323,9 +323,9 @@ reactions fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "content" filledInOptionals____.content ((Encode.enum GithubNoFormat.Enum.ReactionContent.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeReactionOrder) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "reactions" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The repository associated with this node.
@@ -333,7 +333,7 @@ reactions fillInOptionals____ object____ =
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.Issue
 repository object____ =
-      Object.selectionForCompositeField "repository" [] (object____) (identity)
+      Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this issue
@@ -375,9 +375,9 @@ timeline fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "since" filledInOptionals____.since ((GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapEncoder .codecDateTime)) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "timeline" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "timeline" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| Identifies the issue title.
@@ -424,9 +424,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Can user react to this subject

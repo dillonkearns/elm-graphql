@@ -40,7 +40,7 @@ subject :
     SelectionSet decodesTo Github.Interface.Reactable
     -> SelectionSet decodesTo Github.Object.ReactionGroup
 subject object____ =
-    Object.selectionForCompositeField "subject" [] object____ identity
+    Object.selectionForCompositeField "subject" [] object____ Basics.identity
 
 
 type alias UsersOptionalArguments =
@@ -70,9 +70,9 @@ users fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "users" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "users" optionalArgs____ object____ Basics.identity
 
 
 {-| Whether or not the authenticated user has left a reaction on the subject.

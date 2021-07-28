@@ -28,4 +28,4 @@ cursor =
 node : SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.DeploymentStatusEdge
 node object____ =
-      Object.selectionForCompositeField "node" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "node" [] (object____) (Basics.identity >> Decode.nullable)

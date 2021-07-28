@@ -25,7 +25,7 @@ edges :
     SelectionSet decodesTo Github.Object.OrganizationInvitationEdge
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.OrganizationInvitationConnection
 edges object____ =
-    Object.selectionForCompositeField "edges" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object____ (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
@@ -34,7 +34,7 @@ nodes :
     SelectionSet decodesTo Github.Object.OrganizationInvitation
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.OrganizationInvitationConnection
 nodes object____ =
-    Object.selectionForCompositeField "nodes" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object____ (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
@@ -43,7 +43,7 @@ pageInfo :
     SelectionSet decodesTo Github.Object.PageInfo
     -> SelectionSet decodesTo Github.Object.OrganizationInvitationConnection
 pageInfo object____ =
-    Object.selectionForCompositeField "pageInfo" [] object____ identity
+    Object.selectionForCompositeField "pageInfo" [] object____ Basics.identity
 
 
 {-| Identifies the total count of items in the connection.

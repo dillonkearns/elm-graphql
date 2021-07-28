@@ -32,4 +32,4 @@ removedUser :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.RemoveOutsideCollaboratorPayload
 removedUser object____ =
-    Object.selectionForCompositeField "removedUser" [] object____ identity
+    Object.selectionForCompositeField "removedUser" [] object____ Basics.identity

@@ -35,7 +35,7 @@ name =
 object : SelectionSet decodesTo GithubNoFormat.Interface.GitObject
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.TreeEntry
 object object____ =
-      Object.selectionForCompositeField "object" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "object" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Entry file Git object ID.
@@ -50,7 +50,7 @@ oid =
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.TreeEntry
 repository object____ =
-      Object.selectionForCompositeField "repository" [] (object____) (identity)
+      Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| Entry file type.

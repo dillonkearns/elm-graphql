@@ -66,7 +66,7 @@ maybeFragments =
 author : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
 author object____ =
-      Object.selectionForCompositeField "author" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "author" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -109,7 +109,7 @@ createdViaEmail =
 editor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Interface.Comment
 editor object____ =
-      Object.selectionForCompositeField "editor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "editor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Interface.Comment
@@ -161,9 +161,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "userContentEdits" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Did the viewer author this comment.

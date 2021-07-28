@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.ReopenedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Object that was reopened.
@@ -34,7 +34,7 @@ closable :
     SelectionSet decodesTo Github.Interface.Closable
     -> SelectionSet decodesTo Github.Object.ReopenedEvent
 closable object____ =
-    Object.selectionForCompositeField "closable" [] object____ identity
+    Object.selectionForCompositeField "closable" [] object____ Basics.identity
 
 
 {-| Identifies the date and time when the object was created.

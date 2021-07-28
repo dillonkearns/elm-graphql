@@ -28,7 +28,7 @@ clientMutationId =
 comment : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewComment
  -> SelectionSet decodesTo GithubNoFormat.Object.AddPullRequestReviewCommentPayload
 comment object____ =
-      Object.selectionForCompositeField "comment" [] (object____) (identity)
+      Object.selectionForCompositeField "comment" [] (object____) (Basics.identity)
 
 
 {-| The edge from the review's comment connection.
@@ -36,4 +36,4 @@ comment object____ =
 commentEdge : SelectionSet decodesTo GithubNoFormat.Object.PullRequestReviewCommentEdge
  -> SelectionSet decodesTo GithubNoFormat.Object.AddPullRequestReviewCommentPayload
 commentEdge object____ =
-      Object.selectionForCompositeField "commentEdge" [] (object____) (identity)
+      Object.selectionForCompositeField "commentEdge" [] (object____) (Basics.identity)

@@ -28,4 +28,4 @@ clientMutationId =
 topic : SelectionSet decodesTo GithubNoFormat.Object.Topic
  -> SelectionSet decodesTo GithubNoFormat.Object.AcceptTopicSuggestionPayload
 topic object____ =
-      Object.selectionForCompositeField "topic" [] (object____) (identity)
+      Object.selectionForCompositeField "topic" [] (object____) (Basics.identity)

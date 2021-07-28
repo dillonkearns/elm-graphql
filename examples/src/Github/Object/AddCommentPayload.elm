@@ -32,7 +32,7 @@ commentEdge :
     SelectionSet decodesTo Github.Object.IssueCommentEdge
     -> SelectionSet decodesTo Github.Object.AddCommentPayload
 commentEdge object____ =
-    Object.selectionForCompositeField "commentEdge" [] object____ identity
+    Object.selectionForCompositeField "commentEdge" [] object____ Basics.identity
 
 
 {-| The subject
@@ -41,7 +41,7 @@ subject :
     SelectionSet decodesTo Github.Interface.Node
     -> SelectionSet decodesTo Github.Object.AddCommentPayload
 subject object____ =
-    Object.selectionForCompositeField "subject" [] object____ identity
+    Object.selectionForCompositeField "subject" [] object____ Basics.identity
 
 
 {-| The edge from the subject's timeline connection.
@@ -50,4 +50,4 @@ timelineEdge :
     SelectionSet decodesTo Github.Object.IssueTimelineItemEdge
     -> SelectionSet decodesTo Github.Object.AddCommentPayload
 timelineEdge object____ =
-    Object.selectionForCompositeField "timelineEdge" [] object____ identity
+    Object.selectionForCompositeField "timelineEdge" [] object____ Basics.identity

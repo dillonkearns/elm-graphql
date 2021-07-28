@@ -39,9 +39,9 @@ cards fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "cards" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "cards" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| Identifies the date and time when the object was created.
@@ -75,7 +75,7 @@ name =
 project : SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
 project object____ =
-      Object.selectionForCompositeField "project" [] (object____) (identity)
+      Object.selectionForCompositeField "project" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this project column

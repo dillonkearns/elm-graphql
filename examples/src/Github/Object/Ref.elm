@@ -57,9 +57,9 @@ associatedPullRequests fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "states" filledInOptionals____.states (Encode.enum Github.Enum.PullRequestState.toString |> Encode.list), Argument.optional "labels" filledInOptionals____.labels (Encode.string |> Encode.list), Argument.optional "headRefName" filledInOptionals____.headRefName Encode.string, Argument.optional "baseRefName" filledInOptionals____.baseRefName Encode.string, Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeIssueOrder ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "associatedPullRequests" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "associatedPullRequests" optionalArgs____ object____ Basics.identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Ref
@@ -87,7 +87,7 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.Ref
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity
 
 
 {-| The object the ref points to.
@@ -96,4 +96,4 @@ target :
     SelectionSet decodesTo Github.Interface.GitObject
     -> SelectionSet decodesTo Github.Object.Ref
 target object____ =
-    Object.selectionForCompositeField "target" [] object____ identity
+    Object.selectionForCompositeField "target" [] object____ Basics.identity

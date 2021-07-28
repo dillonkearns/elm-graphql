@@ -26,7 +26,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.StatusContext
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "commit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The name of this status context.
@@ -49,7 +49,7 @@ creator :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.StatusContext
 creator object____ =
-    Object.selectionForCompositeField "creator" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "creator" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The description for this status context.

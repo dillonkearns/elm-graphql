@@ -42,9 +42,9 @@ ancestors fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "ancestors" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "ancestors" optionalArgs____ (object____) (Basics.identity)
 
 
 type alias AvatarUrlOptionalArguments = { size : OptionalArgument Int }
@@ -63,7 +63,7 @@ avatarUrl fillInOptionals____ =
 
         optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
       Object.selectionForField "(Maybe ScalarCodecs.Uri)" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
@@ -97,9 +97,9 @@ childTeams fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeTeamOrder), Argument.optional "userLogins" filledInOptionals____.userLogins (Encode.string |> Encode.list), Argument.optional "immediateOnly" filledInOptionals____.immediateOnly (Encode.bool) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "childTeams" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "childTeams" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The slug corresponding to the organization and team.
@@ -165,9 +165,9 @@ invitations fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "invitations" optionalArgs____ (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "invitations" optionalArgs____ (object____) (Basics.identity >> Decode.nullable)
 
 
 type alias MembersOptionalArguments = { first : OptionalArgument Int
@@ -199,9 +199,9 @@ members fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "query" filledInOptionals____.query (Encode.string), Argument.optional "membership" filledInOptionals____.membership ((Encode.enum GithubNoFormat.Enum.TeamMembershipType.toString)), Argument.optional "role" filledInOptionals____.role ((Encode.enum GithubNoFormat.Enum.TeamMemberRole.toString)) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "members" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "members" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The HTTP path for the team' members
@@ -244,7 +244,7 @@ newTeamUrl =
 organization : SelectionSet decodesTo GithubNoFormat.Object.Organization
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
 organization object____ =
-      Object.selectionForCompositeField "organization" [] (object____) (identity)
+      Object.selectionForCompositeField "organization" [] (object____) (Basics.identity)
 
 
 {-| The parent team of the team.
@@ -252,7 +252,7 @@ organization object____ =
 parentTeam : SelectionSet decodesTo GithubNoFormat.Object.Team
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Team
 parentTeam object____ =
-      Object.selectionForCompositeField "parentTeam" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "parentTeam" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The level of privacy the team has.
@@ -289,9 +289,9 @@ repositories fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "query" filledInOptionals____.query (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeTeamRepositoryOrder) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "repositories" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "repositories" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The HTTP path for this team's repositories

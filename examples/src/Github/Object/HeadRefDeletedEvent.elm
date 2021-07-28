@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -41,7 +41,7 @@ headRef :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.HeadRefDeletedEvent
 headRef object____ =
-    Object.selectionForCompositeField "headRef" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "headRef" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the name of the Ref associated with the `head_ref_deleted` event.
@@ -62,4 +62,4 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.HeadRefDeletedEvent
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity

@@ -32,7 +32,7 @@ column :
     SelectionSet decodesTo Github.Object.ProjectColumn
     -> SelectionSet decodesTo Github.Object.DeleteProjectCardPayload
 column object____ =
-    Object.selectionForCompositeField "column" [] object____ identity
+    Object.selectionForCompositeField "column" [] object____ Basics.identity
 
 
 {-| The deleted card ID.

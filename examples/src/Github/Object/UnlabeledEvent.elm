@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.UnlabeledEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -46,7 +46,7 @@ label :
     SelectionSet decodesTo Github.Object.Label
     -> SelectionSet decodesTo Github.Object.UnlabeledEvent
 label object____ =
-    Object.selectionForCompositeField "label" [] object____ identity
+    Object.selectionForCompositeField "label" [] object____ Basics.identity
 
 
 {-| Identifies the `Labelable` associated with the event.
@@ -55,4 +55,4 @@ labelable :
     SelectionSet decodesTo Github.Interface.Labelable
     -> SelectionSet decodesTo Github.Object.UnlabeledEvent
 labelable object____ =
-    Object.selectionForCompositeField "labelable" [] object____ identity
+    Object.selectionForCompositeField "labelable" [] object____ Basics.identity

@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.MergedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the `merge` event.
@@ -34,7 +34,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.MergedEvent
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "commit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -55,7 +55,7 @@ mergeRef :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.MergedEvent
 mergeRef object____ =
-    Object.selectionForCompositeField "mergeRef" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "mergeRef" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the name of the Ref associated with the `merge` event.
@@ -71,7 +71,7 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.MergedEvent
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity
 
 
 {-| The HTTP path for this merged event.

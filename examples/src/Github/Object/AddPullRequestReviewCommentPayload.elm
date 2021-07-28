@@ -32,7 +32,7 @@ comment :
     SelectionSet decodesTo Github.Object.PullRequestReviewComment
     -> SelectionSet decodesTo Github.Object.AddPullRequestReviewCommentPayload
 comment object____ =
-    Object.selectionForCompositeField "comment" [] object____ identity
+    Object.selectionForCompositeField "comment" [] object____ Basics.identity
 
 
 {-| The edge from the review's comment connection.
@@ -41,4 +41,4 @@ commentEdge :
     SelectionSet decodesTo Github.Object.PullRequestReviewCommentEdge
     -> SelectionSet decodesTo Github.Object.AddPullRequestReviewCommentPayload
 commentEdge object____ =
-    Object.selectionForCompositeField "commentEdge" [] object____ identity
+    Object.selectionForCompositeField "commentEdge" [] object____ Basics.identity

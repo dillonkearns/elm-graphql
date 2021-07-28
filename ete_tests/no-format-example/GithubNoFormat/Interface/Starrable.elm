@@ -76,9 +76,9 @@ stargazers fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeStarOrder) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "stargazers" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "stargazers" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| Returns a boolean indicating whether the viewing user has starred this starrable.

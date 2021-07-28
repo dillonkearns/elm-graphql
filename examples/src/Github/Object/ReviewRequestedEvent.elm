@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -46,7 +46,7 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.ReviewRequestedEvent
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity
 
 
 {-| Identifies the reviewer whose review was requested.
@@ -55,7 +55,7 @@ requestedReviewer :
     SelectionSet decodesTo Github.Union.RequestedReviewer
     -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 requestedReviewer object____ =
-    Object.selectionForCompositeField "requestedReviewer" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "requestedReviewer" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the user whose review was requested.
@@ -64,4 +64,4 @@ subject :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequestedEvent
 subject object____ =
-    Object.selectionForCompositeField "subject" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "subject" [] object____ (Basics.identity >> Decode.nullable)

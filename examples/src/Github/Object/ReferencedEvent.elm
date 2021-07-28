@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.ReferencedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'referenced' event.
@@ -34,7 +34,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe decodesTo) Github.Object.ReferencedEvent
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "commit" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the repository associated with the 'referenced' event.
@@ -43,7 +43,7 @@ commitRepository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.ReferencedEvent
 commitRepository object____ =
-    Object.selectionForCompositeField "commitRepository" [] object____ identity
+    Object.selectionForCompositeField "commitRepository" [] object____ Basics.identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -85,4 +85,4 @@ subject :
     SelectionSet decodesTo Github.Union.ReferencedSubject
     -> SelectionSet decodesTo Github.Object.ReferencedEvent
 subject object____ =
-    Object.selectionForCompositeField "subject" [] object____ identity
+    Object.selectionForCompositeField "subject" [] object____ Basics.identity

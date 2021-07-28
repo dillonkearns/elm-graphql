@@ -37,7 +37,7 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.ReviewRequest
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity
 
 
 {-| The reviewer that is requested.
@@ -46,7 +46,7 @@ requestedReviewer :
     SelectionSet decodesTo Github.Union.RequestedReviewer
     -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequest
 requestedReviewer object____ =
-    Object.selectionForCompositeField "requestedReviewer" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "requestedReviewer" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the author associated with this review request.
@@ -55,4 +55,4 @@ reviewer :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.ReviewRequest
 reviewer object____ =
-    Object.selectionForCompositeField "reviewer" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "reviewer" [] object____ (Basics.identity >> Decode.nullable)

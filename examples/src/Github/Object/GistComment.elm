@@ -27,7 +27,7 @@ author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 author object____ =
-    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the gist.
@@ -78,7 +78,7 @@ editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.GistComment
 editor object____ =
-    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "editor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The associated gist.
@@ -87,7 +87,7 @@ gist :
     SelectionSet decodesTo Github.Object.Gist
     -> SelectionSet decodesTo Github.Object.GistComment
 gist object____ =
-    Object.selectionForCompositeField "gist" [] object____ identity
+    Object.selectionForCompositeField "gist" [] object____ Basics.identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.GistComment
@@ -143,9 +143,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

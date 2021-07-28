@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.UnassignedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the assignable associated with the event.
@@ -34,7 +34,7 @@ assignable :
     SelectionSet decodesTo Github.Interface.Assignable
     -> SelectionSet decodesTo Github.Object.UnassignedEvent
 assignable object____ =
-    Object.selectionForCompositeField "assignable" [] object____ identity
+    Object.selectionForCompositeField "assignable" [] object____ Basics.identity
 
 
 {-| Identifies the date and time when the object was created.
@@ -55,4 +55,4 @@ user :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.UnassignedEvent
 user object____ =
-    Object.selectionForCompositeField "user" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "user" [] object____ (Basics.identity >> Decode.nullable)

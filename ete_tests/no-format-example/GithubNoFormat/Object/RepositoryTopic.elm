@@ -33,7 +33,7 @@ resourcePath =
 topic : SelectionSet decodesTo GithubNoFormat.Object.Topic
  -> SelectionSet decodesTo GithubNoFormat.Object.RepositoryTopic
 topic object____ =
-      Object.selectionForCompositeField "topic" [] (object____) (identity)
+      Object.selectionForCompositeField "topic" [] (object____) (Basics.identity)
 
 
 {-| The HTTP URL for this repository-topic.

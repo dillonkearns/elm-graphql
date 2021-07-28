@@ -28,4 +28,4 @@ clientMutationId =
 owner : SelectionSet decodesTo GithubNoFormat.Interface.ProjectOwner
  -> SelectionSet decodesTo GithubNoFormat.Object.DeleteProjectPayload
 owner object____ =
-      Object.selectionForCompositeField "owner" [] (object____) (identity)
+      Object.selectionForCompositeField "owner" [] (object____) (Basics.identity)

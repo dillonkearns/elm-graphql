@@ -46,9 +46,9 @@ externalIdentities fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "externalIdentities" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "externalIdentities" optionalArgs____ (object____) (Basics.identity)
 
 
 id : SelectionSet GithubNoFormat.ScalarCodecs.Id GithubNoFormat.Object.OrganizationIdentityProvider
@@ -75,7 +75,7 @@ issuer =
 organization : SelectionSet decodesTo GithubNoFormat.Object.Organization
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.OrganizationIdentityProvider
 organization object____ =
-      Object.selectionForCompositeField "organization" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "organization" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The signature algorithm used to sign SAML requests for the Identity Provider.

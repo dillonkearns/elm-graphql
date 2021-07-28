@@ -28,7 +28,7 @@ createdAt =
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.DeploymentStatus
 creator object____ =
-      Object.selectionForCompositeField "creator" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "creator" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the deployment associated with status.
@@ -36,7 +36,7 @@ creator object____ =
 deployment : SelectionSet decodesTo GithubNoFormat.Object.Deployment
  -> SelectionSet decodesTo GithubNoFormat.Object.DeploymentStatus
 deployment object____ =
-      Object.selectionForCompositeField "deployment" [] (object____) (identity)
+      Object.selectionForCompositeField "deployment" [] (object____) (Basics.identity)
 
 
 {-| Identifies the description of the deployment.

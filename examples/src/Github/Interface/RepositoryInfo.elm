@@ -145,7 +145,7 @@ licenseInfo :
     SelectionSet decodesTo Github.Object.License
     -> SelectionSet (Maybe decodesTo) Github.Interface.RepositoryInfo
 licenseInfo object____ =
-    Object.selectionForCompositeField "licenseInfo" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "licenseInfo" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The reason the repository has been locked.
@@ -182,7 +182,7 @@ owner :
     SelectionSet decodesTo Github.Interface.RepositoryOwner
     -> SelectionSet decodesTo Github.Interface.RepositoryInfo
 owner object____ =
-    Object.selectionForCompositeField "owner" [] object____ identity
+    Object.selectionForCompositeField "owner" [] object____ Basics.identity
 
 
 {-| Identifies when the repository was last pushed to.
@@ -218,7 +218,7 @@ shortDescriptionHTML fillInOptionals____ =
 
         optionalArgs____ =
             [ Argument.optional "limit" filledInOptionals____.limit Encode.int ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
     Object.selectionForField "ScalarCodecs.Html" "shortDescriptionHTML" optionalArgs____ (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapCodecs |> .codecHtml |> .decoder)
 

@@ -28,7 +28,7 @@ node :
     SelectionSet decodesTo Github.Object.Language
     -> SelectionSet decodesTo Github.Object.LanguageEdge
 node object____ =
-    Object.selectionForCompositeField "node" [] object____ identity
+    Object.selectionForCompositeField "node" [] object____ Basics.identity
 
 
 {-| The number of bytes of code written in the language.

@@ -40,7 +40,7 @@ author :
     SelectionSet decodesTo Github.Object.GitActor
     -> SelectionSet (Maybe decodesTo) Github.Object.Commit
 author object____ =
-    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Check if the committer and the author match.
@@ -71,7 +71,7 @@ blame :
     -> SelectionSet decodesTo Github.Object.Blame
     -> SelectionSet decodesTo Github.Object.Commit
 blame requiredArgs____ object____ =
-    Object.selectionForCompositeField "blame" [ Argument.required "path" requiredArgs____.path Encode.string ] object____ identity
+    Object.selectionForCompositeField "blame" [ Argument.required "path" requiredArgs____.path Encode.string ] object____ Basics.identity
 
 
 {-| The number of changed files in this commit.
@@ -108,9 +108,9 @@ comments fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "comments" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "comments" optionalArgs____ object____ Basics.identity
 
 
 {-| The HTTP path for this Git object
@@ -147,7 +147,7 @@ committer :
     SelectionSet decodesTo Github.Object.GitActor
     -> SelectionSet (Maybe decodesTo) Github.Object.Commit
 committer object____ =
-    Object.selectionForCompositeField "committer" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "committer" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The number of deletions in this commit.
@@ -192,9 +192,9 @@ history fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "path" filledInOptionals____.path Encode.string, Argument.optional "author" filledInOptionals____.author Github.InputObject.encodeCommitAuthor, Argument.optional "since" filledInOptionals____.since (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp), Argument.optional "until" filledInOptionals____.until (Github.ScalarCodecs.codecs |> Github.Scalar.unwrapEncoder .codecGitTimestamp) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "history" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "history" optionalArgs____ object____ Basics.identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.Commit
@@ -271,9 +271,9 @@ parents fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "parents" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "parents" optionalArgs____ object____ Basics.identity
 
 
 {-| The datetime when this commit was pushed.
@@ -289,7 +289,7 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.Commit
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity
 
 
 {-| The HTTP path for this commit
@@ -305,7 +305,7 @@ signature :
     SelectionSet decodesTo Github.Interface.GitSignature
     -> SelectionSet (Maybe decodesTo) Github.Object.Commit
 signature object____ =
-    Object.selectionForCompositeField "signature" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "signature" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Status information for this commit
@@ -314,7 +314,7 @@ status :
     SelectionSet decodesTo Github.Object.Status
     -> SelectionSet (Maybe decodesTo) Github.Object.Commit
 status object____ =
-    Object.selectionForCompositeField "status" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "status" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Returns a URL to download a tarball archive for a repository. Note: For private repositories, these links are temporary and expire after five minutes.
@@ -330,7 +330,7 @@ tree :
     SelectionSet decodesTo Github.Object.Tree
     -> SelectionSet decodesTo Github.Object.Commit
 tree object____ =
-    Object.selectionForCompositeField "tree" [] object____ identity
+    Object.selectionForCompositeField "tree" [] object____ Basics.identity
 
 
 {-| The HTTP path for the tree of this commit

@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MergedEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the `merge` event.
@@ -29,7 +29,7 @@ actor object____ =
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MergedEvent
 commit object____ =
-      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "commit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -49,7 +49,7 @@ id =
 mergeRef : SelectionSet decodesTo GithubNoFormat.Object.Ref
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MergedEvent
 mergeRef object____ =
-      Object.selectionForCompositeField "mergeRef" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "mergeRef" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the name of the Ref associated with the `merge` event.
@@ -64,7 +64,7 @@ mergeRefName =
 pullRequest : SelectionSet decodesTo GithubNoFormat.Object.PullRequest
  -> SelectionSet decodesTo GithubNoFormat.Object.MergedEvent
 pullRequest object____ =
-      Object.selectionForCompositeField "pullRequest" [] (object____) (identity)
+      Object.selectionForCompositeField "pullRequest" [] (object____) (Basics.identity)
 
 
 {-| The HTTP path for this merged event.

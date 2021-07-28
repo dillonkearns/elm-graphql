@@ -38,7 +38,7 @@ avatarUrl fillInOptionals____ =
 
         optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
       Object.selectionForField "ScalarCodecs.Uri" "avatarUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder)
 
@@ -106,9 +106,9 @@ members fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "members" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "members" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The organization's public profile name.
@@ -170,9 +170,9 @@ pinnedRepositories fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals____.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked (Encode.bool) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "pinnedRepositories" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "pinnedRepositories" optionalArgs____ (object____) (Basics.identity)
 
 
 type alias ProjectRequiredArguments = { number : Int }
@@ -186,7 +186,7 @@ project : ProjectRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Project
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 project requiredArgs____ object____ =
-      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "project" [ Argument.required "number" requiredArgs____.number (Encode.int) ] (object____) (Basics.identity >> Decode.nullable)
 
 
 type alias ProjectsOptionalArguments = { first : OptionalArgument Int
@@ -218,9 +218,9 @@ projects fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeProjectOrder), Argument.optional "search" filledInOptionals____.search (Encode.string), Argument.optional "states" filledInOptionals____.states ((Encode.enum GithubNoFormat.Enum.ProjectState.toString) |> Encode.list) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "projects" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "projects" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The HTTP path listing organization's projects
@@ -270,9 +270,9 @@ repositories fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.RepositoryPrivacy.toString)), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeRepositoryOrder), Argument.optional "affiliations" filledInOptionals____.affiliations ((Encode.enum GithubNoFormat.Enum.RepositoryAffiliation.toString) |> Encode.maybe |> Encode.list), Argument.optional "isLocked" filledInOptionals____.isLocked (Encode.bool), Argument.optional "isFork" filledInOptionals____.isFork (Encode.bool) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "repositories" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "repositories" optionalArgs____ (object____) (Basics.identity)
 
 
 type alias RepositoryRequiredArguments = { name : String }
@@ -286,7 +286,7 @@ repository : RepositoryRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 repository requiredArgs____ object____ =
-      Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "repository" [ Argument.required "name" requiredArgs____.name (Encode.string) ] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The HTTP path for this user
@@ -301,7 +301,7 @@ resourcePath =
 samlIdentityProvider : SelectionSet decodesTo GithubNoFormat.Object.OrganizationIdentityProvider
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 samlIdentityProvider object____ =
-      Object.selectionForCompositeField "samlIdentityProvider" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "samlIdentityProvider" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 type alias TeamRequiredArguments = { slug : String }
@@ -315,7 +315,7 @@ team : TeamRequiredArguments
  -> SelectionSet decodesTo GithubNoFormat.Object.Team
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.Organization
 team requiredArgs____ object____ =
-      Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs____.slug (Encode.string) ] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "team" [ Argument.required "slug" requiredArgs____.slug (Encode.string) ] (object____) (Basics.identity >> Decode.nullable)
 
 
 type alias TeamsOptionalArguments = { first : OptionalArgument Int
@@ -355,9 +355,9 @@ teams fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string), Argument.optional "privacy" filledInOptionals____.privacy ((Encode.enum GithubNoFormat.Enum.TeamPrivacy.toString)), Argument.optional "role" filledInOptionals____.role ((Encode.enum GithubNoFormat.Enum.TeamRole.toString)), Argument.optional "query" filledInOptionals____.query (Encode.string), Argument.optional "userLogins" filledInOptionals____.userLogins (Encode.string |> Encode.list), Argument.optional "orderBy" filledInOptionals____.orderBy (GithubNoFormat.InputObject.encodeTeamOrder), Argument.optional "ldapMapped" filledInOptionals____.ldapMapped (Encode.bool), Argument.optional "rootTeamsOnly" filledInOptionals____.rootTeamsOnly (Encode.bool) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "teams" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "teams" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The HTTP path listing organization's teams

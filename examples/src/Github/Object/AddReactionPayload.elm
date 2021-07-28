@@ -32,7 +32,7 @@ reaction :
     SelectionSet decodesTo Github.Object.Reaction
     -> SelectionSet decodesTo Github.Object.AddReactionPayload
 reaction object____ =
-    Object.selectionForCompositeField "reaction" [] object____ identity
+    Object.selectionForCompositeField "reaction" [] object____ Basics.identity
 
 
 {-| The reactable subject.
@@ -41,4 +41,4 @@ subject :
     SelectionSet decodesTo Github.Interface.Reactable
     -> SelectionSet decodesTo Github.Object.AddReactionPayload
 subject object____ =
-    Object.selectionForCompositeField "subject" [] object____ identity
+    Object.selectionForCompositeField "subject" [] object____ Basics.identity

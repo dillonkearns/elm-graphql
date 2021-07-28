@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.MilestonedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -53,4 +53,4 @@ subject :
     SelectionSet decodesTo Github.Union.MilestoneItem
     -> SelectionSet decodesTo Github.Object.MilestonedEvent
 subject object____ =
-    Object.selectionForCompositeField "subject" [] object____ identity
+    Object.selectionForCompositeField "subject" [] object____ Basics.identity

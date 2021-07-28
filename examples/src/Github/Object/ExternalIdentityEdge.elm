@@ -32,4 +32,4 @@ node :
     SelectionSet decodesTo Github.Object.ExternalIdentity
     -> SelectionSet (Maybe decodesTo) Github.Object.ExternalIdentityEdge
 node object____ =
-    Object.selectionForCompositeField "node" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [] object____ (Basics.identity >> Decode.nullable)

@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 creator : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ProtectedBranch
 creator object____ =
-      Object.selectionForCompositeField "creator" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "creator" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Will new commits pushed to this branch dismiss pull request review approvals.
@@ -108,9 +108,9 @@ pushAllowances fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "pushAllowances" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "pushAllowances" optionalArgs____ (object____) (Basics.identity)
 
 
 {-| The repository associated with this protected branch.
@@ -118,7 +118,7 @@ pushAllowances fillInOptionals____ object____ =
 repository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.ProtectedBranch
 repository object____ =
-      Object.selectionForCompositeField "repository" [] (object____) (identity)
+      Object.selectionForCompositeField "repository" [] (object____) (Basics.identity)
 
 
 {-| List of required status check contexts that must pass for commits to be accepted to this branch.
@@ -151,6 +151,6 @@ reviewDismissalAllowances fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "reviewDismissalAllowances" optionalArgs____ (object____) (Basics.identity)

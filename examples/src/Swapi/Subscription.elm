@@ -23,4 +23,4 @@ newMessage :
     SelectionSet decodesTo Swapi.Object.ChatMessage
     -> SelectionSet decodesTo RootSubscription
 newMessage object____ =
-    Object.selectionForCompositeField "newMessage" [] object____ identity
+    Object.selectionForCompositeField "newMessage" [] object____ Basics.identity

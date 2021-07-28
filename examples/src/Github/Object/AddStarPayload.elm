@@ -32,4 +32,4 @@ starrable :
     SelectionSet decodesTo Github.Interface.Starrable
     -> SelectionSet decodesTo Github.Object.AddStarPayload
 starrable object____ =
-    Object.selectionForCompositeField "starrable" [] object____ identity
+    Object.selectionForCompositeField "starrable" [] object____ Basics.identity

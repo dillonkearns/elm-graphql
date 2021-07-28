@@ -28,4 +28,4 @@ clientMutationId =
 projectCard : SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
  -> SelectionSet decodesTo GithubNoFormat.Object.UpdateProjectCardPayload
 projectCard object____ =
-      Object.selectionForCompositeField "projectCard" [] (object____) (identity)
+      Object.selectionForCompositeField "projectCard" [] (object____) (Basics.identity)

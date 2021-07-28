@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ClosedEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Object that was closed.
@@ -29,7 +29,7 @@ actor object____ =
 closable : SelectionSet decodesTo GithubNoFormat.Interface.Closable
  -> SelectionSet decodesTo GithubNoFormat.Object.ClosedEvent
 closable object____ =
-      Object.selectionForCompositeField "closable" [] (object____) (identity)
+      Object.selectionForCompositeField "closable" [] (object____) (Basics.identity)
 
 
 {-| Object which triggered the creation of this event.
@@ -37,7 +37,7 @@ closable object____ =
 closer : SelectionSet decodesTo GithubNoFormat.Union.Closer
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ClosedEvent
 closer object____ =
-      Object.selectionForCompositeField "closer" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "closer" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'closed' event.
@@ -45,7 +45,7 @@ closer object____ =
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ClosedEvent
 commit object____ =
-      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "commit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.

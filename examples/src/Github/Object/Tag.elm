@@ -72,7 +72,7 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.Tag
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity
 
 
 {-| Details about the tag author.
@@ -81,7 +81,7 @@ tagger :
     SelectionSet decodesTo Github.Object.GitActor
     -> SelectionSet (Maybe decodesTo) Github.Object.Tag
 tagger object____ =
-    Object.selectionForCompositeField "tagger" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "tagger" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The Git object the tag points to.
@@ -90,4 +90,4 @@ target :
     SelectionSet decodesTo Github.Interface.GitObject
     -> SelectionSet decodesTo Github.Object.Tag
 target object____ =
-    Object.selectionForCompositeField "target" [] object____ identity
+    Object.selectionForCompositeField "target" [] object____ Basics.identity

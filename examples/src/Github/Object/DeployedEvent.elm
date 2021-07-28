@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.DeployedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -48,7 +48,7 @@ deployment :
     SelectionSet decodesTo Github.Object.Deployment
     -> SelectionSet decodesTo Github.Object.DeployedEvent
 deployment object____ =
-    Object.selectionForCompositeField "deployment" [] object____ identity
+    Object.selectionForCompositeField "deployment" [] object____ Basics.identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.DeployedEvent
@@ -62,7 +62,7 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.DeployedEvent
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity
 
 
 {-| The ref associated with the 'deployed' event.
@@ -71,4 +71,4 @@ ref :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.DeployedEvent
 ref object____ =
-    Object.selectionForCompositeField "ref" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "ref" [] object____ (Basics.identity >> Decode.nullable)

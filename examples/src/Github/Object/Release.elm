@@ -25,7 +25,7 @@ author :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.Release
 author object____ =
-    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -104,9 +104,9 @@ releaseAssets fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "name" filledInOptionals____.name Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "releaseAssets" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "releaseAssets" optionalArgs____ object____ Basics.identity
 
 
 {-| The HTTP path for this issue
@@ -122,7 +122,7 @@ tag :
     SelectionSet decodesTo Github.Object.Ref
     -> SelectionSet (Maybe decodesTo) Github.Object.Release
 tag object____ =
-    Object.selectionForCompositeField "tag" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "tag" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was last updated.

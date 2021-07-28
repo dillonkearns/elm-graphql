@@ -23,7 +23,7 @@ edges :
     SelectionSet decodesTo Github.Object.CommitEdge
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.CommitHistoryConnection
 edges object____ =
-    Object.selectionForCompositeField "edges" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object____ (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
@@ -32,7 +32,7 @@ nodes :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.CommitHistoryConnection
 nodes object____ =
-    Object.selectionForCompositeField "nodes" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object____ (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
@@ -41,7 +41,7 @@ pageInfo :
     SelectionSet decodesTo Github.Object.PageInfo
     -> SelectionSet decodesTo Github.Object.CommitHistoryConnection
 pageInfo object____ =
-    Object.selectionForCompositeField "pageInfo" [] object____ identity
+    Object.selectionForCompositeField "pageInfo" [] object____ Basics.identity
 
 
 {-| Identifies the total count of items in the connection.

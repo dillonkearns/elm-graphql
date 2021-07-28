@@ -39,4 +39,4 @@ project :
     SelectionSet decodesTo Github.Object.Project
     -> SelectionSet decodesTo Github.Object.DeleteProjectColumnPayload
 project object____ =
-    Object.selectionForCompositeField "project" [] object____ identity
+    Object.selectionForCompositeField "project" [] object____ Basics.identity

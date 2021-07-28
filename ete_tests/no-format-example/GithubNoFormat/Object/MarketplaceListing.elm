@@ -184,7 +184,7 @@ logoUrl fillInOptionals____ =
 
         optionalArgs____ =
             [ Argument.optional "size" filledInOptionals____.size (Encode.int) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
       Object.selectionForField "(Maybe ScalarCodecs.Uri)" "logoUrl" optionalArgs____ (GithubNoFormat.ScalarCodecs.codecs |> GithubNoFormat.Scalar.unwrapCodecs |> .codecUri |> .decoder |> Decode.nullable)
 
@@ -215,7 +215,7 @@ pricingUrl =
 primaryCategory : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
  -> SelectionSet decodesTo GithubNoFormat.Object.MarketplaceListing
 primaryCategory object____ =
-      Object.selectionForCompositeField "primaryCategory" [] (object____) (identity)
+      Object.selectionForCompositeField "primaryCategory" [] (object____) (Basics.identity)
 
 
 {-| URL to the listing's privacy policy.
@@ -244,7 +244,7 @@ screenshotUrls =
 secondaryCategory : SelectionSet decodesTo GithubNoFormat.Object.MarketplaceCategory
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.MarketplaceListing
 secondaryCategory object____ =
-      Object.selectionForCompositeField "secondaryCategory" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "secondaryCategory" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| The listing's very short description.

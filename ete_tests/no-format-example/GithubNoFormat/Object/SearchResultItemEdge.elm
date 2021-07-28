@@ -28,7 +28,7 @@ cursor =
 node : SelectionSet decodesTo GithubNoFormat.Union.SearchResultItem
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.SearchResultItemEdge
 node object____ =
-      Object.selectionForCompositeField "node" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "node" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Text matches on the result found.
@@ -36,4 +36,4 @@ node object____ =
 textMatches : SelectionSet decodesTo GithubNoFormat.Object.TextMatch
  -> SelectionSet (Maybe (List (Maybe decodesTo))) GithubNoFormat.Object.SearchResultItemEdge
 textMatches object____ =
-      Object.selectionForCompositeField "textMatches" [] (object____) (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+      Object.selectionForCompositeField "textMatches" [] (object____) (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)

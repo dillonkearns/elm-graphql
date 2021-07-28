@@ -32,4 +32,4 @@ projectColumn :
     SelectionSet decodesTo Github.Object.ProjectColumn
     -> SelectionSet decodesTo Github.Object.UpdateProjectColumnPayload
 projectColumn object____ =
-    Object.selectionForCompositeField "projectColumn" [] object____ identity
+    Object.selectionForCompositeField "projectColumn" [] object____ Basics.identity

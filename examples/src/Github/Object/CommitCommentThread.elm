@@ -46,9 +46,9 @@ comments fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "comments" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "comments" optionalArgs____ object____ Basics.identity
 
 
 {-| The commit the comments were made on.
@@ -57,7 +57,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet decodesTo Github.Object.CommitCommentThread
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ identity
+    Object.selectionForCompositeField "commit" [] object____ Basics.identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.CommitCommentThread
@@ -85,4 +85,4 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.CommitCommentThread
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity

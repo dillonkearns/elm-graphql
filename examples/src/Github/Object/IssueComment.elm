@@ -28,7 +28,7 @@ author :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
 author object____ =
-    Object.selectionForCompositeField "author" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "author" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Author's association with the subject of the comment.
@@ -86,7 +86,7 @@ editor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
 editor object____ =
-    Object.selectionForCompositeField "editor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "editor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.IssueComment
@@ -100,7 +100,7 @@ issue :
     SelectionSet decodesTo Github.Object.Issue
     -> SelectionSet decodesTo Github.Object.IssueComment
 issue object____ =
-    Object.selectionForCompositeField "issue" [] object____ identity
+    Object.selectionForCompositeField "issue" [] object____ Basics.identity
 
 
 {-| The moment the editor made the last edit
@@ -124,7 +124,7 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueComment
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "pullRequest" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| A list of reactions grouped by content left on the subject.
@@ -133,7 +133,7 @@ reactionGroups :
     SelectionSet decodesTo Github.Object.ReactionGroup
     -> SelectionSet (Maybe (List decodesTo)) Github.Object.IssueComment
 reactionGroups object____ =
-    Object.selectionForCompositeField "reactionGroups" [] object____ (identity >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "reactionGroups" [] object____ (Basics.identity >> Decode.list >> Decode.nullable)
 
 
 type alias ReactionsOptionalArguments =
@@ -167,9 +167,9 @@ reactions fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string, Argument.optional "content" filledInOptionals____.content (Encode.enum Github.Enum.ReactionContent.toString), Argument.optional "orderBy" filledInOptionals____.orderBy Github.InputObject.encodeReactionOrder ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "reactions" optionalArgs____ object____ identity
+    Object.selectionForCompositeField "reactions" optionalArgs____ object____ Basics.identity
 
 
 {-| The repository associated with this node.
@@ -178,7 +178,7 @@ repository :
     SelectionSet decodesTo Github.Object.Repository
     -> SelectionSet decodesTo Github.Object.IssueComment
 repository object____ =
-    Object.selectionForCompositeField "repository" [] object____ identity
+    Object.selectionForCompositeField "repository" [] object____ Basics.identity
 
 
 {-| The HTTP path for this issue comment
@@ -229,9 +229,9 @@ userContentEdits fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first Encode.int, Argument.optional "after" filledInOptionals____.after Encode.string, Argument.optional "last" filledInOptionals____.last Encode.int, Argument.optional "before" filledInOptionals____.before Encode.string ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "userContentEdits" optionalArgs____ object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Check if the current viewer can delete this object.

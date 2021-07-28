@@ -32,7 +32,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet decodesTo Github.Object.BlameRange
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ identity
+    Object.selectionForCompositeField "commit" [] object____ Basics.identity
 
 
 {-| The ending line for the range

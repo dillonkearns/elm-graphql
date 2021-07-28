@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReferencedEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the commit associated with the 'referenced' event.
@@ -29,7 +29,7 @@ actor object____ =
 commit : SelectionSet decodesTo GithubNoFormat.Object.Commit
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReferencedEvent
 commit object____ =
-      Object.selectionForCompositeField "commit" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "commit" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the repository associated with the 'referenced' event.
@@ -37,7 +37,7 @@ commit object____ =
 commitRepository : SelectionSet decodesTo GithubNoFormat.Object.Repository
  -> SelectionSet decodesTo GithubNoFormat.Object.ReferencedEvent
 commitRepository object____ =
-      Object.selectionForCompositeField "commitRepository" [] (object____) (identity)
+      Object.selectionForCompositeField "commitRepository" [] (object____) (Basics.identity)
 
 
 {-| Identifies the date and time when the object was created.
@@ -78,4 +78,4 @@ isDirectReference =
 subject : SelectionSet decodesTo GithubNoFormat.Union.ReferencedSubject
  -> SelectionSet decodesTo GithubNoFormat.Object.ReferencedEvent
 subject object____ =
-      Object.selectionForCompositeField "subject" [] (object____) (identity)
+      Object.selectionForCompositeField "subject" [] (object____) (Basics.identity)

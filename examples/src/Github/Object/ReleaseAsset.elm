@@ -65,7 +65,7 @@ release :
     SelectionSet decodesTo Github.Object.Release
     -> SelectionSet (Maybe decodesTo) Github.Object.ReleaseAsset
 release object____ =
-    Object.selectionForCompositeField "release" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "release" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The size (in bytes) of the asset
@@ -88,7 +88,7 @@ uploadedBy :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.ReleaseAsset
 uploadedBy object____ =
-    Object.selectionForCompositeField "uploadedBy" [] object____ identity
+    Object.selectionForCompositeField "uploadedBy" [] object____ Basics.identity
 
 
 {-| Identifies the URL of the release asset.

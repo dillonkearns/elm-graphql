@@ -21,7 +21,7 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 actor : SelectionSet decodesTo GithubNoFormat.Interface.Actor
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.CrossReferencedEvent
 actor object____ =
-      Object.selectionForCompositeField "actor" [] (object____) (identity >> Decode.nullable)
+      Object.selectionForCompositeField "actor" [] (object____) (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -62,7 +62,7 @@ resourcePath =
 source : SelectionSet decodesTo GithubNoFormat.Union.ReferencedSubject
  -> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
 source object____ =
-      Object.selectionForCompositeField "source" [] (object____) (identity)
+      Object.selectionForCompositeField "source" [] (object____) (Basics.identity)
 
 
 {-| Issue or pull request to which the reference was made.
@@ -70,7 +70,7 @@ source object____ =
 target : SelectionSet decodesTo GithubNoFormat.Union.ReferencedSubject
  -> SelectionSet decodesTo GithubNoFormat.Object.CrossReferencedEvent
 target object____ =
-      Object.selectionForCompositeField "target" [] (object____) (identity)
+      Object.selectionForCompositeField "target" [] (object____) (Basics.identity)
 
 
 {-| The HTTP URL for this pull request.

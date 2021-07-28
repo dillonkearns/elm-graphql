@@ -69,6 +69,6 @@ assignees fillInOptionals____ object____ =
 
         optionalArgs____ =
             [ Argument.optional "first" filledInOptionals____.first (Encode.int), Argument.optional "after" filledInOptionals____.after (Encode.string), Argument.optional "last" filledInOptionals____.last (Encode.int), Argument.optional "before" filledInOptionals____.before (Encode.string) ]
-                |> List.filterMap identity
+                |> List.filterMap Basics.identity
     in
-      Object.selectionForCompositeField "assignees" optionalArgs____ (object____) (identity)
+      Object.selectionForCompositeField "assignees" optionalArgs____ (object____) (Basics.identity)

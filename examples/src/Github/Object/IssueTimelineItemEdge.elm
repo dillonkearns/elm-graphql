@@ -32,4 +32,4 @@ node :
     SelectionSet decodesTo Github.Union.IssueTimelineItem
     -> SelectionSet (Maybe decodesTo) Github.Object.IssueTimelineItemEdge
 node object____ =
-    Object.selectionForCompositeField "node" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "node" [] object____ (Basics.identity >> Decode.nullable)

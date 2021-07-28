@@ -53,7 +53,7 @@ invitee :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet (Maybe decodesTo) Github.Object.OrganizationInvitation
 invitee object____ =
-    Object.selectionForCompositeField "invitee" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "invitee" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The user who created the invitation.
@@ -62,7 +62,7 @@ inviter :
     SelectionSet decodesTo Github.Object.User
     -> SelectionSet decodesTo Github.Object.OrganizationInvitation
 inviter object____ =
-    Object.selectionForCompositeField "inviter" [] object____ identity
+    Object.selectionForCompositeField "inviter" [] object____ Basics.identity
 
 
 {-| The organization the invite is for
@@ -71,7 +71,7 @@ organization :
     SelectionSet decodesTo Github.Object.Organization
     -> SelectionSet decodesTo Github.Object.OrganizationInvitation
 organization object____ =
-    Object.selectionForCompositeField "organization" [] object____ identity
+    Object.selectionForCompositeField "organization" [] object____ Basics.identity
 
 
 {-| The user's pending role in the organization (e.g. member, owner).

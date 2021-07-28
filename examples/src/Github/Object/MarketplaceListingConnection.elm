@@ -25,7 +25,7 @@ edges :
     SelectionSet decodesTo Github.Object.MarketplaceListingEdge
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.MarketplaceListingConnection
 edges object____ =
-    Object.selectionForCompositeField "edges" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "edges" [] object____ (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| A list of nodes.
@@ -34,7 +34,7 @@ nodes :
     SelectionSet decodesTo Github.Object.MarketplaceListing
     -> SelectionSet (Maybe (List (Maybe decodesTo))) Github.Object.MarketplaceListingConnection
 nodes object____ =
-    Object.selectionForCompositeField "nodes" [] object____ (identity >> Decode.nullable >> Decode.list >> Decode.nullable)
+    Object.selectionForCompositeField "nodes" [] object____ (Basics.identity >> Decode.nullable >> Decode.list >> Decode.nullable)
 
 
 {-| Information to aid in pagination.
@@ -43,7 +43,7 @@ pageInfo :
     SelectionSet decodesTo Github.Object.PageInfo
     -> SelectionSet decodesTo Github.Object.MarketplaceListingConnection
 pageInfo object____ =
-    Object.selectionForCompositeField "pageInfo" [] object____ identity
+    Object.selectionForCompositeField "pageInfo" [] object____ Basics.identity
 
 
 {-| Identifies the total count of items in the connection.

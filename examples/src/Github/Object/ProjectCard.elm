@@ -29,7 +29,7 @@ column :
     SelectionSet decodesTo Github.Object.ProjectColumn
     -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
 column object____ =
-    Object.selectionForCompositeField "column" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "column" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| The card content item
@@ -38,7 +38,7 @@ content :
     SelectionSet decodesTo Github.Union.ProjectCardItem
     -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
 content object____ =
-    Object.selectionForCompositeField "content" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "content" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -54,7 +54,7 @@ creator :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.ProjectCard
 creator object____ =
-    Object.selectionForCompositeField "creator" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "creator" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the primary key from the database.
@@ -82,7 +82,7 @@ project :
     SelectionSet decodesTo Github.Object.Project
     -> SelectionSet decodesTo Github.Object.ProjectCard
 project object____ =
-    Object.selectionForCompositeField "project" [] object____ identity
+    Object.selectionForCompositeField "project" [] object____ Basics.identity
 
 
 {-| The column that contains this card.
@@ -91,7 +91,7 @@ projectColumn :
     SelectionSet decodesTo Github.Object.ProjectColumn
     -> SelectionSet decodesTo Github.Object.ProjectCard
 projectColumn object____ =
-    Object.selectionForCompositeField "projectColumn" [] object____ identity
+    Object.selectionForCompositeField "projectColumn" [] object____ Basics.identity
 
 
 {-| The HTTP path for this card

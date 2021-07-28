@@ -32,7 +32,7 @@ columnEdge :
     SelectionSet decodesTo Github.Object.ProjectColumnEdge
     -> SelectionSet decodesTo Github.Object.AddProjectColumnPayload
 columnEdge object____ =
-    Object.selectionForCompositeField "columnEdge" [] object____ identity
+    Object.selectionForCompositeField "columnEdge" [] object____ Basics.identity
 
 
 {-| The project
@@ -41,4 +41,4 @@ project :
     SelectionSet decodesTo Github.Object.Project
     -> SelectionSet decodesTo Github.Object.AddProjectColumnPayload
 project object____ =
-    Object.selectionForCompositeField "project" [] object____ identity
+    Object.selectionForCompositeField "project" [] object____ Basics.identity

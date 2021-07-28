@@ -24,7 +24,7 @@ character :
     SelectionSet decodesTo Swapi.Interface.Character
     -> SelectionSet (Maybe decodesTo) Swapi.Object.ChatMessage
 character object____ =
-    Object.selectionForCompositeField "character" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "character" [] object____ (Basics.identity >> Decode.nullable)
 
 
 phrase : SelectionSet Swapi.Enum.Phrase.Phrase Swapi.Object.ChatMessage

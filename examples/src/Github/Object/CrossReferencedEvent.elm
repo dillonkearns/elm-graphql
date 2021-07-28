@@ -25,7 +25,7 @@ actor :
     SelectionSet decodesTo Github.Interface.Actor
     -> SelectionSet (Maybe decodesTo) Github.Object.CrossReferencedEvent
 actor object____ =
-    Object.selectionForCompositeField "actor" [] object____ (identity >> Decode.nullable)
+    Object.selectionForCompositeField "actor" [] object____ (Basics.identity >> Decode.nullable)
 
 
 {-| Identifies the date and time when the object was created.
@@ -67,7 +67,7 @@ source :
     SelectionSet decodesTo Github.Union.ReferencedSubject
     -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
 source object____ =
-    Object.selectionForCompositeField "source" [] object____ identity
+    Object.selectionForCompositeField "source" [] object____ Basics.identity
 
 
 {-| Issue or pull request to which the reference was made.
@@ -76,7 +76,7 @@ target :
     SelectionSet decodesTo Github.Union.ReferencedSubject
     -> SelectionSet decodesTo Github.Object.CrossReferencedEvent
 target object____ =
-    Object.selectionForCompositeField "target" [] object____ identity
+    Object.selectionForCompositeField "target" [] object____ Basics.identity
 
 
 {-| The HTTP URL for this pull request.

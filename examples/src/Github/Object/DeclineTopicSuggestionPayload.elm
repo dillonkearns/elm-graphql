@@ -32,4 +32,4 @@ topic :
     SelectionSet decodesTo Github.Object.Topic
     -> SelectionSet decodesTo Github.Object.DeclineTopicSuggestionPayload
 topic object____ =
-    Object.selectionForCompositeField "topic" [] object____ identity
+    Object.selectionForCompositeField "topic" [] object____ Basics.identity

@@ -25,7 +25,7 @@ commit :
     SelectionSet decodesTo Github.Object.Commit
     -> SelectionSet decodesTo Github.Object.PullRequestCommit
 commit object____ =
-    Object.selectionForCompositeField "commit" [] object____ identity
+    Object.selectionForCompositeField "commit" [] object____ Basics.identity
 
 
 id : SelectionSet Github.ScalarCodecs.Id Github.Object.PullRequestCommit
@@ -39,7 +39,7 @@ pullRequest :
     SelectionSet decodesTo Github.Object.PullRequest
     -> SelectionSet decodesTo Github.Object.PullRequestCommit
 pullRequest object____ =
-    Object.selectionForCompositeField "pullRequest" [] object____ identity
+    Object.selectionForCompositeField "pullRequest" [] object____ Basics.identity
 
 
 {-| The HTTP path for this pull request commit
