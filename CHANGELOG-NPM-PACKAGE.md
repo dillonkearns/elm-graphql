@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.2] - 2021-07-28
+
+### Fixed
+
+- Use unqualified reference to `Basics.identity` to avoid naming conflicts in generated code. That means user-defined GraphQL fields
+  can have the name `identity` without causing any Elm compiler errors now.
+
 ## [4.2.1] - 2021-03-15
 
 ### Fixed
