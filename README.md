@@ -39,12 +39,13 @@ in `dillonkearns/elm-graphql` (the code in this example that is prefixed with `S
 ```elm
 import Graphql.Operation exposing (RootQuery)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+import StarWars.Object
 import StarWars.Object.Human as Human
 import StarWars.Query as Query
 import StarWars.Scalar exposing (Id(..))
 
 
-query : SelectionSet (Maybe Human) RootQuery
+query : SelectionSet (Maybe HumanData) RootQuery
 query =
     Query.human { id = Id "1001" } humanSelection
 
@@ -55,7 +56,7 @@ type alias HumanData =
     }
 
 
-humanSelection : SelectionSet Human StarWars.Object.Human
+humanSelection : SelectionSet HumanData StarWars.Object.Human
 humanSelection =
     SelectionSet.map2 HumanData
         Human.name
