@@ -140,4 +140,25 @@ all =
                         |> Graphql.Document.serializeQueryForUrlWithOperationName "Avatar"
                         |> Expect.equal """query Avatar {avatar0:avatar}"""
             ]
+        , describe "sibling leaves with same composite parent"
+            [ test "simple case" <|
+                \() ->
+                    document
+                        [ Composite "me"
+                            []
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            []
+                            [ leaf "lastName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  me {
+    firstName0: firstName
+    lastName0: lastName
+  }
+}"""
+            ]
         ]
