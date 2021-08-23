@@ -160,5 +160,52 @@ all =
     lastName0: lastName
   }
 }"""
+            , test "merges 3 with no args" <|
+                \() ->
+                    document
+                        [ Composite "me"
+                            []
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            []
+                            [ leaf "middleName" []
+                            ]
+                        , Composite "me"
+                            []
+                            [ leaf "lastName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  me {
+    firstName0: firstName
+    middleName0: middleName
+    lastName0: lastName
+  }
+}"""
+            , test "different arguments are not merged" <|
+                \() ->
+                    document
+                        [ Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 456)
+                            ]
+                            [ leaf "lastName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  me3003759287: me(id: 123) {
+    firstName0: firstName
+  }
+  me1529416052: me(id: 456) {
+    lastName0: lastName
+  }
+}"""
             ]
         ]
