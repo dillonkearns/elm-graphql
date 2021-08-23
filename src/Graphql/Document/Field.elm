@@ -131,12 +131,12 @@ mergedFields children =
         mergeThing =
             mergeFields children
     in
-    (mergeThing.leaves |> List.map leafToField)
+    (mergeThing.leaves |> Dict.values |> List.map leafToField)
         ++ (mergeThing.composites |> Dict.values |> List.map compositeToField)
 
 
 type alias MergedFields =
-    { leaves : List ( { typeString : String, fieldName : String }, List Argument )
+    { leaves : Dict String ( { typeString : String, fieldName : String }, List Argument )
     , composites : Dict String ( { name : String, args : List Argument }, List RawField )
     }
 
@@ -176,11 +176,18 @@ mergeFields rawFields =
                         }
 
                     Leaf info args ->
-                        { leaves = ( info, args ) :: leaves
+                        { leaves =
+                            leaves
+                                |> Dict.update (hashedAliasName field)
+                                    (\maybeChildrenSoFar ->
+                                        maybeChildrenSoFar
+                                            |> Maybe.withDefault ( info, args )
+                                            |> Just
+                                    )
                         , composites = composites
                         }
             )
-            { leaves = []
+            { leaves = Dict.empty
             , composites = Dict.empty
             }
 
