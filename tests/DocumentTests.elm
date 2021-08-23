@@ -60,8 +60,8 @@ all =
                     ]
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
-  avatar0: avatar
   labels0: labels
+  avatar0: avatar
 }"""
         , test "duplicate top-level fields" <|
             \() ->
@@ -200,11 +200,11 @@ all =
                         ]
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
-  me3003759287: me(id: 123) {
-    firstName0: firstName
-  }
   me1529416052: me(id: 456) {
     lastName0: lastName
+  }
+  me3003759287: me(id: 123) {
+    firstName0: firstName
   }
 }"""
             ]

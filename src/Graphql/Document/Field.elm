@@ -1,5 +1,6 @@
 module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 
+import Dict exposing (Dict)
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
@@ -106,8 +107,8 @@ serialize aliasName mIndentationLevel field =
 serializeChildren : Maybe Int -> List RawField -> String
 serializeChildren indentationLevel children =
     children
+        |> mergedFields
         |> nonemptyChildren
-        |> mergeChildren
         |> List.map
             (\field ->
                 serialize (alias field) (indentationLevel |> Maybe.map ((+) 1)) field
@@ -123,27 +124,65 @@ serializeChildren indentationLevel children =
             )
 
 
-mergeChildren : List RawField -> List RawField
-mergeChildren fields =
-    case fields of
-        [ Composite name1 args1 fields1, Composite name2 args2 fields2 ] ->
-            if name1 == name2 && hasSameArgs args1 args2 then
-                [ Composite name1 args1 (fields1 ++ fields2) ]
-
-            else
-                fields
-
-        _ ->
-            fields
+mergedFields : List RawField -> List RawField
+mergedFields children =
+    let
+        mergeThing : MergedFields
+        mergeThing =
+            mergeFields children
+    in
+    (mergeThing.leaves |> List.map leafToField)
+        ++ (mergeThing.composites |> Dict.values |> List.map compositeToField)
 
 
-hasSameArgs : List Argument -> List Argument -> Bool
-hasSameArgs args1 args2 =
-    if List.isEmpty args1 && List.isEmpty args2 then
-        True
+type alias MergedFields =
+    { leaves : List ( { typeString : String, fieldName : String }, List Argument )
+    , composites : Dict String ( { name : String, args : List Argument }, List RawField )
+    }
 
-    else
-        False
+
+leafToField : ( { typeString : String, fieldName : String }, List Argument ) -> RawField
+leafToField ( record, arguments ) =
+    Leaf record arguments
+
+
+compositeToField : ( { name : String, args : List Argument }, List RawField ) -> RawField
+compositeToField ( record, children ) =
+    Composite record.name record.args children
+
+
+{-| Fields will have collisions if there is more than one with the same field name or field alias.
+
+This ensures that composite fields with the same field name or field alias are merged into one composite.
+
+-}
+mergeFields : List RawField -> MergedFields
+mergeFields rawFields =
+    rawFields
+        |> List.foldl
+            (\field { leaves, composites } ->
+                case field of
+                    Composite fieldName args children ->
+                        { leaves = leaves
+                        , composites =
+                            composites
+                                |> Dict.update (hashedAliasName field)
+                                    (\maybeChildrenSoFar ->
+                                        maybeChildrenSoFar
+                                            |> Maybe.withDefault ( { name = fieldName, args = args }, [] )
+                                            |> Tuple.mapSecond ((++) children)
+                                            |> Just
+                                    )
+                        }
+
+                    Leaf info args ->
+                        { leaves = ( info, args ) :: leaves
+                        , composites = composites
+                        }
+            )
+            { leaves = []
+            , composites = Dict.empty
+            }
 
 
 nonemptyChildren : List RawField -> List RawField
