@@ -3,6 +3,7 @@ module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
+import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField(..))
 
 
@@ -106,6 +107,7 @@ serializeChildren : Maybe Int -> List RawField -> String
 serializeChildren indentationLevel children =
     children
         |> nonemptyChildren
+        |> mergeChildren
         |> List.map
             (\field ->
                 serialize (alias field) (indentationLevel |> Maybe.map ((+) 1)) field
@@ -119,6 +121,29 @@ serializeChildren indentationLevel children =
                 Nothing ->
                     " "
             )
+
+
+mergeChildren : List RawField -> List RawField
+mergeChildren fields =
+    case fields of
+        [ Composite name1 args1 fields1, Composite name2 args2 fields2 ] ->
+            if name1 == name2 && hasSameArgs args1 args2 then
+                [ Composite name1 args1 (fields1 ++ fields2) ]
+
+            else
+                fields
+
+        _ ->
+            fields
+
+
+hasSameArgs : List Argument -> List Argument -> Bool
+hasSameArgs args1 args2 =
+    if List.isEmpty args1 && List.isEmpty args2 then
+        True
+
+    else
+        False
 
 
 nonemptyChildren : List RawField -> List RawField

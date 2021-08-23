@@ -140,8 +140,8 @@ all =
                         |> Graphql.Document.serializeQueryForUrlWithOperationName "Avatar"
                         |> Expect.equal """query Avatar {avatar0:avatar}"""
             ]
-        , describe "sibling leaves with same composite parent"
-            [ test "simple case" <|
+        , describe "merge composite fields"
+            [ test "without arguments" <|
                 \() ->
                     document
                         [ Composite "me"
