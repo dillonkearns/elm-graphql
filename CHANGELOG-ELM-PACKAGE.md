@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.6] - 2021-08-24
+
+### Changed
+
+- Merge duplicate Leaf and Composite fields so that there are never more than 1 field in a selection set with the same field name. See [#556](https://github.com/dillonkearns/elm-graphql/pull/556). Fixes [#495](https://github.com/dillonkearns/elm-graphql/issues/495).
+  Technically having Leaf fields with the same field alias or field name is allowed by the GraphQL Spec, but this change makes field aliases and names unique for both Leaf and Composite fields.
+
 ## [5.0.5] - 2021-03-15
 
 ### Fixed
