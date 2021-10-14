@@ -600,10 +600,22 @@ toReadyRequest (Request request) =
             , body =
                 Http.jsonBody
                     (Json.Encode.object
-                        [ ( "query"
-                          , Json.Encode.string serializedMutation
-                          )
-                        ]
+                        (List.append
+                            [ ( "query"
+                              , Json.Encode.string serializedMutation
+                              )
+                            ]
+                            (case request.operationName of
+                                Just operationName ->
+                                    [ ( "operationName"
+                                      , Json.Encode.string operationName
+                                      )
+                                    ]
+
+                                Nothing ->
+                                    []
+                            )
+                        )
                     )
             , decoder = decoderOrError request.expect
             , timeout = request.timeout
