@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.7] - 2021-10-26
+
+### Fixed
+
+- `operationName` is now passed in the body of mutation requests (see [#566](https://github.com/dillonkearns/elm-graphql/pull/566)). Thank you [@galdiuz](https://github.com/galdiuz) for the PR!
+
 ## [5.0.6] - 2021-08-24
 
 ### Changed
