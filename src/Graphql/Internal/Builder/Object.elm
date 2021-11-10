@@ -15,6 +15,7 @@ import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField)
 import Graphql.SelectionSet exposing (FragmentSelectionSet(..), SelectionSet(..))
 import Json.Decode as Decode exposing (Decoder)
+import Json.Encode as Encode
 import String.Interpolate exposing (interpolate)
 
 
@@ -36,6 +37,7 @@ scalarDecoder =
                         False ->
                             "false"
                 )
+        , Decode.value |> Decode.map (Encode.encode 0)
         ]
 
 
