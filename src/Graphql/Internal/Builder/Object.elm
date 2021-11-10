@@ -25,8 +25,6 @@ scalarDecoder : Decoder String
 scalarDecoder =
     Decode.oneOf
         [ Decode.string
-        , Decode.float |> Decode.map String.fromFloat
-        , Decode.int |> Decode.map String.fromInt
         , Decode.bool
             |> Decode.map
                 (\bool ->
