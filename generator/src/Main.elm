@@ -67,6 +67,7 @@ type alias UrlArgs =
     , headers : Dict.Dict String String
     , scalarCodecsModule : Maybe ModuleName
     , skipElmFormat : Bool
+    , skipValidation : Bool
     }
 
 
@@ -76,6 +77,7 @@ type alias FileArgs =
     , outputPath : String
     , scalarCodecsModule : Maybe ModuleName
     , skipElmFormat : Bool
+    , skipValidation : Bool
     }
 
 
@@ -114,6 +116,7 @@ program =
                     )
                 |> with scalarCodecsOption
                 |> with skipElmFormatOption
+                |> with skipScalarCodecValidationOption
                 |> OptionsParser.withDoc "generate files based on the schema at `url`"
                 |> OptionsParser.map FromUrl
             )
@@ -124,6 +127,7 @@ program =
                 |> with outputPathOption
                 |> with scalarCodecsOption
                 |> with skipElmFormatOption
+                |> with skipScalarCodecValidationOption
                 |> OptionsParser.map FromIntrospectionFile
             )
         |> Program.add
@@ -133,6 +137,7 @@ program =
                 |> with outputPathOption
                 |> with scalarCodecsOption
                 |> with skipElmFormatOption
+                |> with skipScalarCodecValidationOption
                 |> OptionsParser.map FromSchemaFile
             )
 
@@ -148,6 +153,11 @@ scalarCodecsOption =
 skipElmFormatOption : Option.Option Bool Bool Option.BeginningOption
 skipElmFormatOption =
     Option.flag "skip-elm-format"
+
+
+skipScalarCodecValidationOption : Option.Option Bool Bool Option.BeginningOption
+skipScalarCodecValidationOption =
+    Option.flag "skip-validation"
 
 
 outputPathOption : Option.Option (Maybe String) String Option.BeginningOption
@@ -183,7 +193,12 @@ init flags msg =
                 , outputPath = options.outputPath
                 , baseModule = options.base
                 , headers = options.headers |> Json.Encode.dict identity Json.Encode.string
-                , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , customDecodersModule =
+                    if options.skipValidation then
+                        Nothing
+
+                    else
+                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
                 }
             )
 
@@ -193,7 +208,12 @@ init flags msg =
                 { introspectionFilePath = options.file
                 , outputPath = options.outputPath
                 , baseModule = options.base
-                , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , customDecodersModule =
+                    if options.skipValidation then
+                        Nothing
+
+                    else
+                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
                 }
             )
 
@@ -203,7 +223,12 @@ init flags msg =
                 { schemaFilePath = options.file
                 , outputPath = options.outputPath
                 , baseModule = options.base
-                , customDecodersModule = options.scalarCodecsModule |> Maybe.map ModuleName.toString
+                , customDecodersModule =
+                    if options.skipValidation then
+                        Nothing
+
+                    else
+                        options.scalarCodecsModule |> Maybe.map ModuleName.toString
                 }
             )
 
