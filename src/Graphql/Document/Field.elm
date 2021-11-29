@@ -1,13 +1,15 @@
 module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 
-import OrderedDict as Dict
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
-import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField(..))
+import OrderedDict as Dict
 
-type alias Dict comparable v  = Dict.OrderedDict comparable v
+
+type alias Dict comparable v =
+    Dict.OrderedDict comparable v
+
 
 hashedAliasName : RawField -> String
 hashedAliasName field =
@@ -127,29 +129,11 @@ serializeChildren indentationLevel children =
 
 mergedFields : List RawField -> List RawField
 mergedFields children =
-    let
-        mergeThing : MergedFields
-        mergeThing =
-            mergeFields children
-    in
-    (mergeThing.leaves |> Dict.values |> List.map leafToField)
-        ++ (mergeThing.composites |> Dict.values |> List.map compositeToField)
+    Dict.values (mergeFields children)
 
 
 type alias MergedFields =
-    { leaves : Dict String ( { typeString : String, fieldName : String }, List Argument )
-    , composites : Dict String ( { name : String, args : List Argument }, List RawField )
-    }
-
-
-leafToField : ( { typeString : String, fieldName : String }, List Argument ) -> RawField
-leafToField ( record, arguments ) =
-    Leaf record arguments
-
-
-compositeToField : ( { name : String, args : List Argument }, List RawField ) -> RawField
-compositeToField ( record, children ) =
-    Composite record.name record.args children
+    Dict String RawField
 
 
 {-| Fields will have collisions if there is more than one with the same field name or field alias.
@@ -161,36 +145,33 @@ mergeFields : List RawField -> MergedFields
 mergeFields rawFields =
     rawFields
         |> List.foldl
-            (\field { leaves, composites } ->
+            (\field mergedSoFar ->
                 case field of
-                    Composite fieldName args children ->
-                        { leaves = leaves
-                        , composites =
-                            composites
-                                |> Dict.update (hashedAliasName field)
-                                    (\maybeChildrenSoFar ->
-                                        maybeChildrenSoFar
-                                            |> Maybe.withDefault ( { name = fieldName, args = args }, [] )
-                                            |> Tuple.mapSecond ((++) children)
-                                            |> Just
-                                    )
-                        }
+                    Composite _ _ newChildren ->
+                        mergedSoFar
+                            |> Dict.update (hashedAliasName field)
+                                (\maybeChildrenSoFar ->
+                                    case maybeChildrenSoFar of
+                                        Nothing ->
+                                            Just field
 
-                    Leaf info args ->
-                        { leaves =
-                            leaves
-                                |> Dict.update (hashedAliasName field)
-                                    (\maybeChildrenSoFar ->
-                                        maybeChildrenSoFar
-                                            |> Maybe.withDefault ( info, args )
-                                            |> Just
-                                    )
-                        , composites = composites
-                        }
+                                        Just (Composite existingFieldName existingArgs existingChildren) ->
+                                            Composite existingFieldName existingArgs (existingChildren ++ newChildren) |> Just
+
+                                        _ ->
+                                            Just field
+                                )
+
+                    Leaf _ _ ->
+                        mergedSoFar
+                            |> Dict.update (hashedAliasName field)
+                                (\maybeChildrenSoFar ->
+                                    maybeChildrenSoFar
+                                        |> Maybe.withDefault field
+                                        |> Just
+                                )
             )
-            { leaves = Dict.empty
-            , composites = Dict.empty
-            }
+            Dict.empty
 
 
 nonemptyChildren : List RawField -> List RawField
