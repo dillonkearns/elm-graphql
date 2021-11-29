@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.8] - 2021-11-29
+
+### Fixed
+
+- Order is now correctly preserved. Version 5.0.6 broke this condition, which is required by the GraphQL spec for mutations so they can be performed in a
+  specific order. Thank you @kyasu1 for the PR! See [#575](https://github.com/dillonkearns/elm-graphql/pull/575).
+
 ## [5.0.7] - 2021-10-26
 
 ### Fixed
