@@ -178,8 +178,8 @@ all =
                         |> Expect.equal """query {
   me {
     firstName0: firstName
-    lastName0: lastName
     middleName0: middleName
+    lastName0: lastName
   }
 }"""
             , test "different arguments are not merged" <|
@@ -198,11 +198,11 @@ all =
                         ]
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
-  me1529416052: me(id: 456) {
-    lastName0: lastName
-  }
   me3003759287: me(id: 123) {
     firstName0: firstName
+  }
+  me1529416052: me(id: 456) {
+    lastName0: lastName
   }
 }"""
             , test "identical leaves are de-duped" <|
