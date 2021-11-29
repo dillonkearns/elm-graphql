@@ -1,12 +1,13 @@
 module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 
-import Dict exposing (Dict)
+import OrderedDict as Dict
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
 import Graphql.Internal.Builder.Argument exposing (Argument)
 import Graphql.RawField exposing (RawField(..))
 
+type alias Dict comparable v  = Dict.OrderedDict comparable v
 
 hashedAliasName : RawField -> String
 hashedAliasName field =
