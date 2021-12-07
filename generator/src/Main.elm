@@ -165,7 +165,7 @@ baseOption =
 
 validateModuleName : String -> Cli.Validate.ValidationResult
 validateModuleName =
-    Cli.Validate.regex "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
+    Cli.Validate.regexWithMessage "I expected this to be" "^[A-Z][A-Za-z_]*(\\.[A-Z][A-Za-z_]*)*$"
 
 
 type alias Flags =
