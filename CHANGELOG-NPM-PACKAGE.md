@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.3] - 2021-12-19
+
+### Fixed
+
+- Improve validation error message for `--scalar-codecs` CLI option (see [#576](https://github.com/dillonkearns/elm-graphql/pull/576)). Thank you for the PR [@ZeldaIV](https://github.com/ZeldaIV)!
+
 ## [4.2.2] - 2021-07-28
 
 ### Fixed
