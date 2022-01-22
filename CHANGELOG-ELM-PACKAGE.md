@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.9] - 2022-01-21
+
+### Fixed
+
+- Query params are now passed through for POST requests (they were always empty before).
+
 ## [5.0.8] - 2021-11-29
 
 ### Fixed
