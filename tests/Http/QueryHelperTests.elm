@@ -86,6 +86,28 @@ all =
                         , url = "https://elm-graphql.herokuapp.com/api"
                         , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
                         }
+        , test "passes through query params for POST requests" <|
+            \() ->
+                let
+                    queryDocument =
+                        document
+                            [ Composite "hero"
+                                []
+                                [ leaf longName1 []
+                                , leaf longName2 []
+                                ]
+                            ]
+                in
+                queryDocument
+                    |> QueryHelper.build Nothing
+                        "https://elm-graphql.herokuapp.com/api"
+                        [ ( "send", "it" ) ]
+                        Nothing
+                    |> Expect.equal
+                        { method = QueryHelper.Post
+                        , url = "https://elm-graphql.herokuapp.com/api?send=it"
+                        , body = Http.jsonBody (Json.Encode.object [ ( "query", Json.Encode.string (Document.serializeQuery queryDocument) ) ])
+                        }
         , test "uses POST when it too long, with operation name" <|
             \() ->
                 let

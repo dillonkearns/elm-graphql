@@ -60,7 +60,7 @@ build forceMethod url queryParams maybeOperationName queryDocument =
                         ( Document.serializeQuery queryDocument, [] )
         in
         { method = Post
-        , url = QueryParams.urlWithQueryParams [] url
+        , url = QueryParams.urlWithQueryParams queryParams url
         , body =
             Http.jsonBody <|
                 Json.Encode.object <|
