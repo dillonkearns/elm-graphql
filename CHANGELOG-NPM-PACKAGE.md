@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.4] - 2022-02-03
+
+### Added
+
+- New `--skip-validations` flag to avoid running `elm make` to give more precise validation errors for Scalar Codecs module if users want to avoid the extra execution time or the additional `elm make` step.
+
 ## [4.2.3] - 2021-12-19
 
 ### Fixed
