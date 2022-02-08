@@ -132,7 +132,7 @@ headingView =
             ]
         , Html.h2 []
             [ link
-                { url = "https://github.com/dillonkearns/elm-graphql/tree/master/examples/src/subscription"
+                { url = "https://github.com/dillonkearns/elm-graphql/tree/master/examples/subscription"
                 , content = "See the code on Github"
                 }
             ]
