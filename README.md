@@ -71,13 +71,13 @@ Once you've installed everything, running the `elm-graphql` code generation tool
 is as simple as this:
 
 ```bash
-npx elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src
+npx @dillonkearns/elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src
 ```
 
 If headers are required, such as a Bearer Token, the `--header` flag can be supplied.
 
 ```bash
-npx elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src --header 'headerKey: header value'
+npx @dillonkearns/elm-graphql https://elm-graphql.herokuapp.com --base StarWars --output examples/src --header 'headerKey: header value'
 ```
 
 ## Learning Resources
