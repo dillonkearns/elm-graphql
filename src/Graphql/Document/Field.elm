@@ -5,6 +5,7 @@ import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
 import Graphql.RawField exposing (RawField(..))
 import OrderedDict as Dict
+import List.Extra
 
 
 type alias Dict comparable v =
@@ -112,9 +113,10 @@ serializeChildren indentationLevel children =
     children
         |> mergedFields
         |> nonemptyChildren
+        |> canAllowHashing
         |> List.map
-            (\field ->
-                serialize (alias field) (indentationLevel |> Maybe.map ((+) 1)) field
+            (\( field, maybeAlias ) ->
+                serialize maybeAlias (indentationLevel |> Maybe.map ((+) 1)) field
             )
         |> List.filterMap identity
         |> String.join
@@ -126,6 +128,34 @@ serializeChildren indentationLevel children =
                     " "
             )
 
+
+canAllowHashing : List RawField -> List ( RawField, Maybe String )
+canAllowHashing rawFields =
+    let
+        isAllDifferent =
+            rawFields
+                |> List.map
+                    (\f ->
+                        case f of
+                            Leaf { fieldName } _ ->
+                                fieldName
+
+                            Composite fieldName _ _ ->
+                                fieldName
+                    )
+                |> List.Extra.allDifferent
+    in
+    rawFields
+        |> List.map
+            (\field ->
+                ( field
+                , if isAllDifferent then
+                    Nothing
+
+                  else
+                    alias field
+                )
+            )
 
 mergedFields : List RawField -> List RawField
 mergedFields children =

@@ -29,12 +29,10 @@ scalarDecoder =
         , Decode.bool
             |> Decode.map
                 (\bool ->
-                    case bool of
-                        True ->
-                            "true"
-
-                        False ->
-                            "false"
+                    if bool then 
+                        "true"
+                    else 
+                        "false"
                 )
         ]
 
@@ -48,9 +46,10 @@ selectionForField typeString fieldName args decoder =
             leaf { typeString = typeString, fieldName = fieldName } args
     in
     SelectionSet [ newLeaf ]
-        (Decode.field
-            (Graphql.Document.Field.hashedAliasName newLeaf)
-            decoder
+        (Decode.oneOf
+            [ Decode.field fieldName decoder
+            , Decode.field (Graphql.Document.Field.hashedAliasName newLeaf) decoder
+            ]
         )
 
 
@@ -64,9 +63,12 @@ selectionForCompositeField :
     -> SelectionSet b lockedTo
 selectionForCompositeField fieldName args (SelectionSet fields decoder) decoderTransform =
     SelectionSet [ composite fieldName args fields ]
-        (Decode.field
-            (Graphql.Document.Field.hashedAliasName (composite fieldName args fields))
-            (decoderTransform decoder)
+        (Decode.oneOf
+            [ Decode.field fieldName (decoderTransform decoder)
+            , Decode.field
+                (Graphql.Document.Field.hashedAliasName (composite fieldName args fields))
+                (decoderTransform decoder)
+            ]
         )
 
 
