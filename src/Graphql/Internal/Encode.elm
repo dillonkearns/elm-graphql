@@ -51,12 +51,11 @@ maybeObject maybeValues =
     maybeValues
         |> List.filterMap
             (\( key, value ) ->
-                case value of
-                    Just actualValue ->
-                        Just ( key, actualValue )
-
-                    Nothing ->
-                        Nothing
+                value
+                    |> Maybe.andThen
+                        (\actualValue ->
+                            Just ( key, actualValue )
+                        )
             )
         |> Object
 

@@ -277,10 +277,8 @@ take a look at the
 -}
 
 import Dict exposing (Dict)
-import Graphql.Document.Field
 import Graphql.RawField as RawField exposing (RawField)
 import Json.Decode as Decode exposing (Decoder)
-import List.Extra
 
 
 {-| SelectionSet type
@@ -829,11 +827,7 @@ combineMaybeList : List (Maybe a) -> Maybe (List a)
 combineMaybeList listOfMaybes =
     let
         step maybeElement accumulator =
-            case maybeElement of
-                Nothing ->
-                    Nothing
-
-                Just element ->
-                    Maybe.map ((::) element) accumulator
+            maybeElement
+                |> Maybe.andThen (\element -> Maybe.map ((::) element) accumulator)
     in
     List.foldr step (Just []) listOfMaybes
