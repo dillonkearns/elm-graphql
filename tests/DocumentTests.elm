@@ -34,13 +34,13 @@ all =
                 document [ leaf "avatar" [] ]
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
-  avatar0: avatar
+  avatar
 }"""
         , test "single leaf for GET serializer" <|
             \() ->
                 document [ leaf "avatar" [] ]
                     |> Graphql.Document.serializeQueryForUrl
-                    |> Expect.equal """{avatar0:avatar}"""
+                    |> Expect.equal """{avatar}"""
         , test "duplicate nested fields for GET serializer" <|
             \() ->
                 document
@@ -51,7 +51,7 @@ all =
                         ]
                     ]
                     |> Graphql.Document.serializeQueryForUrl
-                    |> Expect.equal "{topLevel{avatar0:avatar}}"
+                    |> Expect.equal "{topLevel{avatar}}"
         , test "multiple top-level" <|
             \() ->
                 document
@@ -60,8 +60,8 @@ all =
                     ]
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
-  avatar0: avatar
-  labels0: labels
+  avatar
+  labels
 }"""
         , test "duplicate top-level fields" <|
             \() ->
@@ -70,9 +70,7 @@ all =
                     , leaf "avatar" []
                     ]
                     |> Graphql.Document.serializeQuery
-                    |> Expect.equal """query {
-  avatar0: avatar
-}"""
+                    |> Expect.equal """query {\n  avatar\n}"""
         , test "duplicate nested fields" <|
             \() ->
                 document
@@ -85,7 +83,7 @@ all =
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   topLevel {
-    avatar0: avatar
+    avatar
   }
 }"""
         , test "ignored fields are included with a typename" <|
@@ -130,13 +128,13 @@ all =
                     document [ leaf "avatar" [] ]
                         |> Graphql.Document.serializeQueryWithOperationName "Avatar"
                         |> Expect.equal """query Avatar {
-  avatar0: avatar
+  avatar
 }"""
             , test "single leaf for GET serializer" <|
                 \() ->
                     document [ leaf "avatar" [] ]
                         |> Graphql.Document.serializeQueryForUrlWithOperationName "Avatar"
-                        |> Expect.equal """query Avatar {avatar0:avatar}"""
+                        |> Expect.equal """query Avatar {avatar}"""
             ]
         , describe "merge composite fields"
             [ test "without arguments" <|
@@ -154,8 +152,8 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   me {
-    firstName0: firstName
-    lastName0: lastName
+    firstName
+    lastName
   }
 }"""
             , test "merges 3 with no args" <|
@@ -177,9 +175,9 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   me {
-    firstName0: firstName
-    middleName0: middleName
-    lastName0: lastName
+    firstName
+    middleName
+    lastName
   }
 }"""
             , test "different arguments are not merged" <|
@@ -199,10 +197,10 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   me3003759287: me(id: 123) {
-    firstName0: firstName
+    firstName
   }
   me1529416052: me(id: 456) {
-    lastName0: lastName
+    lastName
   }
 }"""
             , test "identical leaves are de-duped" <|
@@ -213,7 +211,7 @@ all =
                         ]
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
-  version0: version
+  version
 }"""
             , test "identical leaves from a merged Composite parent de-duped" <|
                 \() ->
@@ -231,8 +229,8 @@ all =
                         ]
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
-  me3003759287: me(id: 123) {
-    firstName0: firstName
+  me(id: 123) {
+    firstName
   }
 }"""
             ]
