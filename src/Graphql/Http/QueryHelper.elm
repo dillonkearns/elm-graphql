@@ -64,7 +64,7 @@ build forceMethod url queryParams maybeOperationName queryDocument =
         , body =
             Http.jsonBody <|
                 Json.Encode.object <|
-                    ( "query", Json.Encode.string serializedQuery ) 
+                    ( "query", Json.Encode.string serializedQuery )
                         :: operationNameParamForPostRequest
         }
 

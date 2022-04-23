@@ -29,9 +29,10 @@ scalarDecoder =
         , Decode.bool
             |> Decode.map
                 (\bool ->
-                    if bool then 
+                    if bool then
                         "true"
-                    else 
+
+                    else
                         "false"
                 )
         ]
