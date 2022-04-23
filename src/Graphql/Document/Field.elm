@@ -3,9 +3,8 @@ module Graphql.Document.Field exposing (hashedAliasName, serializeChildren)
 import Graphql.Document.Argument as Argument
 import Graphql.Document.Hash exposing (hashString)
 import Graphql.Document.Indent as Indent
-import Graphql.RawField exposing (RawField(..))
+import Graphql.RawField exposing (RawField(..), name)
 import OrderedDict as Dict
-import List.Extra
 
 
 type alias Dict comparable v =
@@ -16,7 +15,7 @@ hashedAliasName : RawField -> String
 hashedAliasName field =
     field
         |> alias
-        |> Maybe.withDefault (Graphql.RawField.name field)
+        |> Maybe.withDefault (name field)
 
 
 maybeAliasHash : RawField -> Maybe Int
@@ -53,7 +52,7 @@ alias : RawField -> Maybe String
 alias field =
     field
         |> maybeAliasHash
-        |> Maybe.map (\aliasHash -> Graphql.RawField.name field ++ String.fromInt aliasHash)
+        |> Maybe.map (\aliasHash -> name field ++ String.fromInt aliasHash)
 
 
 serialize : Maybe String -> Maybe Int -> RawField -> Maybe String
@@ -132,30 +131,38 @@ serializeChildren indentationLevel children =
 canAllowHashing : List RawField -> List ( RawField, Maybe String )
 canAllowHashing rawFields =
     let
-        isAllDifferent =
+        fieldCounts =
             rawFields
-                |> List.map
-                    (\f ->
-                        case f of
-                            Leaf { fieldName } _ ->
-                                fieldName
+                |> List.map name
+                |> List.foldl
+                    (\fld acc ->
+                        acc
+                            |> Dict.update fld
+                                (\val ->
+                                    Just
+                                        (case val of
+                                            Nothing ->
+                                                0
 
-                            Composite fieldName _ _ ->
-                                fieldName
+                                            Just count ->
+                                                count + 1
+                                        )
+                                )
                     )
-                |> List.Extra.allDifferent
+                    Dict.empty
     in
     rawFields
         |> List.map
             (\field ->
                 ( field
-                , if isAllDifferent then
+                , if (fieldCounts |> Dict.get (name field) |> Maybe.withDefault 0) == 0 then
                     Nothing
 
                   else
                     alias field
                 )
             )
+
 
 mergedFields : List RawField -> List RawField
 mergedFields children =
