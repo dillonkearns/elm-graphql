@@ -168,3 +168,5 @@ Evan talks about his reasons for not automatically generating JSON decoders in E
 ## Is it possible to have recursive SelectionSets in elm-graphql?
 
 Elm JSON Decoders have `Json.Decode.lazy` to help decode recursive data structures like comments. There is no equivalent of lazy in `elm-graphql` because the GraphQL spec [chose not to allow recursive selection sets since they would have an unbounded depth](https://github.com/graphql/graphql-spec/issues/91#issuecomment-206743676).
+
+Instead, the typical approach to retrieving recursive data structures in GraphQL is to manually define a selection set that recurses a specific finite number of times (for example get 10 levels of nested comments, or 20 levels deep), and re-use that when needed.
