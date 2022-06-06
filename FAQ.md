@@ -164,3 +164,7 @@ One thing that I've learned from the Elm community is that the things that seem 
 I feel that way about explicitly defining your types for use with `elm-graphql`. It's work, but it's explicit work, and I don't think that's the bottleneck to maintaining code.
 
 Evan talks about his reasons for not automatically generating JSON decoders in Elm like Haskell does, and I think it's somewhat analagous to my thinking on why `elm-graphql` shouldn't automatically generate types based on your schema: https://gist.github.com/evancz/1c5f2cf34939336ecb79b97bb89d9da6#gistcomment-2606737
+
+## Is it possible to have recursive SelectionSets in elm-graphql?
+
+Elm JSON Decoders have `Json.Decode.lazy` to help decode recursive data structures like comments. There is no equivalent of lazy in `elm-graphql` because the GraphQL spec [chose not to allow recursive selection sets since they would have an unbounded depth](https://github.com/graphql/graphql-spec/issues/91#issuecomment-206743676).
