@@ -19,7 +19,7 @@ constraint that the schema doesn't specify, or 2) when your generated code is
 out of date with the schema.
 
 See the
-[Errors section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Errors)
+[Errors section in the GraphQL spec](https://spec.graphql.org/October2016/#sec-Errors)
 for more details about GraphQL errors.
 
 -}
@@ -31,11 +31,11 @@ type alias GraphqlError =
 
 
 {-| Represents the `data` field in cases where there is an error present, see
-[the error section in the GraphQL spec](http://facebook.github.io/graphql/October2016/#sec-Data).
+[the error section in the GraphQL spec](https://spec.graphql.org/October2016/#sec-Data)
 If the decoder succeeds you will end up with `ParsedData`. If it fails, you
 will get an `UnparsedData` with a `Json.Decode.Value` containing the raw, undecoded
 `data` field. You're likely to end up with `UnparsedData` since
-[GraphQL will return `null` if there is an error on a non-nullable field](http://facebook.github.io/graphql/October2016/#sec-Errors-and-Non-Nullability)
+[GraphQL will return `null` if there is an error on a non-nullable field](https://spec.graphql.org/October2016/#sec-Errors-and-Non-Nullability)
 , which will cause the decode pipeline to fail and give you `UnparsedData`.
 -}
 type PossiblyParsedData parsed

@@ -135,10 +135,10 @@ generateEncoder_ context forInputObject (Type.TypeReference referrableType isNul
             MyDebug.crash "I don't expect to see object references as argument types."
 
         Type.InterfaceRef interfaceName ->
-            MyDebug.crash "Interfaces are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Interfaces"
+            MyDebug.crash "Interfaces are never valid inputs https://spec.graphql.org/October2016/#sec-Interfaces"
 
         Type.UnionRef _ ->
-            MyDebug.crash "Unions are never valid inputs http://facebook.github.io/graphql/October2016/#sec-Unions"
+            MyDebug.crash "Unions are never valid inputs https://spec.graphql.org/October2016/#sec-Unions"
 
         Type.EnumRef enumName ->
             interpolate ("(Encode.enum {0})" ++ isNullableString)

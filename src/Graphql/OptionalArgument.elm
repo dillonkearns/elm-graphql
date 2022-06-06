@@ -43,7 +43,7 @@ An optional argument can be either present, absent, or null, so using a Maybe do
 fully capture the GraphQL concept of an optional argument. For example, you could have
 a mutation that deletes an entry if a null argument is provided, or does nothing if
 the argument is absent. See
-[The official GraphQL spec section on null](http://facebook.github.io/graphql/October2016/#sec-Null-Value)
+[The official GraphQL spec section on null](https://spec.graphql.org/October2016/#sec-Null-Value)
 for details.
 
 -}
