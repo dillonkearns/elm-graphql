@@ -407,5 +407,34 @@ all =
     firstName
   }
 }"""
+            , test "duplicate fields are merged and still only hashed as needed" <|
+                \() ->
+                    document
+                        [ leaf "avatar" []
+                        , leaf "avatar" []
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            , leaf "firstName" []
+                            , leaf "avatar" [ intArg { key = "size", value = 1 } ]
+                            , leaf "avatar" [ intArg { key = "size", value = 2 } ]
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            , leaf "firstName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  avatar
+  me(id: 123) {
+    firstName
+    avatar2648687506: avatar(size: 1)
+    avatar76140203: avatar(size: 2)
+  }
+}"""
             ]
         ]
