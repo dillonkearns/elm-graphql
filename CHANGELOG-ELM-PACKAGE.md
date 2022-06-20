@@ -9,6 +9,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.10] - 2022-06-20
+
+### Changed
+
+- Hashes are now only included in the GraphQL query when they are needed to disambiguate between other sibling fields that would cause a name collision.
+  These details aren't important if you don't depend on any internals, but they will reduce noise when inspecting requests for debugging purposes. Note that
+  it's still important not to depend on any low-level details - be sure not to write code that depends on whether or not field aliases with hashes are used
+  as `elm-graphql` abstracts away these details.
+
+  This change means that many fields will be unhashed now:
+
+```diff
+query {
+-  avatar2648687506: avatar(size: 1)
++  avatar(size: 1)
+}
+```
+
+However, a query like this will still have hashed field aliases because the hashes are needed to avoid a name collision when we query avatar twice at the same level within a selection set:
+
+```graphql
+query {
+  avatar0: avatar
+  avatar2648687506: avatar(size: 1)
+}
+```
+
+Thank you [@hariroshan](https://github.com/hariroshan) for thinking of this improvement and implementing it! See PR [#596](https://github.com/dillonkearns/elm-graphql/pull/596).
+
 ## [5.0.9] - 2022-01-21
 
 ### Fixed
