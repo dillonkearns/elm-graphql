@@ -2,7 +2,7 @@ module Graphql.Http.QueryHelper exposing (HttpMethod(..), build)
 
 import Graphql.Document as Document
 import Graphql.Http.QueryParams as QueryParams
-import Graphql.Operation exposing (RootMutation, RootQuery)
+import Graphql.Operation exposing (RootQuery)
 import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Http
 import Json.Encode
@@ -44,7 +44,7 @@ build forceMethod url queryParams maybeOperationName queryDocument =
 
         urlForGetRequest =
             QueryParams.urlWithQueryParams
-                (queryParams ++ [ ( "query", serializedQueryForGetRequest ) ] ++ operationNameParamForGetRequest)
+                (queryParams ++ ( "query", serializedQueryForGetRequest ) :: operationNameParamForGetRequest)
                 url
     in
     if forceMethod == Just Post || (String.length urlForGetRequest >= maxLength && forceMethod /= Just Get) then
@@ -64,8 +64,8 @@ build forceMethod url queryParams maybeOperationName queryDocument =
         , body =
             Http.jsonBody <|
                 Json.Encode.object <|
-                    [ ( "query", Json.Encode.string serializedQuery ) ]
-                        ++ operationNameParamForPostRequest
+                    ( "query", Json.Encode.string serializedQuery )
+                        :: operationNameParamForPostRequest
         }
 
     else

@@ -34,13 +34,13 @@ all =
                 document [ leaf "avatar" [] ]
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
-  avatar0: avatar
+  avatar
 }"""
         , test "single leaf for GET serializer" <|
             \() ->
                 document [ leaf "avatar" [] ]
                     |> Graphql.Document.serializeQueryForUrl
-                    |> Expect.equal """{avatar0:avatar}"""
+                    |> Expect.equal """{avatar}"""
         , test "duplicate nested fields for GET serializer" <|
             \() ->
                 document
@@ -51,7 +51,7 @@ all =
                         ]
                     ]
                     |> Graphql.Document.serializeQueryForUrl
-                    |> Expect.equal "{topLevel{avatar0:avatar}}"
+                    |> Expect.equal "{topLevel{avatar}}"
         , test "multiple top-level" <|
             \() ->
                 document
@@ -60,8 +60,8 @@ all =
                     ]
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
-  avatar0: avatar
-  labels0: labels
+  avatar
+  labels
 }"""
         , test "duplicate top-level fields" <|
             \() ->
@@ -71,7 +71,7 @@ all =
                     ]
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
-  avatar0: avatar
+  avatar
 }"""
         , test "duplicate nested fields" <|
             \() ->
@@ -85,7 +85,7 @@ all =
                     |> Graphql.Document.serializeQuery
                     |> Expect.equal """query {
   topLevel {
-    avatar0: avatar
+    avatar
   }
 }"""
         , test "ignored fields are included with a typename" <|
@@ -130,13 +130,13 @@ all =
                     document [ leaf "avatar" [] ]
                         |> Graphql.Document.serializeQueryWithOperationName "Avatar"
                         |> Expect.equal """query Avatar {
-  avatar0: avatar
+  avatar
 }"""
             , test "single leaf for GET serializer" <|
                 \() ->
                     document [ leaf "avatar" [] ]
                         |> Graphql.Document.serializeQueryForUrlWithOperationName "Avatar"
-                        |> Expect.equal """query Avatar {avatar0:avatar}"""
+                        |> Expect.equal """query Avatar {avatar}"""
             ]
         , describe "merge composite fields"
             [ test "without arguments" <|
@@ -154,8 +154,8 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   me {
-    firstName0: firstName
-    lastName0: lastName
+    firstName
+    lastName
   }
 }"""
             , test "merges 3 with no args" <|
@@ -177,9 +177,9 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   me {
-    firstName0: firstName
-    middleName0: middleName
-    lastName0: lastName
+    firstName
+    middleName
+    lastName
   }
 }"""
             , test "different arguments are not merged" <|
@@ -199,10 +199,10 @@ all =
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
   me3003759287: me(id: 123) {
-    firstName0: firstName
+    firstName
   }
   me1529416052: me(id: 456) {
-    lastName0: lastName
+    lastName
   }
 }"""
             , test "identical leaves are de-duped" <|
@@ -213,7 +213,7 @@ all =
                         ]
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
-  version0: version
+  version
 }"""
             , test "identical leaves from a merged Composite parent de-duped" <|
                 \() ->
@@ -231,8 +231,180 @@ all =
                         ]
                         |> Graphql.Document.serializeQuery
                         |> Expect.equal """query {
+  me(id: 123) {
+    firstName
+  }
+}"""
+            , test "identical fields with diffrent parameters are hashed." <|
+                \() ->
+                    document
+                        [ Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 456)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
   me3003759287: me(id: 123) {
-    firstName0: firstName
+    firstName
+  }
+  me1529416052: me(id: 456) {
+    firstName
+  }
+}"""
+            , test "identical fields are hashed with diffrent parameters are hashed but unique fields are not" <|
+                \() ->
+                    document
+                        [ leaf "avatar" []
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 456)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  avatar
+  me3003759287: me(id: 123) {
+    firstName
+  }
+  me1529416052: me(id: 456) {
+    firstName
+  }
+}"""
+            , test "identical fields are hashed but unique fields are not even though there are duplicate fields" <|
+                \() ->
+                    document
+                        [ leaf "avatar" []
+                        , leaf "avatar" []
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 456)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  avatar
+  me3003759287: me(id: 123) {
+    firstName
+  }
+  me1529416052: me(id: 456) {
+    firstName
+  }
+}"""
+            , test "identical fields with same arguments are not hashed" <|
+                \() ->
+                    document
+                        [ Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  me(id: 123) {
+    firstName
+  }
+}"""
+            , test "identical fields with same arguments but diffrent selections are merged" <|
+                \() ->
+                    document
+                        [ Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "lastName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  me(id: 123) {
+    firstName
+    lastName
+  }
+}"""
+            , test "identical fields with same arguments but diffrent selections are merged along with union selection" <|
+                \() ->
+                    document
+                        [ Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "lastName" []
+                            ]
+                        , Composite "topLevel"
+                            []
+                            [ Composite "...on Droid" [] []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  me(id: 123) {
+    firstName
+    lastName
+  }
+  topLevel {
+    ...on Droid {
+      __typename
+    }
+  }
+}"""
+            , test "identical fields are hashed." <|
+                \() ->
+                    document
+                        [ leaf "avatar" []
+                        , leaf "avatar" [ intArg { key = "size", value = 1 } ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 123)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        , Composite "me"
+                            [ Graphql.Internal.Builder.Argument.Argument "id" (Graphql.Internal.Encode.int 456)
+                            ]
+                            [ leaf "firstName" []
+                            ]
+                        ]
+                        |> Graphql.Document.serializeQuery
+                        |> Expect.equal """query {
+  avatar0: avatar
+  avatar2648687506: avatar(size: 1)
+  me3003759287: me(id: 123) {
+    firstName
+  }
+  me1529416052: me(id: 456) {
+    firstName
   }
 }"""
             ]
