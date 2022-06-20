@@ -223,7 +223,7 @@ Check the following:
     You must:
     * Have a type for every custom scalar
     * Expose each of these types
-    * Expose a \`decoders\` value
+    * Expose a \`codecs\` value
 
     Above the dashes (----) there are some details that might help you debug the issue. Remember, you can always
     copy-paste the \`${baseModule.join(
