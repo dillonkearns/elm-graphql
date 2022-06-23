@@ -53,6 +53,7 @@ requestedReviewer object____ =
 
 
 {-| Identifies the user whose review request was removed.
+@deprecated `subject` will be renamed. Use `ReviewRequestRemovedEvent.requestedReviewer` instead. Removal on 2018-07-01 UTC.
 -}
 subject : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequestRemovedEvent
