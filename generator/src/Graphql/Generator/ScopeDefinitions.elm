@@ -59,7 +59,7 @@ generateType name =
 objectName : TypeDefinition -> Bool
 objectName (TypeDefinition name definableType description) =
     case definableType of
-        Type.ObjectType _ ->
+        Type.ObjectType _ _ ->
             True
 
         _ ->
@@ -79,7 +79,7 @@ unionName (TypeDefinition name definableType description) =
 interfaceName : TypeDefinition -> Bool
 interfaceName (TypeDefinition name definableType description) =
     case definableType of
-        Type.InterfaceType _ _ ->
+        Type.InterfaceType _ _ _ ->
             True
 
         _ ->

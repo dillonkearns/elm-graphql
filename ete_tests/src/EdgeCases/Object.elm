@@ -5,6 +5,5 @@
 module EdgeCases.Object exposing (..)
 
 
-placeholder : String
-placeholder =
-    ""
+type Human
+    = Human

@@ -5,6 +5,9 @@
 module EdgeCases.Interface exposing (..)
 
 
-placeholder : String
-placeholder =
-    ""
+type Character
+    = Character
+
+
+type Species
+    = Species
