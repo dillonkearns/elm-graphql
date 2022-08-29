@@ -20,7 +20,8 @@ import Json.Decode as Decode
 
 
 type alias Fragments decodesTo =
-    { onHuman : SelectionSet decodesTo EdgeCases.Object.Human
+    { onSpecies : SelectionSet decodesTo EdgeCases.Interface.Species
+    , onHuman : SelectionSet decodesTo EdgeCases.Object.Human
     }
 
 
@@ -31,7 +32,8 @@ fragments :
     -> SelectionSet decodesTo EdgeCases.Interface.Character
 fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Human" selections____.onHuman
+        [ Object.buildFragment "Species" selections____.onSpecies
+        , Object.buildFragment "Human" selections____.onHuman
         ]
 
 
@@ -40,7 +42,8 @@ update syntax to add `SelectionSet`s for the types you want to handle.
 -}
 maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
-    { onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    { onSpecies = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 
 

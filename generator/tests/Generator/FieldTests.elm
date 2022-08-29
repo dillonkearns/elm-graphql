@@ -11,7 +11,7 @@ import Graphql.Parser.Type as Type exposing (TypeDefinition, TypeReference)
 import Test exposing (..)
 
 
-contextWith : Maybe (Dict.Dict String (List ClassCaseName)) -> Context
+contextWith : Maybe (Dict.Dict String (List TypeDefinition)) -> Context
 contextWith maybeInterfaceLookup =
     -- Context.stub
     { stub
@@ -19,6 +19,18 @@ contextWith maybeInterfaceLookup =
         , apiSubmodule = [ "Api" ]
         , interfaces = maybeInterfaceLookup |> Maybe.withDefault Dict.empty
     }
+
+
+typeDefinition : Maybe (Dict.Dict String (List TypeDefinition))
+typeDefinition =
+    Just <|
+        Dict.fromList
+            [ ( "Character"
+              , [ Type.typeDefinition "Human" (Type.ObjectType [] []) Nothing
+                , Type.typeDefinition "Droid" (Type.ObjectType [] []) Nothing
+                ]
+              )
+            ]
 
 
 all : Test
@@ -64,9 +76,7 @@ droid object____ =
                 , args = []
                 }
                     |> Field.generateForObject
-                        (contextWith
-                            (Just (Dict.fromList [ ( "Character", [ ClassCaseName.build "Human", ClassCaseName.build "Droid" ] ) ]))
-                        )
+                        (contextWith typeDefinition)
                         (ClassCaseName.build "RootQueryObject")
                     |> Expect.equal
                         """hero : SelectionSet decodesTo Api.Interface.Character

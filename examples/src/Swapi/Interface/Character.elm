@@ -21,8 +21,8 @@ import Swapi.Union
 
 
 type alias Fragments decodesTo =
-    { onHuman : SelectionSet decodesTo Swapi.Object.Human
-    , onDroid : SelectionSet decodesTo Swapi.Object.Droid
+    { onDroid : SelectionSet decodesTo Swapi.Object.Droid
+    , onHuman : SelectionSet decodesTo Swapi.Object.Human
     }
 
 
@@ -33,8 +33,8 @@ fragments :
     -> SelectionSet decodesTo Swapi.Interface.Character
 fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "Human" selections____.onHuman
-        , Object.buildFragment "Droid" selections____.onDroid
+        [ Object.buildFragment "Droid" selections____.onDroid
+        , Object.buildFragment "Human" selections____.onHuman
         ]
 
 
@@ -43,8 +43,8 @@ update syntax to add `SelectionSet`s for the types you want to handle.
 -}
 maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
-    { onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
-    , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    { onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHuman = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 
 

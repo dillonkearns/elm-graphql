@@ -21,8 +21,8 @@ import Normalize.Union
 
 
 type alias Fragments decodesTo =
-    { onHuman_ : SelectionSet decodesTo Normalize.Object.Human_
-    , onDroid : SelectionSet decodesTo Normalize.Object.Droid
+    { onDroid : SelectionSet decodesTo Normalize.Object.Droid
+    , onHuman_ : SelectionSet decodesTo Normalize.Object.Human_
     }
 
 
@@ -33,8 +33,8 @@ fragments :
     -> SelectionSet decodesTo Normalize.Interface.Character
 fragments selections____ =
     Object.exhaustiveFragmentSelection
-        [ Object.buildFragment "_human" selections____.onHuman_
-        , Object.buildFragment "Droid" selections____.onDroid
+        [ Object.buildFragment "Droid" selections____.onDroid
+        , Object.buildFragment "_human" selections____.onHuman_
         ]
 
 
@@ -43,8 +43,8 @@ update syntax to add `SelectionSet`s for the types you want to handle.
 -}
 maybeFragments : Fragments (Maybe decodesTo)
 maybeFragments =
-    { onHuman_ = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
-    , onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    { onDroid = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
+    , onHuman_ = Graphql.SelectionSet.empty |> Graphql.SelectionSet.map (\_ -> Nothing)
     }
 
 
