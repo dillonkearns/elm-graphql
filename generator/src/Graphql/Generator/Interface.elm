@@ -6,7 +6,7 @@ import Graphql.Generator.Field as FieldGenerator
 import Graphql.Generator.Imports as Imports
 import Graphql.Generator.ModuleName as ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName exposing (ClassCaseName)
-import Graphql.Parser.Type as Type exposing (DefinableType(..), TypeDefinition)
+import Graphql.Parser.Type as Type exposing (DefinableType(..), TypeDefinition(..))
 import ModuleName
 import String.Interpolate exposing (interpolate)
 
@@ -65,23 +65,23 @@ maybeFragments =
 aliasFieldForFragment : Context -> List String -> TypeDefinition -> String
 aliasFieldForFragment context moduleName interfaceImplementor =
     let
-        importPath : Maybe String
+        importPath : Maybe ( ClassCaseName, String )
         importPath =
-            case Type.getDefinableType interfaceImplementor of
-                ObjectType _ _ ->
-                    Just <| String.join "." <| ModuleName.object context <| ClassCaseName.build moduleName
+            case interfaceImplementor of
+                TypeDefinition m (ObjectType _ _) _ ->
+                    Just ( m, String.join "." <| ModuleName.object context m )
 
-                InterfaceType _ _ _ ->
-                    Just <| String.join "." <| ModuleName.interface context <| ClassCaseName.build moduleName
+                TypeDefinition m (InterfaceType _ _ _) _ ->
+                    Just ( m, String.join "." <| ModuleName.interface context m )
 
                 _ ->
                     Nothing
     in
     Maybe.map
-        (\path ->
+        (\( m, path ) ->
             interpolate
                 "on{0} : SelectionSet decodesTo {1}"
-                [ ClassCaseName.normalized moduleName, path ]
+                [ ClassCaseName.normalized m, path ]
         )
         importPath
         |> Maybe.withDefault ""
