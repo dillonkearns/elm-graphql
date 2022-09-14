@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.3.4] - 2022-09-14
+
+### Added
+
+- Deprecated fields now include an `@deprecated` message within the doc comment for the generated function. See [#600](https://github.com/dillonkearns/elm-graphql/pull/600). Thank you [@gampleman](https://github.com/gampleman) for the PR!
+
 ## [4.2.4] - 2022-02-03
 
 ### Added
