@@ -52,6 +52,7 @@ creator object____ =
 
 
 {-| Identifies the primary key from the database.
+@deprecated Exposed database IDs will eventually be removed in favor of global Relay IDs. Use `Node.id` instead. Removal on 2018-07-01 UTC.
 -}
 databaseId : SelectionSet (Maybe Int) GithubNoFormat.Object.ProjectCard
 databaseId =
@@ -79,6 +80,7 @@ project object____ =
 
 
 {-| The column that contains this card.
+@deprecated The associated column may be null if the card is in a pending state. Use `ProjectCard.column` instead. Removal on 2018-07-01 UTC.
 -}
 projectColumn : SelectionSet decodesTo GithubNoFormat.Object.ProjectColumn
  -> SelectionSet decodesTo GithubNoFormat.Object.ProjectCard
@@ -101,6 +103,7 @@ state =
 
 
 {-| Identifies the date and time when the object was last updated.
+@deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
 updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.ProjectCard
 updatedAt =

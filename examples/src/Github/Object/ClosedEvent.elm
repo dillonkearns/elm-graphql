@@ -47,6 +47,7 @@ closer object____ =
 
 
 {-| Identifies the commit associated with the 'closed' event.
+@deprecated `ClosedEvent` may be associated with other objects than a commit. Use ClosedEvent.closer instead. Removal on 2018-07-01 UTC.
 -}
 commit :
     SelectionSet decodesTo Github.Object.Commit

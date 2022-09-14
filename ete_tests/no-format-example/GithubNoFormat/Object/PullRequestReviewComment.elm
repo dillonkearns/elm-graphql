@@ -77,6 +77,7 @@ createdViaEmail =
 
 
 {-| Identifies the primary key from the database.
+@deprecated Exposed database IDs will eventually be removed in favor of global Relay IDs. Use `Node.id` instead. Removal on 2018-07-01 UTC.
 -}
 databaseId : SelectionSet (Maybe Int) GithubNoFormat.Object.PullRequestReviewComment
 databaseId =

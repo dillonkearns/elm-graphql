@@ -17,6 +17,7 @@ import Json.Decode as Decode
 import Graphql.Internal.Encode as Encode exposing (Value)
 
 {-| Identifies the primary key from the database.
+@deprecated Exposed database IDs will eventually be removed in favor of global Relay IDs. Use `Node.id` instead. Removal on 2018-07-01 UTC.
 -}
 databaseId : SelectionSet (Maybe Int) GithubNoFormat.Object.ReviewRequest
 databaseId =
@@ -45,6 +46,7 @@ requestedReviewer object____ =
 
 
 {-| Identifies the author associated with this review request.
+@deprecated Field `reviewer` will be changed in favor of returning a union type. Use `ReviewRequest.requestedReviewer` instead. Removal on 2018-07-01 UTC.
 -}
 reviewer : SelectionSet decodesTo GithubNoFormat.Object.User
  -> SelectionSet (Maybe decodesTo) GithubNoFormat.Object.ReviewRequest

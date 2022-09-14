@@ -73,6 +73,7 @@ state =
 
 
 {-| Identifies the date and time when the object was last updated.
+@deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
 updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.DeploymentStatus
 updatedAt =

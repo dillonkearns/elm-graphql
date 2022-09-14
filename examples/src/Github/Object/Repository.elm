@@ -145,6 +145,7 @@ createdAt =
 
 
 {-| Identifies the primary key from the database.
+@deprecated Exposed database IDs will eventually be removed in favor of global Relay IDs. Use `Node.id` instead. Removal on 2018-07-01 UTC.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.Repository
 databaseId =
@@ -513,6 +514,7 @@ languages fillInOptionals____ object____ =
 
 
 {-| The license associated with the repository
+@deprecated Field `license` will be replaced by a more detailed license object. Use `Repository.licenseInfo` instead. Removal on 2018-07-01 UTC.
 -}
 license : SelectionSet (Maybe String) Github.Object.Repository
 license =
@@ -1078,6 +1080,7 @@ stargazers fillInOptionals____ object____ =
 
 
 {-| Identifies the date and time when the object was last updated.
+@deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Repository
 updatedAt =

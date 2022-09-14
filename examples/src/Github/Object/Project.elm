@@ -97,6 +97,7 @@ creator object____ =
 
 
 {-| Identifies the primary key from the database.
+@deprecated Exposed database IDs will eventually be removed in favor of global Relay IDs. Use `Node.id` instead. Removal on 2018-07-01 UTC.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.Project
 databaseId =
@@ -178,6 +179,7 @@ state =
 
 
 {-| Identifies the date and time when the object was last updated.
+@deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.Project
 updatedAt =

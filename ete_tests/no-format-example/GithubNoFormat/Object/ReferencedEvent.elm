@@ -53,6 +53,7 @@ id =
 
 
 {-| Reference originated in a different repository.
+@deprecated `isCrossReference` will be renamed. Use `ReferencedEvent.isCrossRepository` instead. Removal on 2018-07-01 UTC.
 -}
 isCrossReference : SelectionSet Bool GithubNoFormat.Object.ReferencedEvent
 isCrossReference =

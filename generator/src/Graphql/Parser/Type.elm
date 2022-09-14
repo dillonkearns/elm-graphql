@@ -196,7 +196,7 @@ fieldDecoder : Decoder RawField
 fieldDecoder =
     Decode.map4 RawField
         (Decode.field "name" Decode.string)
-        (Decode.field "description" (Decode.maybe Decode.string))
+        descriptionWithDeprecationDecoder
         (Decode.field "type" typeRefDecoder)
         (argDecoder |> Decode.list |> Decode.field "args")
 
@@ -216,6 +216,25 @@ argDecoder =
         (Decode.field "name" Decode.string)
         (Decode.field "description" (Decode.maybe Decode.string))
         (Decode.field "type" typeRefDecoder)
+
+
+descriptionWithDeprecationDecoder : Decoder (Maybe String)
+descriptionWithDeprecationDecoder =
+    Decode.map3
+        (\description isDeprecated deprecationReason ->
+            Maybe.map
+                (\desc ->
+                    if isDeprecated then
+                        desc ++ "\n@deprecated " ++ Maybe.withDefault "" deprecationReason
+
+                    else
+                        desc
+                )
+                description
+        )
+        (Decode.field "description" (Decode.maybe Decode.string))
+        (Decode.field "isDeprecated" Decode.bool)
+        (Decode.field "deprecationReason" (Decode.maybe Decode.string))
 
 
 createRawTypeRef : Maybe String -> TypeKind -> Maybe RawTypeRef -> RawTypeRef

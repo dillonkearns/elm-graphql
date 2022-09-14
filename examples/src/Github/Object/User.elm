@@ -122,6 +122,7 @@ type alias ContributedRepositoriesOptionalArguments =
 
 
 {-| A list of repositories that the user recently contributed to.
+@deprecated Arguments for connection `contributedRepositories` are getting redesigned. Use `User.repositoriesContributedTo` instead. Removal on 2018-07-01 UTC.
 
   - first - Returns the first _n_ elements from the list.
   - after - Returns the elements in the list that come after the specified global ID.
@@ -157,6 +158,7 @@ createdAt =
 
 
 {-| Identifies the primary key from the database.
+@deprecated Exposed database IDs will eventually be removed in favor of global Relay IDs. Use `Node.id` instead. Removal on 2018-07-01 UTC.
 -}
 databaseId : SelectionSet (Maybe Int) Github.Object.User
 databaseId =
@@ -772,6 +774,7 @@ starredRepositories fillInOptionals____ object____ =
 
 
 {-| Identifies the date and time when the object was last updated.
+@deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
 updatedAt : SelectionSet Github.ScalarCodecs.DateTime Github.Object.User
 updatedAt =

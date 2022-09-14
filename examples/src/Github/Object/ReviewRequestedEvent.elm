@@ -59,6 +59,7 @@ requestedReviewer object____ =
 
 
 {-| Identifies the user whose review was requested.
+@deprecated `subject` will be renamed. Use `ReviewRequestedEvent.requestedReviewer` instead. Removal on 2018-07-01 UTC.
 -}
 subject :
     SelectionSet decodesTo Github.Object.User

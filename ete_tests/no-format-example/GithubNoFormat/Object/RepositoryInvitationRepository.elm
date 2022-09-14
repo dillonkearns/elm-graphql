@@ -101,6 +101,7 @@ isPrivate =
 
 
 {-| The license associated with the repository
+@deprecated Field `license` will be replaced by a more detailed license object. Use `Repository.licenseInfo` instead. Removal on 2018-07-01 UTC.
 -}
 license : SelectionSet (Maybe String) GithubNoFormat.Object.RepositoryInvitationRepository
 license =
@@ -187,6 +188,7 @@ shortDescriptionHTML fillInOptionals____ =
 
 
 {-| Identifies the date and time when the object was last updated.
+@deprecated General type updated timestamps will eventually be replaced by other field specific timestamps. Removal on 2018-07-01 UTC.
 -}
 updatedAt : SelectionSet GithubNoFormat.ScalarCodecs.DateTime GithubNoFormat.Object.RepositoryInvitationRepository
 updatedAt =
