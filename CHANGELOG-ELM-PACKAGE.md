@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.11] - 2022-09-14
+
+### Fixed
+
+- JSON objects are not valid in GraphQL because object properties are unquoted in GraphQL syntax. This release includes a fix that will remove quotes from JSON object properties in the serialized GraphQL query to make them valid GraphQL syntax. Note that not all JSON can be made valid with this approach because some keys need to be quoted (see [#606](https://github.com/dillonkearns/elm-graphql/issues/606) for a discussion of a possible approach to handle those cases). This release fixes [#570](https://github.com/dillonkearns/elm-graphql/issues/570). See [#605](https://github.com/dillonkearns/elm-graphql/pull/605). Thank you [@SiriusStarr](https://github.com/SiriusStarr) for the fix!
+
 ## [5.0.10] - 2022-06-20
 
 ### Changed
