@@ -10,7 +10,6 @@ module Graphql.Parser.Type exposing
     , TypeReference(..)
     , decoder
     , getClassCaseName
-    , getDefinableType
     , interfaces
     , isInterfaceType
     , isObjectType
@@ -336,11 +335,6 @@ interfaces typeDef =
 
         _ ->
             []
-
-
-getDefinableType : TypeDefinition -> DefinableType
-getDefinableType (TypeDefinition _ defType _) =
-    defType
 
 
 getClassCaseName : TypeDefinition -> ClassCaseName

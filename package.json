@@ -11,6 +11,7 @@
     "start": "cd examples && elm-live src/Starwars.elm --open -- --output=elm.js",
     "test": "./bin/approve && elm-test && (cd generator && elm-test)",
     "test:watch": "elm-test --watch",
+    "elm-review": "elm-review && echo 'in repo root\n' && cd generator && elm-review && echo 'in generator folder' && cd ..",
     "gen:starwars": "npm run build && cd examples && ../bin/elm-graphql --scalar-codecs CustomScalarCodecs https://elm-graphql.herokuapp.com --base Swapi --output src",
     "gen:normalize_test": "npm run build && cd ete_tests && ../bin/elm-graphql http://localhost:4000 --base Normalize && cd -",
     "gen:github": "npm run build && && cd examples && ../bin/elm-graphql --introspection-file examples/github-schema.json --base Github --output src",
