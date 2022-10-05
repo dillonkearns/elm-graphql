@@ -2,7 +2,7 @@
 -- https://github.com/dillonkearns/elm-graphql
 
 
-module EdgeCases.Query exposing (..)
+module EdgeCases.Object.Human exposing (..)
 
 import EdgeCases.InputObject
 import EdgeCases.Interface
@@ -16,22 +16,19 @@ import Graphql.Internal.Encode as Encode exposing (Value)
 import Graphql.Operation exposing (RootMutation, RootQuery, RootSubscription)
 import Graphql.OptionalArgument exposing (OptionalArgument(..))
 import Graphql.SelectionSet exposing (SelectionSet)
-import Json.Decode as Decode exposing (Decoder)
+import Json.Decode as Decode
 
 
-type alias HelloRequiredArguments =
-    { name : String }
+name : SelectionSet String EdgeCases.Object.Human
+name =
+    Object.selectionForField "String" "name" [] Decode.string
 
 
-hello :
-    HelloRequiredArguments
-    -> SelectionSet String RootQuery
-hello requiredArgs____ =
-    Object.selectionForField "String" "hello" [ Argument.required "name" requiredArgs____.name Encode.string ] Decode.string
+numberOfHearts : SelectionSet Int EdgeCases.Object.Human
+numberOfHearts =
+    Object.selectionForField "Int" "numberOfHearts" [] Decode.int
 
 
-characters :
-    SelectionSet decodesTo EdgeCases.Interface.Character
-    -> SelectionSet (List decodesTo) RootQuery
-characters object____ =
-    Object.selectionForCompositeField "characters" [] object____ (Basics.identity >> Decode.list)
+ogTerrain : SelectionSet Bool EdgeCases.Object.Human
+ogTerrain =
+    Object.selectionForField "Bool" "ogTerrain" [] Decode.bool
