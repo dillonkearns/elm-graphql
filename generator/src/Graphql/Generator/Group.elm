@@ -53,8 +53,8 @@ interfaceImplementorsDict typeDefs =
         interfaceImplementations interfaceName objectsAndInterfaces =
             -- Filter list based on Interfaces or Objects that implement the passed in Interface name
             List.filter
-                (\objectType ->
-                    Type.interfaces objectType
+                (\objectOrInterface ->
+                    Type.interfacesImplemented objectOrInterface
                         |> List.map ClassCaseName.raw
                         |> List.any ((==) interfaceName)
                 )

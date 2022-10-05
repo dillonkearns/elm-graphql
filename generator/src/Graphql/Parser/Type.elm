@@ -9,8 +9,7 @@ module Graphql.Parser.Type exposing
     , TypeDefinition(..)
     , TypeReference(..)
     , decoder
-    , getClassCaseName
-    , interfaces
+    , interfacesImplemented
     , isInterfaceType
     , isObjectType
     , parseRef
@@ -324,8 +323,11 @@ isInterfaceType typeDef =
             False
 
 
-interfaces : TypeDefinition -> List ClassCaseName
-interfaces typeDef =
+{-| Returns a list of ClassCaseName of the Interfaces that this Type
+implements
+-}
+interfacesImplemented : TypeDefinition -> List ClassCaseName
+interfacesImplemented typeDef =
     case typeDef of
         TypeDefinition _ (InterfaceType _ _ i) _ ->
             i
@@ -337,14 +339,9 @@ interfaces typeDef =
             []
 
 
-getClassCaseName : TypeDefinition -> ClassCaseName
-getClassCaseName (TypeDefinition n _ _) =
-    n
-
-
 rawName : TypeDefinition -> String
-rawName =
-    getClassCaseName >> ClassCaseName.raw
+rawName (TypeDefinition n _ _) =
+    ClassCaseName.raw n
 
 
 expectPresent : Maybe value -> Result String value
