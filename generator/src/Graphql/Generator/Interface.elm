@@ -54,10 +54,10 @@ maybeFragments =
             |> List.map (aliasFieldForFragment context moduleName)
             |> String.join ",\n "
         , implementors
-            |> List.map (Type.getClassCaseName >> exhaustiveBuildupForFragment context moduleName)
+            |> List.map (\(Type.TypeDefinition classCaseName _ _) -> exhaustiveBuildupForFragment context moduleName classCaseName)
             |> String.join ",\n "
         , implementors
-            |> List.map (Type.getClassCaseName >> maybeFragmentEntry context moduleName)
+            |> List.map (\(Type.TypeDefinition classCaseName _ _) -> maybeFragmentEntry context moduleName classCaseName)
             |> String.join ",\n "
         ]
 
