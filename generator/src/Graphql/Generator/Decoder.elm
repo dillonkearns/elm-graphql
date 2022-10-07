@@ -1,5 +1,7 @@
 module Graphql.Generator.Decoder exposing (generateDecoder, generateEncoder, generateEncoderLowLevel, generateType, generateTypeForInputObject)
 
+import Elm.Annotation
+import Elm.ToString
 import Graphql.Generator.Context exposing (Context)
 import Graphql.Generator.ModuleName
 import Graphql.Parser.ClassCaseName as ClassCaseName
@@ -181,7 +183,7 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
         Type.Scalar scalar ->
             case scalar of
                 Scalar.String ->
-                    "String"
+                    Elm.Annotation.string |> Elm.Annotation.toString
 
                 Scalar.Boolean ->
                     "Bool"

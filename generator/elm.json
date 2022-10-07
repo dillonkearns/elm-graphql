@@ -13,9 +13,18 @@
             "elm-community/list-extra": "8.3.0",
             "elm-community/result-extra": "2.4.0",
             "elm-community/string-extra": "4.0.1",
-            "lukewestby/elm-string-interpolate": "1.0.4"
+            "lukewestby/elm-string-interpolate": "1.0.4",
+            "mdgriffith/elm-codegen": "2.0.0"
         },
-        "indirect": {}
+        "indirect": {
+            "elm/parser": "1.1.0",
+            "elm-community/basics-extra": "4.1.0",
+            "miniBill/elm-unicode": "1.0.2",
+            "rtfeldman/elm-hex": "1.0.0",
+            "stil4m/elm-syntax": "7.2.9",
+            "stil4m/structured-writer": "1.0.3",
+            "the-sett/elm-pretty-printer": "3.0.0"
+        }
     },
     "test-dependencies": {
         "direct": {
