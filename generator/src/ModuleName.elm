@@ -1,4 +1,6 @@
-module ModuleName exposing (ModuleName, append, fromList, toString)
+module ModuleName exposing (ModuleName, append, fromList, toAnnotation, toString)
+
+import Elm.Annotation
 
 
 type ModuleName
@@ -8,6 +10,11 @@ type ModuleName
 fromList : List String -> ModuleName
 fromList =
     ModuleName
+
+
+toAnnotation : String -> ModuleName -> Elm.Annotation.Annotation
+toAnnotation string (ModuleName moduleNameParts) =
+    Elm.Annotation.named moduleNameParts string
 
 
 toString : ModuleName -> String
