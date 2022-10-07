@@ -198,7 +198,8 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                     (context.scalarCodecsModule
                         |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
                     )
-                        |> ModuleName.append (ClassCaseName.normalized customScalarName)
+                        |> ModuleName.toAnnotation (ClassCaseName.normalized customScalarName)
+                        |> Elm.Annotation.toString
 
         Type.List typeRef ->
             "(List " ++ generateType_ fromInputObject context typeRef ++ ")"
