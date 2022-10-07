@@ -186,7 +186,7 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                     Elm.Annotation.string |> Elm.Annotation.toString
 
                 Scalar.Boolean ->
-                    "Bool"
+                    Elm.Annotation.bool |> Elm.Annotation.toString
 
                 Scalar.Int ->
                     "Int"
