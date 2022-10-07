@@ -189,10 +189,10 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                     Elm.Annotation.bool |> Elm.Annotation.toString
 
                 Scalar.Int ->
-                    "Int"
+                    Elm.Annotation.int |> Elm.Annotation.toString
 
                 Scalar.Float ->
-                    "Float"
+                    Elm.Annotation.float |> Elm.Annotation.toString
 
                 Scalar.Custom customScalarName ->
                     (context.scalarCodecsModule
