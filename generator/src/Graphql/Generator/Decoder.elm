@@ -181,25 +181,25 @@ generateTypeCommon : Bool -> String -> Context -> TypeReference -> String
 generateTypeCommon fromInputObject nullableString context (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
-            case scalar of
-                Scalar.String ->
-                    Elm.Annotation.string |> Elm.Annotation.toString
+            Elm.Annotation.toString <|
+                case scalar of
+                    Scalar.String ->
+                        Elm.Annotation.string
 
-                Scalar.Boolean ->
-                    Elm.Annotation.bool |> Elm.Annotation.toString
+                    Scalar.Boolean ->
+                        Elm.Annotation.bool
 
-                Scalar.Int ->
-                    Elm.Annotation.int |> Elm.Annotation.toString
+                    Scalar.Int ->
+                        Elm.Annotation.int
 
-                Scalar.Float ->
-                    Elm.Annotation.float |> Elm.Annotation.toString
+                    Scalar.Float ->
+                        Elm.Annotation.float
 
-                Scalar.Custom customScalarName ->
-                    (context.scalarCodecsModule
-                        |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
-                    )
-                        |> ModuleName.toAnnotation (ClassCaseName.normalized customScalarName)
-                        |> Elm.Annotation.toString
+                    Scalar.Custom customScalarName ->
+                        (context.scalarCodecsModule
+                            |> Maybe.withDefault (ModuleName.fromList (context.apiSubmodule ++ [ "ScalarCodecs" ]))
+                        )
+                            |> ModuleName.toAnnotation (ClassCaseName.normalized customScalarName)
 
         Type.List typeRef ->
             "(List " ++ generateType_ fromInputObject context typeRef ++ ")"
