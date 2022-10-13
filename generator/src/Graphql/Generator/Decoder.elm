@@ -214,12 +214,16 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
         |> (\typeString ->
                 case isNullable of
                     Type.Nullable ->
-                        "("
-                            ++ (Elm.Annotation.toString <|
-                                    Elm.Annotation.namedWith [] nullableString [ typeString ]
-                               )
-                            ++ ")"
+                        toStringWithParens <|
+                            Elm.Annotation.namedWith [] nullableString [ typeString ]
 
                     Type.NonNullable ->
                         Elm.Annotation.toString typeString
            )
+
+
+toStringWithParens : Elm.Annotation.Annotation -> String
+toStringWithParens annotation =
+    "("
+        ++ Elm.Annotation.toString annotation
+        ++ ")"
