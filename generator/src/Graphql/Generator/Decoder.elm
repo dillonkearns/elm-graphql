@@ -206,14 +206,15 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                 Graphql.Generator.ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
 
         Type.InputObjectRef inputObjectName ->
-            (if fromInputObject then
+            if fromInputObject then
                 [ ClassCaseName.normalized inputObjectName ]
+                    |> String.join "."
 
-             else
-                Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
+            else
+                (Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
                     ++ [ ClassCaseName.normalized inputObjectName ]
-            )
-                |> String.join "."
+                )
+                    |> String.join "."
     )
         |> (\typeString ->
                 case isNullable of
