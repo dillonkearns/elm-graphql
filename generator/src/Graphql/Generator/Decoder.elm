@@ -181,29 +181,23 @@ generateTypeCommon : Bool -> String -> Context -> TypeReference -> String
 generateTypeCommon fromInputObject nullableString context (Type.TypeReference referrableType isNullable) =
     (case referrableType of
         Type.Scalar scalar ->
-            Elm.Annotation.toString <|
-                Scalar.toAnnotation context scalar
+            Scalar.toAnnotation context scalar
 
         Type.List typeRef ->
             -- TODO remove hacked type from String
-            Elm.Annotation.toString <|
-                Elm.Annotation.var ("(List " ++ generateType_ fromInputObject context typeRef ++ ")")
+            Elm.Annotation.var ("(List " ++ generateType_ fromInputObject context typeRef ++ ")")
 
         Type.ObjectRef objectName ->
-            Elm.Annotation.toString <|
-                Elm.Annotation.var "decodesTo"
+            Elm.Annotation.var "decodesTo"
 
         Type.InterfaceRef interfaceName ->
-            Elm.Annotation.toString <|
-                Elm.Annotation.var "decodesTo"
+            Elm.Annotation.var "decodesTo"
 
         Type.UnionRef unionName ->
-            Elm.Annotation.toString <|
-                Elm.Annotation.var "decodesTo"
+            Elm.Annotation.var "decodesTo"
 
         Type.EnumRef enumName ->
-            Elm.Annotation.toString <|
-                Graphql.Generator.ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
+            Graphql.Generator.ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
 
         Type.InputObjectRef inputObjectName ->
             let
@@ -215,14 +209,13 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                     else
                         Graphql.Generator.ModuleName.inputObject { apiSubmodule = context.apiSubmodule } inputObjectName
             in
-            Elm.Annotation.toString <|
-                Elm.Annotation.named namespace (ClassCaseName.normalized inputObjectName)
+            Elm.Annotation.named namespace (ClassCaseName.normalized inputObjectName)
     )
         |> (\typeString ->
                 case isNullable of
                     Type.Nullable ->
-                        interpolate "({0} {1})" [ nullableString, typeString ]
+                        interpolate "({0} {1})" [ nullableString, Elm.Annotation.toString typeString ]
 
                     Type.NonNullable ->
-                        typeString
+                        Elm.Annotation.toString typeString
            )
