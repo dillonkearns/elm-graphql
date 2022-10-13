@@ -194,10 +194,12 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
                 Elm.Annotation.var "decodesTo"
 
         Type.InterfaceRef interfaceName ->
-            "decodesTo"
+            Elm.Annotation.toString <|
+                Elm.Annotation.var "decodesTo"
 
         Type.UnionRef unionName ->
-            "decodesTo"
+            Elm.Annotation.toString <|
+                Elm.Annotation.var "decodesTo"
 
         Type.EnumRef enumName ->
             Graphql.Generator.ModuleName.enumTypeName { apiSubmodule = context.apiSubmodule } enumName
