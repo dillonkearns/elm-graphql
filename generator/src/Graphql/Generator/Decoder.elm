@@ -188,7 +188,8 @@ generateTypeCommon fromInputObject nullableString context (Type.TypeReference re
             "(List " ++ generateType_ fromInputObject context typeRef ++ ")"
 
         Type.ObjectRef objectName ->
-            "decodesTo"
+            Elm.Annotation.toString <|
+                Elm.Annotation.var "decodesTo"
 
         Type.InterfaceRef interfaceName ->
             "decodesTo"
